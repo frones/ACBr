@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  ACBrXmlDocument,
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
@@ -45,16 +46,35 @@ type
 
   TNFSeR_Giss204 = class(TNFSeR_ABRASFv2)
   protected
-
+    function LerCodigoPaisServico(const ANode: TACBrXmlNode): Integer; override;
+    function LerCodigoPaisTomador(const ANode: TACBrXmlNode): Integer; override;
   public
 
   end;
 
 implementation
 
+uses
+  ACBrXmlBase,
+  ACBrNFSeXConversao;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     Giss
 //==============================================================================
+
+{ TNFSeR_Giss204 }
+
+function TNFSeR_Giss204.LerCodigoPaisServico(
+  const ANode: TACBrXmlNode): Integer;
+begin
+  Result := CodISOPaisToCodIBGE(ObterConteudo(ANode.Childrens.FindAnyNs('CodigoPais'), tcInt));
+end;
+
+function TNFSeR_Giss204.LerCodigoPaisTomador(
+  const ANode: TACBrXmlNode): Integer;
+begin
+  Result := CodISOPaisToCodIBGE(ObterConteudo(ANode.Childrens.FindAnyNs('CodigoPais'), tcInt));
+end;
 
 end.

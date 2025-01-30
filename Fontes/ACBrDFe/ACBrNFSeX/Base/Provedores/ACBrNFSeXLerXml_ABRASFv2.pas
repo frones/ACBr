@@ -55,6 +55,8 @@ type
     function LerDataEmissao(const ANode: TACBrXmlNode): TDateTime; virtual;
     function LerDataEmissaoRps(const ANode: TACBrXmlNode): TDateTime; virtual;
     function LerCompetencia(const ANode: TACBrXmlNode): TDateTime; virtual;
+    function LerCodigoPaisServico(const ANode: TACBrXmlNode): Integer; virtual;
+    function LerCodigoPaisTomador(const ANode: TACBrXmlNode): Integer; virtual;
 
     procedure LerInfNfse(const ANode: TACBrXmlNode);
 
@@ -125,6 +127,18 @@ begin
   // Executa a Configuração Padrão
   inherited Configuracao;
 
+end;
+
+function TNFSeR_ABRASFv2.LerCodigoPaisServico(
+  const ANode: TACBrXmlNode): Integer;
+begin
+  Result := ObterConteudo(ANode.Childrens.FindAnyNs('CodigoPais'), tcInt);
+end;
+
+function TNFSeR_ABRASFv2.LerCodigoPaisTomador(
+  const ANode: TACBrXmlNode): Integer;
+begin
+  Result := ObterConteudo(ANode.Childrens.FindAnyNs('CodigoPais'), tcInt);
 end;
 
 function TNFSeR_ABRASFv2.LerCompetencia(const ANode: TACBrXmlNode): TDateTime;
@@ -314,18 +328,19 @@ begin
   begin
     with NFSe.Tomador.Endereco do
     begin
-      Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('Endereco'), tcStr);
+      Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('Endereco'), tcStr);
 
       if Endereco = '' then
         Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('Logradouro'), tcStr);
 
-      Numero          := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
-      Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('Complemento'), tcStr);
-      Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('Bairro'), tcStr);
+      Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+      Complemento := ObterConteudo(AuxNode.Childrens.FindAnyNs('Complemento'), tcStr);
+      Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('Bairro'), tcStr);
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
-      UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
-      CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
+      UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
+      CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
       xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
+      CodigoPais := LerCodigoPaisTomador(AuxNode);
 
       if UF = '' then
         UF := xUF;
@@ -1005,8 +1020,8 @@ begin
         MunicipioPrestacaoServico := MunicipioPrestacaoServico + '/' + xUF;
       end;
 
-      CodigoPais          := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcInt);
-      ExigibilidadeISS    := FpAOwner.StrToExigibilidadeISS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('ExigibilidadeISS'), tcStr));
+      CodigoPais := LerCodigoPaisServico(AuxNode);
+      ExigibilidadeISS := FpAOwner.StrToExigibilidadeISS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('ExigibilidadeISS'), tcStr));
       IdentifNaoExigibilidade := ObterConteudo(AuxNode.Childrens.FindAnyNs('IdentifNaoExigibilidade'), tcStr);
 
       MunicipioIncidencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioIncidencia'), tcInt);

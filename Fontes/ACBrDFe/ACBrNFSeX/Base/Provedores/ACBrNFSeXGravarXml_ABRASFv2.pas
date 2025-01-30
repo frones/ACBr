@@ -180,6 +180,8 @@ type
     function GerarQuartos: TACBrXmlNode; virtual;
     function GerarQuarto: TACBrXmlNodeArray; virtual;
 
+    function GerarCodigoPaisServico: TACBrXmlNode; virtual;
+    function GerarCodigoPaisTomador: TACBrXmlNode; virtual;
   public
     function GerarXml: Boolean; override;
 
@@ -696,8 +698,7 @@ begin
     Result.AppendChild(AddNode(tcStr, '#34', 'CodigoMunicipio', 1, 7, NrOcorrCodigoMunic_2,
                            OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN));
 
-    Result.AppendChild(AddNode(tcInt, '#35', 'CodigoPais', 4, 4, NrOcorrCodigoPaisServico,
-                                           NFSe.Servico.CodigoPais, DSC_CPAIS));
+    Result.AppendChild(GerarCodigoPaisServico);
 
     Result.AppendChild(AddNode(tcInt, '#36', 'ExigibilidadeISS',
                                NrMinExigISS, NrMaxExigISS, NrOcorrExigibilidadeISS,
@@ -983,8 +984,7 @@ begin
 
     if (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999') or
        (NrOcorrCodigoPaisTomador = 1) then
-      Result.AppendChild(AddNode(tcInt, '#44', 'CodigoPais', 4, 4, NrOcorrCodigoPaisTomador,
-                                  NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS));
+      Result.AppendChild(GerarCodigoPaisTomador);
 
     Result.AppendChild(AddNode(tcStr, '#45', 'Cep', 8, 8, NrOcorrCepTomador,
                                OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP));
@@ -1068,6 +1068,18 @@ begin
     Result.AppendChild(AddNode(tcStr, '#50', 'InscricaoMunicipal', 1, 15, NrOcorrInscEstInter,
                   NFSe.Intermediario.Identificacao.InscricaoMunicipal, DSC_IM));
   end;
+end;
+
+function TNFSeW_ABRASFv2.GerarCodigoPaisServico: TACBrXmlNode;
+begin
+  Result := AddNode(tcInt, '#35', 'CodigoPais', 4, 4, NrOcorrCodigoPaisServico,
+                                           NFSe.Servico.CodigoPais, DSC_CPAIS);
+end;
+
+function TNFSeW_ABRASFv2.GerarCodigoPaisTomador: TACBrXmlNode;
+begin
+  Result := AddNode(tcInt, '#44', 'CodigoPais', 4, 4, NrOcorrCodigoPaisTomador,
+                                  NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
 end;
 
 function TNFSeW_ABRASFv2.GerarConstrucaoCivil: TACBrXmlNode;

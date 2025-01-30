@@ -43,6 +43,18 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+30/01/2025
+-- ACBrNFSeXConversao/ACBrNFSeXGravarXml_ABRASFv2/ACBrNFSeXLerXml_ABRASFv2 --
+-- Giss.GravarXml/Giss.LerXml --
+[*] Foi implementado as funções de conversão: CodIBGEPaisToCodISO e CodISOPaisToCodIBGE
+    que tem como objetivo converter o código IBGE de um país em seu código ISO correspondente
+    e vice-versa.
+    O motivo da implementação das funções é que o provedor Giss usa o código ISO do país em
+    vez do código IBGE.
+    Com o uso dessas funções materemos o padrão de sempre usar o código IBGE ao alimentar o
+    componente independente qual seja o provedor.
+  Por: Italo Giurizzato Junior
+
 29/01/2025
 -- ACBrNFSeXServicos --
 [*] #TK-6550: A cidade de Santa Barbara/MG, trocou de provedor, agora é GestaoISS.

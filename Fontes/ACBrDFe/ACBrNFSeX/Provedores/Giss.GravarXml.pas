@@ -39,6 +39,7 @@ interface
 uses
   SysUtils, Classes, StrUtils,
   ACBrXmlBase,
+  ACBrXmlDocument,
   ACBrNFSeXGravarXml_ABRASFv2;
 
 type
@@ -48,9 +49,15 @@ type
   protected
     procedure Configuracao; override;
 
+    function GerarCodigoPaisServico: TACBrXmlNode; override;
+    function GerarCodigoPaisTomador: TACBrXmlNode; override;
   end;
 
 implementation
+
+uses
+  ACBrNFSeXConsts,
+  ACBrNFSeXConversao;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -69,6 +76,18 @@ begin
   NrOcorrAliquota := 1;
 
   TagTomador := 'TomadorServico';
+end;
+
+function TNFSeW_Giss204.GerarCodigoPaisServico: TACBrXmlNode;
+begin
+  Result := AddNode(tcInt, '#35', 'CodigoPais', 4, 4, NrOcorrCodigoPaisServico,
+                       CodIBGEPaisToCodISO(NFSe.Servico.CodigoPais), DSC_CPAIS);
+end;
+
+function TNFSeW_Giss204.GerarCodigoPaisTomador: TACBrXmlNode;
+begin
+  Result := AddNode(tcInt, '#44', 'CodigoPais', 4, 4, NrOcorrCodigoPaisTomador,
+              CodIBGEPaisToCodISO(NFSe.Tomador.Endereco.CodigoPais), DSC_CPAIS);
 end;
 
 end.

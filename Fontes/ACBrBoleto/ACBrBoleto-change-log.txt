@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/01/2025
+-- ACBrBoletoW_Santander_API.pas --
+[-] TK-6122 - Ajustado Ambiente para Producao/Homologacao e Sandbox, ajustado NossoNumero consulta sandbox para 8 carac
+  https://www.projetoacbr.com.br/forum/topic/80208-erro-na-consulta-detalhada-de-um-boleto-via-api-do-santander-em-sandbox/
+  Por: Victor Gonzales Pandaaa / Daniel Morais
+
 23/01/2025
 -- ACBrBoletoRetorno.pas --
 [-] TK-6141-2 - Estava tentando acessar uma classe q nao estava instanciada.

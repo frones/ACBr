@@ -90,13 +90,8 @@ const
   C_URL_OAUTH_PROD = 'https://trust-open.api.santander.com.br/auth/oauth/v2/token';
 
   {URL Sandbox - nao devolve todas as informações necessárias no retorno}
-  C_URL_HOM = 'https://trust-sandbox.api.santander.com.br/collection_bill_management/v2';
-  C_URL_OAUTH_HOM = 'https://trust-sandbox.api.santander.com.br/auth/oauth/v2/token';
-
-  {URL Homologação open-h removido no manual 2.6 do banco santander}
-  //C_URL_HOM = 'https://trust-open-h.api.santander.com.br/collection_bill_management/v2';
-  //C_URL_OAUTH_HOM = 'https://trust-open-h.api.santander.com.br/auth/oauth/v2/token';
-
+  C_URL_SANDBOX = 'https://trust-sandbox.api.santander.com.br/collection_bill_management/v2';
+  C_URL_OAUTH_SANDBOX = 'https://trust-sandbox.api.santander.com.br/auth/oauth/v2/token';
 
 implementation
 
@@ -113,7 +108,12 @@ uses
 
 procedure TBoletoW_Santander_API.DefinirURL;
 begin
-  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL, C_URL_HOM);
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao    : FPURL := C_URL;
+    tawsHomologacao : FPURL := C_URL; //mesma url de produção, pagina 22
+    tawsSandBox     : FPURL := C_URL_SANDBOX;
+  end;
+
   case Boleto.Configuracoes.WebService.Operacao of
      tpInclui         : FPURL := FPURL + '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips';
      tpAltera         : FPURL := FPURL + '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips';
@@ -210,7 +210,11 @@ begin
     5. registry: Pesquisa de informações de cartório do boleto
     }
     if Assigned(ATitulo) then
+    begin
       LNossoNumero := ATitulo.NossoNumero;
+      if Boleto.Configuracoes.WebService.Ambiente = tawsSandBox then
+        LNossoNumero := PadRight(RemoveZerosEsquerda(LNossoNumero),8,'0');
+    end;
 
     LConsultaList := TStringList.Create;
     try
@@ -253,12 +257,10 @@ end;
 
 function TBoletoW_Santander_API.ValidaAmbiente: string;
 begin
-   {Deixado apenas como produção, orientado pelo SUPORTECONECTIVIDADE
-    Data: 08/01/2024, 12:57 anexado na TK 4804 }
-//  if Boleto.Configuracoes.WebService.Ambiente = taProducao then
-    Result := 'PRODUCAO'
-//  else
-//    Result :=  'TESTE';
+  if Boleto.Configuracoes.WebService.Ambiente in [tawsHomologacao] then
+    Result :=  'TESTE'
+  else
+    Result := 'PRODUCAO';
 end;
 
 procedure TBoletoW_Santander_API.RequisicaoAltera;
@@ -775,10 +777,11 @@ begin
 
   if Assigned(OAuth) then
   begin
-    if OAuth.Ambiente = tawsProducao then
-      OAuth.URL := C_URL_OAUTH_PROD
-    else
-      OAuth.URL := C_URL_OAUTH_HOM;
+    case OAuth.Ambiente of
+      tawsProducao    : OAuth.URL := C_URL_OAUTH_PROD;
+      tawsHomologacao : OAuth.URL := C_URL_OAUTH_PROD;  //mesma url de produção, página 22
+      tawsSandBox     : OAuth.URL := C_URL_OAUTH_SANDBOX;
+    end;
 
     OAuth.Payload := True;
   end;

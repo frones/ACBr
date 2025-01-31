@@ -180,7 +180,7 @@ type
 
 const
   TTipoDataPeriodoArrayStrings: array[TpcteTipoDataPeriodo] of string = ('0',
-    '1', '2', '3', '4', 'N');
+    '1', '2', '3', '4', '-1');
 
 type
   TpcteTipoHorarioIntervalo = (thSemHorario, thNoHorario, thAteHorario,
@@ -188,7 +188,7 @@ type
 
 const
   TTipoHorarioIntervaloArrayStrings: array[TpcteTipoHorarioIntervalo]
-     of string = ('0', '1', '2', '3', '4', 'N');
+     of string = ('0', '1', '2', '3', '4', '-1');
 
 type
   TpcteTipoDocumento = (tdDeclaracao, tdDutoviario, tdCFeSAT, tdNFCe, tdOutros);
@@ -756,28 +756,28 @@ end;
 
 function TpDataPeriodoToStr(const t: TpcteTipoDataPeriodo): string;
 begin
-  result := EnumeradoToStr(t, ['0','1','2','3','4','N'],
+  result := EnumeradoToStr(t, ['0','1','2','3','4','-1'],
                               [tdSemData, tdNaData, tdAteData, tdApartirData,
                                tdNoPeriodo, tdNaoInformado]);
 end;
 
 function StrToTpDataPeriodo(out ok: boolean; const s: string): TpcteTipoDataPeriodo;
 begin
-  result := StrToEnumerado(ok, s, ['0','1','2','3','4','N'],
+  result := StrToEnumerado(ok, s, ['0','1','2','3','4','-1'],
                                   [tdSemData, tdNaData, tdAteData, tdApartirData,
                                    tdNoPeriodo, tdNaoInformado]);
 end;
 
 function TpHorarioIntervaloToStr(const t: TpcteTipoHorarioIntervalo): string;
 begin
-  result := EnumeradoToStr(t, ['0','1','2','3','4','N'],
+  result := EnumeradoToStr(t, ['0','1','2','3','4','-1'],
                               [thSemHorario, thNoHorario, thAteHorario,
                                thApartirHorario, thNoIntervalo, thNaoInformado]);
 end;
 
 function StrToTpHorarioIntervalo(out ok: boolean; const s: string): TpcteTipoHorarioIntervalo;
 begin
-  result := StrToEnumerado(ok, s, ['0','1','2','3','4','N'],
+  result := StrToEnumerado(ok, s, ['0','1','2','3','4','-1'],
                                   [thSemHorario, thNoHorario, thAteHorario,
                                    thApartirHorario, thNoIntervalo, thNaoInformado]);
 end;

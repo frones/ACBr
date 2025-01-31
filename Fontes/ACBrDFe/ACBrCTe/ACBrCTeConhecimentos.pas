@@ -2591,7 +2591,7 @@ begin
         Inc(I);
       end;
 
-      Compl.Entrega.TipoData := StrToTpDataPeriodo(ok,INIRec.ReadString('compl','TipoData','0'));
+      Compl.Entrega.TipoData := StrToTpDataPeriodo(ok,INIRec.ReadString('compl','TipoData','-1'));
       case Compl.Entrega.TipoData of
        tdSemData:
           begin
@@ -2610,7 +2610,7 @@ begin
           end;
       end;
 
-      Compl.Entrega.TipoHora := StrToTpHorarioIntervalo(ok,INIRec.ReadString('compl','TipoHora','0'));
+      Compl.Entrega.TipoHora := StrToTpHorarioIntervalo(ok,INIRec.ReadString('compl','TipoHora','-1'));
       case Compl.Entrega.TipoHora of
        thSemHorario:
           begin

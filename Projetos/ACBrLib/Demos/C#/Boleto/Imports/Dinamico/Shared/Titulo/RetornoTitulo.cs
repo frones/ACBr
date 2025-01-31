@@ -53,6 +53,8 @@ namespace ACBrLib.Boleto
 
         public string DescricaoTipoOcorrencia { get; set; }
 
+        public int LiquidadoBanco { get; set; }
+
         public List<RetornoRejeicao> Rejeicoes { get; } = new List<RetornoRejeicao>();
 
         #endregion Properties

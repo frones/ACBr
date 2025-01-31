@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+31/01/2025
+-- ACBrNFSeXServicos --
+[+] #TK-6563: Incluída a cidade de Sao Jose de Mipibu/RN, o provedor é Tinus.
+  Por: Meinardo de Lima
+
 30/01/2025
 -- ACBrNFSeXServicos --
 [*] #TK-6557: A cidade de Vista Alegre do Alto/SP, trocou a URL o provedor continua o mesmo.

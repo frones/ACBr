@@ -559,7 +559,7 @@ begin
   cdsParametros.FieldDefs.Add('CodigoMunicipio', ftString, 60);
   cdsParametros.FieldDefs.Add('MunicipioIncidencia', ftString, 60);
   cdsParametros.FieldDefs.Add('MunicipioPrestacao', ftString, 60);
-  cdsParametros.FieldDefs.Add('OutrasInformacoes', ftString, 1000);
+  cdsParametros.FieldDefs.Add('OutrasInformacoes', ftString, 4000);
   cdsParametros.FieldDefs.Add('InformacoesComplementares', ftString, 1000);
   cdsParametros.FieldDefs.Add('CodigoObra', ftString, 60);
   cdsParametros.FieldDefs.Add('Art', ftString, 60);

@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 31/01/2025
+-- SigISS.LerXml --
+[*] #TK-6559: Alterações visando a leitura correta do XML do RPS.
+  Por: Tiago Tecchio
+-- ACBrNFSeXDANFSeFR --
+[*] #TK-6551: Alterado o tamanho do campo OutrasInformacoes para 4000.
+  Por: Diego Reckziegel
 -- ACBrNFSeXServicos --
 [+] #TK-6563: Incluída a cidade de Sao Jose de Mipibu/RN, o provedor é Tinus.
   Por: Meinardo de Lima

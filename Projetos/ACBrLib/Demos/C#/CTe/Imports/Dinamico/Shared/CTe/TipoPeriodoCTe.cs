@@ -12,6 +12,7 @@ namespace ACBrLib.Core.CTe
         naData = 1,
         ateData = 2,
         apartirData = 3,
-        noPeriodo = 4
+        noPeriodo = 4,
+        naoInformado = -1
     }
 }

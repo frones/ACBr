@@ -12,6 +12,7 @@ namespace ACBrLib.Core.CTe
         noHorario = 1,
         ateHorario = 2,
         apartirHorario = 3,
-        noIntervaloTempo = 4
+        noIntervaloTempo = 4,
+        naoInformado = -1
     }
 }

@@ -69,7 +69,10 @@ var
 begin
   if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('ListaItensServico');
+  //Conforme schema, <ListaItensServico> está dentro de <Servico>
+  AuxNode := ANode.Childrens.FindAnyNs('Servico');
+  if Assigned(AuxNode) then
+    AuxNode := AuxNode.Childrens.FindAnyNs('ListaItensServico');
 
   if AuxNode <> nil then
     LerServicos(AuxNode);

@@ -884,19 +884,25 @@ begin
         Item.totalAproxTribServ := StringToFloatDef(INIRec.ReadString(sSecao, 'totalAproxTribServ', ''), 0);
 
         sSecao := 'DadosDeducao' + IntToStrZero(I + 1, 3);
-        Item.DadosDeducao.TipoDeducao := FProvider.StrToTipoDeducao(Ok, INIRec.ReadString(sSecao, 'TipoDeducao', ''));
-        Item.DadosDeducao.CpfCnpj := INIRec.ReadString(sSecao, 'CpfCnpj', '');
-        Item.DadosDeducao.NumeroNotaFiscalReferencia := INIRec.ReadString(sSecao, 'NumeroNotaFiscalReferencia', '');
-        Item.DadosDeducao.ValorTotalNotaFiscal := StrToFloatDef(INIRec.ReadString(sSecao, 'ValorTotalNotaFiscal', ''), 0);
-        Item.DadosDeducao.PercentualADeduzir := StrToFloatDef(INIRec.ReadString(sSecao, 'PercentualADeduzir', ''), 0);
-        Item.DadosDeducao.ValorADeduzir := StrToFloatDef(INIRec.ReadString(sSecao, 'ValorADeduzir', ''), 0);
+        if INIRec.SectionExists(sSecao) then
+        begin
+          Item.DadosDeducao.TipoDeducao := FProvider.StrToTipoDeducao(Ok, INIRec.ReadString(sSecao, 'TipoDeducao', ''));
+          Item.DadosDeducao.CpfCnpj := INIRec.ReadString(sSecao, 'CpfCnpj', '');
+          Item.DadosDeducao.NumeroNotaFiscalReferencia := INIRec.ReadString(sSecao, 'NumeroNotaFiscalReferencia', '');
+          Item.DadosDeducao.ValorTotalNotaFiscal := StrToFloatDef(INIRec.ReadString(sSecao, 'ValorTotalNotaFiscal', ''), 0);
+          Item.DadosDeducao.PercentualADeduzir := StrToFloatDef(INIRec.ReadString(sSecao, 'PercentualADeduzir', ''), 0);
+          Item.DadosDeducao.ValorADeduzir := StrToFloatDef(INIRec.ReadString(sSecao, 'ValorADeduzir', ''), 0);
+        end;
 
         //Agili
         sSecao := 'DadosProssionalParceiro' + IntToStrZero(I + 1, 3);
-        Item.DadosProfissionalParceiro.IdentificacaoParceiro.CpfCnpj := INIRec.ReadString(sSecao, 'CpfCnpj', '');
-        Item.DadosProfissionalParceiro.IdentificacaoParceiro.InscricaoMunicipal := INIRec.ReadString(sSecao, 'InscricaoMunicipal', '');
-        Item.DadosProfissionalParceiro.RazaoSocial := INIRec.ReadString(sSecao, 'RazaoSocial', '');
-        Item.DadosProfissionalParceiro.PercentualProfissionalParceiro := StrToFloatDef(INIRec.ReadString(sSecao, 'PercentualProfissionalParceiro', ''), 0);
+        if INIRec.SectionExists(sSecao) then
+        begin
+          Item.DadosProfissionalParceiro.IdentificacaoParceiro.CpfCnpj := INIRec.ReadString(sSecao, 'CpfCnpj', '');
+          Item.DadosProfissionalParceiro.IdentificacaoParceiro.InscricaoMunicipal := INIRec.ReadString(sSecao, 'InscricaoMunicipal', '');
+          Item.DadosProfissionalParceiro.RazaoSocial := INIRec.ReadString(sSecao, 'RazaoSocial', '');
+          Item.DadosProfissionalParceiro.PercentualProfissionalParceiro := StrToFloatDef(INIRec.ReadString(sSecao, 'PercentualProfissionalParceiro', ''), 0);
+        end;
 
         Inc(i);
       end;

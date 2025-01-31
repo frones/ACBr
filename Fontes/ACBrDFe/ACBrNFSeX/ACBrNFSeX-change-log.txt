@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 31/01/2025
+-- ACBrNFSeXNotasFiscais, EloTech.LerXML --
+[*] #TK-6564: Ajuste para correta leitura das deduções no INI e da ListaItensServico o XML.
+  Por: Diego Folieni 
 -- SigISS.LerXml --
 [*] #TK-6559: Alterações visando a leitura correta do XML do RPS.
   Por: Tiago Tecchio

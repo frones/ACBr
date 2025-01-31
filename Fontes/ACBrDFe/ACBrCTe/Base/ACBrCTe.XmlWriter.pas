@@ -1491,7 +1491,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#233', 'pICMSSTRet', 1, 5, 1,
                                     CTe.Imp.ICMS.ICMS60.pICMSSTRet, DSC_PICMS));
 
-  Result.AppendChild(AddNode(tcDe2, '#234', 'vCred', 1, 15, 1,
+  Result.AppendChild(AddNode(tcDe2, '#234', 'vCred', 1, 15, 0,
                                          CTe.Imp.ICMS.ICMS60.vCred, DSC_VCRED));
 
   if CTe.Imp.ICMS.ICMS60.vICMSDeson > 0 then
@@ -1511,7 +1511,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#236', 'CST', 2, 2, 1,
                                CSTICMSTOStr(CTe.Imp.ICMS.ICMS90.CST), DSC_CST));
 
-  Result.AppendChild(AddNode(tcDe2, '#237', 'pRedBC', 1, 5, 1,
+  Result.AppendChild(AddNode(tcDe2, '#237', 'pRedBC', 1, 5, 0,
                                        CTe.Imp.ICMS.ICMS90.pRedBC, DSC_PREDBC));
 
   Result.AppendChild(AddNode(tcDe2, '#238', 'vBC', 1, 15, 1,
@@ -1523,7 +1523,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#240', 'vICMS', 1, 15, 1,
                                          CTe.Imp.ICMS.ICMS90.vICMS, DSC_VICMS));
 
-  Result.AppendChild(AddNode(tcDe2, '#241', 'vCred', 1, 15, 1,
+  Result.AppendChild(AddNode(tcDe2, '#241', 'vCred', 1, 15, 0,
                                          CTe.Imp.ICMS.ICMS90.vCred, DSC_VCRED));
 
   if CTe.Imp.ICMS.ICMS90.vICMSDeson > 0 then

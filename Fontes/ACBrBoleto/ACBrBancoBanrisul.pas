@@ -274,8 +274,8 @@ begin
   // Separador entre a Agência e o Código Cedente
   Result := Result + '/';
   // Código do cedente
-  Result := Result + Copy(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,1,6) + '.';
-  Result := Result + Copy(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,7,1) + '.';
+  Result := Result + Copy(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,1,6) ;
+  Result := Result + Copy(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,7,1) + '-';
   Result := Result + Copy(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,8,2);
 
   if(fpLayoutVersaoArquivo >= 103) then

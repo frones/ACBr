@@ -154,7 +154,6 @@ type
   function EncodeDataHora(const DataStr: string; const FormatoData: string = 'YYYY/MM/DD'): TDateTime;
   function ParseDataHora(const DataStr: string): string;
   function AjustarData(const DataStr: string): string;
-  function CalcularVencimentoBoletoFatorParaData(const AFatorVencimento: Cardinal;  const AReset22Fev2025: boolean): TDateTime;
 
   var
     TimeZoneConfInstance: TTimeZoneConf;
@@ -1175,31 +1174,6 @@ begin
       Result := 0
     else
       Result := StringToDateTime(xData, xFormatoData);
-  end;
-end;
-
-function CalcularVencimentoBoletoFatorParaData(const AFatorVencimento: Cardinal;  const AReset22Fev2025: boolean): TDateTime;
-var LDias : Integer;
- LDataBaseNova: TDateTime;
-begin
-  if AReset22Fev2025 then
-  begin
-    // Regra nova (datas superiores a 21/02/2025)
-    if AFatorVencimento = 0 then
-      Result := 0
-    else begin
-      LDataBaseNova := EncodeDate(2025, 02, 22);
-      LDias := (AFatorVencimento - 1000);
-      Result := LDataBaseNova + LDias;
-    end;
-  end
-  else
-  begin
-    // Regra antiga (vencimentos até 21/02/2025)
-    if AFatorVencimento = 0 then
-      Result := 0
-    else
-      Result := EncodeDate(1997, 10, 07) + AFatorVencimento;
   end;
 end;
 

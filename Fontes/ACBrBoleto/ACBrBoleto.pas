@@ -590,11 +590,9 @@ type
     fpVlrRegsCobranca: Double;
     FDigitosSequencialArquivoRemessa : Integer;
     function GetLocalPagamento: String; virtual;
-    function CalcularFatorVencimento(const DataVencimento: TDateTime): String; virtual;
     function CalcularDigitoCodigoBarras(const CodigoBarras: String): String; virtual;
-
-    function FormatarMoraJurosRemessa(const APosicoes: Integer
-       ;const ACBrTitulo: TACBrTitulo):String; Virtual;
+    function CalcularFatorVencimento(const DataVencimento: TDateTime): String; virtual;
+    function FormatarMoraJurosRemessa(const APosicoes: Integer;const ACBrTitulo: TACBrTitulo):String; Virtual;
 
     function DefineNumeroDocumentoModulo(const ACBrTitulo: TACBrTitulo): String; virtual;  //Utilizado para método CalculaDigitoVerificador
     function ConverterDigitoModuloFinal(): String; virtual;                                //Utilizado para método CalculaDigitoVerificador
@@ -678,7 +676,6 @@ type
 
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String; virtual;
     function CalcularTamMaximoNossoNumero(const Carteira : String; const NossoNumero : String = ''; const Convenio: String = ''): Integer; virtual;
-
     function TipoDescontoToString(const AValue: TACBrTipoDesconto):string; virtual;
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; virtual;
@@ -1575,6 +1572,7 @@ type
     function LerConfiguracao(const AIniBoletos: String): Boolean;
     function GravarArqIni(DirIniRetorno: string; const NomeArquivo: String; const SomenteConfig:Boolean = false): String;
     function GravarConfiguracao(DirIniRetorno: string; const NomeArquivo: String): Boolean;
+    function CalcularVencimentoBoletoFatorParaData(const AFatorVencimento: Cardinal;  const AReset22Fev2025: boolean): TDateTime;
 
   published
     property MAIL  : TACBrMail read FMAIL write SetMAIL;
@@ -3306,9 +3304,9 @@ function TACBrBoleto.GerarMensagemPadraoDataLimitePagamento(
   ATitulo: TACBrTitulo): String;
 begin
   if ATitulo.DataLimitePagto > ATitulo.Vencimento then
-    Result:= ACBrStr('Não Receber após ' + IntToStr(DaysBetween(ATitulo.Vencimento, ATitulo.DataLimitePagto))+ ' dias')
+    Result:= ACBrStr('Não Receber após ' + IntToStr(DaysBetween(ATitulo.Vencimento, ATitulo.DataLimitePagto))+ ' dias do vencimento.')
   else
-    Result := ACBrStr('Não Receber após o Vencimento');
+    Result := ACBrStr('Não Receber após o Vencimento.');
 end;
 
 function TACBrBoleto.GetListaRetornoWeb(const Indice: Integer): TACBrBoletoRetornoWS;
@@ -4533,6 +4531,32 @@ begin
     LArquivo.Free;
   end;
 end;
+
+function TACBrBoleto.CalcularVencimentoBoletoFatorParaData(const AFatorVencimento: Cardinal;  const AReset22Fev2025: boolean): TDateTime;
+var LDias : Integer;
+ LDataBaseNova: TDateTime;
+begin
+  if AReset22Fev2025 then
+  begin
+    // Regra nova (datas superiores a 21/02/2025)
+    if AFatorVencimento = 0 then
+      Result := 0
+    else begin
+      LDataBaseNova := EncodeDate(2025, 02, 22);
+      LDias := (AFatorVencimento - 1000);
+      Result := LDataBaseNova + LDias;
+    end;
+  end
+  else
+  begin
+    // Regra antiga (vencimentos até 21/02/2025)
+    if AFatorVencimento = 0 then
+      Result := 0
+    else
+      Result := EncodeDate(1997, 10, 07) + AFatorVencimento;
+  end;
+end;
+
 
 { TListadeBoletos }
 procedure TListadeBoletos.SetObject ( Index: Integer; Item: TACBrTitulo ) ;

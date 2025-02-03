@@ -118,7 +118,7 @@ begin
           LMensagemRejeicao.Codigo     := IntToStr(HTTPResultCode);
           LMensagemRejeicao.Mensagem   := LJsonObject.AsString['message'];
 
-          if LMensagemRejeicao.Mensagem.IsEmpty then
+          if LMensagemRejeicao.Mensagem = '' then
           begin
             ARetornoWS.ListaRejeicao.Clear;
 

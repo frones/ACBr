@@ -1305,7 +1305,7 @@ begin
   begin
      Tamanho  := 9 ;
      vDigitos := VarArrayOf(
-        [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'5','1,7','','','','',''] ) ;
+        [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'5,6,7,8,9','1,7','','','','',''] ) ;
   end ;
 
   if fsComplemento = 'PB' then

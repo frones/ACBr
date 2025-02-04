@@ -512,9 +512,17 @@ begin
         xData := TratarCampoData(wJsonNCM.AsString['Data_Fim']);
         DataFim := StringToDateTimeDef(xData, 0, 'dd/mm/yyyy');
 
-        TipoAto := wJsonNCM.AsString['Tipo_Ato'];
-        NumeroAto := wJsonNCM.AsString['Numero_Ato'];
-        AnoAto := wJsonNCM.AsInteger['Ano_Ato'];
+        TipoAto := wJsonNCM.AsString['Tipo_Ato_Ini'];
+        NumeroAto := wJsonNCM.AsString['Numero_Ato_Ini'];
+        AnoAto := wJsonNCM.AsInteger['Ano_Ato_Ini'];
+        if (TipoAto = '') and (NumeroAto = '') and (AnoAto = 0) then
+        begin
+          //Deve estar usando uma versão anterior do JSON. Tentar ler essa versão.
+          //Veja: https://www.projetoacbr.com.br/forum/topic/81662-corre%C3%A7%C3%A3o-campos-do-arquivo-de-download-do-ncm/
+          TipoAto := wJsonNCM.AsString['Tipo_Ato'];
+          NumeroAto := wJsonNCM.AsString['Numero_Ato'];
+          AnoAto := wJsonNCM.AsInteger['Ano_Ato'];
+        end;
       end;
     end;
   finally

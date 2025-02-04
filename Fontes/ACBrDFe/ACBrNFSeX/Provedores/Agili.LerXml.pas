@@ -235,7 +235,8 @@ begin
 
       if AuxPais <> nil then
       begin
-        CodigoPais := ObterConteudo(AuxPais.Childrens.FindAnyNs('CodigoPaisBacen'), tcStr);
+        CodigoPais := ObterConteudo(AuxPais.Childrens.FindAnyNs('CodigoPaisBacen'), tcInt);
+        xPais := ObterConteudo(AuxPais.Childrens.FindAnyNs('Descricao'), tcStr);
       end;
 
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);

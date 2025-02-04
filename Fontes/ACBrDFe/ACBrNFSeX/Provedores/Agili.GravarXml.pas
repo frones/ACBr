@@ -593,7 +593,7 @@ function TNFSeW_Agili.GerarPais: TACBrXmlNode;
 begin
   Result := CreateElement('Pais');
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'CodigoPaisBacen', 4, 4, 1,
+  Result.AppendChild(AddNode(tcInt, '#1', 'CodigoPaisBacen', 4, 4, 1,
                                          NFSe.Tomador.Endereco.CodigoPais, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Descricao', 1, 300, 0,

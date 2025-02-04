@@ -188,7 +188,7 @@ end;
 procedure TRetEventoMDFe.Ler_DetEvento(const ANode: TACBrXmlNode);
 var
   sAux: string;
-  AuxNode: TACBrXmlNode;
+  AuxNode, AuxNodeCond: TACBrXmlNode;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
@@ -223,8 +223,14 @@ begin
     InfEvento.detEvento.cUF := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cUF'), tcInt);
     InfEvento.detEvento.cMun := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cMun'), tcInt);
     InfEvento.DetEvento.xJust := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xJust'), tcStr);
-    InfEvento.detEvento.xNome := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
-    InfEvento.detEvento.CPF := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CPF'), tcStr);
+
+    AuxNodeCond := AuxNode.Childrens.FindAnyNs('condutor');
+
+    if AuxNodeCond <> nil then
+    begin
+      InfEvento.detEvento.xNome := ObterConteudoTag(AuxNodeCond.Childrens.FindAnyNs('xNome'), tcStr);
+      InfEvento.detEvento.CPF := ObterConteudoTag(AuxNodeCond.Childrens.FindAnyNs('CPF'), tcStr);
+    end;
 
     sAux := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('indEncPorTerceiro'), tcStr);
 

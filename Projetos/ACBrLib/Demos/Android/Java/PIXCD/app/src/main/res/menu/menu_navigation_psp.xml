@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/menu_pixcd" android:title="Configurações PIXCD" />
+        <item android:id="@+id/menu_bradesco" android:title="Bradesco" />
+        <item android:id="@+id/menu_sicredi" android:title="Sicredi" />
+        <item android:id="@+id/menu_sicoob" android:title="Sicoob" />
+        <item android:id="@+id/menu_shipay" android:title="Shipay" />
+        <item android:id="@+id/menu_santander" android:title="Santander" />
+        <item android:id="@+id/menu_pixpdv" android:title="PixPDV" />
+        <item android:id="@+id/menu_pagseguro" android:title="PagSeguro" />
+        <item android:id="@+id/menu_itau" android:title="Itau" />
+        <item android:id="@+id/menu_inter" android:title="Inter" />
+        <item android:id="@+id/menu_gerencianet" android:title="GerenciaNet" />
+        <item android:id="@+id/menu_bancobrasil" android:title="Banco do Brasil" />
+        <item android:id="@+id/menu_ailos" android:title="Ailos" />
+        <item android:id="@+id/menu_matera" android:title="Matera" />
+        <item android:id="@+id/menu_cielo" android:title="Cielo" />
+        <item android:id="@+id/menu_mercadopago" android:title="MercadoPago" />
+    </group>
+</menu>

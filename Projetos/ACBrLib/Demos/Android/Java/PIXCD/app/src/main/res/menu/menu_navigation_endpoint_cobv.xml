@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/menu_criar_cobranca" android:title="Criar Cobranca" />
+        <item android:id="@+id/menu_consultar_cobranca" android:title="Consultar Cobranca" />
+        <item android:id="@+id/menu_consultar_cobrancas_cobV" android:title="Consultar Cobrancas CobV" />
+        <item android:id="@+id/menu_revisar_cobranca" android:title="Revisar Cobranca" />
+        <item android:id="@+id/menu_cancelar_cobranca" android:title="Cancelar Cobranca" />
+    </group>
+</menu>

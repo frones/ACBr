@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/menu_criar_cobranca_imediata" android:title="Criar Cobranca Imediata" />
+        <item android:id="@+id/menu_consultar_cobranca_imediata" android:title="Consultar Cobranca Imediata" />
+        <item android:id="@+id/menu_consultar_cobrancas_cob" android:title="Consultar Cobrancas Cob" />
+        <item android:id="@+id/menu_revisar_cobranca_imediata" android:title="Revisar Cobranca Imediata" />
+        <item android:id="@+id/menu_cancelar_cobranca_imediata" android:title="Cancelar Cobranca Imediata" />
+    </group>
+</menu>

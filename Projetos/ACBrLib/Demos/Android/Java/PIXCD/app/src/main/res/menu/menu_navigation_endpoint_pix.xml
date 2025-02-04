@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/menu_consultar_pix" android:title="Consultar Pix" />
+        <item android:id="@+id/menu_consultar_pix_recebidos" android:title="Consultar Pix Recebidos" />
+        <item android:id="@+id/menu_solicitar_devolucao_pix" android:title="Solicitar Devolução Pix" />
+        <item android:id="@+id/menu_consultar_devolucao_pix" android:title="Consultar Devolução Pix" />
+    </group>
+</menu>

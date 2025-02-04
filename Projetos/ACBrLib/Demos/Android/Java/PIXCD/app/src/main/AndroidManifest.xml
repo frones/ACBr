@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".utils.PIXCDApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ACBrLibPIXCDDemo"
+        tools:targetApi="31">
+        <activity
+            android:name=".comandos.endpoints.cobv.ComandosEndPointCobVActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ACBrLibPIXCDDemo" />
+        <activity
+            android:name=".comandos.endpoints.cob.ComandosEndPointCobActivity"
+            android:exported="false"
+            android:label="@string/title_activity_comandos_end_point_cob"
+            android:theme="@style/Theme.ACBrLibPIXCDDemo" />
+        <activity
+            android:name=".comandos.endpoints.pix.ComandosEndPointPixActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ACBrLibPIXCDDemo" />
+        <activity
+            android:name=".comandos.ComandosQRCodeEstaticoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ACBrLibPIXCDDemo" />
+        <activity
+            android:name=".configuracoes.ConfiguracoesPIXCDFragment"
+            android:exported="false" />
+        <activity
+            android:name=".configuracoes.ConfiguracoesPIXCDActivity"
+            android:exported="false" />
+        <activity
+            android:name=".comandos.ComandosPIXCDActivity"
+            android:exported="false" />
+        <activity
+            android:name=".configuracoes.ConfiguracoesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

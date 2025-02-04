@@ -261,7 +261,7 @@ type
       read fQuandoExibirQRCode write fQuandoExibirQRCode;
   end;
 
-  {$IfDef FPC}
+  {$IF defined(FPC) and defined(HAS_PNG)}
     TPngImage = class(TPortableNetworkGraphic);
   {$EndIf}
 

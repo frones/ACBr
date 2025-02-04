@@ -1,0 +1,559 @@
+﻿{
+	"lastUpdate": "2022-07-07T16:49:49Z",
+	"TTL": 10000,
+	"id": "14417282000131-7cf42549-aff0-4bfd-a33b-83f4c08ff441",
+	"status": "AVAILABLE",
+	"basicInfo": {
+		"name": "GET IT Restaurante e Pizzaria",
+		"document": "14417282000131",
+		"corporateName": "GET IT TECHNOLOGY",
+		"description": "GET IT Restaurante e Pizzaria especializado em refeições rápidas",
+		"averageTicket": 25,
+		"averagePreparationTime": 30,
+		"minOrderValue": {
+			"value": 10,
+			"currency": "BRL"
+		},
+		"merchantType": "RESTAURANT",
+		"merchantCategories": [
+			"PIZZA",
+			"BURGERS"
+		],
+		"address": {
+			"country": "BR",
+			"state": "SP",
+			"city": "São Paulo",
+			"district": "Vila Carrao",
+			"street": "Rua Cel. Irineu de Castro",
+			"number": "43",
+			"postalCode": "03333-050",
+			"complement": "Sala 1302 13o. Andar",
+			"reference": "Shopping Anália Franco",
+			"latitude": -23.54809,
+			"longitude": -46.63638
+		},
+		"contactEmails": [
+			"adriano@adrianosantostreina.com.br"
+		],
+		"contactPhones": {
+			"commercialNumber": "11998310204",
+			"whatsappNumber": "11998310204"
+		},
+		"logoImage": {
+			"URL": "https://portal.tdevrocks.com.br/fotos/logo.png",
+			"CRC-32": "96b41025"
+		},
+		"bannerImage": {
+			"URL": "https://portal.tdevrocks.com.br/fotos/logo.png",
+			"CRC-32": "96b41025e"
+		},
+		"createdAt": "2011-01-01T12:00:00Z"
+	},
+	"services": [{
+		"id": "11a5608c-20cd-4c9d-be81-6e96be9b5c0a",
+		"status": "AVAILABLE",
+		"serviceType": "DELIVERY",
+		"menuId": "a3e91092-02cb-4e0d-9a84-aedc9e07ca9e",
+		"serviceArea": {
+			"id": "5dabade6-0de0-49d4-ba4a-cd8a6a194758",
+			"polygon": [{
+				"geoCoordinates": [{}],
+				"price": {
+					"value": 5,
+					"currency": "BRL"
+				},
+				"estimateDeliveryTime": 0
+			}],
+			"geoRadius": {
+				"geoMidpointLatitude": -23.54809,
+				"geoMidpointLongitude": -46.63638,
+				"radius": [{
+					"size": 0,
+					"price": {},
+					"estimateDeliveryTime": 0
+				}]
+			}
+		},
+		"serviceHours": {
+			"id": "2224d704-e4eb-4f38-9e14-a9c213bb24d3",
+			"weekHours": [{
+				"dayOfWeek": [
+					"TUESDAY",
+					"WEDNESDAY",
+					"THURSDAY",
+					"FRIDAY",
+					"SATURDAY",
+					"SUNDAY"
+				],
+				"timePeriods": {
+					"startTime": "08:00:00.000Z",
+					"endTime": "23:59:00.000Z"
+				}
+			}],
+			"holidayHours": []
+		}
+	}],
+	"menus": [{
+			"id": "595ff685-c2ae-46e7-8b0a-45e589910322",
+			"name": "Pizzas",
+			"description": "Pizzas",
+			"externalCode": "10500",
+			"disclaimer": "Pizzas Salgadas e Doces",
+			"disclaimerURL": "",
+			"categoryId": [
+				"949486c6-5f88-4426-a08e-85ba35dd0142",
+				"a1fb333e-74b1-45d2-ad49-71c6e0c42d40",
+				"27644ffa-7e39-402f-959a-08dcf41bde44"
+			]
+		},
+		{
+			"id": "4e5ea484-5e70-4ea2-b373-031bf681fae4",
+			"name": "Hamburguers",
+			"description": "Hamburguers",
+			"externalCode": "10600",
+			"disclaimer": "Hamburguers",
+			"disclaimerURL": "",
+			"categoryId": [
+				"a1fb333e-74b1-45d2-ad49-71c6e0c42d40"
+			]
+		},
+		{
+			"id": "46624792-a3aa-42e1-a829-69f76e87d153",
+			"name": "Sucos",
+			"description": "Sucos",
+			"externalCode": "10700",
+			"disclaimer": "Sucos",
+			"disclaimerURL": "",
+			"categoryId": [
+				"27644ffa-7e39-402f-959a-08dcf41bde44"
+			]
+		}
+	],
+	"items": [{
+			"id": "5b1ece82-9a3c-4693-af7c-d19969e50881",
+			"name": "Pepperoni",
+			"description": "Pizza de Pepperoni.",
+			"externalCode": "5b1ece82",
+			"image": {
+				"URL": "https://portal.tdevrocks.com.br/fotos/pizza-3.jpg",
+				"CRC-32": "5b1ece82"
+			},
+			"nutritionalInfo": {
+				"description": "Contém conservantes",
+				"calories": "2000 Cal",
+				"allergen": [],
+				"additives": [],
+				"suitableDiet": [],
+				"isAlcoholic": false
+			},
+			"serving": 8,
+			"unit": "kg",
+			"ean": "7896005202074"
+		},
+		{
+			"id": "5cb0e8ed-620c-467d-8b43-fd2d04bdbb85",
+			"name": "Mussarela",
+			"description": "Meia pizza de mussarela",
+			"externalCode": "5cb0e8ed",
+			"image": {
+				"URL": "https://portal.tdevrocks.com.br/fotos/pizza-1.jpeg",
+				"CRC-32": "5cb0e8ed"
+			},
+			"nutritionalInfo": {
+				"description": "Contém conservantes",
+				"calories": "2000 Cal",
+				"allergen": [],
+				"additives": [],
+				"suitableDiet": [],
+				"isAlcoholic": false
+			},
+			"serving": 8,
+			"unit": "kg",
+			"ean": "7896005202074"
+		},
+		{
+			"id": "0122764d-91b2-485d-8544-baada46cf169",
+			"name": "Portuguesa",
+			"description": "Portuguesa.",
+			"externalCode": "0122764d",
+			"image": {
+				"URL": "https://food-company.com/image.jpg",
+				"CRC-32": "0122764d"
+			},
+			"nutritionalInfo": {
+				"description": "Não contém conservantes",
+				"calories": "2000 Cal",
+				"allergen": [],
+				"additives": [],
+				"suitableDiet": [],
+				"isAlcoholic": false
+			},
+			"serving": 8,
+			"unit": "kg",
+			"ean": "7896005202074"
+		},
+		{
+			"id": "584f4e82-37f1-49c0-8fd3-79586fab3b15",
+			"name": "Big Burguer",
+			"description": "Big Burguer",
+			"externalCode": "584f4e82",
+			"image": {
+				"URL": "https://portal.tdevrocks.com.br/fotos/bigburguer.jpg",
+				"CRC-32": "584f4e82"
+			},
+			"nutritionalInfo": {
+				"description": "Contém conservantes",
+				"calories": "2000 Cal",
+				"allergen": [],
+				"additives": [],
+				"suitableDiet": [],
+				"isAlcoholic": false
+			},
+			"serving": 1,
+			"unit": "kg",
+			"ean": "7896005202074"
+		},
+		{
+			"id": "9695853c-fbf6-4e46-a098-fab148299d5b",
+			"name": "Mega Burguer",
+			"description": "Mega Burguer",
+			"externalCode": "233467",
+			"image": {
+				"URL": "https://portal.tdevrocks.com.br/fotos/megaburguer.jpg",
+				"CRC-32": "9695853c"
+			},
+			"nutritionalInfo": {
+				"description": "",
+				"calories": "2000 Cal",
+				"allergen": [],
+				"additives": [],
+				"suitableDiet": [],
+				"isAlcoholic": false
+			},
+			"serving": 1,
+			"unit": "kg",
+			"ean": "7896005202074"
+		},
+		{
+			"id": "fe49c1d2-1f0f-41d7-b42b-fa40fd8d58cb",
+			"name": "Vege Burguer",
+			"description": "Hamburguer vegetariano",
+			"externalCode": "fe49c1d2",
+			"image": {
+				"URL": "https://portal.tdevrocks.com.br/fotos/vegeburguer.jpg",
+				"CRC-32": "fe49c1d2"
+			},
+			"nutritionalInfo": {
+				"description": "Não contém conservantes nem glútem",
+				"calories": "1500 Cal",
+				"allergen": [],
+				"additives": [],
+				"suitableDiet": [],
+				"isAlcoholic": false
+			},
+			"serving": 1,
+			"unit": "kg",
+			"ean": "7896005202074"
+		},
+		{
+			"id": "e34c43b8-fe10-4240-83fb-c8968dff42c6",
+			"name": "Morango com Leite",
+			"description": "Morango com Leite",
+			"externalCode": "e34c43b8",
+			"image": {
+				"URL": "https://portal.tdevrocks.com.br/fotos/morangoleite.jpg",
+				"CRC-32": "e34c43b8"
+			},
+			"nutritionalInfo": {
+				"description": "Natural",
+				"calories": "150 Cal",
+				"allergen": [],
+				"additives": [],
+				"suitableDiet": [],
+				"isAlcoholic": false
+			},
+			"serving": 1,
+			"unit": "lt",
+			"ean": "7896005202074"
+		},
+		{
+			"id": "3d235a23-1eca-4069-a0f4-fd081fc95e59",
+			"name": "Laranja Natural",
+			"description": "Laranja Natural",
+			"externalCode": "3d235a23",
+			"image": {
+				"URL": "https://portal.tdevrocks.com.br/fotos/vegeburguer.jpg",
+				"CRC-32": "3d235a23"
+			},
+			"nutritionalInfo": {
+				"description": "Não contém conservantes nem glútem",
+				"calories": "1500 Cal",
+				"allergen": [],
+				"additives": [],
+				"suitableDiet": [],
+				"isAlcoholic": false
+			},
+			"serving": 1,
+			"unit": "lt",
+			"ean": "7896005202074"
+		}
+	],
+	"categories": [{
+			"id": "949486c6-5f88-4426-a08e-85ba35dd0142",
+			"index": 0,
+			"name": "Pizzas",
+			"description": "Pizzas Salgadas e Doces",
+			"image": {
+				"URL": "https://portal.tdevrocks.com.br/fotos/pizza-1.jpeg",
+				"CRC-32": "949486c6"
+			},
+			"externalCode": "1001",
+			"status": "AVAILABLE",
+			"availabilityId": [
+				"32a727df-3723-481d-9cd2-87824109382b"
+			],
+			"itemOfferId": [
+				"b46d93c6-4c60-426f-a678-04fc4ae8bf97"
+			]
+		},
+		{
+			"id": "a1fb333e-74b1-45d2-ad49-71c6e0c42d40",
+			"index": 1,
+			"name": "Hamburguers",
+			"description": "Hamburguers",
+			"image": {
+				"URL": "https://portal.tdevrocks.com.br/fotos/pizza-doce.jpg",
+				"CRC-32": "a1fb333e"
+			},
+			"externalCode": "1002",
+			"status": "AVAILABLE",
+			"availabilityId": [
+				"32a727df-3723-481d-9cd2-87824109382b"
+			],
+			"itemOfferId": [
+				"b46d93c6-4c60-426f-a678-04fc4ae8bf97"
+			]
+		},
+		{
+			"id": "27644ffa-7e39-402f-959a-08dcf41bde44",
+			"index": 2,
+			"name": "Sucos",
+			"description": "Sucos",
+			"image": {
+				"URL": "https://portal.tdevrocks.com.br/fotos/prato-feito.jpg",
+				"CRC-32": "27644ffa"
+			},
+			"externalCode": "1003",
+			"status": "AVAILABLE",
+			"availabilityId": [
+				"32a727df-3723-481d-9cd2-87824109382b"
+			],
+			"itemOfferId": [
+				"b46d93c6-4c60-426f-a678-04fc4ae8bf97"
+			]
+		}
+	],
+	"itemOffers": [{
+			"id": "8c20cac0-0c41-4591-82c9-68924da8ad2c",
+			"itemId": "5b1ece82-9a3c-4693-af7c-d19969e50881",
+			"index": 0,
+			"price": {
+				"value": 43.50,
+				"originalValue": 43.50,
+				"currency": "BRL"
+			},
+			"availabilityId": [
+				"32a727df-3723-481d-9cd2-87824109382b"
+			],
+			"optionGroupsId": [
+				"9476e5c2-94ba-43f8-ad52-e57840f42594"
+			]
+		},
+		{
+			"id": "946ea0e2-ed0f-4515-b18a-59bce761656f",
+			"itemId": "5cb0e8ed-620c-467d-8b43-fd2d04bdbb85",
+			"index": 1,
+			"price": {
+				"value": 44.85,
+				"originalValue": 44.85,
+				"currency": "BRL"
+			},
+			"availabilityId": [
+				"32a727df-3723-481d-9cd2-87824109382b"
+			],
+			"optionGroupsId": [
+				"9476e5c2-94ba-43f8-ad52-e57840f42594"
+			]
+		},
+		{
+			"id": "403211aa-feda-4236-afd4-1dce581aaeab",
+			"itemId": "0122764d-91b2-485d-8544-baada46cf169",
+			"index": 2,
+			"price": {
+				"value": 32.60,
+				"originalValue": 32.60,
+				"currency": "BRL"
+			},
+			"availabilityId": [
+				"32a727df-3723-481d-9cd2-87824109382b"
+			],
+			"optionGroupsId": [
+				"9476e5c2-94ba-43f8-ad52-e57840f42594"
+			]
+		},
+		{
+			"id": "493444b6-d634-49fd-8559-2fa65d28769e",
+			"itemId": "584f4e82-37f1-49c0-8fd3-79586fab3b15",
+			"index": 3,
+			"price": {
+				"value": 59.70,
+				"originalValue": 59.70,
+				"currency": "BRL"
+			},
+			"availabilityId": [
+				"32a727df-3723-481d-9cd2-87824109382b"
+			],
+			"optionGroupsId": [
+				"6b78d86f-76fc-4ba9-b056-4419b7c37bae"
+			]
+		},
+		{
+			"id": "f6f50f27-f69f-477b-8fb3-2932f8c8008a",
+			"itemId": "9695853c-fbf6-4e46-a098-fab148299d5b",
+			"index": 4,
+			"price": {
+				"value": 59.70,
+				"originalValue": 59.70,
+				"currency": "BRL"
+			},
+			"availabilityId": [
+				"32a727df-3723-481d-9cd2-87824109382b"
+			],
+			"optionGroupsId": [
+				"6b78d86f-76fc-4ba9-b056-4419b7c37bae"
+			]
+		},
+		{
+			"id": "71c721f3-22b8-4448-a410-01489de1639f",
+			"itemId": "fe49c1d2-1f0f-41d7-b42b-fa40fd8d58cb",
+			"index": 5,
+			"price": {
+				"value": 49.30,
+				"originalValue": 49.30,
+				"currency": "BRL"
+			},
+			"availabilityId": [
+				"32a727df-3723-481d-9cd2-87824109382b"
+			],
+			"optionGroupsId": [
+				"6b78d86f-76fc-4ba9-b056-4419b7c37bae"
+			]
+		},
+		{
+			"id": "9a02143d-1292-43aa-a8b1-40c224837301",
+			"itemId": "e34c43b8-fe10-4240-83fb-c8968dff42c6",
+			"index": 5,
+			"price": {
+				"value": 9.45,
+				"originalValue": 9.45,
+				"currency": "BRL"
+			},
+			"availabilityId": [
+				"32a727df-3723-481d-9cd2-87824109382b"
+			],
+			"optionGroupsId": [
+				"8479e524-0c81-428d-bb09-46d2997fbd77"
+			]
+		},
+		{
+			"id": "bf36e7d6-cd36-4096-8e07-1af06cbc63ca",
+			"itemId": "3d235a23-1eca-4069-a0f4-fd081fc95e59",
+			"index": 6,
+			"price": {
+				"value": 6.90,
+				"originalValue": 6.90,
+				"currency": "BRL"
+			},
+			"availabilityId": [
+				"32a727df-3723-481d-9cd2-87824109382b"
+			],
+			"optionGroupsId": [
+				"8479e524-0c81-428d-bb09-46d2997fbd77"
+			]
+		}
+	],
+	"optionGroups": [{
+			"id": "9476e5c2-94ba-43f8-ad52-e57840f42594",
+			"index": 0,
+			"name": "Escolha uma pizza salgada por favor",
+			"description": "Escolha uma pizza salgada por favor",
+			"externalCode": "10050",
+			"status": "AVAILABLE",
+			"minPermitted": 1,
+			"maxPermitted": 2,
+			"options": [{
+				"id": "9be6381d-ffdc-4620-922b-1e3e4733bcd7",
+				"itemId": "5b1ece82-9a3c-4693-af7c-d19969e50881",
+				"index": 0,
+				"price": {
+					"value": 43.50,
+					"originalValue": 43.50,
+					"currency": "BRL"
+				},
+				"maxPermitted": 2
+			}]
+		},
+		{
+			"id": "6b78d86f-76fc-4ba9-b056-4419b7c37bae",
+			"index": 1,
+			"name": "Escolha um Hamburguer por favor",
+			"description": "Escolha um Hamburguer por favor",
+			"externalCode": "10060",
+			"status": "AVAILABLE",
+			"minPermitted": 1,
+			"maxPermitted": 2,
+			"options": [{
+				"id": "7b2832f4-b9c9-403d-8149-678eda0fdfae",
+				"itemId": "584f4e82-37f1-49c0-8fd3-79586fab3b15",
+				"index": 0,
+				"price": {
+					"value": 59.70,
+					"originalValue": 59.70,
+					"currency": "BRL"
+				},
+				"maxPermitted": 2
+			}]
+		},
+		{
+			"id": "8479e524-0c81-428d-bb09-46d2997fbd77",
+			"index": 2,
+			"name": "Escolha uma bebida por favor",
+			"description": "Escolha uma bebida por favor",
+			"externalCode": "10070",
+			"status": "AVAILABLE",
+			"minPermitted": 1,
+			"maxPermitted": 2,
+			"options": [{}]
+		}
+	],
+	"availabilities": [{
+		"id": "32a727df-3723-481d-9cd2-87824109382b",
+		"startDate": "2020-01-01",
+		"endDate": "2023-12-31",
+		"hours": [{
+			"dayOfWeek": [
+				"MONDAY",
+				"TUESDAY",
+				"WEDNESDAY",
+				"THURSDAY",
+				"FRIDAY",
+				"SATURDAY",
+				"SUNDAY"
+			],
+			"timePeriods": {
+				"startTime": "07:00:00.000Z",
+				"endTime": "18:00:00.000Z"
+			}
+		}]
+	}]
+}

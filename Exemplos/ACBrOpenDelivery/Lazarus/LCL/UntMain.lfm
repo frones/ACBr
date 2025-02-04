@@ -1,0 +1,1445 @@
+object FMain: TFMain
+  Left = 547
+  Height = 1010
+  Top = 279
+  Width = 1350
+  Caption = 'ACBrOpenDelivery - Demo VCL'
+  ClientHeight = 1010
+  ClientWidth = 1350
+  Color = clBtnFace
+  DesignTimePPI = 120
+  Font.Color = clWindowText
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
+  Position = poScreenCenter
+  object pnlTop: TPanel
+    Left = 0
+    Height = 112
+    Top = 0
+    Width = 1350
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 112
+    ClientWidth = 1350
+    Color = clWhite
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object Image1: TImage
+      Left = 0
+      Height = 112
+      Top = 0
+      Width = 112
+      Align = alLeft
+      Stretch = True
+    end
+    object Image2: TImage
+      Left = 1238
+      Height = 112
+      Top = 0
+      Width = 112
+      Align = alRight
+      Stretch = True
+    end
+    object Label1: TLabel
+      Left = 112
+      Height = 112
+      Top = 0
+      Width = 1126
+      Align = alClient
+      Caption = ' DEMO VCL'
+      Color = clHighlight
+      Font.Color = clWindowText
+      Font.Height = -50
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+  end
+  object pnlGeral: TPanel
+    Left = 0
+    Height = 898
+    Top = 112
+    Width = 1350
+    Align = alClient
+    BevelOuter = bvNone
+    ClientHeight = 898
+    ClientWidth = 1350
+    ParentBackground = False
+    TabOrder = 1
+    object tabGeral: TPageControl
+      Left = 0
+      Height = 898
+      Top = 0
+      Width = 1350
+      ActivePage = tbiMerchant
+      Align = alClient
+      TabIndex = 2
+      TabOrder = 0
+      object tbiPolling: TTabSheet
+        Caption = 'Polling'
+        ClientHeight = 865
+        ClientWidth = 1342
+        ImageIndex = 1
+        object Label4: TLabel
+          Left = 4
+          Height = 20
+          Top = 50
+          Width = 87
+          Caption = 'Merchant ID'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label5: TLabel
+          Left = 4
+          Height = 20
+          Top = 110
+          Width = 59
+          Caption = 'Event ID'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label6: TLabel
+          Left = 4
+          Height = 20
+          Top = 180
+          Width = 60
+          Caption = 'Order ID'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Panel1: TPanel
+          Left = 0
+          Height = 51
+          Top = 0
+          Width = 1342
+          Align = alTop
+          BevelOuter = bvNone
+          ClientHeight = 51
+          ClientWidth = 1342
+          ParentBackground = False
+          TabOrder = 0
+          object Label9: TLabel
+            Cursor = crHandPoint
+            Left = 0
+            Height = 51
+            Top = 0
+            Width = 1342
+            Align = alClient
+            Caption = 'https://abrasel-nacional.github.io/docs/#tag/ordersPolling'
+            DragCursor = crHandPoint
+            Font.Color = clNavy
+            Font.Height = -15
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            Layout = tlCenter
+            ParentFont = False
+            OnClick = Label9Click
+          end
+        end
+        object edtPollingMerchantId: TEdit
+          Left = 4
+          Height = 28
+          Top = 76
+          Width = 348
+          TabOrder = 1
+        end
+        object btnPollingAddMerchantId: TButton
+          Left = 372
+          Height = 31
+          Top = 75
+          Width = 162
+          Caption = 'Add Merchant Id'
+          TabOrder = 2
+          OnClick = btnPollingAddMerchantIdClick
+        end
+        object btnPolling: TButton
+          Left = 602
+          Height = 31
+          Top = 75
+          Width = 162
+          Caption = 'Polling'
+          TabOrder = 3
+          OnClick = btnPollingClick
+        end
+        object edtPollingAddEventId: TEdit
+          Left = 4
+          Height = 28
+          Top = 136
+          Width = 348
+          TabOrder = 4
+        end
+        object btnPollingAck: TButton
+          Left = 372
+          Height = 31
+          Top = 135
+          Width = 162
+          Caption = 'Acknowledgment'
+          TabOrder = 5
+          OnClick = btnPollingAckClick
+        end
+        object edtPollingOrderId: TEdit
+          Left = 4
+          Height = 28
+          Top = 206
+          Width = 348
+          TabOrder = 6
+        end
+        object pgPolling: TPageControl
+          Left = 0
+          Height = 551
+          Top = 314
+          Width = 1342
+          ActivePage = tbJSONPolling
+          Align = alBottom
+          TabIndex = 1
+          TabOrder = 7
+          object tabPolling: TTabSheet
+            Caption = 'Polling'
+            ClientHeight = 518
+            ClientWidth = 1334
+            object DBGrid1: TDBGrid
+              Left = 0
+              Height = 518
+              Top = 0
+              Width = 1334
+              Align = alClient
+              Color = clWindow
+              Columns = <              
+                item
+                  Title.Caption = 'eventID'
+                  Width = 225
+                  FieldName = 'eventID'
+                end              
+                item
+                  Title.Caption = 'eventType'
+                  Width = 225
+                  FieldName = 'eventType'
+                end              
+                item
+                  Title.Caption = 'orderID'
+                  Width = 225
+                  FieldName = 'orderID'
+                end              
+                item
+                  Title.Caption = 'orderURL'
+                  Width = 225
+                  FieldName = 'orderURL'
+                end              
+                item
+                  Title.Caption = 'createdAt'
+                  Width = 125
+                  FieldName = 'createdAt'
+                end              
+                item
+                  Title.Caption = 'sourceAppID'
+                  Width = 225
+                  FieldName = 'sourceAppID'
+                end>
+              TabOrder = 0
+              TitleFont.Color = clWindowText
+              TitleFont.Height = -15
+              TitleFont.Name = 'Segoe UI'
+            end
+          end
+          object tbJSONPolling: TTabSheet
+            Caption = 'JSON'
+            ClientHeight = 518
+            ClientWidth = 1334
+            ImageIndex = 1
+            object mmoPolling: TMemo
+              Left = 0
+              Height = 518
+              Top = 0
+              Width = 1334
+              Align = alClient
+              ScrollBars = ssVertical
+              TabOrder = 0
+            end
+          end
+        end
+      end
+      object tbiOrder: TTabSheet
+        Caption = 'Order (Pedidos)'
+        ClientHeight = 865
+        ClientWidth = 1342
+        ImageIndex = 2
+        object Label7: TLabel
+          Left = 10
+          Height = 20
+          Top = 50
+          Width = 60
+          Caption = 'Order ID'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label8: TLabel
+          Left = 10
+          Height = 20
+          Top = 110
+          Width = 51
+          Caption = 'Reason'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label21: TLabel
+          Left = 10
+          Height = 20
+          Top = 180
+          Width = 238
+          Caption = 'Merchant ID (ID Estabelecimento)'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label22: TLabel
+          Left = 410
+          Height = 20
+          Top = 180
+          Width = 291
+          Caption = 'Merchant Name (Nome Estabelecimento)'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label23: TLabel
+          Left = 14
+          Height = 20
+          Top = 250
+          Width = 16
+          Caption = 'ID'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label24: TLabel
+          Left = 410
+          Height = 20
+          Top = 250
+          Width = 138
+          Caption = 'Type (Tipo Entrega)'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label25: TLabel
+          Left = 570
+          Height = 20
+          Top = 250
+          Width = 65
+          Caption = 'displayID'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label26: TLabel
+          Left = 730
+          Height = 20
+          Top = 250
+          Width = 180
+          Caption = 'createdAt (Dt. do Pedido)'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label27: TLabel
+          Left = 990
+          Height = 20
+          Top = 250
+          Width = 210
+          Caption = 'orderTiming (Agendado para)'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Panel2: TPanel
+          Left = 0
+          Height = 51
+          Top = 0
+          Width = 1342
+          Align = alTop
+          BevelOuter = bvNone
+          ClientHeight = 51
+          ClientWidth = 1342
+          ParentBackground = False
+          TabOrder = 0
+          object Label10: TLabel
+            Cursor = crHandPoint
+            Left = 0
+            Height = 51
+            Top = 0
+            Width = 1342
+            Align = alClient
+            Caption = 'https://abrasel-nacional.github.io/docs/#tag/ordersStatus'
+            DragCursor = crHandPoint
+            Font.Color = clNavy
+            Font.Height = -15
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            Layout = tlCenter
+            ParentFont = False
+            OnClick = Label10Click
+          end
+        end
+        object edtOrderOrderId: TEdit
+          Left = 10
+          Height = 28
+          Top = 80
+          Width = 375
+          TabOrder = 1
+        end
+        object btnOrderGetDetails: TButton
+          Left = 410
+          Height = 31
+          Top = 80
+          Width = 152
+          Caption = 'Get Order Details'
+          TabOrder = 2
+          OnClick = btnOrderGetDetailsClick
+        end
+        object btnOrderConfirm: TButton
+          Left = 570
+          Height = 31
+          Top = 80
+          Width = 162
+          Caption = 'Confirm'
+          TabOrder = 3
+          OnClick = btnOrderConfirmClick
+        end
+        object btnOrderDispatch: TButton
+          Left = 740
+          Height = 31
+          Top = 80
+          Width = 162
+          Caption = 'Dispatch'
+          TabOrder = 4
+          OnClick = btnOrderDispatchClick
+        end
+        object btnOrderReadyForPickup: TButton
+          Left = 910
+          Height = 31
+          Top = 80
+          Width = 162
+          Caption = 'Ready For Pickup'
+          TabOrder = 5
+          OnClick = btnOrderReadyForPickupClick
+        end
+        object edtOrderReason: TEdit
+          Left = 10
+          Height = 28
+          Top = 140
+          Width = 311
+          TabOrder = 6
+          Text = 'Texto livre indicando motivo da operação'
+        end
+        object btnOrderRequestCancellation: TButton
+          Left = 570
+          Height = 31
+          Top = 140
+          Width = 162
+          Caption = 'Request Cancellation'
+          TabOrder = 7
+          OnClick = btnOrderRequestCancellationClick
+        end
+        object btnOrderAcceptCancellation: TButton
+          Left = 740
+          Height = 31
+          Top = 140
+          Width = 162
+          Caption = 'Accept Cancellation'
+          TabOrder = 8
+          OnClick = btnOrderAcceptCancellationClick
+        end
+        object btnOrderDenyCancellation: TButton
+          Left = 910
+          Height = 31
+          Top = 140
+          Width = 162
+          Caption = 'Deny Cancellation'
+          TabOrder = 9
+          OnClick = btnOrderDenyCancellationClick
+        end
+        object pgOrder: TPageControl
+          Left = 0
+          Height = 331
+          Top = 534
+          Width = 1342
+          ActivePage = tbPayments
+          Align = alBottom
+          TabIndex = 2
+          TabOrder = 10
+          object tbItems: TTabSheet
+            Caption = 'Items (Itens do Pedido)'
+            ClientHeight = 298
+            ClientWidth = 1334
+            object DBGrid2: TDBGrid
+              Left = 0
+              Height = 298
+              Top = 0
+              Width = 1334
+              Align = alClient
+              Color = clWindow
+              Columns = <              
+                item
+                  Title.Caption = 'ID'
+                  Width = 188
+                  FieldName = 'ID'
+                end              
+                item
+                  Title.Caption = 'Index'
+                  FieldName = 'Index'
+                end              
+                item
+                  Title.Caption = 'Name'
+                  FieldName = 'Name'
+                end              
+                item
+                  Title.Caption = 'externalCode'
+                  Width = 80
+                  FieldName = 'externalCode'
+                end              
+                item
+                  Title.Caption = 'Unit'
+                  Width = 80
+                  FieldName = 'Unit'
+                end              
+                item
+                  Title.Caption = 'specialInstructions'
+                  Width = 80
+                  FieldName = 'specialInstructions'
+                end              
+                item
+                  Title.Caption = 'unitPriceValue'
+                  Width = 80
+                  FieldName = 'unitPriceValue'
+                end              
+                item
+                  Title.Caption = 'optionsPrice'
+                  Width = 80
+                  FieldName = 'optionsPrice'
+                end              
+                item
+                  Title.Caption = 'totalPriceValue'
+                  Width = 80
+                  FieldName = 'totalPriceValue'
+                end              
+                item
+                  Title.Caption = 'totalPriceCurrency'
+                  Width = 80
+                  FieldName = 'totalPriceCurrency'
+                end              
+                item
+                  Title.Caption = 'unitPriceCurrency'
+                  Width = 80
+                  FieldName = 'unitPriceCurrency'
+                end              
+                item
+                  Title.Caption = 'Quantity'
+                  FieldName = 'Quantity'
+                end>
+              TabOrder = 0
+              TitleFont.Color = clWindowText
+              TitleFont.Height = -15
+              TitleFont.Name = 'Segoe UI'
+            end
+          end
+          object tbOptions: TTabSheet
+            Caption = 'Options (Opções do Pedido)'
+            ClientHeight = 298
+            ClientWidth = 1334
+            ImageIndex = 1
+            object DBGrid3: TDBGrid
+              Left = 0
+              Height = 298
+              Top = 0
+              Width = 1334
+              Align = alClient
+              Color = clWindow
+              Columns = <              
+                item
+                  Title.Caption = 'ID'
+                  FieldName = 'ID'
+                end              
+                item
+                  Title.Caption = 'Name'
+                  FieldName = 'Name'
+                end              
+                item
+                  Title.Caption = 'externalCode'
+                  Width = 80
+                  FieldName = 'externalCode'
+                end              
+                item
+                  Title.Caption = 'Unit'
+                  Width = 188
+                  FieldName = 'Unit'
+                end              
+                item
+                  Title.Caption = 'Quantity'
+                  FieldName = 'Quantity'
+                end              
+                item
+                  Title.Caption = 'unitPriceValue'
+                  Width = 80
+                  FieldName = 'unitPriceValue'
+                end              
+                item
+                  Title.Caption = 'unitPriceCurrency'
+                  Width = 80
+                  FieldName = 'unitPriceCurrency'
+                end              
+                item
+                  Title.Caption = 'totalPriceValue'
+                  Width = 80
+                  FieldName = 'totalPriceValue'
+                end              
+                item
+                  Title.Caption = 'totalPriceCurrency'
+                  Width = 80
+                  FieldName = 'totalPriceCurrency'
+                end              
+                item
+                  Title.Caption = 'specialInstructions'
+                  Width = 250
+                  FieldName = 'specialInstructions'
+                end>
+              TabOrder = 0
+              TitleFont.Color = clWindowText
+              TitleFont.Height = -15
+              TitleFont.Name = 'Segoe UI'
+            end
+          end
+          object tbPayments: TTabSheet
+            Caption = 'Payments (Opções de Pagamento)'
+            ClientHeight = 298
+            ClientWidth = 1334
+            ImageIndex = 2
+            object Label35: TLabel
+              Left = 10
+              Height = 20
+              Top = 10
+              Width = 61
+              Caption = 'pending:'
+              Font.Color = clWindowText
+              Font.Height = -15
+              Font.Name = 'Segoe UI'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object lblPaymentsPending: TLabel
+              Left = 110
+              Height = 20
+              Top = 10
+              Width = 132
+              Caption = 'lblPaymentsPending'
+            end
+            object DBGrid4: TDBGrid
+              Left = 0
+              Height = 254
+              Top = 44
+              Width = 1334
+              Align = alBottom
+              Color = clWindow
+              Columns = <>
+              TabOrder = 0
+              TitleFont.Color = clWindowText
+              TitleFont.Height = -15
+              TitleFont.Name = 'Segoe UI'
+            end
+          end
+          object TabSheet4: TTabSheet
+            Caption = 'Customer Address (Endereço do Cliente)'
+            ClientHeight = 298
+            ClientWidth = 1334
+            ImageIndex = 3
+            object Label28: TLabel
+              Left = 10
+              Height = 20
+              Top = 10
+              Width = 45
+              Caption = 'street:'
+              Font.Color = clWindowText
+              Font.Height = -15
+              Font.Name = 'Segoe UI'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object Label29: TLabel
+              Left = 10
+              Height = 20
+              Top = 34
+              Width = 60
+              Caption = 'number:'
+              Font.Color = clWindowText
+              Font.Height = -15
+              Font.Name = 'Segoe UI'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object Label30: TLabel
+              Left = 10
+              Height = 20
+              Top = 58
+              Width = 29
+              Caption = 'city:'
+              Font.Color = clWindowText
+              Font.Height = -15
+              Font.Name = 'Segoe UI'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object Label31: TLabel
+              Left = 10
+              Height = 20
+              Top = 81
+              Width = 70
+              Caption = 'postCode:'
+              Font.Color = clWindowText
+              Font.Height = -15
+              Font.Name = 'Segoe UI'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object Label32: TLabel
+              Left = 10
+              Height = 20
+              Top = 105
+              Width = 53
+              Caption = 'district:'
+              Font.Color = clWindowText
+              Font.Height = -15
+              Font.Name = 'Segoe UI'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object Label33: TLabel
+              Left = 10
+              Height = 20
+              Top = 129
+              Width = 39
+              Caption = 'state:'
+              Font.Color = clWindowText
+              Font.Height = -15
+              Font.Name = 'Segoe UI'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object Label34: TLabel
+              Left = 10
+              Height = 20
+              Top = 152
+              Width = 92
+              Caption = 'complement:'
+              Font.Color = clWindowText
+              Font.Height = -15
+              Font.Name = 'Segoe UI'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object lblDeliveryStreet: TLabel
+              Left = 160
+              Height = 20
+              Top = 10
+              Width = 110
+              Caption = 'lblDeliveryStreet'
+            end
+            object lblDeliveryNumber: TLabel
+              Left = 160
+              Height = 20
+              Top = 34
+              Width = 125
+              Caption = 'lblDeliveryNumber'
+            end
+            object lblDeliveryCity: TLabel
+              Left = 160
+              Height = 20
+              Top = 58
+              Width = 96
+              Caption = 'lblDeliveryCity'
+            end
+            object lblDeliveryPostalCode: TLabel
+              Left = 160
+              Height = 20
+              Top = 81
+              Width = 145
+              Caption = 'lblDeliveryPostalCode'
+            end
+            object lblDeliveryDistrict: TLabel
+              Left = 160
+              Height = 20
+              Top = 105
+              Width = 118
+              Caption = 'lblDeliveryDistrict'
+            end
+            object lblDeliveryState: TLabel
+              Left = 160
+              Height = 20
+              Top = 129
+              Width = 105
+              Caption = 'lblDeliveryState'
+            end
+            object lblDeliveryComplement: TLabel
+              Left = 160
+              Height = 20
+              Top = 152
+              Width = 157
+              Caption = 'lblDeliveryComplement'
+            end
+          end
+          object tbJSONOrder: TTabSheet
+            Caption = 'JSON'
+            ClientHeight = 298
+            ClientWidth = 1334
+            ImageIndex = 4
+            object mmoOrder: TMemo
+              Left = 0
+              Height = 298
+              Top = 0
+              Width = 1334
+              Align = alClient
+              ScrollBars = ssVertical
+              TabOrder = 0
+            end
+          end
+        end
+        object pnlCustomer: TPanel
+          Left = 4
+          Height = 150
+          Top = 320
+          Width = 559
+          BevelOuter = bvNone
+          ClientHeight = 150
+          ClientWidth = 559
+          ParentBackground = False
+          TabOrder = 11
+          object Shape1: TShape
+            Left = 0
+            Height = 150
+            Top = 0
+            Width = 559
+            Align = alClient
+            Brush.Color = 15329769
+            Pen.Color = clGray
+            Pen.Style = psClear
+            Shape = stRoundRect
+          end
+          object Label13: TLabel
+            Left = 11
+            Height = 19
+            Top = 10
+            Width = 530
+            Alignment = taCenter
+            AutoSize = False
+            Caption = 'Customer (Cliente)'
+            Font.Color = clWindowText
+            Font.Height = -15
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object Label14: TLabel
+            Left = 11
+            Height = 20
+            Top = 62
+            Width = 39
+            Caption = 'name'
+            Font.Color = clWindowText
+            Font.Height = -15
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object Label15: TLabel
+            Left = 11
+            Height = 20
+            Top = 86
+            Width = 71
+            Caption = 'document'
+            Font.Color = clWindowText
+            Font.Height = -15
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object Label16: TLabel
+            Left = 11
+            Height = 20
+            Top = 110
+            Width = 44
+            Caption = 'phone'
+            Font.Color = clWindowText
+            Font.Height = -15
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object lblCusomerName: TDBText
+            Left = 90
+            Height = 20
+            Top = 62
+            Width = 115
+            DataField = 'name'
+          end
+          object lblCusomerDocument: TDBText
+            Left = 90
+            Height = 20
+            Top = 89
+            Width = 144
+            DataField = 'documentNumber'
+          end
+          object lblCusomerPhone: TDBText
+            Left = 90
+            Height = 20
+            Top = 115
+            Width = 116
+            DataField = 'phoneNumber'
+          end
+        end
+        object Panel3: TPanel
+          Left = 571
+          Height = 150
+          Top = 320
+          Width = 175
+          BevelOuter = bvNone
+          ClientHeight = 150
+          ClientWidth = 175
+          ParentBackground = False
+          TabOrder = 12
+          object Shape2: TShape
+            Left = 0
+            Height = 150
+            Top = 0
+            Width = 175
+            Align = alClient
+            Brush.Color = 15329769
+            Pen.Color = clGray
+            Pen.Style = psClear
+            Shape = stRoundRect
+          end
+          object Label17: TLabel
+            Left = 10
+            Height = 49
+            Top = 10
+            Width = 150
+            Alignment = taCenter
+            AutoSize = False
+            Caption = 'itemsPrice'#13#10'(Soma dos Itens)'
+            Font.Color = clWindowText
+            Font.Height = -15
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object lblItemsPriceValue: TDBText
+            Left = 10
+            Height = 20
+            Top = 62
+            Width = 121
+            Alignment = taCenter
+          end
+          object lblItemsPriceCurr: TDBText
+            Left = 10
+            Height = 20
+            Top = 89
+            Width = 112
+            Alignment = taCenter
+          end
+        end
+        object Panel4: TPanel
+          Left = 754
+          Height = 150
+          Top = 320
+          Width = 175
+          BevelOuter = bvNone
+          ClientHeight = 150
+          ClientWidth = 175
+          ParentBackground = False
+          TabOrder = 13
+          object Shape3: TShape
+            Left = 0
+            Height = 150
+            Top = 0
+            Width = 175
+            Align = alClient
+            Brush.Color = 15329769
+            Pen.Color = clGray
+            Pen.Style = psClear
+            Shape = stRoundRect
+          end
+          object Label18: TLabel
+            Left = 10
+            Height = 49
+            Top = 10
+            Width = 150
+            Alignment = taCenter
+            AutoSize = False
+            Caption = 'otherPrice'#13#10'(Outras Taxas)'
+            Font.Color = clWindowText
+            Font.Height = -15
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object lblothersFeesValue: TDBText
+            Left = 10
+            Height = 20
+            Top = 62
+            Width = 123
+            Alignment = taCenter
+          end
+          object lblothersFeesCurr: TDBText
+            Left = 10
+            Height = 20
+            Top = 89
+            Width = 114
+            Alignment = taCenter
+          end
+        end
+        object Panel5: TPanel
+          Left = 944
+          Height = 150
+          Top = 320
+          Width = 175
+          BevelOuter = bvNone
+          ClientHeight = 150
+          ClientWidth = 175
+          ParentBackground = False
+          TabOrder = 14
+          object Shape4: TShape
+            Left = 0
+            Height = 150
+            Top = 0
+            Width = 175
+            Align = alClient
+            Brush.Color = 15329769
+            Pen.Color = clGray
+            Pen.Style = psClear
+            Shape = stRoundRect
+          end
+          object Label19: TLabel
+            Left = 10
+            Height = 49
+            Top = 10
+            Width = 150
+            Alignment = taCenter
+            AutoSize = False
+            Caption = 'Discount'#13#10'(Descontos)'
+            Font.Color = clWindowText
+            Font.Height = -15
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object lblDiscountValue: TDBText
+            Left = 10
+            Height = 20
+            Top = 62
+            Width = 111
+            Alignment = taCenter
+          end
+          object lblDiscountCurr: TDBText
+            Left = 10
+            Height = 20
+            Top = 89
+            Width = 102
+            Alignment = taCenter
+          end
+        end
+        object Panel6: TPanel
+          Left = 1134
+          Height = 150
+          Top = 320
+          Width = 175
+          BevelOuter = bvNone
+          ClientHeight = 150
+          ClientWidth = 175
+          ParentBackground = False
+          TabOrder = 15
+          object Shape5: TShape
+            Left = 0
+            Height = 150
+            Top = 0
+            Width = 175
+            Align = alClient
+            Brush.Color = 15329769
+            Pen.Color = clGray
+            Pen.Style = psClear
+            Shape = stRoundRect
+          end
+          object Label20: TLabel
+            Left = 10
+            Height = 49
+            Top = 10
+            Width = 150
+            Alignment = taCenter
+            AutoSize = False
+            Caption = 'oderAmount'#13#10'(Valor Total)'
+            Font.Color = clWindowText
+            Font.Height = -15
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object lblorderAmountValue: TDBText
+            Left = 10
+            Height = 20
+            Top = 62
+            Width = 142
+            Alignment = taCenter
+          end
+          object lblorderAmountCurr: TDBText
+            Left = 10
+            Height = 20
+            Top = 89
+            Width = 133
+            Alignment = taCenter
+          end
+        end
+        object edtMerchantIDOrder: TDBEdit
+          Left = 10
+          Height = 28
+          Top = 210
+          Width = 375
+          DataField = 'merchantID'
+          MaxLength = 0
+          TabOrder = 16
+        end
+        object edtMerchantNameOrder: TDBEdit
+          Left = 410
+          Height = 28
+          Top = 210
+          Width = 322
+          DataField = 'merchantName'
+          MaxLength = 0
+          TabOrder = 17
+        end
+        object edtID: TDBEdit
+          Left = 10
+          Height = 28
+          Top = 280
+          Width = 375
+          DataField = 'ID'
+          MaxLength = 0
+          TabOrder = 18
+        end
+        object edtType: TDBEdit
+          Left = 410
+          Height = 28
+          Top = 280
+          Width = 151
+          DataField = 'type'
+          MaxLength = 0
+          TabOrder = 19
+        end
+        object edtDisplayId: TDBEdit
+          Left = 570
+          Height = 28
+          Top = 280
+          Width = 151
+          DataField = 'displayID'
+          MaxLength = 0
+          TabOrder = 20
+        end
+        object edtCreateAt: TDBEdit
+          Left = 730
+          Height = 28
+          Top = 280
+          Width = 252
+          DataField = 'createdAt'
+          MaxLength = 0
+          TabOrder = 21
+        end
+        object edtOrderTiming: TDBEdit
+          Left = 990
+          Height = 28
+          Top = 280
+          Width = 151
+          DataField = 'orderTiming'
+          MaxLength = 0
+          TabOrder = 22
+        end
+        object btnOrderDelivered: TButton
+          Left = 1090
+          Height = 31
+          Top = 80
+          Width = 162
+          Caption = 'Delivered'
+          TabOrder = 23
+          OnClick = btnOrderDeliveredClick
+        end
+      end
+      object tbiMerchant: TTabSheet
+        Caption = 'Merchant (Estabelecimento)'
+        ClientHeight = 865
+        ClientWidth = 1342
+        ImageIndex = 3
+        object Label12: TLabel
+          Left = 30
+          Height = 20
+          Top = 100
+          Width = 79
+          Caption = 'Merchant Id'
+        end
+        object pnlLink: TPanel
+          Left = 0
+          Height = 51
+          Top = 0
+          Width = 1342
+          Align = alTop
+          BevelOuter = bvNone
+          ClientHeight = 51
+          ClientWidth = 1342
+          ParentBackground = False
+          TabOrder = 0
+          object Label11: TLabel
+            Cursor = crHandPoint
+            Left = 0
+            Height = 51
+            Top = 0
+            Width = 1342
+            Align = alClient
+            Caption = 'https://abrasel-nacional.github.io/docs/#tag/merchantUpdate/operation/menuUpdated'
+            DragCursor = crHandPoint
+            Font.Color = clNavy
+            Font.Height = -15
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            Layout = tlCenter
+            ParentFont = False
+            OnClick = Label11Click
+          end
+        end
+        object edtMerchantUpdateId: TEdit
+          Left = 30
+          Height = 28
+          Top = 126
+          Width = 311
+          TabOrder = 1
+          Text = 'X2V8QrBKZy'
+        end
+        object chkMerchantStatus: TCheckBox
+          Left = 380
+          Height = 24
+          Top = 120
+          Width = 83
+          Caption = 'Available'
+          Checked = True
+          State = cbChecked
+          TabOrder = 2
+        end
+        object btnMerchantUpdate: TButton
+          Left = 540
+          Height = 31
+          Top = 115
+          Width = 361
+          Caption = 'Merchant Update (Atualizar Estabelecimento)'
+          TabOrder = 3
+          OnClick = btnMerchantUpdateClick
+        end
+        object rgUpdateType: TRadioGroup
+          Left = 20
+          Height = 201
+          Top = 170
+          Width = 311
+          AutoFill = True
+          Caption = 'Update Type'
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 1
+          ClientHeight = 176
+          ClientWidth = 307
+          ItemIndex = 0
+          Items.Strings = (
+            'Empty Body'
+            'Only Status'
+            'Entity Type'
+            'Status and Entity Type'
+          )
+          ParentBackground = False
+          TabOrder = 4
+        end
+        object rgUpdateEntity: TRadioGroup
+          Left = 20
+          Height = 251
+          Top = 379
+          Width = 311
+          AutoFill = True
+          Caption = 'Update Entity'
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 1
+          ClientHeight = 226
+          ClientWidth = 307
+          ItemIndex = 0
+          Items.Strings = (
+            'Service'
+            'Menu'
+            'Category'
+            'Item'
+            'Item Offer'
+            'Option Group'
+            'Availability'
+          )
+          ParentBackground = False
+          TabOrder = 5
+        end
+      end
+      object tbiLog: TTabSheet
+        Caption = 'Log'
+        ClientHeight = 865
+        ClientWidth = 1342
+        ImageIndex = 4
+        object mmoLogRequest: TMemo
+          Left = 0
+          Height = 865
+          Top = 0
+          Width = 1342
+          Align = alClient
+          PopupMenu = pmLog
+          ScrollBars = ssVertical
+          TabOrder = 0
+        end
+      end
+      object tbiConfiguracoes: TTabSheet
+        Caption = 'Configurações'
+        ClientHeight = 865
+        ClientWidth = 1342
+        object Label2: TLabel
+          Left = 20
+          Height = 20
+          Top = 20
+          Width = 66
+          Caption = 'Base URL'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label48: TLabel
+          Left = 20
+          Height = 20
+          Top = 90
+          Width = 60
+          Caption = 'Client ID'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label3: TLabel
+          Left = 419
+          Height = 20
+          Top = 90
+          Width = 87
+          Caption = 'Client Secret'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object edtBaseUrl: TEdit
+          Left = 20
+          Height = 28
+          Top = 46
+          Width = 508
+          TabOrder = 0
+          Text = 'https://sandbox.myhubdelivery.io'
+        end
+        object edtClientId: TEdit
+          Left = 20
+          Height = 28
+          Top = 116
+          Width = 391
+          TabOrder = 1
+        end
+        object edtClientSecret: TEdit
+          Left = 419
+          Height = 28
+          Top = 116
+          Width = 391
+          EchoMode = emPassword
+          PasswordChar = '*'
+          TabOrder = 2
+        end
+      end
+    end
+  end
+  object pmLog: TPopupMenu
+    Left = 910
+    Top = 90
+    object Clear1: TMenuItem
+      Caption = 'Clear'
+      OnClick = Clear1Click
+    end
+  end
+  object ACBrOpenDelivery1: TACBrOpenDelivery
+    MarketPlace.Name = mpHubDelivery
+    MarketPlace.Description = 'Hub Delivery'
+    MarketPlace.BaseUrl = 'https://sandbox.myhubdelivery.io'
+    MarketPlace.Resources.Authentication = 'license-manager/api/v1/oauth/token'
+    MarketPlace.Resources.MerchantUpdate = 'merchants/api/v1/{merchantId}/merchantUpdate'
+    MarketPlace.Resources.MerchantStatus = 'merchants/api/v1/{merchantId}/merchantStatus'
+    MarketPlace.Resources.EventPolling = 'orders/api/v1/events:polling'
+    MarketPlace.Resources.EventAcknowledgment = 'orders/api/v1/events/acknowledgment'
+    MarketPlace.Resources.OrderDetails = 'orders/api/v1/{orderId}'
+    MarketPlace.Resources.OrderConfirm = 'orders/api/v1/{orderId}/confirm'
+    MarketPlace.Resources.OrderReadyForPickup = 'orders/api/v1/{orderId}/readyForPickup'
+    MarketPlace.Resources.OrderDispatch = 'orders/api/v1/{orderId}/dispatch'
+    MarketPlace.Resources.OrderDelivered = 'orders/api/v1/{orderId}/delivered'
+    MarketPlace.Resources.OrderRequestCancellation = 'orders/api/v1/{orderId}/requestCancellation'
+    MarketPlace.Resources.OrderAcceptCancellation = 'orders/api/v1/{orderId}/acceptCancellation'
+    MarketPlace.Resources.OrderDenyCancellation = 'orders/api/v1/{orderId}/denyCancellation'
+    TimeOut = 90000
+    OnHTTPEnviar = ACBrOpenDelivery1HTTPEnviar
+    OnHTTPRetornar = ACBrOpenDelivery1HTTPRetornar
+    OnHTTPError = ACBrOpenDelivery1HTTPError
+    Left = 910
+    Top = 20
+  end
+  object BufDataset1: TBufDataset
+    FieldDefs = <>
+    Left = 401
+    Top = 341
+  end
+end

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/02/2025
+-- Diversos --
+[+] #TK-6516: Implementados programas de exemplo em PHP do GTIN ST e MT.
+  Por: Renato Rubinho
+
 29/01/2025
 -- ACBrLibGTIN.lpr, ACBrLibGTINBase.pas, ACBrLibGTINMT.pas, ACBrLibGTINST.pas --
 [+] #TK-6555 - Implementado método ObterCertificados

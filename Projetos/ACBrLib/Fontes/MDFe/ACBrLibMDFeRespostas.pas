@@ -315,7 +315,7 @@ type
 implementation
 
 uses
-  pcnConversao, pcnAuxiliar, ACBrLibMDFeConsts, ACBrUtil.Strings;
+  pcnConversao, pcnAuxiliar, ACBrLibMDFeConsts, ACBrUtil.Strings, ACBrXmlBase;
 
 { TEventoItemResposta }
 constructor TEventoItemResposta.Create(const ItemID: Integer;
@@ -419,7 +419,7 @@ begin
   with ACBrMDFe.WebServices.Enviar do
   begin
     Self.Versao := verAplic;
-    Self.TpAmb := TpAmbToStr(TpAmb);
+    Self.TpAmb := TipoAmbienteToStr(TpAmb);
     Self.verAplic := verAplic;
     Self.CStat := cStat;
     Self.XMotivo := xMotivo;
@@ -436,11 +436,11 @@ begin
   begin
     Self.Xml := ACBrMDFe.Manifestos.Items[0].XMLOriginal;
 
-    FItem := TRetornoItemResposta.Create('MDFe' + DevolveChaveMDFe(ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.chMDFe), Tipo, Codificacao);
+    FItem := TRetornoItemResposta.Create('MDFe' + DevolveChaveMDFe(ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.chDFe), Tipo, Codificacao);
     FItem.Id := 'ID'+ ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.nProt;
-    FItem.tpAmb := TpAmbToStr(ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.tpAmb);
+    FItem.tpAmb := TipoAmbienteToStr(ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.tpAmb);
     FItem.verAplic := ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.verAplic;
-    FItem.chDFe := ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.chMDFe;
+    FItem.chDFe := ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.chDFe;
     FItem.dhRecbto := ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.dhRecbto;
     FItem.nProt := ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.nProt;
     FItem.digVal := ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.digVal;
@@ -579,7 +579,7 @@ begin
   with ACBrMDFe.WebServices.Consulta do
   begin
     Self.Versao := verAplic;
-    Self.TpAmb := TpAmbToStr(TpAmb);
+    Self.TpAmb := TipoAmbienteToStr(TpAmb);
     Self.VerAplic := VerAplic;
     Self.CStat := cStat;
     Self.XMotivo := XMotivo;

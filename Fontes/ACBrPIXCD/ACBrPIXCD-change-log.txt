@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/02/2025
+-- ACBrPIXPSPInter --
+[*] Adicionado endereço Sandbox do PSP Inter
+	por: Paulo Aguiar / Rev.: Alexandre de Paula
+
 03/12/2024
 -- ACBrPIXPSPMatera --
 [-] Correção de MemoryLeak.

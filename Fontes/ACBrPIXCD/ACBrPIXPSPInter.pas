@@ -49,7 +49,7 @@ uses
   ACBrPIXCD, ACBrOpenSSLUtils;
 
 const
-  cInterURLSandbox      = ''; // Não tem Sandbox
+  cInterURLSandbox      = 'https://cdpj-sandbox.partners.uatinter.co';
   cInterURLProducao     = 'https://cdpj.partners.bancointer.com.br';
   cInterPathAuthToken   = '/oauth/v2/token';
   cInterPathAPIPix      = '/pix/v2';

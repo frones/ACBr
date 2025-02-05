@@ -2,14 +2,16 @@ program ACBrInstall_Trunk2;
 
 uses
   Forms,
-  uPrincipal in 'uPrincipal.pas' {frmPrincipal},
-  uFrameLista in 'uFrameLista.pas' {framePacotes: TFrame},
-  ACBrInstallDelphiComponentes in 'ACBrInstallDelphiComponentes.pas',
-  ACBrInstallUtils in 'ACBrInstallUtils.pas',
-  ACBrPacotes in 'ACBrPacotes.pas',
+  ACBr.Principal in 'ACBr.Principal.pas' {frmPrincipal},
+  ACBr.FrameLista in 'ACBr.FrameLista.pas' {framePacotes: TFrame},
+  ACBr.InstallDelphiComponentes in 'ACBr.InstallDelphiComponentes.pas',
+  ACBr.InstallUtils in 'ACBr.InstallUtils.pas',
+  ACBr.Pacotes in 'ACBr.Pacotes.pas',
   ACBrUtil.Strings in '..\..\Fontes\ACBrComum\ACBrUtil.Strings.pas',
   ACBrUtil.FilesIO in '..\..\Fontes\ACBrComum\ACBrUtil.FilesIO.pas',
-  UACBrPlataformaInstalacaoAlvo in 'UACBrPlataformaInstalacaoAlvo.pas';
+  ACBr.PlataformaInstalacaoAlvo in 'ACBr.PlataformaInstalacaoAlvo.pas',
+  Vcl.Themes,
+  Vcl.Styles;
 
 {$R *.res}
 

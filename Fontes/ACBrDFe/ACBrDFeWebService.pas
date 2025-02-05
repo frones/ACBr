@@ -201,6 +201,7 @@ end;
 function TDFeWebService.Executar: Boolean;
 var
   ErroMsg: String;
+  Tratado: Boolean;
 begin
   { Sobrescrever apenas se realmente necessário }
 
@@ -223,6 +224,12 @@ begin
         SalvarResposta;
       end;
     except
+      on E: EACBrDFeExceptionTimeOut do
+      begin
+        FPDFeOwner.FazerLog('ERRO: ' + E.Message, Tratado);
+        if not Tratado then raise;
+      end;
+
       on E: Exception do
       begin
         Result := False;
@@ -433,6 +440,9 @@ begin
         FPDFeOwner.OnTransmitError( HTTPResultCode, InternalErrorCode,
                                     FPURL, FPEnvelopeSoap, FPSoapAction,
                                     Tentar, Tratado) ;
+
+      if InternalErrorCode = 10060 {WSAETIMEDOUT} then
+        raise EACBrDFeExceptionTimeOut.Create('Connection Time Out');
 
       if not (Tentar or Tratado) then
         raise;

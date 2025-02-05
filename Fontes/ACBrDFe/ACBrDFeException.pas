@@ -50,6 +50,7 @@ type
   end;
 
   EACBrDFeExceptionNoPrivateKey = class(EACBrDFeException);
+  EACBrDFeExceptionTimeOut = class(EACBrDFeException);
 
 implementation
 

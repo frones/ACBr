@@ -625,15 +625,26 @@ var
   MsgErro: String;
 begin
   MsgErro := Msg;
+
   if Assigned(E) then
-    MsgErro := MsgErro + sLineBreak + E.Message;
+    begin
+      if EstaVazio(MsgErro) then
+        MsgErro := E.Message
+      else
+        MsgErro := MsgErro + sLineBreak + E.Message;
+    end;
 
   Tratado := False;
   FazerLog('ERRO: ' + MsgErro, Tratado);
 
   // MsgErro já está na String Nativa da IDE... por isso deve usar "CreateDef"
   if not Tratado then
-    raise EACBrDFeException.CreateDef(MsgErro);
+  begin
+    if Assigned(E) and (E is EACBrDFeException) then
+      raise E
+    else
+      raise EACBrDFeException.CreateDef(MsgErro);
+  end;
 end;
 
 procedure TACBrDFe.SetMAIL(AValue: TACBrMail);

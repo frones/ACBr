@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, Forms,
-  ACBrLibComum, ACBrLibNFeDataModule;
+  ACBrLibComum, ACBrLibNFeDataModule, ACBrDFeException;
 
 type
 
@@ -806,6 +806,9 @@ begin
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
+    on E: EACBrDFeExceptionTimeOut do
+       Result := SetRetorno(ErrTimeOut, ConverterStringSaida(E.Message));
+
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
@@ -869,6 +872,9 @@ begin
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
+    on E: EACBrDFeExceptionTimeOut do
+       Result := SetRetorno(ErrTimeOut, ConverterStringSaida(E.Message));
+
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
@@ -925,6 +931,10 @@ begin
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
+
+    on E: EACBrDFeExceptionTimeOut do
+       Result := SetRetorno(ErrTimeOut, ConverterStringSaida(E.Message));
+
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
@@ -1064,6 +1074,9 @@ begin
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
+    on E: EACBrDFeExceptionTimeOut do
+      Result := SetRetorno(ErrTimeOut, ConverterStringSaida(E.Message));
+
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
@@ -1108,6 +1121,10 @@ begin
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
+
+    on E: EACBrDFeExceptionTimeOut do
+      Result := SetRetorno(ErrTimeOut, ConverterStringSaida(E.Message));
+
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
@@ -1186,6 +1203,9 @@ begin
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
+
+    on E: EACBrDFeExceptionTimeOut do
+       Result := SetRetorno(ErrTimeOut, ConverterStringSaida(E.Message));
 
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
@@ -1292,6 +1312,10 @@ begin
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
+
+    on E: EACBrDFeExceptionTimeOut do
+       Result := SetRetorno(ErrTimeOut, ConverterStringSaida(E.Message));
+
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
@@ -1344,6 +1368,9 @@ begin
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
+
+    on E: EACBrDFeExceptionTimeOut do
+      Result := SetRetorno(ErrTimeOut, ConverterStringSaida(E.Message));
 
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
@@ -1461,6 +1488,9 @@ begin
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
+    on E: EACBrDFeExceptionTimeOut do
+       Result := SetRetorno(ErrTimeOut, ConverterStringSaida(E.Message));
+
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
@@ -1520,6 +1550,9 @@ begin
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
+
+    on E: EACBrDFeExceptionTimeOut do
+      Result := SetRetorno(ErrTimeOut, ConverterStringSaida(E.Message));
 
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
@@ -1582,6 +1615,9 @@ begin
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
+
+    on E: EACBrDFeExceptionTimeOut do
+      Result := SetRetorno(ErrTimeOut, ConverterStringSaida(E.Message));
 
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));

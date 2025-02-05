@@ -14,5 +14,6 @@ ErrCPFInvalido = -12;
 ErrIndex = -13;
 ErrGerarXml = -14;
 ErrNaoDisponivelEmModoConsole = -15;
+ErrTimeOut = -19;
 ErrDemoExpirado = -999;
 

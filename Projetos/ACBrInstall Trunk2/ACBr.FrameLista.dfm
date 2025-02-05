@@ -185,7 +185,7 @@ object framePacotes: TframePacotes
       Height = 13
       Caption = 'Gerador de Relat'#243'rios (FastReport)'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clOrange
+      Font.Color = 33023
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
@@ -380,7 +380,7 @@ object framePacotes: TframePacotes
       Height = 13
       Caption = 'Gerador de Relat'#243'rios (FortesReport)'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clOrange
+      Font.Color = 33023
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
@@ -575,7 +575,7 @@ object framePacotes: TframePacotes
       Height = 13
       Caption = 'Gerador de Relat'#243'rios (FPDF Pascal)'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clOrange
+      Font.Color = 33023
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
@@ -715,7 +715,7 @@ object framePacotes: TframePacotes
       Height = 13
       Caption = 'Gerador de Relat'#243'rios (ESCPos)'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clOrange
+      Font.Color = 33023
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]

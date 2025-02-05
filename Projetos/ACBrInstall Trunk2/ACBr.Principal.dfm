@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = Panel1
+  ActiveControl = lbInfo
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Assistente de Instala'#231#227'o de Componente Projeto ACBr - Delphi'
@@ -15,7 +15,6 @@ object frmPrincipal: TfrmPrincipal
   Font.Name = 'Tahoma'
   Font.Style = []
   Position = poScreenCenter
-  RoundedCorners = rcOn
   ScreenSnap = True
   OnClose = FormClose
   OnCreate = FormCreate
@@ -25,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 740
     Height = 630
-    ActivePage = wizPgInicio
+    ActivePage = wizPgInstalacao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -609,7 +608,7 @@ object frmPrincipal: TfrmPrincipal
         Height = 49
         Caption = 'Bem-vindo ao ACBr!'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clOrange
+        Font.Color = 33023
         Font.Height = -41
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
@@ -12705,9 +12704,9 @@ object frmPrincipal: TfrmPrincipal
         Height = 101
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Panel1'
-        Color = clOrange
+        Color = 33023
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clOrange
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
@@ -13154,27 +13153,19 @@ object frmPrincipal: TfrmPrincipal
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
-        ExplicitWidth = 574
-        ExplicitHeight = 517
         inherited pnlBotoesMarcar: TPanel
           Top = 476
           Width = 574
-          ExplicitTop = 476
-          ExplicitWidth = 574
           inherited btnPacotesDesmarcarTodos: TSpeedButton
             Left = 524
-            ExplicitLeft = 524
           end
           inherited btnPacotesMarcarTodos: TSpeedButton
             Left = 474
-            ExplicitLeft = 474
           end
         end
         inherited ScrollBox1: TScrollBox
           Width = 568
           Height = 470
-          ExplicitWidth = 568
-          ExplicitHeight = 470
         end
       end
     end
@@ -13592,7 +13583,7 @@ object frmPrincipal: TfrmPrincipal
         Height = 84
         Caption = 'Que a for'#231'a dos componentes esteja com voc'#234'!'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clOrange
+        Font.Color = 33023
         Font.Height = -35
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
@@ -13607,7 +13598,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 67
+        FrameIndex = 53
         Image.Data = {
           9A470500474946383961F401F401E64100FFCC80FFB2403FCF10F3FCF0D9F6D0
           59D5307FDF60B3ECA04CD2208CE27099E680E6F9E066D940CCF3C0BFEFB0A6E9
@@ -24531,9 +24522,9 @@ object frmPrincipal: TfrmPrincipal
         Height = 61
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Panel1'
-        Color = clOrange
+        Color = 33023
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clOrange
+        Font.Color = clWhite
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
@@ -24638,7 +24629,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 7
+        FrameIndex = 6
         Image.Data = {
           E02E00004749463839613F012800F70300CECFD1A3A8AD727882FFFFFFE9EBEB
           414C5C8C9099D8D8DAB9BBC0E0E2E3535C6AC4C5C8636A76AFB1B7989CA38084
@@ -25413,7 +25404,6 @@ object frmPrincipal: TfrmPrincipal
         Proportional = True
         Stretch = True
         Transparent = True
-        ExplicitWidth = 114
       end
     end
   end

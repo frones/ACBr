@@ -455,22 +455,25 @@ procedure TACBrTEFAPIClassDestaxa.Inicializar;
 var
   wErro: Integer;
 begin
-  inherited;
-  wErro := DestaxaClient.Socket.Conectar;
-  if NaoEstaZerado(wErro) then
-    raise EACBrTEFDestaxaErro.Create(
-      ACBrStr(
-        'Erro ao conectar Destaxa Client' + sLineBreak +
-        'Endereço: ' + DestaxaClient.EnderecoIP + sLineBreak +
-        'Porta: ' + DestaxaClient.Porta + sLineBreak +
-        'Erro: ' + IntToStr(wErro) + '-' + DestaxaClient.Socket.LastErrorDesc));
-  fpInicializado := True;
+  try
+    wErro := DestaxaClient.Socket.Conectar;
+    if NaoEstaZerado(wErro) then
+      raise EACBrTEFDestaxaErro.Create(
+        ACBrStr(
+          'Erro ao conectar Destaxa Client' + sLineBreak +
+          'Endereço: ' + DestaxaClient.EnderecoIP + sLineBreak +
+          'Porta: ' + DestaxaClient.Porta + sLineBreak +
+          'Erro: ' + IntToStr(wErro) + '-' + DestaxaClient.Socket.LastErrorDesc));
+    fpInicializado := True;
+  finally
+    DestaxaClient.Socket.Desconectar;
+  end;
 end;
 
 procedure TACBrTEFAPIClassDestaxa.DesInicializar;
 begin
-  DestaxaClient.Socket.Conectar;
-  inherited DesInicializar;
+  DestaxaClient.Socket.Desconectar;
+  fpInicializado := False;
 end;
 
 function TACBrTEFAPIClassDestaxa.EfetuarPagamento(ValorPagto: Currency; Modalidade: TACBrTEFModalidadePagamento; CartoesAceitos: TACBrTEFTiposCartao;

@@ -46,6 +46,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/02/2025
+-- ACBrTEFDestaxaComum --
+[*] Alteração para abrir/fechar a conexão TCP a cada fluxo de pagamento.
+
+-- ACBrTEFAPIDestaxa --
+[-] Correção para desconectar a conexão TCP ao DesInicializar o componente;
+[*] Ajuste não manter a conexão TCP aberta após Inicializar o componente.
+
 26/01/2025
 -- ACBrTEFScopeAPI, ACBrTEFAPIScope --
 [*] Ajustes para funcionamento de transações PIX

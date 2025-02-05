@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/02/2025
+-- ACBrUtil.Math --
+[*] Revert na rotina HexToAscii para evitar resultados inexperados.
+  Por: Diego Folieni
+
 27/12/2024
 -- ACBrUtil.Base --
 [+] Adicionado os métodos:

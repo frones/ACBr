@@ -494,7 +494,7 @@ begin
   while I < L do
   begin
      B := StrToInt('$' + copy(Cmd, I, 2)) ;
-     Result := Result + ACBrStr( AnsiChr( B ) );
+     Result := Result + AnsiChr( B ) ;
      Inc( I, 2) ;
   end ;
 end ;

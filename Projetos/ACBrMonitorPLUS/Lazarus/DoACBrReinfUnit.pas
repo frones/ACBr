@@ -550,6 +550,9 @@ begin
   ListaDeMetodos.Add(CMetodoConsultarReciboReinf);
   ListaDeMetodos.Add(CMetodoSetVersaoDF);
   ListaDeMetodos.Add(CMetodoSetTipoContribuinte);
+
+  // DoACBrUnit
+  ListaDeMetodos.Add(CMetodoObterCertificados);
 end;
 
 procedure TACBrObjetoReinf.Executar(ACmd: TACBrCmd);

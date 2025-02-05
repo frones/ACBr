@@ -47,6 +47,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/02/2025
+-- ACBrTEFAPICliSiTef --
+[+] Adicionado a Propriedade 'TACBrTEFAPIClassCliSiTef.FinalizarTransacaoIndividual'
+    que permite que o comando 'FinalizarTransacao', seja específico para apenas
+    uma Transação e não para todas Transações da Venda
+    https://dev.softwareexpress.com.br/en/docs/clisitef/clisitef_documento_principal#completion-of-individual-payments-in-the-same-tax-coupon
+    https://www.projetoacbr.com.br/forum/topic/81482-problema-ao-cancelar-pagamento-tef-sitef/
+    (por: Smaili Amorim e DSA)
+
 -- ACBrTEFDestaxaComum --
 [*] Alteração para abrir/fechar a conexão TCP a cada fluxo de pagamento.
 

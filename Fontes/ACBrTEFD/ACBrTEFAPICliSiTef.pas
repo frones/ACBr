@@ -72,6 +72,7 @@ type
     fOperacaoAdministrativa: Integer;
     fOperacaoCancelamento: Integer;
     fAutorizador: String;
+    fFinalizarTransacaoIndividual: Boolean;
   private
     function ExecutarTransacaoSiTef(Funcao: Integer; Valor: Double): Boolean;
     procedure FazerRequisicaoSiTef(Funcao: Integer; Valor: Double);
@@ -142,6 +143,9 @@ type
     property ParamAdicFinalizacao: TACBrTEFParametros read fParamAdicFinalizacao;
     property RespostasPorTipo: TACBrTEFParametros read fRespostasPorTipo;
 
+    property FinalizarTransacaoIndividual: Boolean read fFinalizarTransacaoIndividual
+      write fFinalizarTransacaoIndividual default False;
+
     property Autorizador: String read fAutorizador write fAutorizador;
     property IniciouRequisicao: Boolean read fIniciouRequisicao;
   end;
@@ -173,6 +177,7 @@ begin
   fDocumentosFinalizados := '';
   fUltimoRetornoAPI := 0;
   fAutorizador := '';
+  fFinalizarTransacaoIndividual := False;
 
   fParamAdicConfig := TACBrTEFParametros.Create;
   fParamAdicFuncao := TACBrTEFParametros.Create;
@@ -733,7 +738,7 @@ begin
    else
      DoctoStr := fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao;
 
-   if (pos(DoctoStr, fDocumentosFinalizados) > 0) then
+   if (not fFinalizarTransacaoIndividual) and (pos(DoctoStr, fDocumentosFinalizados) > 0) then
      Exit;
 
   fDocumentosFinalizados := fDocumentosFinalizados + DocumentoVinculado + '|' ;
@@ -1080,13 +1085,14 @@ procedure TACBrTEFAPIClassCliSiTef.FinalizarTransacao(const Rede, NSU,
   CodigoFinalizacao: String; AStatus: TACBrTEFStatusTransacao);
 var
   Confirma: Boolean;
-  i: Integer;
+  i, p: Integer;
   DocumentoVinculado: String;
   DataHora: TDateTime;
 begin
   // CliSiTEF não usa Rede, NSU e Finalizacao
   DocumentoVinculado := '';
   DataHora := 0;
+  p := -1;
   Confirma := (AStatus in [tefstsSucessoAutomatico, tefstsSucessoManual]);
   if (NSU = '') and (CodigoFinalizacao <> '') then  // capturado por 130 em CarregarRespostasPendentes ?
   begin
@@ -1107,10 +1113,16 @@ begin
     begin
       DocumentoVinculado := fpACBrTEFAPI.RespostasTEF[i].DocumentoVinculado;
       DataHora := fpACBrTEFAPI.RespostasTEF[i].DataHoraTransacaoComprovante;
+
+      if fFinalizarTransacaoIndividual then
+        p := ParamAdicFinalizacao.Add('{NumeroPagamentoCupom='+IntToStr(fpACBrTEFAPI.RespostasTEF[i].IdPagamento)+'}');
     end;
   end;
 
   FinalizarTransacaoSiTef(Confirma, DocumentoVinculado, DataHora);
+  
+  if (p >= 0) then
+    ParamAdicFinalizacao.Delete(p);
 end;
 
 procedure TACBrTEFAPIClassCliSiTef.ResolverTransacaoPendente(

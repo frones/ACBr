@@ -43,6 +43,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+05/02/2025
+-- ACBrMonitor.hnd --
+[*] #TK-6585 Incluído novo valor válido para o Ambiente no ACBrBoleto.
+    Por: Júlio Cavalcanti
+
 14/01/2025
 -- ACBrMonitor1.pas, DoBoletoUnit.pas, ACBrMonitorConfig.pas  --
 [*] #TK-6479 Ajustado para Ler o INI VersaoArquivo utilizado no Boleto.

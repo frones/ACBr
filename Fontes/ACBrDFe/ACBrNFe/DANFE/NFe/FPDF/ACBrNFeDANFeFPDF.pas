@@ -1964,7 +1964,7 @@ begin
   //PESO BRUTO
   x := x + w2;
   w3 := RoundTo(maxW*0.20, 0);
-  texto := 'PESO BRUTO';
+  texto := 'PESO BRUTO (Kg)';
   PDF.SetFont(6, '');
   PDF.TextBox(x, y, w3, h, texto, 'T', 'L', 1, '');
   if pesoBruto > 0 then
@@ -1976,7 +1976,7 @@ begin
   //PESO LÍQUIDO
   x := x + w3;
   w := maxW -(w1+3*w2+w3);
-  texto := 'PESO LÍQUIDO';
+  texto := 'PESO LÍQUIDO (Kg)';
   PDF.SetFont(6, '');
   PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
   if pesoLiquido > 0 then

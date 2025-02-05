@@ -1,10 +1,9 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
-  Left = 234
-  Top = 0
+  Left = 226
+  Top = 117
   Caption = 'frlDANFeRLRetrato'
   Font.Height = -18
   inherited RLNFe: TRLReport
-    Left = 10
     Top = 10
     AdjustableMargins = True
     Background.Arrange = baDistributed
@@ -4936,8 +4935,8 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 490
         Height = 7
         Top = 75
-        Width = 49
-        Caption = 'PESO BRUTO'
+        Width = 63
+        Caption = 'PESO BRUTO (Kg)'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -5169,8 +5168,8 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 618
         Height = 7
         Top = 75
-        Width = 52
-        Caption = 'PESO LÍQUIDO'
+        Width = 67
+        Caption = 'PESO LÍQUIDO (Kg)'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -7658,6 +7657,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   end
   inherited RLPDFFilter1: TRLPDFFilter
     Left = 680
-    Top = 114
+    Top = 120
   end
 end

@@ -1,6 +1,6 @@
 inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
-  Left = 204
-  Top = 207
+  Left = 266
+  Top = 118
   Caption = 'frlDANFeRLPaisagem'
   inherited RLNFe: TRLReport
     Left = -8
@@ -2992,8 +2992,8 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Left = 618
         Height = 7
         Top = 55
-        Width = 49
-        Caption = 'PESO BRUTO'
+        Width = 63
+        Caption = 'PESO BRUTO (Kg)'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -3224,8 +3224,8 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Left = 810
         Height = 7
         Top = 55
-        Width = 52
-        Caption = 'PESO LÍQUIDO'
+        Width = 67
+        Caption = 'PESO LÍQUIDO (Kg)'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'

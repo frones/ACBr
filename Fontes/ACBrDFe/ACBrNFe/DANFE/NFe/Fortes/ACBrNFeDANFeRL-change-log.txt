@@ -47,6 +47,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+05/02/2025
+-- Diversos --
+[*] Nos quadros: Peso Bruto e Peso Linquido foi acrescentado "(Kg)" para deixar
+    claro que o numero informado nos quadros estão na unidade Kg.
+    Essa alteração foi aplicada nos modelos feitos em Fortes e FPDF.
+   Por: Italo Giurizzato Junior
+
 20/01/2025
 -- ACBrNFeDANFeEventoRLRetrato --
 [*] #TK-6502: Ajuste visando a impressão dos nomes do eventos: ECONF e Cancelamento do ECONF.

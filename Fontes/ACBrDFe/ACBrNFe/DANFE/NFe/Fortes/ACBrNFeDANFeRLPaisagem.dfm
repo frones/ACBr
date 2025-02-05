@@ -3296,9 +3296,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 10
         Left = 618
         Top = 55
-        Width = 49
+        Width = 63
         Height = 7
-        Caption = 'PESO BRUTO'
+        Caption = 'PESO BRUTO (Kg)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -3544,9 +3544,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 10
         Left = 810
         Top = 55
-        Width = 52
+        Width = 67
         Height = 7
-        Caption = 'PESO L'#205'QUIDO'
+        Caption = 'PESO L'#205'QUIDO (Kg)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7

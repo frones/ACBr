@@ -6,7 +6,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Font.Height = -18
   TextHeight = 24
   inherited RLNFe: TRLReport
-    Left = 10
     Top = 10
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
@@ -5533,9 +5532,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 10
         Left = 490
         Top = 75
-        Width = 49
+        Width = 63
         Height = 7
-        Caption = 'PESO BRUTO'
+        Caption = 'PESO BRUTO (Kg)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -5782,9 +5781,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 10
         Left = 618
         Top = 75
-        Width = 52
+        Width = 67
         Height = 7
-        Caption = 'PESO L'#205'QUIDO'
+        Caption = 'PESO L'#205'QUIDO (Kg)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7

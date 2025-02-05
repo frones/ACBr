@@ -271,7 +271,7 @@ procedure TfrlDANFeRLEtiqueta.InicializarDados;
 begin
   if fpDANFe.Etiqueta then
   begin
-    RLLabel17.Caption := 'DANFE Etiqueta - Etiqueta';
+    RLLabel17.Caption := 'DANFE Etiqueta';
   end
   else
   begin

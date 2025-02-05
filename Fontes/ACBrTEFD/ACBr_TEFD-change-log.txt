@@ -54,6 +54,40 @@ Símbolo : Significado
 [-] Correção para desconectar a conexão TCP ao DesInicializar o componente;
 [*] Ajuste não manter a conexão TCP aberta após Inicializar o componente.
 
+27/01/2025
+-- ACBrTEFScopeAPI --
+[+] Adicionado os métodos:
+    procedure ObterListaImagensPinPad(ALista: TStrings);
+    procedure CarregarImagemPinPad(const NomeImagem: String; const Arquivo: String);
+    procedure ExibirImagemPinPad(const NomeImagem: String);
+    procedure ApagarImagemPinPad(const NomeImagem: String);
+    function ObterInformacoesPinPad: String;
+    procedure ObterDimensoesVisorPinPad(out Width: Word; out Height: Word);
+
+-- ACBrTEFAPI, ACBrTEFAPIScope --
+[+] Adicionado os métodos em 'TACBrTEFAPIClass'
+    procedure ObterListaImagensPinPad(ALista: TStrings); virtual;
+    procedure ObterDimensoesVisorPinPad(out Width: Word; out Height: Word); virtual;
+
+    procedure ExibirImagemPinPad(const NomeImagem: String); virtual;
+    procedure ApagarImagemPinPad(const NomeImagem: String); virtual;
+    procedure CarregarImagemPinPad(const NomeImagem: String; AStream: TStream;
+      TipoImagem: TACBrTEFAPIImagemPinPad); virtual;
+
+-- ACBrTEFAPI --
+[+] Adicionado os métodos em 'TACBrTEFAPI'
+    procedure ObterListaImagensPinPad(ALista: TStrings);
+    procedure ObterDimensoesVisorPinPad(out Width: Word; out Height: Word);
+
+    procedure ExibirImagemPinPad(const NomeImagem: String);
+    procedure ExibirQRCodePinPad(const DadosQRCode: String; const NomeImg: String;
+      Tamanho: Integer = 0);
+    procedure ApagarImagemPinPad(const NomeImagem: String);
+    procedure CarregarImagemPinPad(const NomeImagem: String; AStream: TStream;
+      TipoImagem: TACBrTEFAPIImagemPinPad ); overload;
+    procedure CarregarImagemPinPad(const NomeImagem: String; const Arquivo: String); overload;
+    (por: DSA)
+
 26/01/2025
 -- ACBrTEFScopeAPI, ACBrTEFAPIScope --
 [*] Ajustes para funcionamento de transações PIX

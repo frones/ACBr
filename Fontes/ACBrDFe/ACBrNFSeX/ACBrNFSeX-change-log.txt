@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+06/02/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6586: A cidade de Medianeira/PR mudou de provedor, agora é EloTech.
+  Por: Ronaldo Bispo
+[*] #TK-6589: A cidade de Veranopolis/RS mudou a porta da URL, o provedor continua o mesmo.
+  Por: Sandro Felipe Adad
+[*] #TK-6489: Incluído o Params para assinar o RPS e o Cancelar para a cidade de Rio Negrinho/SC.
+  Por: Willian Delan
+
 04/02/2025
 -- ACBrNFSeXServicos --
 [*] #TK-6576: A cidade de Mirassol D Oeste/MT, mudou as URLs, o provedor é o mesmo.

@@ -48,6 +48,9 @@ Símbolo : Significado
 -- DoACBrReinfUnit.pas, ACBrMonitorConsts.pas --
 [*] #TK-6528 Implementado método Reinf.ValidarReinf().
     Por: Renato Rubinho
+-- ACBrMonitor.hnd --
+[*] #TK-6528 Revisada e atualizada documentação do Reinf.
+    Por: Renato Rubinho
 
 05/02/2025
 -- ACBrMonitor.hnd --

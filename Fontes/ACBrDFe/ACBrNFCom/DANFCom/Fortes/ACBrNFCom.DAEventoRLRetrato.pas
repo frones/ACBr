@@ -348,12 +348,12 @@ begin
 
   Exibir := (fpEventoNFCom.InfEvento.tpEvento = teCancelamento);
 
-  PrintIt := Exibir or (fpEventoNFCom.InfEvento.tpAmb = TACBrTipoAmbiente.taHomologacao);
+  PrintIt := Exibir or (fpEventoNFCom.InfEvento.tpAmb = TACBrTipoAmbiente(taHomologacao));
 
   rllMsgTeste.Visible := False;
   rllMsgTeste.Enabled := False;
 
-  if Integer(fpEventoNFCom.InfEvento.tpAmb) = Integer(taHomologacao) then
+  if fpEventoNFCom.InfEvento.tpAmb = TACBrTipoAmbiente(taHomologacao) then
   begin
     rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
     rllMsgTeste.Visible := True;

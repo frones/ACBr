@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+06/02/2025
+-- ACBrNFCom.DAEventoRLRetrato/ACBrNFCom.DANFComRLRetrato --
+[*] Ajustes para compilar/instalar no Delphi 7.
+   Por: Italo Giurizzato Junior
+
 13/01/2025
 -- ACBrNFComServicos --
 [+] Incluído as URLs de homologação da SEFAZ-MS.

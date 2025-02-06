@@ -372,7 +372,7 @@ begin
     end
     else
     begin
-      if (fpNFCom.Ide.tpEmis = TACBrTipoEmissao.teNormal) then
+      if (fpNFCom.Ide.tpEmis = TACBrTipoEmissao(teNormal)) then
       begin
         rllXmotivo.Caption := ACBrStr('NFCom NÃO ENVIADA PARA SEFAZ');
         rllDadosVariaveis3_Descricao.Visible := False;

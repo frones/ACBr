@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/02/2025
+-- DoACBrReinfUnit.pas, ACBrMonitorConsts.pas --
+[*] #TK-6528 Implementado método Reinf.ValidarReinf().
+    Por: Renato Rubinho
+
 05/02/2025
 -- ACBrMonitor.hnd --
 [*] #TK-6585 Incluído novo valor válido para o Ambiente no ACBrBoleto.

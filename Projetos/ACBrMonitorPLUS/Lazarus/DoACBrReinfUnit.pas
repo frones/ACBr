@@ -146,6 +146,13 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoValidarReinf }
+
+TMetodoValidarReinf = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 implementation
 
 uses
@@ -194,6 +201,19 @@ begin
       VersaoReinf := VersaoReinfToStr(VersaoDF);
 
     MonitorConfig.SalvarArquivo;
+  end;
+end;
+
+{ TMetodoValidarReinf }
+
+procedure TMetodoValidarReinf.Executar;
+begin
+  with TACBrObjetoReinf(fpObjetoDono) do
+  begin
+    try
+      ACBrReinf.Eventos.Validar;
+    finally
+    end;
   end;
 end;
 
@@ -550,6 +570,7 @@ begin
   ListaDeMetodos.Add(CMetodoConsultarReciboReinf);
   ListaDeMetodos.Add(CMetodoSetVersaoDF);
   ListaDeMetodos.Add(CMetodoSetTipoContribuinte);
+  ListaDeMetodos.Add(CMetodoValidarReinf);
 
   // DoACBrUnit
   ListaDeMetodos.Add(CMetodoObterCertificados);
@@ -585,6 +606,7 @@ begin
     8  : AMetodoClass := TMetodoConsultarReciboReinf;
     9  : AMetodoClass := TMetodoSetVersaoDF;
     10 : AMetodoClass := TMetodoSetTipoContribuinte;
+    11 : AMetodoClass := TMetodoValidarReinf;
     else
     begin
       AACBrUnit := TACBrObjetoACBr.Create(Nil); //Instancia DoACBrUnit para validar métodos padrão para todos os objetos

@@ -579,6 +579,7 @@ const
   CMetodoSetIDContribuinteReinf =    'setidcontribuinte';
   CMetodoSetIDTransmissorReinf =     'setidtransmissor';
   CMetodoConsultarReciboReinf =      'consultarreciboreinf';
+  CMetodoValidarReinf =              'validarreinf';
 
   CMetodoConfigurarDados =           'configurardados';
   CMetodoLimparLista =               'limparlista';

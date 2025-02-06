@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/02/2025
+-- ACBrComum.php --
+[*] Sem TK: Removida trava da CarregaContents() quando não for identificado ambiente gráfico
+  Por: Renato Rubinho
+
 10/12/2024
 -- ACBrConsultaCNPJ.php, ACBrConsultaCNPJ.php --
 [*] #TK-6342: Correção na composição do caminho da lib para usar somente DIRECTORY_SEPARATOR

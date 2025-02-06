@@ -101,10 +101,6 @@ function CarregaIniPath($dir, $nomeLib)
 function CarregaContents($importsPath, $dllPath)
 {
     $modoGrafico = verificaAmbienteGrafico();
-    if ( $modoGrafico === 0) {
-        throw new Exception("Ambiente gráfico não identificado");
-        return -10;
-    }
 
     if ($modoGrafico === 2){
         putenv("DISPLAY=:99");

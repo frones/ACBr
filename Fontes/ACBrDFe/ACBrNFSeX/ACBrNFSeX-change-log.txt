@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 06/02/2025
+-- Sintese.Provider --
+[*] Alteração na função TratarXmlRetornado visando resolver o erro de UTF-8.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6586: A cidade de Medianeira/PR mudou de provedor, agora é EloTech.
   Por: Ronaldo Bispo

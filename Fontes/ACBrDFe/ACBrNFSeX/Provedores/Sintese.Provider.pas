@@ -339,7 +339,10 @@ end;
 function TACBrNFSeXWebserviceSintese204.TratarXmlRetornado(
   const aXML: string): string;
 begin
-  Result := inherited TratarXmlRetornado(aXML);
+  Result := ConverteANSIparaUTF8(aXml);
+  Result := RemoverDeclaracaoXML(Result);
+
+  Result := inherited TratarXmlRetornado(Result);
 
   Result := ParseText(Result);
   Result := RemoverDeclaracaoXML(Result);

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 06/02/2025
+-- ACBrNFSeXClass --
+[*] Incluídas as novas classes referente aos novos grupos e campos da reforma tributária.
+  Por: Italo Giurizzato Junior
 -- Sintese.Provider --
 [*] Alteração na função TratarXmlRetornado visando resolver o erro de UTF-8.
   Por: Italo Giurizzato Junior

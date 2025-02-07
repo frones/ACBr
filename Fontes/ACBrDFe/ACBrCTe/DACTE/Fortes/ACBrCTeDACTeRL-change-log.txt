@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/02/2025
+-- ACBrCTeDACTeRLRetrato/ACBrCTeDACTeRLRetratoA5/ACBrCTeDAEventoRLRetrato --
+[*] TK-6539: Alterações visando a impressão de marca d'agua.
+  Por: Heckler Milas
+
 20/01/2025
 -- ACBrCTeDACTeRLRetrato --
 [*] #TK-6505: Alterado a posição dos campos: CNPJ/CPF, Inscrição Estadual e Fone, pois estava 

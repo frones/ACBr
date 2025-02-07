@@ -190,6 +190,7 @@ type
     rlLabel15: TRLLabel;
     rllblSistema: TRLLabel;
     rliBarCode: TRLBarcode;
+    rliMarcadAgua: TRLImage;
     procedure rlb_01_TituloBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_02_DocumentoBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_05_EventoBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -211,6 +212,7 @@ implementation
 
 uses
   DateUtils, ACBrDFeUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
   ACBrValidador, pcteConversaoCTe;
@@ -383,6 +385,11 @@ begin
     rllMunEmitente.Caption := fpCTe.emit.EnderEmit.xMun + ' - ' + fpCTe.emit.EnderEmit.UF;
     rllFoneEmitente.Caption := FormatarFone(fpCTe.emit.enderEmit.fone);
     rllInscEstEmitente.Caption := fpCTe.emit.IE;
+  end;
+
+  if NaoEstaVazio(fpDACTe.MarcaDagua) and FileExists(fpDACTe.MarcaDagua) then begin
+    rliMarcadAgua.Visible := True;
+    rliMarcadAgua.Picture.LoadFromFile(fpDACTe.MarcaDagua);
   end;
 end;
 

@@ -730,9 +730,14 @@ var
   sDoc: string;
   Serie: Integer;
 begin
-  Evento[Idx].InfEvento.id := 'ID' + Evento[Idx].InfEvento.TipoEvento +
+  if VersaoDF >= ve400 then
+    Evento[Idx].InfEvento.id := 'ID' + Evento[Idx].InfEvento.TipoEvento +
                              OnlyNumber(Evento[Idx].InfEvento.chCTe) +
-                             Format('%.3d', [Evento[Idx].InfEvento.nSeqEvento]);
+                             Format('%.3d', [Evento[Idx].InfEvento.nSeqEvento])
+  else
+    Evento[Idx].InfEvento.id := 'ID' + Evento[Idx].InfEvento.TipoEvento +
+                             OnlyNumber(Evento[Idx].InfEvento.chCTe) +
+                             Format('%.2d', [Evento[Idx].InfEvento.nSeqEvento]);
 
   if Length(Evento[Idx].InfEvento.id) < 54 then
     wAlerta('HP07', 'ID', '', 'ID de Evento inválido');

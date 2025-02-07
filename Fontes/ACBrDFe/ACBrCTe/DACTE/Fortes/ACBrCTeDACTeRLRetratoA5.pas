@@ -476,6 +476,7 @@ type
     rllFoneReceb: TRLLabel;
     RLLabel108: TRLLabel;
     RLDraw12: TRLDraw;
+    rliMarcadAgua: TRLImage;
     procedure rlb_01_ReciboBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_02_CabecalhoBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_03_DadosDACTeBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -795,6 +796,11 @@ begin
   if Trim(fpDACTe.Logo) <> '' then
   begin
     rliLogo.Picture.LoadFromFile(fpDACTe.Logo);
+  end;
+
+  if NaoEstaVazio(fpDACTe.MarcaDagua) and FileExists(fpDACTe.MarcaDagua) then begin
+    rliMarcadAgua.Visible := True;
+    rliMarcadAgua.Picture.LoadFromFile(fpDACTe.MarcaDagua);
   end;
 
   if fpDACTe.ExpandeLogoMarca then

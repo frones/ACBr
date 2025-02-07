@@ -650,6 +650,7 @@ type
     rllBarraCTe: TRLLabel;
     rlb_DivisaoRecibo: TRLBand;
     rliDivisao: TRLDraw;
+    rliMarcadAgua: TRLImage;
 
     procedure rlb_01_ReciboBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_02_CabecalhoBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -1144,6 +1145,11 @@ begin
   begin
     rlmDadosEmitente.Left := rlmEmitente.Left;
     rlmDadosEmitente.Width := rlmEmitente.Width;
+  end;
+
+  if NaoEstaVazio(fpDACTe.MarcaDagua) and FileExists(fpDACTe.MarcaDagua) then begin
+    rliMarcadAgua.Visible := True;
+    rliMarcadAgua.Picture.LoadFromFile(fpDACTe.MarcaDagua);
   end;
 
   if fpDACTe.ExpandeLogoMarca then

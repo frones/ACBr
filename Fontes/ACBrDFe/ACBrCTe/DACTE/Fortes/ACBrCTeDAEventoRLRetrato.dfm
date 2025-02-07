@@ -938,6 +938,16 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
       Color = clWhite
       ParentColor = False
       BeforePrint = rlb_04_TomadorBeforePrint
+      object rliMarcadAgua: TRLImage
+        Left = 0
+        Top = 0
+        Width = 740
+        Height = 120
+        Center = True
+        HoldStyle = hsHorizontally
+        Scaled = True
+        Visible = False
+      end
       object rlsQuadro03: TRLDraw
         Left = 0
         Top = 0
@@ -1808,7 +1818,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
     Top = 23
   end
   inherited Datasource1: TDataSource
-    Left = 120
+    Left = 128
     Top = 20
   end
 end

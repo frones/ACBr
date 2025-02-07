@@ -1,9 +1,7 @@
 inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
-  Left = 256
-  Height = 557
-  Top = 88
+  Left = 242
+  Top = 126
   Caption = 'DACTe - Retrato'
-  ClientHeight = 557
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
@@ -2020,6 +2018,15 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       Color = clWhite
       ParentColor = False
       BeforePrint = rlb_03_DadosDACTeBeforePrint
+      object rliMarcadAgua: TRLImage
+        Left = 0
+        Height = 202
+        Top = 0
+        Width = 742
+        Center = True
+        Scaled = True
+        Visible = False
+      end
       object rlsLinhaH08: TRLDraw
         Left = 1
         Height = 1

@@ -57,7 +57,8 @@ type
   {$ENDIF RTL230_UP}
   TACBrCTeDACTeRL = class(TACBrCTeDACTeClass)
   protected
-     FPrintDialog: Boolean;
+    FPrintDialog: Boolean;
+    FMarcadagua: String;
   public
     constructor Create(AOwner: TComponent); override;
     procedure ImprimirDACTe(ACTe: TCTe = nil); override;
@@ -71,6 +72,7 @@ type
     procedure ImprimirINUTILIZACAO(ACTe: TCTe = nil); override;
     procedure ImprimirINUTILIZACAOPDF(ACTe: TCTe = nil); override;
   published
+    property MarcadAgua: String read FMarcadagua write FMarcadagua;
     property PrintDialog: Boolean read FPrintDialog write FPrintDialog;
   end;
 

@@ -4,12 +4,12 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="9">
+    <Units Count="12">
       <Unit0>
         <Filename Value="ACBrCTe_Exemplo.lpr"/>
         <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
         <UsageCount Value="20"/>
-        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
@@ -18,7 +18,7 @@
         <ComponentName Value="frmACBrCTe"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="1"/>
+        <IsVisibleTab Value="True"/>
         <TopLine Value="293"/>
         <CursorPos X="49" Y="306"/>
         <UsageCount Value="20"/>
@@ -71,22 +71,41 @@
         <ComponentName Value="frmDACTeRL"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit7>
       <Unit8>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLRetrato.pas"/>
         <ComponentName Value="frmDACTeRLRetrato"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLRetratoA5.pas"/>
+        <ComponentName Value="frmDACTeRLRetratoA5"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDAEventoRL.pas"/>
+        <ComponentName Value="frmCTeDAEventoRL"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDAEventoRLRetrato.pas"/>
+        <ComponentName Value="frmCTeDAEventoRLRetrato"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit11>
     </Units>
     <JumpHistory Count="27" HistoryIndex="26">
       <Position1>

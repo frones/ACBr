@@ -1497,8 +1497,8 @@ object frmACBrCTe: TfrmACBrCTe
           OnClick = btnConsultarClick
         end
         object btnConsultarChave: TButton
-          Left = 8
-          Top = 40
+          Left = 374
+          Top = 9
           Width = 177
           Height = 25
           Caption = 'Consultar pela Chave'
@@ -1506,7 +1506,7 @@ object frmACBrCTe: TfrmACBrCTe
           OnClick = btnConsultarChaveClick
         end
         object btnConsCad: TButton
-          Left = 192
+          Left = 8
           Top = 40
           Width = 177
           Height = 25
@@ -1514,22 +1514,13 @@ object frmACBrCTe: TfrmACBrCTe
           TabOrder = 2
           OnClick = btnConsCadClick
         end
-        object btnConsultarRecibo: TButton
-          Left = 376
-          Top = 8
-          Width = 177
-          Height = 25
-          Caption = 'Consultar Recibo Lote'
-          TabOrder = 3
-          OnClick = btnConsultarReciboClick
-        end
         object btnStatusServ: TButton
           Left = 8
           Top = 9
           Width = 177
           Height = 25
           Caption = ' Status de Servi'#231'o'
-          TabOrder = 4
+          TabOrder = 3
           OnClick = btnStatusServClick
         end
       end
@@ -1648,31 +1639,22 @@ object frmACBrCTe: TfrmACBrCTe
       object tsInutilizacao: TTabSheet
         Caption = 'Inutiliza'#231#227'o'
         ImageIndex = 5
-        object btnInutilizar: TButton
+        object btnInutilizarImprimir: TButton
           Left = 8
           Top = 9
           Width = 177
           Height = 25
-          Caption = 'Inutilizar Numera'#231#227'o'
-          TabOrder = 0
-          OnClick = btnInutilizarClick
-        end
-        object btnInutilizarImprimir: TButton
-          Left = 191
-          Top = 9
-          Width = 177
-          Height = 25
           Caption = 'Inutilizar Imprimir'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnInutilizarImprimirClick
         end
         object btnGerarPDFInut: TButton
-          Left = 374
+          Left = 194
           Top = 9
           Width = 177
           Height = 25
           Caption = 'Gerar PDF Inutiliza'#231#227'o'
-          TabOrder = 2
+          TabOrder = 1
           OnClick = btnGerarPDFInutClick
         end
       end
@@ -1713,7 +1695,7 @@ object frmACBrCTe: TfrmACBrCTe
       Top = 198
       Width = 567
       Height = 413
-      ActivePage = Dados
+      ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
       object TabSheet5: TTabSheet
@@ -1811,7 +1793,7 @@ object frmACBrCTe: TfrmACBrCTe
     DefaultCharset = UTF_8
     IDECharset = CP1252
     Left = 330
-    Top = 287
+    Top = 295
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '*-nfe.XML'
@@ -1820,7 +1802,7 @@ object frmACBrCTe: TfrmACBrCTe
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
     Left = 427
-    Top = 287
+    Top = 295
   end
   object ACBrCTe1: TACBrCTe
     MAIL = ACBrMail1

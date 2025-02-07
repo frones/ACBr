@@ -159,6 +159,7 @@ implementation
 
 uses
   DateUtils,
+  StrUtilsEx,
   ACBrUtil.Strings,
   ACBrUtil.Math,
   ACBrUtil.XMLHTML,
@@ -330,7 +331,29 @@ begin
 end;
 
 function ReverterFiltroTextoXML(aTexto: String): String;
-var p1,p2:Integer;
+const
+  ENTIDADESHTML_ARRAY: array[0..40] of string = (
+    '&amp;', '&lt;', '&gt;', '&quot;', '&#39;', '&Agrave;', '&Aacute;', '&Acirc;', '&Atilde;', '&Ccedil;',
+    '&Egrave;', '&Eacute;', '&Ecirc;', '&Igrave;', '&Iacute;', '&Icirc;', '&Ograve;', '&Oacute;', '&Ocirc;',
+    '&Otilde;', '&Ugrave;', '&Uacute;', '&Ucirc;', '&agrave;', '&aacute;', '&acirc;', '&atilde;', '&ccedil;',
+    '&egrave;', '&eacute;', '&ecirc;', '&igrave;', '&iacute;', '&icirc;', '&ograve;', '&oacute;', '&ocirc;',
+    '&otilde;', '&ugrave;', '&uacute;', '&ucirc;');
+
+  HTMLHEXCODES_ARRAY: array[0..40] of string = (
+    '&#x26;', '&#x3C;', '&#x3E;', '&#x22;', '&#x27;', '&#xC0;', '&#xC1;', '&#xC2;', '&#xC3;', '&#xC7;',
+    '&#xE0;', '&#xE1;', '&#xE2;', '&#xEC;', '&#xED;', '&#xEE;', '&#xF2;', '&#xF3;', '&#xF4;',
+    '&#xF5;', '&#xF9;', '&#xFA;', '&#xFB;', '&#xE0;', '&#xE1;', '&#xE2;', '&#xE3;', '&#xE7;',
+    '&#xE8;', '&#xE9;', '&#xEA;', '&#xEC;', '&#xED;', '&#xEE;', '&#xF2;', '&#xF3;', '&#xF4;',
+    '&#xF5;', '&#xF9;', '&#xFA;', '&#xFB;');
+
+  LETRASEHSIMBOLOS_ARRAY: array[0..40] of string = (
+    '&', '<', '>', '"', '''', 'À', 'Á', 'Â', 'Ã', 'Ç',
+    'è', 'é', 'ê', 'ì', 'í', 'î', 'ò', 'ó', 'ô',
+    'õ', 'ù', 'ú', 'û', 'à', 'á', 'â', 'ã', 'ç',
+    'è', 'é', 'ê', 'ì', 'í', 'î', 'ò', 'ó', 'ô',
+    'õ', 'ù', 'ú', 'û');
+
+var p1,p2, i:Integer;
     vHex,vStr:String;
     vStrResult:AnsiString;
 begin
@@ -341,11 +364,14 @@ begin
   end
   else
   begin
-    aTexto := StringReplace(aTexto, '&amp;', '&', [rfReplaceAll]);
-    aTexto := StringReplace(aTexto, '&lt;', '<', [rfReplaceAll]);
-    aTexto := StringReplace(aTexto, '&gt;', '>', [rfReplaceAll]);
-    aTexto := StringReplace(aTexto, '&quot;', '"', [rfReplaceAll]);
-    aTexto := StringReplace(aTexto, '&#39;', #39, [rfReplaceAll]);
+    //Converte as HTML-Entities...
+    for i := Low(ENTIDADESHTML_ARRAY) to High(ENTIDADESHTML_ARRAY) do
+      aTexto := FastStringReplace(aTexto, ENTIDADESHTML_ARRAY[i], ACBrStr(LETRASEHSIMBOLOS_ARRAY[i]), [rfReplaceAll]);
+
+    //Converte Hex-Codes...
+    for i := Low(HTMLHEXCODES_ARRAY) to High(HTMLHEXCODES_ARRAY) do
+      aTexto := FastStringReplace(aTexto, HTMLHEXCODES_ARRAY[i], ACBrStr(LETRASEHSIMBOLOS_ARRAY[i]), [rfReplaceAll]);
+    //Converte demais Hex-Codes...
     p1:=Pos('&#x',aTexto);
     while p1>0 do begin
       for p2:=p1 to Length(aTexto) do

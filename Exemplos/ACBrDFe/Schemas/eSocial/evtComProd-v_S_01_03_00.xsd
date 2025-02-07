@@ -26,22 +26,7 @@
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="ideEvento" type="T_ideEvento_folha_mensal_PF" />
-                            <xs:element name="ideEmpregador">
-                                <xs:annotation>
-                                    <xs:documentation>Informações de identificação do empregador.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {tpInsc*}, {nrInsc*}</xs:documentation>
-                                </xs:annotation>
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="tpInsc" type="TS_tpInsc_2" />
-                                        <xs:element name="nrInsc" type="TS_cpf">
-                                            <xs:annotation>
-                                                <xs:documentation>Informar o número de inscrição do contribuinte de acordo com o tipo de inscrição indicado no campo {ideEmpregador/tpInsc}(./tpInsc) e conforme informado em S-1000.</xs:documentation>
-                                            </xs:annotation>
-                                        </xs:element>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
+                            <xs:element name="ideEmpregador" type="T_ideEmpregador_cnpj" />
                             <xs:element name="infoComProd">
                                 <xs:annotation>
                                     <xs:documentation>Informação da comercialização de produção.</xs:documentation>

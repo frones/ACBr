@@ -424,12 +424,11 @@ begin
           end
           else
           begin
-            if VersaoDFx <= ve02_05_00 then
+            if VersaoDFx < veS01_00_00 then
               nmRazao := 'Empresa Teste';
             classTrib := ct01;
           end;
-
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
             natJurid := '0001';
 
           indCoop := tpIndCoop(1);
@@ -446,13 +445,13 @@ begin
           if VersaoDFx > veS01_02_00 then
             indTribFolhaPisPasep := snfSim;
 
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             indEtt := snfSim;
             nrRegEtt := '';
           end;
 
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             with infoOp do
             begin
@@ -479,7 +478,7 @@ begin
             pagDou := '111';
           end;
 
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
             with contato do
             begin
               nmCtt := 'Contato 1';
@@ -492,7 +491,7 @@ begin
           with infoOrgInternacional do
             indAcordoIsenMulta := tpIndAcordoIsencaoMulta(1);
 
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             softwareHouse.Clear;
 
@@ -557,7 +556,7 @@ begin
 
           with aliqGilrat do
           begin
-            if VersaoDFx <= ve02_05_00 then
+            if VersaoDFx < veS01_00_00 then
             begin
               aliqRat := arat1;
               fap := 1.5;
@@ -598,7 +597,7 @@ begin
 {
               nrProcJud := '20150612';
 }
-              if VersaoDFx <= ve02_05_00 then
+              if VersaoDFx < veS01_00_00 then
                 contEntEd := snfSim;
 
               infoEntEduc.Clear;
@@ -671,8 +670,6 @@ begin
 
           if VersaoDFx >= veS01_00_00 then
             codIncCPRP := cicpSuspensaodeIncidenciaemDecorrenciadeDecisaoJudicialDecimo;
-
-
 
           observacao := 'Rubrica Teste';
  {
@@ -807,7 +804,7 @@ begin
             nrInscProp := '65423452341';
           end;
 
-          if VersaoDFx > ve02_05_00 then
+          if VersaoDFx >= veS01_00_00 then
             with dadosOpPort do
             begin
               aliqRat := arat3;
@@ -827,7 +824,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial1030;
 begin
-  if VersaoDFx > ve02_05_00 then
+  if VersaoDFx >= veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.Tabelas.S1030.New do
@@ -887,7 +884,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial1035;
 begin
-  if VersaoDFx > ve02_05_00 then
+  if VersaoDFx >= veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.Tabelas.S1035.New do
@@ -937,7 +934,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial1040;
 begin
-  if VersaoDFx > ve02_05_00 then
+  if VersaoDFx >= veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.Tabelas.S1040.New do
@@ -986,7 +983,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial1050;
 begin
-  if VersaoDFx > ve02_05_00 then
+  if VersaoDFx >= veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.Tabelas.S1050.New do
@@ -1053,7 +1050,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial1060;
 begin
-  if VersaoDFx > ve02_05_00 then
+  if VersaoDFx >= veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.Tabelas.S1060.New do
@@ -1170,7 +1167,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial1080;
 begin
-  if VersaoDFx > ve02_05_00 then
+  if VersaoDFx >= veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.Tabelas.S1080.New do
@@ -1232,7 +1229,7 @@ begin
         // nrRecibo := '1.2.0000000000000000000'; - obrigatorio se indRetif = ireRetificacao.
         indApuracao := iapuMensal;
         perApur := '2015-05';
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
           indGuia := '1';
 
         procEmi := peAplicEmpregador;
@@ -1248,7 +1245,7 @@ begin
       with ideTrabalhador do
       begin
         cpfTrab := '01234567890';
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           nisTrab := '09876543210';
 
         with infoMV do
@@ -1277,7 +1274,7 @@ begin
 
           with sucessaoVinc do
           begin
-            if VersaoDFx <= ve02_05_00 then
+            if VersaoDFx < veS01_00_00 then
             begin
               tpInscAnt := tiCNPJ;
               cnpjEmpregAnt := '12345678901234';
@@ -1385,10 +1382,10 @@ begin
               ideTabRubr := 'E380';
               qtdRubr := 100;
               fatorRubr := 50;
-              if VersaoDFx <= ve02_05_00 then
+              if VersaoDFx < veS01_00_00 then
                 vrUnit := 3296.35;
               vrRubr := 3330.30;
-              if VersaoDFx > ve02_05_00 then
+              if VersaoDFx >= veS01_00_00 then
                 indApurIR := tiaiNormal;
 
               if VersaoDFx > veS01_02_00 then
@@ -1401,7 +1398,7 @@ begin
               end;
             end;
 
-            if VersaoDFx <= ve02_05_00 then
+            if VersaoDFx < veS01_00_00 then
             begin
               infoSaudeColet.detOper.Clear;
 
@@ -1434,13 +1431,13 @@ begin
         begin
           dtAcConv := Now;
           tpAcConv := tacLegislacaoFederalEstadualMunicipalDistrital;
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             dtEfAcConv := Now;
             compAcConv := '2017-01';
           end;
           dsc := 'Dissídio';
-          if VersaoDFx > ve02_05_00 then
+          if VersaoDFx >= veS01_00_00 then
             remunSuc := tpNao;
           idePeriodo.Clear;
 
@@ -1471,10 +1468,10 @@ begin
                   ideTabRubr := 'E380';
                   qtdRubr := 100;
                   fatorRubr := 50;
-                  if VersaoDFx <= ve02_05_00 then
+                  if VersaoDFx < veS01_00_00 then
                     vrUnit := 3296.35;
                   vrRubr := 3330.30;
-                  if VersaoDFx > ve02_05_00 then
+                  if VersaoDFx >= veS01_00_00 then
                    indApurIR := tiaiNormal;
                 end;
 
@@ -1607,12 +1604,12 @@ begin
               qtdRubr := 100;
               fatorRubr := 50;
 
-              if VersaoDFx <= ve02_05_00 then
+              if VersaoDFx < veS01_00_00 then
                 vrUnit := 3296.35;
 
               vrRubr := 3330.30;
 
-              if VersaoDFx > ve02_05_00 then
+              if VersaoDFx >= veS01_00_00 then
                 indApurIR := tiaiNormal;
             end;
           end;
@@ -1651,11 +1648,11 @@ begin
                   ideTabRubr := 'E380';
                   qtdRubr := 100;
                   fatorRubr := 50;
-                  if VersaoDFx <= ve02_05_00 then
+                  if VersaoDFx < veS01_00_00 then
                     vrUnit := 3296.35;
                   vrRubr := 3330.30;
 
-                  if VersaoDFx > ve02_05_00 then
+                  if VersaoDFx >= veS01_00_00 then
                     indApurIR := tiaiNormal;
                 end;
               end;
@@ -1754,7 +1751,7 @@ begin
               qtdRubr := 100;
               fatorRubr := 50;
               vrRubr := 3330.30;
-              if VersaoDFx > ve02_05_00 then
+              if VersaoDFx >= veS01_00_00 then
                 indApurIR := tiaiNormal;
 
               if VersaoDFx > veS01_02_00 then
@@ -1795,7 +1792,7 @@ begin
                 qtdRubr := 100;
                 fatorRubr := 50;
                 vrRubr := 3330.30;
-                if VersaoDFx > ve02_05_00 then
+                if VersaoDFx >= veS01_00_00 then
                   indApurIR := tiaiNormal;
               end;
             end;
@@ -1820,7 +1817,7 @@ begin
         // nrRecibo := '1.2.0000000000000000000'; - obrigatorio se indRetif = ireRetificacao.
         indApuracao := iapuMensal;
 
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
           indGuia := '1';
 
         perApur := '2023-03';
@@ -1838,7 +1835,7 @@ begin
       begin
         cpfBenef := '01478523690';
 
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           with deps  do
             vrDedDep := 100.50;
 
@@ -1849,7 +1846,7 @@ begin
           dtPgto := StrToDate('10/06/2015');
           tpPgto := tpPgtoRemun1200;
 
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             indResBr := tpNao;
 
@@ -2281,7 +2278,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial1250;
 begin
-  if VersaoDFx > ve02_05_00 then
+  if VersaoDFx >= veS01_01_00 then
     exit;
 
   with ACBreSocial1.Eventos.Periodicos.S1250.New do
@@ -2620,7 +2617,7 @@ begin
         indRetif := ireOriginal;
         // nrRecibo := '1.2.0000000000000000000'; - obrigatorio se indRetif = ireRetificacao.
         indApuracao := iapuMensal;
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
           indGuia := '1';
         perApur := '2015-06';
         procEmi := peAplicEmpregador;
@@ -2630,7 +2627,7 @@ begin
       with ideEmpregador do
       begin
         tpInsc := tiCNPJ;
-        nrInsc := '00000000000';
+        nrInsc := edtIdEmpregador.Text;
       end;
 
       with infoComProd do
@@ -2793,7 +2790,7 @@ begin
       begin
         indRetif := ireOriginal;
         // nrRecibo := '1.2.0000000000000000000'; - obrigatorio se indRetif = ireRetificacao.
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           indApuracao := iapuMensal
         else
           indGuia := '1';
@@ -2883,7 +2880,7 @@ begin
         indRetif := ireOriginal;
         // nrRecibo := '1.2.0000000000000000000'; - obrigatorio se indRetif = ireRetificacao.
         indApuracao := iapuMensal;
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
           indGuia := '1';
         perApur := '2015-06';
         procEmi := peAplicEmpregador;
@@ -2905,7 +2902,7 @@ begin
 
         with infoSubstPatrOpPort.New do
         begin
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
             cnpjOpPortuario := '12345678900112'
           else
             codLotacao := '001';
@@ -2913,7 +2910,7 @@ begin
 
         with infoSubstPatrOpPort.New do
         begin
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
             cnpjOpPortuario := '98765432100014'
           else
             codLotacao := '002';
@@ -2948,7 +2945,7 @@ begin
       with ideEvento do
       begin
         indApuracao := iapuMensal;
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
           indGuia := '1';
         perApur := '2015-06';
         procEmi := peAplicEmpregador;
@@ -2977,7 +2974,7 @@ begin
 //        indRetif := ireOriginal;
         // nrRecibo := '1.2.0000000000000000000'; - obrigatorio se indRetif = ireRetificacao.
         indApuracao := iapuMensal;
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
           indGuia := '1';
         perApur := '2022-06';
         procEmi := peAplicEmpregador;
@@ -2990,7 +2987,7 @@ begin
         nrInsc := edtIdEmpregador.Text;
       end;
 
-      if VersaoDFx <= ve02_05_00 then
+      if VersaoDFx < veS01_00_00 then
         with ideRespInf do
         begin
           nmResp := 'Responsavel teste';
@@ -3003,7 +3000,7 @@ begin
       begin
         evtRemun := tpSimNao(0);
 
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
         begin
           evtPgtos := tpSimNao(1);
           evtAqProd := tpSimNao(1);
@@ -3012,7 +3009,7 @@ begin
         evtComProd := tpSimNao(0);
         evtContratAvNP := tpSimNao(1);
         evtInfoComplPer := tpSimNao(0);
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           compSemMovto := '07-2015'
         else
         begin
@@ -3027,7 +3024,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial1300;
 begin
-  if VersaoDFx > ve02_05_00 then
+  if VersaoDFx >= veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.Periodicos.S1300.New do
@@ -3089,7 +3086,7 @@ begin
         dtNascto := Now - 9125;
         dtAdm := Now;
 
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
         begin
           matricula := '001';
           codCateg := 101;
@@ -3134,35 +3131,35 @@ begin
       with trabalhador do
       begin
         cpfTrab := '12345678901';
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           nisTrab := '12345678901';
         nmTrab := 'Empregado teste com acentuação';
         sexo := 'M';
         racaCor := 1;
         estCiv := 1;
         grauInstr := '10';
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           indPriEmpr := tpNao;
         nmSoc := 'Nome social';
 
         with nascimento do
         begin
           dtNascto := date;
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             codMunic := 1234567;
             uf := 'PR';
           end;
           paisNascto := '565';
           paisNac := '545';
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             nmMae := 'teste mãe';
             nmPai := 'teste pai';
           end;
         end;
 
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
         begin
           with documentos do
           begin
@@ -3240,7 +3237,7 @@ begin
           end;
         end;
 
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
         begin
           with trabEstrangeiro do
           begin
@@ -3279,7 +3276,7 @@ begin
           nmDep := 'João Antônio';
           dtNascto := date;
           cpfDep := '12345678901';
-          if VersaoDFx > ve02_05_00 then
+          if VersaoDFx >= veS01_00_00 then
             sexoDep := 'F';
           depIRRF := tpSim;
           depSF := tpNao;
@@ -3294,7 +3291,7 @@ begin
           nmDep := 'Dependente 2';
           dtNascto := date;
           cpfDep := '12345678901';
-          if VersaoDFx > ve02_05_00 then
+          if VersaoDFx >= veS01_00_00 then
             sexoDep := 'F';
           depIRRF := tpSim;
           depSF := tpNao;
@@ -3303,7 +3300,7 @@ begin
             descrDep := 'Descrever o dependente';
         end;
 
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           with aposentadoria do
             trabAposent := tpNao;
 
@@ -3312,7 +3309,7 @@ begin
           fonePrinc := '91067240';
           emailPrinc := 'teste@email.com.br';
 
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             foneAlternat := '91067240';
             emailAlternat := 'teste@teste.com';
@@ -3325,7 +3322,7 @@ begin
         matricula := '54545';
         tpRegTrab :=  trCLT;
         tpRegPrev := tpTpRegPrev(1);
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           nrRecInfPrelim := '9999999999';
 
         with infoRegimeTrab do
@@ -3345,7 +3342,7 @@ begin
 
             with fgts do
             begin
-              if VersaoDFx <= ve02_05_00 then
+              if VersaoDFx < veS01_00_00 then
                 opcFGTS := tpOpcFGTS(ofOptante);
               dtOpcFGTS := date;
             end;
@@ -3355,7 +3352,7 @@ begin
               hipLeg := 1;
               justContr := 'teste';
 
-              if VersaoDFx <= ve02_05_00 then
+              if VersaoDFx < veS01_00_00 then
               begin
                 with ideTomadorServ do
                 begin
@@ -3402,14 +3399,14 @@ begin
 {
           // enviar apenas um tipo de admissao
           with infoEstatutario do
-                                 
+
           begin
-            if VersaoDFx <= ve02_05_00 then
+            if VersaoDFx < veS01_00_00 then
               indProvim := ipNormal;
 
             tpProv := tpNomeacaoCargoEfetivo;
 
-            if VersaoDFx <= ve02_05_00 then
+            if VersaoDFx < veS01_00_00 then
             begin
               dtNomeacao := Date;
               dtPosse := Date;
@@ -3417,7 +3414,7 @@ begin
 
             dtExercicio := Date;
 
-            if VersaoDFx > ve02_05_00 then
+            if VersaoDFx >= veS01_00_00 then
             begin
               tpPlanRP := prpSemSegregacaoDaMassa;
               indTetoRGPS := tpSim;
@@ -3430,11 +3427,11 @@ begin
 
         with infoContrato do
         begin
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             codCargo := '545';
             codFuncao := '5456';
-                          
+
             codCarreira := '1';
             dtIngrCarr := Now;
           end
@@ -3449,7 +3446,6 @@ begin
           end;
 
           codCateg := 111;
-                                 
 
           with remuneracao do
           begin
@@ -3462,7 +3458,7 @@ begin
           begin
             tpContr := tpTpContr(1);
             dtTerm := date;
-            if VersaoDFx > ve02_05_00 then
+            if VersaoDFx >= veS01_00_00 then
             begin
               clauAssec := tpNao;
               objDet    := 'teste Obj Det';
@@ -3478,7 +3474,7 @@ begin
               descComp := 'Descricao local geral teste';
             end;
 
-            if VersaoDFx <= ve02_05_00 then
+            if VersaoDFx < veS01_00_00 then
             begin
               with localTrabDom do
               begin
@@ -3504,9 +3500,6 @@ begin
                 codMunic    := 1234567;
                 uf          := 'SP';
               end;
-            begin
-
-            end;
           end;
 
           with horContratual do
@@ -3514,7 +3507,7 @@ begin
             qtdHrsSem := 44;
             tpJornada := tpTpJornada(1);
             tmpParc   := tpNaoeTempoParcial;
-            if VersaoDFx > ve02_05_00 then
+            if VersaoDFx >= veS01_00_00 then
             begin
               horNoturno := tpNao;
               dscJorn := 'Descricao da Jornada';
@@ -3575,7 +3568,7 @@ begin
           dtTransf := date;
         end;
 
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
         begin
           with mudancaCPF do
           begin
@@ -3631,7 +3624,7 @@ begin
 
       with trabalhador do
       begin
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           nisTrab := '12345678901';
         nmTrab := 'Empregado teste';
         sexo := 'M';
@@ -3639,10 +3632,10 @@ begin
         estCiv := 1;
         grauInstr := '10';
         nmSoc := 'Nome social';
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
           paisNac := '105';
 
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
         begin
           with nascimento do
           begin
@@ -3654,8 +3647,8 @@ begin
             nmMae      := 'Joaquina';
             nmPai      := 'Sebastiao';
           end;
-        end 
-        else 
+        end
+        else
         begin
           with documentos do
           begin
@@ -3733,7 +3726,7 @@ begin
           end;
         end;
 
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
           with trabImig do
           begin
             tmpResid := ttrPrazoIndeterminado;
@@ -3741,7 +3734,7 @@ begin
 
           end;
 
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           with trabEstrangeiro do
           begin
             dtChegada := date;
@@ -3770,7 +3763,7 @@ begin
           nmDep := 'Dependente 1';
           dtNascto := date;
           cpfDep := '12345678901';
-          if VersaoDFx > ve02_05_00 then
+          if VersaoDFx >= veS01_00_00 then
             sexoDep := 'F';
           depIRRF := tpSim;
           depSF := tpNao;
@@ -3785,7 +3778,7 @@ begin
           nmDep := 'Dependente 2';
           dtNascto := date;
           cpfDep := '12345678901';
-          if VersaoDFx > ve02_05_00 then
+          if VersaoDFx >= veS01_00_00 then
             sexoDep := 'F';
           depIRRF := tpSim;
           depSF := tpNao;
@@ -3794,7 +3787,7 @@ begin
             descrDep := 'Descrever o dependente';
         end;
 
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           with aposentadoria do
             trabAposent := tpNao;
 
@@ -3804,7 +3797,7 @@ begin
 
           emailPrinc := 'teste@email.com.br';
 
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             foneAlternat := '91067240';
             emailAlternat := 'teste@teste.com';
@@ -3840,7 +3833,7 @@ begin
       with ideVinculo do
       begin
         cpfTrab := '12345678901';
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           nisTrab := '96325874103';
         matricula := 'A1234';
       end;
@@ -3893,7 +3886,7 @@ begin
 
         with infoContrato do
         begin
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             codCargo  := '123';
             codFuncao := '321';
@@ -3909,7 +3902,7 @@ begin
 
           codCateg := 111;
 
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             codCarreira := '1';
             dtIngrCarr := Now;
@@ -3963,16 +3956,16 @@ begin
           begin
             qtdHrsSem := 44;
             tpJornada := tjDemaisTiposJornada;
-            if VersaoDFx <= ve02_05_00 then
+            if VersaoDFx < veS01_00_00 then
               dscTpJorn := 'Descrição do tipo de jornada, obrigatorio se tpJornada = tjDemaisTiposJornada';
-                                          
+
 
             tmpParc := tpNaoeTempoParcial;
             horNoturno := tpNao;
 
-            if VersaoDFx > ve02_05_00 then
+            if VersaoDFx >= veS01_00_00 then
               dscJorn := 'Descrever os horarios de trabalho'
-            else if VersaoDFx <= ve02_05_00 then
+            else if VersaoDFx < veS01_00_00 then
             begin
               horario.Clear;
 
@@ -3984,7 +3977,7 @@ begin
             end;
           end;
 
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             filiacaoSindical.Clear;
 
@@ -4012,7 +4005,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2210;
 begin
-  if VersaoDFx <= ve02_05_00 then
+  if VersaoDFx < veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.NaoPeriodicos.S2210.New do
@@ -4129,7 +4122,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2220;
 begin
-  if VersaoDFx <= ve02_05_00 then
+  if VersaoDFx < veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.NaoPeriodicos.S2220.New do
@@ -4234,7 +4227,7 @@ begin
       with ideVinculo do
       begin
         cpfTrab   := '12345678901';
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           nisTrab   := '12345678901';
         matricula := '5000';
       end;
@@ -4277,10 +4270,10 @@ begin
       with ideVinculo do
       begin
         cpfTrab := '12345678901';
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           nisTrab := '12345678901';
         matricula := 'A123';
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
           codCateg := 101;
       end;
 
@@ -4294,14 +4287,14 @@ begin
           tpAcidTransito := tpatOutros;
           observacao := 'Campo opcional, salvo quando codMotAfast=21 aí é obrigatória';
 
-          if VersaoDFx > ve02_05_00 then
+          if VersaoDFx >= veS01_00_00 then
             with perAquis do
             begin
               dtInicio := Date-365;
               dtFim    := Date-1;
             end;
 
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             infoAtestado.Clear;
 
@@ -4353,8 +4346,9 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2231;
 begin
-  if VersaoDFx <= ve02_05_00 then
+  if VersaoDFx < veS01_00_00 then
     exit;
+
   with ACBreSocial1.Eventos.NaoPeriodicos.S2231.New do
   begin
     with evtCessao do
@@ -4383,7 +4377,6 @@ begin
 
       with infoCessao do
       begin
-
         with iniCessao do
         begin
           dtIniCessao := date;
@@ -4424,10 +4417,10 @@ begin
       with ideVinculo do
       begin
         cpfTrab := '12345678901';
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           nisTrab := '12345678901';
         matricula := '564545';
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
           codCateg := 101;
       end;
 
@@ -4439,7 +4432,7 @@ begin
 
         with infoAmb.New do
         begin
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
             codAmb := '654'
           else
           begin
@@ -4500,7 +4493,7 @@ begin
         with respReg.New do
         begin
           cpfResp := '12345678901';
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             nisResp := '12345678901';
             nmResp := 'RESPONSAVEL';
@@ -4513,7 +4506,7 @@ begin
 
         with obs do
         begin
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
             metErg := 'METODOLOGIA';
           obsCompl := 'OBS COMPLEMENTAR';
         end;
@@ -4524,7 +4517,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2245;
 begin
-  if VersaoDFx > ve02_05_00 then
+  if VersaoDFx >= veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.NaoPeriodicos.S2245.New do
@@ -4585,7 +4578,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2250;
 begin
-  if VersaoDFx > ve02_05_00 then
+  if VersaoDFx >= veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.NaoPeriodicos.S2250.New do
@@ -4642,7 +4635,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2260;
 begin
-  if VersaoDFx > ve02_05_00 then
+  if VersaoDFx >= veS01_00_00 then
     exit;
 
  with ACBreSocial1.Eventos.NaoPeriodicos.S2260.New do
@@ -4730,7 +4723,7 @@ begin
       with ideVinculo do
       begin
         cpfTrab := '12345678901';
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           nisTrab := '88888888888';
         matricula := '123456';
       end;
@@ -4741,12 +4734,12 @@ begin
 {
         nrProcJud := '999999999';
 }
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
           nrLeiAnistia := '20190000001';
 
         dtEfetRetorno := Now + 20;
         dtEfeito := Now;
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           indPagtoJuizo := tpSim;
       end;
     end;
@@ -4765,9 +4758,9 @@ begin
       begin
         indRetif := ireOriginal;
         // nrRecibo :='1.2.0000000000000000000'; - obrigatorio se indRetif = ireRetificacao.
-                                     
-                         
-        if VersaoDFx > ve02_05_00 then
+
+
+        if VersaoDFx >= veS01_00_00 then
           indGuia := '1';
         procEmi := peAplicEmpregador;
         verProc := '1.0';
@@ -4782,7 +4775,7 @@ begin
       with ideVinculo do
       begin
         cpfTrab := '33333333303';
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           nisTrab := '11111111111';
         matricula := '123456';
       end;
@@ -4791,7 +4784,7 @@ begin
       begin
         mtvDeslig := '02';
         dtDeslig := date;
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
           dtAvPrv := date - 30;
         indPagtoAPI := tpSim;
         dtProjFimAPI := Now;
@@ -4800,13 +4793,13 @@ begin
         vrAlim := 1985.65;
 
         // Certidão de óbito apenas em caso de morte quando o mtvDeslig for 09 ou 10
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           nrCertObito := '0123456789';
 
         // numero do processo que decidiu o desligamento mtvdeslig = 17
         nrProcTrab := '96325874101234567890';
 
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
         begin
           with infoInterm.New do
           begin
@@ -4828,20 +4821,19 @@ begin
           end;
         end;
 
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           indCumprParc := cpaCumprimentoTotal;
 
-        if VersaoDFx <= ve02_04_01 then // Observação opcional - versão 2.04.01
-                               
+        if VersaoDFx < veS01_00_00 then // Observação opcional - versão 2.04.01
           observacao := 'Anotações relevantes sobre o desligamento que não tenham campo próprio';
 
-        if VersaoDFx >= ve02_04_02 then // Obsercação opcional - versão 2.04.02
+        if VersaoDFx >= veS01_00_00 then // Obsercação opcional - versão 2.04.02
           with observacoes.New do
            observacao := 'Anotações relevantes sobre o desligamento que não tenham campo próprio';
 
         with sucessaoVinc do
         begin
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             tpInscSuc := tiCNPJ;
             cnpjSucessora := '12345678912345';
@@ -4854,7 +4846,7 @@ begin
         end;
         // Transferência de titularidade do empregado doméstico para outro representante da mesma unidade familiar.
 {
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
         begin
           with transfTit do
           begin
@@ -4926,10 +4918,10 @@ begin
                   ideTabRubr := 'A01';
                   qtdRubr := 2;
                   fatorRubr := 200.65;
-                  if VersaoDFx <= ve02_05_00 then
+                  if VersaoDFx < veS01_00_00 then
                     vrUnit := 152.35;
                   vrRubr := 304.70;
-                  if VersaoDFx > ve02_05_00 then
+                  if VersaoDFx >= veS01_00_00 then
                     indApurIR := tiaiNormal;
                   if VersaoDFx > veS01_02_00 then
                   begin
@@ -4942,9 +4934,9 @@ begin
                     end;
                   end;
                 end;
-                if VersaoDFx <= ve02_05_00 then
+                if VersaoDFx < veS01_00_00 then
                   with infoSaudeColet.detOper.New do
-                                      
+
                   begin
                     cnpjOper := '74563215000195';
                     regANS := '123456';
@@ -4975,7 +4967,7 @@ begin
               begin
                 dtAcConv := Now;
                 tpAcConv := tacAcordoColTrab;
-                if VersaoDFx <= ve02_05_00 then
+                if VersaoDFx < veS01_00_00 then
                   dtEfAcConv := Now;
                 dsc := 'Detalhamento';
 
@@ -5001,13 +4993,14 @@ begin
                       ideTabRubr := 'A01';
                       qtdRubr := 0.4;
                       fatorRubr := 200.65;
-                      if VersaoDFx <= ve02_05_00 then
+                      if VersaoDFx < veS01_00_00 then
                         vrUnit := 200.35;
                       vrRubr := 1500.70;
                     end;
 
                     with infoAgNocivo do
                       grauExp := ge1;
+
                     with infoSimples do
                       indSimples := idsIntegralmente;
                   end;
@@ -5059,7 +5052,7 @@ begin
 
         with consigFGTS.New do
         begin
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
             idConsig := tpSim;
           insConsig := '12345';
           nrContr := '123456';
@@ -5092,7 +5085,7 @@ begin
       with trabalhador do
       begin
         cpfTrab := '98765432123';
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           nisTrab := '54789632145';
         nmTrab := 'João das Neve';
         sexo := 'M';
@@ -5104,21 +5097,21 @@ begin
         with nascimento do
         begin
           dtNascto := date;
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             codMunic := 4153623;
             uf := 'PR';
           end;
           paisNascto := '063';
           paisNac := '105';
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             nmMae := 'Joana das Neve';
             nmPai := 'Jose das Neve';
           end;
         end;
 
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
         begin
           with documentos do
           begin
@@ -5197,7 +5190,7 @@ begin
           end;
         end;
 
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           with trabEstrangeiro do
           begin
             dtChegada := date;
@@ -5234,7 +5227,7 @@ begin
           cpfDep := '99999999909';
           depIRRF := tpSim;
           depSF := tpNao;
-          if VersaoDFx > ve02_05_00 then
+          if VersaoDFx >= veS01_00_00 then
             incTrab := tpNao;
           if VersaoDFx >= veS01_02_00 then
             descrDep := 'Descrever o dependente';
@@ -5248,7 +5241,7 @@ begin
           cpfDep := '99999999909';
           depIRRF := tpSim;
           depSF := tpNao;
-          if VersaoDFx > ve02_05_00 then
+          if VersaoDFx >= veS01_00_00 then
             incTrab := tpNao;
           if VersaoDFx >= veS01_02_00 then
             descrDep := 'Descrever o dependente';
@@ -5258,7 +5251,7 @@ begin
         begin
           fonePrinc := '91067240';
           emailPrinc := 'TESTE@email.com.br';
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
           begin
             foneAlternat := '91067240';
             emailAlternat := 'teste@teste.com';
@@ -5268,7 +5261,7 @@ begin
 
       with infoTSVInicio do
       begin
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
         begin
           cadIni := tpSim;
           matricula := 'A235890B';
@@ -5284,7 +5277,7 @@ begin
         begin
           with cargoFuncao do
           begin
-            if VersaoDFx <= ve02_05_00 then
+            if VersaoDFx < veS01_00_00 then
             begin
               codCargo := '001';
               codFuncao := '001';
@@ -5307,7 +5300,7 @@ begin
 
           with FGTS do
           begin
-            if VersaoDFx <= ve02_05_00 then
+            if VersaoDFx < veS01_00_00 then
               OpcFGTS := ofOptante;
             dtOpcFGTS := date;
           end;
@@ -5316,7 +5309,7 @@ begin
           with infoDirSind do
           begin
             categOrig := 111;
-            if VersaoDFx <= ve02_05_00 then
+            if VersaoDFx < veS01_00_00 then
               cnpjOrigem := '12345678901234'
             else
             begin
@@ -5325,7 +5318,7 @@ begin
             end;
             dtAdmOrig := date;
             matricOrig := 'A1234';
-            if VersaoDFx > ve02_05_00 then
+            if VersaoDFx >= veS01_00_00 then
             begin
               tpRegTrab := trCLT;
               tpRegPrev := rpRGPS;
@@ -5341,7 +5334,7 @@ begin
             dtAdmCed := date;
             tpRegTrab := trCLT;
             tpRegPrev := rpRGPS;
-            if VersaoDFx <= ve02_05_00 then
+            if VersaoDFx < veS01_00_00 then
               infOnus := ocCedente;
           end;
 
@@ -5362,7 +5355,7 @@ begin
             nivEstagio := nvSuperior;
             areaAtuacao := 'Direito';
             nrApol := '123456';
-            if VersaoDFx <= ve02_05_00 then
+            if VersaoDFx < veS01_00_00 then
               vlrBolsa := 600.00;
             dtPrevTerm := IncMonth(date, 12);
 
@@ -5381,7 +5374,7 @@ begin
             with ageIntegracao do
             begin
               cnpjAgntInteg := '12345678901234';
-              if VersaoDFx <= ve02_05_00 then
+              if VersaoDFx < veS01_00_00 then
               begin
                 nmRazao := 'Nome da empresa';
                 dscLograd := 'R Adam Smith';
@@ -5396,7 +5389,7 @@ begin
             with supervisorEstagio do
             begin
               cpfSupervisor := '00000000000';
-              if VersaoDFx <= ve02_05_00 then
+              if VersaoDFx < veS01_00_00 then
                 nmSuperv := 'Pedro das Pedras';
             end;
 
@@ -5437,7 +5430,7 @@ begin
       with ideTrabSemVinc do
       begin
         cpfTrab := '12345678901';
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           nisTrab := '00000000000';
         codCateg := 723;
       end;
@@ -5451,7 +5444,7 @@ begin
         begin
           with cargoFuncao do
           begin
-            if VersaoDFx <= ve02_05_00 then
+            if VersaoDFx < veS01_00_00 then
             begin
               codCargo := '001';
               codFuncao := '001';
@@ -5478,7 +5471,7 @@ begin
             nivEstagio := nvSuperior;
             areaAtuacao := 'Direito';
             nrApol := '123456';
-            if VersaoDFx <= ve02_05_00 then
+            if VersaoDFx < veS01_00_00 then
               vlrBolsa := 600.00;
             dtPrevTerm := IncMonth(date, 12);
 
@@ -5497,7 +5490,7 @@ begin
             with ageIntegracao do
             begin
               cnpjAgntInteg := '98765432145678';
-              if VersaoDFx <= ve02_05_00 then
+              if VersaoDFx < veS01_00_00 then
               begin
                 nmRazao := 'Nome da empresa';
                 dscLograd := 'R Adam Smith';
@@ -5512,7 +5505,7 @@ begin
             with supervisorEstagio do
             begin
               cpfSupervisor := '12345678901';
-              if VersaoDFx <= ve02_05_00 then
+              if VersaoDFx < veS01_00_00 then
                 nmSuperv := 'Pedro das Pedras';
             end;
 
@@ -5544,7 +5537,7 @@ begin
         // nrRecibo :='1.2.0000000000000000000'; - obrigatorio se indRetif = ireRetificacao.
         procEmi := peAplicEmpregador;
         verProc := '1.0';
-        if VersaoDFx > ve02_05_00 then
+        if VersaoDFx >= veS01_00_00 then
           indGuia := '1';
       end;
 
@@ -5557,7 +5550,7 @@ begin
       with ideTrabSemVinc do
       begin
         cpfTrab := '12345678987';
-        if VersaoDFx <= ve02_05_00 then
+        if VersaoDFx < veS01_00_00 then
           nisTrab := '98765432123'
         else
           matricula := 'A215032';
@@ -5626,10 +5619,10 @@ begin
                 ideTabRubr := 'A01';
                 qtdRubr := 2;
                 fatorRubr := 50.25;
-                if VersaoDFx <= ve02_05_00 then
+                if VersaoDFx < veS01_00_00 then
                   vrUnit := 152.35;
                 vrRubr := 304.70;
-                if VersaoDF > ve02_05_00 then
+                if VersaoDF >= veS01_00_00 then
                   indApurIR := tiaiNormal;
 
                 if VersaoDFx > veS01_02_00 then
@@ -5644,7 +5637,7 @@ begin
                 end;
               end;
 
-              if VersaoDFx <= ve02_05_00 then
+              if VersaoDFx < veS01_00_00 then
               begin
                 with infoSaudeColet do
                 begin
@@ -5716,7 +5709,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2400;
 begin
-  if VersaoDFx <= ve02_05_00 then
+  if VersaoDFx < veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.NaoPeriodicos.S2400.New do
@@ -5787,7 +5780,7 @@ begin
           dtNascto := date;
           cpfDep := '12345678901';
           depIRRF := tpSim;
-          if VersaoDFx > ve02_05_00 then
+          if VersaoDFx >= veS01_00_00 then
             sexoDep := 'F';
           depSF := tpNao;
           incTrab := tpNao;
@@ -5802,7 +5795,7 @@ begin
           DtNascto := date;
           cpfDep := '12345678901';
           depIRRF := tpSim;
-          if VersaoDFx > ve02_05_00 then
+          if VersaoDFx >= veS01_00_00 then
             sexoDep := 'M';
           depSF := tpNao;
           incTrab := tpNao;
@@ -5816,7 +5809,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2405;
 begin
-  if VersaoDFx <= ve02_05_00 then
+  if VersaoDFx < veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.NaoPeriodicos.S2405.New do
@@ -5888,7 +5881,7 @@ begin
               dtNascto := date;
               cpfDep := '12345678901';
               depIRRF := tpSim;
-              if VersaoDFx > ve02_05_00 then
+              if VersaoDFx >= veS01_00_00 then
                 sexoDep := 'F';
               depSF := tpNao;
               incTrab := tpNao;
@@ -5903,7 +5896,7 @@ begin
               DtNascto := date;
               cpfDep := '12345678901';
               depIRRF := tpSim;
-              if VersaoDFx > ve02_05_00 then
+              if VersaoDFx >= veS01_00_00 then
                 sexoDep := 'M';
               depSF := tpNao;
               incTrab := tpNao;
@@ -5919,7 +5912,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2410;
 begin
-  if VersaoDFx <= ve02_05_00 then
+  if VersaoDFx < veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.NaoPeriodicos.S2410.New do
@@ -6005,7 +5998,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2416;
 begin
-  if VersaoDFx <= ve02_05_00 then
+  if VersaoDFx < veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.NaoPeriodicos.S2416.New do
@@ -6063,7 +6056,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2418;
 begin
-  if VersaoDFx <= ve02_05_00 then
+  if VersaoDFx < veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.NaoPeriodicos.S2418.New do
@@ -6103,7 +6096,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2420;
 begin
-  if VersaoDFx <= ve02_05_00 then
+  if VersaoDFx < veS01_00_00 then
     exit;
 
   with ACBreSocial1.Eventos.NaoPeriodicos.S2420.New do
@@ -6544,7 +6537,7 @@ begin
       with ideEmpregador do
       begin
         TpInsc := tiCNPJ;
-        nrInsc := '12345678901234';
+        nrInsc := edtIdEmpregador.Text;
       end;
 
       with ideProc do
@@ -6584,7 +6577,7 @@ begin
         with ideTrabalhador do
         begin
           cpfTrab := '12345678950';
-          if VersaoDFx <= ve02_05_00 then
+          if VersaoDFx < veS01_00_00 then
             nisTrab := '12345678901';
         end;
 

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 07/02/2025
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Tupassi/PR, o provedor é IPM versão 1.01
+  Por: Alex Heinen
 -- ACBrNFSeXClass --
 [*] Finalizado a inclusão das novas classes referente aos novos grupos e campos 
     da reforma tributária (classes exclusivas para o Padrão Nacional).

@@ -283,6 +283,10 @@ type
     btnCancInsucessoEntrega: TButton;
     btnEventoECONF: TButton;
     btnEventoCancECONF: TButton;
+    Label41: TLabel;
+    edtIdCSRT: TEdit;
+    Label46: TLabel;
+    edtCSRT: TEdit;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -4498,6 +4502,10 @@ begin
     Ini.WriteString('Emitente', 'UF',          edtEmitUF.Text);
     Ini.WriteInteger('Emitente', 'CRT',        cbTipoEmpresa.ItemIndex);
 
+    // Responsável Técnico
+    Ini.WriteString('RespTecnico', 'IdCSRT', edtIdCSRT.Text);
+    Ini.WriteString('RespTecnico', 'CSRT', edtCSRT.Text);
+
     Ini.WriteString('Email', 'Host',    edtSmtpHost.Text);
     Ini.WriteString('Email', 'Port',    edtSmtpPort.Text);
     Ini.WriteString('Email', 'User',    edtSmtpUser.Text);
@@ -4621,6 +4629,10 @@ begin
     edtEmitUF.Text         := Ini.ReadString('Emitente', 'UF',          '');
 
     cbTipoEmpresa.ItemIndex := Ini.ReadInteger('Emitente', 'CRT', 2);
+
+    // Responsável Técnico
+    edtIdCSRT.Text := Ini.ReadString('RespTecnico', 'IdCSRT', '');
+    edtCSRT.Text := Ini.ReadString('RespTecnico', 'CSRT', '');
 
     edtSmtpHost.Text     := Ini.ReadString('Email', 'Host',    '');
     edtSmtpPort.Text     := Ini.ReadString('Email', 'Port',    '');
@@ -4751,6 +4763,10 @@ begin
     PathMensal       := GetPathNFe(0);
     PathSalvar       := PathMensal;
   end;
+
+  // IdCSRT e CSRT do Responsável Técnico, no momento só a SEFAZ-PR esta exigindo
+  ACBrNFe1.Configuracoes.RespTec.idCSRT := StrToIntDef(edtIdCSRT.Text, 0);
+  ACBrNFe1.Configuracoes.RespTec.CSRT := edtCSRT.Text;
 
   if ACBrNFe1.DANFE <> nil then
   begin

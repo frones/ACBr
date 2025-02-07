@@ -24,7 +24,7 @@ object frmACBrNFe: TfrmACBrNFe
       Left = 1
       Top = 1
       Width = 295
-      Height = 544
+      Height = 553
       ActivePage = TabSheet1
       TabOrder = 0
       object TabSheet1: TTabSheet
@@ -33,7 +33,7 @@ object frmACBrNFe: TfrmACBrNFe
           Left = 0
           Top = 0
           Width = 287
-          Height = 516
+          Height = 525
           ActivePage = TabSheet12
           Align = alClient
           MultiLine = True
@@ -359,7 +359,7 @@ object frmACBrNFe: TfrmACBrNFe
               Left = 3
               Top = 12
               Width = 265
-              Height = 389
+              Height = 464
               Caption = 'Geral'
               TabOrder = 0
               object sbtnPathSalvar: TSpeedButton
@@ -453,6 +453,20 @@ object frmACBrNFe: TfrmACBrNFe
                 NumGlyphs = 2
                 OnClick = spPathSchemasClick
               end
+              object Label41: TLabel
+                Left = 8
+                Top = 378
+                Width = 140
+                Height = 13
+                Caption = 'IdCSRT (Somente SEFAZ-PR)'
+              end
+              object Label46: TLabel
+                Left = 7
+                Top = 418
+                Width = 130
+                Height = 13
+                Caption = 'CSRT (Somente SEFAZ-PR)'
+              end
               object edtPathLogs: TEdit
                 Left = 8
                 Top = 239
@@ -540,6 +554,20 @@ object frmACBrNFe: TfrmACBrNFe
                 Width = 228
                 Height = 21
                 TabOrder = 11
+              end
+              object edtIdCSRT: TEdit
+                Left = 8
+                Top = 394
+                Width = 248
+                Height = 21
+                TabOrder = 12
+              end
+              object edtCSRT: TEdit
+                Left = 7
+                Top = 434
+                Width = 248
+                Height = 21
+                TabOrder = 13
               end
             end
           end

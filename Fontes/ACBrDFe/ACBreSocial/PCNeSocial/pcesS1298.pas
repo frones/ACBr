@@ -59,30 +59,6 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS1298CollectionItem = class;
-  TEvtReabreEvPer = class;
-
-  TS1298Collection = class(TeSocialCollection)
-  private
-    function GetItem(Index: Integer): TS1298CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS1298CollectionItem);
-  public
-    function Add: TS1298CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS1298CollectionItem;
-    property Items[Index: Integer]: TS1298CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS1298CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtReabreEvPer: TEvtReabreEvPer;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtReabreEvPer: TEvtReabreEvPer read FEvtReabreEvPer write FEvtReabreEvPer;
-  end;
-
   TEvtReabreEvPer = class(TESocialEvento)
   private
     FIdeEvento: TIdeEvento4;
@@ -98,6 +74,27 @@ type
 
     property IdeEvento: TIdeEvento4 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+  end;
+
+  TS1298CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtReabreEvPer: TEvtReabreEvPer;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtReabreEvPer: TEvtReabreEvPer read FEvtReabreEvPer write FEvtReabreEvPer;
+  end;
+
+  TS1298Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS1298CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS1298CollectionItem);
+  public
+    function Add: TS1298CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1298CollectionItem;
+    property Items[Index: Integer]: TS1298CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -181,9 +178,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtReabreEvPer');
-
-//    Validar(schevtReabreEvPer);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

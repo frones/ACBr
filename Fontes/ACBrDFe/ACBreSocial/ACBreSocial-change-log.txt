@@ -52,6 +52,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2025
+-- Diversos --
+[*] Remoção de código que eram usados por versões antigas, ou seja, antes das
+    versões Simplificadas.
+    Remoção realizada nos eventos de tabelas e eventos periódicos.
+Por: Italo Giurizzato Junior
+
 10/01/2025
 -- pcesS1210 --
 [*] #TK-6468 - Ajuste das ocorrências do vlrDedPC e vlrDedPC13 conforme leiaute.

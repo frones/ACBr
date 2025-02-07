@@ -61,41 +61,38 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS1005Collection = class;
-  TS1005CollectionItem = class;
-  TEvtTabEstab = class;
-
-  {Classes específicas deste evento}
-  TInfoPCD = class;
-  TInfoEntEducCollection = class;
-  TInfoEntEducCollectionItem = class;
-  TInfoApr = class;
-  TInfoTrab = class;
-  TInfoObra = class;
-  TinfoCaepf = class; //introduzido no layout2.1
-  TDadosEstab = class;
-  TIdeEstab = class;
-  TInfoEstab = class;
-
-  TS1005Collection = class(TeSocialCollection)
+  TIdeEstab = class(TObject)
   private
-    function GetItem(Index: Integer): TS1005CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS1005CollectionItem);
+    FTpInsc: tpTpInsc;
+    FNrInsc: string;
+    FIniValid: string;
+    FFimValid: string;
   public
-    function Add: TS1005CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS1005CollectionItem;
-    property Items[Index: Integer]: TS1005CollectionItem read GetItem write SetItem; default;
+    property tpInsc: tpTpInsc read FTpInsc write FTpInsc;
+    property nrInsc: string read FNrInsc write FNrInsc;
+    property iniValid: string read FIniValid write FIniValid;
+    property fimValid: string read FFimValid write FFimValid;
   end;
 
-  TS1005CollectionItem = class(TObject)
+  TinfoCaepf = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FevtTabEstab: TevtTabEstab;
+    FtpCaepf: tpCaepf;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
-    destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtTabEstab: TevtTabEstab read FevtTabEstab write FevtTabEstab;
+    property tpCaepf: tpCaepf read FtpCaepf write FtpCaepf;
+  end;
+
+  TInfoObra = class(TObject)
+  private
+    FIndSubstPatrObra: tpIndSubstPatronalObra;
+  public
+    property indSubstPatrObra: tpIndSubstPatronalObra read FIndSubstPatrObra write FIndSubstPatrObra;
+  end;
+
+  TInfoEntEducCollectionItem = class(TObject)
+  private
+    FNrInsc: string;
+  public
+    property nrInsc: string read FNrInsc write FNrInsc;
   end;
 
   TInfoEntEducCollection = class(TACBrObjectList)
@@ -106,13 +103,6 @@ type
     function Add: TInfoEntEducCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
     function New: TInfoEntEducCollectionItem;
     property Items[Index: Integer]: TInfoEntEducCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TInfoEntEducCollectionItem = class(TObject)
-  private
-    FNrInsc: string;
-  public
-    property nrInsc: string read FNrInsc write FNrInsc;
   end;
 
   TInfoApr = class(TObject)
@@ -154,20 +144,6 @@ type
     property infoPCD: TInfoPCD read getInfoPCD write FInfoPCD;
   end;
 
-  TInfoObra = class(TObject)
-  private
-    FIndSubstPatrObra: tpIndSubstPatronalObra;
-  public
-    property indSubstPatrObra: tpIndSubstPatronalObra read FIndSubstPatrObra write FIndSubstPatrObra;
-  end;
-
-  TinfoCaepf = class(TObject)
-  private
-    FtpCaepf: tpCaepf;
-  public
-    property tpCaepf: tpCaepf read FtpCaepf write FtpCaepf;
-  end;
-
   TDadosEstab = class(TObject)
   private
     FCnaePrep: string;
@@ -192,19 +168,6 @@ type
     property infoObra: TInfoObra read getInfoObra write FInfoObra;
     property infoCaepf : TinfoCaepf read getinfoCaepf write FinfoCaepf;
     property infoTrab: TInfoTrab read FInfoTrab write FInfoTrab;
-  end;
-
-  TIdeEstab = class(TObject)
-  private
-    FTpInsc: tpTpInsc;
-    FNrInsc: string;
-    FIniValid: string;
-    FFimValid: string;
-  public
-    property tpInsc: tpTpInsc read FTpInsc write FTpInsc;
-    property nrInsc: string read FNrInsc write FNrInsc;
-    property iniValid: string read FIniValid write FIniValid;
-    property fimValid: string read FFimValid write FFimValid;
   end;
 
   TInfoEstab = class(TObject)
@@ -254,6 +217,28 @@ type
     property ideEvento: TIdeEvento read FIdeEvento write FIdeEvento;
     property ideEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property infoEstab: TInfoEstab read FInfoEstab write FInfoEstab;
+  end;
+
+  TS1005CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FevtTabEstab: TevtTabEstab;
+  public
+    constructor Create(AOwner: TComponent); reintroduce;
+    destructor Destroy; override;
+
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property evtTabEstab: TevtTabEstab read FevtTabEstab write FevtTabEstab;
+  end;
+
+  TS1005Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS1005CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS1005CollectionItem);
+  public
+    function Add: TS1005CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1005CollectionItem;
+    property Items[Index: Integer]: TS1005CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -437,8 +422,7 @@ begin
 
   Gerador.wCampo(tcStr, '', 'cnaePrep', 1, 7, 1, infoEstab.DadosEstab.cnaePrep);
 
-  if (VersaoDF > ve02_05_00) and
-     (infoEstab.DadosEstab.cnpjResp <> '') then
+  if (infoEstab.DadosEstab.cnpjResp <> '') then
     Gerador.wCampo(tcStr, '', 'cnpjResp', 1, 14, 1, infoEstab.DadosEstab.cnpjResp);
 
   GerarAliqGilRat(FIdeEmpregador, infoEstab.FIdeEstab.tpInsc, infoEstab.DadosEstab.aliqGilrat, 'aliqGilrat');
@@ -492,14 +476,10 @@ var
   L: Boolean;
 begin
   if (infoEstab.DadosEstab.infoTrab.infoAprInst()) or 
-     (infoEstab.DadosEstab.infoTrab.infoPCDInst()) or 
-     (VersaoDF <= ve02_05_00) then
+     (infoEstab.DadosEstab.infoTrab.infoPCDInst()) then
   begin
     L := False;
 
-    if VersaoDF <= ve02_05_00 then
-      L := True;
-      
     if infoEstab.DadosEstab.infoTrab.infoAprInst() then
       if (infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud <> '') or
          (Assigned(infoEstab.DadosEstab.infoTrab.infoApr.FInfoEntEduc)) then
@@ -525,8 +505,7 @@ procedure TEvtTabEstab.GerarInfoPCD;
 begin
   if infoEstab.DadosEstab.infoTrab.infoPCDInst() then
   begin
-    if (VersaoDF <= ve02_05_00) or 
-       (infoEstab.DadosEstab.infoTrab.infoPCD.nrProcJud <> '') then
+    if (infoEstab.DadosEstab.infoTrab.infoPCD.nrProcJud <> '') then
     begin
       Gerador.wGrupo('infoPCD');
 
@@ -541,8 +520,7 @@ procedure TEvtTabEstab.GerarInfoApr;
 begin
   if infoEstab.DadosEstab.infoTrab.infoAprInst() then
   begin
-    if (VersaoDF <= ve02_05_00) or 
-       (infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud <> '') or
+    if (infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud <> '') or
        (Assigned(infoEstab.DadosEstab.infoTrab.infoApr.FInfoEntEduc)) then
     begin
       Gerador.wGrupo('infoApr');
@@ -614,9 +592,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabEstab');
-
-//    Validar(schevtTabEstab);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -662,13 +637,12 @@ begin
       if (FModoLancamento <> mlExclusao) then
       begin
         sSecao := 'dadosEstab';
-        infoEstab.DadosEstab.cnaePrep   := INIRec.ReadString(sSecao, 'cnaePrep', EmptyStr);
-        infoEstab.DadosEstab.cnpjResp   := INIRec.ReadString(sSecao, 'cnpjResp', EmptyStr);
+        infoEstab.DadosEstab.cnaePrep := INIRec.ReadString(sSecao, 'cnaePrep', EmptyStr);
+        infoEstab.DadosEstab.cnpjResp := INIRec.ReadString(sSecao, 'cnpjResp', EmptyStr);
 
         sSecao := 'aliqGilrat';
-        infoEstab.DadosEstab.aliqGilrat.AliqRat      :=eSStrToAliqRat(Ok, INIRec.ReadString(sSecao, 'aliqRat', '1'));
-        infoEstab.DadosEstab.aliqGilrat.Fap          := StringToFloatDef(INIRec.ReadString(sSecao, 'fap', ''), 0);
-        infoEstab.DadosEstab.aliqGilrat.AliqRatAjust := StringToFloatDef(INIRec.ReadString(sSecao, 'aliqRatAjust', ''), 0);
+        infoEstab.DadosEstab.aliqGilrat.AliqRat :=eSStrToAliqRat(Ok, INIRec.ReadString(sSecao, 'aliqRat', '1'));
+        infoEstab.DadosEstab.aliqGilrat.Fap     := StringToFloatDef(INIRec.ReadString(sSecao, 'fap', ''), 0);
 
         sSecao := 'procAdmJudRat';
         if INIRec.ReadString(sSecao, 'tpProc', '') <> '' then

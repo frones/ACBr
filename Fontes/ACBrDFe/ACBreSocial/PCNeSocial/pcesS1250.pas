@@ -297,29 +297,14 @@ var
 begin
   for i := 0 to pIdeProdutor.Count - 1 do
   begin
-    if VersaoDF < ve02_05_00 then
-    begin
-      Gerador.wGrupo('ideProdutor');
-      Gerador.wCampo(tcStr, '', 'tpInscProd',  1,  1, 1, eSTpInscricaoToStr(pIdeProdutor.Items[i].tpInscProd));
-      Gerador.wCampo(tcStr, '', 'nrInscProd',  1, 14, 1, pIdeProdutor.Items[i].nrInscProd);
-      Gerador.wCampo(tcDe2, '', 'vlrBruto',    1, 14, 1, pIdeProdutor.Items[i].vlrBruto);
-      Gerador.wCampo(tcDe2, '', 'vrCPDescPR',  1, 14, 1, pIdeProdutor.Items[i].vrCPDescPR);
-      Gerador.wCampo(tcDe2, '', 'vrRatDescPR', 1, 14, 1, pIdeProdutor.Items[i].vrRatDescPR);
-      Gerador.wCampo(tcDe2, '', 'vrSenarDesc', 1, 14, 1, pIdeProdutor.Items[i].vrSenarDesc);
-    end;
+    Gerador.wGrupo('ideProdutor tpInscProd="' + eSTpInscricaoToStr(pIdeProdutor.Items[i].tpInscProd) + '"' +
+                              ' nrInscProd="' + pIdeProdutor.Items[i].nrInscProd + '"' +
+                              ' vlrBruto="' + FloatToString(pIdeProdutor.Items[i].vlrBruto, '.', FloatMask(2, False)) + '"' +
+                              ' vrCPDescPR="' + FloatToString(pIdeProdutor.Items[i].vrCPDescPR, '.', FloatMask(2, False)) + '"' +
+                              ' vrRatDescPR="' + FloatToString(pIdeProdutor.Items[i].vrRatDescPR, '.', FloatMask(2, False)) + '"' +
+                              ' vrSenarDesc="' + FloatToString(pIdeProdutor.Items[i].vrSenarDesc, '.', FloatMask(2, False)) + '"' +
+                              ' indOpcCP="' + eSIndOpcCPToStr(pIdeProdutor.Items[i].IndOpcCp) + '"');
 
-
-    if VersaoDF >= ve02_05_00 then
-    begin
-      Gerador.wGrupo('ideProdutor tpInscProd="' + eSTpInscricaoToStr(pIdeProdutor.Items[i].tpInscProd) + '"' +
-                                ' nrInscProd="' + pIdeProdutor.Items[i].nrInscProd + '"' +
-                                ' vlrBruto="' + FloatToString(pIdeProdutor.Items[i].vlrBruto, '.', FloatMask(2, False)) + '"' +
-                                ' vrCPDescPR="' + FloatToString(pIdeProdutor.Items[i].vrCPDescPR, '.', FloatMask(2, False)) + '"' +
-                                ' vrRatDescPR="' + FloatToString(pIdeProdutor.Items[i].vrRatDescPR, '.', FloatMask(2, False)) + '"' +
-                                ' vrSenarDesc="' + FloatToString(pIdeProdutor.Items[i].vrSenarDesc, '.', FloatMask(2, False)) + '"' +
-                                ' indOpcCP="' + eSIndOpcCPToStr(pIdeProdutor.Items[i].IndOpcCp) + '"');
-
-    end;
 
     GerarNfs(pIdeProdutor.Items[i].Nfs);
     GerarInfoProcJud(pIdeProdutor.Items[i].InfoProcJud);
@@ -356,26 +341,12 @@ var
 begin
   for i := 0 to pInfoProcJud.Count - 1 do
   begin
-    if VersaoDF < ve02_05_00 then
-    begin
-      Gerador.wGrupo('infoProcJud');
+    Gerador.wGrupo('infoProcJud nrProcJud="' + pInfoProcJud.Items[i].nrProcJud + '"' +
+                              ' codSusp="' + IntToStr(pInfoProcJud.Items[i].codSusp) + '"' +
+                              ' vrCPNRet="' + FloatToString(pInfoProcJud.Items[i].vrCPNRet, '.', FloatMask(2, False)) + '"' +
+                              ' vrRatNRet="' + FloatToString(pInfoProcJud.Items[i].vrRatNRet, '.', FloatMask(2, False)) + '"' +
+                              ' vrSenarNRet="' + FloatToString(pInfoProcJud.Items[i].vrSenarNRet, '.', FloatMask(2, False)) + '"');
 
-      Gerador.wCampo(tcStr, '', 'nrProcJud',   1, 20, 1, pInfoProcJud.Items[i].nrProcJud);
-      Gerador.wCampo(tcInt, '', 'codSusp',     1, 14, 1, pInfoProcJud.Items[i].codSusp);
-      Gerador.wCampo(tcDe2, '', 'vrCPNRet',    1, 14, 1, pInfoProcJud.Items[i].vrCPNRet);
-      Gerador.wCampo(tcDe2, '', 'vrRatNRet',   1, 14, 1, pInfoProcJud.Items[i].vrRatNRet);
-      Gerador.wCampo(tcDe2, '', 'vrSenarNRet', 1, 14, 1, pInfoProcJud.Items[i].vrSenarNRet);
-    end;
-
-    if VersaoDF >= ve02_05_00 then
-    begin
-      Gerador.wGrupo('infoProcJud nrProcJud="' + pInfoProcJud.Items[i].nrProcJud + '"' +
-                                ' codSusp="' + IntToStr(pInfoProcJud.Items[i].codSusp) + '"' +
-                                ' vrCPNRet="' + FloatToString(pInfoProcJud.Items[i].vrCPNRet, '.', FloatMask(2, False)) + '"' +
-                                ' vrRatNRet="' + FloatToString(pInfoProcJud.Items[i].vrRatNRet, '.', FloatMask(2, False)) + '"' +
-                                ' vrSenarNRet="' + FloatToString(pInfoProcJud.Items[i].vrSenarNRet, '.', FloatMask(2, False)) + '"');
-
-    end;
 
     Gerador.wGrupo('/infoProcJud');
   end;
@@ -390,25 +361,12 @@ var
 begin
   for i := 0 to pTpAquis.Count - 1 do
   begin
-    if (VersaoDF < ve02_05_00) then
-    begin
-      Gerador.wGrupo('tpAquis');
+    Gerador.wGrupo('tpAquis indAquis="' + eSIdAquisStr(pTpAquis.Items[i].indAquis) + '"' +
+                          ' vlrTotAquis="' + FloatToString(pTpAquis.Items[i].vlrTotAquis, '.', FloatMask(2, False)) + '"');
 
-      Gerador.wCampo(tcStr, '', 'indAquis',    1,  1, 1, eSIdAquisStr(pTpAquis.Items[i].indAquis));
-      Gerador.wCampo(tcDe2, '', 'vlrTotAquis', 1, 14, 1, pTpAquis.Items[i].vlrTotAquis);
+    GerarIdeProdutor(pTpAquis.Items[i].IdeProdutor);
 
-      GerarIdeProdutor(pTpAquis.Items[i].IdeProdutor);
-    end;
-
-    if (VersaoDF >= ve02_05_00) then
-    begin
-      Gerador.wGrupo('tpAquis indAquis="' + eSIdAquisStr(pTpAquis.Items[i].indAquis) + '"' +
-                            ' vlrTotAquis="' + FloatToString(pTpAquis.Items[i].vlrTotAquis, '.', FloatMask(2, False)) + '"');
-
-      GerarIdeProdutor(pTpAquis.Items[i].IdeProdutor);
-
-      GerarInfoProcJ(pTpAquis.Items[i].InfoProcJ);
-    end;
+    GerarInfoProcJ(pTpAquis.Items[i].InfoProcJ);
 
     Gerador.wGrupo('/tpAquis');
   end;

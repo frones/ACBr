@@ -70,53 +70,129 @@ uses
 	pcesGerador;
 
 type
-
-  TEvtRmnRPPS = class;
-  TeS1202IdeTrabalhador = class;
-  TInfoComplem = class;
-  TSucessaoVinc3 = class;
-  TDMDevCollection = class;
-  TDMDevCollectionItem = class;
-  TInfoPerApur = class;
-  TIdeEstabCollection = class;
-  TIdeEstabCollectionItem = class;
-  TRemunPerApur1202Collection = class;
-  TS1202CollectionItem = class;
-  TInfoPerAnt = class;
-  TIdePeriodoCollection = class;
-  TIdePeriodoCollectionItem = class;
-
-  TS1202Collection = class(TeSocialCollection)
+  TSucessaoVinc3 = class
   private
-    function GetItem(Index: integer): TS1202CollectionItem;
-    procedure SetItem(Index: integer; Value: TS1202CollectionItem);
+    FcnpjOrgaoAnt: string;
+    FmatricAnt: string;
+    FdtExercicio: TDateTime;
+    Fobservacao: string;
   public
-    function Add: TS1202CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS1202CollectionItem;
-    property Items[Index: integer]: TS1202CollectionItem read GetItem write SetItem;
-      default;
+    property cnpjOrgaoAnt: string read FcnpjOrgaoAnt write FcnpjOrgaoAnt;
+    property matricAnt: string read FmatricAnt write FmatricAnt;
+    property dtExercicio: TDateTime read FdtExercicio write FdtExercicio;
+    property observacao: string read Fobservacao write Fobservacao;
   end;
 
-  TS1202CollectionItem = class(TObject)
+  TInfoComplem = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FEvtRmnRPPS: TEvtRmnRPPS;
+    FNmTrab: string;
+    FDtNascto: TDateTime;
+    FSucessaoVinc: TSucessaoVinc3;
+
+    function getSucessaoVinc(): TSucessaoVinc3;
   public
-    constructor Create(AOwner: TComponent);
+    constructor Create;
     destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtRmnRPPS: TEvtRmnRPPS read FEvtRmnRPPS write FEvtRmnRPPS;
+
+    function SucessaoVincInst(): boolean;
+
+    property nmTrab: string read FNmTrab write FNmTrab;
+    property dtNascto: TDateTime read FDtNascto write FDtNascto;
+    property sucessaoVinc: TSucessaoVinc3 read getSucessaoVinc write FSucessaoVinc;
   end;
 
-  TDMDevCollection = class(TACBrObjectList)
+  TeS1202IdeTrabalhador = class(TideTrabalhador)
   private
-    function GetItem(Index: integer): TDMDevCollectionItem;
-    procedure SetItem(Index: integer; Value: TDMDevCollectionItem);
+    FInfoComplem: TInfoComplem;
+
+    function getInfoComplem(): TInfoComplem;
   public
-    function Add: TDMDevCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TDMDevCollectionItem;
-    property Items[Index: integer]: TDMDevCollectionItem read GetItem write SetItem;
-      default;
+    constructor Create;
+    destructor Destroy; override;
+
+    function InfoComplemInst(): boolean;
+
+    property InfoComplem: TInfoComplem read getInfoComplem write FInfoComplem;
+  end;
+
+  TRemunPerApur1202Collection = class(TACBrObjectList)
+  private
+    function GetItem(Index: integer): TRemunPerCollectionItem;
+    procedure SetItem(Index: integer; Value: TRemunPerCollectionItem);
+  public
+    function Add: TRemunPerCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRemunPerCollectionItem;
+    property Items[Index: integer]: TRemunPerCollectionItem read GetItem write SetItem;
+  end;
+
+  TIdeEstabCollectionItem = class(TObject)
+  private
+    FTpInsc: TpTpInsc;
+    FNrInsc: string;
+    FRemunPerApur: TRemunPerApur1202Collection;
+    FRemunPerAnt: TRemunPerApur1202Collection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property tpInsc: TpTPInsc read FTpInsc write FTpInsc;
+    property nrInsc: string read FNrInsc write FNrInsc;
+    property remunPerApur: TRemunPerApur1202Collection read FRemunPerApur write FRemunPerApur;
+    property remunPerAnt: TRemunPerApur1202Collection read FRemunPerAnt write FRemunPerAnt;
+  end;
+
+  TIdeEstabCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: integer): TIdeEstabCollectionItem;
+    procedure SetItem(Index: integer; Value: TIdeEstabCollectionItem);
+  public
+    function Add: TIdeEstabCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdeEstabCollectionItem;
+    property Items[Index: integer]: TIdeEstabCollectionItem read GetItem write SetItem;
+  end;
+
+  TInfoPerApur = class(TObject)
+  private
+    FIdeEstab: TIdeEstabCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property ideEstab: TIdeEstabCollection read FIdeEstab write FIdeEstab;
+  end;
+
+  TIdePeriodoCollectionItem = class(TObject)
+  private
+    FPerRef: string;
+    FIdeEstab: TIdeEstabCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property perRef: string read FPerRef write FPerRef;
+    property ideEstab: TIdeEstabCollection read FIdeEstab write FIdeEstab;
+  end;
+
+  TIdePeriodoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: integer): TIdePeriodoCollectionItem;
+    procedure SetItem(Index: integer; Value: TIdePeriodoCollectionItem);
+  public
+    function Add: TIdePeriodoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdePeriodoCollectionItem;
+    property Items[Index: integer]: TIdePeriodoCollectionItem read GetItem write SetItem;
+  end;
+
+  TInfoPerAnt = class(TObject)
+  private
+    FremunOrgSuc: tpSimNao;
+    FIdePeriodo: TIdePeriodoCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property remunOrgSuc: tpSimNao read FremunOrgSuc write FremunOrgSuc;
+    property idePeriodo: TIdePeriodoCollection read FIdePeriodo write FIdePeriodo;
   end;
 
   TDMDevCollectionItem = class(TObject)
@@ -145,6 +221,17 @@ type
     property ideDmDev: string read FIdeDmDev write FIdeDmDev;
     property infoPerApur: TInfoPerApur read getInfoPerApur write FInfoPerApur;
     property infoPerAnt: TInfoPerAnt read getInfoPerAnt write FInfoPerAnt;
+  end;
+
+  TDMDevCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: integer): TDMDevCollectionItem;
+    procedure SetItem(Index: integer; Value: TDMDevCollectionItem);
+  public
+    function Add: TDMDevCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDMDevCollectionItem;
+    property Items[Index: integer]: TDMDevCollectionItem read GetItem write SetItem;
+      default;
   end;
 
   TEvtRmnRPPS = class(TeSocialEvento)
@@ -179,129 +266,26 @@ type
     property dmDev: TDMDevCollection read FDMDev write FDMDev;
   end;
 
-  TRemunPerApur1202Collection = class(TACBrObjectList)
+  TS1202CollectionItem = class(TObject)
   private
-    function GetItem(Index: integer): TRemunPerCollectionItem;
-    procedure SetItem(Index: integer; Value: TRemunPerCollectionItem);
+    FTipoEvento: TTipoEvento;
+    FEvtRmnRPPS: TEvtRmnRPPS;
   public
-    function Add: TRemunPerCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TRemunPerCollectionItem;
-    property Items[Index: integer]: TRemunPerCollectionItem read GetItem write SetItem;
-  end;
-
-  TIdeEstabCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: integer): TIdeEstabCollectionItem;
-    procedure SetItem(Index: integer; Value: TIdeEstabCollectionItem);
-  public
-    function Add: TIdeEstabCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TIdeEstabCollectionItem;
-    property Items[Index: integer]: TIdeEstabCollectionItem read GetItem write SetItem;
-  end;
-
-  TIdeEstabCollectionItem = class(TObject)
-  private
-    FTpInsc: TpTpInsc;
-    FNrInsc: string;
-    FRemunPerApur: TRemunPerApur1202Collection;
-    FRemunPerAnt: TRemunPerApur1202Collection;
-  public
-    constructor Create;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-
-    property tpInsc: TpTPInsc read FTpInsc write FTpInsc;
-    property nrInsc: string read FNrInsc write FNrInsc;
-    property remunPerApur: TRemunPerApur1202Collection read FRemunPerApur write FRemunPerApur;
-    property remunPerAnt: TRemunPerApur1202Collection read FRemunPerAnt write FRemunPerAnt;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property evtRmnRPPS: TEvtRmnRPPS read FEvtRmnRPPS write FEvtRmnRPPS;
   end;
 
-  TIdePeriodoCollection = class(TACBrObjectList)
+  TS1202Collection = class(TeSocialCollection)
   private
-    function GetItem(Index: integer): TIdePeriodoCollectionItem;
-    procedure SetItem(Index: integer; Value: TIdePeriodoCollectionItem);
+    function GetItem(Index: integer): TS1202CollectionItem;
+    procedure SetItem(Index: integer; Value: TS1202CollectionItem);
   public
-    function Add: TIdePeriodoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TIdePeriodoCollectionItem;
-    property Items[Index: integer]: TIdePeriodoCollectionItem read GetItem write SetItem;
-  end;
-
-  TIdePeriodoCollectionItem = class(TObject)
-  private
-    FPerRef: string;
-    FIdeEstab: TIdeEstabCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property perRef: string read FPerRef write FPerRef;
-    property ideEstab: TIdeEstabCollection read FIdeEstab write FIdeEstab;
-  end;
-
-  TInfoPerAnt = class(TObject)
-  private
-    FremunOrgSuc: tpSimNao;
-    FIdePeriodo: TIdePeriodoCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property remunOrgSuc: tpSimNao read FremunOrgSuc write FremunOrgSuc;
-    property idePeriodo: TIdePeriodoCollection read FIdePeriodo write FIdePeriodo;
-  end;
-
-  TInfoPerApur = class(TObject)
-  private
-    FIdeEstab: TIdeEstabCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property ideEstab: TIdeEstabCollection read FIdeEstab write FIdeEstab;
-  end;
-
-  TeS1202IdeTrabalhador = class(TideTrabalhador)
-  private
-    FInfoComplem: TInfoComplem;
-
-    function getInfoComplem(): TInfoComplem;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function InfoComplemInst(): boolean;
-
-    property InfoComplem: TInfoComplem read getInfoComplem write FInfoComplem;
-  end;
-
-  TInfoComplem = class(TObject)
-  private
-    FNmTrab: string;
-    FDtNascto: TDateTime;
-    FSucessaoVinc: TSucessaoVinc3;
-
-    function getSucessaoVinc(): TSucessaoVinc3;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function SucessaoVincInst(): boolean;
-
-    property nmTrab: string read FNmTrab write FNmTrab;
-    property dtNascto: TDateTime read FDtNascto write FDtNascto;
-    property sucessaoVinc: TSucessaoVinc3 read getSucessaoVinc write FSucessaoVinc;
-  end;
-
-  TSucessaoVinc3 = class
-  private
-    FcnpjOrgaoAnt: string;
-    FmatricAnt: string;
-    FdtExercicio: TDateTime;
-    Fobservacao: string;
-  public
-    property cnpjOrgaoAnt: string read FcnpjOrgaoAnt write FcnpjOrgaoAnt;
-    property matricAnt: string read FmatricAnt write FmatricAnt;
-    property dtExercicio: TDateTime read FdtExercicio write FdtExercicio;
-    property observacao: string read Fobservacao write Fobservacao;
+    function Add: TS1202CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1202CollectionItem;
+    property Items[Index: integer]: TS1202CollectionItem read GetItem write SetItem;
+      default;
   end;
 
 implementation
@@ -703,17 +687,14 @@ begin
     Gerador.wCampo(tcStr, '', 'ideDmDev', 1, 30, 1, dmDev[i].ideDmDev);
     Gerador.wCampo(tcInt, '', 'codCateg', 1,  3, 1, dmDev[i].codCateg);
 
-    if VersaoDF >= veS01_01_00 then
+    if (dmDev[i].indRRA = snfSim) and (dmDev[i].infoRRAInst()) then
     begin
-      if (dmDev[i].indRRA = snfSim) and (dmDev[i].infoRRAInst()) then
-      begin
-        Gerador.wCampo(tcStr, '', 'indRRA', 1,  1, 1, eSSimNaoFacultativoToStr(dmDev[i].indRRA));
+      Gerador.wCampo(tcStr, '', 'indRRA', 1,  1, 1, eSSimNaoFacultativoToStr(dmDev[i].indRRA));
 
-        if (dmDev[i].infoRRAInst()) then
-          GerarInfoRRA(dmDev[i].infoRRA);
-      end;
+      if (dmDev[i].infoRRAInst()) then
+        GerarInfoRRA(dmDev[i].infoRRA);
     end;
-    
+
     if (dmDev[i].infoPerApurInst()) then
       GerarInfoPerApur(dmDev[i].infoPerApur);
 
@@ -777,9 +758,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtRmnRPPS');
-
-//    Validar(schevtRmnRPPS);
   except on e: Exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

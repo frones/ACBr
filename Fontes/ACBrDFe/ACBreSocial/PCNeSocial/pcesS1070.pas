@@ -60,37 +60,7 @@ uses
   pcnConversao, pcnGerador,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
-
 type
-  TS1070Collection = class;
-  TS1070CollectionItem = class;
-  TEvtTabProcesso = class;
-  TDadosProcJud = class;
-  TDadosProc = class;
-  TInfoProcesso = class;
-  TIdeProcesso = class;
-
-  TS1070Collection = class(TeSocialCollection)
-  private
-    function GetItem(Index: Integer): TS1070CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS1070CollectionItem);
-  public
-    function Add: TS1070CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS1070CollectionItem;
-    property Items[Index: Integer]: TS1070CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS1070CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtTabProcesso: TEvtTabProcesso;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor  Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtTabProcesso: TEvtTabProcesso read FEvtTabProcesso write FEvtTabProcesso;
-  end;
-
   TIdeProcesso = class(TObject)
   private
     FTpProc : tpTpProc;
@@ -104,29 +74,15 @@ type
     property fimValid: string read FFimValid write FFimValid;
   end;
 
-  TEvtTabProcesso = class(TESocialEvento)
+  TDadosProcJud = class(TObject)
   private
-    FModoLancamento: TModoLancamento;
-    fIdeEvento: TIdeEvento;
-    fIdeEmpregador: TIdeEmpregador;
-    fInfoProcesso: TInfoProcesso;
-
-    {Geradores específicos da classe}
-    procedure GerarIdeProcesso;
-    procedure GerarDadosProcJud;
-    procedure GerarDadosProc;
-    procedure GerarDadosInfoSusp;
+    FUfVara: string;
+    FCodMunic: integer;
+    FIdVara: string;
   public
-    constructor Create(AACBreSocial: TObject); override;
-    destructor  Destroy; override;
-
-    function GerarXML: boolean; override;
-    function LerArqIni(const AIniString: String): Boolean;
-
-    property ModoLancamento: TModoLancamento read FModoLancamento write FModoLancamento;
-    property IdeEvento: TIdeEvento read fIdeEvento write fIdeEvento;
-    property IdeEmpregador: TIdeEmpregador read fIdeEmpregador write fIdeEmpregador;
-    property InfoProcesso: TInfoProcesso read fInfoProcesso write fInfoProcesso;
+    property UfVara: string read FUfVara write FUfVara;
+    property codMunic: integer read FCodMunic write FCodMunic;
+    property idVara: string read FIdVara write FIdVara;
   end;
 
   TInfoSuspCollectionItem = class(TObject)
@@ -150,17 +106,6 @@ type
     function Add: TInfoSuspCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
     function New: TInfoSuspCollectionItem;
     property Items[Index: Integer]: TInfoSuspCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TDadosProcJud = class(TObject)
-  private
-    FUfVara: string;
-    FCodMunic: integer;
-    FIdVara: string;
-  public
-    property UfVara: string read FUfVara write FUfVara;
-    property codMunic: integer read FCodMunic write FCodMunic;
-    property idVara: string read FIdVara write FIdVara;
   end;
 
   TDadosProc = class(TObject)
@@ -206,6 +151,52 @@ type
     property ideProcesso: TIdeProcesso read FIdeProcesso write FIdeProcesso;
     property dadosProc: TDadosProc read getDadosProc write FDadosProc;
     property novaValidade: TIdePeriodo read getNovaValidade write FNovaValidade;
+  end;
+
+  TEvtTabProcesso = class(TESocialEvento)
+  private
+    FModoLancamento: TModoLancamento;
+    fIdeEvento: TIdeEvento;
+    fIdeEmpregador: TIdeEmpregador;
+    fInfoProcesso: TInfoProcesso;
+
+    {Geradores específicos da classe}
+    procedure GerarIdeProcesso;
+    procedure GerarDadosProcJud;
+    procedure GerarDadosProc;
+    procedure GerarDadosInfoSusp;
+  public
+    constructor Create(AACBreSocial: TObject); override;
+    destructor  Destroy; override;
+
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property ModoLancamento: TModoLancamento read FModoLancamento write FModoLancamento;
+    property IdeEvento: TIdeEvento read fIdeEvento write fIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read fIdeEmpregador write fIdeEmpregador;
+    property InfoProcesso: TInfoProcesso read fInfoProcesso write fInfoProcesso;
+  end;
+
+  TS1070CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtTabProcesso: TEvtTabProcesso;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor  Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtTabProcesso: TEvtTabProcesso read FEvtTabProcesso write FEvtTabProcesso;
+  end;
+
+  TS1070Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS1070CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS1070CollectionItem);
+  public
+    function Add: TS1070CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1070CollectionItem;
+    property Items[Index: Integer]: TS1070CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -410,9 +401,7 @@ begin
 
   Gerador.wCampo(tcInt, '', 'indAutoria', 1, 1, 1, eSindAutoriaToStr(InfoProcesso.dadosProc.indAutoria));
   Gerador.wCampo(tcInt, '', 'indMatProc', 1, 2, 1, eSTpIndMatProcToStr(InfoProcesso.dadosProc.indMatProc));
-
-  if VersaoDF >= ve02_04_02 then
-    Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 0, InfoProcesso.dadosProc.observacao);
+  Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 0, InfoProcesso.dadosProc.observacao);
 
   GerarDadosProcJud;
   GerarDadosInfoSusp;
@@ -483,9 +472,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabProcesso');
-
-//    Validar(schevtTabProcesso);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

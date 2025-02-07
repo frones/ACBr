@@ -61,48 +61,23 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS1020Collection = class;
-  TS1020CollectionItem = class;
-  TevtTabLotacao = class;
-  TIdeLotacao = class;
-  TFPasLotacao = class;
-  TInfoEmprParcial = class;
-  TdadosOpPort = class;
-  TDadosLotacao = class;
-  TInfoLotacao = class;
-  TProcJudTerceiroCollectionItem = class;
-  TProcJudTerceiroCollection = class;
-  TInfoProcJudTerceiros = class;
-
-  TS1020Collection = class(TeSocialCollection)
+  TIdeLotacao = class(TObject)
   private
-    function GetItem(Index: Integer): TS1020CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS1020CollectionItem);
+    FCodLotacao: string;
+    FIniValid: string;
+    FFimValid: string;
   public
-    function Add: TS1020CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS1020CollectionItem;
-    property Items[Index: Integer]: TS1020CollectionItem read GetItem write SetItem; default;
+    property codLotacao: string read fCodLotacao write fCodLotacao;
+    property iniValid: string read FIniValid write FIniValid;
+    property fimValid: string read FFimValid write FFimValid;
   end;
 
-  TS1020CollectionItem = class(TObject)
+  TProcJudTerceiroCollectionItem = class(TProcesso)
   private
-    FTipoEvento: TTipoEvento;
-    FEvtTabLotacao: TevtTabLotacao;
+    FCodTerc: string;
   public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtTabLotacao: TevtTabLotacao read FEvtTabLotacao write FEvtTabLotacao;
-  end;
-
-  TInfoProcJudTerceiros = class(TObject)
-  private
-    FProcJudTerceiro: TProcJudTerceiroCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property procJudTerceiro: TProcJudTerceiroCollection read FProcJudTerceiro write FProcJudTerceiro;
+    property codTerc: string read FCodTerc write FCodTerc;
+    property nrProcJud: string read FNrProc write FNrProc;
   end;
 
   TProcJudTerceiroCollection = class(TACBrObjectList)
@@ -115,50 +90,14 @@ type
     property Items[Index: Integer]: TProcJudTerceiroCollectionItem read GetItem write SetItem;
   end;
 
-  TProcJudTerceiroCollectionItem = class(TProcesso)
+  TInfoProcJudTerceiros = class(TObject)
   private
-    FCodTerc: string;
+    FProcJudTerceiro: TProcJudTerceiroCollection;
   public
-    property codTerc: string read FCodTerc write FCodTerc;
-    property nrProcJud: string read FNrProc write FNrProc;
-  end;
-
-  TevtTabLotacao = class(TeSocialEvento)
-  private
-    FModoLancamento: TModoLancamento;
-    fIdeEvento: TIdeEvento;
-    fIdeEmpregador: TIdeEmpregador;
-    fInfoLotacao: TInfoLotacao;
-
-    {Geradores específicos da classe}
-    procedure GerarIdeLotacao;
-    procedure GerarInfoEmprParcial;
-    procedure GerarDadosOpPort;
-    procedure GerarInfoProcJudTerceiros;
-    procedure GerarFPasLotacao;
-    procedure GerarDadosLotacao;
-  public
-    constructor Create(AACBreSocial: TObject); override;
+    constructor Create;
     destructor Destroy; override;
 
-    function GerarXML: boolean; override;
-    function LerArqIni(const AIniString: String): Boolean;
-
-    property ModoLancamento: TModoLancamento read FModoLancamento write FModoLancamento;
-    property IdeEvento: TIdeEvento read FIdeEvento write FIdeEvento;
-    property ideEmpregador: TIdeEmpregador read FideEmpregador write FideEmpregador;
-    property infoLotacao: TInfoLotacao read fInfoLotacao write fInfoLotacao;
-  end;
-
-  TIdeLotacao = class(TObject)
-  private
-    FCodLotacao: string;
-    FIniValid: string;
-    FFimValid: string;
-  public
-    property codLotacao: string read fCodLotacao write fCodLotacao;
-    property iniValid: string read FIniValid write FIniValid;
-    property fimValid: string read FFimValid write FFimValid;
+    property procJudTerceiro: TProcJudTerceiroCollection read FProcJudTerceiro write FProcJudTerceiro;
   end;
 
   TFPasLotacao = class(TObject)
@@ -234,7 +173,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    
+
     function ideLotacaoInst(): Boolean;
     function dadosLotacaoInst(): Boolean;
     function novaValidadeInst(): Boolean;
@@ -242,6 +181,54 @@ type
     property ideLotacao: TIdeLotacao read fIdeLotacao write fIdeLotacao;
     property dadosLotacao: TDadosLotacao read getDadosLotacao write fDadosLotacao;
     property novaValidade: TidePeriodo read getNovaValidade write fNovaValidade;
+  end;
+
+  TevtTabLotacao = class(TeSocialEvento)
+  private
+    FModoLancamento: TModoLancamento;
+    fIdeEvento: TIdeEvento;
+    fIdeEmpregador: TIdeEmpregador;
+    fInfoLotacao: TInfoLotacao;
+
+    {Geradores específicos da classe}
+    procedure GerarIdeLotacao;
+    procedure GerarInfoEmprParcial;
+    procedure GerarDadosOpPort;
+    procedure GerarInfoProcJudTerceiros;
+    procedure GerarFPasLotacao;
+    procedure GerarDadosLotacao;
+  public
+    constructor Create(AACBreSocial: TObject); override;
+    destructor Destroy; override;
+
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property ModoLancamento: TModoLancamento read FModoLancamento write FModoLancamento;
+    property IdeEvento: TIdeEvento read FIdeEvento write FIdeEvento;
+    property ideEmpregador: TIdeEmpregador read FideEmpregador write FideEmpregador;
+    property infoLotacao: TInfoLotacao read fInfoLotacao write fInfoLotacao;
+  end;
+
+  TS1020CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtTabLotacao: TevtTabLotacao;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtTabLotacao: TevtTabLotacao read FEvtTabLotacao write FEvtTabLotacao;
+  end;
+
+  TS1020Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS1020CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS1020CollectionItem);
+  public
+    function Add: TS1020CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1020CollectionItem;
+    property Items[Index: Integer]: TS1020CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -324,9 +311,7 @@ begin
 
   GerarFPasLotacao;
   GerarInfoEmprParcial;
-
-  if VersaoDF > ve02_05_00 then
-    GerarDadosOpPort;
+  GerarDadosOpPort;
     
   Gerador.wGrupo('/dadosLotacao');
 end;
@@ -364,15 +349,7 @@ begin
     Gerador.wCampo(tcStr, '', 'tpInscContrat', 1,  1, 1, eStpInscContratanteToStr(infoLotacao.DadosLotacao.InfoEmprParcial.tpInscContrat));
     Gerador.wCampo(tcStr, '', 'nrInscContrat', 1, 14, 1, infoLotacao.DadosLotacao.InfoEmprParcial.nrInscContrat);
 
-    if VersaoDF >= veS01_00_00 then
-    begin
-      if infoLotacao.DadosLotacao.InfoEmprParcial.nrInscProp <> '' then
-      begin
-        Gerador.wCampo(tcStr, '', 'tpInscProp', 1,  1, 1, eSTpInscPropToStr(self.infoLotacao.DadosLotacao.InfoEmprParcial.tpInscProp));
-        Gerador.wCampo(tcStr, '', 'nrInscProp', 1, 14, 1, infoLotacao.DadosLotacao.InfoEmprParcial.nrInscProp);
-      end;
-    end
-    else
+    if infoLotacao.DadosLotacao.InfoEmprParcial.nrInscProp <> '' then
     begin
       Gerador.wCampo(tcStr, '', 'tpInscProp', 1,  1, 1, eSTpInscPropToStr(self.infoLotacao.DadosLotacao.InfoEmprParcial.tpInscProp));
       Gerador.wCampo(tcStr, '', 'nrInscProp', 1, 14, 1, infoLotacao.DadosLotacao.InfoEmprParcial.nrInscProp);
@@ -461,9 +438,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabLotacao');
-
-//    Validar(schevtTabLotacao);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

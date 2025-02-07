@@ -61,34 +61,82 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS1260CollectionItem = class;
-  TEvtComProd = class;
-  TInfoComProd=class;
-  TIdeEstabel=class;
-  TTpComercItem = class;
-  TTpComercColecao = class;
-  TIdeAdquirItem = class;
-  TIdeAdquirColecao = class;
-
-  TS1260Collection = class(TeSocialCollection)
+  TIdeAdquirItem = class(TObject)
   private
-    function GetItem(Index: Integer): TS1260CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS1260CollectionItem);
+    FtpInsc: tpTpInsc;
+    FnrInsc: string;
+    FvrComerc: Double;
+    FvrRetPR: Double;
+    FNfs: TNfsColecao;
+    function getNfs: TNfsColecao;
   public
-    function Add: TS1260CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS1260CollectionItem;
-    property Items[Index: Integer]: TS1260CollectionItem read GetItem write SetItem; default;
+    constructor Create;
+    destructor Destroy; override;
+    function nfsInst: boolean;
+
+    property tpInsc: tpTpInsc read FtpInsc write FtpInsc;
+    property nrInsc: string read FnrInsc write FnrInsc;
+    property vrComerc: Double read FvrComerc write FvrComerc;
+    property vrRetPR: Double read FvrRetPR write FvrRetPR;
+    property nfs: TNfsColecao read getNfs write FNfs;
   end;
 
-  TS1260CollectionItem = class(TObject)
+  TIdeAdquirColecao = class(TACBrObjectList)
   private
-    FTipoEvento: TTipoEvento;
-    FEvtComProd: TEvtComProd;
+    function GetItem(Index: Integer): TIdeAdquirItem;
+    procedure SetItem(Index: Integer; const Value: TIdeAdquirItem);
   public
-    constructor Create(AOwner: TComponent);
+    function Add: TIdeAdquirItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdeAdquirItem;
+    property Items[Index: Integer]: TIdeAdquirItem read GetItem write SetItem;
+  end;
+
+  TTpComercItem = class(TObject)
+  private
+    FindComerc: tpIndComerc;
+    FvrTotCom: Double;
+    FIdeAdquir: TIdeAdquirColecao;
+    FInfoProcJud: TInfoProcJudCollection;
+  public
+    constructor Create;
     destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtComProd: TEvtComProd read FEvtComProd write FEvtComProd;
+
+    property indComerc: tpIndComerc read FindComerc write FindComerc;
+    property vrTotCom: double read FvrTotCom write FvrTotCom;
+    property IdeAdquir: TIdeAdquirColecao read FIdeAdquir write FIdeAdquir;
+    property InfoProcJud: TInfoProcJudCollection read FInfoProcJud write FInfoProcJud;
+  end;
+
+  TTpComercColecao = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TTpComercItem;
+    procedure SetItem(Index: Integer; const Value: TTpComercItem);
+  public
+    function Add: TTpComercItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TTpComercItem;
+    property Items[Index: Integer]: TTpComercItem read GetItem write SetItem;
+  end;
+
+  TIdeEstabel=class(TObject)
+  private
+    FnrInscEstabRural: string;
+    FTpComerc: TTpComercColecao;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property nrInscEstabRural: string read FnrInscEstabRural write FnrInscEstabRural;
+    property TpComerc: TTpComercColecao read FTpComerc write FTpComerc;
+  end;
+
+  TInfoComProd=class(TObject)
+  private
+    FIdeEstabel: TIdeEstabel;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property IdeEstabel: TIdeEstabel read FIdeEstabel write FIdeEstabel;
   end;
 
   TEvtComProd = class(TESocialEvento)
@@ -116,82 +164,25 @@ type
     property InfoComProd: TInfoComProd read FInfoComProd write FInfoComProd;
   end;
 
-  TInfoComProd=class(TObject)
+  TS1260CollectionItem = class(TObject)
   private
-    FIdeEstabel: TIdeEstabel;
+    FTipoEvento: TTipoEvento;
+    FEvtComProd: TEvtComProd;
   public
-    constructor Create;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-
-    property IdeEstabel: TIdeEstabel read FIdeEstabel write FIdeEstabel;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtComProd: TEvtComProd read FEvtComProd write FEvtComProd;
   end;
 
-  TIdeEstabel=class(TObject)
+  TS1260Collection = class(TeSocialCollection)
   private
-    FnrInscEstabRural: string;
-    FTpComerc: TTpComercColecao;
+    function GetItem(Index: Integer): TS1260CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS1260CollectionItem);
   public
-    constructor Create;
-    destructor Destroy; override;
-
-    property nrInscEstabRural: string read FnrInscEstabRural write FnrInscEstabRural;
-    property TpComerc: TTpComercColecao read FTpComerc write FTpComerc;
-  end;
-
-  TTpComercColecao = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TTpComercItem;
-    procedure SetItem(Index: Integer; const Value: TTpComercItem);
-  public
-    function Add: TTpComercItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TTpComercItem;
-    property Items[Index: Integer]: TTpComercItem read GetItem write SetItem;
-  end;
-
-  TTpComercItem = class(TObject)
-  private
-    FindComerc: tpIndComerc;
-    FvrTotCom: Double;
-    FIdeAdquir: TIdeAdquirColecao;
-    FInfoProcJud: TInfoProcJudCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property indComerc: tpIndComerc read FindComerc write FindComerc;
-    property vrTotCom: double read FvrTotCom write FvrTotCom;
-    property IdeAdquir: TIdeAdquirColecao read FIdeAdquir write FIdeAdquir;
-    property InfoProcJud: TInfoProcJudCollection read FInfoProcJud write FInfoProcJud;
-  end;
-
-  TIdeAdquirColecao = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TIdeAdquirItem;
-    procedure SetItem(Index: Integer; const Value: TIdeAdquirItem);
-  public
-    function Add: TIdeAdquirItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TIdeAdquirItem;
-    property Items[Index: Integer]: TIdeAdquirItem read GetItem write SetItem;
-  end;
-
-  TIdeAdquirItem = class(TObject)
-  private
-    FtpInsc: tpTpInsc;
-    FnrInsc: string;
-    FvrComerc: Double;
-    FvrRetPR: Double;
-    FNfs: TNfsColecao;
-    function getNfs: TNfsColecao;
-  public
-    constructor Create;
-    destructor Destroy; override;
-    function nfsInst: boolean;
-
-    property tpInsc: tpTpInsc read FtpInsc write FtpInsc;
-    property nrInsc: string read FnrInsc write FnrInsc;
-    property vrComerc: Double read FvrComerc write FvrComerc;
-    property vrRetPR: Double read FvrRetPR write FvrRetPR;
-    property nfs: TNfsColecao read getNfs write FNfs;
+    function Add: TS1260CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1260CollectionItem;
+    property Items[Index: Integer]: TS1260CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -495,10 +486,7 @@ begin
     GerarCabecalho('evtComProd');
     Gerador.wGrupo('evtComProd Id="' + Self.Id + '"');
 
-    if VersaoDF <= ve02_05_00 then
-      GerarIdeEvento3(self.IdeEvento, True, True, False)
-    else
-      GerarIdeEvento3(self.IdeEvento, True, False, True);
+    GerarIdeEvento3(self.IdeEvento, True, False, True);
 
     GerarIdeEmpregador(self.IdeEmpregador);
     GerarInfoComProd;
@@ -508,9 +496,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtComProd');
-
-//    Validar(schevtComProd);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

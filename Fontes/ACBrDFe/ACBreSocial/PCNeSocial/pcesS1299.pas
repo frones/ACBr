@@ -58,53 +58,6 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS1299CollectionItem = class;
-  TEvtFechaEvPer = class;
-  TInfoFech = class;
-
-  TS1299Collection = class(TeSocialCollection)
-  private
-    function GetItem(Index: Integer): TS1299CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS1299CollectionItem);
-  public
-    function Add: TS1299CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS1299CollectionItem;
-    property Items[Index: Integer]: TS1299CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS1299CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtFechaEvPer: TEvtFechaEvPer;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtFechaEvPer: TEvtFechaEvPer read FEvtFechaEvPer write FEvtFechaEvPer;
-  end;
-
-  TEvtFechaEvPer = class(TESocialEvento)
-  private
-    FIdeEvento: TIdeEvento4;
-    FIdeEmpregador: TIdeEmpregador;
-    FIdeRespInf : TIdeRespInf;
-    FInfoFech: TInfoFech;
-
-    {Geradores específicos da classe}
-    procedure GerarInfoFech;
-  public
-    constructor Create(AACBreSocial: TObject); override;
-    destructor  Destroy; override;
-
-    function GerarXML: boolean; override;
-    function LerArqIni(const AIniString: String): Boolean;
-
-    property IdeEvento: TIdeEvento4 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property IdeRespInf: TIdeRespInf read FIdeRespInf write FIdeRespInf;
-    property InfoFech: TInfoFech read FInfoFech write FInfoFech;
-  end;
-
   TInfoFech = class
   private
     FevtRemun: TpSimNao;
@@ -131,6 +84,49 @@ type
     property indExcApur1250: tpSimNaoFacultativo read FindExcApur1250 write FindExcApur1250;
     property transDCTFWeb: tpSimNaoFacultativo read FtransDCTFWeb write FtransDCTFWeb;
     property naoValid: TpSimNaoFacultativo read FNaoValid write FNaoValid;
+  end;
+
+  TEvtFechaEvPer = class(TESocialEvento)
+  private
+    FIdeEvento: TIdeEvento4;
+    FIdeEmpregador: TIdeEmpregador;
+    FIdeRespInf : TIdeRespInf;
+    FInfoFech: TInfoFech;
+
+    {Geradores específicos da classe}
+    procedure GerarInfoFech;
+  public
+    constructor Create(AACBreSocial: TObject); override;
+    destructor  Destroy; override;
+
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property IdeEvento: TIdeEvento4 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeRespInf: TIdeRespInf read FIdeRespInf write FIdeRespInf;
+    property InfoFech: TInfoFech read FInfoFech write FInfoFech;
+  end;
+
+  TS1299CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtFechaEvPer: TEvtFechaEvPer;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtFechaEvPer: TEvtFechaEvPer read FEvtFechaEvPer write FEvtFechaEvPer;
+  end;
+
+  TS1299Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS1299CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS1299CollectionItem);
+  public
+    function Add: TS1299CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1299CollectionItem;
+    property Items[Index: Integer]: TS1299CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -204,43 +200,22 @@ begin
   Gerador.wGrupo('infoFech');
 
   Gerador.wCampo(tcStr, '', 'evtRemun',        1, 1, 1, eSSimNaoToStr(self.InfoFech.evtRemun));
-
-  if VersaoDF >= veS01_01_00 then
-    Gerador.wCampo(tcStr, '', 'evtPgtos',      1, 1, 1, eSSimNaoToStr(self.InfoFech.evtPgtos));
-
-  if VersaoDF <= ve02_05_00 then
-    Gerador.wCampo(tcStr, '', 'evtAqProd',     1, 1, 1, eSSimNaoToStr(self.InfoFech.evtAqProd));
-  
+  Gerador.wCampo(tcStr, '', 'evtPgtos',      1, 1, 1, eSSimNaoToStr(self.InfoFech.evtPgtos));
   Gerador.wCampo(tcStr, '', 'evtComProd',      1, 1, 1, eSSimNaoToStr(self.InfoFech.evtComProd));
   Gerador.wCampo(tcStr, '', 'evtContratAvNP',  1, 1, 1, eSSimNaoToStr(self.InfoFech.evtContratAvNP));
   Gerador.wCampo(tcStr, '', 'evtInfoComplPer', 1, 1, 1, eSSimNaoToStr(self.InfoFech.evtInfoComplPer));
 
-  if VersaoDF <= ve02_05_00 then
-  begin
-    if ((eSSimNaoToStr(self.InfoFech.evtRemun)        = 'N') and
-        (eSSimNaoToStr(self.InfoFech.evtPgtos)        = 'N') and
-        (eSSimNaoToStr(self.InfoFech.evtAqProd)       = 'N') and
-        (eSSimNaoToStr(self.InfoFech.evtComProd)      = 'N') and
-        (eSSimNaoToStr(self.InfoFech.evtContratAvNP)  = 'N') and
-        (eSSimNaoToStr(self.InfoFech.evtInfoComplPer) = 'N')) then
-      Gerador.wCampo(tcStr, '', 'compSemMovto', 1, 7, 0, self.InfoFech.compSemMovto);
-  end;
-
-  if (VersaoDF >= ve02_05_00) and
-     (Self.InfoFech.indExcApur1250 <> snfNada) and
+  if (Self.InfoFech.indExcApur1250 <> snfNada) and
      ((Self.ideEvento.IndApuracao = iapuMensal) and
       (Copy(Self.ideEvento.perApur,1,4)+Copy(Self.ideEvento.perApur,6,2) <= '202106'))
   then
     Gerador.wCampo(tcStr, '', 'indExcApur1250', 1, 1, 1, eSSimNaoFacultativoToStr(self.InfoFech.indExcApur1250));
 
-  if VersaoDF >= veS01_00_00 then
-  begin
-    if Self.infoFech.transDCTFWeb = snfSim then
-      Gerador.wCampo(tcStr, '', 'transDCTFWeb', 1, 1, 1, eSSimNaoFacultativoToStr(self.infoFech.transDCTFWeb));
+  if Self.infoFech.transDCTFWeb = snfSim then
+    Gerador.wCampo(tcStr, '', 'transDCTFWeb', 1, 1, 1, eSSimNaoFacultativoToStr(self.infoFech.transDCTFWeb));
 
-    if ((VersaoDF >= veS01_03_00) or (Self.infoFech.naoValid = snfSim)) then
-      Gerador.wCampo(tcStr, '', 'naoValid', 1, 1, 0, eSSimNaoFacultativoToStr(self.infoFech.naoValid));
-  end;
+  if Self.infoFech.naoValid = snfSim then
+    Gerador.wCampo(tcStr, '', 'naoValid', 1, 1, 0, eSSimNaoFacultativoToStr(self.infoFech.naoValid));
 
   Gerador.wGrupo('/infoFech');
 end;
@@ -259,9 +234,6 @@ begin
     GerarIdeEvento4(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);
 
-    if VersaoDF <= ve02_05_00 then
-      GerarIdeRespInf(Self.IdeRespInf);
-
     GerarInfoFech;
 
     Gerador.wGrupo('/evtFechaEvPer');
@@ -269,8 +241,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtFechaEvPer');
-//    Validar(schevtFechaEvPer);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak +'Nome Resp.: ' + Self.FIdeRespInf.nmResp + sLineBreak + ' ' + e.Message);
   end;

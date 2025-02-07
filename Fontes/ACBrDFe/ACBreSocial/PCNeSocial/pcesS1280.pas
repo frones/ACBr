@@ -58,34 +58,48 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS1280Collection = class;
-  TS1280CollectionItem = class;
-  TEvtInfoComplPer = class;
-  TInfoSubstPatrOpPortItem = class;
-  TInfoSubstPatrOpPortColecao = class;
-  TInfoSubstPatr = class;
-  TInfoAtivConcom = class;
-  TinfoPercTransf11096 = class;
-
-  TS1280Collection = class(TeSocialCollection)
+  TInfoAtivConcom = class(TObject)
   private
-    function GetItem(Index: Integer): TS1280CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS1280CollectionItem);
+    FfatorMes: Double;
+    Ffator13: Double;
   public
-    function Add: TS1280CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS1280CollectionItem;
-    property Items[Index: Integer]: TS1280CollectionItem read GetItem write SetItem; default;
+    property fatorMes: Double read FfatorMes write FfatorMes;
+    property fator13: Double read Ffator13 write Ffator13;
   end;
 
-  TS1280CollectionItem = class(TObject)
+  TInfoSubstPatr = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FEvtInfoComplPer: TEvtInfoComplPer;
+    FindSubstPatr: tpIndSubstPatr;
+    FpercRedContrib: double;
   public
-    constructor Create(AOwner: TComponent);
-    destructor  Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtInfoComplPer: TEvtInfoComplPer read FEvtInfoComplPer write FEvtInfoComplPer;
+    property indSubstPatr: tpIndSubstPatr read FindSubstPatr write FindSubstPatr;
+    property percRedContrib: double read FpercRedContrib write FpercRedContrib;
+  end;
+
+  TInfoSubstPatrOpPortItem = class(TObject)
+  private
+    FcnpjOpPortuario : string;
+    FcodLotacao      : string;
+  public
+    property cnpjOpPortuario: string read FcnpjOpPortuario write FcnpjOpPortuario;
+    property codLotacao: string read FcodLotacao write FcodLotacao;
+  end;
+
+  TInfoSubstPatrOpPortColecao = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TInfoSubstPatrOpPortItem;
+    procedure SetItem(Index: Integer; const Value: TInfoSubstPatrOpPortItem);
+  public
+    function Add: TInfoSubstPatrOpPortItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoSubstPatrOpPortItem;
+    property Items[Index: Integer]: TInfoSubstPatrOpPortItem read GetItem write SetItem;
+  end;
+
+  TinfoPercTransf11096 = class(TObject)
+  private
+    FpercTransf: Integer;
+  public
+    property percTransf : Integer read FpercTransf write FpercTransf;
   end;
 
   TEvtInfoComplPer = class(TESocialEvento)
@@ -129,49 +143,25 @@ type
     property infoPercTransf11096 : TinfoPercTransf11096 read getinfoPercTransf11096 write FinfoPercTransf11096;
   end;
 
-  TInfoSubstPatr = class(TObject)
+  TS1280CollectionItem = class(TObject)
   private
-    FindSubstPatr: tpIndSubstPatr;
-    FpercRedContrib: double;
+    FTipoEvento: TTipoEvento;
+    FEvtInfoComplPer: TEvtInfoComplPer;
   public
-    property indSubstPatr: tpIndSubstPatr read FindSubstPatr write FindSubstPatr;
-    property percRedContrib: double read FpercRedContrib write FpercRedContrib;
+    constructor Create(AOwner: TComponent);
+    destructor  Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtInfoComplPer: TEvtInfoComplPer read FEvtInfoComplPer write FEvtInfoComplPer;
   end;
 
-  TInfoSubstPatrOpPortItem = class(TObject)
+  TS1280Collection = class(TeSocialCollection)
   private
-    FcnpjOpPortuario : string;
-    FcodLotacao      : string;
+    function GetItem(Index: Integer): TS1280CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS1280CollectionItem);
   public
-    property cnpjOpPortuario: string read FcnpjOpPortuario write FcnpjOpPortuario;
-    property codLotacao: string read FcodLotacao write FcodLotacao;
-  end;
-
-  TInfoSubstPatrOpPortColecao = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TInfoSubstPatrOpPortItem;
-    procedure SetItem(Index: Integer; const Value: TInfoSubstPatrOpPortItem);
-  public
-    function Add: TInfoSubstPatrOpPortItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TInfoSubstPatrOpPortItem;
-    property Items[Index: Integer]: TInfoSubstPatrOpPortItem read GetItem write SetItem;
-  end;
-
-  TinfoPercTransf11096 = class(TObject)
-  private
-    FpercTransf: Integer;
-  public
-    property percTransf : Integer read FpercTransf write FpercTransf;
-  end;
-
-
-  TInfoAtivConcom = class(TObject)
-  private
-    FfatorMes: Double;
-    Ffator13: Double;
-  public
-    property fatorMes: Double read FfatorMes write FfatorMes;
-    property fator13: Double read Ffator13 write Ffator13;
+    function Add: TS1280CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1280CollectionItem;
+    property Items[Index: Integer]: TS1280CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -260,16 +250,14 @@ end;
 
 procedure TEvtInfoComplPer.GerarinfoPercTransf11096;
 begin
-  if VersaoDF > ve02_05_00 then
-    if infoPercTransf11096.percTransf > 0 then
-    begin
-      Gerador.wGrupo('infoPercTransf11096');
+  if infoPercTransf11096.percTransf > 0 then
+  begin
+    Gerador.wGrupo('infoPercTransf11096');
 
-      Gerador.wCampo(tcStr, '', 'percTransf', 1, 1, 1, infoPercTransf11096.percTransf);
+    Gerador.wCampo(tcStr, '', 'percTransf', 1, 1, 1, infoPercTransf11096.percTransf);
 
-      Gerador.wGrupo('/infoPercTransf11096');
-    end;
-
+    Gerador.wGrupo('/infoPercTransf11096');
+  end;
 end;
 
 procedure TEvtInfoComplPer.GerarInfoSubstPatr;
@@ -296,10 +284,7 @@ begin
 
     Gerador.wGrupo('infoSubstPatrOpPort');
 
-    if VersaoDF <= ve02_05_00 then
-      Gerador.wCampo(tcStr, '', 'cnpjOpPortuario', 14, 14, 1, objInfoSubstPatrOpPortItem.cnpjOpPortuario)
-    else
-      Gerador.wCampo(tcStr, '', 'codLotacao ', 30, 30, 1, objInfoSubstPatrOpPortItem.codLotacao);
+    Gerador.wCampo(tcStr, '', 'codLotacao ', 30, 30, 1, objInfoSubstPatrOpPortItem.codLotacao);
 
     Gerador.wGrupo('/infoSubstPatrOpPort');
   end;
@@ -336,9 +321,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtInfoComplPer');
-
-//    Validar(schevtInfoComplPer);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

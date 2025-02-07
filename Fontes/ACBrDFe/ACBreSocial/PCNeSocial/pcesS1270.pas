@@ -61,62 +61,6 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS1270CollectionItem = class;
-  TEvtContratAvNP = class;
-  TRemunAvNPItem = class;
-  TRemunAvNPColecao = class;
-
-  TS1270Collection = class(TeSocialCollection)
-  private
-    function GetItem(Index: Integer): TS1270CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS1270CollectionItem);
-  public
-    function Add: TS1270CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS1270CollectionItem;
-    property Items[Index: Integer]: TS1270CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS1270CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtContratAvNP: TEvtContratAvNP;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtContratAvNP: TEvtContratAvNP read FEvtContratAvNP write FEvtContratAvNP;
-  end;
-
-  TEvtContratAvNP = class(TESocialEvento)
-  private
-    FIdeEvento: TIdeEvento3;
-    FIdeEmpregador: TIdeEmpregador;
-    FRemunAvNp: TRemunAvNPColecao;
-
-    {Geradores específicos da classe}
-    procedure GerarRemunAvNP(pRemunAvNPColecao: TRemunAvNPColecao);
-  public
-    constructor Create(AACBreSocial: TObject); override;
-    destructor Destroy; override;
-
-    function GerarXML: boolean; override;
-    function LerArqIni(const AIniString: String): Boolean;
-
-    property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property remunAvNp: TRemunAvNPColecao read FRemunAvNp write FRemunAvNp;
-  end;
-
-  TRemunAvNPColecao = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TRemunAvNPItem;
-    procedure SetItem(Index: Integer; const Value: TRemunAvNPItem);
-  public
-    function Add: TRemunAvNPItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TRemunAvNPItem;
-    property Items[Index: Integer]: TRemunAvNPItem read GetItem write SetItem;
-  end;
-
   TRemunAvNPItem = class(TObject)
   private
     FtpInsc: tpTpInsc;
@@ -140,6 +84,57 @@ type
     property vrBcCp13: Double read FVrBcCp13 write FVrBcCp13;
     property vrBcFgts: Double read FVrBcFgts write FVrBcFgts;
     property vrDescCP: Double read FVrDescCP write FVrDescCP;
+  end;
+
+  TRemunAvNPColecao = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TRemunAvNPItem;
+    procedure SetItem(Index: Integer; const Value: TRemunAvNPItem);
+  public
+    function Add: TRemunAvNPItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRemunAvNPItem;
+    property Items[Index: Integer]: TRemunAvNPItem read GetItem write SetItem;
+  end;
+
+  TEvtContratAvNP = class(TESocialEvento)
+  private
+    FIdeEvento: TIdeEvento3;
+    FIdeEmpregador: TIdeEmpregador;
+    FRemunAvNp: TRemunAvNPColecao;
+
+    {Geradores específicos da classe}
+    procedure GerarRemunAvNP(pRemunAvNPColecao: TRemunAvNPColecao);
+  public
+    constructor Create(AACBreSocial: TObject); override;
+    destructor Destroy; override;
+
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property remunAvNp: TRemunAvNPColecao read FRemunAvNp write FRemunAvNp;
+  end;
+
+  TS1270CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtContratAvNP: TEvtContratAvNP;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtContratAvNP: TEvtContratAvNP read FEvtContratAvNP write FEvtContratAvNP;
+  end;
+
+  TS1270Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS1270CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS1270CollectionItem);
+  public
+    function Add: TS1270CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1270CollectionItem;
+    property Items[Index: Integer]: TS1270CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -268,10 +263,7 @@ begin
     GerarCabecalho('evtContratAvNP');
     Gerador.wGrupo('evtContratAvNP Id="' + Self.Id + '"');
 
-    if VersaoDF <= ve02_05_00 then
-      gerarIdeEvento3(self.IdeEvento, True, True, False)
-    else
-      GerarIdeEvento3(self.IdeEvento, True, False, True);
+    GerarIdeEvento3(self.IdeEvento, True, False, True);
 
     gerarIdeEmpregador(self.IdeEmpregador);
     GerarRemunAvNP(remunAvNp);
@@ -281,9 +273,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtContratAvNP');
-
-//    Validar(schevtContratAvNP);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

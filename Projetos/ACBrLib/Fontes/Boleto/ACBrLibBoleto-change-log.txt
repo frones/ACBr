@@ -41,6 +41,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+07/02/2025
+-- ACBrLibBoletoConsoleMTDemo.lpi --
+[+] Adicionado novo Projeto, 100% CONSOLE e MT versão Demonstração.
+[+] Compatível com compilação em Linux 64 e Android 32 e 64
+
 23/01/2025
 -- ACBrLibBoletoRespostas.pas --
 [-] TK-6508 - Ajustado para validar o conteudo antes de MotivoRejeicaoComando 

@@ -1587,7 +1587,7 @@ begin
       // Informar A Exigibilidade ISS para fintelISS [1/2/3/4/5/6/7]
       Servico.ExigibilidadeISS := exiExigivel;
 
-//      Servico.CodigoPais := 1058; // Brasil
+      Servico.CodigoPais := 1058; // Brasil
       Servico.MunicipioIncidencia := StrToIntDef(edtCodCidade.Text, 0);
 
       {=========================================================================
@@ -1644,7 +1644,7 @@ begin
       Tomador.Endereco.CodigoMunicipio := edtCodCidade.Text;
       Tomador.Endereco.xMunicipio := 'Cidade do Tomador';
       Tomador.Endereco.UF := edtEmitUF.Text;
-      Tomador.Endereco.CodigoPais := 0;
+      Tomador.Endereco.CodigoPais := 1058; // Brasil
       Tomador.Endereco.CEP := '14800000';
       Tomador.Endereco.xPais := 'BRASIL';
       Tomador.Contato.Telefone := '1622223333';

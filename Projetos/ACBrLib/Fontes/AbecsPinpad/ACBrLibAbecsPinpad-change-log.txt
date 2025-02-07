@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2025
+-- ACBrLibAbecsPinpadConsoleMTDemo.lpi --
+[+] Adicionado novo Projeto, 100% CONSOLE e MT versão Demonstração.
+[+] Compatível com compilação em Linux 64 e Android 32 e 64
+
 12/08/2024
 --- ACBrLibAbecsPinpadBase, ACBrLibAbecsPinpadDataModule, ACBrLibAbecsPinpadST, ACBrLibAbecsPinpadMT,
     ACBrLibAbecsPinpadStaticImportST, ACBrLibAbecsPinpadStaticImportMT, ACBrLibAbecsPinpadRespostas ---

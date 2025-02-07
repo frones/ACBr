@@ -294,12 +294,11 @@ type
   { HexToAsciiTest }
 
   HexToAsciiTest = class(TTestCase)
-  private
-    function DevolveHexStrParaConverter(ATexto: String): String;
   published
     procedure Simples;
     procedure Comlexo;
     procedure CompletoCaracteresEspeciais;
+    procedure DesCriptografia;
   end;
 
   { AsciiToHexTest }
@@ -1523,21 +1522,6 @@ end;
 
 { HexToAsciiTest }
 
-function HexToAsciiTest.DevolveHexStrParaConverter(ATexto: String): String;
-var
-  vStr, vHex: String;
-  p1, p2: Integer;
-begin
-  p1:=Pos('&#x',aTexto);
-  for p2:=p1 to Length(aTexto) do
-    if aTexto[p2]=';' then
-       break;
-  vHex:=Copy(aTexto,p1,p2-p1+1);
-  vStr:=StringReplace(vHex,'&#x','',[rfReplaceAll]);
-  vStr:=StringReplace(vStr,';','',[rfReplaceAll]);
-  Result := vStr;
-end;
-
 procedure HexToAsciiTest.Simples;
 begin
   CheckEquals('ABCD', HexToAscii('41424344') );
@@ -1550,20 +1534,59 @@ end;
 
 procedure HexToAsciiTest.CompletoCaracteresEspeciais;
 begin
-  CheckEquals(ACBrStr('á'), HexToAscii(DevolveHexStrParaConverter('&#xE1;')));
-  CheckEquals(ACBrStr('é'), HexToAscii(DevolveHexStrParaConverter('&#xE9;')));
-  CheckEquals(ACBrStr('í'), HexToAscii(DevolveHexStrParaConverter('&#xED;')));
-  CheckEquals(ACBrStr('ó'), HexToAscii(DevolveHexStrParaConverter('&#xF3;')));
-  CheckEquals(ACBrStr('ú'), HexToAscii(DevolveHexStrParaConverter('&#xFA;')));
-  CheckEquals(ACBrStr('ç'), HexToAscii(DevolveHexStrParaConverter('&#xE7;')));
-  CheckEquals(ACBrStr('ñ'), HexToAscii(DevolveHexStrParaConverter('&#xF1;')));
-  CheckEquals(ACBrStr('Á'), HexToAscii(DevolveHexStrParaConverter('&#xC1;')));
-  CheckEquals(ACBrStr('É'), HexToAscii(DevolveHexStrParaConverter('&#xC9;')));
-  CheckEquals(ACBrStr('Í'), HexToAscii(DevolveHexStrParaConverter('&#xCD;')));
-  CheckEquals(ACBrStr('Ó'), HexToAscii(DevolveHexStrParaConverter('&#xD3;')));
-  CheckEquals(ACBrStr('Ú'), HexToAscii(DevolveHexStrParaConverter('&#xDA;')));
-  CheckEquals(ACBrStr('Ç'), HexToAscii(DevolveHexStrParaConverter('&#xC7;')));
-  CheckEquals(ACBrStr('Ñ'), HexToAscii(DevolveHexStrParaConverter('&#xD1;')));
+  CheckEquals(ACBrStr('&'), HexToAscii('26'));
+  CheckEquals(ACBrStr('<'), HexToAscii('3C'));
+  CheckEquals(ACBrStr('>'), HexToAscii('3E'));
+  CheckEquals(ACBrStr('À'), HexToAscii('C0'));
+  CheckEquals(ACBrStr('Á'), HexToAscii('C1'));
+  CheckEquals(ACBrStr('Ã'), HexToAscii('C3'));
+  CheckEquals(ACBrStr('Â'), HexToAscii('C2'));
+  CheckEquals(ACBrStr('à'), HexToAscii('E0'));
+  CheckEquals(ACBrStr('á'), HexToAscii('E1'));
+  CheckEquals(ACBrStr('ã'), HexToAscii('E3'));
+  CheckEquals(ACBrStr('â'), HexToAscii('E2'));
+  CheckEquals(ACBrStr('È'), HexToAscii('C8'));
+  CheckEquals(ACBrStr('É'), HexToAscii('C9'));
+  CheckEquals(ACBrStr('Ê'), HexToAscii('CA'));
+  CheckEquals(ACBrStr('è'), HexToAscii('E8'));
+  CheckEquals(ACBrStr('é'), HexToAscii('E9'));
+  CheckEquals(ACBrStr('ê'), HexToAscii('EA'));
+  CheckEquals(ACBrStr('Ì'), HexToAscii('CC'));
+  CheckEquals(ACBrStr('Í'), HexToAscii('CD'));
+  CheckEquals(ACBrStr('Î'), HexToAscii('CE'));
+  CheckEquals(ACBrStr('ì'), HexToAscii('EC'));
+  CheckEquals(ACBrStr('í'), HexToAscii('ED'));
+  CheckEquals(ACBrStr('î'), HexToAscii('EE'));
+  CheckEquals(ACBrStr('Ò'), HexToAscii('D2'));
+  CheckEquals(ACBrStr('Ó'), HexToAscii('D3'));
+  CheckEquals(ACBrStr('Õ'), HexToAscii('D5'));
+  CheckEquals(ACBrStr('Ô'), HexToAscii('D4'));
+  CheckEquals(ACBrStr('ò'), HexToAscii('F2'));
+  CheckEquals(ACBrStr('ó'), HexToAscii('F3'));
+  CheckEquals(ACBrStr('õ'), HexToAscii('F5'));
+  CheckEquals(ACBrStr('ô'), HexToAscii('F4'));
+  CheckEquals(ACBrStr('Ù'), HexToAscii('D9'));
+  CheckEquals(ACBrStr('Ú'), HexToAscii('DA'));
+  CheckEquals(ACBrStr('Û'), HexToAscii('DB'));
+  CheckEquals(ACBrStr('ù'), HexToAscii('F9'));
+  CheckEquals(ACBrStr('ú'), HexToAscii('FA'));
+  CheckEquals(ACBrStr('û'), HexToAscii('FB'));
+  CheckEquals(ACBrStr('Ç'), HexToAscii('C7'));
+  CheckEquals(ACBrStr('ç'), HexToAscii('E7'));
+  CheckEquals(ACBrStr('Ñ'), HexToAscii('D1'));
+  CheckEquals(ACBrStr('ñ'), HexToAscii('F1'));
+end;
+
+procedure HexToAsciiTest.DesCriptografia;
+const
+  CK = #25 + #251 + #133 + #80;
+var
+  RndK1, RndK2, HexStr: AnsiString;
+begin
+  RndK1 := 'BD';
+  RndK2 := '16';
+  HexStr := '19015C466B9EF6311F';
+  CheckEquals('[Empresa]', StrCrypt(HexToAscii(HexStr), RndK1 + RndK2 + CK));
 end;
 
 { LEStrToIntTest }

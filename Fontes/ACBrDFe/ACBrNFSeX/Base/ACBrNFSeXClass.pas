@@ -1359,9 +1359,9 @@ type
     property vCBS: Double read FvCBS write FvCBS;
   end;
 
-  { FtotCIBSSel }
+  { TtotCIBSSel }
 
-  FtotCIBSSel = class(TObject)
+  TtotCIBSSel = class(TObject)
   private
     FvTotNF: Double;
     FgSel: TgSel;
@@ -1382,13 +1382,13 @@ type
   TIBSCBSSELNfse = class(TObject)
   private
     FIBSCBS: TIBSCBS;
-    FtotCIBSSel: FtotCIBSSel;
+    FtotCIBSSel: TtotCIBSSel;
   public
     constructor Create;
     destructor Destroy; override;
 
     property IBSCBS: TIBSCBS read FIBSCBS write FIBSCBS;
-    property totCIBSSel: FtotCIBSSel read FtotCIBSSel write FtotCIBSSel;
+    property totCIBSSel: TtotCIBSSel read FtotCIBSSel write FtotCIBSSel;
   end;
 
   { TinfNFSe }
@@ -2896,7 +2896,7 @@ begin
   inherited Create;
 
   FIBSCBS := TIBSCBS.Create;
-  FtotCIBSSel := FtotCIBSSel.Create;
+  FtotCIBSSel := TtotCIBSSel.Create;
 end;
 
 destructor TIBSCBSSELNfse.Destroy;
@@ -2923,9 +2923,9 @@ begin
   inherited Destroy;
 end;
 
-{ FtotCIBSSel }
+{ TtotCIBSSel }
 
-constructor FtotCIBSSel.Create;
+constructor TtotCIBSSel.Create;
 begin
   inherited Create;
 
@@ -2934,7 +2934,7 @@ begin
   FgCBS := TgCBS.Create;
 end;
 
-destructor FtotCIBSSel.Destroy;
+destructor TtotCIBSSel.Destroy;
 begin
   FgSel.Free;
   FgIBS.Free;

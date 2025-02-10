@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/02/2025
+-- ACBrNFe.Classes/ACBrNFe.Conversao/pcnConversaoNFe--
+[+] Inclusão das novas classes e tipos para atender a Reforma Tributária.
+   Por: Italo Giurizzato Junior
+
 20/01/2025
 -- ACBrNFeServicos --
 [*] Atualizado a URL do serviço ConsultaCadastro do RS.

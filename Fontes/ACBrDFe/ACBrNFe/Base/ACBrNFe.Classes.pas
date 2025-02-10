@@ -47,197 +47,138 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
-  pcnConversao, pcnConversaoNFe, pcnSignature, pcnProcNFe, pcnGerador,
+  pcnConversao,
+  pcnConversaoNFe,
+  pcnSignature, pcnProcNFe, pcnGerador,
   ACBrBase;
 
 type
-  TInfNFe = class;
-  TIde = class;
-  TNFrefCollection = class;
-  TNFrefCollectionItem = class;
-  TRefNF = class;
-  TRefNFP = class;
-  TRefECF = class;
-  TEmit = class;
-  TAvulsa = class;
-  TenderEmit = class;
-  TDest = class;
-  TenderDest = class;
-  TRetirada = class;
-  TEntrega = class;
-  TDetCollection = class;
-  TDetCollectionItem = class;
-  TProd = class;
-  TRastroCollection = class;
-  TRastroCollectionItem = class;
-  TveicProd = class;
-  TmedCollection = class;
-  TmedCollectionItem = class;
-  TarmaCollection = class;
-  TarmaCollectionItem = class;
-  TComb = class;
-  TCIDE = class;
-  TICMSComb = class;
-  TICMSInter = class;
-  TICMSCons = class;
-  TDICollection = class;
-  TDICollectionItem = class;
-  TAdiCollection = class;
-  TAdiCollectionItem = class;
-  TNVECollection = class;
-  TNVECollectionItem = class;
-
-  TdetExportCollection = class;
-  TdetExportCollectionItem = class;
-
-  TImposto = class;
-  TICMS = class;
-  TIPI = class;
-  TII = class;
-  TPIS = class;
-  TPISST = class;
-  TCOFINS = class;
-  TCOFINSST = class;
-  TISSQN = class;
-  TICMSUFDest = class;
-  TTotal = class;
-  TICMSTot = class;
-  TISSQNtot = class;
-  TretTrib = class;
-  TTransp = class;
-  TTransporta = class;
-  TveicTransp = class;
-  TretTransp = class;
-  TreboqueCollection = class;
-  TreboqueCollectionItem = class;
-  TVolCollection = class;
-  TVolCollectionItem = class;
-  TLacresCollection = class;
-  TLacresCollectionItem = class;
-  TCobr = class;
-  TFat = class;
-  TDupCollection = class;
-  TDupCollectionItem = class;
-  TinfIntermed = class;
-  TInfAdic = class;
-  TobsContCollection = class;
-  TobsContCollectionItem = class;
-  TobsFiscoCollection = class;
-  TobsFiscoCollectionItem = class;
-  TprocRefCollection = class;
-  TprocRefCollectionItem = class;
-  TExporta = class;
-  TCompra = class;
-  TCana = class;
-  TForDiaCollection = class;
-  TForDiaCollectionItem = class;
-  TDeducCollection = class;
-  TDeducCollectionItem = class;
-  TpagCollection = class;
-  TpagCollectionItem = class;
-
-  TautXMLCollection     = class;
-  TautXMLCollectionItem = class;
-
-  TinfNFeSupl = class;
-
-  TinfRespTec = class;
-
-  Tagropecuario = class;
-  Tdefensivo = class;
-  TguiaTransito = class;
-
-
-  { TNFe }
-
-  TNFe = class(TObject)
-  private
-    FinfNFe: TinfNFe;
-    FIde: TIde;
-    FEmit: TEmit;
-    FAvulsa: TAvulsa;
-    FDest: TDest;
-    FRetirada: TRetirada;
-    FEntrega: TEntrega;
-    FDet: TDetCollection;
-    FTotal: TTotal;
-    FTransp: TTransp;
-    FCobr: TCobr;
-    Fpag: TpagCollection;
-    FinfIntermed: TinfIntermed;
-    FInfAdic: TInfAdic;
-    Fexporta: Texporta;
-    Fcompra: Tcompra;
-    Fcana: Tcana;
-    FSignature: TSignature;
-    FProcNFe: TProcNFe;
-    FautXML: TautXMLCollection;
-    FinfNFeSupl: TinfNFeSupl;
-    FinfRespTec: TinfRespTec;
-    Fagropecuario: Tagropecuario;
-
-    procedure SetDet(Value: TDetCollection);
-    procedure Setpag(Value: TpagCollection);
-    procedure SetautXML(const Value: TautXMLCollection);
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    procedure Assign(Source: TNFe);
-//    procedure SetXMLString(const AValue : AnsiString);
-    property infNFe: TinfNFe read FinfNFe write FinfNFe;
-    property Ide: TIde read FIde write FIde;
-    property Emit: TEmit read FEmit write FEmit;
-    property Avulsa: TAvulsa read FAvulsa write FAvulsa;
-    property Dest: TDest read FDest write FDest;
-    property Retirada: TRetirada read FRetirada write FRetirada;
-    property Entrega: TEntrega read FEntrega write FEntrega;
-    property autXML: TautXMLCollection read FautXML write SetautXML;
-    property Det: TDetCollection read FDet write SetDet;
-    property Total: TTotal read FTotal write FTotal;
-    property Transp: TTransp read FTransp write FTransp;
-    property Cobr: TCobr read FCobr write FCobr;
-    property pag: TpagCollection read Fpag write Setpag;
-    property infIntermed: TinfIntermed read FinfIntermed write FinfIntermed;
-    property InfAdic: TInfAdic read FInfAdic write FInfAdic;
-    property exporta: Texporta read Fexporta write Fexporta;
-    property compra: Tcompra read Fcompra write Fcompra;
-    property cana: Tcana read Fcana write Fcana;
-    property infNFeSupl: TinfNFeSupl read FinfNFeSupl write FinfNFeSupl;
-    property signature: Tsignature read Fsignature write Fsignature;
-    property procNFe: TProcNFe read FProcNFe write FProcNFe;
-    property infRespTec: TinfRespTec read FinfRespTec write FinfRespTec;
-    property agropecuario: Tagropecuario read Fagropecuario write Fagropecuario;
-  end;
-
-  TinfNFeSupl = class(TObject)
-  private
-    FqrCode: String;
-    FurlChave: String;
-  public
-    procedure Assign(Source: TinfNFeSupl);
-    property qrCode: String read FqrCode write FqrCode;
-    property urlChave: String read FurlChave write FurlChave;
-  end;
+  { TinfNFe }
 
   TinfNFe = class(TObject)
   private
-    FID: String;
+    FID: string;
     FVersao: Double;
-//    function GetVersaoStr: String;
-//    function GetVersao: Real;
   public
     procedure Assign(Source: TinfNFe);
-    property ID: String read FID write FID;
+    property ID: string read FID write FID;
     property Versao: Double read FVersao write FVersao;
-//    property VersaoStr: String read GetVersaoStr;
   end;
+
+  { TRefNF }
+
+  TRefNF = class(TObject)
+  private
+    FcUF: Integer;
+    FAAMM: string;
+    FCNPJ: string;
+    Fmodelo: Integer;
+    Fserie: Integer;
+    FnNF: Integer;
+  public
+    procedure Assign(Source: TRefNF);
+    property cUF: Integer read FcUF write FcUF;
+    property AAMM: string read FAAMM write FAAMM;
+    property CNPJ: string read FCNPJ write FCNPJ;
+    property modelo: Integer read FModelo write Fmodelo;
+    property serie: Integer read FSerie write Fserie;
+    property nNF: Integer read FnNF write FnNF;
+  end;
+
+  { TRefECF }
+
+  TRefECF = class(TObject)
+  private
+    Fmodelo: TpcnECFModRef;
+    FnECF: string;
+    FnCOO: string;
+  public
+    procedure Assign(Source: TRefECF);
+    property modelo:TpcnECFModRef read FModelo write Fmodelo default ECFModRefVazio;
+    property nECF: string read FnECF write FnECF;
+    property nCOO: string read FnCOO write FnCOO;
+  end;
+
+  { TRefNFP }
+
+  TRefNFP = class(TObject)
+  private
+    FcUF: Integer;
+    FAAMM: string;
+    FCNPJCPF: string;
+    FIE: string;
+    Fmodelo: string;
+    Fserie: Integer;
+    FnNF: Integer;
+  public
+    procedure Assign(Source: TRefNFP);
+    property cUF: Integer read FcUF write FcUF;
+    property AAMM: string read FAAMM write FAAMM;
+    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
+    property IE: string read FIE write FIE;
+    property modelo: string read FModelo write Fmodelo;
+    property serie: Integer read FSerie write Fserie;
+    property nNF: Integer read FnNF write FnNF;
+  end;
+
+  { TNFrefCollectionItem }
+
+  TNFrefCollectionItem = class(TObject)
+  private
+    FrefNFe: string;
+    FrefNFeSig: string;
+    FrefCTe: string;
+    FRefNF: TRefNF;
+    FRefECF: TRefECF;
+    FRefNFP: TRefNFP;
+  public
+    constructor Create();
+    destructor Destroy; override;
+
+    procedure Assign(Source: TNFrefCollectionItem);
+    property refNFe: string read FrefNFe write FrefNFe;
+    property refNFeSig: string read FrefNFeSig write FrefNFeSig;
+    property refCTe: string read FrefCTe write FrefCTe;
+    property RefNF: TRefNF read FRefNF write FRefNF;
+    property RefECF: TRefECF read FRefECF write FRefECF;
+    property RefNFP: TRefNFP read FRefNFP write FRefNFP;
+  end;
+
+  { TNFrefCollection }
+
+  TNFrefCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TNFrefCollectionItem;
+    procedure SetItem(Index: Integer; Value: TNFrefCollectionItem);
+  public
+    function Add: TNFrefCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TNFrefCollectionItem;
+    property Items[Index: Integer]: TNFrefCollectionItem read GetItem write SetItem; default;
+  end;
+
+  // Reforma Tributária
+  { TgCompraGov }
+
+  TgCompraGov = class(TObject)
+  private
+    FtpCompraGov: TtpCompraGov;
+    FpRedutor: Double;
+    FtipoNotaCredito: string;
+  public
+    procedure Assign(Source: TgCompraGov);
+
+    property tpCompraGov: TtpCompraGov read FtpCompraGov write FtpCompraGov;
+    property pRedutor: Double read FpRedutor write FpRedutor;
+    property tipoNotaCredito: string read FtipoNotaCredito write FtipoNotaCredito;
+  end;
+
+  { TIde }
 
   TIde = class(TObject)
   private
     FcUF: Integer;
     FcNF: Integer;
-    FnatOp: String;
+    FnatOp: string;
     FindPag: TpcnIndicadorPagamento;
     Fmodelo: Integer;
     Fserie: Integer;
@@ -258,9 +199,12 @@ type
     FindPres: TpcnPresencaComprador;
     FindIntermed: TindIntermed;
     FprocEmi: TpcnProcessoEmissao;
-    FverProc: String;
+    FverProc: string;
     FdhCont : TDateTime;
-    FxJust  : String;
+    FxJust  : string;
+    FcMunFGIBS: Integer;
+    FindMultaJuros: TindMultaJuros;
+    FgCompraGov: TgCompraGov;
 
     procedure SetNFref(Value: TNFrefCollection);
   public
@@ -268,9 +212,10 @@ type
     destructor Destroy; override;
 
     procedure Assign(Source: TIde);
+
     property cUF: Integer read FcUF write FcUF;
     property cNF: Integer read FcNF write FcNF;
-    property natOp: String read FnatOp write FnatOp;
+    property natOp: string read FnatOp write FnatOp;
     property indPag: TpcnIndicadorPagamento read FindPag write FindPag default ipPrazo;
     property modelo: Integer read Fmodelo write Fmodelo;
     property serie: Integer read Fserie write Fserie;
@@ -291,347 +236,666 @@ type
     property indPres: TpcnPresencaComprador read FindPres write FindPres;
     property indIntermed: TindIntermed read FindIntermed write FindIntermed;
     property procEmi: TpcnProcessoEmissao read FprocEmi write FprocEmi default peAplicativoContribuinte;
-    property verProc: String read FverProc write FverProc;
+    property verProc: string read FverProc write FverProc;
     property dhCont: TDateTime read FdhCont write FdhCont;
-    property xJust: String read FxJust write FxJust;
+    property xJust: string read FxJust write FxJust;
+    // Reforma Tributária
+    property cMunFGIBS: Integer read FcMunFGIBS write FcMunFGIBS;
+    property indMultaJuros: TindMultaJuros read FindMultaJuros write FindMultaJuros default timjNenhum;
+    property gCompraGov: TgCompraGov read FgCompraGov write FgCompraGov;
   end;
 
-  TNFrefCollection = class(TACBrObjectList)
+  { TenderEmit }
+
+  TenderEmit = class(TObject)
   private
-    function GetItem(Index: Integer): TNFrefCollectionItem;
-    procedure SetItem(Index: Integer; Value: TNFrefCollectionItem);
+    FxLgr: string;
+    Fnro: string;
+    fxCpl: string;
+    FxBairro: string;
+    FcMun: Integer;
+    FxMun: string;
+    FUF: string;
+    FCEP: Integer;
+    FcPais: Integer;
+    FxPais: string;
+    Ffone: string;
   public
-    function Add: TNFrefCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TNFrefCollectionItem;
-    property Items[Index: Integer]: TNFrefCollectionItem read GetItem write SetItem; default;
+    procedure Assign(Source: TenderEmit);
+    property xLgr: string read FxLgr write FxLgr;
+    property nro: string read Fnro write Fnro;
+    property xCpl: string read FxCpl write FxCpl;
+    property xBairro: string read FxBairro write FxBairro;
+    property cMun: Integer read FcMun write FcMun;
+    property xMun: string read FxMun write FxMun;
+    property UF: string read FUF write FUF;
+    property CEP: Integer read FCEP write FCEP;
+    property cPais: Integer read FcPais write FcPais;
+    property xPais: string read FxPais write FxPais;
+    property fone: string read Ffone write Ffone;
   end;
 
-  TNFrefCollectionItem = class(TObject)
-  private
-    FrefNFe: String;
-    FrefNFeSig: String;
-    FrefCTe: String;
-    FRefNF: TRefNF;
-    FRefECF: TRefECF;
-    FRefNFP: TRefNFP;
-  public
-    constructor Create();
-    destructor Destroy; override;
-
-    procedure Assign(Source: TNFrefCollectionItem);
-    property refNFe: String read FrefNFe write FrefNFe;
-    property refNFeSig: String read FrefNFeSig write FrefNFeSig;
-    property refCTe: String read FrefCTe write FrefCTe;
-    property RefNF: TRefNF read FRefNF write FRefNF;
-    property RefNFP: TRefNFP read FRefNFP write FRefNFP;
-    property RefECF: TRefECF read FRefECF write FRefECF;
-  end;
-
-  TRefNF = class(TObject)
-  private
-    FcUF: Integer;
-    FAAMM: String;
-    FCNPJ: String;
-    Fmodelo: Integer;
-    Fserie: Integer;
-    FnNF: Integer;
-  public
-    procedure Assign(Source: TRefNF);
-    property cUF: Integer read FcUF write FcUF;
-    property AAMM: String read FAAMM write FAAMM;
-    property CNPJ: String read FCNPJ write FCNPJ;
-    property modelo: Integer read FModelo write Fmodelo;
-    property serie: Integer read FSerie write Fserie;
-    property nNF: Integer read FnNF write FnNF;
-  end;
-
-  TRefNFP = class(TObject)
-  private
-    FcUF: Integer;
-    FAAMM: String;
-    FCNPJCPF: String;
-    FIE: String;
-    Fmodelo: String;
-    Fserie: Integer;
-    FnNF: Integer;
-  public
-    procedure Assign(Source: TRefNFP);
-    property cUF: Integer read FcUF write FcUF;
-    property AAMM: String read FAAMM write FAAMM;
-    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
-    property IE: String read FIE write FIE;
-    property modelo: String read FModelo write Fmodelo;
-    property serie: Integer read FSerie write Fserie;
-    property nNF: Integer read FnNF write FnNF;
-  end;
-
-  TRefECF = class(TObject)
-  private
-    Fmodelo: TpcnECFModRef;
-    FnECF: String;
-    FnCOO: String;
-  public
-    procedure Assign(Source: TRefECF);
-    property modelo:TpcnECFModRef read FModelo write Fmodelo default ECFModRefVazio;
-    property nECF: String read FnECF write FnECF;
-    property nCOO: String read FnCOO write FnCOO;
-  end;
-
+  { TEmit }
 
   TEmit = class(TObject)
   private
-    FCNPJCPF: String;
-    FxNome: String;
-    FxFant: String;
+    FCNPJCPF: string;
+    FxNome: string;
+    FxFant: string;
     FenderEmit: TenderEmit;
-    FIE: String;
-    FIEST: String;
-    FIM: String;
-    FCNAE: String;
+    FIE: string;
+    FIEST: string;
+    FIM: string;
+    FCNAE: string;
     FCRT: TpcnCRT;
   public
     constructor Create();
     destructor Destroy; override;
 
     procedure Assign(Source: TEmit);
-    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
-    property xNome: String read FxNome write FxNome;
-    property xFant: String read FxFant write FxFant;
+    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
+    property xNome: string read FxNome write FxNome;
+    property xFant: string read FxFant write FxFant;
     property EnderEmit: TEnderEmit read FEnderEmit write FEnderEmit;
-    property IE: String read FIE write FIE;
-    property IEST: String read FIEST write FIEST;
-    property IM: String read FIM write FIM;
-    property CNAE: String read FCNAE write FCNAE;
+    property IE: string read FIE write FIE;
+    property IEST: string read FIEST write FIEST;
+    property IM: string read FIM write FIM;
+    property CNAE: string read FCNAE write FCNAE;
     property CRT: TpcnCRT read FCRT write FCRT;
   end;
 
-  TenderEmit = class(TObject)
-  private
-    FxLgr: String;
-    Fnro: String;
-    fxCpl: String;
-    FxBairro: String;
-    FcMun: Integer;
-    FxMun: String;
-    FUF: String;
-    FCEP: Integer;
-    FcPais: Integer;
-    FxPais: String;
-    Ffone: String;
-  public
-    procedure Assign(Source: TenderEmit);
-    property xLgr: String read FxLgr write FxLgr;
-    property nro: String read Fnro write Fnro;
-    property xCpl: String read FxCpl write FxCpl;
-    property xBairro: String read FxBairro write FxBairro;
-    property cMun: Integer read FcMun write FcMun;
-    property xMun: String read FxMun write FxMun;
-    property UF: String read FUF write FUF;
-    property CEP: Integer read FCEP write FCEP;
-    property cPais: Integer read FcPais write FcPais;
-    property xPais: String read FxPais write FxPais;
-    property fone: String read Ffone write Ffone;
-  end;
+  { TAvulsa }
 
   TAvulsa = class(TObject)
   private
-    FCNPJ: String;
-    FxOrgao: String;
-    Fmatr: String;
-    FxAgente: String;
-    Ffone: String;
-    FUF: String;
-    FnDAR: String;
+    FCNPJ: string;
+    FxOrgao: string;
+    Fmatr: string;
+    FxAgente: string;
+    Ffone: string;
+    FUF: string;
+    FnDAR: string;
     FdEmi: TDateTime;
     FvDAR: Currency;
-    FrepEmi: String;
+    FrepEmi: string;
     FdPag: TDateTime;
   public
     procedure Assign(Source: TAvulsa);
-    property CNPJ: String read FCNPJ write FCNPJ;
-    property xOrgao: String read FxOrgao write FxOrgao;
-    property matr: String read Fmatr write Fmatr;
-    property xAgente: String read FxAgente write FxAgente;
-    property fone: String read Ffone write Ffone;
-    property UF: String read FUF write FUF;
-    property nDAR: String read FnDAR write FnDAR;
+    property CNPJ: string read FCNPJ write FCNPJ;
+    property xOrgao: string read FxOrgao write FxOrgao;
+    property matr: string read Fmatr write Fmatr;
+    property xAgente: string read FxAgente write FxAgente;
+    property fone: string read Ffone write Ffone;
+    property UF: string read FUF write FUF;
+    property nDAR: string read FnDAR write FnDAR;
     property dEmi: TDateTime read FdEmi write FdEmi;
     property vDAR: Currency read FvDAR write FvDAR;
-    property repEmi: String read FrepEmi write FrepEmi;
+    property repEmi: string read FrepEmi write FrepEmi;
     property dPag: TDateTime read FdPag write FdPag;
   end;
 
+  { TEnderDest }
+
+  TEnderDest = class(TObject)
+  private
+    FxLgr: string;
+    Fnro: string;
+    fxCpl: string;
+    FxBairro: string;
+    FcMun: Integer;
+    FxMun: string;
+    FUF: string;
+    FCEP: Integer;
+    FcPais: Integer;
+    FxPais: string;
+    Ffone: string;
+  public
+    procedure Assign(Source: TEnderDest);
+    property xLgr: string read FxLgr write FxLgr;
+    property nro: string read Fnro write Fnro;
+    property xCpl: string read FxCpl write FxCpl;
+    property xBairro: string read FxBairro write FxBairro;
+    property cMun: Integer read FcMun write FcMun;
+    property xMun: string read FxMun write FxMun;
+    property UF: string read FUF write FUF;
+    property CEP: Integer read FCEP write FCEP;
+    property cPais: Integer read FcPais write FcPais;
+    property xPais: string read FxPais write FxPais;
+    property fone: string read Ffone write Ffone;
+  end;
+
+  { TDest }
+
   TDest = class(TObject)
   private
-    FCNPJCPF: String;
-    FidEstrangeiro: String;
-    FxNome: String;
+    FCNPJCPF: string;
+    FidEstrangeiro: string;
+    FxNome: string;
     FEnderDest: TEnderDest;
     FindIEDest: TpcnindIEDest;
-    FIE: String;
-    FISUF: String;
-    FIM: String;
-    Femail: String;
+    FIE: string;
+    FISUF: string;
+    FIM: string;
+    Femail: string;
   public
     constructor Create();
     destructor Destroy; override;
 
     procedure Assign(Source: TDest);
-    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
-    property idEstrangeiro: String read FidEstrangeiro write FidEstrangeiro;
-    property xNome: String read FxNome write FxNome;
+    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
+    property idEstrangeiro: string read FidEstrangeiro write FidEstrangeiro;
+    property xNome: string read FxNome write FxNome;
     property EnderDest: TEnderDest read FEnderDest write FEnderDest;
     property indIEDest: TpcnindIEDest read FindIEDest write FindIEDest;
-    property IE: String read FIE write FIE;
-    property ISUF: String read FISUF write FISUF;
-    property IM: String read FIM write FIM;
-    property Email: String read Femail write Femail;
+    property IE: string read FIE write FIE;
+    property ISUF: string read FISUF write FISUF;
+    property IM: string read FIM write FIM;
+    property Email: string read Femail write Femail;
   end;
 
-  TEnderDest = class(TObject)
-  private
-    FxLgr: String;
-    Fnro: String;
-    fxCpl: String;
-    FxBairro: String;
-    FcMun: Integer;
-    FxMun: String;
-    FUF: String;
-    FCEP: Integer;
-    FcPais: Integer;
-    FxPais: String;
-    Ffone: String;
-  public
-    procedure Assign(Source: TEnderDest);
-    property xLgr: String read FxLgr write FxLgr;
-    property nro: String read Fnro write Fnro;
-    property xCpl: String read FxCpl write FxCpl;
-    property xBairro: String read FxBairro write FxBairro;
-    property cMun: Integer read FcMun write FcMun;
-    property xMun: String read FxMun write FxMun;
-    property UF: String read FUF write FUF;
-    property CEP: Integer read FCEP write FCEP;
-    property cPais: Integer read FcPais write FcPais;
-    property xPais: String read FxPais write FxPais;
-    property fone: String read Ffone write Ffone;
-  end;
+  { TRetirada }
 
   TRetirada = class(TObject)
   private
-    FCNPJCPF: String;
-    FxNome: String;
-    FxLgr: String;
-    Fnro: String;
-    fxCpl: String;
-    FxBairro: String;
+    FCNPJCPF: string;
+    FxNome: string;
+    FxLgr: string;
+    Fnro: string;
+    fxCpl: string;
+    FxBairro: string;
     FcMun: Integer;
-    FxMun: String;
-    FUF: String;
+    FxMun: string;
+    FUF: string;
     FCEP: Integer;
     FcPais: Integer;
-    FxPais: String;
-    Ffone: String;
-    Femail: String;
-    FIE: String;
+    FxPais: string;
+    Ffone: string;
+    Femail: string;
+    FIE: string;
   public
     procedure Assign(Source: TRetirada);
-    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
-    property xNome: String read FxNome write FxNome;
-    property xLgr: String read FxLgr write FxLgr;
-    property nro: String read Fnro write Fnro;
-    property xCpl: String read FxCpl write FxCpl;
-    property xBairro: String read FxBairro write FxBairro;
+    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
+    property xNome: string read FxNome write FxNome;
+    property xLgr: string read FxLgr write FxLgr;
+    property nro: string read Fnro write Fnro;
+    property xCpl: string read FxCpl write FxCpl;
+    property xBairro: string read FxBairro write FxBairro;
     property cMun: Integer read FcMun write FcMun;
-    property xMun: String read FxMun write FxMun;
-    property UF: String read FUF write FUF;
+    property xMun: string read FxMun write FxMun;
+    property UF: string read FUF write FUF;
     property CEP: Integer read FCEP write FCEP;
     property cPais: Integer read FcPais write FcPais;
-    property xPais: String read FxPais write FxPais;
-    property fone: String read Ffone write Ffone;
-    property Email: String read Femail write Femail;
-    property IE: String read FIE write FIE;
+    property xPais: string read FxPais write FxPais;
+    property fone: string read Ffone write Ffone;
+    property Email: string read Femail write Femail;
+    property IE: string read FIE write FIE;
   end;
+
+  { TEntrega }
 
   TEntrega = class(TObject)
   private
-    FCNPJCPF: String;
-    FxNome: String;
-    FxLgr: String;
-    Fnro: String;
-    fxCpl: String;
-    FxBairro: String;
+    FCNPJCPF: string;
+    FxNome: string;
+    FxLgr: string;
+    Fnro: string;
+    fxCpl: string;
+    FxBairro: string;
     FcMun: Integer;
-    FxMun: String;
-    FUF: String;
+    FxMun: string;
+    FUF: string;
     FCEP: Integer;
     FcPais: Integer;
-    FxPais: String;
-    Ffone: String;
-    Femail: String;
-    FIE: String;
+    FxPais: string;
+    Ffone: string;
+    Femail: string;
+    FIE: string;
   public
     procedure Assign(Source: TEntrega);
-    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
-    property xNome: String read FxNome write FxNome;
-    property xLgr: String read FxLgr write FxLgr;
-    property nro: String read Fnro write Fnro;
-    property xCpl: String read FxCpl write FxCpl;
-    property xBairro: String read FxBairro write FxBairro;
+    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
+    property xNome: string read FxNome write FxNome;
+    property xLgr: string read FxLgr write FxLgr;
+    property nro: string read Fnro write Fnro;
+    property xCpl: string read FxCpl write FxCpl;
+    property xBairro: string read FxBairro write FxBairro;
     property cMun: Integer read FcMun write FcMun;
-    property xMun: String read FxMun write FxMun;
-    property UF: String read FUF write FUF;
+    property xMun: string read FxMun write FxMun;
+    property UF: string read FUF write FUF;
     property CEP: Integer read FCEP write FCEP;
     property cPais: Integer read FcPais write FcPais;
-    property xPais: String read FxPais write FxPais;
-    property fone: String read Ffone write Ffone;
-    property Email: String read Femail write Femail;
-    property IE: String read FIE write FIE;
+    property xPais: string read FxPais write FxPais;
+    property fone: string read Ffone write Ffone;
+    property Email: string read Femail write Femail;
+    property IE: string read FIE write FIE;
   end;
 
-  TDetCollection = class(TACBrObjectList)
+  { TAdiCollectionItem }
+
+  TAdiCollectionItem = class(TObject)
   private
-    function GetItem(Index: Integer): TDetCollectionItem;
-    procedure SetItem(Index: Integer; Value: TDetCollectionItem);
+    FnAdicao: Integer;
+    FnSeqAdi: Integer;
+    FcFabricante: string;
+    FvDescDI: Currency;
+    FnDraw: string;
   public
-    procedure Assign(Source: TDetCollection);
-    function Add: TDetCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TDetCollectionItem;
-    property Items[Index: Integer]: TDetCollectionItem read GetItem write SetItem; default;
+    procedure Assign(Source: TAdiCollectionItem);
+    property nAdicao: Integer read FnAdicao write FnAdicao;
+    property nSeqAdi: Integer read FnSeqAdi write FnSeqAdi;
+    property cFabricante: string read FcFabricante write FcFabricante;
+    property vDescDI: Currency read FvDescDI write FvDescDI;
+    property nDraw: string read FnDraw write FnDraw;
   end;
 
-  TobsItem = class(TObject)
-  private
-    FxCampo: String;
-    FxTexto: String;
-  public
-    procedure Assign(Source: TobsItem);
+  { TAdiCollection }
 
-    property xCampo: String read FxCampo write FxCampo;
-    property xTexto: String read FxTexto write FxTexto;
+  TAdiCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TAdiCollectionItem;
+    procedure SetItem(Index: Integer; Value: TAdiCollectionItem);
+  public
+    function Add: TAdiCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TAdiCollectionItem;
+    property Items[Index: Integer]: TAdiCollectionItem read GetItem write SetItem; default;
   end;
 
-  TDetCollectionItem = class(TObject)
+  { TDICollectionItem }
+
+  TDICollectionItem = class(TObject)
   private
-    FProd: TProd;
-    FImposto: TImposto;
-    FpDevol: Currency;
-    FvIPIDevol: Currency;
-    FinfAdProd: String;
-    FobsCont: TobsItem;
-    FobsFisco: TobsItem;
+    FnDi: string;
+    FdDi: TDateTime;
+    FxLocDesemb: string;
+    FUFDesemb: string;
+    FdDesemb: TDateTime;
+    FtpViaTransp: TpcnTipoViaTransp;
+    FvAFRMM: Currency;
+    FtpIntermedio: TpcnTipoIntermedio;
+    FCNPJ: string;
+    FUFTerceiro: string;
+    FcExportador: string;
+    Fadi: TAdiCollection;
+
+    procedure SetAdi(Value: TAdiCollection);
   public
-    constructor Create;
+    constructor Create();
     destructor Destroy; override;
 
-    procedure Assign(Source: TDetCollectionItem);
+    procedure Assign(Source: TDICollectionItem);
+    property nDi: string read FnDi write FnDi;
+    property dDi: TDateTime read FdDi write FdDi;
+    property xLocDesemb: string read FxLocDesemb write FxLocDesemb;
+    property UFDesemb: string read FUFDesemb write FUFDesemb;
+    property dDesemb: TDateTime read FdDesemb write FdDesemb;
+    property tpViaTransp: TpcnTipoViaTransp read FtpViaTransp write FtpViaTransp;
+    property vAFRMM: Currency read FvAFRMM write FvAFRMM;
+    property tpIntermedio: TpcnTipoIntermedio read FtpIntermedio write FtpIntermedio;
+    property CNPJ: string read FCNPJ write FCNPJ;
+    property UFTerceiro: string read FUFTerceiro write FUFTerceiro;
+    property cExportador: string read FcExportador write FcExportador;
+    property adi: TAdiCollection read Fadi write SetAdi;
+  end;
 
-    property Prod: TProd read FProd write FProd;
-    property Imposto: TImposto read FImposto write FImposto;
-    property pDevol: Currency read FpDevol write FpDevol;
-    property vIPIDevol: Currency read FvIPIDevol write FvIPIDevol;
-    property infAdProd: String read FinfAdProd write FinfAdProd;
-    property obsCont: TobsItem read FobsCont write FobsCont;
-    property obsFisco: TobsItem read FobsFisco write FobsFisco;
+  { TDICollection }
+
+  TDICollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TDICollectionItem;
+    procedure SetItem(Index: Integer; Value: TDICollectionItem);
+  public
+    function Add: TDICollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDICollectionItem;
+    property Items[Index: Integer]: TDICollectionItem read GetItem write SetItem; default;
+  end;
+
+  { TdetExportCollectionItem }
+
+  TdetExportCollectionItem = class(TObject)
+  private
+    FnDraw: string;
+    FnRE: string;
+    FchNFe: string;
+    FqExport: Currency;
+  public
+    procedure Assign(Source: TdetExportCollectionItem);
+    property nDraw: string read FnDraw write FnDraw;
+    property nRE: string read FnRE write FnRE;
+    property chNFe: string read FchNFe write FchNFe;
+    property qExport: Currency read FqExport write FqExport;
+  end;
+
+  { TdetExportCollection }
+
+  TdetExportCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TdetExportCollectionItem;
+    procedure SetItem(Index: Integer; Value: TdetExportCollectionItem);
+  public
+    function Add: TdetExportCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New.'{$EndIf};
+    function New: TdetExportCollectionItem;
+    property Items[Index: Integer]: TdetExportCollectionItem read GetItem write SetItem; default;
+  end;
+
+  { TRastroCollectionItem }
+
+  TRastroCollectionItem = class(TObject)
+  private
+    FnLote: string;
+    FqLote: Currency;
+    FdFab: TDateTime;
+    FdVal: TDateTime;
+    FcAgreg: string;
+  public
+    procedure Assign(Source: TRastroCollectionItem);
+    property nLote: string read FnLote write FnLote;
+    property qLote: Currency read FqLote write FqLote;
+    property dFab: TDateTime read FdFab write FdFab;
+    property dVal: TDateTime read FdVal write FdVal;
+    property cAgreg: string read FcAgreg write FcAgreg;
+  end;
+
+  { TRastroCollection }
+
+  TRastroCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TRastroCollectionItem;
+    procedure SetItem(Index: Integer; Value: TRastroCollectionItem);
+  public
+    function Add: TRastroCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRastroCollectionItem;
+    property Items[Index: Integer]: TRastroCollectionItem read GetItem write SetItem; default;
+  end;
+
+  { TveicProd }
+
+  TveicProd = class(TObject)
+  private
+    FtpOP: TpcnTipoOperacao;
+    Fchassi: string;
+    FcCor: string;
+    FxCor: string;
+    Fpot: string;
+    FCilin: string;
+    FpesoL: string;
+    FpesoB: string;
+    FnSerie: string;
+    FtpComb: string;
+    FnMotor: string;
+    FCMT: string;
+    Fdist: string;
+    FanoMod: Integer;
+    FanoFab: Integer;
+    FtpPint: string;
+    FtpVeic: Integer;
+    FespVeic: Integer;
+    FVIN: string;
+    FcondVeic: TpcnCondicaoVeiculo;
+    FcMod: string;
+    FcCorDENATRAN: string;
+    Flota: Integer;
+    FtpRest: Integer;
+
+    function getCombDescricao: string;
+  public
+    procedure Assign(Source: TveicProd);
+    property tpOP: TpcnTipoOperacao read FtpOP write FtpOP;
+    property chassi: string read Fchassi write Fchassi;
+    property cCor: string read FcCor write FcCor;
+    property xCor: string read FxCor write FxCor;
+    property pot: string read Fpot write Fpot;
+    property Cilin: string read FCilin write FCilin;
+    property pesoL: string read FpesoL write FpesoL;
+    property pesoB: string read FpesoB write FpesoB;
+    property nSerie: string read FnSerie write FnSerie;
+    property tpComb: string read FtpComb write FtpComb;
+    property CombDescricao: string read getCombDescricao;
+    property nMotor: string read FnMotor write FnMotor;
+    property CMT: string read FCMT write FCMT;
+    property dist: string read Fdist write Fdist;
+    property anoMod: Integer read FanoMod write FanoMod;
+    property anoFab: Integer read FanoFab write FanoFab;
+    property tpPint: string read FtpPint write FtpPint;
+    property tpVeic: Integer read FtpVeic write FtpVeic;
+    property espVeic: Integer read FespVeic write FespVeic;
+    property VIN: string read FVIN write FVIN;
+    property condVeic: TpcnCondicaoVeiculo read FcondVeic write FcondVeic;
+    property cMod: string read FcMod write FcMod;
+    property cCorDENATRAN: string read FcCorDENATRAN write FcCorDENATRAN;
+    property lota: Integer read Flota write Flota;
+    property tpRest: Integer read FtpRest write FtpRest;
+  end;
+
+  { TMedCollectionItem }
+
+  TMedCollectionItem = class(TObject)
+  private
+    FcProdANVISA: string;
+    FxMotivoIsencao: string;
+    FnLote: string;
+    FqLote: Currency;
+    FdFab: TDateTime;
+    FdVal: TDateTime;
+    FvPMC: Currency;
+  public
+    procedure Assign(Source: TMedCollectionItem);
+    property cProdANVISA: string read FcProdANVISA write FcProdANVISA;
+    property xMotivoIsencao: string read FxMotivoIsencao write FxMotivoIsencao;
+    property nLote: string read FnLote write FnLote;
+    property qLote: Currency read FqLote write FqLote;
+    property dFab: TDateTime read FdFab write FdFab;
+    property dVal: TDateTime read FdVal write FdVal;
+    property vPMC: Currency read FvPMC write FvPMC;
+  end;
+
+  { TMedCollection }
+
+  TMedCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TMedCollectionItem;
+    procedure SetItem(Index: Integer; Value: TMedCollectionItem);
+  public
+    function Add: TMedCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TMedCollectionItem;
+    property Items[Index: Integer]: TMedCollectionItem read GetItem write SetItem; default;
+  end;
+
+  { TArmaCollectionItem }
+
+  TArmaCollectionItem = class(TObject)
+  private
+    FtpArma: TpcnTipoArma;
+    FnSerie: string;
+    FnCano: string;
+    Fdescr: string;
+  public
+    procedure Assign(Source: TArmaCollectionItem);
+    property tpArma: TpcnTipoArma read FtpArma write FtpArma default taUsoPermitido;
+    property nSerie: string read FnSerie write FnSerie;
+    property nCano: string read FnCano write FnCano;
+    property descr: string read Fdescr write Fdescr;
+  end;
+
+  { TArmaCollection }
+
+  TArmaCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TArmaCollectionItem;
+    procedure SetItem(Index: Integer; Value: TArmaCollectionItem);
+  public
+    function Add: TArmaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TArmaCollectionItem;
+    property Items[Index: Integer]: TArmaCollectionItem read GetItem write SetItem; default;
+  end;
+
+  { TCIDE }
+
+  TCIDE = class(TObject)
+  private
+    FqBCProd: Currency;
+    FvAliqProd: Currency;
+    FvCIDE: Currency;
+  public
+    procedure Assign(Source: TCIDE);
+    property qBCProd: Currency read FqBCProd write FqBCProd;
+    property vAliqProd: Currency read FvAliqProd write FvAliqProd;
+    property vCIDE: Currency read FvCIDE write FvCIDE;
+  end;
+
+  { TICMSComb }
+
+  TICMSComb = class(TObject)
+  private
+    FvBCICMS: Currency;
+    FvICMS: Currency;
+    FvBCICMSST: Currency;
+    FvICMSST: Currency;
+  public
+    procedure Assign(Source: TICMSComb);
+    property vBCICMS: Currency read FvBCICMS write FvBCICMS;
+    property vICMS: Currency read FvICMS write FvICMS;
+    property vBCICMSST: Currency read FvBCICMSST write FvBCICMSST;
+    property vICMSST: Currency read FvICMSST write FvICMSST;
+  end;
+
+  { TICMSInter }
+
+  TICMSInter = class(TObject)
+  private
+    FvBCICMSSTDest: Currency;
+    FvICMSSTDest: Currency;
+  public
+    procedure Assign(Source: TICMSInter);
+    property vBCICMSSTDest: Currency read FvBCICMSSTDest write FvBCICMSSTDest;
+    property vICMSSTDest: Currency read FvICMSSTDest write FvICMSSTDest;
+  end;
+
+  { TICMSCons }
+
+  TICMSCons = class(TObject)
+  private
+    FvBCICMSSTCons: Currency;
+    FvICMSSTCons: Currency;
+    FUFcons: string;
+  public
+    procedure Assign(Source: TICMSCons);
+    property vBCICMSSTCons: Currency read FvBCICMSSTCons write FvBCICMSSTCons;
+    property vICMSSTCons: Currency read FvICMSSTCons write FvICMSSTCons;
+    property UFcons: string read FUFcons write FUFcons;
+  end;
+
+  { Tencerrante }
+
+  Tencerrante = class(TObject)
+  private
+    FnBico: Integer;
+    FnBomba: Integer;
+    FnTanque: Integer;
+    FvEncIni: Currency;
+    FvEncFin: Currency;
+  public
+    procedure Assign(Source: Tencerrante);
+
+    property nBico: Integer read FnBico write FnBico;
+    property nBomba: Integer read FnBomba write FnBomba;
+    property nTanque: Integer read FnTanque write FnTanque;
+    property vEncIni: Currency read FvEncIni write FvEncIni;
+    property vEncFin: Currency read FvEncFin write FvEncFin;
+  end;
+
+  { TorigCombCollectionItem }
+
+  TorigCombCollectionItem = class(TObject)
+  private
+    FindImport: TindImport;
+    FcUFOrig: Integer;
+    FpOrig: Currency;
+  public
+    procedure Assign(Source: TorigCombCollectionItem);
+
+    property indImport: TindImport read FindImport write FindImport;
+    property cUFOrig: Integer read FcUFOrig write FcUFOrig;
+    property pOrig: Currency read FpOrig write FpOrig;
+  end;
+
+  { TorigCombCollection }
+
+  TorigCombCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TorigCombCollectionItem;
+    procedure SetItem(Index: Integer; Value: TorigCombCollectionItem);
+  public
+    function Add: TorigCombCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TorigCombCollectionItem;
+    property Items[Index: Integer]: TorigCombCollectionItem read GetItem write SetItem; default;
+  end;
+
+  { TComb }
+
+  TComb = class(TObject)
+  private
+    FcProdANP: Integer;
+    FpMixGN: Currency;
+    FdescANP: string;
+    FpGLP: Currency;
+    FpGNn: Currency;
+    FpGNi: Currency;
+    FvPart: Currency;
+    FCODIF: string;
+    FqTemp: Currency;
+    FUFcons: string;
+    FCIDE: TCIDE;
+    FICMS: TICMSComb;
+    FICMSInter: TICMSInter;
+    FICMSCons: TICMSCons;
+    Fencerrante: Tencerrante;
+    FpBio: Currency;
+    ForigComb: TorigCombCollection;
+
+    procedure SetorigComb(const Value: TorigCombCollection);
+  public
+    constructor Create();
+    destructor Destroy; override;
+    procedure Assign(Source: TComb);
+
+    property cProdANP: Integer read FcProdANP write FcProdANP;
+    property pMixGN: Currency read FpMixGN write FpMixGN;
+    property descANP: string read FdescANP write FdescANP;
+    property pGLP: Currency read FpGLP write FpGLP;
+    property pGNn: Currency read FpGNn write FpGNn;
+    property pGNi: Currency read FpGNi write FpGNi;
+    property vPart: Currency read FvPart write FvPart;
+    property CODIF: string read FCODIF write FCODIF;
+    property qTemp: Currency read FqTemp write FqTemp;
+    property UFcons: string read FUFcons write FUFcons;
+    property CIDE: TCIDE read FCIDE write FCIDE;
+    property ICMS: TICMSComb read FICMS write FICMS;
+    property ICMSInter: TICMSInter read FICMSInter write FICMSInter;
+    property ICMSCons: TICMSCons read FICMSCons write FICMSCons;
+    property encerrante: Tencerrante read Fencerrante write Fencerrante;
+    property pBio: Currency read FpBio write FpBio;
+    property origComb: TorigCombCollection read ForigComb write SetorigComb;
+  end;
+
+  { TNVECollectionItem }
+
+  TNVECollectionItem = class(TObject)
+  private
+    FNve: string;
+  public
+    procedure Assign(Source: TNVECollectionItem);
+    property NVE: string read FNve write FNve;
+  end;
+
+  { TNVECollection }
+
+  TNVECollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TNVECollectionItem;
+    procedure SetItem(Index: Integer; Value: TNVECollectionItem);
+  public
+    function Add: TNVECollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New.'{$EndIf};
+    function New: TNVECollectionItem;
+    property Items[Index: Integer]: TNVECollectionItem read GetItem write SetItem; default;
   end;
 
   { TCredPresumidoCollectionItem }
@@ -665,20 +929,20 @@ type
 
   TProd = class(TObject)
   private
-    FcProd: String;
+    FcProd: string;
     FnItem: Integer;
-    FcEAN: String;
-    FxProd: String;
-    FNCM: String;
-    FEXTIPI: String;
+    FcEAN: string;
+    FxProd: string;
+    FNCM: string;
+    FEXTIPI: string;
     //Fgenero: Integer;
-    FCFOP: String;
-    FuCom: String;
+    FCFOP: string;
+    FuCom: string;
     FqCom: Currency;
     FvUnCom: Double;
     FvProd: Currency;
-    FcEANTrib: String;
-    FuTrib: String;
+    FcEANTrib: string;
+    FuTrib: string;
     FqTrib: Currency;
     FvUnTrib: Double;
     FvFrete: Currency;
@@ -687,23 +951,23 @@ type
     FvOutro: Currency;
     FIndTot: TpcnIndicadorTotal;
     FDI: TDICollection;
-    FxPed: String;
-    FnItemPed: String;
+    FxPed: string;
+    FnItemPed: string;
     FdetExport: TdetExportCollection;
     FRastro: TRastroCollection;
     FveicProd: TveicProd;
     Fmed: TMedCollection;
     Farma: TarmaCollection;
     Fcomb: TComb;
-    FnRECOPI: String;
-    FnFCI: String;
+    FnRECOPI: string;
+    FnFCI: string;
     FNVE: TNVECollection;
-    FCEST: String;
+    FCEST: string;
     FindEscala: TpcnIndEscala;
-    FCNPJFab: String;
-    FcBenef: String;
-    FcBarra: String;
-    FcBarraTrib: String;
+    FCNPJFab: string;
+    FcBenef: string;
+    FcBarra: string;
+    FcBarraTrib: string;
     FCredPresumido: TCredPresumidoCollection;
 
     procedure SetDI(Value: TDICollection);
@@ -712,7 +976,7 @@ type
     procedure SetArma(Value: TarmaCollection);
     procedure SetdetExport(const Value: TdetExportCollection);
     procedure SetNVE(Value : TNVeCollection);
-    procedure setCFOP(const Value: String);
+    procedure setCFOP(const Value: string);
     procedure SetCredPresumido(const Value: TCredPresumidoCollection);
   public
     constructor Create();
@@ -720,23 +984,23 @@ type
 
     procedure Assign(Source: TProd);
 
-    property cProd: String read FcProd write FcProd;
+    property cProd: string read FcProd write FcProd;
     property nItem: Integer read FnItem write FnItem;
-    property cEAN: String read FcEAN write FcEAN;
-    property cBarra: String read FcBarra write FcBarra;
-    property xProd: String read FxProd write FxProd;
-    property NCM: String read FNCM write FNCM;
+    property cEAN: string read FcEAN write FcEAN;
+    property cBarra: string read FcBarra write FcBarra;
+    property xProd: string read FxProd write FxProd;
+    property NCM: string read FNCM write FNCM;
     property NVE : TNVECollection read FNVE write SetNVE; //FNVE;
-    property EXTIPI: String read FEXTIPI write FEXTIPI;
+    property EXTIPI: string read FEXTIPI write FEXTIPI;
     //property genero: Integer read Fgenero write Fgenero;
-    property CFOP: String read FCFOP write setCFOP;
-    property uCom: String read FuCom write FuCom;
+    property CFOP: string read FCFOP write setCFOP;
+    property uCom: string read FuCom write FuCom;
     property qCom: Currency read FqCom write FqCom;
     property vUnCom: Double read FvUnCom write FvUnCom;
     property vProd: Currency read FvProd write FvProd;
-    property cEANTrib: String read FcEANTrib write FcEANTrib;
-    property cBarraTrib: String read FcBarraTrib write FcBarraTrib;
-    property uTrib: String read FuTrib write FuTrib;
+    property cEANTrib: string read FcEANTrib write FcEANTrib;
+    property cBarraTrib: string read FcBarraTrib write FcBarraTrib;
+    property uTrib: string read FuTrib write FuTrib;
     property qTrib: Currency read FqTrib write FqTrib;
     property vUnTrib: Double read FvUnTrib write FvUnTrib;
     property vFrete: Currency read FvFrete write FvFrete;
@@ -745,435 +1009,24 @@ type
     property vOutro: Currency read FvOutro write FvOutro;
     property IndTot: TpcnIndicadorTotal read FIndTot write FIndTot default itSomaTotalNFe;
     property DI: TDICollection read FDI write SetDI;
-    property xPed: String read FxPed write FxPed;
-    property nItemPed : String read FnItemPed write FnItemPed;
+    property xPed: string read FxPed write FxPed;
+    property nItemPed : string read FnItemPed write FnItemPed;
     property detExport: TdetExportCollection read FdetExport write SetdetExport;
     property rastro: TRastroCollection read FRastro write SetRastro;
     property veicProd: TveicProd read FveicProd write FveicProd;
     property med: TMedCollection read Fmed write SetMed;
     property arma: TarmaCollection read Farma write SetArma;
     property comb: TComb read Fcomb write Fcomb;
-    property nRECOPI: String read FnRECOPI write FnRECOPI;
-    property nFCI: String read FnFCI write FnFCI;
-    property CEST: String read FCEST write FCEST;
+    property nRECOPI: string read FnRECOPI write FnRECOPI;
+    property nFCI: string read FnFCI write FnFCI;
+    property CEST: string read FCEST write FCEST;
     property indEscala: TpcnIndEscala read FindEscala write FindEscala default ieNenhum;
-    property CNPJFab: String read FCNPJFab write FCNPJFab;
-    property cBenef: String read FcBenef write FcBenef;
+    property CNPJFab: string read FCNPJFab write FCNPJFab;
+    property cBenef: string read FcBenef write FcBenef;
     property CredPresumido: TCredPresumidoCollection read FCredPresumido write SetCredPresumido;
   end;
 
-  TveicProd = class(TObject)
-  private
-    FtpOP: TpcnTipoOperacao;
-    Fchassi: String;
-    FcCor: String;
-    FxCor: String;
-    Fpot: String;
-    FCilin: String;
-    FpesoL: String;
-    FpesoB: String;
-    FnSerie: String;
-    FtpComb: String;
-    FnMotor: String;
-    FCMT: String;
-    Fdist: String;
-    //FRENAVAM: String;
-    FanoMod: Integer;
-    FanoFab: Integer;
-    FtpPint: String;
-    FtpVeic: Integer;
-    FespVeic: Integer;
-    FVIN: String;
-    FcondVeic: TpcnCondicaoVeiculo;
-    FcMod: String;
-    FcCorDENATRAN: String;
-    Flota: Integer;
-    FtpRest: Integer;
-
-    function getCombDescricao: String;
-  public
-    procedure Assign(Source: TveicProd);
-    property tpOP: TpcnTipoOperacao read FtpOP write FtpOP;
-    property chassi: String read Fchassi write Fchassi;
-    property cCor: String read FcCor write FcCor;
-    property xCor: String read FxCor write FxCor;
-    property pot: String read Fpot write Fpot;
-    property Cilin: String read FCilin write FCilin;
-    property pesoL: String read FpesoL write FpesoL;
-    property pesoB: String read FpesoB write FpesoB;
-    property nSerie: String read FnSerie write FnSerie;
-    property tpComb: String read FtpComb write FtpComb;
-    property CombDescricao: String read getCombDescricao;
-    property nMotor: String read FnMotor write FnMotor;
-    property CMT: String read FCMT write FCMT;
-    property dist: String read Fdist write Fdist;
-    //property RENAVAM: String read FRENAVAM write FRENAVAM;
-    property anoMod: Integer read FanoMod write FanoMod;
-    property anoFab: Integer read FanoFab write FanoFab;
-    property tpPint: String read FtpPint write FtpPint;
-    property tpVeic: Integer read FtpVeic write FtpVeic;
-    property espVeic: Integer read FespVeic write FespVeic;
-    property VIN: String read FVIN write FVIN;
-    property condVeic: TpcnCondicaoVeiculo read FcondVeic write FcondVeic;
-    property cMod: String read FcMod write FcMod;
-    property cCorDENATRAN: String read FcCorDENATRAN write FcCorDENATRAN;
-    property lota: Integer read Flota write Flota;
-    property tpRest: Integer read FtpRest write FtpRest;
-  end;
-
-  TRastroCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TRastroCollectionItem;
-    procedure SetItem(Index: Integer; Value: TRastroCollectionItem);
-  public
-    function Add: TRastroCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TRastroCollectionItem;
-    property Items[Index: Integer]: TRastroCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TRastroCollectionItem = class(TObject)
-  private
-    FnLote: String;
-    FqLote: Currency;
-    FdFab: TDateTime;
-    FdVal: TDateTime;
-    FcAgreg: String;
-  public
-    procedure Assign(Source: TRastroCollectionItem);
-    property nLote: String read FnLote write FnLote;
-    property qLote: Currency read FqLote write FqLote;
-    property dFab: TDateTime read FdFab write FdFab;
-    property dVal: TDateTime read FdVal write FdVal;
-    property cAgreg: String read FcAgreg write FcAgreg;
-  end;
-
-  TMedCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TMedCollectionItem;
-    procedure SetItem(Index: Integer; Value: TMedCollectionItem);
-  public
-    function Add: TMedCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TMedCollectionItem;
-    property Items[Index: Integer]: TMedCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TMedCollectionItem = class(TObject)
-  private
-    FcProdANVISA: String;
-    FxMotivoIsencao: String;
-    FnLote: String;
-    FqLote: Currency;
-    FdFab: TDateTime;
-    FdVal: TDateTime;
-    FvPMC: Currency;
-  public
-    procedure Assign(Source: TMedCollectionItem);
-    property cProdANVISA: String read FcProdANVISA write FcProdANVISA;
-    property xMotivoIsencao: String read FxMotivoIsencao write FxMotivoIsencao;
-    property nLote: String read FnLote write FnLote;
-    property qLote: Currency read FqLote write FqLote;
-    property dFab: TDateTime read FdFab write FdFab;
-    property dVal: TDateTime read FdVal write FdVal;
-    property vPMC: Currency read FvPMC write FvPMC;
-  end;
-
-  TArmaCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TArmaCollectionItem;
-    procedure SetItem(Index: Integer; Value: TArmaCollectionItem);
-  public
-    function Add: TArmaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TArmaCollectionItem;
-    property Items[Index: Integer]: TArmaCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TArmaCollectionItem = class(TObject)
-  private
-    FtpArma: TpcnTipoArma;
-    FnSerie: String;
-    FnCano: String;
-    Fdescr: String;
-  public
-    procedure Assign(Source: TArmaCollectionItem);
-    property tpArma: TpcnTipoArma read FtpArma write FtpArma default taUsoPermitido;
-    property nSerie: String read FnSerie write FnSerie;
-    property nCano: String read FnCano write FnCano;
-    property descr: String read Fdescr write Fdescr;
-  end;
-
-  TorigCombCollectionItem = class(TObject)
-  private
-    FindImport: TindImport;
-    FcUFOrig: Integer;
-    FpOrig: Currency;
-  public
-    procedure Assign(Source: TorigCombCollectionItem);
-
-    property indImport: TindImport read FindImport write FindImport;
-    property cUFOrig: Integer read FcUFOrig write FcUFOrig;
-    property pOrig: Currency read FpOrig write FpOrig;
-  end;
-
-  TorigCombCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TorigCombCollectionItem;
-    procedure SetItem(Index: Integer; Value: TorigCombCollectionItem);
-  public
-    function Add: TorigCombCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TorigCombCollectionItem;
-    property Items[Index: Integer]: TorigCombCollectionItem read GetItem write SetItem; default;
-  end;
-
-  Tencerrante = class(TObject)
-  private
-    FnBico: Integer;
-    FnBomba: Integer;
-    FnTanque: Integer;
-    FvEncIni: Currency;
-    FvEncFin: Currency;
-  public
-    procedure Assign(Source: Tencerrante);
-
-    property nBico: Integer read FnBico write FnBico;
-    property nBomba: Integer read FnBomba write FnBomba;
-    property nTanque: Integer read FnTanque write FnTanque;
-    property vEncIni: Currency read FvEncIni write FvEncIni;
-    property vEncFin: Currency read FvEncFin write FvEncFin;
-  end;
-
-  TComb = class(TObject)
-  private
-    FcProdANP: Integer;
-    FpMixGN: Currency;
-    FdescANP: String;
-    FpGLP: Currency;
-    FpGNn: Currency;
-    FpGNi: Currency;
-    FvPart: Currency;
-    FCODIF: String;
-    FqTemp: Currency;
-    FUFcons: String;
-    FCIDE: TCIDE;
-    FICMS: TICMSComb;
-    FICMSInter: TICMSInter;
-    FICMSCons: TICMSCons;
-    Fencerrante: Tencerrante;
-    FpBio: Currency;
-    ForigComb: TorigCombCollection;
-
-    procedure SetorigComb(const Value: TorigCombCollection);
-  public
-    constructor Create();
-    destructor Destroy; override;
-    procedure Assign(Source: TComb);
-
-    property cProdANP: Integer read FcProdANP write FcProdANP;
-    property pMixGN: Currency read FpMixGN write FpMixGN;
-    property descANP: String read FdescANP write FdescANP;
-    property pGLP: Currency read FpGLP write FpGLP;
-    property pGNn: Currency read FpGNn write FpGNn;
-    property pGNi: Currency read FpGNi write FpGNi;
-    property vPart: Currency read FvPart write FvPart;
-    property CODIF: String read FCODIF write FCODIF;
-    property qTemp: Currency read FqTemp write FqTemp;
-    property UFcons: String read FUFcons write FUFcons;
-    property CIDE: TCIDE read FCIDE write FCIDE;
-    property ICMS: TICMSComb read FICMS write FICMS;
-    property ICMSInter: TICMSInter read FICMSInter write FICMSInter;
-    property ICMSCons: TICMSCons read FICMSCons write FICMSCons;
-    property encerrante: Tencerrante read Fencerrante write Fencerrante;
-    property pBio: Currency read FpBio write FpBio;
-    property origComb: TorigCombCollection read ForigComb write SetorigComb;
-  end;
-
-  TCIDE = class(TObject)
-  private
-    FqBCProd: Currency;
-    FvAliqProd: Currency;
-    FvCIDE: Currency;
-  public
-    procedure Assign(Source: TCIDE);
-    property qBCProd: Currency read FqBCProd write FqBCProd;
-    property vAliqProd: Currency read FvAliqProd write FvAliqProd;
-    property vCIDE: Currency read FvCIDE write FvCIDE;
-  end;
-
-  TICMSComb = class(TObject)
-  private
-    FvBCICMS: Currency;
-    FvICMS: Currency;
-    FvBCICMSST: Currency;
-    FvICMSST: Currency;
-  public
-    procedure Assign(Source: TICMSComb);
-    property vBCICMS: Currency read FvBCICMS write FvBCICMS;
-    property vICMS: Currency read FvICMS write FvICMS;
-    property vBCICMSST: Currency read FvBCICMSST write FvBCICMSST;
-    property vICMSST: Currency read FvICMSST write FvICMSST;
-  end;
-
-  TICMSInter = class(TObject)
-  private
-    FvBCICMSSTDest: Currency;
-    FvICMSSTDest: Currency;
-  public
-    procedure Assign(Source: TICMSInter);
-    property vBCICMSSTDest: Currency read FvBCICMSSTDest write FvBCICMSSTDest;
-    property vICMSSTDest: Currency read FvICMSSTDest write FvICMSSTDest;
-  end;
-
-  TICMSCons = class(TObject)
-  private
-    FvBCICMSSTCons: Currency;
-    FvICMSSTCons: Currency;
-    FUFcons: String;
-  public
-    procedure Assign(Source: TICMSCons);
-    property vBCICMSSTCons: Currency read FvBCICMSSTCons write FvBCICMSSTCons;
-    property vICMSSTCons: Currency read FvICMSSTCons write FvICMSSTCons;
-    property UFcons: String read FUFcons write FUFcons;
-  end;
-
-  TDICollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TDICollectionItem;
-    procedure SetItem(Index: Integer; Value: TDICollectionItem);
-  public
-    function Add: TDICollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TDICollectionItem;
-    property Items[Index: Integer]: TDICollectionItem read GetItem write SetItem; default;
-  end;
-
-  TDICollectionItem = class(TObject)
-  private
-    FnDi: String;
-    FdDi: TDateTime;
-    FxLocDesemb: String;
-    FUFDesemb: String;
-    FdDesemb: TDateTime;
-    FtpViaTransp: TpcnTipoViaTransp;
-    FvAFRMM: Currency;
-    FtpIntermedio: TpcnTipoIntermedio;
-    FCNPJ: String;
-    FUFTerceiro: String;
-    FcExportador: String;
-    Fadi: TAdiCollection;
-
-    procedure SetAdi(Value: TAdiCollection);
-  public
-    constructor Create();
-    destructor Destroy; override;
-
-    procedure Assign(Source: TDICollectionItem);
-    property nDi: String read FnDi write FnDi;
-    property dDi: TDateTime read FdDi write FdDi;
-    property xLocDesemb: String read FxLocDesemb write FxLocDesemb;
-    property UFDesemb: String read FUFDesemb write FUFDesemb;
-    property dDesemb: TDateTime read FdDesemb write FdDesemb;
-    property tpViaTransp: TpcnTipoViaTransp read FtpViaTransp write FtpViaTransp;
-    property vAFRMM: Currency read FvAFRMM write FvAFRMM;
-    property tpIntermedio: TpcnTipoIntermedio read FtpIntermedio write FtpIntermedio;
-    property CNPJ: String read FCNPJ write FCNPJ;
-    property UFTerceiro: String read FUFTerceiro write FUFTerceiro;
-    property cExportador: String read FcExportador write FcExportador;
-    property adi: TAdiCollection read Fadi write SetAdi;
-  end;
-
-  TAdiCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TAdiCollectionItem;
-    procedure SetItem(Index: Integer; Value: TAdiCollectionItem);
-  public
-    function Add: TAdiCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TAdiCollectionItem;
-    property Items[Index: Integer]: TAdiCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TAdiCollectionItem = class(TObject)
-  private
-    FnAdicao: Integer;
-    FnSeqAdi: Integer;
-    FcFabricante: String;
-    FvDescDI: Currency;
-    FnDraw: String;
-  public
-    procedure Assign(Source: TAdiCollectionItem);
-    property nAdicao: Integer read FnAdicao write FnAdicao;
-    property nSeqAdi: Integer read FnSeqAdi write FnSeqAdi;
-    property cFabricante: String read FcFabricante write FcFabricante;
-    property vDescDI: Currency read FvDescDI write FvDescDI;
-    property nDraw: String read FnDraw write FnDraw;
-  end;
-
-  TNVECollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TNVECollectionItem;
-    procedure SetItem(Index: Integer; Value: TNVECollectionItem);
-  public
-    function Add: TNVECollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New.'{$EndIf};
-    function New: TNVECollectionItem;
-    property Items[Index: Integer]: TNVECollectionItem read GetItem write SetItem; default;
-  end;
-
-  TNVECollectionItem = class(TObject)
-  private
-    FNve: String;
-  public
-    procedure Assign(Source: TNVECollectionItem);
-    property NVE: String read FNve write FNve;
-  end;
-
-  TdetExportCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TdetExportCollectionItem;
-    procedure SetItem(Index: Integer; Value: TdetExportCollectionItem);
-  public
-    function Add: TdetExportCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New.'{$EndIf};
-    function New: TdetExportCollectionItem;
-    property Items[Index: Integer]: TdetExportCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TdetExportCollectionItem = class(TObject)
-  private
-    FnDraw: String;
-    FnRE: String;
-    FchNFe: String;
-    FqExport: Currency;
-  public
-    procedure Assign(Source: TdetExportCollectionItem);
-    property nDraw: String read FnDraw write FnDraw;
-    property nRE: String read FnRE write FnRE;
-    property chNFe: String read FchNFe write FchNFe;
-    property qExport: Currency read FqExport write FqExport;
-  end;
-
-  TImposto = class(TObject)
-  private
-    FvTotTrib: Currency;
-    FICMS: TICMS;
-    FIPI: TIPI;
-    FII: TII;
-    FPIS: TPIS;
-    FPISST: TPISST;
-    FCOFINS: TCOFINS;
-    FCOFINSST: TCOFINSST;
-    FISSQN: TISSQN;
-    FICMSUFDest: TICMSUFDest;
-  public
-    constructor Create();
-    destructor Destroy; override;
-    procedure Assign(Source: TImposto);
-    property vTotTrib: Currency read FvTotTrib write FvTotTrib;
-    property ICMS: TICMS read FICMS write FICMS;
-    property IPI: TIPI read FIPI write FIPI;
-    property II: TII read FII write FII;
-    property PIS: TPIS read FPIS write FPIS;
-    property PISST: TPISST read FPISST write FPISST;
-    property COFINS: TCOFINS read FCOFINS write FCOFINS;
-    property COFINSST: TCOFINSST read FCOFINSST write FCOFINSST;
-    property ISSQN: TISSQN read FISSQN write FISSQN;
-    property ICMSUFDest: TICMSUFDest read FICMSUFDest write FICMSUFDest;
-  end;
+  { TICMS }
 
   TICMS = class(TObject)
   private
@@ -1191,7 +1044,7 @@ type
     FvBCST: Currency;                     //N21
     FpICMSST: Currency;                   //N22
     FvICMSST: Currency;                   //N23
-    FUFST: String;                        //N24
+    FUFST: string;                        //N24
     FpBCOp: Currency;                     //N25
     FvBCSTRet: Currency;                  //N26
     FvICMSSTRet: Currency;                //N27
@@ -1228,7 +1081,6 @@ type
     FvICMSMono: Currency;
     FadRemICMSReten: Currency;
     FvICMSMonoReten: Currency;
-//    FadRemICMSDif: Currency;
     FvICMSMonoDif: Currency;
     FadRemICMSRet: Currency;
     FvICMSMonoRet: Currency;
@@ -1259,7 +1111,7 @@ type
     property vBCST: Currency read FvBCST write FvBCST;
     property pICMSST: Currency read FpICMSST write FpICMSST;
     property vICMSST: Currency read FvICMSST write FvICMSST;
-    property UFST: String read FUFST write FUFST;
+    property UFST: string read FUFST write FUFST;
     property pBCOp: Currency read FpBCOp write FpBCOp;
     property vBCSTRet: Currency read FvBCSTRet write FvBCSTRet;
     property vICMSSTRet: Currency read FvICMSSTRet write FvICMSSTRet;
@@ -1303,7 +1155,6 @@ type
     property pRedAdRem: Currency read FpRedAdRem write FpRedAdRem;
     property motRedAdRem: TmotRedAdRem read FmotRedAdRem write FmotRedAdRem;
     // CST 53
-//    property adRemICMSDif: Currency read FadRemICMSDif write FadRemICMSDif;
     property vICMSMonoOp: Currency read FvICMSMonoOp write FvICMSMonoOp;
     property vICMSMonoDif: Currency read FvICMSMonoDif write FvICMSMonoDif;
     // CST 61
@@ -1315,13 +1166,15 @@ type
     property cBenefRBC: string read FcBenefRBC write FcBenefRBC;
   end;
 
+  { TIPI }
+
   TIPI = class(TObject)
   private
-    FclEnq: String;
-    FCNPJProd: String;
-    FcSelo: String;
+    FclEnq: string;
+    FCNPJProd: string;
+    FcSelo: string;
     FqSelo: Integer;
-    FcEnq: String;
+    FcEnq: string;
     FCST: TpcnCstIpi;
     FvBC: Currency;
     FqUnid: Currency;
@@ -1330,11 +1183,11 @@ type
     FvIPI: Currency;
   public
     procedure Assign(Source: TIPI);
-    property clEnq: String read FclEnq write FclEnq;
-    property CNPJProd: String read FCNPJProd write FCNPJProd;
-    property cSelo: String read FcSelo write FcSelo;
+    property clEnq: string read FclEnq write FclEnq;
+    property CNPJProd: string read FCNPJProd write FCNPJProd;
+    property cSelo: string read FcSelo write FcSelo;
     property qSelo: Integer read FqSelo write FqSelo;
-    property cEnq: String read FcEnq write FcEnq;
+    property cEnq: string read FcEnq write FcEnq;
     property CST: TpcnCstIpi read FCST write FCST default ipi00;
     property vBC: Currency read FvBC write FvBC;
     property qUnid: Currency read FqUnid write FqUnid;
@@ -1342,6 +1195,8 @@ type
     property pIPI: Currency read FpIPI write FpIPI;
     property vIPI: Currency read FvIPI write FvIPI;
   end;
+
+  { TII }
 
   TII = class(TObject)
   private
@@ -1356,6 +1211,8 @@ type
     property vII: Currency read FvII write FvII;
     property vIOF: Currency read FvIOF write FvIOF;
   end;
+
+  { TPIS }
 
   TPIS = class(TObject)
   private
@@ -1375,6 +1232,8 @@ type
     property vAliqProd: Currency read FvAliqProd write FvAliqProd;
   end;
 
+  { TPISST }
+
   TPISST = class(TObject)
   private
     FvBc: Currency;
@@ -1392,6 +1251,8 @@ type
     property vPIS: Currency read FvPIS write FvPIS;
     property indSomaPISST: TIndSomaPISST read FindSomaPISST write FindSomaPISST;
   end;
+
+  { TCOFINS }
 
   TCOFINS = class(TObject)
   private
@@ -1413,20 +1274,516 @@ type
     property qBCProd: Currency read FqBCProd write FqBCProd;
   end;
 
-  TTotal = class(TObject)
+  { TCOFINSST }
+
+  TCOFINSST = class(TObject)
   private
-    FICMSTot: TICMSTot;
-    FISSQNtot: TISSQNtot;
-    FretTrib: TretTrib;
+    FvBC: Currency;
+    FpCOFINS: Currency;
+    FqBCProd: Currency;
+    FvAliqProd: Currency;
+    FvCOFINS: Currency;
+    FindSomaCOFINSST: TIndSomaCOFINSST;
+  public
+    procedure Assign(Source: TCOFINSST);
+    property vBC: Currency read FvBC write FvBC;
+    property pCOFINS: Currency read FpCOFINS write FpCOFINS;
+    property qBCProd: Currency read FqBCProd write FqBCProd;
+    property vAliqProd: Currency read FvAliqProd write FvAliqProd;
+    property vCOFINS: Currency read FvCOFINS write FvCOFINS;
+    property indSomaCOFINSST: TIndSomaCOFINSST read FindSomaCOFINSST write FindSomaCOFINSST;
+  end;
+
+  { TISSQN }
+
+  TISSQN = class(TObject)
+  private
+    FvBC: Currency;
+    FvAliq: Currency;
+    FvISSQN: Currency;
+    FcMunFG: Integer;
+    FcListServ: string;
+    FcSitTrib: TpcnISSQNcSitTrib;
+    FvDeducao: Currency;
+    FvOutro: Currency;
+    FvDescIncond: Currency;
+    FvDescCond: Currency;
+    FindISSRet: TpcnindISSRet;
+    FvISSRet: Currency;
+    FindISS: TpcnindISS;
+    FcServico: string;
+    FcMun: Integer;
+    FcPais: Integer;
+    FnProcesso: string;
+    FindIncentivo: TpcnindIncentivo;
+  public
+    procedure Assign(Source: TISSQN);
+    property vBC: Currency read FvBC write FvBC;
+    property vAliq: Currency read FvAliq write FvAliq;
+    property vISSQN: Currency read FvISSQN write FvISSQN;
+    property cMunFG: Integer read FcMunFG write FcMunFG;
+    property cListServ: string read FcListServ write FcListServ;
+    property cSitTrib: TpcnISSQNcSitTrib read FcSitTrib write FcSitTrib default ISSQNcSitTribVazio;
+    property vDeducao: Currency read FvDeducao write FvDeducao;
+    property vOutro: Currency read FvOutro write FvOutro;
+    property vDescIncond: Currency read FvDescIncond write FvDescIncond;
+    property vDescCond: Currency read FvDescCond write FvDescCond;
+    property indISSRet: TpcnindISSRet read FindISSRet write FindISSRet;
+    property vISSRet: Currency read FvISSRet write FvISSRet;
+    property indISS: TpcnindISS read FindISS write FindISS;
+    property cServico: string read FcServico write FcServico;
+    property cMun: Integer read FcMun write FcMun;
+    property cPais: Integer read FcPais write FcPais;
+    property nProcesso: string read FnProcesso write FnProcesso;
+    property indIncentivo: TpcnindIncentivo read FindIncentivo write FindIncentivo;
+  end;
+
+  { TICMSUFDest }
+
+  TICMSUFDest = class(TObject)
+  private
+    FvBCUFDest: Currency;
+    FvBCFCPUFDest: Currency;
+    FpFCPUFDest: Currency;
+    FpICMSUFDest: Currency;
+    FpICMSInter: Currency;
+    FpICMSInterPart: Currency;
+    FvFCPUFDest: Currency;
+    FvICMSUFDest: Currency;
+    FvICMSUFRemet: Currency;
+  public
+    procedure Assign(Source: TICMSUFDest);
+    property vBCUFDest: Currency read FvBCUFDest write FvBCUFDest;
+    property vBCFCPUFDest: Currency read FvBCFCPUFDest write FvBCFCPUFDest;
+    property pFCPUFDest: Currency read FpFCPUFDest write FpFCPUFDest;
+    property pICMSUFDest: Currency read FpICMSUFDest write FpICMSUFDest;
+    property pICMSInter: Currency read FpICMSInter write FpICMSInter;
+    property pICMSInterPart: Currency read FpICMSInterPart write FpICMSInterPart;
+    property vFCPUFDest: Currency read FvFCPUFDest write FvFCPUFDest;
+    property vICMSUFDest: Currency read FvICMSUFDest write FvICMSUFDest;
+    property vICMSUFRemet: Currency read FvICMSUFRemet write FvICMSUFRemet;
+  end;
+
+  { TImposto }
+
+  TImposto = class(TObject)
+  private
+    FvTotTrib: Currency;
+    FICMS: TICMS;
+    FIPI: TIPI;
+    FII: TII;
+    FPIS: TPIS;
+    FPISST: TPISST;
+    FCOFINS: TCOFINS;
+    FCOFINSST: TCOFINSST;
+    FISSQN: TISSQN;
+    FICMSUFDest: TICMSUFDest;
   public
     constructor Create();
     destructor Destroy; override;
-
-    procedure Assign(Source: TTotal);
-    property ICMSTot: TICMSTot read FICMSTot write FICMSTot;
-    property ISSQNtot: TISSQNtot read FISSQNtot write FISSQNtot;
-    property retTrib: TretTrib read FretTrib write FretTrib;
+    procedure Assign(Source: TImposto);
+    property vTotTrib: Currency read FvTotTrib write FvTotTrib;
+    property ICMS: TICMS read FICMS write FICMS;
+    property IPI: TIPI read FIPI write FIPI;
+    property II: TII read FII write FII;
+    property PIS: TPIS read FPIS write FPIS;
+    property PISST: TPISST read FPISST write FPISST;
+    property COFINS: TCOFINS read FCOFINS write FCOFINS;
+    property COFINSST: TCOFINSST read FCOFINSST write FCOFINSST;
+    property ISSQN: TISSQN read FISSQN write FISSQN;
+    property ICMSUFDest: TICMSUFDest read FICMSUFDest write FICMSUFDest;
   end;
+
+  { TobsItem }
+
+  TobsItem = class(TObject)
+  private
+    FxCampo: string;
+    FxTexto: string;
+  public
+    procedure Assign(Source: TobsItem);
+
+    property xCampo: string read FxCampo write FxCampo;
+    property xTexto: string read FxTexto write FxTexto;
+  end;
+
+  { Tseletivo }
+
+  Tseletivo = class(TObject)
+  private
+//italo    FCST: TCSTseletivo;
+    FcClassTrib: Integer;
+  public
+    procedure Assign(Source: Tseletivo);
+
+//italo    property CST: TCSTseletivo read FCST write FCST default cst00;
+    property cClassTrib: Integer read FcClassTrib write FcClassTrib;
+  end;
+
+  { TgImpSel }
+
+  TgImpSel = class(TObject)
+  private
+    FvBCImpSel: Double;
+    FpImpSel: Double;
+    FpImpSelEspec: Double;
+    FuTrib: string;
+    FqTrib: Double;
+    FvImpSel: Double;
+//italo    FCST: TCSTIBSCBS;
+    FcClassTrib: string;
+    FindPerecimento: TindPerecimento;
+  public
+    procedure Assign(Source: TgImpSel);
+
+    property vBCImpSel: Double read FvBCImpSel write FvBCImpSel;
+    property pImpSel: Double read FpImpSel write FpImpSel;
+    property pImpSelEspec: Double read FpImpSelEspec write FpImpSelEspec;
+    property uTrib: string read FuTrib write FuTrib;
+    property qTrib: Double read FqTrib write FqTrib;
+    property vImpSel: Double read FvImpSel write FvImpSel;
+//italo    property CST: TCSTIBSCBS read FCST write FCST default cst00;
+    property cClassTrib: string read FcClassTrib write FcClassTrib;
+    property indPerecimento: TindPerecimento read FindPerecimento write FindPerecimento;
+  end;
+
+  { TgDif }
+
+  TgDif = class(TObject)
+  private
+    FpDif: Double;
+    FvDif: Double;
+  public
+    property pDif: Double read FpDif write FpDif;
+    property vDif: Double read FvDif write FvDif;
+  end;
+
+  { TgDevTrib }
+
+  TgDevTrib = class(TObject)
+  private
+    FvDevTrib: Double;
+  public
+    property vDevTrib: Double read FvDevTrib write FvDevTrib;
+  end;
+
+  { TgRed }
+
+  TgRed = class(TObject)
+  private
+    FpRedAliq: Double;
+    FpAliqEfet: Double;
+  public
+    property pRedAliq: Double read FpRedAliq write FpRedAliq;
+    property pAliqEfet: Double read FpAliqEfet write FpAliqEfet;
+  end;
+
+  { TgDesonUF }
+
+  TgDesonUF = class(TObject)
+  private
+//italo    FCST: Integer;
+    FcClassTrib: Integer;
+    FvBC: Double;
+    FpAliq: Double;
+    FvDeson: Double;
+    FvIBSUF: Double;
+  public
+//italo    property CST: Integer read FCST write FCST;
+    property cClassTrib: Integer read FcClassTrib write FcClassTrib;
+    property vBC: Double read FvBC write FvBC;
+    property pAliq: Double read FpAliq write FpAliq;
+    property vDeson: Double read FvDeson write FvDeson;
+    property vIBSUF: Double read FvIBSUF write FvIBSUF;
+  end;
+
+  { TgIBSUF }
+
+  TgIBSUF = class(TObject)
+  private
+    FpIBSUF: Double;
+    FvTribOp: Double;
+    FgDif: TgDif;
+    FgDevTrib: TgDevTrib;
+    FgRed: TgRed;
+    FgDeson: TgDesonUF;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Assign(Source: TgIBSUF);
+
+    property pIBSUF: Double read FpIBSUF write FpIBSUF;
+    property vTribOp: Double read FvTribOp write FvTribOp;
+    property gDif: TgDif read FgDif write FgDif;
+    property gDevTrib: TgDevTrib read FgDevTrib write FgDevTrib;
+    property gRed: TgRed read FgRed write FgRed;
+    property gDeson: TgDesonUF read FgDeson write FgDeson;
+  end;
+
+  { TgDesonMun }
+
+  TgDesonMun = class(TObject)
+  private
+//italo    FCST: Integer;
+    FcClassTrib: Integer;
+    FvBC: Double;
+    FpAliq: Double;
+    FvDeson: Double;
+    FvIBSMun: Double;
+  public
+//italo    property CST: Integer read FCST write FCST;
+    property cClassTrib: Integer read FcClassTrib write FcClassTrib;
+    property vBC: Double read FvBC write FvBC;
+    property pAliq: Double read FpAliq write FpAliq;
+    property vDeson: Double read FvDeson write FvDeson;
+    property vIBSMun: Double read FvIBSMun write FvIBSMun;
+  end;
+
+  { TgIBSMun }
+
+  TgIBSMun = class(TObject)
+  private
+    FpIBSMun: Double;
+    FvTribOp: Double;
+    FgDif: TgDif;
+    FgDevTrib: TgDevTrib;
+    FgRed: TgRed;
+    FgDeson: TgDesonMun;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Assign(Source: TgIBSMun);
+
+    property pIBSMun: Double read FpIBSMun write FpIBSMun;
+    property vTribOp: Double read FvTribOp write FvTribOp;
+    property gDif: TgDif read FgDif write FgDif;
+    property gDevTrib: TgDevTrib read FgDevTrib write FgDevTrib;
+    property gRed: TgRed read FgRed write FgRed;
+    property gDeson: TgDesonMun read FgDeson write FgDeson;
+  end;
+
+  { TgIBSCBSCredPres }
+
+  TgIBSCBSCredPres = class(TObject)
+  private
+    FcCredPres: Integer;
+    FpCredPres: Double;
+    FvCredPres: Double;
+    FvCredPresConsSus: Double;
+  public
+    property cCredPres: Integer read FcCredPres write FcCredPres;
+    property pCredPres: Double read FpCredPres write FpCredPres;
+    property vCredPres: Double read FvCredPres write FvCredPres;
+    property vCredPresConsSus: Double read FvCredPresConsSus write FvCredPresConsSus;
+  end;
+
+  { TgCBSCredPres }
+
+  TgCBSCredPres = class(TObject)
+  private
+    FcCredPres: Integer;
+    FpCredPres: Double;
+    FvCredPres: Double;
+    FvCredPresConsSus: Double;
+  public
+    property cCredPres: Integer read FcCredPres write FcCredPres;
+    property pCredPres: Double read FpCredPres write FpCredPres;
+    property vCredPres: Double read FvCredPres write FvCredPres;
+    property vCredPresConsSus: Double read FvCredPresConsSus write FvCredPresConsSus;
+  end;
+
+  { TgDesonCBS }
+
+  TgDesonCBS = class(TObject)
+  private
+//italo    FCST: Integer;
+    FcClassTrib: Integer;
+    FvBC: Double;
+    FpAliq: Double;
+    FvDeson: Double;
+    FvCBS: Double;
+  public
+//italo    property CST: Integer read FCST write FCST;
+    property cClassTrib: Integer read FcClassTrib write FcClassTrib;
+    property vBC: Double read FvBC write FvBC;
+    property pAliq: Double read FpAliq write FpAliq;
+    property vDeson: Double read FvDeson write FvDeson;
+    property vCBS: Double read FvCBS write FvCBS;
+  end;
+
+  { TgCBS }
+
+  TgCBS = class(TObject)
+  private
+    FpCBS: Double;
+    FvTribOp: Double;
+    FgCBSCredPres: TgCBSCredPres;
+    FgDif: TgDif;
+    FgDevTrib: TgDevTrib;
+    FgRed: TgRed;
+    FgDeson: TgDesonCBS;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Assign(Source: TgCBS);
+
+    property pCBS: Double read FpCBS write FpCBS;
+    property vTribOp: Double read FvTribOp write FvTribOp;
+    property gCBSCredPres: TgCBSCredPres read FgCBSCredPres write FgCBSCredPres;
+    property gDif: TgDif read FgDif write FgDif;
+    property gDevTrib: TgDevTrib read FgDevTrib write FgDevTrib;
+    property gRed: TgRed read FgRed write FgRed;
+    property gDeson: TgDesonCBS read FgDeson write FgDeson;
+  end;
+
+  { TgIBSCBS }
+
+  TgIBSCBS = class(TObject)
+  private
+    FvBC: Double;
+    FgIBSUF: TgIBSUF;
+    FgIBSMun: TgIBSMun;
+    FgIBSCredPres: TgIBSCBSCredPres;
+    FgCBS: TgCBS;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Assign(Source: TgIBSCBS);
+
+    property vBC: Double read FvBC write FvBC;
+    property gIBSUF: TgIBSUF read FgIBSUF write FgIBSUF;
+    property gIBSMun: TgIBSMun read FgIBSMun write FgIBSMun;
+    property gIBSCredPres: TgIBSCBSCredPres read FgIBSCredPres write FgIBSCredPres;
+    property gCBS: TgCBS read FgCBS write FgCBS;
+  end;
+
+  { TgIBSCBSMono }
+
+  TgIBSCBSMono = class(TObject)
+  private
+    FqBCMono: Double;
+    FadRemIBS: Double;
+    FadRemCBS: Double;
+    FvIBSMono: Double;
+    FvCBSMono: Double;
+    FqBCMonoReten: Double;
+    FadRemIBSREten: Double;
+    FvIBSMonoReten: Double;
+    FpCredPresIBS: Double;
+    FvCRedPresIBS: Double;
+    FpCredPresCBS: Double;
+    FvCredPresCBS: Double;
+    FpDifIBS: Double;
+    FvIBSMonoDif: Double;
+    FpDifCBS: Double;
+    FvCBSMonoDif: Double;
+    FvTotIBSMono: Double;
+    FvTotCBSMono: Double;
+  public
+    procedure Assign(Source: TgIBSCBSMono);
+
+    property qBCMono: Double read FqBCMono write FqBCMono;
+    property adRemIBS: Double read FadRemIBS write FadRemIBS;
+    property adRemCBS: Double read FadRemCBS write FadRemCBS;
+    property vIBSMono: Double read FvIBSMono write FvIBSMono;
+    property vCBSMono: Double read FvCBSMono write FvCBSMono;
+    property qBCMonoReten: Double read FqBCMonoReten write FqBCMonoReten;
+    property adRemIBSREten: Double read FadRemIBSREten write FadRemIBSREten;
+    property vIBSMonoReten: Double read FvIBSMonoReten write FvIBSMonoReten;
+    property pCredPresIBS: Double read FpCredPresIBS write FpCredPresIBS;
+    property vCRedPresIBS: Double read FvCRedPresIBS write FvCRedPresIBS;
+    property pCredPresCBS: Double read FpCredPresCBS write FpCredPresCBS;
+    property vCredPresCBS: Double read FvCredPresCBS write FvCredPresCBS;
+    property pDifIBS: Double read FpDifIBS write FpDifIBS;
+    property vIBSMonoDif: Double read FvIBSMonoDif write FvIBSMonoDif;
+    property pDifCBS: Double read FpDifCBS write FpDifCBS;
+    property vCBSMonoDif: Double read FvCBSMonoDif write FvCBSMonoDif;
+    property vTotIBSMono: Double read FvTotIBSMono write FvTotIBSMono;
+    property vTotCBSMono: Double read FvTotCBSMono write FvTotCBSMono;
+  end;
+
+  { TIBSCBSSel }
+
+  TIBSCBSSel = class(TObject)
+  private
+    Fseletivo: Tseletivo;
+    FgImpSel: TgImpSel;
+//italo    FCST: Integer;
+    FcClassTrib: Integer;
+    FgIBSCBS: TgIBSCBS;
+    FgIBSCBSMono: TgIBSCBSMono;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property seletivo: Tseletivo read Fseletivo write Fseletivo;
+    property gImpSel: TgImpSel read FgImpSel write FgImpSel;
+//italo    property CST: Integer read FCST write FCST;
+    property cClassTrib: Integer read FcClassTrib write FcClassTrib;
+    property gIBSCBS: TgIBSCBS read FgIBSCBS write FgIBSCBS;
+    property gIBSCBSMono: TgIBSCBSMono read FgIBSCBSMono write FgIBSCBSMono;
+  end;
+
+  { TDFeReferenciado }
+
+  TDFeReferenciado = class(TObject)
+  private
+    FchaveAcesso: string;
+    FnItem: Integer;
+  public
+    property chaveAcesso: string read FchaveAcesso write FchaveAcesso;
+    property nItem: Integer read FnItem write FnItem;
+  end;
+
+  { TDetCollectionItem }
+
+  TDetCollectionItem = class(TObject)
+  private
+    FProd: TProd;
+    FImposto: TImposto;
+    FpDevol: Currency;
+    FvIPIDevol: Currency;
+    FinfAdProd: string;
+    FobsCont: TobsItem;
+    FobsFisco: TobsItem;
+    FIBSCBSSel: TIBSCBSSel;
+    FDFeReferenciado: TDFeReferenciado;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Assign(Source: TDetCollectionItem);
+
+    property Prod: TProd read FProd write FProd;
+    property Imposto: TImposto read FImposto write FImposto;
+    property pDevol: Currency read FpDevol write FpDevol;
+    property vIPIDevol: Currency read FvIPIDevol write FvIPIDevol;
+    property infAdProd: string read FinfAdProd write FinfAdProd;
+    property obsCont: TobsItem read FobsCont write FobsCont;
+    property obsFisco: TobsItem read FobsFisco write FobsFisco;
+    // Reforma Tributária
+    property IBSCBSSel: TIBSCBSSel read FIBSCBSSel write FIBSCBSSel;
+    property DFeReferenciado: TDFeReferenciado read FDFeReferenciado write FDFeReferenciado;
+  end;
+
+  { TDetCollection }
+
+  TDetCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TDetCollectionItem;
+    procedure SetItem(Index: Integer; Value: TDetCollectionItem);
+  public
+    procedure Assign(Source: TDetCollection);
+    function Add: TDetCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDetCollectionItem;
+    property Items[Index: Integer]: TDetCollectionItem read GetItem write SetItem; default;
+  end;
+
+  { TICMSTot }
 
   TICMSTot = class(TObject)
   private
@@ -1493,6 +1850,8 @@ type
     property qBCMonoRet: Currency read FqBCMonoRet write FqBCMonoRet;
   end;
 
+  { TISSQNtot }
+
   TISSQNtot = class(TObject)
   private
     FvServ: Currency;
@@ -1510,10 +1869,10 @@ type
     FvDescCond: Currency;
 //    FindISSRet: TpcnindISSRet;
 //    FindISS: TpcnindISS;
-//    FcServico: String;
+//    FcServico: string;
 //    FcMun: Integer;
 //    FcPais: Integer;
-//    FnProcesso: String;
+//    FnProcesso: string;
     FvISSRet: Currency;
     FcRegTrib: TpcnRegTribISSQN;
 //    FindIncentivo: TpcnindIncentivo;
@@ -1534,14 +1893,16 @@ type
     property vDescCond: Currency read FvDescCond write FvDescCond;
 //    property indISSRet: TpcnindISSRet read FindISSRet write FindISSRet;
 //    property indISS: TpcnindISS read FindISS write FindISS;
-//    property cServico: String read FcServico write FcServico;
+//    property cServico: string read FcServico write FcServico;
 //    property cMun: Integer read FcMun write FcMun;
 //    property cPais: Integer read FcPais write FcPais;
-//    property nProcesso: String read FnProcesso write FnProcesso;
+//    property nProcesso: string read FnProcesso write FnProcesso;
     property vISSRet: Currency read FvISSRet write FvISSRet;
     property cRegTrib: TpcnRegTribISSQN read FcRegTrib write FcRegTrib;
 //    property indIncentivo: TpcnindIncentivo read FindIncentivo write FindIncentivo;
   end;
+
+  { TretTrib }
 
   TretTrib = class(TObject)
   private
@@ -1563,89 +1924,166 @@ type
     property vRetPrev: Currency read FvRetPrev write FvRetPrev;
   end;
 
-  TCOFINSST = class(TObject)
+  { TTotal }
+
+  TTotal = class(TObject)
   private
-    FvBC: Currency;
-    FpCOFINS: Currency;
-    FqBCProd: Currency;
-    FvAliqProd: Currency;
-    FvCOFINS: Currency;
-    FindSomaCOFINSST: TIndSomaCOFINSST;
+    FICMSTot: TICMSTot;
+    FISSQNtot: TISSQNtot;
+    FretTrib: TretTrib;
   public
-    procedure Assign(Source: TCOFINSST);
-    property vBC: Currency read FvBC write FvBC;
-    property pCOFINS: Currency read FpCOFINS write FpCOFINS;
-    property qBCProd: Currency read FqBCProd write FqBCProd;
-    property vAliqProd: Currency read FvAliqProd write FvAliqProd;
-    property vCOFINS: Currency read FvCOFINS write FvCOFINS;
-    property indSomaCOFINSST: TIndSomaCOFINSST read FindSomaCOFINSST write FindSomaCOFINSST;
+    constructor Create();
+    destructor Destroy; override;
+
+    procedure Assign(Source: TTotal);
+    property ICMSTot: TICMSTot read FICMSTot write FICMSTot;
+    property ISSQNtot: TISSQNtot read FISSQNtot write FISSQNtot;
+    property retTrib: TretTrib read FretTrib write FretTrib;
   end;
 
-  TISSQN = class(TObject)
+  { TTransporta }
+
+  TTransporta = class(TObject)
   private
-    FvBC: Currency;
-    FvAliq: Currency;
-    FvISSQN: Currency;
+    FCNPJCPF: string;
+    FxNome: string;
+    FIE: string;
+    FxEnder: string;
+    FxMun: string;
+    FUF: string;
+  public
+    procedure Assign(Source: TTransporta);
+    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
+    property xNome: string read FxNome write FxNome;
+    property IE: string read FIE write FIE;
+    property xEnder: string read FxEnder write FxEnder;
+    property xMun: string read FxMun write FxMun;
+    property UF: string read FUF write FUF;
+  end;
+
+  { TretTransp }
+
+  TretTransp = class(TObject)
+  private
+    FvServ: Currency;
+    FvBCRet: Currency;
+    FpICMSRet: Currency;
+    FvICMSRet: Currency;
+    FCFOP: string;
     FcMunFG: Integer;
-    FcListServ: String;
-    FcSitTrib: TpcnISSQNcSitTrib;
-    FvDeducao: Currency;
-    FvOutro: Currency;
-    FvDescIncond: Currency;
-    FvDescCond: Currency;
-    FindISSRet: TpcnindISSRet;
-    FvISSRet: Currency;
-    FindISS: TpcnindISS;
-    FcServico: String;
-    FcMun: Integer;
-    FcPais: Integer;
-    FnProcesso: String;
-    FindIncentivo: TpcnindIncentivo;
   public
-    procedure Assign(Source: TISSQN);
-    property vBC: Currency read FvBC write FvBC;
-    property vAliq: Currency read FvAliq write FvAliq;
-    property vISSQN: Currency read FvISSQN write FvISSQN;
+    procedure Assign(Source: TretTransp);
+    property vServ: Currency read FvServ write FvServ;
+    property vBCRet: Currency read FvBCRet write FvBCRet;
+    property pICMSRet: Currency read FpICMSRet write FpICMSRet;
+    property vICMSRet: Currency read FvICMSRet write FvICMSRet;
+    property CFOP: string read FCFOP write FCFOP;
     property cMunFG: Integer read FcMunFG write FcMunFG;
-    property cListServ: String read FcListServ write FcListServ;
-    property cSitTrib: TpcnISSQNcSitTrib read FcSitTrib write FcSitTrib default ISSQNcSitTribVazio;
-    property vDeducao: Currency read FvDeducao write FvDeducao;
-    property vOutro: Currency read FvOutro write FvOutro;
-    property vDescIncond: Currency read FvDescIncond write FvDescIncond;
-    property vDescCond: Currency read FvDescCond write FvDescCond;
-    property indISSRet: TpcnindISSRet read FindISSRet write FindISSRet;
-    property vISSRet: Currency read FvISSRet write FvISSRet;
-    property indISS: TpcnindISS read FindISS write FindISS;
-    property cServico: String read FcServico write FcServico;
-    property cMun: Integer read FcMun write FcMun;
-    property cPais: Integer read FcPais write FcPais;
-    property nProcesso: String read FnProcesso write FnProcesso;
-    property indIncentivo: TpcnindIncentivo read FindIncentivo write FindIncentivo;
   end;
 
-  TICMSUFDest = class(TObject)
+  { TveicTransp }
+
+  TveicTransp = class(TObject)
   private
-    FvBCUFDest: Currency;
-    FvBCFCPUFDest: Currency;
-    FpFCPUFDest: Currency;
-    FpICMSUFDest: Currency;
-    FpICMSInter: Currency;
-    FpICMSInterPart: Currency;
-    FvFCPUFDest: Currency;
-    FvICMSUFDest: Currency;
-    FvICMSUFRemet: Currency;
+    Fplaca: string;
+    FUF: string;
+    FRNTC: string;
   public
-    procedure Assign(Source: TICMSUFDest);
-    property vBCUFDest: Currency read FvBCUFDest write FvBCUFDest;
-    property vBCFCPUFDest: Currency read FvBCFCPUFDest write FvBCFCPUFDest;
-    property pFCPUFDest: Currency read FpFCPUFDest write FpFCPUFDest;
-    property pICMSUFDest: Currency read FpICMSUFDest write FpICMSUFDest;
-    property pICMSInter: Currency read FpICMSInter write FpICMSInter;
-    property pICMSInterPart: Currency read FpICMSInterPart write FpICMSInterPart;
-    property vFCPUFDest: Currency read FvFCPUFDest write FvFCPUFDest;
-    property vICMSUFDest: Currency read FvICMSUFDest write FvICMSUFDest;
-    property vICMSUFRemet: Currency read FvICMSUFRemet write FvICMSUFRemet;
+    procedure Assign(Source: TveicTransp);
+    property placa: string read Fplaca write Fplaca;
+    property UF: string read FUF write FUF;
+    property RNTC: string read FRNTC write FRNTC;
   end;
+
+  { TLacresCollectionItem }
+
+  TLacresCollectionItem = class(TObject)
+  private
+    FnLacre: string;
+  public
+    procedure Assign(Source: TLacresCollectionItem);
+    property nLacre: string read FnLacre write FnLacre;
+  end;
+
+  { TLacresCollection }
+
+  TLacresCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TLacresCollectionItem;
+    procedure SetItem(Index: Integer; Value: TLacresCollectionItem);
+  public
+    function Add: TLacresCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TLacresCollectionItem;
+    property Items[Index: Integer]: TLacresCollectionItem read GetItem write SetItem; default;
+  end;
+
+  { TVolCollectionItem }
+
+  TVolCollectionItem = class(TObject)
+  private
+    FqVol: Integer;
+    Fesp: string;
+    Fmarca: string;
+    FnVol: string;
+    FpesoL: Currency;
+    FpesoB: Currency;
+    FLacres: TLacresCollection;
+
+    procedure SetLacres(Value: TLacresCollection);
+  public
+    constructor Create();
+    destructor Destroy; override;
+
+    procedure Assign(Source: TVolCollectionItem);
+    property qVol: Integer read FqVol write FqVol;
+    property esp: string read Fesp write Fesp;
+    property marca: string read Fmarca write Fmarca;
+    property nVol: string read FnVol write FnVol;
+    property pesoL: Currency read FpesoL write FpesoL;
+    property pesoB: Currency read FpesoB write FpesoB;
+    property Lacres: TLacresCollection read FLacres write SetLacres;
+  end;
+
+  { TVolCollection }
+
+  TVolCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TVolCollectionItem;
+    procedure SetItem(Index: Integer; Value: TVolCollectionItem);
+  public
+    function Add: TVolCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TVolCollectionItem;
+    property Items[Index: Integer]: TVolCollectionItem read GetItem write SetItem; default;
+  end;
+
+  { TReboqueCollectionItem }
+
+  TReboqueCollectionItem = class(TObject)
+  private
+    Fplaca: string;
+    FUF: string;
+    FRNTC: string;
+  public
+    procedure Assign(Source: TReboqueCollectionItem);
+
+    property placa: string read Fplaca write Fplaca;
+    property UF: string read FUF write FUF;
+    property RNTC: string read FRNTC write FRNTC;
+  end;
+
+  { TReboqueCollection }
+
+  TReboqueCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TReboqueCollectionItem;
+    procedure SetItem(Index: Integer; Value: TReboqueCollectionItem);
+  public
+    function Add: TReboqueCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TReboqueCollectionItem;
+    property Items[Index: Integer]: TReboqueCollectionItem read GetItem write SetItem; default;
+  end;
+
+  { TTransp }
 
   TTransp = class(TObject)
   private
@@ -1655,8 +2093,8 @@ type
     FveicTransp: TveicTransp;
     FVol: TVolCollection;
     FReboque: TReboqueCollection;
-    Fvagao: String;
-    Fbalsa: String;
+    Fvagao: string;
+    Fbalsa: string;
 
     procedure SetVol(Value: TVolCollection);
     procedure SetReboque(Value: TReboqueCollection);
@@ -1671,133 +2109,53 @@ type
     property veicTransp: TveicTransp read FveicTransp write FveicTransp;
     property Vol: TVolCollection read FVol write SetVol;
     property Reboque: TReboqueCollection read FReboque write SetReboque;
-    property vagao: String read Fvagao write Fvagao;
-    property balsa: String read Fbalsa write Fbalsa;
+    property vagao: string read Fvagao write Fvagao;
+    property balsa: string read Fbalsa write Fbalsa;
   end;
 
-  TTransporta = class(TObject)
+  { TFat }
+
+  TFat = class(TObject)
   private
-    FCNPJCPF: String;
-    FxNome: String;
-    FIE: String;
-    FxEnder: String;
-    FxMun: String;
-    FUF: String;
+    FnFat: string;
+    FvOrig: Currency;
+    FvDesc: Currency;
+    FvLiq: Currency;
   public
-    procedure Assign(Source: TTransporta);
-    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
-    property xNome: String read FxNome write FxNome;
-    property IE: String read FIE write FIE;
-    property xEnder: String read FxEnder write FxEnder;
-    property xMun: String read FxMun write FxMun;
-    property UF: String read FUF write FUF;
+    procedure Assign(Source: TFat);
+    property nFat: string read FnFat write FnFat;
+    property vOrig: Currency read FvOrig write FvOrig;
+    property vDesc: Currency read FvDesc write FvDesc;
+    property vLiq: Currency read FvLiq write FvLiq;
   end;
 
-  TretTransp = class(TObject)
+  { TDupCollectionItem }
+
+  TDupCollectionItem = class(TObject)
   private
-    FvServ: Currency;
-    FvBCRet: Currency;
-    FpICMSRet: Currency;
-    FvICMSRet: Currency;
-    FCFOP: String;
-    FcMunFG: Integer;
+    FnDup: string;
+    FdVenc: TDateTime;
+    FvDup: Currency;
   public
-    procedure Assign(Source: TretTransp);
-    property vServ: Currency read FvServ write FvServ;
-    property vBCRet: Currency read FvBCRet write FvBCRet;
-    property pICMSRet: Currency read FpICMSRet write FpICMSRet;
-    property vICMSRet: Currency read FvICMSRet write FvICMSRet;
-    property CFOP: String read FCFOP write FCFOP;
-    property cMunFG: Integer read FcMunFG write FcMunFG;
+    procedure Assign(Source: TDupCollectionItem);
+    property nDup: string read FnDup write FnDup;
+    property dVenc: TDateTime read FdVenc write FdVenc;
+    property vDup: Currency read FvDup write FvDup;
   end;
 
-  TveicTransp = class(TObject)
+  { TDupCollection }
+
+  TDupCollection = class(TACBrObjectList)
   private
-    Fplaca: String;
-    FUF: String;
-    FRNTC: String;
+    function GetItem(Index: Integer): TDupCollectionItem;
+    procedure SetItem(Index: Integer; Value: TDupCollectionItem);
   public
-    procedure Assign(Source: TveicTransp);
-    property placa: String read Fplaca write Fplaca;
-    property UF: String read FUF write FUF;
-    property RNTC: String read FRNTC write FRNTC;
+    function Add: TDupCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDupCollectionItem;
+    property Items[Index: Integer]: TDupCollectionItem read GetItem write SetItem; default;
   end;
 
-  TReboqueCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TReboqueCollectionItem;
-    procedure SetItem(Index: Integer; Value: TReboqueCollectionItem);
-  public
-    function Add: TReboqueCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TReboqueCollectionItem;
-    property Items[Index: Integer]: TReboqueCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TReboqueCollectionItem = class(TObject)
-  private
-    Fplaca: String;
-    FUF: String;
-    FRNTC: String;
-  public
-    procedure Assign(Source: TReboqueCollectionItem);
-
-    property placa: String read Fplaca write Fplaca;
-    property UF: String read FUF write FUF;
-    property RNTC: String read FRNTC write FRNTC;
-  end;
-
-  TVolCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TVolCollectionItem;
-    procedure SetItem(Index: Integer; Value: TVolCollectionItem);
-  public
-    function Add: TVolCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TVolCollectionItem;
-    property Items[Index: Integer]: TVolCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TVolCollectionItem = class(TObject)
-  private
-    FqVol: Integer;
-    Fesp: String;
-    Fmarca: String;
-    FnVol: String;
-    FpesoL: Currency;
-    FpesoB: Currency;
-    FLacres: TLacresCollection;
-
-    procedure SetLacres(Value: TLacresCollection);
-  public
-    constructor Create();
-    destructor Destroy; override;
-
-    procedure Assign(Source: TVolCollectionItem);
-    property qVol: Integer read FqVol write FqVol;
-    property esp: String read Fesp write Fesp;
-    property marca: String read Fmarca write Fmarca;
-    property nVol: String read FnVol write FnVol;
-    property pesoL: Currency read FpesoL write FpesoL;
-    property pesoB: Currency read FpesoB write FpesoB;
-    property Lacres: TLacresCollection read FLacres write SetLacres;
-  end;
-
-  TLacresCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TLacresCollectionItem;
-    procedure SetItem(Index: Integer; Value: TLacresCollectionItem);
-  public
-    function Add: TLacresCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TLacresCollectionItem;
-    property Items[Index: Integer]: TLacresCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TLacresCollectionItem = class(TObject)
-  private
-    FnLacre: String;
-  public
-    procedure Assign(Source: TLacresCollectionItem);
-    property nLacre: String read FnLacre write FnLacre;
-  end;
+  { TCobr }
 
   TCobr = class(TObject)
   private
@@ -1814,40 +2172,40 @@ type
     property Dup: TDupCollection read FDup write SetDup;
   end;
 
-  TFat = class(TObject)
-  private
-    FnFat: String;
-    FvOrig: Currency;
-    FvDesc: Currency;
-    FvLiq: Currency;
-  public
-    procedure Assign(Source: TFat);
-    property nFat: String read FnFat write FnFat;
-    property vOrig: Currency read FvOrig write FvOrig;
-    property vDesc: Currency read FvDesc write FvDesc;
-    property vLiq: Currency read FvLiq write FvLiq;
-  end;
+  { TpagCollectionItem }
 
-  TDupCollection = class(TACBrObjectList)
+  TpagCollectionItem = class(TObject)
   private
-    function GetItem(Index: Integer): TDupCollectionItem;
-    procedure SetItem(Index: Integer; Value: TDupCollectionItem);
+    FtPag: TpcnFormaPagamento;
+    FxPag: string;
+    FvPag: Currency;
+    FtpIntegra: TtpIntegra;
+    FCNPJ: string;
+    FtBand: TpcnBandeiraCartao;
+    FcAut: string;
+    FindPag: TpcnIndicadorPagamento;
+    FdPag: TDateTime;
+    FCNPJPag: string;
+    FUFPag: string;
+    FCNPJReceb: string;
+    FidTermPag: string;
   public
-    function Add: TDupCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TDupCollectionItem;
-    property Items[Index: Integer]: TDupCollectionItem read GetItem write SetItem; default;
-  end;
+    constructor Create;
+    procedure Assign(Source: TpagCollectionItem);
 
-  TDupCollectionItem = class(TObject)
-  private
-    FnDup: String;
-    FdVenc: TDateTime;
-    FvDup: Currency;
-  public
-    procedure Assign(Source: TDupCollectionItem);
-    property nDup: String read FnDup write FnDup;
-    property dVenc: TDateTime read FdVenc write FdVenc;
-    property vDup: Currency read FvDup write FvDup;
+    property indPag: TpcnIndicadorPagamento read FindPag write FindPag default ipNenhum;
+    property tPag: TpcnFormaPagamento read FtPag write FtPag;
+    property xPag: string read FxPag write FxPag;
+    property vPag: Currency read FvPag write FvPag;
+    property tpIntegra: TtpIntegra read FtpIntegra write FtpIntegra;
+    property CNPJ: string read FCNPJ write FCNPJ;
+    property tBand: TpcnBandeiraCartao read FtBand write FtBand;
+    property cAut: string read FcAut write FcAut;
+    property dPag: TDateTime read FdPag write FdPag;
+    property CNPJPag: string read FCNPJPag write FCNPJPag;
+    property UFPag: string read FUFPag write FUFPag;
+    property CNPJReceb: string read FCNPJReceb write FCNPJReceb;
+    property idTermPag: string read FidTermPag write FidTermPag;
   end;
 
   { TpagCollection }
@@ -1869,72 +2227,31 @@ type
     property vTroco: Currency read FvTroco write FvTroco;
   end;
 
-  TpagCollectionItem = class(TObject)
-  private
-    FtPag: TpcnFormaPagamento;
-    FxPag: string;
-    FvPag: Currency;
-    FtpIntegra: TtpIntegra;
-    FCNPJ: String;
-    FtBand: TpcnBandeiraCartao;
-    FcAut: String;
-    FindPag: TpcnIndicadorPagamento;
-    FdPag: TDateTime;
-    FCNPJPag: String;
-    FUFPag: String;
-    FCNPJReceb: String;
-    FidTermPag: String;
-  public
-    constructor Create;
-    procedure Assign(Source: TpagCollectionItem);
-
-    property indPag: TpcnIndicadorPagamento read FindPag write FindPag default ipNenhum;
-    property tPag: TpcnFormaPagamento read FtPag write FtPag;
-    property xPag: string read FxPag write FxPag;
-    property vPag: Currency read FvPag write FvPag;
-    property tpIntegra: TtpIntegra read FtpIntegra write FtpIntegra;
-    property CNPJ: String read FCNPJ write FCNPJ;
-    property tBand: TpcnBandeiraCartao read FtBand write FtBand;
-    property cAut: String read FcAut write FcAut;
-    property dPag: TDateTime read FdPag write FdPag;
-    property CNPJPag: String read FCNPJPag write FCNPJPag;
-    property UFPag: String read FUFPag write FUFPag;
-    property CNPJReceb: String read FCNPJReceb write FCNPJReceb;
-    property idTermPag: String read FidTermPag write FidTermPag;
-  end;
+  { TinfIntermed }
 
   TinfIntermed = class(TObject)
   private
-    FCNPJ: String;
-    FidCadIntTran: String;
+    FCNPJ: string;
+    FidCadIntTran: string;
   public
     procedure Assign(Source: TinfIntermed);
-    property CNPJ: String read FCNPJ write FCNPJ;
-    property idCadIntTran: String read FidCadIntTran write FidCadIntTran;
+    property CNPJ: string read FCNPJ write FCNPJ;
+    property idCadIntTran: string read FidCadIntTran write FidCadIntTran;
   end;
 
-  TInfAdic = class(TObject)
+  { TobsContCollectionItem }
+
+  TobsContCollectionItem = class(TObject)
   private
-    FinfAdFisco: String;
-    FinfCpl: String;
-    FobsCont: TobsContCollection;
-    FobsFisco: TobsFiscoCollection;
-    FprocRef: TprocRefCollection;
-
-    procedure SetobsCont(Value: TobsContCollection);
-    procedure SetobsFisco(Value: TobsFiscoCollection);
-    procedure SetprocRef(Value: TprocRefCollection);
+    FxCampo: string;
+    FxTexto: string;
   public
-    constructor Create(AOwner: TNFe);
-    destructor Destroy; override;
-
-    procedure Assign(Source: TInfAdic);
-    property infAdFisco: String read FinfAdFisco write FinfAdFisco;
-    property infCpl: String read FinfCpl write FinfCpl;
-    property obsCont: TobsContCollection read FobsCont write SetobsCont;
-    property obsFisco: TobsFiscoCollection read FobsFisco write SetobsFisco;
-    property procRef: TprocRefCollection read FprocRef write SetprocRef;
+    procedure Assign(Source: TobsContCollectionItem);
+    property xCampo: string read FxCampo write FxCampo;
+    property xTexto: string read FxTexto write FxTexto;
   end;
+
+  { TobsContCollection }
 
   TobsContCollection = class(TACBrObjectList)
   private
@@ -1946,15 +2263,19 @@ type
     property Items[Index: Integer]: TobsContCollectionItem read GetItem write SetItem; default;
   end;
 
-  TobsContCollectionItem = class(TObject)
+  { TobsFiscoCollectionItem }
+
+  TobsFiscoCollectionItem = class(TObject)
   private
-    FxCampo: String;
-    FxTexto: String;
+    FxCampo: string;
+    FxTexto: string;
   public
-    procedure Assign(Source: TobsContCollectionItem);
-    property xCampo: String read FxCampo write FxCampo;
-    property xTexto: String read FxTexto write FxTexto;
+    procedure Assign(Source: TobsFiscoCollectionItem);
+    property xCampo: string read FxCampo write FxCampo;
+    property xTexto: string read FxTexto write FxTexto;
   end;
+
+  { TobsFiscoCollection }
 
   TobsFiscoCollection = class(TACBrObjectList)
   private
@@ -1966,15 +2287,22 @@ type
     property Items[Index: Integer]: TobsFiscoCollectionItem read GetItem write SetItem; default;
   end;
 
-  TobsFiscoCollectionItem = class(TObject)
+  { TprocRefCollectionItem }
+
+  TprocRefCollectionItem = class(TObject)
   private
-    FxCampo: String;
-    FxTexto: String;
+    FnProc: string;
+    FindProc: TpcnIndicadorProcesso;
+    FtpAto: TtpAto;
   public
-    procedure Assign(Source: TobsFiscoCollectionItem);
-    property xCampo: String read FxCampo write FxCampo;
-    property xTexto: String read FxTexto write FxTexto;
+    procedure Assign(Source: TprocRefCollectionItem);
+
+    property nProc: string read FnProc write FnProc;
+    property indProc: TpcnIndicadorProcesso read FindProc write FindProc default ipSEFAZ;
+    property tpAto: TtpAto read FtpAto write FtpAto;
   end;
+
+  { TprocRefCollection }
 
   TprocRefCollection = class(TACBrObjectList)
   private
@@ -1986,53 +2314,119 @@ type
     property Items[Index: Integer]: TprocRefCollectionItem read GetItem write SetItem; default;
   end;
 
-  TprocRefCollectionItem = class(TObject)
-  private
-    FnProc: String;
-    FindProc: TpcnIndicadorProcesso;
-    FtpAto: TtpAto;
-  public
-    procedure Assign(Source: TprocRefCollectionItem);
+  { TInfAdic }
 
-    property nProc: String read FnProc write FnProc;
-    property indProc: TpcnIndicadorProcesso read FindProc write FindProc default ipSEFAZ;
-    property tpAto: TtpAto read FtpAto write FtpAto;
+  TInfAdic = class(TObject)
+  private
+    FinfAdFisco: string;
+    FinfCpl: string;
+    FobsCont: TobsContCollection;
+    FobsFisco: TobsFiscoCollection;
+    FprocRef: TprocRefCollection;
+
+    procedure SetobsCont(Value: TobsContCollection);
+    procedure SetobsFisco(Value: TobsFiscoCollection);
+    procedure SetprocRef(Value: TprocRefCollection);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Assign(Source: TInfAdic);
+    property infAdFisco: string read FinfAdFisco write FinfAdFisco;
+    property infCpl: string read FinfCpl write FinfCpl;
+    property obsCont: TobsContCollection read FobsCont write SetobsCont;
+    property obsFisco: TobsFiscoCollection read FobsFisco write SetobsFisco;
+    property procRef: TprocRefCollection read FprocRef write SetprocRef;
   end;
+
+  { TExporta }
 
   TExporta = class(TObject)
   private
-    FUFembarq: String;
-    FxLocEmbarq: String;
+    FUFembarq: string;
+    FxLocEmbarq: string;
     // Versao 3.10
-    FUFSaidaPais: String;
-    FxLocExporta: String;
-    FxLocDespacho: String;
+    FUFSaidaPais: string;
+    FxLocExporta: string;
+    FxLocDespacho: string;
   public
     procedure Assign(Source: TExporta);
-    property UFembarq: String read FUFembarq write FUFembarq;
-    property xLocEmbarq: String read FxLocEmbarq write FxLocEmbarq;
+    property UFembarq: string read FUFembarq write FUFembarq;
+    property xLocEmbarq: string read FxLocEmbarq write FxLocEmbarq;
     // Versao 3.10
-    property UFSaidaPais: String read FUFSaidaPais write FUFSaidaPais;
-    property xLocExporta: String read FxLocExporta write FxLocExporta;
-    property xLocDespacho: String read FxLocDespacho write FxLocDespacho;
+    property UFSaidaPais: string read FUFSaidaPais write FUFSaidaPais;
+    property xLocExporta: string read FxLocExporta write FxLocExporta;
+    property xLocDespacho: string read FxLocDespacho write FxLocDespacho;
   end;
+
+  { TCompra }
 
   TCompra = class(TObject)
   private
-    FxNEmp: String;
-    FxPed: String;
-    FxCont: String;
+    FxNEmp: string;
+    FxPed: string;
+    FxCont: string;
   public
     procedure Assign(Source: TCompra);
-    property xNEmp: String read FxNEmp write FxNEmp;
-    property xPed: String read FxPed write FxPed;
-    property xCont: String read FxCont write FxCont;
+    property xNEmp: string read FxNEmp write FxNEmp;
+    property xPed: string read FxPed write FxPed;
+    property xCont: string read FxCont write FxCont;
   end;
 
-  TCana = class(TObject)
+  { TForDiaCollectionItem }
+
+  TForDiaCollectionItem = class(TObject)
   private
-    Fsafra: String;
-    Fref: String;
+    Fdia: Integer;
+    Fqtde: Currency;
+  public
+    procedure Assign(Source: TForDiaCollectionItem);
+    property dia: Integer read Fdia write Fdia;
+    property qtde: Currency read Fqtde write Fqtde;
+  end;
+
+  { TForDiaCollection }
+
+  TForDiaCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TForDiaCollectionItem;
+    procedure SetItem(Index: Integer; Value: TForDiaCollectionItem);
+  public
+    function Add: TForDiaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TForDiaCollectionItem;
+    property Items[Index: Integer]: TForDiaCollectionItem read GetItem write SetItem; default;
+  end;
+
+  { TDeducCollectionItem }
+
+  TDeducCollectionItem = class(TObject)
+  private
+    FxDed: string;
+    FvDed: Currency;
+  public
+    procedure Assign(Source: TDeducCollectionItem);
+    property xDed: string read FxDed write FxDed;
+    property vDed: Currency read FvDed write FvDed;
+  end;
+
+  { TDeducCollection }
+
+  TDeducCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TDeducCollectionItem;
+    procedure SetItem(Index: Integer; Value: TDeducCollectionItem);
+  public
+    function Add: TDeducCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New.'{$EndIf};
+    function New: TDeducCollectionItem;
+    property Items[Index: Integer]: TDeducCollectionItem read GetItem write SetItem; default;
+  end;
+
+  { Tcana }
+
+  Tcana = class(TObject)
+  private
+    Fsafra: string;
+    Fref: string;
     Ffordia : TForDiaCollection;
     FqTotMes: Double;
     FqTotAnt: Double;
@@ -2049,8 +2443,8 @@ type
     destructor Destroy; override;
 
     procedure Assign(Source: TCana);
-    property safra: String read Fsafra write Fsafra;
-    property ref: String read Fref write Fref;
+    property safra: string read Fsafra write Fsafra;
+    property ref: string read Fref write Fref;
     property fordia: TForDiaCollection read Ffordia write SetForDia;
     property qTotMes: Double read FqTotMes write FqTotMes;
     property qTotAnt: Double read FqTotAnt write FqTotAnt;
@@ -2061,45 +2455,17 @@ type
     property vLiqFor: Currency read FvLiqFor write FvLiqFor;
   end;
 
-  TForDiaCollection = class(TACBrObjectList)
+  { TautXMLCollectionItem }
+
+  TautXMLCollectionItem = class(TObject)
   private
-    function GetItem(Index: Integer): TForDiaCollectionItem;
-    procedure SetItem(Index: Integer; Value: TForDiaCollectionItem);
+    FCNPJCPF: string;
   public
-    function Add: TForDiaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TForDiaCollectionItem;
-    property Items[Index: Integer]: TForDiaCollectionItem read GetItem write SetItem; default;
+    procedure Assign(Source: TautXMLCollectionItem);
+    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
   end;
 
-  TForDiaCollectionItem = class(TObject)
-  private
-    Fdia: Integer;
-    Fqtde: Currency;
-  public
-    procedure Assign(Source: TForDiaCollectionItem);
-    property dia: Integer read Fdia write Fdia;
-    property qtde: Currency read Fqtde write Fqtde;
-  end;
-
-  TDeducCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TDeducCollectionItem;
-    procedure SetItem(Index: Integer; Value: TDeducCollectionItem);
-  public
-    function Add: TDeducCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New.'{$EndIf};
-    function New: TDeducCollectionItem;
-    property Items[Index: Integer]: TDeducCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TDeducCollectionItem = class(TObject)
-  private
-    FxDed: String;
-    FvDed: Currency;
-  public
-    procedure Assign(Source: TDeducCollectionItem);
-    property xDed: String read FxDed write FxDed;
-    property vDed: Currency read FvDed write FvDed;
-  end;
+  { TautXMLCollection }
 
   TautXMLCollection = class(TACBrObjectList)
   private
@@ -2111,55 +2477,67 @@ type
     property Items[Index: Integer]: TautXMLCollectionItem read GetItem write SetItem; default;
   end;
 
-  TautXMLCollectionItem = class(TObject)
+  { TinfNFeSupl }
+
+  TinfNFeSupl = class(TObject)
   private
-    FCNPJCPF: String;
+    FqrCode: string;
+    FurlChave: string;
   public
-    procedure Assign(Source: TautXMLCollectionItem);
-    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    procedure Assign(Source: TinfNFeSupl);
+    property qrCode: string read FqrCode write FqrCode;
+    property urlChave: string read FurlChave write FurlChave;
   end;
+
+  { TinfRespTec }
 
   TinfRespTec = class(TObject)
   private
-    FCNPJ: String;
-    FxContato: String;
-    Femail: String;
-    Ffone: String;
+    FCNPJ: string;
+    FxContato: string;
+    Femail: string;
+    Ffone: string;
     FidCSRT: Integer;
-    FhashCSRT: String;
+    FhashCSRT: string;
   public
     procedure Assign(Source: TinfRespTec);
-    property CNPJ: String     read FCNPJ     write FCNPJ;
-    property xContato: String read FxContato write FxContato;
-    property email: String    read Femail    write Femail;
-    property fone: String     read Ffone     write Ffone;
+    property CNPJ: string     read FCNPJ     write FCNPJ;
+    property xContato: string read FxContato write FxContato;
+    property email: string    read Femail    write Femail;
+    property fone: string     read Ffone     write Ffone;
     property idCSRT: Integer  read FidCSRT   write FidCSRT;
-    property hashCSRT: String read FhashCSRT write FhashCSRT;
+    property hashCSRT: string read FhashCSRT write FhashCSRT;
   end;
+
+  { Tdefensivo }
 
   Tdefensivo = class(TObject)
   private
-    FnReceituario: String;
-    FCPFRespTec: String;
+    FnReceituario: string;
+    FCPFRespTec: string;
   public
-    property nReceituario: String read FnReceituario write FnReceituario;
-    property CPFRespTec: String read FCPFRespTec write FCPFRespTec;
+    property nReceituario: string read FnReceituario write FnReceituario;
+    property CPFRespTec: string read FCPFRespTec write FCPFRespTec;
   end;
+
+  { TguiaTransito }
 
   TguiaTransito = class(TObject)
   private
-    FUFGuia: String;
+    FUFGuia: string;
     FtpGuia: TtpGuia;
-    FserieGuia: String;
-    FnGuia: String;
+    FserieGuia: string;
+    FnGuia: string;
   public
     constructor Create;
     destructor Destroy; override;
-    property UFGuia: String read FUFGuia write FUFGuia;
+    property UFGuia: string read FUFGuia write FUFGuia;
     property tpGuia: TtpGuia read FtpGuia write FtpGuia;
-    property serieGuia: String read FserieGuia write FserieGuia;
-    property nGuia: String read FnGuia write FnGuia;
+    property serieGuia: string read FserieGuia write FserieGuia;
+    property nGuia: string read FnGuia write FnGuia;
   end;
+
+  { Tagropecuario }
 
   Tagropecuario = class(TObject)
   private
@@ -2170,6 +2548,188 @@ type
     destructor Destroy; override;
     property defensivo: Tdefensivo read Fdefensivo write Fdefensivo;
     property guiaTransito: TguiaTransito read FguiaTransito write FguiaTransito;
+  end;
+
+  { TgSel }
+
+  TgSel = class(TObject)
+  private
+    FvBCSel: Double;
+    FvImpSel: Double;
+    FvBCIBSCBS: Double;
+  public
+    property vBCSel: Double read FvBCSel write FvBCSel;
+    property vImpSel: Double read FvImpSel write FvImpSel;
+    property vBCIBSCBS: Double read FvBCIBSCBS write FvBCIBSCBS;
+  end;
+
+  { TgIBSUFTot }
+
+  TgIBSUFTot = class(TObject)
+  private
+    FvDif: Double;
+    FvDevTrib: Double;
+    FvDeson: Double;
+    FvIBSUF: Double;
+  public
+    property vDif: Double read FvDif write FvDif;
+    property vDevTrib: Double read FvDevTrib write FvDevTrib;
+    property vDeson: Double read FvDeson write FvDeson;
+    property vIBSUF: Double read FvIBSUF write FvIBSUF;
+  end;
+
+  { TgIBSMunTot }
+
+  TgIBSMunTot = class(TObject)
+  private
+    FvDif: Double;
+    FvDevTrib: Double;
+    FvDeson: Double;
+    FvIBSMun: Double;
+    FvIBSTot: Double;
+  public
+    property vDif: Double read FvDif write FvDif;
+    property vDevTrib: Double read FvDevTrib write FvDevTrib;
+    property vDeson: Double read FvDeson write FvDeson;
+    property vIBSMun: Double read FvIBSMun write FvIBSMun;
+    property vIBSTot: Double read FvIBSTot write FvIBSTot;
+  end;
+
+  { TgIBS }
+
+  TgIBS = class(TObject)
+  private
+    FgIBSUFTot: TgIBSUFTot;
+    FgIBSMunTot: TgIBSMunTot;
+    FvCresPres: Double;
+    FvCredPresCondSus: Double;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Assign(Source: TgIBS);
+
+    property gIBSUFTot: TgIBSUFTot read FgIBSUFTot write FgIBSUFTot;
+    property gIBSMunTot: TgIBSMunTot read FgIBSMunTot write FgIBSMunTot;
+    property vCresPres: Double read FvCresPres write FvCresPres;
+    property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;
+  end;
+
+  { TgCBSTot }
+
+  TgCBSTot = class(TObject)
+  private
+    FvCresPres: Double;
+    FvCredPresCondSus: Double;
+    FvDif: Double;
+    FvDevTrib: Double;
+    FvDeson: Double;
+    FvCBS: Double;
+  public
+    property vCresPres: Double read FvCresPres write FvCresPres;
+    property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;
+    property vDif: Double read FvDif write FvDif;
+    property vDevTrib: Double read FvDevTrib write FvDevTrib;
+    property vDeson: Double read FvDeson write FvDeson;
+    property vCBS: Double read FvCBS write FvCBS;
+  end;
+
+  { TgMono }
+
+  TgMono = class(TObject)
+  private
+    FvTotIBSMono: Double;
+    FvTotCBSMono: Double;
+    FvTotNF: Double;
+  public
+    property vTotIBSMono: Double read FvTotIBSMono write FvTotIBSMono;
+    property vTotCBSMono: Double read FvTotCBSMono write FvTotCBSMono;
+    property vTotNF: Double read FvTotNF write FvTotNF;
+  end;
+
+  { TIBSCBSSelTot }
+
+  TIBSCBSSelTot = class(TObject)
+  private
+    FgSel: TgSel;
+    FgIBS: TgIBS;
+    FgCBS: TgCBSTot;
+    FgMono: TgMono;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Assign(Source: TIBSCBSSelTot);
+
+    property gSel: TgSel read FgSel write FgSel;
+    property gIBS: TgIBS read FgIBS write FgIBS;
+    property gCBS: TgCBSTot read FgCBS write FgCBS;
+    property gMono: TgMono read FgMono write FgMono;
+  end;
+
+  { TNFe }
+
+  TNFe = class(TObject)
+  private
+    FinfNFe: TinfNFe;
+    FIde: TIde;
+    FEmit: TEmit;
+    FAvulsa: TAvulsa;
+    FDest: TDest;
+    FRetirada: TRetirada;
+    FEntrega: TEntrega;
+    FDet: TDetCollection;
+    FTotal: TTotal;
+    FTransp: TTransp;
+    FCobr: TCobr;
+    Fpag: TpagCollection;
+    FinfIntermed: TinfIntermed;
+    FInfAdic: TInfAdic;
+    Fexporta: Texporta;
+    Fcompra: Tcompra;
+    Fcana: Tcana;
+    FSignature: TSignature;
+    FProcNFe: TProcNFe;
+    FautXML: TautXMLCollection;
+    FinfNFeSupl: TinfNFeSupl;
+    FinfRespTec: TinfRespTec;
+    Fagropecuario: Tagropecuario;
+    FIBSCBSSelTot: TIBSCBSSelTot;
+
+    procedure SetDet(Value: TDetCollection);
+    procedure Setpag(Value: TpagCollection);
+    procedure SetautXML(const Value: TautXMLCollection);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Assign(Source: TNFe);
+//    procedure SetXMLString(const AValue : AnsiString);
+    property infNFe: TinfNFe read FinfNFe write FinfNFe;
+    property Ide: TIde read FIde write FIde;
+    property Emit: TEmit read FEmit write FEmit;
+    property Avulsa: TAvulsa read FAvulsa write FAvulsa;
+    property Dest: TDest read FDest write FDest;
+    property Retirada: TRetirada read FRetirada write FRetirada;
+    property Entrega: TEntrega read FEntrega write FEntrega;
+    property autXML: TautXMLCollection read FautXML write SetautXML;
+    property Det: TDetCollection read FDet write SetDet;
+    property Total: TTotal read FTotal write FTotal;
+    property Transp: TTransp read FTransp write FTransp;
+    property Cobr: TCobr read FCobr write FCobr;
+    property pag: TpagCollection read Fpag write Setpag;
+    property infIntermed: TinfIntermed read FinfIntermed write FinfIntermed;
+    property InfAdic: TInfAdic read FInfAdic write FInfAdic;
+    property exporta: Texporta read Fexporta write Fexporta;
+    property compra: Tcompra read Fcompra write Fcompra;
+    property cana: Tcana read Fcana write Fcana;
+    property infNFeSupl: TinfNFeSupl read FinfNFeSupl write FinfNFeSupl;
+    property signature: Tsignature read Fsignature write Fsignature;
+    property procNFe: TProcNFe read FProcNFe write FProcNFe;
+    property infRespTec: TinfRespTec read FinfRespTec write FinfRespTec;
+    property agropecuario: Tagropecuario read Fagropecuario write Fagropecuario;
+    // Reforma Tributária
+    property IBSCBSSelTot: TIBSCBSSelTot read FIBSCBSSelTot write FIBSCBSSelTot;
   end;
 
 const
@@ -2208,21 +2768,9 @@ begin
   signature.Assign(Source.signature);
   procNFe.Assign(Source.procNFe);
   infRespTec.Assign(Source.infRespTec);
+  IBSCBSSelTot.Assign(Source.IBSCBSSelTot);
 end;
-{
-procedure TNFe.SetXMLString(const AValue: AnsiString);
-var
- LocNFeR : TNFeR;
-begin
-  LocNFeR := TNFeR.Create(Self);
-  try
-    LocNFeR.Leitor.Arquivo := AValue;
-    LocNFeR.LerXml;
-  finally
-    LocNFeR.Free
-  end;
-end;
-}
+
 constructor TNFe.Create;
 begin
   inherited Create;
@@ -2240,7 +2788,7 @@ begin
   Fpag     := TpagCollection.Create;
   FTransp  := TTransp.Create;
   FinfIntermed := TinfIntermed.Create;
-  FinfAdic := TinfAdic.Create(self);
+  FinfAdic := TinfAdic.Create;
   FExporta := TExporta.Create;
   FCompra  := TCompra.Create;
   FCana    := TCana.Create;
@@ -2257,6 +2805,8 @@ begin
 
   FDest.EnderDest.xPais := 'BRASIL';
   FDest.EnderDest.cPais := 1058;
+
+  FIBSCBSSelTot := TIBSCBSSelTot.Create;
 end;
 
 destructor TNFe.Destroy;
@@ -2284,6 +2834,7 @@ begin
   FProcNFe.Free;
   FinfRespTec.Free;
   FAgropecuario.Free;
+  FIBSCBSSelTot.Free;
 
   inherited Destroy;
 end;
@@ -2345,6 +2896,8 @@ begin
   pDevol := Source.pDevol;
   vIPIDevol := Source.vIPIDevol;
   infAdProd := Source.infAdProd;
+  IBSCBSSel := Source.IBSCBSSel;
+  DFeReferenciado := Source.DFeReferenciado;
 
   obsCont.Assign(Source.obsCont);
   obsFisco.Assign(Source.obsFisco);
@@ -2353,10 +2906,13 @@ end;
 constructor TDetCollectionItem.Create;
 begin
   inherited Create;
+
   FProd := TProd.Create;
   FImposto := TImposto.Create;
   FobsCont := TobsItem.Create;
   FobsFisco := TobsItem.Create;
+  FIBSCBSSel := TIBSCBSSel.Create;
+  FDFeReferenciado := TDFeReferenciado.Create;
 end;
 
 destructor TDetCollectionItem.Destroy;
@@ -2365,6 +2921,9 @@ begin
   FImposto.Free;
   FobsCont.Free;
   FobsFisco.Free;
+  FIBSCBSSel.Free;
+  FDFeReferenciado.Free;
+
   inherited;
 end;
 
@@ -2601,7 +3160,7 @@ begin
   CredPresumido.Assign(Source.CredPresumido);
 end;
 
-procedure TProd.setCFOP(const Value: String);
+procedure TProd.setCFOP(const Value: string);
 begin
   FCFOP := Value;
 end;
@@ -3118,9 +3677,10 @@ begin
   procRef.Assign(Source.procRef);
 end;
 
-constructor TinfAdic.Create(AOwner: TNFe);
+constructor TinfAdic.Create;
 begin
   inherited Create;
+
   FobsCont  := TobsContCollection.Create;
   FobsFisco := TobsFiscoCollection.Create;
   FprocRef  := TprocRefCollection.Create;
@@ -3131,6 +3691,7 @@ begin
   FobsCont.Free;
   FobsFisco.Free;
   FprocRef.Free;
+
   inherited;
 end;
 
@@ -3313,23 +3874,7 @@ begin
   ID     := Source.ID;
   Versao := Source.Versao;
 end;
-{
-function TinfNFe.GetVersao: Real;
-begin
-  if FVersao <= 0 then
-     Result := 2
-  else
-     Result := FVersao;
-end;
 
-function TinfNFe.GetVersaoStr: String;
-begin
-  if FVersao <= 0 then
-     Result := V2_00
-  else
-     Result := 'versao="'+FloatToString(FVersao,'.','#0.00')+'"';
-end;
-}
 { TveicProd }
 
 procedure TveicProd.Assign(Source: TveicProd);
@@ -3361,7 +3906,7 @@ begin
   tpRest       := Source.tpRest;
 end;
 
-function TveicProd.getCombDescricao: String;
+function TveicProd.getCombDescricao: string;
 var
   wTpComb: Integer;
 begin
@@ -3386,8 +3931,8 @@ begin
     16: Result:='16 - ALCOOL/GASOLINA';
     17: Result:='17 - GASOLINA/ALCOOL/GAS NATURAL';
     18: Result:='18 - GASOLINA/ELETRICO';
-    else
-      Result:=FtpComb;
+  else
+    Result:=FtpComb;
   end;
 end;
 
@@ -4302,6 +4847,270 @@ destructor Tagropecuario.Destroy;
 begin
   Fdefensivo.Free;
   FguiaTransito.Free;
+  inherited;
+end;
+
+{ TgCompraGov }
+
+procedure TgCompraGov.Assign(Source: TgCompraGov);
+begin
+  tpCompraGov := Source.tpCompraGov;
+  pRedutor := Source.pRedutor;
+  tipoNotaCredito := Source.tipoNotaCredito;
+end;
+
+{ TIBSCBSSel }
+
+constructor TIBSCBSSel.Create;
+begin
+  inherited Create;
+
+  Fseletivo := Tseletivo.Create;
+  FgImpSel := TgImpSel.Create;
+  FgIBSCBS := TgIBSCBS.Create;
+  FgIBSCBSMono := TgIBSCBSMono.Create;
+end;
+
+destructor TIBSCBSSel.Destroy;
+begin
+  Fseletivo.Free;
+  FgImpSel.Free;
+  FgIBSCBS.Free;
+  FgIBSCBSMono.Free;
+
+  inherited;
+end;
+
+{ Tseletivo }
+
+procedure Tseletivo.Assign(Source: Tseletivo);
+begin
+//italo  CST := Source.CST;
+  cClassTrib := Source.cClassTrib;
+end;
+
+{ TgImpSel }
+
+procedure TgImpSel.Assign(Source: TgImpSel);
+begin
+  vBCImpSel := Source.vBCImpSel;
+  pImpSel := Source.pImpSel;
+  pImpSelEspec := Source.pImpSelEspec;
+  uTrib := Source.uTrib;
+  qTrib := Source.qTrib;
+  vImpSel := Source.vImpSel;
+//italo  CST := Source.CST;
+  cClassTrib := Source.cClassTrib;
+  indPerecimento := Source.indPerecimento;
+end;
+
+{ TgIBSCBS }
+
+procedure TgIBSCBS.Assign(Source: TgIBSCBS);
+begin
+  vBC := Source.vBC;
+  gIBSUF := Source.gIBSUF;
+  gIBSMun := Source.gIBSMun;
+  gIBSCredPres := Source.gIBSCredPres;
+  gCBS := Source.gCBS;
+end;
+
+constructor TgIBSCBS.Create;
+begin
+  inherited Create;
+
+  FgIBSUF := TgIBSUF.Create;
+  FgIBSMun := TgIBSMun.Create;
+  FgIBSCredPres := TgIBSCBSCredPres.Create;
+  FgCBS := TgCBS.Create;
+end;
+
+destructor TgIBSCBS.Destroy;
+begin
+  FgIBSUF.Free;
+  FgIBSMun.Free;
+  FgIBSCredPres.Free;
+  FgCBS.Free;
+
+  inherited;
+end;
+
+{ TgIBSUF }
+
+procedure TgIBSUF.Assign(Source: TgIBSUF);
+begin
+  pIBSUF := Source.pIBSUF;
+  vTribOp := Source.vTribOp;
+  gDif := Source.gDif;
+  gDevTrib := Source.gDevTrib;
+  gRed := Source.gRed;
+  gDeson := Source.gDeson;
+end;
+
+constructor TgIBSUF.Create;
+begin
+  inherited Create;
+
+  FgDif := TgDif.Create;
+  FgDevTrib := TgDevTrib.Create;
+  FgRed := TgRed.Create;
+  FgDeson := TgDesonUF.Create;
+end;
+
+destructor TgIBSUF.Destroy;
+begin
+  FgDif.Free;
+  FgDevTrib.Free;
+  FgRed.Free;
+  FgDeson.Free;
+
+  inherited;
+end;
+
+{ TgIBSMun }
+
+procedure TgIBSMun.Assign(Source: TgIBSMun);
+begin
+  pIBSMun := Source.pIBSMun;
+  vTribOp := Source.vTribOp;
+  gDif := Source.gDif;
+  gDevTrib := Source.gDevTrib;
+  gRed := Source.gRed;
+  gDeson := Source.gDeson;
+end;
+
+constructor TgIBSMun.Create;
+begin
+  inherited Create;
+
+  FgDif := TgDif.Create;
+  FgDevTrib := TgDevTrib.Create;
+  FgRed := TgRed.Create;
+  FgDeson := TgDesonMun.Create;
+end;
+
+destructor TgIBSMun.Destroy;
+begin
+  FgDif.Free;
+  FgDevTrib.Free;
+  FgRed.Free;
+  FgDeson.Free;
+
+  inherited;
+end;
+
+{ TgCBS }
+
+procedure TgCBS.Assign(Source: TgCBS);
+begin
+  pCBS := Source.pCBS;
+  vTribOp := Source.vTribOp;
+  gCBSCredPres := Source.gCBSCredPres;
+  gDif := Source.gDif;
+  gDevTrib := Source.gDevTrib;
+  gRed := Source.gRed;
+  gDeson := Source.gDeson;
+end;
+
+constructor TgCBS.Create;
+begin
+  inherited Create;
+
+  FgCBSCredPres := TgCBSCredPres.Create;
+  FgDif := TgDif.Create;
+  FgDevTrib := TgDevTrib.Create;
+  FgRed := TgRed.Create;
+  FgDeson := TgDesonCBS.Create;
+end;
+
+destructor TgCBS.Destroy;
+begin
+  FgCBSCredPres.Free;
+  FgDif.Free;
+  FgDevTrib.Free;
+  FgRed.Free;
+  FgDeson.Free;
+
+  inherited;
+end;
+
+{ TgIBSCBSMono }
+
+procedure TgIBSCBSMono.Assign(Source: TgIBSCBSMono);
+begin
+  qBCMono := Source.qBCMono;
+  adRemIBS := Source.adRemIBS;
+  adRemCBS := Source.adRemCBS;
+  vIBSMono := Source.vIBSMono;
+  vCBSMono := Source.vCBSMono;
+  qBCMonoReten := Source.qBCMonoReten;
+  adRemIBSREten := Source.adRemIBSREten;
+  vIBSMonoReten := Source.vIBSMonoReten;
+  pCredPresIBS := Source.pCredPresIBS;
+  vCRedPresIBS := Source.vCRedPresIBS;
+  pCredPresCBS := Source.pCredPresCBS;
+  vCredPresCBS := Source.vCredPresCBS;
+  pDifIBS := Source.pDifIBS;
+  vIBSMonoDif := Source.vIBSMonoDif;
+  pDifCBS := Source.pDifCBS;
+  vCBSMonoDif := Source.vCBSMonoDif;
+  vTotIBSMono := Source.vTotIBSMono;
+  vTotCBSMono := Source.vTotCBSMono;
+end;
+
+{ TIBSCBSSelTot }
+
+procedure TIBSCBSSelTot.Assign(Source: TIBSCBSSelTot);
+begin
+  gSel := Source.gSel;
+  gIBS := Source.gIBS;
+  gCBS := Source.gCBS;
+  gMono := Source.gMono;
+end;
+
+constructor TIBSCBSSelTot.Create;
+begin
+  inherited Create;
+
+  FgSel := TgSel.Create;
+  FgIBS := TgIBS.Create;
+  FgCBS := TgCBSTot.Create;
+  FgMono := TgMono.Create;
+end;
+
+destructor TIBSCBSSelTot.Destroy;
+begin
+  FgSel.Free;
+  FgIBS.Free;
+  FgCBS.Free;
+  FgMono.Free;
+
+  inherited;
+end;
+
+{ TgIBS }
+
+procedure TgIBS.Assign(Source: TgIBS);
+begin
+  gIBSUFTot := Source.gIBSUFTot;
+  gIBSMunTot := Source.gIBSMunTot;
+  vCresPres := Source.vCresPres;
+  vCredPresCondSus := Source.vCredPresCondSus;
+end;
+
+constructor TgIBS.Create;
+begin
+  inherited Create;
+
+  FgIBSUFTot := TgIBSUFTot.Create;
+  FgIBSMunTot := TgIBSMunTot.Create;
+end;
+
+destructor TgIBS.Destroy;
+begin
+  FgIBSUFTot.Free;
+  FgIBSMunTot.Free;
+
   inherited;
 end;
 

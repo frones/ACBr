@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/02/2025
+-- ACBrCTe.Classes --
+[+] Inclusão das novas classes para atender a Reforma Tributária.
+   Por: Italo Giurizzato Junior
+
 31/01/2025
 -- ACBrCTe.XmlWriter --
 [*] Correção para alguns campos do ICMS que são opcionais e estavam como obrigatórios.

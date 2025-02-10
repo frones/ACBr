@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/02/2025
+-- ACBrNFComClass --
+[+] Inclusão das novas classes para atender a Reforma Tributária.
+   Por: Italo Giurizzato Junior
 -- ACBrNFComServicos --
 [+] Incluído as URLs de produção da SEFAZ-MS.
    Por: Italo Giurizzato Junior

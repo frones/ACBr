@@ -165,7 +165,7 @@ type
                 schresCTe, schprocCTe, schprocCTeOS, schprocEventoCTe,
                 schresMDFe, schprocMDFe, schprocEventoMDFe,
                 schresBPe, schprocBPe, schprocEventoBPe,
-                schprocGTVe);
+                schprocGTVe, schprocCTeSimp);
 
 
   TStrToTpEvento = function (out ok: boolean; const s: String): TpcnTpEvento;

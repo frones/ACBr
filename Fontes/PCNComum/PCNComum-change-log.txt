@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/02/2025
+-- pcnConversao --
+[+] acrescentado o enumerador: schprocCTeSimp ao tipo TSchemaDFe.
+   Por: Italo Giurizzato Junior
+
 07/02/2024
 -- pcnAuxiliar --
 [*] #Tk-6581: Ajuste visando sanar problema na leitura de caracteres escapados em Hex-Code.

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/02/2025
+-- ACBrLibNCMsConsoleMT.lpi, ACBrLibNCMsConsoleMTDemo.lpi --
+[+] Adicionado novo Projeto, 100% CONSOLE e MT versão Pro e Demonstração.
+[+] Compatível com compilação em Linux 64 e Android 32 e 64
+    Por: Antonio Carlos Junior
+
 13/08/2024
 --- ACBrLibNCMsBase, ACBrLibNCMsST, ACBrLibNCMsMT,
     ACBrLibNCMsStaticImportST, ACBrLibNCMsStaticImportMT, ACBrLibNCMsRespostas ---

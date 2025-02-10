@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/02/2025
+-- ACBrLibReinfConsoleMT.lpi, ACBrLibReinfConsoleMTDemo.lpi --
+[+] Adicionado novo Projeto, 100% CONSOLE e MT versão Pro e Demonstração.
+[+] Compatível com compilação em Linux 64 e Android 32 e 64
+    Por: Antonio Carlos Junior
+
 05/02/2025
 -- ACBrLib.hnd --
 [*] #TK-6528 Revisada e atualizada documentação do Reinf na Lib.

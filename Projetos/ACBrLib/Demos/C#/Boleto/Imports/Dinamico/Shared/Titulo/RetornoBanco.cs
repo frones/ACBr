@@ -18,6 +18,8 @@ namespace ACBrLib.Boleto
 
         public int VersaoLote { get; set; }
 
+        public int NumeroArquivo { get; set; }
+
         #endregion Properties
     }
 }

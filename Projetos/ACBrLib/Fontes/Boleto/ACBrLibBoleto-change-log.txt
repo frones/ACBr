@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/02/2025
+-- RetornoBanco.cs, RetornoTitulo.cs --
+[*] #TK-6596 - Novos campos na leitura de retornos de cobrança.
+[*] Gerada nova versão dos nugets.
+  Por: SWAPI / Renato Rubinho
+
 07/02/2025
 -- ACBrLibBoletoConsoleMTDemo.lpi --
 [+] Adicionado novo Projeto, 100% CONSOLE e MT versão Demonstração.

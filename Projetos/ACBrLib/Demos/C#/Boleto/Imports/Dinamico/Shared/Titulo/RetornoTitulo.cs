@@ -47,6 +47,8 @@ namespace ACBrLib.Boleto
 
         public decimal ValorRecebido { get; set; }
 
+        public decimal ValorPago { get; set; }
+
         public string SeuNumero { get; set; }
 
         public string CodTipoOcorrencia { get; set; }

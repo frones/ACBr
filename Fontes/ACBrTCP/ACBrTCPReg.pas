@@ -40,9 +40,10 @@ procedure Register;
 
 implementation
 
-Uses ACBrSocket, ACBrCEP, ACBrIBGE, ACBrNFPws, ACBrCNIEE, ACBrSuframa, ACBrDownload,
-   SysUtils, ACBrIBPTax, ACBrConsultaCNPJ, ACBrConsultaCPF, ACBrCotacao, ACBrMail,
-   ACBrSpedTabelas, ACBrSedex, ACBrNCMs, ACBrFeriado, ACBrFrenet;
+uses
+  ACBrSocket, ACBrCEP, ACBrIBGE, ACBrNFPws, ACBrCNIEE, ACBrSuframa, ACBrDownload,
+  SysUtils, ACBrIBPTax, ACBrConsultaCNPJ, ACBrConsultaCPF, ACBrCotacao, ACBrMail,
+  ACBrSpedTabelas, ACBrSedex, ACBrNCMs, ACBrFeriado, ACBrFrenet, ACBrCupomVerde;
 
 {$IFNDEF FPC}
    {$R ACBrTCP.dcr}
@@ -53,7 +54,8 @@ begin
   RegisterComponents('ACBrTCP',
     [ TACBrTCPServer, TACBrCEP, TACBrIBGE, TACBrNFPws, TACBrCNIEE, TACBrSuframa,
       TACBrDownload, TACBrIBPTax, TACBrConsultaCNPJ, TACBrConsultaCPF, TACBrCotacao,
-      TACBrMail, TACBrSpedTabelas, TACBrSedex, TACBrNCMs, TACBrFeriado, TACBrFrenet ]
+      TACBrMail, TACBrSpedTabelas, TACBrSedex, TACBrNCMs, TACBrFeriado, TACBrFrenet,
+      TACBrCupomVerde ]
   );
 end;
 

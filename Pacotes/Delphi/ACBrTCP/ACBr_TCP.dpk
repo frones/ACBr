@@ -70,7 +70,8 @@ contains
   ACBrFeriadoWSCalendario in '..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSCalendario.pas',
   ACBrFeriadoWSJSON in '..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSJSON.pas',
   ACBrFrenet in '..\..\..\Fontes\ACBrTCP\ACBrFrenet.pas',
-  ACBr.Auth.JWT in '..\..\..\Fontes\ACBrTCP\ACBr.Auth.JWT.pas';
+  ACBr.Auth.JWT in '..\..\..\Fontes\ACBrTCP\ACBr.Auth.JWT.pas',
+  ACBrCupomVerde in '..\..\..\Fontes\ACBrTCP\ACBrCupomVerde.pas';
 
 end.
 

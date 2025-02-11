@@ -36,7 +36,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
-    <Files Count="30">
+    <Files Count="31">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrTCPReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -154,10 +154,14 @@
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.CNPJWS.pas"/>
         <UnitName Value="ACBrConsultaCNPJ.WS.CNPJWS"/>
       </Item29>
-	  <Item30>
+      <Item30>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBr.Auth.JWT.pas"/>
         <UnitName Value="ACBr.Auth.JWT"/>
       </Item30>
+      <Item31>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCupomVerde.pas"/>
+        <UnitName Value="ACBrCupomVerde"/>
+      </Item31>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">

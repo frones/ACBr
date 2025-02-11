@@ -43,6 +43,19 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+11/02/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6604: Acrescentado o Params Dividir100 para a cidade de Embu-Guacu/SP.
+  Por: C4Dev
+[+] #TK-6603: Incluída a cidade de Sao Francisco do Guapore/RO, o provedor é WebISS versão 2.02
+  Por: Light System Software
+[*] #TK-6600: Acrescentado a Link em homologação para a cidade de Maringa/PR.
+  Por: SG Sistemas
+[*] #TK-6599: Acrescentado a Link em homologação para a cidade de Sorocaba/SP.
+  Por: SG Sistemas
+[*] #TK-6598: A cidade de Sao Joao do Itaperiu/SC, mudou de provedor agora é IPM versão 1.01
+  Por: TiagoFZ
+
 07/02/2025
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Tupassi/PR, o provedor é IPM versão 1.01

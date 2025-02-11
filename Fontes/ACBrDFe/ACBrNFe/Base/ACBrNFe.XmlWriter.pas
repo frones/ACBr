@@ -1355,7 +1355,7 @@ begin
   SetLength(Result, NFe.Det[i].Prod.detExport.Count);
   for j := 0 to NFe.Det[i].Prod.detExport.Count - 1 do
   begin
-    Result[i] := FDocument.CreateElement('detExport');
+    Result[j] := FDocument.CreateElement('detExport');
 
     // O número do Ato Concessório de Suspensão deve ser preenchido com 11 dígitos
     // (AAAANNNNNND) e o número do Ato Concessório de Drawback Isenção deve ser

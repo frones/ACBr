@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/02/2025
+-- ACBrNFe.XmlWriter --
+[-] Possível solução para o erro que estava ocorrendo ao gerar o grupo detExport.
+   Por: Italo Giurizzato Junior
+
 10/02/2025
 -- ACBrNFe.Classes/ACBrNFe.Conversao/pcnConversaoNFe--
 [+] Inclusão das novas classes e tipos para atender a Reforma Tributária.

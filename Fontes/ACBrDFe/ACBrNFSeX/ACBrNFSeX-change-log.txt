@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 11/02/2025
+-- VersaTecnologia.Provider --
+[*] #TK-6602: Sobreescritas as funções: ResponsavelRetencaoToStr, StrToResponsavelRetencao e
+    ResponsavelRetencaoDescricao, para compatibilizar com o Schema usado pelo provedor.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6604: Acrescentado o Params Dividir100 para a cidade de Embu-Guacu/SP.
   Por: C4Dev

@@ -76,6 +76,10 @@ type
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
     procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
+  public
+    function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao): string; override;
+    function StrToResponsavelRetencao(out ok: boolean; const s: string): TnfseResponsavelRetencao; override;
+    function ResponsavelRetencaoDescricao(const t: TnfseResponsavelRetencao): string; override;
   end;
 
   TACBrNFSeProviderVersaTecnologia201 = class (TACBrNFSeProviderVersaTecnologia200)
@@ -157,6 +161,33 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
+end;
+
+function TACBrNFSeProviderVersaTecnologia200.ResponsavelRetencaoDescricao(
+  const t: TnfseResponsavelRetencao): string;
+begin
+  case t of
+    rtTomador       : Result := '1 - Tomador';
+    rtPrestador     : Result := '2 - Prestador';
+  else
+    Result := '';
+  end;
+end;
+
+function TACBrNFSeProviderVersaTecnologia200.ResponsavelRetencaoToStr(
+  const t: TnfseResponsavelRetencao): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['1', '2', '', ''],
+                           [rtTomador, rtPrestador, rtIntermediario, rtNenhum]);
+end;
+
+function TACBrNFSeProviderVersaTecnologia200.StrToResponsavelRetencao(
+  out ok: boolean; const s: string): TnfseResponsavelRetencao;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['1', '2', ''],
+                           [rtTomador, rtPrestador, rtNenhum]);
 end;
 
 procedure TACBrNFSeProviderVersaTecnologia200.ValidarSchema(
@@ -478,7 +509,7 @@ function TACBrNFSeXWebserviceVersaTecnologia200.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-  Result := ParseText(Result);
+  Result := ParseText(AnsiString(Result));
   Result := RemoverDeclaracaoXML(Result);
 end;
 

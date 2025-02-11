@@ -49,9 +49,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/02/2025
+-- ACBrBancoSantander.pas --
+[*] TK-6533 - Ajustado para ler NossoNumeroCompleto no CNAB400 
+  https://www.projetoacbr.com.br/forum/topic/81533-retorno-banco-santander/
+  Por: Daniel Morais InfoCotidiano
+
 03/02/2025
 -- ACBrBancoBanrisul.pas --
-[*] TK-TK-6494 - Ajustado nova formatação para CodigoCedente impresso no boleto.
+[*] TK-6494 - Ajustado nova formatação para CodigoCedente impresso no boleto.
   https://www.projetoacbr.com.br/forum/topic/81360-rejei%C3%A7%C3%A3o-no-layout-do-boleto-banrisul/
   Por: Daniel Morais InfoCotidiano
 

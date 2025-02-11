@@ -49,6 +49,7 @@ type
   TACBrBancoPenseBank = class(TACBrBancoBrasil)
   private
     function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String; reintroduce;
+    function MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo) :string; override;
   public
    Constructor create(AOwner: TACBrBanco);
    function MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String; override;
@@ -138,6 +139,11 @@ function TACBrBancoPenseBank.MontarCampoCodigoCedente(const ACBrTitulo: TACBrTit
 begin
   Result := Trim(ACBrTitulo.ACBrBoleto.Cedente.Agencia)+'/'+
              IntToStr(StrToIntDef(ACBrTitulo.ACBrBoleto.Cedente.Conta,0)); // mesmo padrão de impressão do pense bank
+end;
+
+function TACBrBancoPenseBank.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): string;
+begin
+  Result:= '000' + inherited MontarCampoNossoNumero(ACBrTitulo);
 end;
 
 end.

@@ -103,7 +103,8 @@ uses
   ACBrBoleto,
   SysUtils,
   pcnConversao,
-  ACBrBoletoConversao;
+  ACBrBoletoConversao, 
+  ACBrBancoPenseBank;
 
 { TBoletoW_PenseBank_API }
 
@@ -311,7 +312,7 @@ begin
   begin
     LJsonObject := TACBrJSONObject.Create;
     LJsonObject.AddPair('idboleto', ATitulo.NumeroDocumento);
-    LJsonObject.AddPair('numeroTituloCliente', ATitulo.NossoNumero);
+    LJsonObject.AddPair('numeroTituloCliente', Boleto.Banco.MontarCampoNossoNumero(ATitulo));
 
     FPDadosMsg := LJsonObject.ToJSON;
   end;
@@ -326,7 +327,7 @@ begin
     LJsonObject := TACBrJSONObject.Create;
 
     LJsonObject.AddPair('idboleto', ATitulo.NumeroDocumento);
-    LJsonObject.AddPair('numeroTituloCliente', ATitulo.NossoNumero);
+    LJsonObject.AddPair('numeroTituloCliente', Boleto.Banco.MontarCampoNossoNumero(ATitulo));
 
     FPDadosMsg := LJsonObject.ToJSON;
   end;
@@ -336,16 +337,27 @@ procedure TBoletoW_PenseBank_API.RequisicaoConsulta;
 var
   LJsonObject: TACBrJSONObject;
   LIdBoleto : string;
+  LNossoNumero : Boolean;
+  LTamNossoNumero : Integer;
 begin
   if Assigned(ATitulo) then
   begin
     LJsonObject := TACBrJSONObject.Create;
-    LIdBoleto := IfThen(ATitulo.SeuNumero <> '',ATitulo.SeuNumero,ATitulo.NumeroDocumento);
 
-    if LIdBoleto <> '' then
+    LIdBoleto := IfThen(ATitulo.SeuNumero <> '',ATitulo.SeuNumero,ATitulo.NumeroDocumento);
+    LTamNossoNumero := ATitulo.ACBrBoleto.Banco.CalcularTamMaximoNossoNumero(ATitulo.Carteira,
+                                                                             ATitulo.NossoNumero,
+                                                                             ATitulo.ACBrBoleto.Cedente.Convenio);
+
+    LNossoNumero := (ATitulo.NossoNumero = '') or (ATitulo.NossoNumero = '0') or (ATitulo.NossoNumero = PadLeft(ATitulo.NossoNumero,LTamNossoNumero,'0'));
+
+    if (LIdBoleto <> '') and (LNossoNumero) then
+      LJsonObject.AddPair('idexterno', LIdBoleto)
+    else
+    begin
       LJsonObject.AddPair('idboleto', LIdBoleto);
-    if ATitulo.NossoNumero <> '0' then
-    LJsonObject.AddPair('numeroTituloCliente', ATitulo.NossoNumero);
+      LJsonObject.AddPair('numeroTituloCliente', Boleto.Banco.MontarCampoNossoNumero(ATitulo));
+    end;
 
     FPDadosMsg := LJsonObject.ToJSON;
   end;
@@ -485,7 +497,7 @@ begin
   begin
     AJson.AddPair('idboleto', ATitulo.NumeroDocumento);
     AJson.AddPair('dataVencimento', FormatDateBr(ATitulo.Vencimento, 'DD/MM/YYYY'));
-    AJson.AddPair('numeroTituloCliente', ATitulo.NossoNumero);
+    AJson.AddPair('numeroTituloCliente', Boleto.Banco.MontarCampoNossoNumero(ATitulo));
   end;
 
 end;
@@ -497,7 +509,7 @@ begin
     if Assigned(AJson) then
     begin
       AJson.AddPair('idboleto', ATitulo.NumeroDocumento);
-      AJson.AddPair('numeroTituloCliente', ATitulo.NossoNumero);
+      AJson.AddPair('numeroTituloCliente', Boleto.Banco.MontarCampoNossoNumero(ATitulo));
 
       case ATitulo.OcorrenciaOriginal.Tipo of
         ToRemessaPedidoNegativacao: // Inclusão
@@ -524,7 +536,7 @@ begin
   if Assigned(ATitulo) and Assigned(AJson) and (ATitulo.DiasDeProtesto > 0) then
   begin
     AJson.AddPair('idboleto', ATitulo.NumeroDocumento);
-    AJson.AddPair('numeroTituloCliente', ATitulo.NossoNumero);
+    AJson.AddPair('numeroTituloCliente', Boleto.Banco.MontarCampoNossoNumero(ATitulo));
     AJson.AddPair('quantidadeDiasProtesto', ATitulo.DiasDeProtesto);
   end;
 end;

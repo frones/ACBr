@@ -1,0 +1,325 @@
+object Form1: TForm1
+  Left = 582
+  Height = 466
+  Top = 186
+  Width = 466
+  Caption = 'Form1'
+  ClientHeight = 466
+  ClientWidth = 466
+  LCLVersion = '3.8.0.0'
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 466
+    Top = 0
+    Width = 466
+    ActivePage = tsEnviarXML
+    Align = alClient
+    TabIndex = 1
+    TabOrder = 0
+    object tsConsultarCPF: TTabSheet
+      Caption = 'Consultar CPF'
+      ClientHeight = 438
+      ClientWidth = 458
+      object edCPF: TEdit
+        Left = 40
+        Height = 23
+        Top = 43
+        Width = 216
+        TabOrder = 0
+        Text = '40864390858'
+      end
+      object btConsultar: TButton
+        Left = 40
+        Height = 25
+        Top = 80
+        Width = 75
+        Caption = 'Consultar'
+        TabOrder = 1
+        OnClick = btConsultarClick
+      end
+      object mmLog: TMemo
+        Left = 40
+        Height = 272
+        Top = 128
+        Width = 384
+        ReadOnly = True
+        TabOrder = 2
+      end
+      object lbCPF: TLabel
+        Left = 40
+        Height = 15
+        Top = 29
+        Width = 21
+        Caption = 'CPF'
+        ParentColor = False
+      end
+    end
+    object tsEnviarXML: TTabSheet
+      Caption = 'Enviar XML'
+      ClientHeight = 438
+      ClientWidth = 458
+      object edXML: TEdit
+        Left = 32
+        Height = 23
+        Top = 48
+        Width = 368
+        TabOrder = 0
+      end
+      object btAcharXML: TSpeedButton
+        Left = 400
+        Height = 23
+        Top = 48
+        Width = 24
+        Anchors = [akTop, akRight]
+        Flat = True
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000064000000640000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000100000065000000140000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000100000083000000F6000000540000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          000600000088000000F70000006B000000000000000000000000000000000000
+          000000000000000000050000004B00000096000000A800000081000000260000
+          0076000000F30000007100000000000000000000000000000000000000000000
+          00000000000800000098000000F4000000C0000000B1000000DD000000E90000
+          00CF000000660000000300000000000000000000000000000000000000000000
+          00000000006D000000F90000004C000000070000000200000013000000A10000
+          00E5000000220000000000000000000000000000000000000000000000000000
+          000A000000CF0000009500000000000000000000000000000000000000120000
+          00DE000000770000000000000000000000000000000000000000000000000000
+          001A000000E20000005D00000000000000000000000000000000000000040000
+          00B80000009A0000000000000000000000000000000000000000000000000000
+          0011000000D800000076000000000000000000000000000000000000000D0000
+          00D4000000850000000000000000000000000000000000000000000000000000
+          000000000094000000E200000019000000000000000000000000000000670000
+          00F30000003B0000000000000000000000000000000000000000000000000000
+          000000000017000000CB000000EA0000008900000068000000A1000000F70000
+          0083000000020000000000000000000000000000000000000000000000000000
+          000000000000000000160000008D000000D1000000DA000000C30000005A0000
+          0004000000000000000000000000000000000000000000000000000000000000
+          00000000000000000000000000000000000B0000001300000005000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000
+        }
+        OnClick = btAcharXMLClick
+        ShowHint = True
+        ParentFont = False
+        ParentShowHint = False
+      end
+      object edCPF1: TEdit
+        Left = 32
+        Height = 23
+        Top = 102
+        Width = 120
+        TabOrder = 1
+        Text = '40864390858'
+      end
+      object lbCPF1: TLabel
+        Left = 32
+        Height = 15
+        Top = 88
+        Width = 21
+        Caption = 'CPF'
+        ParentColor = False
+      end
+      object edCodOperador: TEdit
+        Left = 168
+        Height = 23
+        Top = 102
+        Width = 120
+        TabOrder = 2
+      end
+      object lbCodOperador: TLabel
+        Left = 168
+        Height = 15
+        Top = 88
+        Width = 92
+        Caption = 'Código Operador'
+        ParentColor = False
+      end
+      object edCodDocumento: TEdit
+        Left = 304
+        Height = 23
+        Top = 102
+        Width = 120
+        TabOrder = 3
+      end
+      object lbCodDocumento: TLabel
+        Left = 304
+        Height = 15
+        Top = 88
+        Width = 105
+        Caption = 'Código Documento'
+        ParentColor = False
+      end
+      object gbComprovantes: TGroupBox
+        Left = 16
+        Height = 110
+        Top = 146
+        Width = 425
+        Caption = 'Comprovantes'
+        ClientHeight = 90
+        ClientWidth = 421
+        TabOrder = 4
+        object lbDescricao: TLabel
+          Left = 16
+          Height = 15
+          Top = 5
+          Width = 51
+          Caption = 'Descrição'
+          ParentColor = False
+        end
+        object edDescricao: TEdit
+          Left = 16
+          Height = 23
+          Top = 21
+          Width = 120
+          TabOrder = 0
+        end
+        object lbParcelas: TLabel
+          Left = 152
+          Height = 15
+          Top = 5
+          Width = 43
+          Caption = 'Parcelas'
+          ParentColor = False
+        end
+        object edParcelas: TEdit
+          Left = 152
+          Height = 23
+          Top = 21
+          Width = 120
+          TabOrder = 1
+        end
+        object lbValorTotal: TLabel
+          Left = 288
+          Height = 15
+          Top = 5
+          Width = 55
+          Caption = 'Valor Total'
+          ParentColor = False
+        end
+        object edValorTotal: TEdit
+          Left = 285
+          Height = 23
+          Top = 21
+          Width = 120
+          TabOrder = 2
+        end
+        object btAdicionar: TButton
+          Left = 16
+          Height = 25
+          Top = 53
+          Width = 120
+          Caption = 'Adicionar'
+          TabOrder = 3
+          OnClick = btAdicionarClick
+        end
+        object lbComprovantes: TLabel
+          Left = 152
+          Height = 21
+          Top = 57
+          Width = 118
+          Caption = 'Comprovantes: 0'
+          Font.Height = -16
+          ParentColor = False
+          ParentFont = False
+        end
+      end
+      object btEnviar: TButton
+        Left = 32
+        Height = 25
+        Top = 272
+        Width = 120
+        Caption = 'Enviar'
+        TabOrder = 5
+        OnClick = btEnviarClick
+      end
+      object lbXML2: TLabel
+        Left = 32
+        Height = 15
+        Top = 34
+        Width = 24
+        Caption = 'XML'
+        ParentColor = False
+      end
+      object btLimpar: TButton
+        Left = 168
+        Height = 25
+        Top = 272
+        Width = 120
+        Caption = 'Limpar'
+        TabOrder = 6
+        OnClick = btLimparClick
+      end
+      object mmLogEnviar: TMemo
+        Left = 32
+        Height = 96
+        Top = 320
+        Width = 392
+        ReadOnly = True
+        TabOrder = 7
+      end
+    end
+    object tsCancelarDocumento: TTabSheet
+      Caption = 'Cancelar Documento'
+      ClientHeight = 438
+      ClientWidth = 458
+      object lbChave: TLabel
+        Left = 40
+        Height = 15
+        Top = 29
+        Width = 33
+        Caption = 'Chave'
+        ParentColor = False
+      end
+      object edChave: TEdit
+        Left = 40
+        Height = 23
+        Top = 43
+        Width = 384
+        TabOrder = 0
+      end
+      object btCancelar: TButton
+        Left = 40
+        Height = 25
+        Top = 80
+        Width = 75
+        Caption = 'Cancelar'
+        TabOrder = 1
+        OnClick = btCancelarClick
+      end
+      object mmLogCancelar: TMemo
+        Left = 40
+        Height = 272
+        Top = 128
+        Width = 384
+        ReadOnly = True
+        TabOrder = 2
+      end
+    end
+  end
+  object ACBrCupomVerde1: TACBrCupomVerde
+    ProxyPort = '8080'
+    ContentsEncodingCompress = []
+    NivelLog = 0
+    xApiKey = '12c392ad-ec0b-4ec5-bd3b-605044ea4d34'
+    Ambiente = cvaHomologacao
+    Left = 88
+    Top = 40
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 192
+    Top = 40
+  end
+end

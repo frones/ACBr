@@ -37,6 +37,7 @@ unit ACBrBoletoW_PenseBank_API;
 interface
 
 uses
+  strutils,
   ACBrBoletoWS,
   ACBrBoletoWS.Rest,
   ACBrJSON, 
@@ -98,7 +99,6 @@ const
 implementation
 
 uses
-  strutils,
   ACBrUtil.DateTime,
   ACBrBoleto,
   SysUtils,

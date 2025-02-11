@@ -201,7 +201,7 @@ begin
           begin
             //LJSonObject := TACBrJSONObject.Create;
             LJSonObject :=  LJson.AsJSONObject['resultado'] ;
-
+            ARetornoWS.Header.ContaCorrente              := LJSonObject.AsString['numeroContaCorrente'];
             ARetornoWS.DadosRet.IDBoleto.CodBarras       := LJSonObject.AsString['codigoBarras'];
             ARetornoWS.DadosRet.IDBoleto.LinhaDig        := LJSonObject.AsString['linhaDigitavel'];
             ARetornoWS.DadosRet.IDBoleto.NossoNum        := LJSonObject.AsString['nossoNumero'];

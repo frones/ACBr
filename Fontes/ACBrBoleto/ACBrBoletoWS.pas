@@ -120,7 +120,6 @@ type
     procedure Clear;
 
   protected
-
     property Banco: TACBrTipoCobranca read FBanco write SetBanco;
 
   public
@@ -262,7 +261,6 @@ begin
   FMsg        := '';
   FLeitor     := TLeitor.Create;
   FACBrBoleto := ABoletoWS;
-
 end;
 
 destructor TRetornoEnvioClass.Destroy;
@@ -478,7 +476,6 @@ begin
       FRetornoBanco  := TRetornoEnvioClass.Create(FBoleto);
   end;
   FBoletoWSClass.FBoleto := FBoleto;
-
 end;
 
 constructor TBoletoWS.Create(AOwner: TComponent);

@@ -357,7 +357,7 @@ type
     procedure GerarInfoPerApur(pInfoPerApur: TInfoPerApur);
     procedure GerarInfoPerAnt(pInfoPerAnt: TInfoPerAnt);
 //    procedure GerarInfoTrabInterm(pInfoTrabInterm: TInfoTrabIntermCollection);
-//    procedure GerarInfoComplCont(pInfoComplCont: TInfoComplCont);
+    procedure GerarInfoComplCont(pInfoComplCont: TInfoComplCont);
 
   public
     constructor Create(AACBreSocial: TObject); override;
@@ -976,6 +976,10 @@ begin
        (dmDev[i].infoPerAnt.ideADC.Count > 0) then
       GerarInfoPerAnt(dmDev[i].infoPerAnt);
 
+    if (dmDev[i].infoComplContInst()) and
+       (Trim(dmDev[i].infoComplCont.codCBO) <> '') then
+      GerarinfoComplCont(dmDev[i].infoComplCont);
+
     Gerador.wGrupo('/dmDev');
   end;
 
@@ -1062,7 +1066,7 @@ begin
 
   Result := (Gerador.ArquivoFormatoXML <> '');
 end;
-{
+
 procedure TEvtRemun.GerarInfoComplCont(pInfoComplCont: TInfoComplCont);
 begin
   Gerador.wGrupo('infoComplCont');
@@ -1076,7 +1080,7 @@ begin
 
   Gerador.wGrupo('/infoComplCont');
 end;
-}
+
 { TS1200CollectionItem }
 
 constructor TS1200CollectionItem.Create(AOwner: TComponent);

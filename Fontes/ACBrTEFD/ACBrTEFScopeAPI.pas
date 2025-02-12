@@ -2446,9 +2446,9 @@ end;
 procedure TACBrTEFScopeAPI.ExibirMensagemPinPad(const MsgPinPad: String);
 var
   ret: LongInt;
-  s: String;
+  s: AnsiString;
 begin
-  s := FormatarMsgPinPad(MsgPinPad);
+  s := AnsiString(FormatarMsgPinPad(MsgPinPad));
   GravarLog('ScopePPDisplay( '+s+' )');
   ret := xScopePPDisplay(PAnsiChar(s));
   GravarLog('  ret: '+IntToStr(ret));
@@ -2527,7 +2527,7 @@ begin
   end;
 
   GravarLog('ScopePPStartOptionMenu( '+Titulo+', '+Lista+' )');
-  ret := xScopePPStartOptionMenu(PAnsiChar(Titulo), PAnsiChar(Lista));
+  ret := xScopePPStartOptionMenu(PAnsiChar(AnsiString(Titulo)), PAnsiChar(Lista));
   GravarLog('  ret: '+IntToStr(ret));
   if (ret <> PC_OK) then
     TratarErroPinPadScope(ret);
@@ -2642,9 +2642,9 @@ end;
 procedure TACBrTEFScopeAPI.ExibirImagemPinPad(const NomeImagem: String);
 var
   ret: LongInt;
-  s: String;
+  s: AnsiString;
 begin
-  s := TratarNomeImagemPinPad(NomeImagem);
+  s := AnsiString(TratarNomeImagemPinPad(NomeImagem));
   GravarLog('ScopePPMMDisplayImage( '+s+' )');
   ret := xScopePPMMDisplayImage(PAnsiChar(s));
   GravarLog('  ret: '+IntToStr(ret));
@@ -2655,9 +2655,9 @@ end;
 procedure TACBrTEFScopeAPI.ApagarImagemPinPad(const NomeImagem: String);
 var
   ret: LongInt;
-  s: String;
+  s: AnsiString;
 begin
-  s := TratarNomeImagemPinPad(NomeImagem);
+  s := AnsiString(TratarNomeImagemPinPad(NomeImagem));
   GravarLog('ScopePPMMFileDelete( '+s+' )');
   ret := xScopePPMMFileDelete(PAnsiChar(s));
   GravarLog('  ret: '+IntToStr(ret));
@@ -2785,7 +2785,7 @@ begin
 
   // ExibirMensagem( Format(sMsgAbrindoConexao, [sEmpresa, sFilial, sPDV]) );
   GravarLog('ScopeOpen( 2, '+sEmpresa+', '+sFilial+', '+sPDV+' )');
-  ret := xScopeOpen( PAnsiChar('2'),
+  ret := xScopeOpen( PAnsiChar(AnsiString('2')),
                      PAnsiChar(AnsiString(sEmpresa)),
                      PAnsiChar(AnsiString(sFilial)),
                      PAnsiChar(AnsiString(sPDV)) );
@@ -4060,7 +4060,7 @@ begin
           Canal := CANAL_COMM_SERIAL;
 
         GravarLog('ScopePPOpenSecure( '+IntToStr(Canal)+', '+IntToStr(aPorta)+' )');
-        endereco := IntToStr(aPorta);
+        endereco := AnsiString(IntToStr(aPorta));
         ret := xScopePPOpenSecure(Canal, PAnsiChar(endereco));
       end
       else
@@ -4081,9 +4081,9 @@ end;
 procedure TACBrTEFScopeAPI.FecharPinPad;
 var
   ret: LongInt;
-  s: String;
+  s: AnsiString;
 begin
-  s := FormatarMsgPinPad(fMsgPinPad);
+  s := AnsiString(FormatarMsgPinPad(fMsgPinPad));
   GravarLog('ScopePPClose( '+s+' )');
   ret := xScopePPClose(PAnsiChar(s));
   GravarLog('  ret: '+IntToStr(ret));

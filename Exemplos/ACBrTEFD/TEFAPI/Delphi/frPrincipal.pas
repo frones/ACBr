@@ -39,7 +39,7 @@ uses
   Spin, Buttons, DBCtrls, ExtCtrls, Grids,
   uVendaClass,
   ACBrPosPrinter, ACBrTEFComum, ACBrTEFAPI, ACBrBase, ACBrTEFAPIComum,
-  ImgList, System.ImageList, ACBrAbecsPinPad;
+  ImgList,  ACBrAbecsPinPad;
 
 type
 
@@ -166,7 +166,7 @@ type
     btTestarPosPrinter: TBitBtn;
     gbDadosTerminal: TGroupBox;
     Label8: TLabel;
-    edCodTerminal: TEdit;
+    edCodFilial: TEdit;
     Label20: TLabel;
     edPortaPinPad: TEdit;
     Label23: TLabel;
@@ -174,11 +174,12 @@ type
     Label24: TLabel;
     edCodEmpresa: TEdit;
     Label30: TLabel;
-    edCodFilial: TEdit;
+    edCodTerminal: TEdit;
     ACBrAbecsPinPad1: TACBrAbecsPinPad;
     btExibirImagemPinPad: TButton;
     btMenuPinPad: TButton;
     btCancelarUltima: TBitBtn;
+    Button1: TButton;
     procedure ACBrTEFAPI1QuandoDetectarTransacaoPendente(
       RespostaTEF: TACBrTEFResp; const MsgErro: String);
     procedure ACBrTEFAPI1QuandoExibirMensagem(const Mensagem: String;
@@ -228,6 +229,7 @@ type
     procedure seValorInicialVendaKeyPress(Sender: TObject; var Key: Char);
     procedure ACBrAbecsPinPad1WriteLog(const ALogLine: string;
       var Tratado: Boolean);
+    procedure Button1Click(Sender: TObject);
   private
     FVenda: TVenda;
     FTipoBotaoOperacao: TTipoBotaoOperacao;
@@ -879,6 +881,8 @@ begin
     end;
   end;
   *)
+
+  AdicionarLinhaLog('Sucesso: '+IfThen(RespostaTEF.Sucesso, 'SIM', 'NÃO'));
 end;
 
 procedure TFormPrincipal.ACBrTEFAPI1QuandoFinalizarTransacao(
@@ -1096,9 +1100,15 @@ begin
 
     MR := FormObtemCampo.ShowModal ;
 
-    Cancelado := (MR <> mrOK) ;
+    Cancelado := (MR = mrCancel);
     Validado := False;  // Não fizemos as validações de "DefinicaoCampo.ValidacaoDado", vamos deixar o ACBrTEFAPI validar
-    Resposta := FormObtemCampo.Resposta;
+
+    if (MR = mrOK) then
+      Resposta := FormObtemCampo.Resposta
+    else if (MR = mrRetry) then  // Botão Voltar
+      Resposta := ':-2'
+    else if (MR = mrCancel) then // Botão Cancelar
+      Resposta := ':-1';
   finally
     FormObtemCampo.Free;
   end;
@@ -1187,9 +1197,9 @@ begin
     edRazaoSocialEstabelecimento.Text := INI.ReadString('Estabelecimento', 'RazaoSocial', edRazaoSocialEstabelecimento.Text);
     edCNPJEstabelecimento.Text := INI.ReadString('Estabelecimento', 'CNPJ', edCNPJEstabelecimento.Text);
 
-    edCodTerminal.Text := INI.ReadString('Terminal', 'CodTerminal', edCodTerminal.Text);
     edCodEmpresa.Text := INI.ReadString('Terminal', 'CodEmpresa', edCodEmpresa.Text);
     edCodFilial.Text := INI.ReadString('Terminal', 'CodFilial', edCodFilial.Text);
+    edCodTerminal.Text := INI.ReadString('Terminal', 'CodTerminal', edCodTerminal.Text);
     edPortaPinPad.Text := INI.ReadString('Terminal', 'PortaPinPad', edPortaPinPad.Text);
     edEnderecoServidor.Text := INI.ReadString('Terminal', 'EnderecoServidor', edEnderecoServidor.Text);
 
@@ -1233,9 +1243,9 @@ begin
     INI.WriteString('Estabelecimento', 'RazaoSocial', edRazaoSocialEstabelecimento.Text);
     INI.WriteString('Estabelecimento', 'CNPJ', edCNPJEstabelecimento.Text);
 
-    INI.WriteString('Terminal', 'CodTerminal', edCodTerminal.Text);
     INI.WriteString('Terminal', 'CodEmpresa', edCodEmpresa.Text);
     INI.WriteString('Terminal', 'CodFilial', edCodFilial.Text);
+    INI.WriteString('Terminal', 'CodTerminal', edCodTerminal.Text);
     INI.WriteString('Terminal', 'PortaPinPad', edPortaPinPad.Text);
     INI.WriteString('Terminal', 'EnderecoServidor', edEnderecoServidor.Text);
 
@@ -1282,7 +1292,7 @@ end;
 
 procedure TFormPrincipal.AdicionarLinhaImpressao(ALinha: String);
 begin
-  mImpressao.Lines.Add(ALinha);
+  mImpressao.Lines.Add(ACBrStr(ALinha));
   if ACBrPosPrinter1.Ativo then
     ACBrPosPrinter1.Imprimir(ALinha);
 end;
@@ -1483,6 +1493,13 @@ begin
   end;
 end;
 
+procedure TFormPrincipal.Button1Click(Sender: TObject);
+begin
+  ACBrTEFAPI1.ExibirQRCodePinPad(
+  '00020101021226900014BR.GOV.BCB.PIX2568pix-qr.mercadopago.com/instore/p/v2/7edcf890b0de4f0689fe7aea52e447b843540016com.mercadolibre0130'+
+  'https://mpago.la/pos/1078225765204000053039865802BR5907GETCARD6009SAO PAULO62070503***6304424C', 'QRCODE');
+end;
+
 procedure TFormPrincipal.btObterCPFClick(Sender: TObject);
 var
   Saida: String;
@@ -1557,6 +1574,8 @@ var
   ReajusteValor: Double;
   IndicePagto: LongInt;
 begin
+  AdicionarLinhaLog('- AdicionarPagamento( '+Indice+', '+FloatToStr(AValor)+' )');
+
   Ok := False;
   TemTEF := False;
 
@@ -1625,12 +1644,13 @@ begin
       end;
       *)
       Ok := ACBrTEFAPI1.EfetuarPagamento( IntToStr(Venda.NumOperacao),
-                                          AValor, Modalidade, CartoesAceitos,
-                                          tefmfAVista );
+                                          AValor, Modalidade, CartoesAceitos);
+      AdicionarLinhaLog(' EfetuarPagamento - OK: '+IfThen(Ok, 'Sim', 'Não'));
 
       Ok := Ok and
             ACBrTEFAPI1.UltimaRespostaTEF.Sucesso and
             ACBrTEFAPI1.UltimaRespostaTEF.TransacaoAprovada;
+      AdicionarLinhaLog(' Sucesso - OK: '+IfThen(Ok, 'Sim', 'Não'));
     end
     else
       Ok := True;
@@ -1650,6 +1670,8 @@ begin
     end;
   end;
   *)
+
+  AdicionarLinhaLog('  - OK: '+IfThen(Ok, 'Sim', 'Não'));
 
   if Ok then
   begin
@@ -1706,6 +1728,9 @@ begin
     end;
 
     AtualizarPagamentosVendaNaInterface;
+
+    AdicionarLinhaLog('- Venda.TotalPago: '+FloatToStr(Venda.TotalPago));
+    AdicionarLinhaLog('- Venda.TotalVenda: '+FloatToStr(Venda.TotalVenda));
 
     if (Venda.TotalPago >= Venda.TotalVenda) then
       FinalizarVenda;
@@ -1797,6 +1822,7 @@ var
   DoctoFiscalOk: Boolean;
   MR: TModalResult;
 begin
+  AdicionarLinhaLog('- FinalizarVenda');
   try
     // AQUI você deve Chamar uma Rotina para Gerar e Transmitir o Documento Fiscal (NFCe ou SAT)
     DoctoFiscalOk := not cbSimularErroNoDoctoFiscal.Checked;
@@ -1875,6 +1901,7 @@ procedure TFormPrincipal.ImprimirTodosComprovantes;
 var
   i: Integer;
 begin
+  AdicionarLinhaLog('- ImprimirTodosComprovantes');
   for i := 0 to ACBrTEFAPI1.RespostasTEF.Count-1 do
     ImprimirComprovantes(ACBrTEFAPI1.RespostasTEF[i]);
 end;
@@ -2028,9 +2055,9 @@ begin
   ACBrTEFAPI1.DadosEstabelecimento.RazaoSocial := edRazaoSocialEstabelecimento.Text;
   ACBrTEFAPI1.DadosEstabelecimento.CNPJ := edCNPJEstabelecimento.Text;
 
-  ACBrTEFAPI1.DadosTerminal.CodTerminal := edCodTerminal.Text;
   ACBrTEFAPI1.DadosTerminal.CodEmpresa := edCodEmpresa.Text;
   ACBrTEFAPI1.DadosTerminal.CodFilial  := edCodFilial.Text;
+  ACBrTEFAPI1.DadosTerminal.CodTerminal := edCodTerminal.Text;
   ACBrTEFAPI1.DadosTerminal.PortaPinPad := edPortaPinPad.Text;
   ACBrTEFAPI1.DadosTerminal.EnderecoServidor := edEnderecoServidor.Text;
 
@@ -2058,6 +2085,13 @@ begin
     end;
   end;
 
+  //if (ACBrTEFAPI1.TEF is TACBrTEFAPIClassScope) then
+  //begin
+  //  with TACBrTEFAPIClassScope(ACBrTEFAPI1.TEF) do
+  //  begin
+  //    TEFScopeAPI.ControleConexao := True;
+  //  end;
+  //end;
 end;
 
 procedure TFormPrincipal.AtivarTEF;

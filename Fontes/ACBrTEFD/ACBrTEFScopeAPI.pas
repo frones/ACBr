@@ -1566,7 +1566,7 @@ type
     function ConfigurarPropriedadeScope(AId: LongInt; Ligado: Boolean): Boolean;
 
     procedure VerificarDiretorioDeTrabalho;
-    procedure VerificarEAjustarScopeINI;
+    procedure VerificarEAjustarScopeINI(const ASuportaCarteirasDigitaisPix: Boolean);
     function ConfigurarPortaPinPad(const APortaPinPad: String): Word;
     procedure ObterDadosScopeINI(out AEmpresa: String; out AFilial: String;
       out AEnderecoIP: String; out APortaTCP: String);
@@ -1745,6 +1745,8 @@ begin
 end;
 
 procedure TACBrTEFScopeAPI.Inicializar;
+var
+  vSuportaCarteirasDigitaisPix: Boolean;
 begin
   if fInicializada then
     Exit;
@@ -1766,7 +1768,8 @@ begin
     DoException(Format(sErrEventoNaoAtribuido, ['OnExibeQRCode']));
 
   VerificarDiretorioDeTrabalho;
-  VerificarEAjustarScopeINI;
+  vSuportaCarteirasDigitaisPix := True; // Elton... Verificar.
+  VerificarEAjustarScopeINI(vSuportaCarteirasDigitaisPix);
   LoadLibFunctions;
 
   try
@@ -2195,7 +2198,8 @@ begin
     DoException(Format(sErrDirTrabalhoInvalido, [fDiretorioTrabalho]));
 end;
 
-procedure TACBrTEFScopeAPI.VerificarEAjustarScopeINI;
+procedure TACBrTEFScopeAPI.VerificarEAjustarScopeINI(const
+    ASuportaCarteirasDigitaisPix: Boolean);
 var
   ini: TMemIniFile;
   sl: TStringList;
@@ -2266,8 +2270,11 @@ begin
         AjustarParamSeNaoExistir(SecName, 'WKPAN', IfThen(fPinPadSeguro, 's', 'n'));
         if (fEnderecoIP = '127.0.0.1') or (LowerCase(fEnderecoIP) = 'localhost') then
           AjustarParamSeNaoExistir(SecName, 'ThinClient', 's');
-        AjustarParamSeNaoExistir(SecName, 'CRTYPE', '1');
-        AjustarParamSeNaoExistir(SecName, 'ExibeQRcode', 's');
+        if ASuportaCarteirasDigitaisPix then
+        begin
+          AjustarParamSeNaoExistir(SecName, 'CRTYPE', '1');
+          AjustarParamSeNaoExistir(SecName, 'ExibeQRcode', 's');
+        end;
         Break;
       end;
     end;
@@ -2906,7 +2913,7 @@ function TACBrTEFScopeAPI.IniciarTransacao(Operacao: TACBrTEFScopeOperacao;
   const Param1: String; const Param2: String; const Param3: String;
   const Param4: String): LongInt;
 var
-  p1, p2, p3, p4: PAnsiChar;
+  p1, p2{, p3, p4}: PAnsiChar;
   w1, w2, w3, w4: Word;
   ret: LongInt;
   f1: Double;
@@ -2925,8 +2932,8 @@ begin
   fDadosDaTransacao.Clear;
   p1 := PAnsiChar(AnsiString(Param1));
   p2 := PAnsiChar(AnsiString(Param2));
-  p3 := PAnsiChar(AnsiString(Param3));
-  p4 := PAnsiChar(AnsiString(Param4));
+//  p3 := PAnsiChar(AnsiString(Param3));
+//  p4 := PAnsiChar(AnsiString(Param4));
   ret := 0;
 
   case Operacao of

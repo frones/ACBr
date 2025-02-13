@@ -43,9 +43,22 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/02/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6613: A cidade de Novo Sao Joaquim/MT mudou os Params.
+  Por: Márcio Baroni
+[+] #TK-6616: Incluída a cidade de Coronel Bicaco/RS, o provedor é IPM versão 1.00
+  Por: Pablo Cerbaro
+[*] #TK-6615: A cidade de Campinapolis/MT mudou os Params.
+  Por: Márcio Baroni
+[*] #TK-6617: A cidade de Pato Branco/PR mudou as URLs, o provedor continua o mesmo.
+  Por: christian@adminfo.com.br
+[*] #TK-6605: A cidade de Santos Dumont/MG mudou as URLs, o provedor continua o mesmo.
+  Por: Pegasus Aut e Desenv
+
 11/02/2025
 -- VersaTecnologia.Provider --
-[*] #TK-6602: Sobreescritas as funções: ResponsavelRetencaoToStr, StrToResponsavelRetencao e
+[*] #TK-6602: Sobre escritas as funções: ResponsavelRetencaoToStr, StrToResponsavelRetencao e
     ResponsavelRetencaoDescricao, para compatibilizar com o Schema usado pelo provedor.
   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --

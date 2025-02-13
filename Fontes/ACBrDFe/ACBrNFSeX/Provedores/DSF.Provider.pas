@@ -514,6 +514,8 @@ procedure TACBrNFSeProviderDSF203.Configuracao;
 begin
   inherited Configuracao;
 
+  ConfigGeral.QuebradeLinha := '\s\n';
+
   with ConfigAssinar do
   begin
     ConsultarLote := True;

@@ -105,7 +105,7 @@ begin
   begin
     try
       if Copy(Trim(RetWS),0,5) = 'ERRO:' then
-        RetWS := Copy(Trim(RetWS),5,Length(RetWS));
+        RetWS := Copy(Trim(RetWS),6,Length(RetWS));
 
       LJsonObject := TACBrJSONObject.Parse(RetWS);
       ARetornoWS.MsgRetorno := RetWS;
@@ -195,7 +195,6 @@ begin
               ARetornoWS.DadosRet.IDBoleto.IDBoleto              := IntToStr(LItemObject.AsInteger['idboleto']);
               ARetornoWS.DadosRet.IDBoleto.URL                   := LItemObject.AsString['url_boleto'];
               ARetornoWS.DadosRet.TituloRet.TxId                 := LItemObject.AsString['pix_hash'];
-//              ARetornoWS.DadosRet.TituloRet.EMV                := LItemObject.AsString['pixQrCode'];
               ARetornoWS.DadosRet.TituloRet.SeuNumero            := LItemObject.AsString['idExterno'];
               ARetornoWS.indicadorContinuidade                   := false;
               ARetornoWS.DadosRet.TituloRet.CodBarras            := ARetornoWS.DadosRet.IDBoleto.CodBarras;
@@ -210,12 +209,33 @@ begin
           else if (LTipoOperacao in [TpConsulta]) then
             begin
 
-              ARetornoWS.DadosRet.IDBoleto.LinhaDig              := LJsonObject.AsString['codigoLinhaDigitavel'];
-              ARetornoWS.DadosRet.IDBoleto.URL                   := LJsonObject.AsString['url_boleto'];
-              ARetornoWS.DadosRet.TituloRet.TxId                 := LJsonObject.AsString['pix_hash'];
-              ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := LJSonObject.AsString['situacaoEstadoTituloCobranca'];
-              ARetornoWS.DadosRet.TituloRet.ValorPago            := LJSonObject.AsCurrency['valorPagoSacado'];
-
+              LItemObject := LJsonObject.AsJSONObject['message'];
+              ARetornoWS.DadosRet.IDBoleto.IDBoleto              := IntToStr(LItemObject.AsInteger['idboleto']);
+              ARetornoWS.DadosRet.IDBoleto.CodBarras             := LItemObject.AsString['codigoBarraNumerico'];
+              ARetornoWS.DadosRet.IDBoleto.LinhaDig              := LItemObject.AsString['codigoLinhaDigitavel'];
+              ARetornoWS.DadosRet.IDBoleto.NossoNum              := RightStr(LItemObject.AsString['numeroTituloCliente'], 10);
+              ARetornoWS.DadosRet.TituloRet.NumeroDocumento      := LItemObject.AsString['numeroTituloBeneficiario'];
+              ARetornoWS.DadosRet.TituloRet.ValorDocumento       := LItemObject.AsCurrency['valorOriginalTituloCobranca'];
+              ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := LItemObject.AsString['situacaoEstadoTituloCobranca'];
+              ARetornoWS.DadosRet.TituloRet.ValorPago            := LItemObject.AsCurrency['valorPagoSacado'];
+              ARetornoWS.DadosRet.TituloRet.ValorMoraJuros       := LItemObject.AsCurrency['valorJuroMoraRecebido'];
+              ARetornoWS.DadosRet.TituloRet.CodigoMulta          := CmPercentual;
+              ARetornoWS.DadosRet.TituloRet.DataMulta            := StrToDateDef(LItemObject.AsString['dataMultaTitulo'], 0);
+              ARetornoWS.DadosRet.TituloRet.ValorMulta           := LItemObject.AsCurrency['valorMultaRecebido'];
+              ARetornoWS.DadosRet.TituloRet.PercentualMulta      := LItemObject.AsFloat['percentualMultaTitulo'];
+              ARetornoWS.DadosRet.TituloRet.ValorDesconto        := LItemObject.AsCurrency['valorDescontoUtilizado'];
+              ARetornoWS.DadosRet.TituloRet.DataBaixa            := StrToDateDef(LItemObject.AsString['dataRecebimentoTitulo'], 0);
+              ARetornoWS.DadosRet.IDBoleto.IDBoleto              := IntToStr(LItemObject.AsInteger['idboleto']);
+              ARetornoWS.DadosRet.IDBoleto.URL                   := LItemObject.AsString['url_boleto'];
+              ARetornoWS.DadosRet.TituloRet.TxId                 := LItemObject.AsString['pix_hash'];
+              ARetornoWS.DadosRet.TituloRet.SeuNumero            := LItemObject.AsString['idExterno'];
+              ARetornoWS.indicadorContinuidade                   := false;
+              ARetornoWS.DadosRet.TituloRet.CodBarras            := ARetornoWS.DadosRet.IDBoleto.CodBarras;
+              ARetornoWS.DadosRet.TituloRet.LinhaDig             := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
+              ARetornoWS.DadosRet.TituloRet.NossoNumero          := ARetornoWS.DadosRet.IDBoleto.NossoNum;
+              ARetornoWS.DadosRet.TituloRet.Vencimento           := StrToDate(LItemObject.AsString['dataVencimentoTituloCobranca']);
+              ARetornoWS.DadosRet.TituloRet.ValorDocumento       := LItemObject.AsFloat['valorOriginalTituloCobranca'];
+              ARetornoWS.DadosRet.TituloRet.ValorAtual           := LItemObject.AsFloat['valorOriginalTituloCobranca'];
             end
           else if (LTipoOperacao = TpBaixa) then
             begin
@@ -257,7 +277,7 @@ begin
     LListaRetorno.JSON := RetWS;
     try
       if Copy(Trim(RetWS),0,5) = 'ERRO:' then
-        RetWS := Copy(Trim(RetWS),5,Length(RetWS));
+        RetWS := Copy(Trim(RetWS),6,Length(RetWS));
 
       LJsonObject := TACBrJSONObject.Parse(RetWS);
       try

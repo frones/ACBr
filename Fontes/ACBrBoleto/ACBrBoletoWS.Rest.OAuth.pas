@@ -116,6 +116,7 @@ type
 implementation
 uses
   SysUtils,
+  ACBrUtil.DateTime,
   ACBrUtil.Strings,
   ACBrUtil.Base,
   ACBrBoletoWS,
@@ -164,7 +165,11 @@ begin
   if (FArqLOG = '') then
     Exit;
 
-  WriteLog(FArqLOG, FormatDateTime('dd/mm/yy hh:nn:ss:zzz', now) + ' - ' + AString);
+  WriteLog(FArqLOG, FormatDateTime('dd/mm/yy hh:nn:ss:zzz', now) +
+                  ' ' +
+                  ACBrUtil.DateTime.GetUTCSistema +
+                  ' - ' +
+                  AString);
 end;
 
 function TOAuth.getContentType: String;
@@ -221,7 +226,7 @@ begin
   FExpire          := 0;
   FErroComunicacao := '';
   try
-    LJson := TACBrJSONObject.Parse(UTF8ToNativeString(StringReplace(ARetorno,#$A,'',[rfReplaceAll])));
+    LJson := TACBrJSONObject.Parse(UTF8ToNativeString(Trim(ARetorno)));
 
     try
       if (FHTTPSend.ResultCode in [ 200 .. 205 ]) then

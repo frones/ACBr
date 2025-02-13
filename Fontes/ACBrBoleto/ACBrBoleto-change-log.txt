@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/02/2025
+-- ACBrBoleto.pas --
+[*] TK-6565 - Ajustado exception para ser utilizado da classe de boleto
+  https://www.projetoacbr.com.br/forum/topic/81638-acbrboleto-sugest%C3%A3o-de-melhoria/
+  Por:  samuel.parastchuk, Victor H. Gonzales Pandaaa, Daniel Morais InfoCotidiano
+
 11/02/2025
 -- ACBrBancoSantander.pas --
 [*] TK-6533 - Ajustado para ler NossoNumeroCompleto no CNAB400 

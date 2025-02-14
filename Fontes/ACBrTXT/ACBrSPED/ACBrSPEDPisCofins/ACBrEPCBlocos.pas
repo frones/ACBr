@@ -51,7 +51,7 @@ uses
 
 type
   /// Versão do Leiaute do arquivo - TRegistro0000
-  TACBrCodVer = (
+  TACBrVersaoLeiauteSPEDContribuicoes = (
                  vlVersao100,  // Código 001 - Versão 100 ADE Cofis nº 31/2010 de 01/01/2011
                  vlVersao101,  // Código 002 - Versão 101 ADE Cofis nº 34/2010 de 01/01/2011
                  vlVersao200,  // Código 002 - Versão 200 ADE Cofis nº 20/2012
@@ -60,7 +60,11 @@ type
                  vlVersao310,  // Código 005 - ADE Cofis nº 82/2018 - Apuração em 01/01/2019
                  vlVersao320   // Código 006 - ADE Cofis ??? - Apuração em 01/01/2020
                 );
-  TACBrVersaoLeiaute = TACBrCodVer;
+
+  TACBrVersaoLeiaute = TACBrVersaoLeiauteSPEDContribuicoes deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDContribuicoes'{$EndIf}{$EndIf};
+  TACBrCodVer = TACBrVersaoLeiauteSPEDContribuicoes deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDContribuicoes'{$EndIf}{$EndIf};
+
+
 
   /// Indicador de movimento - TOpenBlocos
   TACBrIndMov = (

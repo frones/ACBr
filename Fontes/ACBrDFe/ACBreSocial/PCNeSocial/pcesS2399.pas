@@ -61,58 +61,52 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2399CollectionItem = class;
-  TEvtTSVTermino = class;
-  TInfoTSVTermino = class;
-  TVerbasRescS2399 = class;
-  TDmDevCollectionItem = class;
-  TDmDevCollection = class;
-  TRemunAposTerm = class;
-
-  TS2399Collection = class(TeSocialCollection)
+  TDmDevCollectionItem = class(TObject)
   private
-    function GetItem(Index: Integer): TS2399CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2399CollectionItem);
+    FIdeDmDev: string;
+    FIdeEstabLot: TideEstabLotCollection;
+    FindRRA: tpSimNaoFacultativo;
+    FinfoRRA: TinfoRRA;
+
+    function getInfoRRA: TInfoRRA;
   public
-    function Add: TS2399CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2399CollectionItem;
-    property Items[Index: Integer]: TS2399CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS2399CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtTSVTermino : TEvtTSVTermino;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtTSVTermino: TEvtTSVTermino read FEvtTSVTermino write FEvtTSVTermino;
-  end;
-
-  TEvtTSVTermino = class(TeSocialEvento)
-  private
-    FIdeEvento: TIdeEvento2;
-    FIdeEmpregador: TIdeEmpregador;
-    FIdeTrabSemVInc : TideTrabSemVinc;
-    FInfoTSVTermino: TInfoTSVTermino;
-
-    procedure GerarInfoTSVTermino(obj: TInfoTSVTermino);
-    procedure GerarVerbasResc(obj: TVerbasRescS2399);
-    procedure GerarIdeTrabSemVinc(obj: TIdeTrabSemVinc);
-    procedure GerarDmDev(pDmDev: TDmDevCollection);
-    procedure GerarRemunAposTerm(obj: TRemunAposTerm);
-   public
-    constructor Create(AACBreSocial: TObject); override;
+    constructor Create;
     destructor Destroy; override;
 
-    function GerarXML: boolean; override;
-    function LerArqIni(const AIniString: String): Boolean;
+    function infoRRAInst: boolean;
 
-    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property IdeTrabSemVInc: TideTrabSemVinc read FIdeTrabSemVInc write FIdeTrabSemVInc;
-    property InfoTSVTermino: TInfoTSVTermino read FInfoTSVTermino write FInfoTSVTermino;
+    property ideDmDev: string read FIdeDmDev write FIdeDmDev;
+    property indRRA: tpSimNaoFacultativo read FindRRA write FindRRA;
+    property infoRRA: TinfoRRA read getInfoRRA write FinfoRRA;
+    property ideEstabLot: TideEstabLotCollection read FIdeEstabLot write FIdeEstabLot;
+  end;
+
+  TDmDevCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TDMDevCollectionItem;
+    procedure SetItem(Index: Integer; Value: TDMDevCollectionItem);
+  public
+    function Add: TDMDevCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDMDevCollectionItem;
+    property Items[Index: Integer]: TDMDevCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TVerbasRescS2399 = class(TVerbasResc)
+  private
+    FDmDev: TDmDevCollection;
+  public
+    constructor Create; reintroduce;
+
+    property dmDev: TDmDevCollection read FDmDev write FDmDev;
+  end;
+
+  TRemunAposTerm = class
+  private
+   FindRemun: TpIndRemun;
+   FdtFimRemun: TDateTime;
+  public
+   property indRemun: TpIndRemun read FindRemun write FindRemun;
+   property dtFimRemun: TDateTime read FdtFimRemun write FdtFimRemun;
   end;
 
   TinfoTSVTermino = class(TObject)
@@ -143,52 +137,50 @@ type
     property RemunAposTerm: TRemunAposTerm read FRemunAposTerm write FRemunAposTerm;
   end;
 
-  TDmDevCollection = class(TACBrObjectList)
+  TEvtTSVTermino = class(TeSocialEvento)
   private
-    function GetItem(Index: Integer): TDMDevCollectionItem;
-    procedure SetItem(Index: Integer; Value: TDMDevCollectionItem);
-  public
-    function Add: TDMDevCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TDMDevCollectionItem;
-    property Items[Index: Integer]: TDMDevCollectionItem read GetItem write SetItem; default;
-  end;
+    FIdeEvento: TIdeEvento2;
+    FIdeEmpregador: TIdeEmpregador;
+    FIdeTrabSemVInc : TideTrabSemVinc;
+    FInfoTSVTermino: TInfoTSVTermino;
 
-  TDmDevCollectionItem = class(TObject)
-  private
-    FIdeDmDev: string;
-    FIdeEstabLot: TideEstabLotCollection;
-    FindRRA: tpSimNaoFacultativo;
-    FinfoRRA: TinfoRRA;
-
-    function getInfoRRA: TInfoRRA;
-  public
-    constructor Create;
+    procedure GerarInfoTSVTermino(obj: TInfoTSVTermino);
+    procedure GerarVerbasResc(obj: TVerbasRescS2399);
+    procedure GerarIdeTrabSemVinc(obj: TIdeTrabSemVinc);
+    procedure GerarDmDev(pDmDev: TDmDevCollection);
+    procedure GerarRemunAposTerm(obj: TRemunAposTerm);
+   public
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
-    function infoRRAInst: boolean;
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
 
-    property ideDmDev: string read FIdeDmDev write FIdeDmDev;
-    property indRRA: tpSimNaoFacultativo read FindRRA write FindRRA;
-    property infoRRA: TinfoRRA read getInfoRRA write FinfoRRA;
-    property ideEstabLot: TideEstabLotCollection read FIdeEstabLot write FIdeEstabLot;
+    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeTrabSemVInc: TideTrabSemVinc read FIdeTrabSemVInc write FIdeTrabSemVInc;
+    property InfoTSVTermino: TInfoTSVTermino read FInfoTSVTermino write FInfoTSVTermino;
   end;
 
-  TVerbasRescS2399 = class(TVerbasResc)
+  TS2399CollectionItem = class(TObject)
   private
-    FDmDev: TDmDevCollection;
+    FTipoEvento: TTipoEvento;
+    FEvtTSVTermino : TEvtTSVTermino;
   public
-    constructor Create; reintroduce;
-
-    property dmDev: TDmDevCollection read FDmDev write FDmDev;
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtTSVTermino: TEvtTSVTermino read FEvtTSVTermino write FEvtTSVTermino;
   end;
 
-  TRemunAposTerm = class
+  TS2399Collection = class(TeSocialCollection)
   private
-   FindRemun: TpIndRemun;
-   FdtFimRemun: TDateTime;
+    function GetItem(Index: Integer): TS2399CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2399CollectionItem);
   public
-   property indRemun: TpIndRemun read FindRemun write FindRemun;
-   property dtFimRemun: TDateTime read FdtFimRemun write FdtFimRemun;
+    function Add: TS2399CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2399CollectionItem;
+    property Items[Index: Integer]: TS2399CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -354,12 +346,9 @@ begin
 
   Gerador.wCampo(tcStr, '', 'cpfTrab',  11, 11, 1, obj.cpfTrab);
 
-  if VersaoDF <= ve02_05_00 then
-    Gerador.wCampo(tcStr, '', 'nisTrab',   1, 11, 0, obj.nisTrab)
-  else
-    Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 0, obj.matricula);
+  Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 0, obj.matricula);
 
-  if (VersaoDF <= ve02_05_00) or (obj.matricula = '') then
+  if (obj.matricula = '') then
     Gerador.wCampo(tcStr, '', 'codCateg',  1,  3, 1, obj.codCateg);
 
   Gerador.wGrupo('/ideTrabSemVinculo');
@@ -367,12 +356,12 @@ end;
 
 procedure TEvtTSVTermino.GerarRemunAposTerm(obj: TRemunAposTerm);
 begin
-  if (VersaoDF >= veS01_01_00) and (obj.indRemun <> ireNaoInformado) then
+  if obj.indRemun <> ireNaoInformado then
   begin
     Gerador.wGrupo('remunAposTerm');
 
-    Gerador.wCampo(tcStr, '', 'indRemun',         1,  1, 1, TpIndRemunToStr(Obj.indRemun));
-    Gerador.wCampo(tcDat, '', 'dtFimRemun',      10, 10, 1, Obj.dtFimRemun);
+    Gerador.wCampo(tcStr, '', 'indRemun', 1, 1, 1, TpIndRemunToStr(Obj.indRemun));
+    Gerador.wCampo(tcDat, '', 'dtFimRemun', 10, 10, 1, Obj.dtFimRemun);
 
     Gerador.wGrupo('/remunAposTerm');
   end;
@@ -385,11 +374,8 @@ begin
   Gerador.wCampo(tcDat, '', 'dtTerm',       10, 10, 1, obj.dtTerm);
   Gerador.wCampo(tcStr, '', 'mtvDesligTSV',  1,  2, 0, obj.mtvDesligTSV);
 
-  if (
-       (Self.IdeTrabSemVInc.codCateg = 201) or
-       (Self.IdeTrabSemVInc.codCateg = 202) or
-       (Self.IdeTrabSemVInc.codCateg = 721)
-     ) and (VersaoDF >= ve02_05_00) then
+  if (Self.IdeTrabSemVInc.codCateg = 201) or (Self.IdeTrabSemVInc.codCateg = 202) or
+     (Self.IdeTrabSemVInc.codCateg = 721) then
   begin
     if obj.pensAlim <> paNenhum then
       Gerador.wCampo(tcStr, '', 'pensAlim',    1,  1, 1, obj.pensAlim);
@@ -401,7 +387,7 @@ begin
   if obj.mtvDesligTSV <> '07' then
      GerarVerbasResc(obj.verbasResc);
 
-  if (VersaoDF >= ve02_05_00) and (obj.mtvDesligTSV = '07') then
+  if (obj.mtvDesligTSV = '07') then
      GerarMudancaCPF3(obj.mudancaCPF);
 	
   GerarQuarentena(obj.quarentena);
@@ -420,15 +406,12 @@ begin
 
     Gerador.wCampo(tcStr, '', 'ideDmDev', 1, 30, 1, pDmDev[i].ideDmDev);
 
-    if VersaoDF >= veS01_01_00 then
+    if (pDmDev[i].indRRA = snfSim) and (pDmDev[i].infoRRAInst()) then
     begin
-      if (pDmDev[i].indRRA = snfSim) and (pDmDev[i].infoRRAInst()) then
-      begin
-        Gerador.wCampo(tcStr, '', 'indRRA', 1,  1, 1, eSSimNaoFacultativoToStr(pDmDev[i].indRRA));
+      Gerador.wCampo(tcStr, '', 'indRRA', 1, 1, 1, eSSimNaoFacultativoToStr(pDmDev[i].indRRA));
 
-        if (pDmDev[i].infoRRAInst()) then
-          GerarInfoRRA(pDmDev[i].infoRRA);
-      end;
+      if (pDmDev[i].infoRRAInst()) then
+        GerarInfoRRA(pDmDev[i].infoRRA);
     end;
 
     GerarIdeEstabLot(pDmDev[i].ideEstabLot);
@@ -477,9 +460,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTSVTermino');
-
-//    Validar(schevtTSVTermino);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -530,11 +510,8 @@ begin
       infoTSVTermino.dtTerm       := StringToDateTime(INIRec.ReadString(sSecao, 'dtTerm', '0'));
       infoTSVTermino.mtvDesligTSV := INIRec.ReadString(sSecao, 'mtvDesligTSV', '');
 
-      if (
-           (IdeTrabSemVInc.codCateg = 201) or
-           (IdeTrabSemVInc.codCateg = 202) or
-           (IdeTrabSemVInc.codCateg = 721)
-         ) and (VersaoDF >= ve02_05_00) then
+      if (IdeTrabSemVInc.codCateg = 201) or (IdeTrabSemVInc.codCateg = 202) or
+         (IdeTrabSemVInc.codCateg = 721) then
       begin
         infoTSVTermino.pensAlim := eSStrToTpPensaoAlimEx(INIREC.ReadString(sSecao, 'pensAlim', EmptyStr));
 
@@ -544,8 +521,8 @@ begin
           infoTSVTermino.vrAlim      := StringToFloatDef(INIRec.ReadString(sSecao, 'vrAlim', ''), 0);
         end;
       end;
-      if  (VersaoDF > ve02_05_00) then
-        infoTSVTermino.nrProcTrab   := INIRec.ReadString(sSecao, 'nrProcTrab', EmptyStr);
+
+      infoTSVTermino.nrProcTrab   := INIRec.ReadString(sSecao, 'nrProcTrab', EmptyStr);
 
       sSecao := 'mudancaCPF';
       infoTSVTermino.mudancaCPF.novoCPF := INIRec.ReadString(sSecao, 'novoCPF', EmptyStr);

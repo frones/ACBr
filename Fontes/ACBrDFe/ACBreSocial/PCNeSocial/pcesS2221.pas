@@ -58,30 +58,6 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2221CollectionItem = class;
-  TEvtToxic = class;
-
-  TS2221Collection = class(TeSocialCollection)
-  private
-    function GetItem(Index: Integer): TS2221CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2221CollectionItem);
-  public
-    function Add: TS2221CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2221CollectionItem;
-    property Items[Index: Integer]: TS2221CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS2221CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtToxic: TEvtToxic;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor  Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtToxic: TEvtToxic read FEvtToxic write FEvtToxic;
-  end;
-
   TToxicologico = class(TObject)
   private
     FdtExame: TDateTime;
@@ -121,6 +97,27 @@ type
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
     property toxicologico: TToxicologico read FToxicologico write FToxicologico;
+  end;
+
+  TS2221CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtToxic: TEvtToxic;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor  Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtToxic: TEvtToxic read FEvtToxic write FEvtToxic;
+  end;
+
+  TS2221Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS2221CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2221CollectionItem);
+  public
+    function Add: TS2221CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2221CollectionItem;
+    property Items[Index: Integer]: TS2221CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -202,8 +199,6 @@ begin
   Gerador.wCampo(tcStr, '', 'nmMed',       1, 70, 0, objToxicologico.nmMed);
   Gerador.wCampo(tcStr, '', 'nrCRM',       1,  8, 0, objToxicologico.nrCRM);
   Gerador.wCampo(tcStr, '', 'ufCRM',       1,  2, 0, objToxicologico.ufCRM);
-  if VersaoDF <= ve02_05_00 then
-    Gerador.wCampo(tcStr, '', 'indRecusa',   1,  1, 1, eSSimNaoToStr(objToxicologico.indRecusa));
 
   Gerador.wGrupo('/toxicologico');
 end;
@@ -229,9 +224,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtToxic');
-
-//    Validar(schEvtToxic);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

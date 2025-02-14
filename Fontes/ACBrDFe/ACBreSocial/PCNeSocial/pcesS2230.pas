@@ -58,141 +58,6 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2230CollectionItem = class;
-  TEvtAfastTemp = class;
-  TinfoAfastamento = class;
-  TiniAfastamento = class;
-  TaltAfastamento = class;
-  TfimAfastamento = class;
-  TinfoAtestado = class;
-  TinfoAtestadoItem = class;
-  TinfoCessao = class;
-  TinfoMandSind = class;
-  TinfoRetif = class;
-  TperAquis = class;
-  TinfoMandElet = class;
-
-  TS2230Collection = class(TeSocialCollection)
-  private
-    function GetItem(Index: Integer): TS2230CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2230CollectionItem);
-  public
-    function Add: TS2230CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2230CollectionItem;
-    property Items[Index: Integer]: TS2230CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS2230CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtAfastTemp: TEvtAfastTemp;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtAfastTemp: TEvtAfastTemp read FEvtAfastTemp write FEvtAfastTemp;
-  end;
-
-  TEvtAfastTemp = class(TeSocialEvento)
-  private
-    FIdeEvento : TIdeEvento2;
-    FIdeEmpregador : TIdeEmpregador;
-    FIdeVinculo : TIdeVinculo;
-    FinfoAfastamento : TinfoAfastamento;
-
-    procedure GerarInfoAfastamento(objInfoAfast: TinfoAfastamento);
-    procedure GerarInfoAtestado(objInfoAtestado: TinfoAtestado);
-    procedure GerarInfoCessao(objInfoCessao: TinfoCessao);
-    procedure GerarInfoMandSind(objInfoMandSind: TInfoMandSind);
-//    procedure GerarAltAfast(objAltAfast: TaltAfastamento);
-//    procedure GerarAltEmpr(pAltEmpr: TAltEmpr);
-    procedure GerarInfoRetif(objInfoRetif: TInfoRetif);
-    procedure GerarFimAfast(objFimAfast: TfimAfastamento);
-  public
-    constructor Create(AACBreSocial: TObject); override;
-    destructor  Destroy; override;
-
-    function GerarXML: boolean; override;
-    function LerArqIni(const AIniString: String): Boolean;
-
-    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
-    property infoAfastamento: TinfoAfastamento read FinfoAfastamento write FinfoAfastamento;
-  end;
-
-  TinfoAfastamento = class(TObject)
-  private
-    FiniAfastamento : TiniAfastamento;
-    FaltAfastamento : TaltAfastamento;
-    FinfoRetif: TinfoRetif;
-    FfimAfastamento : TfimAfastamento;
-  public
-    constructor Create;
-    destructor  Destroy; override;
-
-    property iniAfastamento: TiniAfastamento read FiniAfastamento write FiniAfastamento;
-    property altAfastamento: TaltAfastamento read FaltAfastamento write FaltAfastamento;
-    property infoRetif: TinfoRetif read FinfoRetif write FinfoRetif;
-    property fimAfastamento: TfimAfastamento read FfimAfastamento write FfimAfastamento;
-  end;
-
-  TperAquis = class(TObject)
-  private
-    fdtInicio: TDateTime;
-    fdtFim: TDateTime;
-  public
-    property dtInicio: TDateTime read fdtInicio write fdtInicio;
-    property dtFim: TDateTime read fdtFim write fdtFim;
-  end;
-  
-  TinfoMandElet = class(TObject)
-  private
-    fcnpjMandElet: string;
-    findRemunCargo: tpSimNao;
-  public
-    property cnpjMandElet: string read fcnpjMandElet write fcnpjMandElet;
-    property indRemunCargo: tpSimNao read findRemunCargo write findRemunCargo;
-  end;
-  
-  tiniAfastamento = class(TAfastamento)
-  private
-    FInfoMesmoMtv: tpSimNao;
-    FtpAcidTransito: tpTpAcidTransito;
-    FObservacao: String;
-    FinfoAtestado: TinfoAtestado;
-    FinfoCessao: TinfoCessao;
-    FinfoMandSind: TinfoMandSind;
-    FperAquis: TperAquis;
-    FinfoMandElet: TinfoMandElet;
-    
-    function getInfoAtestado: TinfoAtestado;
-  public
-    constructor Create;
-    destructor  Destroy; override;
-
-    function infoAtestadoInst: Boolean;
-
-    property infoMesmoMtv: tpSimNao read FInfoMesmoMtv write FInfoMesmoMtv;
-    property tpAcidTransito: tpTpAcidTransito read FtpAcidTransito write FtpAcidTransito;
-    property Observacao: String read FObservacao write FObservacao;
-    property infoAtestado: TinfoAtestado read getInfoAtestado write FinfoAtestado;
-    property infoCessao: TinfoCessao read FinfoCessao write FinfoCessao;
-    property infoMandSind: TinfoMandSind read FinfoMandSind write FinfoMandSind;
-    property perAquis: TperAquis read FperAquis write FperAquis;
-    property infoMandElet: TinfoMandElet read finfoMandElet write finfoMandElet;
-  end;
-
-  TinfoAtestado = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TinfoAtestadoItem;
-    procedure SetItem(Index: Integer; Value: TinfoAtestadoItem);
-  public
-    function Add: TinfoAtestadoItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TinfoAtestadoItem;
-    property Items[Index: Integer]: TinfoAtestadoItem read GetItem write SetItem; default;
-  end;
-
   TinfoAtestadoItem = class(TObject)
   private
     FcodCID : String;
@@ -208,6 +73,16 @@ type
     property codCID: String read FCodCId write FcodCID;
     property qtDiasAfast: Integer read FqtDiasAfast write FqtDiasAfast;
     property Emitente: TEmitente read getEmitente write FEmitente;
+  end;
+
+  TinfoAtestado = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfoAtestadoItem;
+    procedure SetItem(Index: Integer; Value: TinfoAtestadoItem);
+  public
+    function Add: TinfoAtestadoItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfoAtestadoItem;
+    property Items[Index: Integer]: TinfoAtestadoItem read GetItem write SetItem; default;
   end;
 
   TinfoCessao = class(TObject)
@@ -226,6 +101,52 @@ type
   public
     property cnpjSind: String read FcnpjSind write FcnpjSind;
     property infOnusRemun: tpOnusRemun read FinfOnusRemun write FinfOnusRemun;
+  end;
+
+  TperAquis = class(TObject)
+  private
+    fdtInicio: TDateTime;
+    fdtFim: TDateTime;
+  public
+    property dtInicio: TDateTime read fdtInicio write fdtInicio;
+    property dtFim: TDateTime read fdtFim write fdtFim;
+  end;
+
+  TinfoMandElet = class(TObject)
+  private
+    fcnpjMandElet: string;
+    findRemunCargo: tpSimNao;
+  public
+    property cnpjMandElet: string read fcnpjMandElet write fcnpjMandElet;
+    property indRemunCargo: tpSimNao read findRemunCargo write findRemunCargo;
+  end;
+
+  tiniAfastamento = class(TAfastamento)
+  private
+    FInfoMesmoMtv: tpSimNao;
+    FtpAcidTransito: tpTpAcidTransito;
+    FObservacao: String;
+    FinfoAtestado: TinfoAtestado;
+    FinfoCessao: TinfoCessao;
+    FinfoMandSind: TinfoMandSind;
+    FperAquis: TperAquis;
+    FinfoMandElet: TinfoMandElet;
+
+    function getInfoAtestado: TinfoAtestado;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    function infoAtestadoInst: Boolean;
+
+    property infoMesmoMtv: tpSimNao read FInfoMesmoMtv write FInfoMesmoMtv;
+    property tpAcidTransito: tpTpAcidTransito read FtpAcidTransito write FtpAcidTransito;
+    property Observacao: String read FObservacao write FObservacao;
+    property infoAtestado: TinfoAtestado read getInfoAtestado write FinfoAtestado;
+    property infoCessao: TinfoCessao read FinfoCessao write FinfoCessao;
+    property infoMandSind: TinfoMandSind read FinfoMandSind write FinfoMandSind;
+    property perAquis: TperAquis read FperAquis write FperAquis;
+    property infoMandElet: TinfoMandElet read finfoMandElet write finfoMandElet;
   end;
 
   TAltEmpr = class(TObject)
@@ -273,13 +194,6 @@ type
     property altEmpr: TAltEmpr read getAltEmpr write FAltEmpr;
   end;
 
-  TfimAfastamento = class(TObject)
-  private
-    FdtTermAfast : TDateTime;
-  public
-    property dtTermAfast: TDateTime read FdtTermAfast write FdtTermAfast;
-  end;
-
   TinfoRetif = class(TObject)
   private
     ForigRetif: Integer;
@@ -289,6 +203,76 @@ type
     property origRetif: Integer read ForigRetif write ForigRetif;
     property tpProc: tpTpProc read FTpProc write FTpProc;
     property nrProc: String read FnrProc write FnrProc;
+  end;
+
+  TfimAfastamento = class(TObject)
+  private
+    FdtTermAfast : TDateTime;
+  public
+    property dtTermAfast: TDateTime read FdtTermAfast write FdtTermAfast;
+  end;
+
+  TinfoAfastamento = class(TObject)
+  private
+    FiniAfastamento : TiniAfastamento;
+    FaltAfastamento : TaltAfastamento;
+    FinfoRetif: TinfoRetif;
+    FfimAfastamento : TfimAfastamento;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    property iniAfastamento: TiniAfastamento read FiniAfastamento write FiniAfastamento;
+    property altAfastamento: TaltAfastamento read FaltAfastamento write FaltAfastamento;
+    property infoRetif: TinfoRetif read FinfoRetif write FinfoRetif;
+    property fimAfastamento: TfimAfastamento read FfimAfastamento write FfimAfastamento;
+  end;
+
+  TEvtAfastTemp = class(TeSocialEvento)
+  private
+    FIdeEvento : TIdeEvento2;
+    FIdeEmpregador : TIdeEmpregador;
+    FIdeVinculo : TIdeVinculo;
+    FinfoAfastamento : TinfoAfastamento;
+
+    procedure GerarInfoAfastamento(objInfoAfast: TinfoAfastamento);
+    procedure GerarInfoAtestado(objInfoAtestado: TinfoAtestado);
+    procedure GerarInfoCessao(objInfoCessao: TinfoCessao);
+    procedure GerarInfoMandSind(objInfoMandSind: TInfoMandSind);
+    procedure GerarInfoRetif(objInfoRetif: TInfoRetif);
+    procedure GerarFimAfast(objFimAfast: TfimAfastamento);
+  public
+    constructor Create(AACBreSocial: TObject); override;
+    destructor  Destroy; override;
+
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
+    property infoAfastamento: TinfoAfastamento read FinfoAfastamento write FinfoAfastamento;
+  end;
+
+  TS2230CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtAfastTemp: TEvtAfastTemp;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtAfastTemp: TEvtAfastTemp read FEvtAfastTemp write FEvtAfastTemp;
+  end;
+
+  TS2230Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS2230CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2230CollectionItem);
+  public
+    function Add: TS2230CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2230CollectionItem;
+    property Items[Index: Integer]: TS2230CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -519,33 +503,23 @@ begin
 
     Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 0, objInfoAfast.iniAfastamento.observacao);
 
-    if (VersaoDF > ve02_05_00) and (objInfoAfast.iniAfastamento.perAquis.dtInicio > 0) then
+    if (objInfoAfast.iniAfastamento.perAquis.dtInicio > 0) then
     begin
       Gerador.wGrupo('perAquis');
       Gerador.wCampo(tcDat, '', 'dtInicio',  10,  10, 1, objInfoAfast.iniAfastamento.perAquis.dtInicio);
-      
+
       if objInfoAfast.iniAfastamento.perAquis.dtFim > 0 then
         Gerador.wCampo(tcDat, '', 'dtFim',   10,  10, 0, objInfoAfast.iniAfastamento.perAquis.dtFim);
-      
+
       Gerador.wGrupo('/perAquis');
     end;
 
-    if (VersaoDF > ve02_05_00) and (objInfoAfast.iniAfastamento.infoMandElet.cnpjMandElet <> '') then
+    if (objInfoAfast.iniAfastamento.infoMandElet.cnpjMandElet <> '') then
     begin
       Gerador.wGrupo('infoMandElet');
       Gerador.wCampo(tcStr, '', 'cnpjMandElet',  14,  14, 1, objInfoAfast.iniAfastamento.infoMandElet.cnpjMandElet);
       Gerador.wCampo(tcStr, '', 'indRemunCargo',  1,   1, 0, eSSimNaoToStr(objInfoAfast.iniAfastamento.infoMandElet.indRemunCargo));
       Gerador.wGrupo('/infoMandElet');
-    end;
-
-    if (VersaoDF <= ve02_05_00) then
-    begin
-      // Critério de geração: F (Se {codMotAfast} = [01, 03, 35]); N (Nos demais casos)
-      if ((objInfoAfast.iniAfastamento.infoAtestadoInst) and
-          (objInfoAfast.iniAfastamento.codMotAfast in [mtvAcidenteDoencaTrabalho,
-                                                       mtvAcidenteDoencaNaoTrabalho,
-                                                       mtvLicencaMaternidadeAntecipacaoProrrogacao])) then
-        GerarInfoAtestado(objInfoAfast.iniAfastamento.infoAtestado);
     end;
 
     if Assigned(objInfoAfast.iniAfastamento.infoCessao) then
@@ -557,7 +531,6 @@ begin
     Gerador.wGrupo('/iniAfastamento');
   end;
 
-  //    GerarAltAfast(objInfoAfast.altAfastamento);
   GerarInfoRetif(objInfoAfast.FinfoRetif);
 
   if (DateToStr(objInfoAfast.fimAfastamento.dtTermAfast) <> dDataBrancoNula) then
@@ -634,53 +607,12 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAfastTemp');
-
-//    Validar(schevtAfastTemp);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '')
 end;
-(*
-procedure TEvtAfastTemp.GerarAltEmpr(pAltEmpr: TAltEmpr);
-begin
-  //  Não é mais gerado na versão 2.4.01
-  Gerador.wGrupo('altEmpr');
-    Gerador.wCampo(tcStr, '', 'codCID', 0,0,0, pAltEmpr.codCID);
-    Gerador.wCampo(tcInt, '', 'qtdDiasAfast', 0,0,0, pAltEmpr.qtdDiasAfast);
-    Gerador.wCampo(tcStr, '', 'nmEmit', 0,0,0, pAltEmpr.nmEmit);
-    Gerador.wCampo(tcInt, '', 'ideOC', 0,0,0, eSIdeOCToStr(pAltEmpr.ideOC));
-    Gerador.wCampo(tcStr, '', 'nrOc', 0,0,0, pAltEmpr.nrOc);
-    Gerador.wCampo(tcStr, '', 'ufOC', 0,0,0, pAltEmpr.ufOC);
-  Gerador.wGrupo('/altEmpr');
-end;
-*)
-
-(*
-procedure TEvtAfastTemp.GerarAltAfast(objAltAfast: TaltAfastamento);
-begin
-  // Não é mais gerado na versão 2.4.01
-  if (Assigned(objAltAfast)) then
-  begin
-    if objAltAfast.dtAltMot > 0 then
-    begin
-      Gerador.wGrupo('altAfastamento');
-        Gerador.wCampo(tcDat, '', 'dtAltMot', 0,0,0, objAltAfast.dtAltMot);
-        Gerador.wCampo(tcStr, '', 'codMotAnt', 0,0,0, objAltAfast.codMotAnt);
-        Gerador.wCampo(tcStr, '', 'codMotAfast', 0,0,0, objAltAfast.codMotAfast);
-        Gerador.wCampo(tcStr, '', 'infoMesmoMtv', 0,0,0, eSSimNaoToStr(objAltAfast.infoMesmoMtv));
-        Gerador.wCampo(tcStr, '', 'indEfRetroativo', 0,0,0, eSSimNaoToStr(objAltAfast.indEfRetroativo));
-        Gerador.wCampo(tcInt, '', 'origAlt', 0,0,0, eSTpOrigemAltAfastToStr(objAltAfast.origAlt));
-        Gerador.wCampo(tcStr, '', 'nrProcJud', 0,0,0, objAltAfast.nrProcJud);
-        if objAltAfast.altEmprInst then
-          GerarAltEmpr(objAltAfast.altEmpr);
-      Gerador.wGrupo('/altAfastamento');
-    end;
-  end;
-end;
- *)
 
 procedure TEvtAfastTemp.GerarFimAfast(objFimAfast: TfimAfastamento);
 begin

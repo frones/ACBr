@@ -61,32 +61,65 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2245CollectionItem = class;
-  TEvtTreiCap = class;
-  TTreiCap = class;
-  TInfoComplem = class;
-  TIdeProfRespCollection = class;
-  TIdeProfRespCollectionItem = class;
-
-  TS2245Collection = class(TeSocialCollection)
+  TIdeProfRespCollectionItem = class(TObject)
   private
-    function GetItem(Index: Integer): TS2245CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2245CollectionItem);
+    FcpfProf: String;
+    FNmProf: String;
+    FTpProf: tpTpProf;
+    FFormProf: String;
+    FcodCBO: String;
+    FnacProf: tpNacProf;
   public
-    function Add: TS2245CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2245CollectionItem;
-    property Items[Index: Integer]: TS2245CollectionItem read GetItem write SetItem; default;
+    property cpfProf: string read FcpfProf write FcpfProf;
+    property nmProf: string read FNmProf write FNmProf;
+    property tpProf: tpTpProf read FTpProf write FTpProf;
+    property formProf: string read FFormProf write FFormProf;
+    property codCBO: string read FcodCBO write FcodCBO;
+    property nacProf: tpNacProf read FnacProf write FnacProf;
   end;
 
-  TS2245CollectionItem = class(TObject)
+  TIdeProfRespCollection = class(TACBrObjectList)
   private
-    FTipoEvento: TTipoEvento;
-    FEvtTreiCap: TEvtTreiCap;
+    function GetItem(Index: Integer): TIdeProfRespCollectionItem;
+    procedure SetItem(Index: Integer; Value: TIdeProfRespCollectionItem);
   public
-    constructor Create(AOwner: TComponent);
-    destructor  Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtTreiCap: TEvtTreiCap read FEvtTreiCap write FEvtTreiCap;
+    function Add: TIdeProfRespCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdeProfRespCollectionItem;
+    property Items[Index: Integer]: TIdeProfRespCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TInfoComplem = class(TObject)
+  private
+    FdtTreiCap: TDateTime;
+    FdurTreiCap: Double;
+    FModTreiCap: tpModTreiCap;
+    FTpTreiCap: tpTpTreiCap;
+    FindTreinAnt: tpSimNao;
+    FIdeProfResp: TIdeProfRespCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property dtTreiCap: TDateTime read FdtTreiCap write FdtTreiCap;
+    property durTreiCap: Double read FdurTreiCap write FdurTreiCap;
+    property modTreiCap: tpModTreiCap read FModTreiCap write FModTreiCap;
+    property tpTreiCap: tpTpTreiCap read FTpTreiCap write FTpTreiCap;
+    property indTreinAnt: tpSimNao read FindTreinAnt write FindTreinAnt;
+    property ideProfResp: TIdeProfRespCollection read FIdeProfResp write FIdeProfResp;
+  end;
+
+  TTreiCap = class(TObject)
+  private
+    FcodTreiCap: String;
+    FobsTreiCap: String;
+    FInfoComplem: TInfoComplem;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property codTreiCap: String read FcodTreiCap write FcodTreiCap;
+    property obsTreiCap: String read FobsTreiCap write FobsTreiCap;
+    property infoComplem: TInfoComplem read FInfoComplem write FInfoComplem;
   end;
 
   TEvtTreiCap = class(TeSocialEvento)
@@ -113,65 +146,25 @@ type
     property treiCap: TTreiCap read FTreiCap write FTreiCap;
   end;
 
-  TTreiCap = class(TObject)
+  TS2245CollectionItem = class(TObject)
   private
-    FcodTreiCap: String;
-    FobsTreiCap: String;
-    FInfoComplem: TInfoComplem;
+    FTipoEvento: TTipoEvento;
+    FEvtTreiCap: TEvtTreiCap;
   public
-    constructor Create;
-    destructor Destroy; override;
-
-    property codTreiCap: String read FcodTreiCap write FcodTreiCap;
-    property obsTreiCap: String read FobsTreiCap write FobsTreiCap;
-    property infoComplem: TInfoComplem read FInfoComplem write FInfoComplem;
+    constructor Create(AOwner: TComponent);
+    destructor  Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtTreiCap: TEvtTreiCap read FEvtTreiCap write FEvtTreiCap;
   end;
 
-  TInfoComplem = class(TObject)
+  TS2245Collection = class(TeSocialCollection)
   private
-    FdtTreiCap: TDateTime;
-    FdurTreiCap: Double;
-    FModTreiCap: tpModTreiCap;
-    FTpTreiCap: tpTpTreiCap;
-    FindTreinAnt: tpSimNao;
-    FIdeProfResp: TIdeProfRespCollection;
+    function GetItem(Index: Integer): TS2245CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2245CollectionItem);
   public
-    constructor Create;
-    destructor Destroy; override;
-
-    property dtTreiCap: TDateTime read FdtTreiCap write FdtTreiCap;
-    property durTreiCap: Double read FdurTreiCap write FdurTreiCap;
-    property modTreiCap: tpModTreiCap read FModTreiCap write FModTreiCap;
-    property tpTreiCap: tpTpTreiCap read FTpTreiCap write FTpTreiCap;
-    property indTreinAnt: tpSimNao read FindTreinAnt write FindTreinAnt;
-    property ideProfResp: TIdeProfRespCollection read FIdeProfResp write FIdeProfResp;
-  end;
-
-  TIdeProfRespCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TIdeProfRespCollectionItem;
-    procedure SetItem(Index: Integer; Value: TIdeProfRespCollectionItem);
-  public
-    function Add: TIdeProfRespCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TIdeProfRespCollectionItem;
-    property Items[Index: Integer]: TIdeProfRespCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TIdeProfRespCollectionItem = class(TObject)
-  private
-    FcpfProf: String;
-    FNmProf: String;
-    FTpProf: tpTpProf;
-    FFormProf: String;
-    FcodCBO: String;
-    FnacProf: tpNacProf;
-  public
-    property cpfProf: string read FcpfProf write FcpfProf;
-    property nmProf: string read FNmProf write FNmProf;
-    property tpProf: tpTpProf read FTpProf write FTpProf;
-    property formProf: string read FFormProf write FFormProf;
-    property codCBO: string read FcodCBO write FcodCBO;
-    property nacProf: tpNacProf read FnacProf write FnacProf;
+    function Add: TS2245CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2245CollectionItem;
+    property Items[Index: Integer]: TS2245CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -309,9 +302,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTreiCap');
-
-//    Validar(schevtTreiCap);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

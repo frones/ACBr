@@ -58,55 +58,25 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2260CollectionItem = class;
-  TEvtConvInterm = class;
-  TInfoConvInterm = class;
-  Tjornada = class;
-  TlocalTrab = class;
-
-  TS2260Collection = class(TeSocialCollection)
+  Tjornada = class(TObject)
   private
-    function GetItem(Index: Integer): TS2260CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2260CollectionItem);
+    FcodHorContrat: string;
+    FdscJornada: string;
   public
-    function Add: TS2260CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2260CollectionItem;
-    property Items[Index: Integer]: TS2260CollectionItem read GetItem write SetItem; default;
+    property codHorContrat: string read FcodHorContrat write FcodHorContrat;
+    property dscJornada: string read FdscJornada write FdscJornada;
   end;
 
-  TS2260CollectionItem = class(TObject)
+  TlocalTrab = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FEvtConvInterm: TEvtConvInterm;
+    FindLocal: string;
+    FlocalTrabInterm: TBrasil;
   public
-    constructor Create(AOwner: TComponent);
+    constructor Create;
     destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtConvInterm: TEvtConvInterm read FEvtConvInterm write FEvtConvInterm;
-  end;
 
-  TEvtConvInterm = class(TeSocialEvento)
-  private
-    FIdeEvento: TIdeEvento2;
-    FIdeEmpregador: TIdeEmpregador;
-    FIdeVinculo: TIdeVinculo;
-    FInfoConvInterm: TInfoConvInterm;
-
-    procedure GerarInfoConvInterm;
-    procedure Gerarjornada;
-    procedure GerarlocalTrab;
-  public
-    constructor Create(AACBreSocial: TObject); override;
-    destructor  Destroy; override;
-
-    function GerarXML: boolean; override;
-    function LerArqIni(const AIniString: String): Boolean;
-
-    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
-    
-    property InfoConvInterm: TInfoConvInterm read FInfoConvInterm write FInfoConvInterm;
+    property indLocal: string read FindLocal write FindLocal;
+    property localTrabInterm: TBrasil read FlocalTrabInterm write FlocalTrabInterm;
   end;
 
   TInfoConvInterm = class(TObject)
@@ -129,25 +99,49 @@ type
     property localTrab: TlocalTrab read FlocalTrab write FlocalTrab;
   end;
 
-  Tjornada = class(TObject)
+  TEvtConvInterm = class(TeSocialEvento)
   private
-    FcodHorContrat: string;
-    FdscJornada: string;
+    FIdeEvento: TIdeEvento2;
+    FIdeEmpregador: TIdeEmpregador;
+    FIdeVinculo: TIdeVinculo;
+    FInfoConvInterm: TInfoConvInterm;
+
+    procedure GerarInfoConvInterm;
+    procedure Gerarjornada;
+    procedure GerarlocalTrab;
   public
-    property codHorContrat: string read FcodHorContrat write FcodHorContrat;
-    property dscJornada: string read FdscJornada write FdscJornada;
+    constructor Create(AACBreSocial: TObject); override;
+    destructor  Destroy; override;
+
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
+
+    property InfoConvInterm: TInfoConvInterm read FInfoConvInterm write FInfoConvInterm;
   end;
 
-  TlocalTrab = class(TObject)
+  TS2260CollectionItem = class(TObject)
   private
-    FindLocal: string;
-    FlocalTrabInterm: TBrasil;
+    FTipoEvento: TTipoEvento;
+    FEvtConvInterm: TEvtConvInterm;
   public
-    constructor Create;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtConvInterm: TEvtConvInterm read FEvtConvInterm write FEvtConvInterm;
+  end;
 
-    property indLocal: string read FindLocal write FindLocal;
-    property localTrabInterm: TBrasil read FlocalTrabInterm write FlocalTrabInterm;
+  TS2260Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS2260CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2260CollectionItem);
+  public
+    function Add: TS2260CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2260CollectionItem;
+    property Items[Index: Integer]: TS2260CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -280,9 +274,7 @@ begin
   Gerador.wCampo(tcStr, '', 'codConv',     1, 30, 1, self.InfoConvInterm.codConv);
   Gerador.wCampo(tcDat, '', 'dtInicio',   10, 10, 1, self.InfoConvInterm.dtInicio);
   Gerador.wCampo(tcDat, '', 'dtFim',      10, 10, 1, self.InfoConvInterm.dtFim);
-
-  if self.VersaoDF >= ve02_04_02 then
-    Gerador.wCampo(tcDat, '', 'dtPrevPgto', 10, 10, 1, self.InfoConvInterm.dtPrevPgto);
+  Gerador.wCampo(tcDat, '', 'dtPrevPgto', 10, 10, 1, self.InfoConvInterm.dtPrevPgto);
 
   Gerarjornada;
   GerarlocalTrab;
@@ -311,9 +303,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtConvInterm');
-
-//    Validar(schevtConvInterm);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

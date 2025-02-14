@@ -61,65 +61,124 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador, pcnLeitor;
 
 type
-  TS2210CollectionItem = class;
-  TEvtCAT = class;
-  TCat = class;
-  TCatOrigem = class;
-  TAtestado = class;
-  TAgenteCausadorCollection = class;
-  TAgenteCausadorItem = class;
-  TParteAtingidaCollection = class;
-  TParteAtingidaItem = class;
-  TLocalAcidente = class;
-  TideLocalAcid = class;
-
-  TS2210Collection = class(TeSocialCollection)
+  TideLocalAcid = class(TObject)
   private
-    function GetItem(Index: Integer): TS2210CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2210CollectionItem);
+    FtpInsc: tpTpInsc;
+    FnrInsc: string;
   public
-    function Add: TS2210CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2210CollectionItem;
-    property Items[Index: Integer]: TS2210CollectionItem read GetItem write SetItem; default;
+    property tpInsc: tpTpInsc read FtpInsc write FtpInsc;
+    property nrInsc: String read FnrInsc write FnrInsc;
   end;
 
-  TS2210CollectionItem = class(TObject)
+  TLocalAcidente = class
   private
-    FTipoEvento: TTipoEvento;
-    FEvtCAT: TEvtCAT;
+    FtpLocal: tpTpLocal;
+    FdscLocal: String;
+    FcodAmb: String;
+    FtpLograd: String;
+    FdscLograd: String;
+    FnrLograd: String;
+    Fcomplemento: String;
+    Fbairro: String;
+    Fcep: String;
+    FcodMunic: Integer;
+    Fuf: string;
+    FPais: String;
+    FCodPostal: String;
+    FideLocalAcid: TideLocalAcid;
   public
-    constructor Create(AOwner: TComponent);
+    constructor Create;
     destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtCAT: TEvtCAT read FEvtCAT write FEvtCAT;
+
+    property tpLocal: tpTpLocal read FtpLocal write FtpLocal;
+    property dscLocal: string read FdscLocal write FdscLocal;
+    property codAmb: string read FcodAmb write FcodAmb;
+    property tpLograd: string read FtpLograd write FtpLograd;
+    property dscLograd: string read FdscLograd write FdscLograd;
+    property nrLograd: string read FnrLograd write FnrLograd;
+    property complemento: string read Fcomplemento write Fcomplemento;
+    property bairro: string read Fbairro write Fbairro;
+    property cep: string read Fcep write Fcep;
+    property codMunic: Integer read FcodMunic write FcodMunic;
+    property uf: string read Fuf write Fuf;
+    property pais: string read FPais write FPais;
+    property codPostal: string read FCodPostal write FCodPostal;
+    property ideLocalAcid: TideLocalAcid read FideLocalAcid write FideLocalAcid;
   end;
 
-  TEvtCAT = class(TeSocialEvento)
+  TParteAtingidaItem = class(TObject)
   private
-    FIdeEvento: TIdeEvento2;
-    FIdeEmpregador: TIdeEmpregador;
-    FIdeVinculo: TIdeVinculo;
-    FCat: TCat;
-
-    procedure GerarCAT;
-    procedure GerarLocalAcidente;
-    procedure GerarIdeLocalAcid;
-    procedure GerarParteAtingida;
-    procedure GerarAgenteCausador;
-    procedure GerarAtestado;
-    procedure GerarCatOrigem;
+    FcodParteAting: Integer;
+    Flateralidade: tpLateralidade;
   public
-    constructor Create(AACBreSocial: TObject); override;
+    property codParteAting: Integer read FcodParteAting write FcodParteAting;
+    property lateralidade: tpLateralidade read Flateralidade write Flateralidade;
+  end;
+
+  TParteAtingidaCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TParteAtingidaItem;
+    procedure SetItem(Index: Integer; const Value: TParteAtingidaItem);
+  public
+    function Add: TParteAtingidaItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TParteAtingidaItem;
+    property Items[Index: Integer]: TParteAtingidaItem read GetItem write SetItem;
+  end;
+
+  TAgenteCausadorItem = class(TObject)
+  private
+    FcodAgntCausador: Integer;
+  public
+    property codAgntCausador: Integer read FcodAgntCausador write FcodAgntCausador;
+  end;
+
+  TAgenteCausadorCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TAgenteCausadorItem;
+    procedure SetItem(Index: Integer; const Value: TAgenteCausadorItem);
+  public
+    function Add: TAgenteCausadorItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TAgenteCausadorItem;
+    property Items[Index: Integer]: TAgenteCausadorItem read GetItem write SetItem;
+  end;
+
+  TAtestado = class
+  private
+    FcodCNES: String;
+    FdtAtendimento: TDateTime;
+    FhrAtendimento: string;
+    FindInternacao: tpSimNao;
+    FdurTrat: integer;
+    FindAfast: tpSimNao;
+    FdscLesao: integer;
+    FdscCompLesao: string;
+    FdiagProvavel: string;
+    FcodCID: string;
+    Fobservacao: string;
+    FEmitente: TEmitente;
+  public
+    constructor Create;
     destructor Destroy; override;
 
-    function GerarXML: boolean; override;
-    function LerXML : Boolean;
-    function LerArqIni(const AIniString: String): Boolean;
+    property codCNES: String read FcodCNES write FcodCNES;
+    property dtAtendimento: TDateTime read FdtAtendimento write FdtAtendimento;
+    property hrAtendimento: string read FhrAtendimento write FhrAtendimento;
+    property indInternacao: tpSimNao read FindInternacao write FindInternacao;
+    property durTrat: integer read FdurTrat write FdurTrat;
+    property indAfast: tpSimNao read FindAfast write FindAfast;
+    property dscLesao: integer read FdscLesao write FdscLesao;
+    property dscCompLesao: string read FdscCompLesao write FdscCompLesao;
+    property diagProvavel: string read FdiagProvavel write FdiagProvavel;
+    property codCID: string read FcodCID write FcodCID;
+    property observacao: string read Fobservacao write Fobservacao;
+    property emitente: TEmitente read FEmitente write FEmitente;
+  end;
 
-    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
-    property Cat: TCat read FCat write FCat;
+  TCatOrigem = class
+  private
+    FnrRecCatOrig: string;
+  public
+    property nrRecCatOrig: string read FnrRecCatOrig write FnrRecCatOrig;
   end;
 
   TCat = class(TObject)
@@ -166,124 +225,53 @@ type
     property catOrigem: TCatOrigem read FCatOrigem write FCatOrigem;
   end;
 
-  TAtestado = class
+  TEvtCAT = class(TeSocialEvento)
   private
-    FcodCNES: String;
-    FdtAtendimento: TDateTime;
-    FhrAtendimento: string;
-    FindInternacao: tpSimNao;
-    FdurTrat: integer;
-    FindAfast: tpSimNao;
-    FdscLesao: integer;
-    FdscCompLesao: string;
-    FdiagProvavel: string;
-    FcodCID: string;
-    Fobservacao: string;
-    FEmitente: TEmitente;
+    FIdeEvento: TIdeEvento2;
+    FIdeEmpregador: TIdeEmpregador;
+    FIdeVinculo: TIdeVinculo;
+    FCat: TCat;
+
+    procedure GerarCAT;
+    procedure GerarLocalAcidente;
+    procedure GerarIdeLocalAcid;
+    procedure GerarParteAtingida;
+    procedure GerarAgenteCausador;
+    procedure GerarAtestado;
+    procedure GerarCatOrigem;
   public
-    constructor Create;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
-    property codCNES: String read FcodCNES write FcodCNES;
-    property dtAtendimento: TDateTime read FdtAtendimento write FdtAtendimento;
-    property hrAtendimento: string read FhrAtendimento write FhrAtendimento;
-    property indInternacao: tpSimNao read FindInternacao write FindInternacao;
-    property durTrat: integer read FdurTrat write FdurTrat;
-    property indAfast: tpSimNao read FindAfast write FindAfast;
-    property dscLesao: integer read FdscLesao write FdscLesao;
-    property dscCompLesao: string read FdscCompLesao write FdscCompLesao;
-    property diagProvavel: string read FdiagProvavel write FdiagProvavel;
-    property codCID: string read FcodCID write FcodCID;
-    property observacao: string read Fobservacao write Fobservacao;
-    property emitente: TEmitente read FEmitente write FEmitente;
+    function GerarXML: boolean; override;
+    function LerXML : Boolean;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
+    property Cat: TCat read FCat write FCat;
   end;
 
-  TCatOrigem = class
+  TS2210CollectionItem = class(TObject)
   private
-    FnrRecCatOrig: string;
+    FTipoEvento: TTipoEvento;
+    FEvtCAT: TEvtCAT;
   public
-    property nrRecCatOrig: string read FnrRecCatOrig write FnrRecCatOrig;
-  end;
-
-  TAgenteCausadorItem = class(TObject)
-  private
-    FcodAgntCausador: Integer;
-  public
-    property codAgntCausador: Integer read FcodAgntCausador write FcodAgntCausador;
-  end;
-
-  TAgenteCausadorCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TAgenteCausadorItem;
-    procedure SetItem(Index: Integer; const Value: TAgenteCausadorItem);
-  public
-    function Add: TAgenteCausadorItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TAgenteCausadorItem;
-    property Items[Index: Integer]: TAgenteCausadorItem read GetItem write SetItem;
-  end;
-
-  TParteAtingidaItem = class(TObject)
-  private
-    FcodParteAting: Integer;
-    Flateralidade: tpLateralidade;
-  public
-    property codParteAting: Integer read FcodParteAting write FcodParteAting;
-    property lateralidade: tpLateralidade read Flateralidade write Flateralidade;
-  end;
-
-  TParteAtingidaCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TParteAtingidaItem;
-    procedure SetItem(Index: Integer; const Value: TParteAtingidaItem);
-  public
-    function Add: TParteAtingidaItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TParteAtingidaItem;
-    property Items[Index: Integer]: TParteAtingidaItem read GetItem write SetItem;
-  end;
-
-  TideLocalAcid = class(TObject)
-  private
-    FtpInsc: tpTpInsc;
-    FnrInsc: string;
-  public
-    property tpInsc: tpTpInsc read FtpInsc write FtpInsc;
-    property nrInsc: String read FnrInsc write FnrInsc;
-  end;
-
-  TLocalAcidente = class
-  private
-    FtpLocal: tpTpLocal;
-    FdscLocal: String;
-    FcodAmb: String;
-    FtpLograd: String;
-    FdscLograd: String;
-    FnrLograd: String;
-    Fcomplemento: String;
-    Fbairro: String;
-    Fcep: String;
-    FcodMunic: Integer;
-    Fuf: string;
-    FPais: String;
-    FCodPostal: String;
-    FideLocalAcid: TideLocalAcid;
-  public
-    constructor Create;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtCAT: TEvtCAT read FEvtCAT write FEvtCAT;
+  end;
 
-    property tpLocal: tpTpLocal read FtpLocal write FtpLocal;
-    property dscLocal: string read FdscLocal write FdscLocal;
-    property codAmb: string read FcodAmb write FcodAmb;
-    property tpLograd: string read FtpLograd write FtpLograd;
-    property dscLograd: string read FdscLograd write FdscLograd;
-    property nrLograd: string read FnrLograd write FnrLograd;
-    property complemento: string read Fcomplemento write Fcomplemento;
-    property bairro: string read Fbairro write Fbairro;
-    property cep: string read Fcep write Fcep;
-    property codMunic: Integer read FcodMunic write FcodMunic;
-    property uf: string read Fuf write Fuf;
-    property pais: string read FPais write FPais;
-    property codPostal: string read FCodPostal write FCodPostal;
-    property ideLocalAcid: TideLocalAcid read FideLocalAcid write FideLocalAcid;
+  TS2210Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS2210CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2210CollectionItem);
+  public
+    function Add: TS2210CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2210CollectionItem;
+    property Items[Index: Integer]: TS2210CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -443,30 +431,14 @@ begin
 end;
 
 procedure TEvtCAT.GerarAgenteCausador;
-var
-  i: integer;
 begin
-  if (VersaoDF > ve02_05_00) and (Self.Cat.AgenteCausador.Count > 0) then
+  if (Self.Cat.AgenteCausador.Count > 0) then
   begin
     Gerador.wGrupo('agenteCausador');
 
     Gerador.wCampo(tcInt, '', 'codAgntCausador', 1, 9, 1, Self.Cat.AgenteCausador.Items[0].codAgntCausador);
 
     Gerador.wGrupo('/agenteCausador');
-  end
-  else
-  begin
-    for i := 0 to Self.Cat.AgenteCausador.Count - 1 do
-    begin
-      Gerador.wGrupo('agenteCausador');
-
-      Gerador.wCampo(tcInt, '', 'codAgntCausador', 1, 9, 1, Self.Cat.AgenteCausador.Items[i].codAgntCausador);
-
-      Gerador.wGrupo('/agenteCausador');
-    end;
-
-    if Self.Cat.AgenteCausador.Count > 99 then
-      Gerador.wAlerta('', 'agenteCausador', 'Lista de Agentes Causadores', ERR_MSG_MAIOR_MAXIMO + '99');
   end;
 end;
 
@@ -475,9 +447,6 @@ begin
   if Self.Cat.Atestado.dtAtendimento > 0 then
   begin
     Gerador.wGrupo('atestado');
-
-    if VersaoDF <= ve02_05_00 then
-      Gerador.wCampo(tcStr, '', 'codCNES',        1,   7, 0, Self.Cat.Atestado.codCNES);
 
     Gerador.wCampo(tcDat, '', 'dtAtendimento', 10,  10, 1, Self.Cat.Atestado.dtAtendimento);
     Gerador.wCampo(tcStr, '', 'hrAtendimento',  4,   4, 1, Self.Cat.Atestado.hrAtendimento);
@@ -563,10 +532,6 @@ begin
 
   Gerador.wCampo(tcStr, '', 'tpLocal',     1,   1, 1, eSTpLocalToStr(Self.Cat.LocalAcidente.tpLocal));
   Gerador.wCampo(tcStr, '', 'dscLocal',    1,  80, 0, Self.Cat.LocalAcidente.dscLocal);
-
-  if VersaoDF <= ve02_05_00 then
-    Gerador.wCampo(tcStr, '', 'codAmb',      1,  30, 0, Self.Cat.LocalAcidente.codAmb);
-
   Gerador.wCampo(tcStr, '', 'tpLograd',    1,   4, 0, Self.Cat.LocalAcidente.tpLograd);
   Gerador.wCampo(tcStr, '', 'dscLograd',   1, 100, 0, Self.Cat.LocalAcidente.dscLograd);
   Gerador.wCampo(tcStr, '', 'nrLograd',    1,  10, 0, Self.Cat.LocalAcidente.nrLograd);

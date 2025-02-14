@@ -58,33 +58,63 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2306CollectionItem = class;
-  TEvtTSVAltContr = class;
-  TinfoTSVAlteracao = class;
-  TinfoComplementares = class;
-  TinfoMandElet = class;
-  TinfoDirSind = class;
-  TinfoTrabCedido = class;
-  
-  TS2306Collection = class(TeSocialCollection)
+  TinfoMandElet = class(TObject)
   private
-    function GetItem(Index: Integer): TS2306CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2306CollectionItem);
+    FindRemunCargo: tpSimNaoFacultativo;
+    FtpRegPrev: tpTpRegPrev;
   public
-    function Add: TS2306CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2306CollectionItem;
-    property Items[Index: Integer]: TS2306CollectionItem read GetItem write SetItem; default;
+    property indRemunCargo: tpSimNaoFacultativo read FindRemunCargo write FindRemunCargo;
+    property tpRegPrev: tpTpRegPrev read FtpRegPrev write FtpRegPrev;
   end;
 
-  TS2306CollectionItem = class(TObject)
+  TinfoDirSind = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FEvtTSVAltContr: TEvtTSVAltContr;
+   FtpRegPrev : tpTpRegPrevFacultativo;
   public
-    constructor Create(AOwner: TComponent);
+   property tpRegPrev: tpTpRegPrevFacultativo read FtpRegPrev write FtpRegPrev;
+  end;
+
+  TinfoTrabCedido = class(TObject)
+  private
+    FTpRegPrev: tpTpRegPrevFacultativo;
+  public
+    property tpRegPrev: tpTpRegPrevFacultativo read FTpRegPrev write FTpRegPrev;
+  end;
+
+  TinfoComplementares = class(TObject)
+  private
+    FcargoFuncao : TcargoFuncao;
+    FRemuneracao : TRemuneracao;
+    FinfoEstagiario : TinfoEstagiario;
+    FinfoMandElet : TinfoMandElet;
+    FinfoDirSind : TinfoDirSind;
+    FinfoTrabCedido : TinfoTrabCedido;
+    FlocalTrabGeral: TLocalTrabGeral;
+  public
+    constructor Create;
     destructor  Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtTSVAltContr: TEvtTSVAltContr read FEvtTSVAltContr write FEvtTSVAltContr;
+
+    property cargoFuncao : TcargoFuncao read FcargoFuncao write FcargoFuncao;
+    property Remuneracao : TRemuneracao read FRemuneracao write FRemuneracao;
+    property infoEstagiario : TinfoEstagiario read FinfoEstagiario write FinfoEstagiario;
+    property infoMandElet : TinfoMandElet read FinfoMandElet write FinfoMandElet;
+    property infoDirigenteSindical : TinfoDirSind read FinfoDirSind write FinfoDirSind;
+    property infoTrabCedido : TinfoTrabCedido read FinfoTrabCedido write FinfoTrabCedido;
+    property localTrabGeral: TLocalTrabGeral read FLocalTrabGeral write FLocalTrabGeral;
+  end;
+
+  TinfoTSVAlteracao = class(TObject)
+  private
+    FdtAlteracao : TDateTime;
+    FnatAtividade: tpNatAtividade;
+    FinfoComplementares : TinfoComplementares;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    property dtAlteracao : TDateTime read FdtAlteracao write FdtAlteracao;
+    property natAtividade : tpNatAtividade read FnatAtividade write FnatAtividade;
+    property infoComplementares : TinfoComplementares read FinfoComplementares write FinfoComplementares;
   end;
 
   TEvtTSVAltContr = class(TeSocialEvento)
@@ -119,65 +149,27 @@ type
     property infoTSVAlteracao : TinfoTSVAlteracao read FinfoTSVAlteracao write FinfoTSVAlteracao;
   end;
 
-  TinfoTSVAlteracao = class(TObject)
+  TS2306CollectionItem = class(TObject)
   private
-    FdtAlteracao : TDateTime;
-    FnatAtividade: tpNatAtividade;
-    FinfoComplementares : TinfoComplementares;
+    FTipoEvento: TTipoEvento;
+    FEvtTSVAltContr: TEvtTSVAltContr;
   public
-    constructor Create;
+    constructor Create(AOwner: TComponent);
     destructor  Destroy; override;
-
-    property dtAlteracao : TDateTime read FdtAlteracao write FdtAlteracao;
-    property natAtividade : tpNatAtividade read FnatAtividade write FnatAtividade;
-    property infoComplementares : TinfoComplementares read FinfoComplementares write FinfoComplementares;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtTSVAltContr: TEvtTSVAltContr read FEvtTSVAltContr write FEvtTSVAltContr;
   end;
 
-  TinfoComplementares = class(TObject)
+  TS2306Collection = class(TeSocialCollection)
   private
-    FcargoFuncao : TcargoFuncao;
-    FRemuneracao : TRemuneracao;
-    FinfoEstagiario : TinfoEstagiario;
-    FinfoMandElet : TinfoMandElet;
-    FinfoDirSind : TinfoDirSind;
-    FinfoTrabCedido : TinfoTrabCedido;
-    FlocalTrabGeral: TLocalTrabGeral;
+    function GetItem(Index: Integer): TS2306CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2306CollectionItem);
   public
-    constructor Create;
-    destructor  Destroy; override;
-
-    property cargoFuncao : TcargoFuncao read FcargoFuncao write FcargoFuncao;
-    property Remuneracao : TRemuneracao read FRemuneracao write FRemuneracao;
-    property infoEstagiario : TinfoEstagiario read FinfoEstagiario write FinfoEstagiario;
-    property infoMandElet : TinfoMandElet read FinfoMandElet write FinfoMandElet;
-    property infoDirigenteSindical : TinfoDirSind read FinfoDirSind write FinfoDirSind;
-    property infoTrabCedido : TinfoTrabCedido read FinfoTrabCedido write FinfoTrabCedido;
-    property localTrabGeral: TLocalTrabGeral read FLocalTrabGeral write FLocalTrabGeral;
+    function Add: TS2306CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2306CollectionItem;
+    property Items[Index: Integer]: TS2306CollectionItem read GetItem write SetItem; default;
   end;
 
-  TinfoMandElet = class(TObject)
-  private
-    FindRemunCargo: tpSimNaoFacultativo;
-    FtpRegPrev: tpTpRegPrev;
-  public
-    property indRemunCargo: tpSimNaoFacultativo read FindRemunCargo write FindRemunCargo;
-    property tpRegPrev: tpTpRegPrev read FtpRegPrev write FtpRegPrev;
-  end;
-  
-  TinfoDirSind = class(TObject)
-  private
-   FtpRegPrev : tpTpRegPrevFacultativo;
-  public
-   property tpRegPrev: tpTpRegPrevFacultativo read FtpRegPrev write FtpRegPrev;
-  end;
-  
-  TinfoTrabCedido = class(TObject)
-  private
-    FTpRegPrev: tpTpRegPrevFacultativo;
-  public
-    property tpRegPrev: tpTpRegPrevFacultativo read FTpRegPrev write FTpRegPrev;
-  end;
-  
 implementation
 
 uses
@@ -300,17 +292,6 @@ begin
 
     Gerador.wCampo(tcStr, '', 'cnpjAgntInteg', 14,  14, 1, obj.cnpjAgntInteg);
 
-    if (VersaoDF <= ve02_05_00) then
-    begin
-      Gerador.wCampo(tcStr, '', 'nmRazao',        1, 100, 1, obj.nmRazao);
-      Gerador.wCampo(tcStr, '', 'dscLograd',      1,  80, 1, obj.dscLograd);
-      Gerador.wCampo(tcStr, '', 'nrLograd',       1,  10, 1, obj.nrLograd);
-      Gerador.wCampo(tcStr, '', 'bairro',         1,  60, 0, obj.bairro);
-      Gerador.wCampo(tcStr, '', 'cep',            1,   8, 1, obj.cep);
-      Gerador.wCampo(tcStr, '', 'codMunic',       7,   7, 0, obj.codMunic);
-      Gerador.wCampo(tcStr, '', 'uf',             2,   2, 1, obj.uf);
-    end;
-
     Gerador.wGrupo('/ageIntegracao');
   end;
 end;
@@ -326,19 +307,11 @@ begin
   begin
     Gerador.wGrupo('cargoFuncao');
 
-    if VersaoDF <= ve02_05_00 then
-    begin
-      Gerador.wCampo(tcStr, '', 'codCargo',  1, 30, 1, obj.codCargo);
-      Gerador.wCampo(tcStr, '', 'codFuncao', 1, 30, 0, obj.codFuncao);
-    end
-    else
-    begin
-      Gerador.wCampo(tcStr, '', 'nmCargo',     0, 100, 0, obj.nmCargo);
-      Gerador.wCampo(tcStr, '', 'CBOCargo',    0,   6, 0, obj.CBOCargo);
-      Gerador.wCampo(tcStr, '', 'nmFuncao',    0, 100, 0, obj.nmFuncao);
-      Gerador.wCampo(tcStr, '', 'CBOFuncao',   0,   6, 0, obj.CBOFuncao);
-    end;
-    
+    Gerador.wCampo(tcStr, '', 'nmCargo',     0, 100, 0, obj.nmCargo);
+    Gerador.wCampo(tcStr, '', 'CBOCargo',    0,   6, 0, obj.CBOCargo);
+    Gerador.wCampo(tcStr, '', 'nmFuncao',    0, 100, 0, obj.nmFuncao);
+    Gerador.wCampo(tcStr, '', 'CBOFuncao',   0,   6, 0, obj.CBOFuncao);
+
     Gerador.wGrupo('/cargoFuncao');
   end;
 end;
@@ -349,13 +322,10 @@ begin
 
   Gerador.wCampo(tcStr, '', 'cpfTrab',    11, 11, 1, obj.cpfTrab);
   
-  if VersaoDF <= ve02_05_00 then
-    Gerador.wCampo(tcStr, '', 'nisTrab',   1, 11, 0, obj.nisTrab)
-  else
-    Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 0, obj.matricula);
-  
-  if (VersaoDF <= ve02_05_00) or (obj.matricula = '') then
-      Gerador.wCampo(tcStr, '', 'codCateg',    1,  3, 1, obj.codCateg);
+  Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 0, obj.matricula);
+
+  if (obj.matricula = '') then
+    Gerador.wCampo(tcStr, '', 'codCateg',    1,  3, 1, obj.codCateg);
 
   Gerador.wGrupo('/ideTrabSemVinculo');
 end;
@@ -377,17 +347,11 @@ begin
     GerarcargoFuncao(obj.cargoFuncao);
     GerarRemuneracao(obj.Remuneracao);
     
-    if VersaoDF > ve02_05_00 then
-    begin
-      GerarInfoMandElet(obj.infoMandElet);
-      GerarinfoDirigenteSindical(obj.infoDirigenteSindical);
-      GerarinfoTrabCedido(obj.infoTrabCedido);
-    end;
-    
+    GerarInfoMandElet(obj.infoMandElet);
+    GerarinfoDirigenteSindical(obj.infoDirigenteSindical);
+    GerarinfoTrabCedido(obj.infoTrabCedido);
     GerarinfoEstagiario(obj.infoEstagiario);
-
-    if VersaoDF >= veS01_02_00 then
-      GerarLocalTrabGeral(obj.localTrabGeral);
+    GerarLocalTrabGeral(obj.localTrabGeral);
 
     Gerador.wGrupo('/infoComplementares');
   end;
@@ -403,10 +367,6 @@ begin
     Gerador.wCampo(tcStr, '', 'nivEstagio',   1,  1, 1, eStpNivelEstagioToStr(obj.nivEstagio));
     Gerador.wCampo(tcStr, '', 'areaAtuacao',  1, 50, 0, obj.areaAtuacao);
     Gerador.wCampo(tcStr, '', 'nrApol',       1, 30, 0, obj.nrApol);
-
-    if VersaoDF <= ve02_05_00 then
-      Gerador.wCampo(tcDe2, '', 'vlrBolsa',     1, 14, 0, obj.vlrBolsa);
-
     Gerador.wCampo(tcDat, '', 'dtPrevTerm',  10, 10, 1, obj.dtPrevTerm);
 
     GerarInstEnsino(obj.instEnsino);
@@ -446,7 +406,7 @@ begin
 
   Gerador.wCampo(tcStr, '', 'cnpjInstEnsino', 14,  14, 0, obj.cnpjInstEnsino);
 
-  if (obj.cnpjInstEnsino = '') or (VersaoDF <= ve02_05_00) then   // Preenchendo somente se não tiver CNPJ
+  if (obj.cnpjInstEnsino = '') then   // Preenchendo somente se não tiver CNPJ
   begin
     Gerador.wCampo(tcStr, '', 'nmRazao',         1, 100, 1, obj.nmRazao);
     Gerador.wCampo(tcStr, '', 'dscLograd',       1,  80, 0, obj.dscLograd);
@@ -519,9 +479,6 @@ begin
 
     Gerador.wCampo(tcStr, '', 'cpfSupervisor', 11, 11, 1, obj.cpfSupervisor);
 
-    if VersaoDF <= ve02_05_00 then
-      Gerador.wCampo(tcStr, '', 'nmSuperv',      1,  70, 1, obj.nmSuperv);
-
     Gerador.wGrupo('/supervisorEstagio');
   end;
 end;
@@ -547,9 +504,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTSVAltContr');
-
-//    Validar(schevtTSVAltContr);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

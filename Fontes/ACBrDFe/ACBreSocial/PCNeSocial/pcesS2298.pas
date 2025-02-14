@@ -58,30 +58,21 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2298Collection = class;
-  TS2298CollectionItem = class;
-  TEvtReintegr = class;
-  TInfoReintegr = class;
-
-  TS2298Collection = class(TeSocialCollection)
+  TInfoReintegr = class
   private
-    function GetItem(Index: Integer): TS2298CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2298CollectionItem);
+     FtpReint: tpTpReint;
+     FnrProcJud: string;
+     FnrLeiAnistia: string;
+     FdtEfetRetorno: TDateTime;
+     FdtEfeito: TDateTime;
+     FindPagtoJuizo: tpSimNao;
   public
-    function Add: TS2298CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2298CollectionItem;
-    property Items[Index: Integer]: TS2298CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS2298CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtReintegr: TEvtReintegr;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor  Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtReintegr: TEvtReintegr read FEvtReintegr write FEvtReintegr;
+    property tpReint: tpTpReint read FtpReint write FtpReint;
+    property nrProcJud: string read FnrProcJud write FnrProcJud;
+    property nrLeiAnistia: string read FnrLeiAnistia write FnrLeiAnistia;
+    property dtEfetRetorno: TDateTime read FdtEfetRetorno write FdtEfetRetorno;
+    property dtEfeito: TDateTime read FdtEfeito write FdtEfeito;
+    property indPagtoJuizo: tpSimNao read FindPagtoJuizo write FindPagtoJuizo;
   end;
 
   TEvtReintegr = class(TeSocialEvento)
@@ -105,21 +96,25 @@ type
     property InfoReintegr: TInfoReintegr read FInfoReintegr write FInfoReintegr;
   end;
 
-  TInfoReintegr = class
+  TS2298CollectionItem = class(TObject)
   private
-     FtpReint: tpTpReint;
-     FnrProcJud: string;
-     FnrLeiAnistia: string;
-     FdtEfetRetorno: TDateTime;
-     FdtEfeito: TDateTime;
-     FindPagtoJuizo: tpSimNao;
+    FTipoEvento: TTipoEvento;
+    FEvtReintegr: TEvtReintegr;
   public
-    property tpReint: tpTpReint read FtpReint write FtpReint;
-    property nrProcJud: string read FnrProcJud write FnrProcJud;
-    property nrLeiAnistia: string read FnrLeiAnistia write FnrLeiAnistia;
-    property dtEfetRetorno: TDateTime read FdtEfetRetorno write FdtEfetRetorno;
-    property dtEfeito: TDateTime read FdtEfeito write FdtEfeito;
-    property indPagtoJuizo: tpSimNao read FindPagtoJuizo write FindPagtoJuizo;
+    constructor Create(AOwner: TComponent);
+    destructor  Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtReintegr: TEvtReintegr read FEvtReintegr write FEvtReintegr;
+  end;
+
+  TS2298Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS2298CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2298CollectionItem);
+  public
+    function Add: TS2298CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2298CollectionItem;
+    property Items[Index: Integer]: TS2298CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -204,8 +199,6 @@ begin
 
   Gerador.wCampo(tcDat, '', 'dtEfetRetorno', 10, 10, 1, self.InfoReintegr.dtEfetRetorno);
   Gerador.wCampo(tcDat, '', 'dtEfeito',      10, 10, 1, self.InfoReintegr.dtEfeito);
-  if VersaoDF <= ve02_05_00 then
-    Gerador.wCampo(tcStr, '', 'indPagtoJuizo',  1,  1, 1, eSSimNaoToStr(self.InfoReintegr.indPagtoJuizo));
 
   Gerador.wGrupo('/infoReintegr');
 end;
@@ -231,9 +224,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtReintegr');
-
-//    Validar(schevtReintegr);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

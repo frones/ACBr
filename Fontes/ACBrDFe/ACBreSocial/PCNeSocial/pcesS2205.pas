@@ -58,30 +58,6 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2205CollectionItem = class;
-  TEvtAltCadastral = class;
-
-  TS2205Collection = class(TeSocialCollection)
-  private
-    function GetItem(Index: Integer): TS2205CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2205CollectionItem);
-  public
-    function Add: TS2205CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2205CollectionItem;
-    property Items[Index: Integer]: TS2205CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS2205CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtAltCadastral: TEvtAltCadastral;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtAltCadastral: TEvtAltCadastral read FEvtAltCadastral write FEvtAltCadastral;
-  end;
-
   TEvtAltCadastral = class(TeSocialEvento)
   private
     FdtAlteracao: TDateTime;
@@ -107,6 +83,27 @@ type
     property trabalhador: TTrabalhador read FTrabalhador write FTrabalhador;
     property vinculo: TVinculo read FVinculo write FVinculo;
     property ideTrabalhador: TideTrabalhador read FIdeTrabalhador write FIdeTrabalhador;
+  end;
+
+  TS2205CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtAltCadastral: TEvtAltCadastral;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtAltCadastral: TEvtAltCadastral read FEvtAltCadastral write FEvtAltCadastral;
+  end;
+
+  TS2205Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS2205CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2205CollectionItem);
+  public
+    function Add: TS2205CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2205CollectionItem;
+    property Items[Index: Integer]: TS2205CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation

@@ -52,6 +52,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2025
+-- Diversos --
+[*] Remoção de código que eram usados por versões antigas, ou seja, antes das
+    versões Simplificadas.
+    Remoção realizada nos eventos não periódicos (2190 até 2399).
+Por: Italo Giurizzato Junior
+
 12/02/2025
 -- Diversos --
 [*] #TK-TK-6608 - Restaurada geração do grupo infoComplCont no S1200

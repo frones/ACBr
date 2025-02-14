@@ -58,50 +58,6 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2190CollectionItem = class;
-  TEvtAdmPrelim = class;
-  TInfoRegPrelim = class;
-
-  TS2190Collection = class(TeSocialCollection)
-  private
-    function GetItem(Index: Integer): TS2190CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2190CollectionItem);
-  public
-    function Add: TS2190CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2190CollectionItem;
-    property Items[Index: Integer]: TS2190CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS2190CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtAdmPrelim: TEvtAdmPrelim;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtAdmPrelim: TEvtAdmPrelim read FEvtAdmPrelim write  FEvtAdmPrelim;
-  end;
-
-  TEvtAdmPrelim = class(TeSocialEvento)
-  private
-    FIdeEvento: TIdeEvento2;
-    FIdeEmpregador: TIdeEmpregador;
-    FInfoRegPrelim: TInfoRegPrelim;
-
-    procedure GerarInfoRegPrelim;
-  public
-    constructor Create(AACBreSocial: TObject); override;
-    destructor Destroy; override;
-
-    function GerarXML: boolean; override;
-    function LerArqIni(const AIniString: String): Boolean;
-
-    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property InfoRegPrelim: TInfoRegPrelim read FInfoRegPrelim write FInfoRegPrelim;
-  end;
-  
   TInfoRegPrelim = class(TObject)
   private
     FcpfTrab: string;
@@ -122,6 +78,46 @@ type
     property codCateg: Integer read FcodCateg write FcodCateg;
     property natAtividade: tpNatAtividade read FnatAtividade write FnatAtividade;
     property infoRegCTPS: TinfoRegCTPS read FinfoRegCTPS write FinfoRegCTPS;
+  end;
+
+  TEvtAdmPrelim = class(TeSocialEvento)
+  private
+    FIdeEvento: TIdeEvento2;
+    FIdeEmpregador: TIdeEmpregador;
+    FInfoRegPrelim: TInfoRegPrelim;
+
+    procedure GerarInfoRegPrelim;
+  public
+    constructor Create(AACBreSocial: TObject); override;
+    destructor Destroy; override;
+
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property InfoRegPrelim: TInfoRegPrelim read FInfoRegPrelim write FInfoRegPrelim;
+  end;
+
+  TS2190CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtAdmPrelim: TEvtAdmPrelim;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtAdmPrelim: TEvtAdmPrelim read FEvtAdmPrelim write  FEvtAdmPrelim;
+  end;
+
+  TS2190Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS2190CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2190CollectionItem);
+  public
+    function Add: TS2190CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2190CollectionItem;
+    property Items[Index: Integer]: TS2190CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -216,28 +212,25 @@ begin
   Gerador.wCampo(tcDat, '', 'dtNascto', 10, 10, 1, infoRegPrelim.dtNascto);
   Gerador.wCampo(tcDat, '', 'dtAdm',    10, 10, 1, infoRegPrelim.dtAdm);
 
-  if VersaoDF > ve02_05_00 then
+  Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 1, infoRegPrelim.matricula);
+  Gerador.wCampo(tcInt, '', 'codCateg',  1,  3, 1, infoRegPrelim.codCateg);
+
+  if infoRegPrelim.natAtividade <> navNaoInformar then
+   Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 1, eSNatAtividadeToStr(infoRegPrelim.natAtividade));
+
+  if infoRegPrelim.infoRegCTPS.CBOCargo <> '' then
   begin
-    Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 1, infoRegPrelim.matricula);
-    Gerador.wCampo(tcInt, '', 'codCateg',  1,  3, 1, infoRegPrelim.codCateg);
+    Gerador.wGrupo('infoRegCTPS');
 
-    if infoRegPrelim.natAtividade <> navNaoInformar then
-     Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 1, eSNatAtividadeToStr(infoRegPrelim.natAtividade));
+    Gerador.wCampo(tcStr, '', 'CBOCargo',   6,  6, 1, infoRegPrelim.infoRegCTPS.CBOCargo);
+    Gerador.wCampo(tcDe2, '', 'vrSalFx',    1, 14, 1, infoRegPrelim.infoRegCTPS.VrSalFx);
+    Gerador.wCampo(tcStr, '', 'undSalFixo', 1,  1, 1, eSUndSalFixoToStr(infoRegPrelim.infoRegCTPS.UndSalFixo));
+    Gerador.wCampo(tcStr, '', 'tpContr',    1,  1, 1, eSTpContrToStr(infoRegPrelim.infoRegCTPS.tpContr));
 
-    if infoRegPrelim.infoRegCTPS.CBOCargo <> '' then
-    begin
-      Gerador.wGrupo('infoRegCTPS');
+    if infoRegPrelim.infoRegCTPS.dtTerm <> 0 then
+      Gerador.wCampo(tcDat, '', 'dtTerm',    10, 10, 0, infoRegPrelim.infoRegCTPS.dtTerm);
 
-      Gerador.wCampo(tcStr, '', 'CBOCargo',   6,  6, 1, infoRegPrelim.infoRegCTPS.CBOCargo);
-      Gerador.wCampo(tcDe2, '', 'vrSalFx',    1, 14, 1, infoRegPrelim.infoRegCTPS.VrSalFx);
-      Gerador.wCampo(tcStr, '', 'undSalFixo', 1,  1, 1, eSUndSalFixoToStr(infoRegPrelim.infoRegCTPS.UndSalFixo));
-      Gerador.wCampo(tcStr, '', 'tpContr',    1,  1, 1, eSTpContrToStr(infoRegPrelim.infoRegCTPS.tpContr));
-
-      if infoRegPrelim.infoRegCTPS.dtTerm <> 0 then
-        Gerador.wCampo(tcDat, '', 'dtTerm',    10, 10, 0, infoRegPrelim.infoRegCTPS.dtTerm);
-    
-      Gerador.wGrupo('/infoRegCTPS');
-    end;
+    Gerador.wGrupo('/infoRegCTPS');
   end;
 
   Gerador.wGrupo('/infoRegPrelim');
@@ -254,11 +247,7 @@ begin
     GerarCabecalho('evtAdmPrelim');
     Gerador.wGrupo('evtAdmPrelim Id="' + Self.Id + '"');
 
-    if VersaoDF > ve02_05_00 then
-      GerarIdeEvento2(self.IdeEvento)
-    else
-      GerarIdeEvento(self.IdeEvento);
-      
+    GerarIdeEvento2(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);
     GerarInfoRegPrelim;
 
@@ -267,9 +256,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAdmPrelim');
-
-//    Validar(schevtAdmPrelim);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

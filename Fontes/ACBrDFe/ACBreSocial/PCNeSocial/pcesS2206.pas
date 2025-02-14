@@ -58,63 +58,6 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-
-  TS2206CollectionItem = class;
-  TEvtAltContratual = class;
-  TAltContratual = class;
-  TServPubl = class;
-  TInfoContratoS2206 = class;
-
-  TS2206Collection = class(TeSocialCollection)
-  private
-    function GetItem(Index: Integer): TS2206CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2206CollectionItem);
-  public
-    function Add: TS2206CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2206CollectionItem;
-    property Items[Index: Integer]: TS2206CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS2206CollectionItem = class(TObject)
-  private
-    FTipoEvento : TTipoEvento;
-    FEvtAltContratual: TEvtAltContratual;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor  Destroy; override;
-    property TipoEvento : TTipoEvento read FTipoEvento;
-    property EvtAltContratual : TEvtAltContratual read FEvtAltContratual write FEvtAltContratual;
-  end;
-
-  TEvtAltContratual = class(TeSocialEvento)
-  private
-    FIdeEvento: TIdeEvento2;
-    FIdeEmpregador: TIdeEmpregador;
-    FIdeVinculo : TIdeVinculo;
-    FAltContratual: TAltContratual;
-
-    {Geradores da Classe - Necessários pois os geradores de ACBreSocialGerador
-     possuem campos excedentes que não se aplicam ao S2206}
-    procedure GerarAltContratual(objAltContratual: TAltContratual);
-    procedure GerarInfoCeletista(objInfoCeletista : TInfoCeletista);
-    procedure GerarInfoEstatutario(pInfoEstatutario: TInfoEstatutario);
-    procedure GerarInfoContrato(ObjInfoContrato: TInfoContrato; pTipo: Integer; pInfoCeletista: TInfoCeletista);
-    procedure GerarTrabTemp(pTrabTemp: TTrabTemporario);
-    procedure GerarServPubl(pServPubl: TServPubl);
-    function  GetAltContratual : TAltContratual;
-  public
-    constructor Create(AACBreSocial: TObject); override;
-    destructor Destroy; override;
-
-    function GerarXML: boolean; override;
-    function LerArqIni(const AIniString: String): Boolean;
-
-    property IdeEvento : TIdeEvento2 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property IdeVinculo : TIdeVinculo read FIdeVinculo write FIdeVInculo;
-    property AltContratual : TAltContratual read GetAltContratual write FAltContratual;
-  end;
-
   TServPubl = class(TObject)
   private
     FMtvAlter: tpMtvAlt;
@@ -151,6 +94,56 @@ type
     property Vinculo : TVInculo read FVinculo write FVinculo;
     property infoRegimeTrab : TinfoRegimeTrab read FinfoRegimeTrab write FinfoRegimeTrab;
     property infoContrato : TInfoContratoS2206 read FinfoContrato write FinfoContrato;
+  end;
+
+  TEvtAltContratual = class(TeSocialEvento)
+  private
+    FIdeEvento: TIdeEvento2;
+    FIdeEmpregador: TIdeEmpregador;
+    FIdeVinculo : TIdeVinculo;
+    FAltContratual: TAltContratual;
+
+    {Geradores da Classe - Necessários pois os geradores de ACBreSocialGerador
+     possuem campos excedentes que não se aplicam ao S2206}
+    procedure GerarAltContratual(objAltContratual: TAltContratual);
+    procedure GerarInfoCeletista(objInfoCeletista : TInfoCeletista);
+    procedure GerarInfoEstatutario(pInfoEstatutario: TInfoEstatutario);
+    procedure GerarInfoContrato(ObjInfoContrato: TInfoContrato; pTipo: Integer; pInfoCeletista: TInfoCeletista);
+    procedure GerarTrabTemp(pTrabTemp: TTrabTemporario);
+//    procedure GerarServPubl(pServPubl: TServPubl);
+    function  GetAltContratual : TAltContratual;
+  public
+    constructor Create(AACBreSocial: TObject); override;
+    destructor Destroy; override;
+
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property IdeEvento : TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeVinculo : TIdeVinculo read FIdeVinculo write FIdeVInculo;
+    property AltContratual : TAltContratual read GetAltContratual write FAltContratual;
+  end;
+
+  TS2206CollectionItem = class(TObject)
+  private
+    FTipoEvento : TTipoEvento;
+    FEvtAltContratual: TEvtAltContratual;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor  Destroy; override;
+    property TipoEvento : TTipoEvento read FTipoEvento;
+    property EvtAltContratual : TEvtAltContratual read FEvtAltContratual write FEvtAltContratual;
+  end;
+
+  TS2206Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS2206CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2206CollectionItem);
+  public
+    function Add: TS2206CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2206CollectionItem;
+    property Items[Index: Integer]: TS2206CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -277,14 +270,11 @@ begin
 
   Gerador.wCampo(tcInt, '', 'tpPlanRP', 1, 1, 1, eSTpPlanRPToStr(pInfoEstatutario.tpPlanRP));
 
-  if VersaoDF > ve02_05_00 then
-  begin
-    if pInfoEstatutario.indTetoRGPS <> snfNada then
-      Gerador.wCampo(tcStr, '', 'indTetoRGPS', 0, 1, 0,  eSSimNaoFacultativoToStr(pInfoEstatutario.indTetoRGPS));
+  if pInfoEstatutario.indTetoRGPS <> snfNada then
+    Gerador.wCampo(tcStr, '', 'indTetoRGPS', 0, 1, 0,  eSSimNaoFacultativoToStr(pInfoEstatutario.indTetoRGPS));
 
-    if pInfoEstatutario.indAbonoPerm <> snfNada then
-      Gerador.wCampo(tcStr, '', 'indAbonoPerm', 0, 1, 0,  eSSimNaoFacultativoToStr(pInfoEstatutario.indAbonoPerm));
-  end;
+  if pInfoEstatutario.indAbonoPerm <> snfNada then
+    Gerador.wCampo(tcStr, '', 'indAbonoPerm', 0, 1, 0,  eSSimNaoFacultativoToStr(pInfoEstatutario.indAbonoPerm));
 
   Gerador.wGrupo('/infoEstatutario');
 end;
@@ -297,14 +287,9 @@ begin
   Gerador.wCampo(tcDat, '', 'dtEf',        10,  10, 0, objAltContratual.dtEf);
   Gerador.wCampo(tcStr, '', 'dscAlt',       1, 150, 0, objAltContratual.dscAlt);
 
-  if VersaoDF <= ve02_05_00 then
-    GerarVinculo(objAltContratual.Vinculo, 3)
-  else
-  begin
-    Gerador.wGrupo('vinculo');
+  Gerador.wGrupo('vinculo');
 
-    Gerador.wCampo(tcStr, '', 'tpRegPrev', 1, 1, 1, eSTpRegPrevToStr(objAltContratual.vinculo.tpRegPrev));
-  end;
+  Gerador.wCampo(tcStr, '', 'tpRegPrev', 1, 1, 1, eSTpRegPrevToStr(objAltContratual.vinculo.tpRegPrev));
 
   if ((objAltContratual.Vinculo.tpRegPrev = rpRPPS) or
       (objAltContratual.Vinculo.tpRegTrab <> trEstatutario)) then
@@ -321,8 +306,7 @@ begin
  
   GerarInfoContrato(objAltContratual.Vinculo.InfoContrato, 3, objAltContratual.Vinculo.infoRegimeTrab.InfoCeletista);
 
-  if VersaoDF > ve02_05_00 then
-    Gerador.wGrupo('/vinculo');
+  Gerador.wGrupo('/vinculo');
   
   Gerador.wGrupo('/altContratual');
 end;
@@ -357,41 +341,19 @@ begin
   Gerador.wGrupo('/infoCeletista');
 end;
 
-procedure TEvtAltContratual.GerarServPubl(pServPubl: TServPubl);
-begin
-  Gerador.wGrupo('servPubl');
-
-  Gerador.wCampo(tcInt, '', 'mtvAlter', 1, 1, 1, eSTpMtvAltToStr(pServPubl.mtvAlter));
-
-  Gerador.wGrupo('/servPubl');
-end;
-
 procedure TEvtAltContratual.GerarInfoContrato(ObjInfoContrato: TInfoContrato; pTipo: Integer; pInfoCeletista: TInfoCeletista);
 begin
   Gerador.wGrupo('infoContrato');
 
-  if VersaoDF <= ve02_05_00 then
-  begin
-    Gerador.wCampo(tcStr, '', 'codCargo',     1, 30, 0, objInfoContrato.CodCargo);
-    Gerador.wCampo(tcStr, '', 'codFuncao',    1, 30, 0, objInfoContrato.CodFuncao);
-  end
-  else
-  begin
-    Gerador.wCampo(tcStr, '', 'nmCargo',     0, 100, 0, objInfoContrato.nmCargo);
-    Gerador.wCampo(tcStr, '', 'CBOCargo',    0,   6, 0, objInfoContrato.CBOCargo);
-    Gerador.wCampo(tcDat, '', 'dtIngrCargo', 0,  10, 0, objInfoContrato.dtIngrCargo);
-    Gerador.wCampo(tcStr, '', 'nmFuncao',    0, 100, 0, objInfoContrato.nmFuncao);
-    Gerador.wCampo(tcStr, '', 'CBOFuncao',   0,   6, 0, objInfoContrato.CBOFuncao);
-    Gerador.wCampo(tcStr, '', 'acumCargo',   0,   1, 0, eSSimNaoFacultativoToStr(objInfoContrato.acumCargo));
-  end;
-  
+  Gerador.wCampo(tcStr, '', 'nmCargo',     0, 100, 0, objInfoContrato.nmCargo);
+  Gerador.wCampo(tcStr, '', 'CBOCargo',    0,   6, 0, objInfoContrato.CBOCargo);
+  Gerador.wCampo(tcDat, '', 'dtIngrCargo', 0,  10, 0, objInfoContrato.dtIngrCargo);
+  Gerador.wCampo(tcStr, '', 'nmFuncao',    0, 100, 0, objInfoContrato.nmFuncao);
+  Gerador.wCampo(tcStr, '', 'CBOFuncao',   0,   6, 0, objInfoContrato.CBOFuncao);
+  Gerador.wCampo(tcStr, '', 'acumCargo',   0,   1, 0, eSSimNaoFacultativoToStr(objInfoContrato.acumCargo));
+
   Gerador.wCampo(tcInt, '', 'codCateg',     1,  3, 1, objInfoContrato.CodCateg);
-  
-  if VersaoDF <= ve02_05_00 then
-  begin
-    Gerador.wCampo(tcStr, '', 'codCarreira',  1, 30, 0, objInfoContrato.codCarreira);
-    Gerador.wCampo(tcDat, '', 'dtIngrCarr',  10, 10, 0, objInfoContrato.dtIngrCarr);
-  end;
+
   if(NaoEstaVazio(pInfoCeletista.cnpjSindCategProf))then
   begin
     GerarRemuneracao(objInfoContrato.Remuneracao);
@@ -405,14 +367,12 @@ begin
     if (pInfoCeletista.TpRegJor = rjSubmetidosHorarioTrabalho) then
       GerarHorContratual(objInfoContrato.HorContratual);
   end;
-  if VersaoDF < veS01_00_00 then
-     GerarFiliacaoSindical(objInfoContrato.FiliacaoSindical);
+
   GerarAlvaraJudicial(objInfoContrato.AlvaraJudicial);
   GerarObservacoes(objInfoContrato.observacoes);
 
-  if VersaoDF > ve02_05_00 then
-    if objInfoContrato.treiCapInst() then
-      GerarTreinamentoCapacitacao(objInfoContrato.treiCap);
+  if objInfoContrato.treiCapInst() then
+    GerarTreinamentoCapacitacao(objInfoContrato.treiCap);
     
   Gerador.wGrupo('/infoContrato');
 end;
@@ -522,14 +482,8 @@ begin
 
         sSecao := 'aprend';
 
-        Ok := False;
-        if (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF >= veS01_02_00) then
-        begin
-          if INIRec.ReadString(sSecao, 'indAprend', '') = '1' then
-            Ok := (INIRec.ReadString(sSecao, 'cnpjEntQual', '') <> EmptyStr)
-          else
-            Ok := (INIRec.ReadString(sSecao, 'tpInsc', '') <> EmptyStr);
-        end
+        if INIRec.ReadString(sSecao, 'indAprend', '') = '1' then
+          Ok := (INIRec.ReadString(sSecao, 'cnpjEntQual', '') <> EmptyStr)
         else
           Ok := (INIRec.ReadString(sSecao, 'tpInsc', '') <> EmptyStr);
 

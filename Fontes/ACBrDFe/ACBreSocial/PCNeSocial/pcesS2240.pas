@@ -61,142 +61,6 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador, pcnLeitor;
 
 type
-  TS2240Collection = class;
-  TS2240CollectionItem = class;
-  TEvtExpRisco = class;
-  TinfoExpRisco = class;
-  TInfoAmbCollection = class;
-  TInfoAmbCollectionItem = class;
-  TInfoAtiv = class;
-{  
-  TAtivPericInsalCollection = class;
-  TAtivPericInsalCollectionItem = class;
-}  
-  TAgNocCollection = class;
-  TAgNocCollectionItem = class;
-  TEpcEpi = class;
-  TEpiCollection = class;
-  TEpiCollectionItem = class;
-  TEpiCompl = class;
-  TRespRegCollection = class;
-  TRespRegCollectionItem = class;
-  TObs = class;
-
-  TS2240Collection = class(TeSocialCollection)
-  private
-    function GetItem(Index: Integer): TS2240CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2240CollectionItem);
-  public
-    function Add: TS2240CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2240CollectionItem;
-    property Items[Index: Integer]: TS2240CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS2240CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtExpRisco: TEvtExpRisco;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtExpRisco: TEvtExpRisco read FEvtExpRisco write FEvtExpRisco;
-  end;
-
-  TEvtExpRisco = class(TeSocialEvento)
-  private
-    FIdeEvento: TIdeEvento2;
-    FIdeEmpregador: TIdeEmpregador;
-    FIdeVinculo: TIdeVinculo;
-    FinfoExpRisco: TinfoExpRisco;
-
-    { Geradores da classe }
-    procedure GerarInfoExpRisco(objInfoExpRisco: TInfoExpRisco);
-    procedure GerarInfoAmb(objInfoAmb: TinfoAmbCollection);
-    procedure GerarInfoAtiv(objInfoAtiv: TInfoAtiv);
-    procedure GerarAgNoc(objFatRisco: TAgNocCollection);
-    procedure GerarEpcEpi(pEpcEpi: TEpcEpi);
-    procedure GerarEPI(objEPI: TEpiCollection);
-    procedure GerarEpiCompl(objEPICompl: TEpiCompl);
-    procedure GerarRespReg(pRespReg: TRespRegCollection);
-    procedure GerarObs(pObs: TObs);
-  public
-    constructor Create(AACBreSocial: TObject); override;
-    destructor  Destroy; override;
-
-    function GerarXML: boolean; override;
-    function LerXML : Boolean;
-    function LerArqIni(const AIniString: String): Boolean;
-
-    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
-    property infoExpRisco: TinfoExpRisco read FinfoExpRisco write FinfoExpRisco;
-  end;
-
-  TRespRegCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TRespRegCollectionItem;
-    procedure SetItem(Index: Integer; Value: TRespRegCollectionItem);
-  public
-    function Add: TRespRegCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TRespRegCollectionItem;
-    property Items[Index: Integer]: TRespRegCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TRespRegCollectionItem = class(TObject)
-  private
-    FcpfResp: String;
-    FNisResp: String;
-    FNmResp: String;
-    FIdeOC: tpIdeOC;
-    FdscOC: String;
-    FNrOc: String;
-    FUfOC: string;
-  public
-    property cpfResp: string read FcpfResp write FcpfResp;
-    property nisResp: string read FNisResp write FNisResp;
-    property nmResp: string read FNmResp write FNmResp;
-    property ideOC: tpIdeOC read FIdeOC write FIdeOC;
-    property dscOC: string read FdscOC write FdscOC;
-    property nrOC: string read FNrOc write FNrOc;
-    property ufOC: string read FUfOC write FUfOC;
-  end;
-
-  TinfoExpRisco = class(TObject)
-  private
-    FdtIniCondicao: TDateTime;
-    FdtFimCondicao: TDateTime;
-    FInfoAmb: TInfoAmbCollection;
-    FInfoAtiv: TInfoAtiv;
-    FFatRisco: TAgNocCollection;
-    FRespReg: TRespRegCollection;
-    FObs: TObs;
-
-    function getRespReg: TRespRegCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property dtIniCondicao: TDateTime read FdtIniCondicao write FdtIniCondicao;
-    property dtFimCondicao: TDateTime read FdtFimCondicao write FdtFimCondicao;
-    property InfoAmb: TInfoAmbCollection read FInfoAmb write FInfoAmb;
-    property infoAtiv: TInfoAtiv read FInfoAtiv write FInfoAtiv;
-    property agNoc: TagNocCollection read FFatRisco write FFatRisco;
-    property respReg: TRespRegCollection read getRespReg write FRespReg;
-    property obs: TObs read FObs write FObs;
-  end;
-
-  TInfoAmbCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TInfoAmbCollectionItem;
-    procedure SetItem(Index: Integer; Value: TInfoAmbCollectionItem);
-  public
-    function Add: TInfoAmbCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TInfoAmbCollectionItem;
-    property Items[Index: Integer]: TInfoAmbCollectionItem read GetItem write SetItem;
-  end;
-
   TInfoAmbCollectionItem = class(TObject)
   private
     FcodAmb: String;
@@ -212,6 +76,16 @@ type
     property nrInsc: String read FnrInsc write FnrInsc;
   end;
 
+  TInfoAmbCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TInfoAmbCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfoAmbCollectionItem);
+  public
+    function Add: TInfoAmbCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoAmbCollectionItem;
+    property Items[Index: Integer]: TInfoAmbCollectionItem read GetItem write SetItem;
+  end;
+
   TInfoAtiv = class(TObject)
   private
     FdscAtivDes: String;
@@ -222,14 +96,78 @@ type
     property dscAtivDes: String read FdscAtivDes write FdscAtivDes;
   end;
 
-  TAgNocCollection = class(TACBrObjectList)
+  TEpiCollectionItem = class(TObject)
   private
-    function GetItem(Index: Integer): TagNocCollectionItem;
-    procedure SetItem(Index: Integer; Value: TAgNocCollectionItem);
+    FcaEPI: String;
+    FdscEPI: String;
+    FmedProtecao: tpSimNao;
+    FcondFuncto: tpSimNao;
+    FusoInint: tpSimNao;
+    FprzValid: tpSimNao;
+    FperiodicTroca: tpSimNao;
+    Fhigienizacao: tpSimNao;
+    FdocAval: String;
   public
-    function Add: TAgNocCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TAgNocCollectionItem;
-    property Items[Index: Integer]: TagNocCollectionItem read GetItem write SetItem;
+    property caEPI: string read FcaEPI write FcaEPI;
+    property dscEPI: string read FdscEPI write FdscEPI;
+    property medProtecao: tpSimNao read FmedProtecao write FmedProtecao;
+    property condFuncto: tpSimNao read FcondFuncto write FcondFuncto;
+    property usoInint: tpSimNao read FusoInint write FusoInint;
+    property przValid: tpSimNao read FprzValid write FprzValid;
+    property periodicTroca: tpSimNao read FperiodicTroca write FperiodicTroca;
+    property higienizacao: tpSimNao read Fhigienizacao write Fhigienizacao;
+    property docAval: string read FdocAval write FdocAval;
+  end;
+
+  TEpiCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TEpiCollectionItem;
+    procedure SetItem(Index: Integer; Value: TEpiCollectionItem);
+  public
+    function Add: TEpiCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TEpiCollectionItem;
+    property Items[Index: Integer]: TEpiCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TEpiCompl = class(TObject)
+  private
+    FmedProtecao: tpSimNaoFacultativo;
+    FcondFuncto: tpSimNaoFacultativo;
+    FusoInint: tpSimNaoFacultativo;
+    FprzValid: tpSimNaoFacultativo;
+    FperiodicTroca: tpSimNaoFacultativo;
+    Fhigienizacao: tpSimNaoFacultativo;
+  public
+    property medProtecao: tpSimNaoFacultativo read FmedProtecao write FmedProtecao;
+    property condFuncto: tpSimNaoFacultativo read FcondFuncto write FcondFuncto;
+    property usoInint: tpSimNaoFacultativo read FusoInint write FusoInint;
+    property przValid: tpSimNaoFacultativo read FprzValid write FprzValid;
+    property periodicTroca: tpSimNaoFacultativo read FperiodicTroca write FperiodicTroca;
+    property higienizacao: tpSimNaoFacultativo read Fhigienizacao write Fhigienizacao;
+  end;
+
+  TEpcEpi = class(TObject)
+  private
+    FUtilizEPC: tpUtilizEPC;
+    FEficEpc: tpSimNao;
+    FUtilizEPI: tpUtilizEPI;
+    FEpi: TEpiCollection;
+    FEpiCompl: TEpiCompl;
+    FeficEpi: tpSimNaoFacultativo;
+
+    function getEpi: TEpiCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function epiInst(): boolean;
+
+    property utilizEPC: tpUtilizEPC read FUtilizEPC write FUtilizEPC;
+    property eficEpc: tpSimNao read FEficEpc write FEficEpc;
+    property utilizEPI: tpUtilizEPI read FUtilizEPI write FUtilizEPI;
+    property epi: TEpiCollection read getEpi write FEpi;
+    property epiCompl: TEpiCompl read FEpiCompl write FEpiCompl;
+    property eficEpi : tpSimNaoFacultativo read FeficEpi write FeficEpi;
   end;
 
   TAgNocCollectionItem = class(TObject)
@@ -260,80 +198,45 @@ type
     property epcEpi: TEpcEpi read getEpcEpi write FEpcEpi;
   end;
 
-  TEpcEpi = class(TObject)
+  TAgNocCollection = class(TACBrObjectList)
   private
-    FUtilizEPC: tpUtilizEPC;
-    FEficEpc: tpSimNao;
-    FUtilizEPI: tpUtilizEPI;
-    FEpi: TEpiCollection;
-    FEpiCompl: TEpiCompl;
-    FeficEpi: tpSimNaoFacultativo;
-
-    function getEpi: TEpiCollection;
+    function GetItem(Index: Integer): TagNocCollectionItem;
+    procedure SetItem(Index: Integer; Value: TAgNocCollectionItem);
   public
-    constructor Create;
-    destructor Destroy; override;
-
-    function epiInst(): boolean;
-
-    property utilizEPC: tpUtilizEPC read FUtilizEPC write FUtilizEPC;
-    property eficEpc: tpSimNao read FEficEpc write FEficEpc;
-    property utilizEPI: tpUtilizEPI read FUtilizEPI write FUtilizEPI;
-    property epi: TEpiCollection read getEpi write FEpi;
-    property epiCompl: TEpiCompl read FEpiCompl write FEpiCompl;
-    property eficEpi : tpSimNaoFacultativo read FeficEpi write FeficEpi;
+    function Add: TAgNocCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TAgNocCollectionItem;
+    property Items[Index: Integer]: TagNocCollectionItem read GetItem write SetItem;
   end;
 
-  TEpiCollection = class(TACBrObjectList)
+  TRespRegCollectionItem = class(TObject)
   private
-    function GetItem(Index: Integer): TEpiCollectionItem;
-    procedure SetItem(Index: Integer; Value: TEpiCollectionItem);
+    FcpfResp: String;
+    FNisResp: String;
+    FNmResp: String;
+    FIdeOC: tpIdeOC;
+    FdscOC: String;
+    FNrOc: String;
+    FUfOC: string;
   public
-    function Add: TEpiCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TEpiCollectionItem;
-    property Items[Index: Integer]: TEpiCollectionItem read GetItem write SetItem; default;
+    property cpfResp: string read FcpfResp write FcpfResp;
+    property nisResp: string read FNisResp write FNisResp;
+    property nmResp: string read FNmResp write FNmResp;
+    property ideOC: tpIdeOC read FIdeOC write FIdeOC;
+    property dscOC: string read FdscOC write FdscOC;
+    property nrOC: string read FNrOc write FNrOc;
+    property ufOC: string read FUfOC write FUfOC;
   end;
 
-  TEpiCollectionItem = class(TObject)
+  TRespRegCollection = class(TACBrObjectList)
   private
-    FcaEPI: String;
-    FdscEPI: String;
-    FmedProtecao: tpSimNao;
-    FcondFuncto: tpSimNao;
-    FusoInint: tpSimNao;
-    FprzValid: tpSimNao;
-    FperiodicTroca: tpSimNao;
-    Fhigienizacao: tpSimNao;
-    FdocAval: String;
+    function GetItem(Index: Integer): TRespRegCollectionItem;
+    procedure SetItem(Index: Integer; Value: TRespRegCollectionItem);
   public
-    property caEPI: string read FcaEPI write FcaEPI;
-    property dscEPI: string read FdscEPI write FdscEPI;
-    property medProtecao: tpSimNao read FmedProtecao write FmedProtecao;
-    property condFuncto: tpSimNao read FcondFuncto write FcondFuncto;
-    property usoInint: tpSimNao read FusoInint write FusoInint;
-    property przValid: tpSimNao read FprzValid write FprzValid;
-    property periodicTroca: tpSimNao read FperiodicTroca write FperiodicTroca;
-    property higienizacao: tpSimNao read Fhigienizacao write Fhigienizacao;
-    property docAval: string read FdocAval write FdocAval;
+    function Add: TRespRegCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRespRegCollectionItem;
+    property Items[Index: Integer]: TRespRegCollectionItem read GetItem write SetItem; default;
   end;
-  
-  TEpiCompl = class(TObject)
-  private
-    FmedProtecao: tpSimNaoFacultativo;
-    FcondFuncto: tpSimNaoFacultativo;
-    FusoInint: tpSimNaoFacultativo;
-    FprzValid: tpSimNaoFacultativo;
-    FperiodicTroca: tpSimNaoFacultativo;
-    Fhigienizacao: tpSimNaoFacultativo;
-  public
-    property medProtecao: tpSimNaoFacultativo read FmedProtecao write FmedProtecao;
-    property condFuncto: tpSimNaoFacultativo read FcondFuncto write FcondFuncto;
-    property usoInint: tpSimNaoFacultativo read FusoInint write FusoInint;
-    property przValid: tpSimNaoFacultativo read FprzValid write FprzValid;
-    property periodicTroca: tpSimNaoFacultativo read FperiodicTroca write FperiodicTroca;
-    property higienizacao: tpSimNaoFacultativo read Fhigienizacao write Fhigienizacao;
-  end;
-  
+
   TObs = class(TObject)
   private
     FmetErg: String;
@@ -341,6 +244,85 @@ type
   public
     property metErg: String read FmetErg write FmetErg;
     property obsCompl: String read FobsCompl write FobsCompl;
+  end;
+
+  TinfoExpRisco = class(TObject)
+  private
+    FdtIniCondicao: TDateTime;
+    FdtFimCondicao: TDateTime;
+    FInfoAmb: TInfoAmbCollection;
+    FInfoAtiv: TInfoAtiv;
+    FFatRisco: TAgNocCollection;
+    FRespReg: TRespRegCollection;
+    FObs: TObs;
+
+    function getRespReg: TRespRegCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property dtIniCondicao: TDateTime read FdtIniCondicao write FdtIniCondicao;
+    property dtFimCondicao: TDateTime read FdtFimCondicao write FdtFimCondicao;
+    property InfoAmb: TInfoAmbCollection read FInfoAmb write FInfoAmb;
+    property infoAtiv: TInfoAtiv read FInfoAtiv write FInfoAtiv;
+    property agNoc: TagNocCollection read FFatRisco write FFatRisco;
+    property respReg: TRespRegCollection read getRespReg write FRespReg;
+    property obs: TObs read FObs write FObs;
+  end;
+
+  TEvtExpRisco = class(TeSocialEvento)
+  private
+    FIdeEvento: TIdeEvento2;
+    FIdeEmpregador: TIdeEmpregador;
+    FIdeVinculo: TIdeVinculo;
+    FinfoExpRisco: TinfoExpRisco;
+
+    { Geradores da classe }
+    procedure GerarInfoExpRisco(objInfoExpRisco: TInfoExpRisco);
+    procedure GerarInfoAmb(objInfoAmb: TinfoAmbCollection);
+    procedure GerarInfoAtiv(objInfoAtiv: TInfoAtiv);
+    procedure GerarAgNoc(objFatRisco: TAgNocCollection);
+    procedure GerarEpcEpi(pEpcEpi: TEpcEpi);
+    procedure GerarEPI(objEPI: TEpiCollection);
+    procedure GerarEpiCompl(objEPICompl: TEpiCompl);
+    procedure GerarRespReg(pRespReg: TRespRegCollection);
+    procedure GerarObs(pObs: TObs);
+
+    function LerArqIni_Legado(const AIniString: String): Boolean;
+    function LerArqIni_Simplificado(const AIniString: String): Boolean;
+  public
+    constructor Create(AACBreSocial: TObject); override;
+    destructor  Destroy; override;
+
+    function GerarXML: boolean; override;
+    function LerXML : Boolean;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
+    property infoExpRisco: TinfoExpRisco read FinfoExpRisco write FinfoExpRisco;
+  end;
+
+  TS2240CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtExpRisco: TEvtExpRisco;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtExpRisco: TEvtExpRisco read FEvtExpRisco write FEvtExpRisco;
+  end;
+
+  TS2240Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS2240CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2240CollectionItem);
+  public
+    function Add: TS2240CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2240CollectionItem;
+    property Items[Index: Integer]: TS2240CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -421,24 +403,9 @@ begin
   begin
     Gerador.wGrupo('epi');
 
-    if VersaoDF <= ve02_05_00 then
-      Gerador.wCampo(tcStr, '', 'caEPI',         1,  20, 0, objEPI[i].caEPI)
-    else
-      Gerador.wCampo(tcStr, '', 'docAval',       1, 255, 0, objEPI[i].docAval);
-      
-    Gerador.wCampo(tcStr, '', 'dscEPI',          1, 999, 0, objEPI[i].dscEPI);
-{    
-    Gerador.wCampo(tcStr, '', 'eficEpi',         1,   1, 1, eSSimNaoToStr(objEPI[i].eficEpi));
-}    
-    if VersaoDF <= ve02_05_00 then
-    begin
-      Gerador.wCampo(tcStr, '', 'medProtecao',   1,   1, 1, eSSimNaoToStr(objEPI[i].medProtecao));
-      Gerador.wCampo(tcStr, '', 'condFuncto',    1,   1, 1, eSSimNaoToStr(objEPI[i].condFuncto));
-      Gerador.wCampo(tcStr, '', 'usoInint',      1,   1, 1, eSSimNaoToStr(objEPI[i].usoInint));
-      Gerador.wCampo(tcStr, '', 'przValid',      1,   1, 1, eSSimNaoToStr(objEPI[i].przValid));
-      Gerador.wCampo(tcStr, '', 'periodicTroca', 1,   1, 1, eSSimNaoToStr(objEPI[i].periodicTroca));
-      Gerador.wCampo(tcStr, '', 'higienizacao',  1,   1, 1, eSSimNaoToStr(objEPI[i].higienizacao));
-    end;
+    Gerador.wCampo(tcStr, '', 'docAval', 1, 255, 0, objEPI[i].docAval);
+
+    Gerador.wCampo(tcStr, '', 'dscEPI',  1, 999, 0, objEPI[i].dscEPI);
 
     Gerador.wGrupo('/epi');
   end;
@@ -449,9 +416,6 @@ end;
 
 procedure TEvtExpRisco.GerarEpiCompl(objEPICompl: TEpiCompl);
 begin
-  if VersaoDF <= ve02_05_00 then
-    Exit;
-    
   Gerador.wGrupo('epiCompl');
   
   Gerador.wCampo(tcStr, '', 'medProtecao',   1,   1, 0, eSSimNaoFacultativoToStr(objEPICompl.medProtecao));
@@ -506,7 +470,7 @@ begin
     Gerador.wCampo(tcInt, '', 'unMed',        1,   2, 0, objFatRisco.Items[i].unMed);
     Gerador.wCampo(tcStr, '', 'tecMedicao',   1,  40, 0, objFatRisco.Items[i].tecMedicao);
 
-    if (VersaoDF >= veS01_02_00) and (objFatRisco.Items[i].codAgNoc = '05.01.001') and (objFatRisco.Items[i].nrProcJud <> '') then
+    if (objFatRisco.Items[i].codAgNoc = '05.01.001') and (objFatRisco.Items[i].nrProcJud <> '') then
       Gerador.wCampo(tcStr, '', 'nrProcJud', 20,  20, 1, objFatRisco.Items[i].nrProcJud);
     
     if (objFatRisco.Items[i].epcEpiInst()) and (objFatRisco.Items[i].codAgNoc <> '09.01.001') then
@@ -527,16 +491,11 @@ begin
   begin
     Gerador.wGrupo('infoAmb');
 
-    if VersaoDF <= ve02_05_00 then
-      Gerador.wCampo(tcStr, '', 'codAmb',   1,  30, 1, objInfoAmb.items[i].codAmb)
-    else
-    begin
-      Gerador.wCampo(tcStr, '', 'localAmb', 1,   1, 1, eSLocalAmbToStr(objInfoAmb.items[i].localAmb));
-      Gerador.wCampo(tcStr, '', 'dscSetor', 1, 100, 1, objInfoAmb.items[i].dscSetor);
-      Gerador.wCampo(tcStr, '', 'tpInsc',   1,   1, 1, eSTpInscricaoToStr(objInfoAmb.items[i].tpInsc));
-      Gerador.wCampo(tcStr, '', 'nrInsc',  12,  14, 1, objInfoAmb.items[i].nrInsc); 
-    end;
-    
+    Gerador.wCampo(tcStr, '', 'localAmb', 1,   1, 1, eSLocalAmbToStr(objInfoAmb.items[i].localAmb));
+    Gerador.wCampo(tcStr, '', 'dscSetor', 1, 100, 1, objInfoAmb.items[i].dscSetor);
+    Gerador.wCampo(tcStr, '', 'tpInsc',   1,   1, 1, eSTpInscricaoToStr(objInfoAmb.items[i].tpInsc));
+    Gerador.wCampo(tcStr, '', 'nrInsc',  12,  14, 1, objInfoAmb.items[i].nrInsc);
+
     Gerador.wGrupo('/infoAmb');
   end;
 
@@ -563,12 +522,6 @@ begin
 
     Gerador.wCampo(tcStr, '', 'cpfResp', 1, 11, 1, pRespReg[i].cpfResp);
     
-    if VersaoDF <= ve02_05_00 then
-    begin
-      Gerador.wCampo(tcStr, '', 'nisResp', 1, 11, 1, pRespReg[i].nisResp);
-      Gerador.wCampo(tcStr, '', 'nmResp',  1, 70, 1, pRespReg[i].nmResp);
-    end;
-
     if pRespReg[i].ideOC <> idNenhum then
       Gerador.wCampo(tcStr, '', 'ideOC',   1,  1, 1, eSIdeOCToStrEX(pRespReg[i].ideOC));
 
@@ -608,15 +561,10 @@ end;
 
 procedure TEvtExpRisco.GerarObs(pObs: TObs);
 begin
-  if (((pObs.metErg <> '') or (pObs.obsCompl <> '')) and (VersaoDF <= ve02_05_00)) or
-     ((pObs.obsCompl <> '') and (VersaoDF > ve02_05_00)) then
+  if (pObs.obsCompl <> '') then
   begin
     Gerador.wGrupo('obs');
-    
-    if VersaoDF <= ve02_05_00 then
-      if (pObs.metErg <> '') then
-        Gerador.wCampo(tcStr, '', 'metErg',   1, 999, 0, pObs.metErg);
-    
+
     if (pObs.obsCompl <> '') then
       Gerador.wCampo(tcStr, '', 'obsCompl', 1, 999, 0, pObs.obsCompl);
     
@@ -628,6 +576,7 @@ function TEvtExpRisco.GerarXML: boolean;
 begin
   try
     inherited GerarXML;
+
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
      
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
@@ -645,9 +594,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtExpRisco');
-
-//    Validar(schevtExpRisco);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -852,7 +798,7 @@ begin
   Self.Add(Result);
 end;
 
-function TEvtExpRisco.LerArqIni(const AIniString: String): Boolean;
+function TEvtExpRisco.LerArqIni_Legado(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   Ok: Boolean;
@@ -912,7 +858,6 @@ begin
             dscSetor:= INIRec.ReadString(sSecao, 'dscSetor', EmptyStr);
             tpInsc:= eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
             nrInsc:= INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
-//            codAmb := sFim;
           end;
 
           with infoExpRisco do
@@ -994,16 +939,13 @@ begin
 
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
-                with epcEpi.epiCompl do
-                begin
-                  medProtecao        := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'medProtecao', 'S'));
-                  condFuncto         := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'condFuncto', 'S'));
-                  usoInint           := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'usoInint', 'S'));
-                  przValid           := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'przValid', 'S'));
-                  periodicTroca      := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'periodicTroca', 'S'));
-                  higienizacao       := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'higienizacao', 'S'));
-                end;
 
+                epcEpi.epiCompl.medProtecao   := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'medProtecao', 'S'));
+                epcEpi.epiCompl.condFuncto    := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'condFuncto', 'S'));
+                epcEpi.epiCompl.usoInint      := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'usoInint', 'S'));
+                epcEpi.epiCompl.przValid      := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'przValid', 'S'));
+                epcEpi.epiCompl.periodicTroca := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'periodicTroca', 'S'));
+                epcEpi.epiCompl.higienizacao  := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'higienizacao', 'S'));
               end;
 
               Inc(J);
@@ -1054,6 +996,185 @@ begin
   end;
 end;
 
+function TEvtExpRisco.LerArqIni_Simplificado(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I, J: Integer;
+  ItemagNoc: TAgNocCollectionItem;
+
+  procedure InfoAmb;
+  var
+    Item: TInfoAmbCollectionItem;
+  begin
+    I := 1;
+    while true do
+    begin
+      // de 1 até 9
+      sSecao := 'infoAmb' + IntToStrZero(I, 1);
+      sFim   := INIRec.ReadString(sSecao, 'localAmb', 'FIM');
+
+      if (sFim = 'FIM') or (Length(sFim) <= 0) then
+        break;
+
+      Item := Self.infoExpRisco.infoAmb.New;
+
+      Item.localAmb := eSStrToLocalAmb(Ok, INIRec.ReadString(sSecao, 'localAmb', '0'));
+      Item.dscSetor := INIRec.ReadString(sSecao, 'dscSetor', '');
+      Item.tpInsc   := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      Item.nrInsc   := INIRec.ReadString(sSecao, 'nrInsc', '');
+
+      inc(I);
+    end;
+  end;
+
+  procedure RespReg;
+  var
+    Item: TRespRegCollectionItem;
+  begin
+    I := 1;
+    while true do
+    begin
+      sSecao := 'respReg' + IntToStrZero(I, 2);
+      sFim   := INIRec.ReadString(sSecao, 'cpfResp', 'FIM');
+
+      if (sFim = 'FIM') or (Length(sFim) <= 0) then
+        break;
+
+      Item := Self.infoExpRisco.respReg.New;
+
+      Item.cpfResp := INIRec.ReadString(sSecao, 'cpfResp', '');
+      Item.ideOC   := eSStrToIdeOCEX(INIRec.ReadString(sSecao, 'ideOC', ''));
+      Item.dscOC   := INIRec.ReadString(sSecao, 'dscOC', '');
+      Item.nrOC    := INIRec.ReadString(sSecao, 'nrOc', '');
+      Item.ufOC    := INIRec.ReadString(sSecao, 'ufOC', 'SP');
+
+      Inc(I);
+    end;
+  end;
+begin
+  Result := True;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      sSecao := 'evtExpRisco';
+      Id         := INIRec.ReadString(sSecao, 'Id', '');
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo := INIRec.ReadString(sSecao, 'nrRecibo', '');
+      ideEvento.ProcEmi  := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc  := INIRec.ReadString(sSecao, 'verProc', '');
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', '');
+
+      sSecao := 'ideVinculo';
+      ideVinculo.CpfTrab   := INIRec.ReadString(sSecao, 'cpfTrab', '');
+      ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', '');
+      ideVinculo.codCateg  := INIRec.ReadInteger(sSecao, 'codCateg', 0);
+
+      sSecao := 'infoExpRisco';
+      infoExpRisco.dtIniCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniCondicao', '0'));
+      infoExpRisco.dtFimCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimCondicao', '0'));
+
+      if ((infoExpRisco.dtIniCondicao >= StringToDateTime('16/01/2022')) and (infoExpRisco.dtFimCondicao > 0)) then
+        infoExpRisco.dtFimCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimCondicao', '0'));
+
+      InfoAmb;
+
+      sSecao := 'infoAtiv';
+      infoExpRisco.infoAtiv.dscAtivDes := INIRec.ReadString(sSecao, 'dscAtivDes', '');
+
+      I := 1;
+      while true do
+      begin
+        // de 001 até 999
+        sSecao := 'agNoc' + IntToStrZero(I, 3);
+        sFim   := INIRec.ReadString(sSecao, 'codAgNoc', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        ItemagNoc := infoExpRisco.agNoc.New;
+
+        ItemagNoc.codAgNoc   := sFim;
+        ItemagNoc.dscAgNoc   := INIRec.ReadString(sSecao, 'dscAgNoc', '');
+        ItemagNoc.tpAval     := StrTotpAval(Ok, INIRec.ReadString(sSecao, 'tpAval', '0'));
+        ItemagNoc.intConc    := StringToFloatDef(INIRec.ReadString(sSecao, 'intConc', ''), 0);
+        ItemagNoc.limTol     := StringToFloatDef(INIRec.ReadString(sSecao, 'limTol', ''), 0);
+        ItemagNoc.unMed      := INIRec.ReadInteger(sSecao, 'unMed', 0);
+        ItemagNoc.tecMedicao := INIRec.ReadString(sSecao, 'tecMedicao', '');
+        ItemagNoc.nrProcJud  := INIRec.ReadString(sSecao, 'nrProcJud', '');
+
+        ItemagNoc.epcEpi.utilizEPC := eSStrTotpUtilizEPC(Ok, INIRec.ReadString(sSecao, 'utilizEPC', '0'));
+        ItemagNoc.epcEpi.eficEpc   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'eficEpc', '0'));
+        ItemagNoc.epcEpi.utilizEPI := eSStrTotpUtilizEPI(Ok, INIRec.ReadString(sSecao, 'utilizEPI', '0'));
+        ItemagNoc.epcEpi.eficEpi   := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'eficEpi', 'S'));
+
+        j := 1;
+        while true do
+        begin
+          // de 00 até 50
+          sSecao := 'epi' + IntToStrZero(I, 3) + IntToStrZero(J, 2);
+          sFim   := INIRec.ReadString(sSecao, 'docAval', 'FIM');
+
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with ItemagNoc.epcEpi.epi.New do
+          begin
+            docAval := INIRec.ReadString(sSecao, 'docAval', '');
+          end;
+
+          Inc(J);
+        end;
+
+        sSecao := 'epiCompl' + IntToStrZero(I, 3);
+        sFim   := INIRec.ReadString(sSecao, 'medProtecao', 'FIM');
+
+        if not ((sFim = 'FIM') or (Length(sFim) <= 0)) then
+        begin
+          ItemagNoc.epcEpi.epiCompl.medProtecao   := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'medProtecao', 'S'));
+          ItemagNoc.epcEpi.epiCompl.condFuncto    := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'condFuncto', 'S'));
+          ItemagNoc.epcEpi.epiCompl.usoInint      := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'usoInint', 'S'));
+          ItemagNoc.epcEpi.epiCompl.przValid      := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'przValid', 'S'));
+          ItemagNoc.epcEpi.epiCompl.periodicTroca := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'periodicTroca', 'S'));
+          ItemagNoc.epcEpi.epiCompl.higienizacao  := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'higienizacao', 'S'));
+        end;
+
+        inc(I);
+      end;
+
+      RespReg;
+
+      sSecao := 'obs';
+      infoExpRisco.obs.obsCompl := INIRec.ReadString(sSecao, 'obsCompl', '');
+    end;
+
+    GerarXML;
+    XML := FXML;
+  finally
+    INIRec.Free;
+  end;
+end;
+
+function TEvtExpRisco.LerArqIni(const AIniString: String): Boolean;
+begin
+//  if VersaoDF < veS01_00_00 then
+    Result := LerArqIni_Legado(AIniString);
+//  else
+//    Result := LerArqIni_Simplificado(AIniString)
+end;
+
 function TEvtExpRisco.LerXML: Boolean;
 var
   Leitor: TLeitor;
@@ -1068,28 +1189,25 @@ begin
     if Leitor.rExtrai(1, 'evtExpRisco') <> '' then
     begin
       if Leitor.rExtrai(2, 'ideEvento') <> '' then
-        with Self.ideEvento do
-        begin
-          indRetif := eSStrToIndRetificacao(ok, leitor.rCampo(tcStr, 'indRetif'));
-          nrRecibo := Leitor.rCampo(tcStr,'nrRecibo');
-          procEmi  := eSStrToprocEmi(ok, Leitor.rCampo(tcStr, 'procEmi'));
-          verProc  := Leitor.rCampo(tcStr, 'verProc');
-        end;
+      begin
+        Self.ideEvento.indRetif := eSStrToIndRetificacao(ok, leitor.rCampo(tcStr, 'indRetif'));
+        Self.ideEvento.nrRecibo := Leitor.rCampo(tcStr,'nrRecibo');
+        Self.ideEvento.procEmi  := eSStrToprocEmi(ok, Leitor.rCampo(tcStr, 'procEmi'));
+        Self.ideEvento.verProc  := Leitor.rCampo(tcStr, 'verProc');
+      end;
 
       if Leitor.rExtrai(2, 'ideEmpregador') <> '' then
-        with Self.ideEmpregador do
-        begin
-          tpInsc := eSStrToTpInscricao(ok, Leitor.rCampo(tcStr, 'tpInsc'));
-          nrInsc := Leitor.rCampo(tcStr, 'nrInsc');
-        end;
+      begin
+        Self.ideEmpregador.tpInsc := eSStrToTpInscricao(ok, Leitor.rCampo(tcStr, 'tpInsc'));
+        Self.ideEmpregador.nrInsc := Leitor.rCampo(tcStr, 'nrInsc');
+      end;
 
       if Leitor.rExtrai(2, 'ideVinculo') <> '' then
-        with Self.ideVinculo do
-        begin
-          cpfTrab   := Leitor.rCampo(tcStr, 'cpfTrab');
-          matricula := Leitor.rCampo(tcStr, 'matricula');
-          codCateg  := Leitor.rCampo(tcInt, 'codCateg');
-        end;
+      begin
+        Self.ideVinculo.cpfTrab   := Leitor.rCampo(tcStr, 'cpfTrab');
+        Self.ideVinculo.matricula := Leitor.rCampo(tcStr, 'matricula');
+        Self.ideVinculo.codCateg  := Leitor.rCampo(tcInt, 'codCateg');
+      end;
 
       if Leitor.rExtrai(2, 'infoExpRisco') <> '' then
       begin
@@ -1111,8 +1229,7 @@ begin
             end;
           
           if Leitor.rExtrai(3, 'infoAtiv') <> '' then
-            with infoAtiv do
-              dscAtivDes := Leitor.rCampo(tcStr, 'dscAtivDes');
+            infoAtiv.dscAtivDes := Leitor.rCampo(tcStr, 'dscAtivDes');
               
           i := 0;
           while Leitor.rExtrai(3, 'agNoc', '', i + 1) <> '' do
@@ -1129,36 +1246,34 @@ begin
               nrProcJud  := Leitor.rCampo(tcStr, 'nrProcJud');
 
               if Leitor.rExtrai(4, 'epcEpi') <> '' then
-                with epcEpi do
-                begin
-                  utilizEPC := eSStrTotpUtilizEPC(ok, Leitor.rCampo(tcStr, 'utilizEPC'));
-                  eficEpc   := eSStrToSimNao(ok, Leitor.rCampo(tcStr, 'eficEpc'));
-                  utilizEPI := eSStrTotpUtilizEPI(ok , Leitor.rCampo(tcStr, 'utilizEPI'));
-                  eficEpi   := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'eficEpi'));
-                  
-                  j := 0;
-                  while Leitor.rExtrai(5, 'epi', '', j + 1) <> '' do
-                  begin
-                    with epi.New do
-                    begin
-                      docAval := Leitor.rCampo(tcStr, 'docAval');
-                      dscEPI  := Leitor.rCampo(tcStr, 'dscEPI');
-                    end;
+              begin
+                epcEpi.utilizEPC := eSStrTotpUtilizEPC(ok, Leitor.rCampo(tcStr, 'utilizEPC'));
+                epcEpi.eficEpc   := eSStrToSimNao(ok, Leitor.rCampo(tcStr, 'eficEpc'));
+                epcEpi.utilizEPI := eSStrTotpUtilizEPI(ok , Leitor.rCampo(tcStr, 'utilizEPI'));
+                epcEpi.eficEpi   := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'eficEpi'));
 
-                    Inc(j);
+                j := 0;
+                while Leitor.rExtrai(5, 'epi', '', j + 1) <> '' do
+                begin
+                  with epcEpi.epi.New do
+                  begin
+                    docAval := Leitor.rCampo(tcStr, 'docAval');
+                    dscEPI  := Leitor.rCampo(tcStr, 'dscEPI');
                   end;
 
-                  if Leitor.rExtrai(5, 'epiCompl') <> '' then
-                    with epiCompl do
-                    begin
-                      medProtecao   := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'medProtecao'));
-                      condFuncto    := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'condFuncto'));
-                      usoInint      := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'usoInint'));
-                      przValid      := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'przValid'));
-                      periodicTroca := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'periodicTroca'));
-                      higienizacao  := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'higienizacao'));
-                    end;
+                  Inc(j);
                 end;
+
+                if Leitor.rExtrai(5, 'epiCompl') <> '' then
+                begin
+                  epcEpi.epiCompl.medProtecao   := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'medProtecao'));
+                  epcEpi.epiCompl.condFuncto    := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'condFuncto'));
+                  epcEpi.epiCompl.usoInint      := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'usoInint'));
+                  epcEpi.epiCompl.przValid      := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'przValid'));
+                  epcEpi.epiCompl.periodicTroca := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'periodicTroca'));
+                  epcEpi.epiCompl.higienizacao  := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'higienizacao'));
+                end;
+              end;
             end;
             
             Inc(i);
@@ -1180,8 +1295,7 @@ begin
           end;
           
           if Leitor.rExtrai(3, 'obs') <> '' then
-            with obs do
-              obsCompl := Leitor.rCampo(tcStr, 'obsCompl');
+            obs.obsCompl := Leitor.rCampo(tcStr, 'obsCompl');
         end;
       end;
     end;

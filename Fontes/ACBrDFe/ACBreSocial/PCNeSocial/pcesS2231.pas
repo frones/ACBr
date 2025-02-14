@@ -58,33 +58,40 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-
-  TS2231CollectionItem = class;
-  TEvtCessao = class;
-  TInfoCessao = class;
-  TIniCessao = class;
-  TFimCessao = class;
-
-  TS2231Collection = class(TeSocialCollection)
+  TIniCessao = class
   private
-    function GetItem(Index: Integer): TS2231CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2231CollectionItem);
+    FDtIniCessao: TDateTime;
+    FCnpjCess: string;
+    FRespRemun: tpSimNao;
   public
-    function Add: TS2231CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2231CollectionItem;
-    property Items[Index: Integer]: TS2231CollectionItem read GetItem write SetItem; default;
+    property dtIniCessao: TDateTime read FDtIniCessao write FDtIniCessao;
+    property cnpjCess: string read FCnpjCess write FCnpjCess;
+    property respRemun: tpSimNao read FRespRemun write FRespRemun;
   end;
 
-  TS2231CollectionItem = class(TObject)
+  TFimCessao = class
   private
-    FTipoEvento : TTipoEvento;
-    FEvtCessao: TEvtCessao;
+    FDtTermCessao: TDateTime;
   public
-    constructor Create(AOwner: TComponent);
+    property dtTermCessao: TDateTime read FDtTermCessao write FDtTermCessao;
+  end;
+
+  TInfoCessao = class(TObject)
+  private
+    FIniCessao: TIniCessao;
+    FFimCessao: TFimCessao;
+
+    function getIniCessao(): TIniCessao;
+    function getFimCessao(): TFimCessao;
+  public
+    constructor Create;
     destructor  Destroy; override;
-    
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtCessao: TEvtCessao read FEvtCessao write FEvtCessao;
+
+    function iniCessaoInst(): Boolean;
+    function fimCessaoInst(): Boolean;
+
+    property iniCessao: TIniCessao read getIniCessao write FIniCessao;
+    property fimCessao: TFimCessao read getFimCessao write FFimCessao;
   end;
 
   TEvtCessao = class(TeSocialEvento)
@@ -110,40 +117,26 @@ type
     property InfoCessao: TInfoCessao read FInfoCessao write FInfoCessao;
   end;
 
-  TIniCessao = class
+  TS2231CollectionItem = class(TObject)
   private
-    FDtIniCessao: TDateTime;
-    FCnpjCess: string;
-    FRespRemun: tpSimNao;
+    FTipoEvento : TTipoEvento;
+    FEvtCessao: TEvtCessao;
   public
-    property dtIniCessao: TDateTime read FDtIniCessao write FDtIniCessao;
-    property cnpjCess: string read FCnpjCess write FCnpjCess;
-    property respRemun: tpSimNao read FRespRemun write FRespRemun;
-  end;
-
-  TFimCessao = class
-  private
-    FDtTermCessao: TDateTime;
-  public
-    property dtTermCessao: TDateTime read FDtTermCessao write FDtTermCessao;
-  end;
-
-  TInfoCessao = class(TObject)
-  private
-    FIniCessao: TIniCessao;
-    FFimCessao: TFimCessao;
-    
-    function getIniCessao(): TIniCessao;
-    function getFimCessao(): TFimCessao;
-  public
-    constructor Create;
+    constructor Create(AOwner: TComponent);
     destructor  Destroy; override;
-    
-    function iniCessaoInst(): Boolean;
-    function fimCessaoInst(): Boolean;
-    
-    property iniCessao: TIniCessao read getIniCessao write FIniCessao;
-    property fimCessao: TFimCessao read getFimCessao write FFimCessao;
+
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtCessao: TEvtCessao read FEvtCessao write FEvtCessao;
+  end;
+
+  TS2231Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS2231CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2231CollectionItem);
+  public
+    function Add: TS2231CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2231CollectionItem;
+    property Items[Index: Integer]: TS2231CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -320,9 +313,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'EvtCessao');
-
-//    Validar(schEvtCessao);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -334,8 +324,7 @@ function TEvtCessao.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   Ok: Boolean;
-  sSecao, sFim: String;
-  I: Integer;
+  sSecao: String;
 begin
   Result := True;
 

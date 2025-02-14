@@ -61,34 +61,87 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador, pcnLeitor;
 
 type
-  TS2220CollectionItem = class;
-  TevtMonit = class;
-  TexMedOcup = class;
-  TAso = class;
-  TExameCollectionItem = class;
-  TExameCollection = class;
-  TRespMonit = class;
-  TMedico = class;
-
-  TS2220Collection = class(TeSocialCollection)
+  TExameCollectionItem = class(TObject)
   private
-    function GetItem(Index: Integer): TS2220CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2220CollectionItem);
+    FDtExm: TDateTime;
+    FProcRealizado: string;
+    FObsProc: string;
+    FOrdExame: tpOrdExame;
+    FIndResult: tpIndResult;
   public
-    function Add: TS2220CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2220CollectionItem;
-    property Items[Index: Integer]: TS2220CollectionItem read GetItem write SetItem; default;
+    property DtExm: TDateTime read FDtExm write FDtExm;
+    property ProcRealizado: string read FProcRealizado write FProcRealizado;
+    property obsProc: string read FObsProc write FObsProc;
+    property ordExame: tpOrdExame read FOrdExame write FOrdExame;
+    property indResult: tpIndResult read FIndResult write FIndResult;
   end;
 
-  TS2220CollectionItem = class(TObject)
+  TExameCollection = class(TACBrObjectList)
   private
-    FTipoEvento: TTipoEvento;
-    FevtMonit: TevtMonit;
+    function GetItem(Index: Integer): TExameCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TExameCollectionItem);
   public
-    constructor Create(AOwner: TComponent);
+    function Add: TExameCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TExameCollectionItem;
+    property Items[Index: Integer]: TExameCollectionItem read GetItem write SetItem;
+  end;
+
+  TMedico = class
+  private
+    FNmMed: string;
+    FCPFMed : String;
+    FNISMed : String;
+    FnrCRM: String;
+    FufCRM: string;
+  public
+    property cpfMed: String read FCPFMed write FCPFMed;
+    property nisMed: String read FNISMed write FNISMed;
+    property NmMed: String read FNmMed write FNmMed;
+    property nrCRM: String read FnrCRM write FnrCRM;
+    property ufCRM: string read FufCRM write FufCRM;
+  end;
+
+  TAso = class(TObject)
+  private
+    FDtAso: TDateTime;
+    FResAso: tpResAso;
+    FExame: TExameCollection;
+    FMedico: TMedico;
+  public
+    constructor Create;
     destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtMonit: TevtMonit read FevtMonit write FevtMonit;
+
+    property DtAso: TDateTime read FDtAso write FDtAso;
+    property ResAso: tpResAso read FResAso write FResAso;
+    property Exame: TExameCollection read FExame write FExame;
+    property Medico: TMedico read FMedico write FMedico;
+  end;
+
+  TRespMonit = class
+  private
+    FCPFResp: String;
+    FNMResp: String;
+    FNRCRM: String;
+    FUFCRM: string;
+  public
+    property cpfResp: String read FCPFResp write FCPFResp;
+    property nmResp: String read FNMResp write FNMResp;
+    property nrCRM: String read FNRCRM write FNRCRM;
+    property ufCRM: string read FUFCRM write FUFCRM;
+  end;
+
+  TexMedOcup = class(TObject)
+  private
+    FtpExameOcup: tpTpExameOcup;
+    FAso: TAso;
+    FRespMonit : TRespMonit;
+  public
+    property tpExameOcup: tpTpExameOcup read FtpExameOcup write FtpExameOcup;
+    property Aso : TAso read FAso write FAso;
+    property RespMonit : TRespMonit read FRespMonit write FRespMonit;
+
+    constructor Create;
+    destructor Destroy; override;
   end;
 
   TevtMonit = class(TeSocialEvento)
@@ -118,87 +171,25 @@ type
     property exMedOcup: TexMedOcup read FexMedOcup write FexMedOcup;
   end;
 
-  TexMedOcup = class(TObject)
+  TS2220CollectionItem = class(TObject)
   private
-    FtpExameOcup: tpTpExameOcup;
-    FAso: TAso;
-    FRespMonit : TRespMonit;
+    FTipoEvento: TTipoEvento;
+    FevtMonit: TevtMonit;
   public
-    property tpExameOcup: tpTpExameOcup read FtpExameOcup write FtpExameOcup;
-    property Aso : TAso read FAso write FAso;
-    property RespMonit : TRespMonit read FRespMonit write FRespMonit;
-
-    constructor Create;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property evtMonit: TevtMonit read FevtMonit write FevtMonit;
   end;
 
-  TAso = class(TObject)
+  TS2220Collection = class(TeSocialCollection)
   private
-    FDtAso: TDateTime;
-    FResAso: tpResAso;
-    FExame: TExameCollection;
-    FMedico: TMedico;
+    function GetItem(Index: Integer): TS2220CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2220CollectionItem);
   public
-    constructor Create;
-    destructor Destroy; override;
-
-    property DtAso: TDateTime read FDtAso write FDtAso;
-    property ResAso: tpResAso read FResAso write FResAso;
-    property Exame: TExameCollection read FExame write FExame;
-    property Medico: TMedico read FMedico write FMedico;
-  end;
-
-  TExameCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TExameCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TExameCollectionItem);
-  public
-    function Add: TExameCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TExameCollectionItem;
-    property Items[Index: Integer]: TExameCollectionItem read GetItem write SetItem;
-  end;
-
-  TExameCollectionItem = class(TObject)
-  private
-    FDtExm: TDateTime;
-    FProcRealizado: string;
-    FObsProc: string;
-    FOrdExame: tpOrdExame;
-    FIndResult: tpIndResult;
-  public
-    property DtExm: TDateTime read FDtExm write FDtExm;
-    property ProcRealizado: string read FProcRealizado write FProcRealizado;
-    property obsProc: string read FObsProc write FObsProc;
-    property ordExame: tpOrdExame read FOrdExame write FOrdExame;
-    property indResult: tpIndResult read FIndResult write FIndResult;
-  end;
-
-  TRespMonit = class
-  private
-    FCPFResp: String;
-    FNMResp: String;
-    FNRCRM: String;
-    FUFCRM: string;
-  public
-    property cpfResp: String read FCPFResp write FCPFResp;
-    property nmResp: String read FNMResp write FNMResp;
-    property nrCRM: String read FNRCRM write FNRCRM;
-    property ufCRM: string read FUFCRM write FUFCRM;
-  end;
-
-  TMedico = class
-  private
-    FNmMed: string;
-    FCPFMed : String;
-    FNISMed : String;
-    FnrCRM: String;
-    FufCRM: string;
-  public
-    property cpfMed: String read FCPFMed write FCPFMed;
-    property nisMed: String read FNISMed write FNISMed;
-    property NmMed: String read FNmMed write FNmMed;
-    property nrCRM: String read FnrCRM write FnrCRM;
-    property ufCRM: string read FufCRM write FufCRM;
+    function Add: TS2220CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2220CollectionItem;
+    property Items[Index: Integer]: TS2220CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -332,28 +323,12 @@ begin
 end;
 
 procedure TevtMonit.GerarMedico;
-var
-  NrOcorrNrCRM: Integer;
 begin
-  if (VersaoDF >= veS01_02_00) then
-    NrOcorrNrCRM := 0
-  else
-    NrOcorrNrCRM := 1;
-
   Gerador.wGrupo('medico');
 
-  if VersaoDF <= ve02_05_00 then
-  begin
-    if Trim(self.exMedOcup.Aso.Medico.cpfMed) <> '' then
-      Gerador.wCampo(tcStr, '', 'cpfMed', 11, 11, 0, self.exMedOcup.Aso.Medico.cpfMed);
-   
-    if Trim(self.exMedOcup.Aso.Medico.nisMed) <> '' then
-      Gerador.wCampo(tcStr, '', 'nisMed', 1, 11, 0, self.exMedOcup.Aso.Medico.nisMed);
-  end;
-
   Gerador.wCampo(tcStr, '', 'nmMed', 1, 70, 1, self.exMedOcup.Aso.Medico.NmMed);
-  Gerador.wCampo(tcStr, '', 'nrCRM', 1, 10, NrOcorrNrCRM, self.exMedOcup.Aso.Medico.nrCRM);
-  Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, NrOcorrNrCRM, self.exMedOcup.Aso.Medico.ufCRM);
+  Gerador.wCampo(tcStr, '', 'nrCRM', 1, 10, 0, self.exMedOcup.Aso.Medico.nrCRM);
+  Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 0, self.exMedOcup.Aso.Medico.ufCRM);
 
   Gerador.wGrupo('/medico');
 end;
@@ -387,10 +362,9 @@ procedure TevtMonit.GerarExMedOcup;
   function DeveGerarRespMonit: Boolean;
   begin
     //layout 2.5 ou algum campo preenchido deve gerar grupo.
-    Result := (VersaoDF <= ve02_05_00) or (
-     (Trim(self.exMedOcup.RespMonit.nmResp) <> '') and
-     (Trim(self.exMedOcup.RespMonit.nrCRM)  <> '') and
-     (Trim(self.exMedOcup.RespMonit.ufCRM)  <> '')); 
+    Result := (Trim(self.exMedOcup.RespMonit.nmResp) <> '') and
+              (Trim(self.exMedOcup.RespMonit.nrCRM)  <> '') and
+              (Trim(self.exMedOcup.RespMonit.ufCRM)  <> '');
   end;
 begin
   Gerador.wGrupo('exMedOcup');
@@ -423,8 +397,10 @@ end;
 
 function TevtMonit.GerarXML: boolean;
 begin
-  Result := inherited GerarXML;
   try
+    inherited GerarXML;
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtMonit');
@@ -440,9 +416,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtMonit');
-
-//    Validar(schevtMonit);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

@@ -58,31 +58,35 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2250CollectionItem = class;
-  TEvtAvPrevio = class;
-  TInfoAvPrevio = class;
-  TDetAvPrevio = class;
-  TCancAvPrevio = class;
-
-  TS2250Collection = class(TeSocialCollection)
+  TDetAvPrevio = class
   private
-    function GetItem(Index: Integer): TS2250CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2250CollectionItem);
+    FdtAvPrv: TDateTime;
+    FdtPrevDeslig: TDateTime;
+    Fobservacao: string;
   public
-    function Add: TS2250CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2250CollectionItem;
-    property Items[Index: Integer]: TS2250CollectionItem read GetItem write SetItem; default;
+    property dtAvPrv: TDateTime read FdtAvPrv write FdtAvPrv;
+    property dtPrevDeslig: TDateTime read FdtPrevDeslig write FdtPrevDeslig;
+    property observacao: string read Fobservacao write Fobservacao;
   end;
 
-  TS2250CollectionItem = class(TObject)
+  TCancAvPrevio = class
   private
-    FTipoEvento: TTipoEvento;
-    FEvtAvPrevio: TEvtAvPrevio;
+    FdtCancAvPrv: TDateTime;
+    Fobservacao: string;
   public
-    constructor Create(AOwner: TComponent);
+    property dtCancAvPrv: TDateTime read FdtCancAvPrv write FdtCancAvPrv;
+    property observacao: string read Fobservacao write Fobservacao;
+  end;
+
+  TInfoAvPrevio = class
+  private
+    FDetAvPrevio : TDetAvPrevio;
+    FCancAvPrevio: TCancAvPrevio;
+  public
+    constructor Create;
     destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtAvPrevio: TEvtAvPrevio read FEvtAvPrevio write FEvtAvPrevio;
+    property DetAvPrevio: TDetAvPrevio read FDetAvPrevio write FDetAvPrevio;
+    property CancAvPrevio: TCancAvPrevio read FCancAvPrevio write FCancAvPrevio;
   end;
 
   TEvtAvPrevio = class(TeSocialEvento)
@@ -108,35 +112,25 @@ type
     property InfoAvPrevio: TInfoAvPrevio read FInfoAvPrevio write FInfoAvPrevio;
   end;
 
-  TInfoAvPrevio = class
+  TS2250CollectionItem = class(TObject)
   private
-    FDetAvPrevio : TDetAvPrevio;
-    FCancAvPrevio: TCancAvPrevio;
+    FTipoEvento: TTipoEvento;
+    FEvtAvPrevio: TEvtAvPrevio;
   public
-    constructor Create;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-    property DetAvPrevio: TDetAvPrevio read FDetAvPrevio write FDetAvPrevio;
-    property CancAvPrevio: TCancAvPrevio read FCancAvPrevio write FCancAvPrevio;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtAvPrevio: TEvtAvPrevio read FEvtAvPrevio write FEvtAvPrevio;
   end;
 
-  TDetAvPrevio = class
+  TS2250Collection = class(TeSocialCollection)
   private
-    FdtAvPrv: TDateTime;
-    FdtPrevDeslig: TDateTime;
-    Fobservacao: string;
+    function GetItem(Index: Integer): TS2250CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2250CollectionItem);
   public
-    property dtAvPrv: TDateTime read FdtAvPrv write FdtAvPrv;
-    property dtPrevDeslig: TDateTime read FdtPrevDeslig write FdtPrevDeslig;
-    property observacao: string read Fobservacao write Fobservacao;
-  end;
-
-  TCancAvPrevio = class
-  private
-    FdtCancAvPrv: TDateTime;
-    Fobservacao: string;
-  public
-    property dtCancAvPrv: TDateTime read FdtCancAvPrv write FdtCancAvPrv;
-    property observacao: string read Fobservacao write Fobservacao;
+    function Add: TS2250CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2250CollectionItem;
+    property Items[Index: Integer]: TS2250CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -282,9 +276,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAvPrevio');
-
-//    Validar(schevtAvPrevio);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

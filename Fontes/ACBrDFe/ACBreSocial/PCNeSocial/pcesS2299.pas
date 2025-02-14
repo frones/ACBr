@@ -61,78 +61,189 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2299CollectionItem = class;
-  TEvtDeslig = class;
-  TInfoDeslig = class;
-  TVerbasRescS2299 = class;
-  TDmDevCollectionS2299 = class;
-  TDMDevCollectionItemS2299 = class;
-  TInfoPerApur = class;
-  TInfoPerAnt = class;
-  TIdeADCCollection = class;
-  TIdeADCItem = class;
-  TIdePeriodoCollection = class;
-  TIdePeriodoItem = class;
-  TConsigFGTSCollection = class;
-  TConsigFGTSItem = class;
-  TtransfTit = class;
-  TInfoTrabIntermCollection = class;
-  TInfoTrabIntermItem = class;
-  TProcCS = class;
-  TRemunAposDeslig = class;
-
-  TS2299Collection = class(TeSocialCollection)
+  TInfoPerApur = class(TObject)
   private
-    function GetItem(Index: Integer): TS2299CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2299CollectionItem);
+    FIdeEstabLot: TideEstabLotCollection;
   public
-    function Add: TS2299CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2299CollectionItem;
-    property Items[Index: Integer]: TS2299CollectionItem read GetItem write SetItem; default;
+    constructor Create;
+    destructor Destroy; override;
+
+    property ideEstabLot: TideEstabLotCollection read FIdeEstabLot write FIdeEstabLot;
   end;
 
-  TS2299CollectionItem = class(TObject)
+  TIdePeriodoItem = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FEvtDeslig : TEvtDeslig;
+    FPerRef: string;
+    FIdeEstabLot: TideEstabLotCollection;
   public
-    constructor Create(AOwner: Tcomponent);
-    destructor  Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtDeslig: TEvtDeslig read FEvtDeslig write FEvtDeslig;
+    constructor Create;
+    destructor Destroy; override;
+
+    property perRef: string read FPerRef write FPerRef;
+    property ideEstabLot: TideEstabLotCollection read FIdeEstabLot write FIdeEstabLot;
   end;
 
-  TEvtDeslig = class(TeSocialEvento)
+  TIdePeriodoCollection = class(TACBrObjectList)
   private
-    FIdeEvento: TIdeEvento2;
-    FIdeEmpregador: TIdeEmpregador;
-    FIdeVinculo: TIdeVinculo;
-    FInfoDeslig: TInfoDeslig;
-
-    procedure GerarInfoDeslig(obj: TInfoDeslig);
-    procedure GerarSucessaoVinc(obj: TSucessaoVinc2);
-    procedure GerarVerbasResc(obj: TVerbasRescS2299);
-    procedure GerarProcCS(obj: TProcCS);
-    procedure GerarDmDev(pDmDev: TDmDevCollectionS2299);
-    procedure GerarInfoPerApur(pInfoPerApur: TInfoPerApur);
-    procedure GerarInfoPerAnt(pInfoPerAnt: TInfoPerAnt);
-    procedure GerarIdeADC(pIdeADC: TIdeADCCollection);
-    procedure GerarIdePeriodo(pIdePeriodo: TIdePeriodoCollection);
-    procedure GerarconsigFGTS(obj: TConsigFGTSCollection);
-    procedure GerarTransfTit(obj: TtransfTit);
-    procedure GerarInfoTrabInterm(obj: TInfoTrabIntermCollection);
-    procedure GerarRemunAposDeslig(obj: TRemunAposDeslig);
+    function GetItem(Index: Integer): TIdePeriodoItem;
+    procedure SetItem(Index: Integer; Value: TIdePeriodoItem);
   public
-    constructor Create(AACBreSocial: TObject); override;
-    destructor  Destroy; override;
+    function Add: TIdePeriodoItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdePeriodoItem;
+    property Items[Index: Integer]: TIdePeriodoItem read GetItem write SetItem; default;
+  end;
 
-    function GerarXML: boolean; override;
-    function LerArqIni(const AIniString: String): Boolean;
+  TIdeADCItem = class(TObject)
+  private
+    FDtAcConv: TDateTime;
+    FTpAcConv: tpTpAcConv;
+    FcompAcConv: String;
+    FDtEfAcConv: TDateTime;
+    FDsc: String;
+    FIdePeriodo: TIdePeriodoCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
 
-    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
-    property InfoDeslig: TInfoDeslig read FInfoDeslig write FInfoDeslig;
+    property dtAcConv: TDateTime read FDtAcConv write FDtAcConv;
+    property tpAcConv: tpTpAcConv read FTpAcConv write FTpAcConv;
+    property compAcConv: String read FcompAcConv write FcompAcConv;
+    property dtEfAcConv: TDateTime read FdtEfAcConv write FdtEfAcConv;
+    property dsc: string read FDsc write FDsc;
+    property idePeriodo: TIdePeriodoCollection read FIdePeriodo write FIdePeriodo;
+  end;
+
+  TIdeADCCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TIdeADCItem;
+    procedure SetItem(Index: Integer; Value: TIdeADCItem);
+  public
+    function Add: TIdeADCItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdeADCItem;
+    property Items[Index: Integer]: TIdeADCItem read GetItem write SetItem; default;
+  end;
+
+  TInfoPerAnt = class(TObject)
+  private
+    FIdeADC: TIdeADCCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property ideADC: TIdeADCCollection read FIdeADC write FIdeADC;
+  end;
+
+  TInfoTrabIntermItem = class(TObject)
+  private
+    FcodConv: string;
+  public
+    property codConv: string read FcodConv write FcodConv;
+  end;
+
+  TInfoTrabIntermCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TInfoTrabIntermItem;
+    procedure SetItem(Index: Integer; Value: TInfoTrabIntermItem);
+  public
+    function Add: TInfoTrabIntermItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoTrabIntermItem;
+    property Items[Index: Integer]: TInfoTrabIntermItem read GetItem write SetItem; default;
+  end;
+
+  TDMDevCollectionItemS2299 = class(TObject)
+  private
+    FIdeDmDev: string;
+    FInfoPerApur: TInfoPerApur;
+    FInfoPerAnt: TInfoPerAnt;
+    FinfoTrabInterm: TinfoTrabIntermCollection;
+    FindRRA: tpSimNaoFacultativo;
+    FinfoRRA: TinfoRRA;
+
+    function getInfoPerApur: TInfoPerApur;
+    function getInfoPerAnt: TInfoPerAnt;
+    function getInfoRRA: TInfoRRA;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function infoPerApurInst: boolean;
+    function infoPerAntInst: boolean;
+    function infoRRAInst: boolean;
+
+    property ideDmDev: string read FIdeDmDev write FIdeDmDev;
+    property indRRA: tpSimNaoFacultativo read FindRRA write FindRRA;
+    property infoRRA: TinfoRRA read getInfoRRA write FinfoRRA;
+    property infoPerApur: TInfoPerApur read getInfoPerApur write FInfoPerApur;
+    property infoPerAnt: TInfoPerAnt read getInfoPerAnt write FInfoPerAnt;
+    property infoTrabInterm: TinfoTrabIntermCollection read FinfoTrabInterm write FinfoTrabInterm;
+  end;
+
+  TDmDevCollectionS2299 = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TDMDevCollectionItemS2299;
+    procedure SetItem(Index: Integer; Value: TDMDevCollectionItemS2299);
+  public
+    function Add: TDMDevCollectionItemS2299; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDMDevCollectionItemS2299;
+    property Items[Index: Integer]: TDMDevCollectionItemS2299 read GetItem write SetItem; default;
+  end;
+
+  TProcCS = class(TObject)
+  private
+    FnrProcJud: String;
+  public
+    property nrProcJud: String read FnrProcJud write FnrProcJud;
+  end;
+
+  TVerbasRescS2299 = class(TVerbasResc)
+  private
+    FDmDev: TDmDevCollectionS2299;
+    FProcCS: TProcCS;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property dmDev: TDmDevCollectionS2299 read FDmDev write FDmDev;
+    property ProcCS: TProcCS read FProcCS write FProcCS;
+  end;
+
+  TConsigFGTSItem = class(TObject)
+  private
+    FidConsig: tpSimNao;
+    FinsConsig: string;
+    FnrContr: string;
+  public
+    property idConsig: tpSimNao read FidConsig write FidConsig;
+    property insConsig: string read FinsConsig write FinsConsig;
+    property nrContr: string read FnrContr write FnrContr;
+  end;
+
+  TConsigFGTSCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TConsigFGTSItem;
+    procedure SetItem(Index: Integer; Value: TConsigFGTSItem);
+  public
+    function Add: TConsigFGTSItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TConsigFGTSItem;
+    property Items[Index: Integer]: TConsigFGTSItem read GetItem write SetItem; default;
+  end;
+
+  TtransfTit = class(TObject)
+  private
+    FcpfSubstituto: string;
+    FdtNascto: TDateTime;
+  public
+    property cpfSubstituto: string read FcpfSubstituto write FcpfSubstituto;
+    property dtNascto: TDateTime read FdtNascto write FdtNascto;
+  end;
+
+  TRemunAposDeslig = class
+  private
+   FindRemun: TpIndRemun;
+   FdtFimRemun: TDateTime;
+  public
+   property indRemun: TpIndRemun read FindRemun write FindRemun;
+   property dtFimRemun: TDateTime read FdtFimRemun write FdtFimRemun;
   end;
 
   TInfoDeslig = class(TObject)
@@ -199,191 +310,60 @@ type
     property remunAposDeslig: TRemunAposDeslig read FRemunAposDeslig write FRemunAposDeslig;
   end;
 
-  TIdePeriodoCollection = class(TACBrObjectList)
+  TEvtDeslig = class(TeSocialEvento)
   private
-    function GetItem(Index: Integer): TIdePeriodoItem;
-    procedure SetItem(Index: Integer; Value: TIdePeriodoItem);
+    FIdeEvento: TIdeEvento2;
+    FIdeEmpregador: TIdeEmpregador;
+    FIdeVinculo: TIdeVinculo;
+    FInfoDeslig: TInfoDeslig;
+
+    procedure GerarInfoDeslig(obj: TInfoDeslig);
+    procedure GerarSucessaoVinc(obj: TSucessaoVinc2);
+    procedure GerarVerbasResc(obj: TVerbasRescS2299);
+    procedure GerarProcCS(obj: TProcCS);
+    procedure GerarDmDev(pDmDev: TDmDevCollectionS2299);
+    procedure GerarInfoPerApur(pInfoPerApur: TInfoPerApur);
+    procedure GerarInfoPerAnt(pInfoPerAnt: TInfoPerAnt);
+    procedure GerarIdeADC(pIdeADC: TIdeADCCollection);
+    procedure GerarIdePeriodo(pIdePeriodo: TIdePeriodoCollection);
+    procedure GerarconsigFGTS(obj: TConsigFGTSCollection);
+    procedure GerarTransfTit(obj: TtransfTit);
+    procedure GerarInfoTrabInterm(obj: TInfoTrabIntermCollection);
+    procedure GerarRemunAposDeslig(obj: TRemunAposDeslig);
   public
-    function Add: TIdePeriodoItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TIdePeriodoItem;
-    property Items[Index: Integer]: TIdePeriodoItem read GetItem write SetItem; default;
+    constructor Create(AACBreSocial: TObject); override;
+    destructor  Destroy; override;
+
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
+    property InfoDeslig: TInfoDeslig read FInfoDeslig write FInfoDeslig;
   end;
 
-  TIdePeriodoItem = class(TObject)
+  TS2299CollectionItem = class(TObject)
   private
-    FPerRef: string;
-    FIdeEstabLot: TideEstabLotCollection;
+    FTipoEvento: TTipoEvento;
+    FEvtDeslig : TEvtDeslig;
   public
-    constructor Create;
-    destructor Destroy; override;
-
-    property perRef: string read FPerRef write FPerRef;
-    property ideEstabLot: TideEstabLotCollection read FIdeEstabLot write FIdeEstabLot;
+    constructor Create(AOwner: Tcomponent);
+    destructor  Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtDeslig: TEvtDeslig read FEvtDeslig write FEvtDeslig;
   end;
 
-  TIdeADCCollection = class(TACBrObjectList)
+  TS2299Collection = class(TeSocialCollection)
   private
-    function GetItem(Index: Integer): TIdeADCItem;
-    procedure SetItem(Index: Integer; Value: TIdeADCItem);
+    function GetItem(Index: Integer): TS2299CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2299CollectionItem);
   public
-    function Add: TIdeADCItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TIdeADCItem;
-    property Items[Index: Integer]: TIdeADCItem read GetItem write SetItem; default;
+    function Add: TS2299CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2299CollectionItem;
+    property Items[Index: Integer]: TS2299CollectionItem read GetItem write SetItem; default;
   end;
 
-  TIdeADCItem = class(TObject)
-  private
-    FDtAcConv: TDateTime;
-    FTpAcConv: tpTpAcConv;
-    FcompAcConv: String;
-    FDtEfAcConv: TDateTime;
-    FDsc: String;
-    FIdePeriodo: TIdePeriodoCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property dtAcConv: TDateTime read FDtAcConv write FDtAcConv;
-    property tpAcConv: tpTpAcConv read FTpAcConv write FTpAcConv;
-    property compAcConv: String read FcompAcConv write FcompAcConv;
-    property dtEfAcConv: TDateTime read FdtEfAcConv write FdtEfAcConv;
-    property dsc: string read FDsc write FDsc;
-    property idePeriodo: TIdePeriodoCollection read FIdePeriodo write FIdePeriodo;
-  end;
-
-  TInfoPerAnt = class(TObject)
-  private
-    FIdeADC: TIdeADCCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property ideADC: TIdeADCCollection read FIdeADC write FIdeADC;
-  end;
-
-  TInfoPerApur = class(TObject)
-  private
-    FIdeEstabLot: TideEstabLotCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property ideEstabLot: TideEstabLotCollection read FIdeEstabLot write FIdeEstabLot;
-  end;
-
-  TDmDevCollectionS2299 = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TDMDevCollectionItemS2299;
-    procedure SetItem(Index: Integer; Value: TDMDevCollectionItemS2299);
-  public
-    function Add: TDMDevCollectionItemS2299; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TDMDevCollectionItemS2299;
-    property Items[Index: Integer]: TDMDevCollectionItemS2299 read GetItem write SetItem; default;
-  end;
-
-  TDMDevCollectionItemS2299 = class(TObject)
-  private
-    FIdeDmDev: string;
-    FInfoPerApur: TInfoPerApur;
-    FInfoPerAnt: TInfoPerAnt;
-    FinfoTrabInterm: TinfoTrabIntermCollection;
-    FindRRA: tpSimNaoFacultativo;
-    FinfoRRA: TinfoRRA;
-
-    function getInfoPerApur: TInfoPerApur;
-    function getInfoPerAnt: TInfoPerAnt;
-    function getInfoRRA: TInfoRRA;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function infoPerApurInst: boolean;
-    function infoPerAntInst: boolean;
-    function infoRRAInst: boolean;
-
-    property ideDmDev: string read FIdeDmDev write FIdeDmDev;
-    property indRRA: tpSimNaoFacultativo read FindRRA write FindRRA;
-    property infoRRA: TinfoRRA read getInfoRRA write FinfoRRA;
-    property infoPerApur: TInfoPerApur read getInfoPerApur write FInfoPerApur;
-    property infoPerAnt: TInfoPerAnt read getInfoPerAnt write FInfoPerAnt;
-    property infoTrabInterm: TinfoTrabIntermCollection read FinfoTrabInterm write FinfoTrabInterm;
-  end;
-
-  TVerbasRescS2299 = class(TVerbasResc)
-  private
-    FDmDev: TDmDevCollectionS2299;
-    FProcCS: TProcCS;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property dmDev: TDmDevCollectionS2299 read FDmDev write FDmDev;
-    property ProcCS: TProcCS read FProcCS write FProcCS;
-  end;
-
-  TConsigFGTSCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TConsigFGTSItem;
-    procedure SetItem(Index: Integer; Value: TConsigFGTSItem);
-  public
-    function Add: TConsigFGTSItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TConsigFGTSItem;
-    property Items[Index: Integer]: TConsigFGTSItem read GetItem write SetItem; default;
-  end;
-
-  TConsigFGTSItem = class(TObject)
-  private
-    FidConsig: tpSimNao;
-    FinsConsig: string;
-    FnrContr: string;
-  public
-    property idConsig: tpSimNao read FidConsig write FidConsig;
-    property insConsig: string read FinsConsig write FinsConsig;
-    property nrContr: string read FnrContr write FnrContr;
-  end;
-
-  TtransfTit = class(TObject)
-  private
-    FcpfSubstituto: string;
-    FdtNascto: TDateTime;
-  public
-    property cpfSubstituto: string read FcpfSubstituto write FcpfSubstituto;
-    property dtNascto: TDateTime read FdtNascto write FdtNascto;
-  end;
-
-  TInfoTrabIntermCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TInfoTrabIntermItem;
-    procedure SetItem(Index: Integer; Value: TInfoTrabIntermItem);
-  public
-    function Add: TInfoTrabIntermItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TInfoTrabIntermItem;
-    property Items[Index: Integer]: TInfoTrabIntermItem read GetItem write SetItem; default;
-  end;
-
-  TInfoTrabIntermItem = class(TObject)
-  private
-    FcodConv: string;
-  public
-    property codConv: string read FcodConv write FcodConv;
-  end;
-
-  TProcCS = class(TObject)
-  private
-    FnrProcJud: String;
-  public
-    property nrProcJud: String read FnrProcJud write FnrProcJud;
-  end;
-
-  TRemunAposDeslig = class
-  private
-   FindRemun: TpIndRemun;
-   FdtFimRemun: TDateTime;
-  public
-   property indRemun: TpIndRemun read FindRemun write FindRemun;
-   property dtFimRemun: TDateTime read FdtFimRemun write FdtFimRemun;
-  end;
-  
 implementation
 
 uses
@@ -772,9 +752,8 @@ begin
   Gerador.wCampo(tcStr, '', 'mtvDeslig',    1,  2, 1, obj.mtvDeslig);
   Gerador.wCampo(tcDat, '', 'dtDeslig',    10, 10, 1, obj.dtDeslig);
 
-  if VersaoDF > ve02_05_00 then
-    if obj.dtAvPrv > 0 then
-      Gerador.wCampo(tcDat, '', 'dtAvPrv', 10, 10, 0, obj.dtAvPrv);
+  if obj.dtAvPrv > 0 then
+    Gerador.wCampo(tcDat, '', 'dtAvPrv', 10, 10, 0, obj.dtAvPrv);
 
   Gerador.wCampo(tcStr, '', 'indPagtoAPI',  1,  1, 1, eSSimNaoToStr(obj.indPagtoAPI));
 
@@ -786,33 +765,17 @@ begin
   Gerador.wCampo(tcDe2, '', 'percAliment', 1,  5, 0, obj.percAliment);
   Gerador.wCampo(tcDe2, '', 'vrAlim',      1, 14, 0, obj.vrAlim);
 
-  if VersaoDF <= ve02_05_00 then
-    if ((obj.mtvDeslig='09') or (obj.mtvDeslig='10')) then
-      Gerador.wCampo(tcStr, '', 'nrCertObito', 1, 32, 0, obj.nrCertObito);
-
   if obj.nrProcTrab <> '' then
     Gerador.wCampo(tcStr, '', 'nrProcTrab', 1, 20, 0, obj.nrProcTrab);
 
-  if VersaoDF >= veS01_02_00 then
-    if not (StrToIntDef(obj.mtvDeslig,0) in [10, 11, 12, 13, 28, 29, 30, 34, 36, 37, 40, 43, 44]) then
-      if obj.indPDV = snfSim then
-        Gerador.wCampo(tcStr, '', 'indPDV',  1,  1, 1, eSSimNaoFacultativoToStr(obj.indPDV));
+  if not (StrToIntDef(obj.mtvDeslig,0) in [10, 11, 12, 13, 28, 29, 30, 34, 36, 37, 40, 43, 44]) then
+    if obj.indPDV = snfSim then
+      Gerador.wCampo(tcStr, '', 'indPDV',  1,  1, 1, eSSimNaoFacultativoToStr(obj.indPDV));
 
-  //O campo é sempre obrigatório para a categoria 111 (Intermitente)
-  if (VersaoDF <= ve02_05_00) then
-  begin
-    Gerador.wCampo(tcStr, '', 'indCumprParc', 1,   1, 1, eSTpCumprParcialAvisoToStr(obj.indCumprParc));
-    if ((obj.QtdDiasInterm >= 0) or (obj.CodCateg = 111))  then
-      Gerador.wCampo(tcInt, '', 'qtdDiasInterm', 1,   2, 1, obj.QtdDiasInterm);
-  end;
-
-  if (VersaoDF >= veS01_00_00) and (obj.infoIntermInst()) then
+  if obj.infoIntermInst() then
     GerarinfoInterm(obj.infoInterm);
 
-  if VersaoDF = ve02_04_01 then
-    Gerador.wCampo(tcStr, '', 'observacao',   1, 255, 0, obj.Observacao)
-  else
-    GerarObservacoes(obj.observacoes);
+  GerarObservacoes(obj.observacoes);
 
   if (StrToIntDef(obj.mtvDeslig,0) in [11, 12, 13, 25, 28, 29, 30]) then
      GerarSucessaoVinc(obj.SucessaoVinc);
@@ -820,7 +783,7 @@ begin
   if (obj.transfTit.cpfSubstituto <> '') And (obj.mtvDeslig='34') then
     GerarTransfTit(obj.transfTit);
 
-  if (VersaoDF >= ve02_05_00) and (obj.mtvDeslig = '36') then
+  if (obj.mtvDeslig = '36') then
     GerarMudancaCPF3(obj.mudancaCPF);
 
   if (obj.verbasRescInst) and  (obj.mtvDeslig <> '11') and (obj.mtvDeslig <>'12') and
@@ -842,18 +805,8 @@ begin
   begin
     Gerador.wGrupo('sucessaoVinc');
 
-    if VersaoDF <= ve02_05_00 then
-    begin
-      if VersaoDF >= ve02_05_00 then
-        Gerador.wCampo(tcStr, '', 'tpInscSuc',    1,  1, 1, eSTpInscricaoToStr(obj.tpInscSuc));
-
-      Gerador.wCampo(tcStr, '', 'cnpjSucessora', 14, 14, 1, obj.cnpjSucessora);
-    end
-    else
-    begin
-      Gerador.wCampo(tcStr, '', 'tpInsc',         1,  1, 1, eSTpInscricaoToStr(obj.tpInsc));
-      Gerador.wCampo(tcStr, '', 'nrInsc',        14, 14, 1, obj.nrInsc);
-    end;
+    Gerador.wCampo(tcStr, '', 'tpInsc',         1,  1, 1, eSTpInscricaoToStr(obj.tpInsc));
+    Gerador.wCampo(tcStr, '', 'nrInsc',        14, 14, 1, obj.nrInsc);
 
     Gerador.wGrupo('/sucessaoVinc');
   end;
@@ -898,8 +851,6 @@ begin
     Gerador.wCampo(tcDat, '', 'dtAcConv',   10,  10, 0, pIdeADC[i].dtAcConv);
     Gerador.wCampo(tcStr, '', 'tpAcConv',    1,   1, 1, eSTpAcConvToStr(pIdeADC[i].tpAcConv));
     Gerador.wCampo(tcStr, '', 'compAcConv',  7,   7, 0, pIdeADC[i].compAcConv);
-    if VersaoDF <= ve02_05_00 then
-      Gerador.wCampo(tcDat, '', 'dtEfAcConv', 10,  10, 1, pIdeADC[i].dtEfAcConv);
     Gerador.wCampo(tcStr, '', 'dsc',         1, 255, 1, pIdeADC[i].dsc);
 
     GerarIdePeriodo(pIdeADC[i].idePeriodo);
@@ -930,15 +881,12 @@ begin
 
     Gerador.wCampo(tcStr, '', 'ideDmDev', 1, 30, 1, pDmDev[i].ideDmDev);
 
-    if VersaoDF >= veS01_01_00 then
+    if (pDmDev[i].indRRA = snfSim) and (pDmDev[i].infoRRAInst()) then
     begin
-      if (pDmDev[i].indRRA = snfSim) and (pDmDev[i].infoRRAInst()) then
-      begin
-        Gerador.wCampo(tcStr, '', 'indRRA', 1,  1, 1, eSSimNaoFacultativoToStr(pDmDev[i].indRRA));
+      Gerador.wCampo(tcStr, '', 'indRRA', 1, 1, 1, eSSimNaoFacultativoToStr(pDmDev[i].indRRA));
 
-        if (pDmDev[i].infoRRAInst()) then
-          GerarInfoRRA(pDmDev[i].infoRRA);
-      end;
+      if (pDmDev[i].infoRRAInst()) then
+        GerarInfoRRA(pDmDev[i].infoRRA);
     end;
 
     if pDmDev[i].infoPerApurInst then
@@ -946,9 +894,6 @@ begin
 
     if pDmDev[i].infoPerAntInst then
       GerarInfoPerAnt(pDmDev[i].infoPerAnt);
-
-    if VersaoDF <= ve02_05_00 then
-      GerarInfoTrabInterm(pDmDev[i].infoTrabInterm);
 
     Gerador.wGrupo('/dmDev');
   end;
@@ -967,8 +912,7 @@ begin
   if obj.infoMVInst then
     GerarInfoMV(obj.infoMV);
 
-  if (VersaoDF >= ve02_04_02) then
-    GerarProcCS(obj.ProcCS);
+  GerarProcCS(obj.ProcCS);
 
   Gerador.wGrupo('/verbasResc');
 end;
@@ -994,9 +938,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtDeslig');
-
-//    Validar(schevtDeslig);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -1008,38 +949,20 @@ procedure TEvtDeslig.GerarconsigFGTS(obj: TConsigFGTSCollection);
 var
   i: Integer;
 begin
-  if VersaoDF = ve02_04_01 then
+  // Na versão 02.04.02 o grupo <consigFGTS> é opcional e a quantidade de
+  // ocorrências é 9
+  for i := 0 to obj.Count -1 do
   begin
-    // Na versão 02.04.01 o grupo <consigFGTS> é obrigatório e a quantidade de
-    // ocorrências é 1
-    if obj.Count = 1 then
-    begin
-      Gerador.wGrupo('consigFGTS');
+     Gerador.wGrupo('consigFGTS');
 
-      Gerador.wCampo(tcStr, '', 'idConsig',  1,  1, 1, eSSimNaoToStr(obj[0].idConsig));
-      Gerador.wCampo(tcStr, '', 'insConsig', 0,  5, 0, obj[0].insConsig);
-      Gerador.wCampo(tcStr, '', 'nrContr',   0, 40, 0, obj[0].nrContr);
+     Gerador.wCampo(tcStr, '', 'insConsig', 0,  5, 0, obj[i].insConsig);
+     Gerador.wCampo(tcStr, '', 'nrContr',   0, 40, 0, obj[i].nrContr);
 
-      Gerador.wGrupo('/consigFGTS');
-    end;
-  end
-  else
-  begin
-    // Na versão 02.04.02 o grupo <consigFGTS> é opcional e a quantidade de
-    // ocorrências é 9
-    for i := 0 to obj.Count -1 do
-    begin
-       Gerador.wGrupo('consigFGTS');
-
-       Gerador.wCampo(tcStr, '', 'insConsig', 0,  5, 0, obj[i].insConsig);
-       Gerador.wCampo(tcStr, '', 'nrContr',   0, 40, 0, obj[i].nrContr);
-
-       Gerador.wGrupo('/consigFGTS');
-    end;
-
-    if obj.Count > 99 then
-      Gerador.wAlerta('', 'consigFGTS', 'Informações sobre operação de crédito consignado com garantia de FGTS', ERR_MSG_MAIOR_MAXIMO + '99')
+     Gerador.wGrupo('/consigFGTS');
   end;
+
+  if obj.Count > 99 then
+    Gerador.wAlerta('', 'consigFGTS', 'Informações sobre operação de crédito consignado com garantia de FGTS', ERR_MSG_MAIOR_MAXIMO + '99')
 end;
 
 procedure TEvtDeslig.GerarTransfTit(obj: TtransfTit);
@@ -1083,7 +1006,7 @@ end;
 
 procedure TEvtDeslig.GerarRemunAposDeslig(obj: TRemunAposDeslig);
 begin
-  if (VersaoDF >= veS01_01_00) and (obj.indRemun <> ireNaoInformado) then
+  if obj.indRemun <> ireNaoInformado then
   begin
     Gerador.wGrupo('remunAposDeslig');
 
@@ -1379,8 +1302,6 @@ begin
               dtAcConv   := StringToDateTime(sFim);
               tpAcConv   := eSStrToTpAcConv(Ok, INIRec.ReadString(sSecao, 'tpAcConv', 'A'));
               compAcConv := INIRec.ReadString(sSecao, 'compAcConv', EmptyStr);
-              if VersaoDF <= ve02_05_00 then
-                dtEfAcConv := StringToDateTime(INIRec.ReadString(sSecao, 'dtEfAcConv', '0'));
               dsc        := INIRec.ReadString(sSecao, 'dsc', EmptyStr);
 
               L := 1;

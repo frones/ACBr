@@ -58,31 +58,6 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador, pcnLeitor;
 
 type
-  TS2200Collection = class;
-  TS2200CollectionItem = class;
-  TEvtAdmissao = class;
-
-  TS2200Collection = class(TeSocialCollection)
-  private
-    function GetItem(Index: Integer): TS2200CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2200CollectionItem);
-  public
-    function Add: TS2200CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2200CollectionItem;
-    property Items[Index: Integer]: TS2200CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS2200CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtAdmissao: TEvtAdmissao;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtAdmissao: TEvtAdmissao read FEvtAdmissao write FEvtAdmissao;
-  end;
-
   TEvtAdmissao = class(TeSocialEvento)
   private
     FIdeEvento: TIdeEvento2;
@@ -102,6 +77,27 @@ type
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property Trabalhador: TTrabalhador read FTrabalhador write FTrabalhador;
     property Vinculo: TVinculo read FVinculo write FVinculo;
+  end;
+
+  TS2200CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtAdmissao: TEvtAdmissao;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtAdmissao: TEvtAdmissao read FEvtAdmissao write FEvtAdmissao;
+  end;
+
+  TS2200Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS2200CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2200CollectionItem);
+  public
+    function Add: TS2200CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2200CollectionItem;
+    property Items[Index: Integer]: TS2200CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -466,14 +462,8 @@ begin
 
       sSecao := 'aprend';
 
-      Ok := False;
-      if (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF >= veS01_02_00) then
-      begin
-        if INIRec.ReadString(sSecao, 'indAprend', '') = '1' then
-          Ok := (INIRec.ReadString(sSecao, 'cnpjEntQual', '') <> EmptyStr)
-        else
-          Ok := (INIRec.ReadString(sSecao, 'tpInsc', '') <> EmptyStr);
-      end
+      if INIRec.ReadString(sSecao, 'indAprend', '') = '1' then
+        Ok := (INIRec.ReadString(sSecao, 'cnpjEntQual', '') <> EmptyStr)
       else
         Ok := (INIRec.ReadString(sSecao, 'tpInsc', '') <> EmptyStr);
 
@@ -649,27 +639,6 @@ begin
         end;
 
         Inc(I);
-      end;
-
-      sSecao := 'sucessaoVinc';
-      if ((INIRec.ReadString(sSecao, 'cnpjEmpregAnt', '') <> '') and (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF <= ve02_05_00)) then
-      begin
-        vinculo.sucessaoVinc.tpInsc        := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
-        vinculo.sucessaoVinc.nrInsc        := INIRec.ReadString(sSecao, 'nrInsc', '');
-        vinculo.sucessaoVinc.tpInscAnt     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInscAnt', '1'));
-        vinculo.sucessaoVinc.cnpjEmpregAnt := INIRec.ReadString(sSecao, 'cnpjEmpregAnt', '');
-        vinculo.sucessaoVinc.MatricAnt     := INIRec.ReadString(sSecao, 'matricAnt', '');
-        vinculo.sucessaoVinc.dtTransf      := StringToDateTime(INIRec.ReadString(sSecao, 'dtTransf', '0'));
-        vinculo.sucessaoVinc.Observacao    := INIRec.ReadString(sSecao, 'observacao', '');
-      end;
-
-      if ((INIRec.ReadString(sSecao, 'tpInsc', '') <> '') and (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF > ve02_05_00)) then
-      begin
-        vinculo.sucessaoVinc.tpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
-        vinculo.sucessaoVinc.nrInsc       := INIRec.ReadString(sSecao, 'nrInsc', '');
-        vinculo.sucessaoVinc.MatricAnt    := INIRec.ReadString(sSecao, 'matricAnt', '');
-        vinculo.sucessaoVinc.dtTransf     := StringToDateTime(INIRec.ReadString(sSecao, 'dtTransf', '0'));
-        vinculo.sucessaoVinc.Observacao   := INIRec.ReadString(sSecao, 'observacao', '');
       end;
 
       sSecao := 'transfDom';
@@ -991,17 +960,6 @@ begin
             end;
             Inc(i);
           end;
-        end;
-
-        if ((Leitor.rExtrai(3, 'sucessaoVinc') <> '') and (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF <= ve02_05_00)) then
-        begin
-          vinculo.sucessaoVinc.tpInsc        := eSStrToTpInscricao(bOk, Leitor.rCampo(tcStr, 'tpInsc'));
-          vinculo.sucessaoVinc.nrInsc        := Leitor.rCampo(tcStr, 'nrInsc');
-          vinculo.sucessaoVinc.tpInscAnt     := eSStrToTpInscricao(bOk, Leitor.rCampo(tcStr, 'tpInscAnt'));
-          vinculo.sucessaoVinc.cnpjEmpregAnt := Leitor.rCampo(tcStr, 'cnpjEmpregAnt');
-          vinculo.sucessaoVinc.MatricAnt     := Leitor.rCampo(tcStr, 'matricAnt');
-          vinculo.sucessaoVinc.dtTransf      := StringToDateTime(Leitor.rCampo(tcDat, 'dtTransf'));
-          vinculo.sucessaoVinc.Observacao    := Leitor.rCampo(tcStr, 'observacao');
         end;
 
         if Leitor.rExtrai(3, 'transfDom') <> '' then

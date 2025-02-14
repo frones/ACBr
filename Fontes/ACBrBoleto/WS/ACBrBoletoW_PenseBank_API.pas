@@ -259,7 +259,7 @@ begin
       LJsonObject.AddPair('campoUtilizacaoBeneficiario',Trim(Copy(OnlyCharsInSet(AnsiUpperCase(ATitulo.NumeroDocumento),CHARS_VALIDOS),0,30)));
       LJsonObject.AddPair('numeroTituloBeneficiario', Copy(Trim(UpperCase(IfThen(ATitulo.SeuNumero<>'',ATitulo.SeuNumero,ATitulo.NumeroDocumento))),0,15));
       //LJsonObject.AddPair('numeroTituloCliente', Boleto.Banco.MontarCampoNossoNumero(ATitulo));
-      LJsonObject.AddPair('mensagemBloquetoOcorrencia', UpperCase(Copy(Trim(ATitulo.Mensagem.Text),0,30)));
+      LJsonObject.AddPair('mensagemBloquetoOcorrencia', UpperCase(Copy(Trim(ATitulo.Mensagem.Text),0,105)));
 
 
       GerarDesconto(LJsonObject);

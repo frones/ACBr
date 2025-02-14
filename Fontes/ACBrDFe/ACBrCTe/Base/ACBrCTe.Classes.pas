@@ -171,12 +171,12 @@ type
     FcCredPres: Integer;
     FpCredPres: Double;
     FvCredPres: Double;
-    FvCredPresConsSus: Double;
+    FvCredPresCondSus: Double;
   public
     property cCredPres: Integer read FcCredPres write FcCredPres;
     property pCredPres: Double read FpCredPres write FpCredPres;
     property vCredPres: Double read FvCredPres write FvCredPres;
-    property vCredPresConsSus: Double read FvCredPresConsSus write FvCredPresConsSus;
+    property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;
   end;
 
   { TgIBSCBS }
@@ -217,88 +217,6 @@ type
     property gIBSCBS: TgIBSCBS read FgIBSCBS write FgIBSCBS;
   end;
 
-  { TgIBSUFTot }
-
-  TgIBSUFTot = class(TObject)
-  private
-    FvDif: Double;
-    FvDevTrib: Double;
-    FvDeson: Double;
-    FvIBSUF: Double;
-  public
-    property vDif: Double read FvDif write FvDif;
-    property vDevTrib: Double read FvDevTrib write FvDevTrib;
-    property vDeson: Double read FvDeson write FvDeson;
-    property vIBSUF: Double read FvIBSUF write FvIBSUF;
-  end;
-
-  { TgIBSMunTot }
-
-  TgIBSMunTot = class(TObject)
-  private
-    FvDif: Double;
-    FvDevTrib: Double;
-    FvDeson: Double;
-    FvIBSMun: Double;
-  public
-    property vDif: Double read FvDif write FvDif;
-    property vDevTrib: Double read FvDevTrib write FvDevTrib;
-    property vDeson: Double read FvDeson write FvDeson;
-    property vIBSMun: Double read FvIBSMun write FvIBSMun;
-  end;
-
-  { TgIBS }
-
-  TgIBS = class(TObject)
-  private
-    FgIBSUFTot: TgIBSUFTot;
-    FgIBSMunTot: TgIBSMunTot;
-    FvCredPres: Double;
-    FvCredPresConsSus: Double;
-    FvIBSTot: Double;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property gIBSUFTot: TgIBSUFTot read FgIBSUFTot write FgIBSUFTot;
-    property gIBSMunTot: TgIBSMunTot read FgIBSMunTot write FgIBSMunTot;
-    property vCredPres: Double read FvCredPres write FvCredPres;
-    property vCredPresConsSus: Double read FvCredPresConsSus write FvCredPresConsSus;
-    property vIBSTot: Double read FvIBSTot write FvIBSTot;
-  end;
-
-  { TgCBS }
-
-  TgCBS = class(TObject)
-  private
-    FvDif: Double;
-    FvDevTrib: Double;
-    FvDeson: Double;
-    FvCredPresConsSus: Double;
-    FvCBS: Double;
-  public
-    property vDif: Double read FvDif write FvDif;
-    property vDevTrib: Double read FvDevTrib write FvDevTrib;
-    property vDeson: Double read FvDeson write FvDeson;
-    property vCredPresConsSus: Double read FvCredPresConsSus write FvCredPresConsSus;
-    property vCBS: Double read FvCBS write FvCBS;
-  end;
-
-  { TIBSCBSTot }
-
-  TIBSCBSTot = class(TObject)
-  private
-    FvBCCIBS: Double;
-    FgIBS: TgIBS;
-    FgCBS: TgCBS;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property vBCCIBS: Double read FvBCCIBS write FvBCCIBS;
-    property gIBS: TgIBS read FgIBS write FgIBS;
-    property gCBS: TgCBS read FgCBS write FgCBS;
-  end;
   {======== Fim das Classes da Reforma Tributária }
 
   TInfCTe = class(TObject)
@@ -1070,6 +988,7 @@ type
     FICMSUFFim: TICMSUFFim;
     FinfTribFed: TinfTribFed;
     FIBSCBS: TIBSCBS;
+    FvTotDFe: Double;
   public
     constructor Create;
     destructor Destroy; override;
@@ -1079,7 +998,9 @@ type
     property infAdFisco: string      read FInfAdFisco  write FInfAdFisco;
     property ICMSUFFim: TICMSUFFim   read FICMSUFFim   write FICMSUFFim;
     property infTribFed: TinfTribFed read FinfTribFed  write FinfTribFed;
+    // Reforma Tributaria
     property IBSCBS: TIBSCBS read FIBSCBS write FIBSCBS;
+    property vTotDFe: Double read FvTotDFe write FvTotDFe;
   end;
 
   TInfQCollectionItem = class(TObject)
@@ -4990,42 +4911,6 @@ begin
   FgDevTrib.Free;
   FgRed.Free;
   FgDeson.Free;
-
-  inherited Destroy;
-end;
-
-{ TIBSCBSTot }
-
-constructor TIBSCBSTot.Create;
-begin
-  inherited Create;
-
-  FgIBS := TgIBS.Create;
-  FgCBS := TgCBS.Create;
-end;
-
-destructor TIBSCBSTot.Destroy;
-begin
-  FgIBS.Free;
-  FgCBS.Free;
-
-  inherited Destroy;
-end;
-
-{ TgIBS }
-
-constructor TgIBS.Create;
-begin
-  inherited Create;
-
-  FgIBSUFTot := TgIBSUFTot.Create;
-  FgIBSMunTot := TgIBSMunTot.Create;
-end;
-
-destructor TgIBS.Destroy;
-begin
-  FgIBSUFTot.Free;
-  FgIBSMunTot.Free;
 
   inherited Destroy;
 end;

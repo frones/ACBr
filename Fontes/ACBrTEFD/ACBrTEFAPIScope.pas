@@ -65,7 +65,7 @@ type
     fTEFScopeAPI: TACBrTEFScopeAPI;
 
     procedure QuandoGravarLogAPI(const ALogLine: String; var Tratado: Boolean);
-    procedure QuandocopeTransacaoEmAndamentoAPI( EstadoOperacao: TACBrTEFScopeEstadoOperacao;
+    procedure QuandoTransacaoEmAndamentoAPI( EstadoOperacao: TACBrTEFScopeEstadoOperacao;
       out Cancelar: Boolean);
 
     procedure QuandoExibirMensagemAPI(const Mensagem: String;
@@ -419,7 +419,7 @@ begin
   fpTEFRespClass := TACBrTEFRespScope;
 
   fTEFScopeAPI := TACBrTEFScopeAPI.Create;
-  fTEFScopeAPI.OnTransacaoEmAndamento := QuandocopeTransacaoEmAndamentoAPI;
+  fTEFScopeAPI.OnTransacaoEmAndamento := QuandoTransacaoEmAndamentoAPI;
   fTEFScopeAPI.OnGravarLog := QuandoGravarLogAPI;
   fTEFScopeAPI.OnExibeMensagem := QuandoExibirMensagemAPI;
   fTEFScopeAPI.OnExibeMenu := QuandoPerguntarMenuAPI;
@@ -455,6 +455,7 @@ begin
     IpStr := copy(IpStr, 1, p-1);
   end;
 
+  fTEFScopeAPI.PathLib := PathDLL;
   fTEFScopeAPI.DiretorioTrabalho := ADir;
   fTEFScopeAPI.EnderecoIP := IpStr;
   fTEFScopeAPI.PortaTCP := PortaStr;
@@ -568,7 +569,7 @@ begin
   Tratado := True;
 end;
 
-procedure TACBrTEFAPIClassScope.QuandocopeTransacaoEmAndamentoAPI(
+procedure TACBrTEFAPIClassScope.QuandoTransacaoEmAndamentoAPI(
   EstadoOperacao: TACBrTEFScopeEstadoOperacao; out Cancelar: Boolean);
 var
   i: Integer;

@@ -46,6 +46,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2025
+-- ACBrTEFScopeAPI --
+[*] Ajuste para o caso da rotina 'ScopeConsultaPP' retornar 'RCS_PP_NAO_ENCONTRADO'
+    https://www.projetoacbr.com.br/forum/topic/81846-tef-scope-problema-ao-comunicar-com-pinpad/
+
+-- ACBrTEFAPIScope --
+[*] Correção no nome de Método 'QuandoTransacaoEmAndamentoAPI'
+[*] Informando 'PathDLL'  em 'TACBrTEFAPIClassScope.Inicializar'
+    (por: DSA)
+
 12/02/2025
 -- ACBrTEFScopeAPI --
 [*] Ajustes para evitar A.V. em Delphi 10.2.x

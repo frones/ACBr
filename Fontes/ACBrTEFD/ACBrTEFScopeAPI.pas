@@ -4047,7 +4047,13 @@ begin
               ', Config:'+IntToStr(bConfig)+
               ', Exclusivo:'+IntToStr(bExclusivo)+
               ', Porta:'+IntToStr(bPorta) );
-    if (ret <> PC_OK) then
+    if (ret = RCS_PP_NAO_ENCONTRADO) then
+    begin
+      bExclusivo := 0;
+      bPorta := 0;
+      bConfig := PPCONF_MODO_ABECS;
+    end
+    else if (ret <> PC_OK) then
       TratarErroPinPadScope(ret);
 
     if (bExclusivo = 0) then

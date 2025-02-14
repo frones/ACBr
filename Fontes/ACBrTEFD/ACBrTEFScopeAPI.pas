@@ -1566,7 +1566,7 @@ type
     function ConfigurarPropriedadeScope(AId: LongInt; Ligado: Boolean): Boolean;
 
     procedure VerificarDiretorioDeTrabalho;
-    procedure VerificarEAjustarScopeINI(const ASuportaCarteirasDigitaisPix: Boolean);
+    procedure VerificarEAjustarScopeINI;
     function ConfigurarPortaPinPad(const APortaPinPad: String): Word;
     procedure ObterDadosScopeINI(out AEmpresa: String; out AFilial: String;
       out AEnderecoIP: String; out APortaTCP: String);
@@ -1745,8 +1745,6 @@ begin
 end;
 
 procedure TACBrTEFScopeAPI.Inicializar;
-var
-  vSuportaCarteirasDigitaisPix: Boolean;
 begin
   if fInicializada then
     Exit;
@@ -1768,8 +1766,7 @@ begin
     DoException(Format(sErrEventoNaoAtribuido, ['OnExibeQRCode']));
 
   VerificarDiretorioDeTrabalho;
-  vSuportaCarteirasDigitaisPix := True; // Elton... Verificar.
-  VerificarEAjustarScopeINI(vSuportaCarteirasDigitaisPix);
+  VerificarEAjustarScopeINI;
   LoadLibFunctions;
 
   try
@@ -2198,8 +2195,7 @@ begin
     DoException(Format(sErrDirTrabalhoInvalido, [fDiretorioTrabalho]));
 end;
 
-procedure TACBrTEFScopeAPI.VerificarEAjustarScopeINI(const
-    ASuportaCarteirasDigitaisPix: Boolean);
+procedure TACBrTEFScopeAPI.VerificarEAjustarScopeINI;
 var
   ini: TMemIniFile;
   sl: TStringList;
@@ -2268,12 +2264,19 @@ begin
         AjustarParamSeNaoExistir(SecName, 'VersaoAutomacao', sName);
         AjustarParamSeNaoExistir(SecName, 'CupomReduzido', IfThen(fCupomReduzido, 's', 'n'));
         AjustarParamSeNaoExistir(SecName, 'WKPAN', IfThen(fPinPadSeguro, 's', 'n'));
+
+        // Configuração para PIX, sempre será em LocalHost
         if (fEnderecoIP = '127.0.0.1') or (LowerCase(fEnderecoIP) = 'localhost') then
-          AjustarParamSeNaoExistir(SecName, 'ThinClient', 's');
-        if ASuportaCarteirasDigitaisPix then
         begin
+          AjustarParamSeNaoExistir(SecName, 'ThinClient', 's');
           AjustarParamSeNaoExistir(SecName, 'CRTYPE', '1');
           AjustarParamSeNaoExistir(SecName, 'ExibeQRcode', 's');
+        end
+        else
+        begin
+          ini.DeleteKey(SecName, 'ThinClient');
+          ini.DeleteKey(SecName, 'CRTYPE');
+          ini.DeleteKey(SecName, 'ExibeQRcode');
         end;
         Break;
       end;

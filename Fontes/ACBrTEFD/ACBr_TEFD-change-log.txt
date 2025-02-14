@@ -50,6 +50,8 @@ Símbolo : Significado
 -- ACBrTEFScopeAPI --
 [*] Ajuste para o caso da rotina 'ScopeConsultaPP' retornar 'RCS_PP_NAO_ENCONTRADO'
     https://www.projetoacbr.com.br/forum/topic/81846-tef-scope-problema-ao-comunicar-com-pinpad/
+[*] Ajuste em 'TACBrTEFScopeAPI.VerificarEAjustarScopeINI', para remover chaves
+    exclusivas de PIX, quando configuração não for específica para PIX
 
 -- ACBrTEFAPIScope --
 [*] Correção no nome de Método 'QuandoTransacaoEmAndamentoAPI'

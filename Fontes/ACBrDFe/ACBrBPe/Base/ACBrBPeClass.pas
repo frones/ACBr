@@ -213,12 +213,12 @@ type
     FcCredPres: Integer;
     FpCredPres: Double;
     FvCredPres: Double;
-    FvCredPresConsSus: Double;
+    FvCredPresCondSus: Double;
   public
     property cCredPres: Integer read FcCredPres write FcCredPres;
     property pCredPres: Double read FpCredPres write FpCredPres;
     property vCredPres: Double read FvCredPres write FvCredPres;
-    property vCredPresConsSus: Double read FvCredPresConsSus write FvCredPresConsSus;
+    property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;
   end;
 
   { TgIBSCBS }
@@ -296,7 +296,7 @@ type
     FgIBSUFTot: TgIBSUFTot;
     FgIBSMunTot: TgIBSMunTot;
     FvCredPres: Double;
-    FvCredPresConsSus: Double;
+    FvCredPresCondSus: Double;
     FvIBSTot: Double;
   public
     constructor Create;
@@ -305,7 +305,7 @@ type
     property gIBSUFTot: TgIBSUFTot read FgIBSUFTot write FgIBSUFTot;
     property gIBSMunTot: TgIBSMunTot read FgIBSMunTot write FgIBSMunTot;
     property vCredPres: Double read FvCredPres write FvCredPres;
-    property vCredPresConsSus: Double read FvCredPresConsSus write FvCredPresConsSus;
+    property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;
     property vIBSTot: Double read FvIBSTot write FvIBSTot;
   end;
 
@@ -316,13 +316,13 @@ type
     FvDif: Double;
     FvDevTrib: Double;
     FvDeson: Double;
-    FvCredPresConsSus: Double;
+    FvCredPresCondSus: Double;
     FvCBS: Double;
   public
     property vDif: Double read FvDif write FvDif;
     property vDevTrib: Double read FvDevTrib write FvDevTrib;
     property vDeson: Double read FvDeson write FvDeson;
-    property vCredPresConsSus: Double read FvCredPresConsSus write FvCredPresConsSus;
+    property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;
     property vCBS: Double read FvCBS write FvCBS;
   end;
 
@@ -371,6 +371,7 @@ type
     FvBC: Double;
     FvICMS: Double;
     FIBSCBSTot: TIBSCBSTot;
+    FvTotDFe: Double;
   public
     constructor Create;
     destructor Destroy; override;
@@ -382,6 +383,7 @@ type
     property vICMS: Double   read FvICMS write FvICMS;
     // Reforma Tributaria
     property IBSCBSTot: TIBSCBSTot read FIBSCBSTot write FIBSCBSTot;
+    property vTotDFe: Double read FvTotDFe write FvTotDFe;
   end;
 
   TdetCollectionItem = class(TObject)
@@ -882,6 +884,7 @@ type
     FinfAdFisco: String;
     FICMSUFFim: TICMSUFFim;
     FIBSCBS: TIBSCBS;
+    FvTotDFe: Double;
   public
     constructor Create;
     destructor Destroy; override;
@@ -893,6 +896,7 @@ type
     property ICMSUFFim: TICMSUFFim read FICMSUFFim write FICMSUFFim;
     // Reforma Tributaria
     property IBSCBS: TIBSCBS read FIBSCBS write FIBSCBS;
+    property vTotDFe: Double read FvTotDFe write FvTotDFe;
   end;
 
   TICMS = class(TObject)

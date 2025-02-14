@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2025
+-- ACBrNFe.Classes/ACBrNFe.Consts --
+[+] Inclusão de novas contantes e ajustes nas novas classes para atender a Reforma Tributária.
+   Por: Italo Giurizzato Junior
+
 11/02/2025
 -- ACBrNFe.XmlWriter --
 [-] Possível solução para o erro que estava ocorrendo ao gerar o grupo detExport.

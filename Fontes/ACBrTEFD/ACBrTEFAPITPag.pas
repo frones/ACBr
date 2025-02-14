@@ -184,13 +184,14 @@ function TACBrTEFAPIClassTPag.EfetuarPagamento(ValorPagto: Currency;
   DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
 var
   Params: TACBrTEFTPagTransactionParams;
+  ret: LongInt;
 begin
   Params.amount := Trunc(ValorPagto * 100);
   if not (Modalidade in [tefmpNaoDefinido, tefmpCartao]) then
     fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPICapturaNaoSuportada),
       [GetEnumName(TypeInfo(TACBrTEFModalidadePagamento), integer(Modalidade) ), ClassName] ));
 
-  Params.cardType := CardType_CTLS;
+  Params.cardType := CardType_NONE;
 
   if (teftcCredito in CartoesAceitos) then
     Params.transactionType := TransactionType_CREDIT
@@ -209,7 +210,7 @@ begin
   Params.isTyped := 0;
   Params.installment := Parcelas;
 
-  GetTEFTPagAPI.ExecutarTransacao(Params);
+  ret := GetTEFTPagAPI.ExecutarTransacao(Params);
 end;
 
 function TACBrTEFAPIClassTPag.EfetuarAdministrativa(

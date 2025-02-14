@@ -51,15 +51,6 @@ resourcestring
   sErrEventoNaoAtribuido = 'Evento %s não atribuido';
   sErrCNPJNaoInformado = 'CNPJEmpresa não informado';
 
-type
-  EACBrTEFTPagAPI = class(Exception);
-
-  //TACBrTEFTPagCreditType = ( CreditType_NO_INSTALLMENT,
-  //                           CreditType_INSTALLMENT );
-
-  //TACBrTEFTPagCardType = ( CardType_EMV = 1,
-  //                         CardType_CTLS,
-  //                         CardType_NONE);
 const
   CreditType_NO_INSTALLMENT = 0;
   CreditType_INSTALLMENT = 1;
@@ -72,24 +63,27 @@ const
   TransactionType_CREDIT = 1;
   TransactionType_VOUCHER = 2;
 
-type
-  TACBrTEFTPagReadCardType = ( ReadCardType_MAGNETIC,
-                               ReadCardType_M1,
-                               ReadCardType_M2,
-                               ReadCardType_EMV_CONTACT,
-                               ReadCardType_TIB,
-                               ReadCardType_CONTACTLESS_STRIPE,
-                               ReadCardType_CONTACTLESS_EMV,
-                               ReadCardType_TYPED) ;
+  TransactionStatus_CONFIRMED = 0;
+  TransactionStatus_UNDONE = 1;
+  TransactionStatus_PENDING = 2;
+  TransactionStatus_PENDING_CONFIRMATION = 3;
+  TransactionStatus_UNDO = 4;
+  TransactionStatus_PENDING_UNDO = 5;
+  TransactionStatus_REJECTED = 6;
+  TransactionStatus_CANCELLED = 7;
 
-  TACBrTEFTPagTransactionStatus = ( TransactionStatus_CONFIRMED,
-                                    TransactionStatus_UNDONE,
-                                    TransactionStatus_PENDING,
-                                    TransactionStatus_PENDING_CONFIRMATION,
-                                    TransactionStatus_UNDO,
-                                    TransactionStatus_PENDING_UNDO,
-                                    TransactionStatus_REJECTED,
-                                    TransactionStatus_CANCELLED );
+  ReadCardType_MAGNETIC = 0;
+  ReadCardType_M1 = 1;
+  ReadCardType_M2 = 2;
+  ReadCardType_EMV_CONTACT = 3;
+  ReadCardType_TIB = 4;
+  ReadCardType_CONTACTLESS_STRIPE = 5;
+  ReadCardType_CONTACTLESS_EMV = 6;
+  ReadCardType_TYPED = 7;
+
+type
+  EACBrTEFTPagAPI = class(Exception);
+
 
   TACBrTEFTPagReasonUndo = ( ReasonUndo_TIME_OUT,
                              ReasonUndo_DENIED_BY_CARD,
@@ -175,12 +169,11 @@ type
     TRANSACTION_NOT_FOUND = 1019
   );
 
-
   TACBrTEFTPagTransactionParams = record
     amount: Int64;
-    creditType: Cardinal; // TACBrTEFTPagCreditType;
-    cardType: Cardinal; // TACBrTEFTPagCardType;
-    transactionType: Cardinal; // TACBrTEFTPagTransactionType;
+    creditType: Cardinal;
+    cardType: Cardinal;
+    transactionType: Cardinal;
     installment: LongInt;
     isTyped: LongInt;
   end;
@@ -189,9 +182,9 @@ type
     startDate: Int64;
     endDate: Int64;
     statusSize: LongInt;
-    status: array[0..7] of TACBrTEFTPagTransactionStatus;
+    status: array[0..7] of Cardinal;
     readCardTypeSize: LongInt;
-    readCardType: array[0..7] of TACBrTEFTPagReadCardType;
+    readCardType: array[0..7] of Cardinal;
   end;
 
   PACBrTEFTPagTransactionPartial = ^TACBrTEFTPagTransactionPartial;
@@ -200,14 +193,14 @@ type
     amount: Int64;
     typeTransaction: PAnsiChar;
     installments: LongInt;
-    transactionStatus: TACBrTEFTPagTransactionStatus;
+    transactionStatus: Cardinal;
     date: Int64; //UNIX time
     nsuResponse: PAnsiChar;
     reasonUndo: TACBrTEFTPagReasonUndo;
     transactionReceipt: PAnsiChar;
     brand: PAnsiChar;
     authentication: LongInt;
-    entryMode: TACBrTEFTPagReadCardType;
+    entryMode: Cardinal;
     merchantCode: PAnsiChar;
     nsuAcquirer: PAnsiChar;
     authAcquirer: PAnsiChar;
@@ -219,9 +212,9 @@ type
 
   TACBrTEFTPagExibeMensagem = procedure( const Mensagem: String) of object;
 
-  TACBrTPagCallBackProcess = procedure(code: TACBrTEFTPagNotificationType; process: AnsiChar);
-  TACBrTPagCallBackError = procedure(code: TACBrTEFTPagReturnCodes; error: PAnsiChar);
-  TACBrTPagCallBackSuccess = procedure(success: PAnsiChar);
+  TACBrTPagCallBackProcess = procedure(code: Cardinal; process: PAnsiChar); cdecl;
+  TACBrTPagCallBackError = procedure(code: Cardinal; error: PAnsiChar); cdecl;
+  TACBrTPagCallBackSuccess = procedure(success: PAnsiChar); cdecl;
 
   { TACBrTEFTPagAPI }
 
@@ -301,9 +294,9 @@ type
 function GetTEFTPagAPI: TACBrTEFTPagAPI;
 function ReturnCodesToStr(ReturnCode: TACBrTEFTPagReturnCodes): String;
 
-procedure CallBackProcess(code: TACBrTEFTPagNotificationType; process: AnsiChar);
-procedure CallBackError(code: TACBrTEFTPagReturnCodes; error: PAnsiChar);
-procedure CallBackSuccess(success: PAnsiChar);
+procedure CallBackProcess(code: Cardinal; process: PAnsiChar); cdecl;
+procedure CallBackError(code: Cardinal; error: PAnsiChar); cdecl;
+procedure CallBackSuccess(success: PAnsiChar); cdecl;
 
 
 var
@@ -385,25 +378,24 @@ begin
   end;
 end;
 
-procedure CallBackProcess(code: TACBrTEFTPagNotificationType;
-  process: AnsiChar);
+procedure CallBackProcess(code: Cardinal; process: PAnsiChar); cdecl;
 var
   s: String;
 begin
-  //if (process = nil) then
-  //  s := ''
-  //else
+  if (process = nil) then
+    s := ''
+  else
     s := TrimRight(String(process));
 
   with GetTEFTPagAPI do
   begin
     GravarLog( Format('   Callback Process: code: %s %s ',
       [GetEnumName(TypeInfo(TACBrTEFTPagNotificationType), integer(code)), s] ));
-    //ExibirMensagem(s);  //TODO: verificar porque sempre vem vazio
+    ExibirMensagem(s);
   end;
 end;
 
-procedure CallBackError(code: TACBrTEFTPagReturnCodes; error: PAnsiChar);
+procedure CallBackError(code: Cardinal; error: PAnsiChar); cdecl;
 var
   s: String;
 begin
@@ -414,12 +406,13 @@ begin
 
   with GetTEFTPagAPI do
   begin
-    GravarLog( Format('   Callback Error: code: %s %s ', [ReturnCodesToStr(code), s] ));
+    GravarLog( Format('   Callback Error: code: %s %s ',
+      [ReturnCodesToStr(TACBrTEFTPagReturnCodes(code)), s] ));
     ExibirMensagem(s);
   end;
 end;
 
-procedure CallBackSuccess(success: PAnsiChar);
+procedure CallBackSuccess(success: PAnsiChar); cdecl;
 var
   s: String;
 begin
@@ -501,12 +494,12 @@ function TACBrTEFTPagAPI.ExecutarTransacao(Params: TACBrTEFTPagTransactionParams
   ): LongInt;
 begin
   GravarLog('  call - transaction' + sLineBreak +
-            '  Params.amount: '+IntToStr(Params.amount)+ sLineBreak +
-            '  Params.creditType: '+ IntToStr(Params.creditType) + sLineBreak + // GetEnumName(TypeInfo(TACBrTEFTPagCreditType), integer(Params.creditType))+ sLineBreak +
-            '  Params.cardType: '+IntToStr(Params.cardType) + sLineBreak +  // GetEnumName(TypeInfo(TACBrTEFTPagCardType), integer(Params.cardType))+ sLineBreak +
-            '  Params.transactionType: '+ IntToStr(Params.transactionType) + sLineBreak +  //GetEnumName(TypeInfo(TACBrTEFTPagTransactionType), integer(Params.transactionType))+ sLineBreak +
-            '  Params.installment: '+IntToStr(Params.installment)+ sLineBreak +
-            '  Params.isTyped: '+IntToStr(Params.isTyped) );
+            '    Params.amount: '+IntToStr(Params.amount)+ sLineBreak +
+            '    Params.creditType: '+ IntToStr(Params.creditType) + sLineBreak +
+            '    Params.cardType: '+IntToStr(Params.cardType) + sLineBreak +
+            '    Params.transactionType: '+ IntToStr(Params.transactionType) + sLineBreak +
+            '    Params.installment: '+IntToStr(Params.installment)+ sLineBreak +
+            '    Params.isTyped: '+IntToStr(Params.isTyped) );
 
   Result := xTPagTransaction(Params);
   TratarErroTPag( TACBrTEFTPagReturnCodes(Result));

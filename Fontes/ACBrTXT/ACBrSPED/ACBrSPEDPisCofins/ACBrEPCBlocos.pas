@@ -61,8 +61,8 @@ type
                  vlVersao320   // Código 006 - ADE Cofis ??? - Apuração em 01/01/2020
                 );
 
-  TACBrVersaoLeiaute = TACBrVersaoLeiauteSPEDContribuicoes deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDContribuicoes'{$EndIf}{$EndIf};
-  TACBrCodVer = TACBrVersaoLeiauteSPEDContribuicoes deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDContribuicoes'{$EndIf}{$EndIf};
+  TACBrVersaoLeiaute = TACBrVersaoLeiauteSPEDContribuicoes {$IfDef DELPHI2009_UP} deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDContribuicoes'{$EndIf}{$EndIf};
+  TACBrCodVer = TACBrVersaoLeiauteSPEDContribuicoes {$IfDef DELPHI2009_UP} deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDContribuicoes'{$EndIf}{$EndIf};
 
 
 

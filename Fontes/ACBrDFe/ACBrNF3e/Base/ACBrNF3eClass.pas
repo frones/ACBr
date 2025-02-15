@@ -173,12 +173,12 @@ type
     FcCredPres: Integer;
     FpCredPres: Double;
     FvCredPres: Double;
-    FvCredPresConsSus: Double;
+    FvCredPresCondSus: Double;
   public
     property cCredPres: Integer read FcCredPres write FcCredPres;
     property pCredPres: Double read FpCredPres write FpCredPres;
     property vCredPres: Double read FvCredPres write FvCredPres;
-    property vCredPresConsSus: Double read FvCredPresConsSus write FvCredPresConsSus;
+    property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;
   end;
 
   { TgIBSCBS }
@@ -256,7 +256,7 @@ type
     FgIBSUFTot: TgIBSUFTot;
     FgIBSMunTot: TgIBSMunTot;
     FvCredPres: Double;
-    FvCredPresConsSus: Double;
+    FvCredPresCondSus: Double;
     FvIBSTot: Double;
   public
     constructor Create;
@@ -265,7 +265,7 @@ type
     property gIBSUFTot: TgIBSUFTot read FgIBSUFTot write FgIBSUFTot;
     property gIBSMunTot: TgIBSMunTot read FgIBSMunTot write FgIBSMunTot;
     property vCredPres: Double read FvCredPres write FvCredPres;
-    property vCredPresConsSus: Double read FvCredPresConsSus write FvCredPresConsSus;
+    property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;
     property vIBSTot: Double read FvIBSTot write FvIBSTot;
   end;
 
@@ -276,13 +276,13 @@ type
     FvDif: Double;
     FvDevTrib: Double;
     FvDeson: Double;
-    FvCredPresConsSus: Double;
+    FvCredPresCondSus: Double;
     FvCBS: Double;
   public
     property vDif: Double read FvDif write FvDif;
     property vDevTrib: Double read FvDevTrib write FvDevTrib;
     property vDeson: Double read FvDeson write FvDeson;
-    property vCredPresConsSus: Double read FvCredPresConsSus write FvCredPresConsSus;
+    property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;
     property vCBS: Double read FvCBS write FvCBS;
   end;
 
@@ -394,6 +394,7 @@ type
     FvCOFINSEfet: Double;
     FvIRRF: Double;
     FIBSCBSTot: TIBSCBSTot;
+    FvTotDFe: Double;
   public
     constructor Create;
     destructor Destroy; override;
@@ -419,6 +420,7 @@ type
     property vPISEfet: Double    read FvPISEfet    write FvPISEfet;
     // Reforma Tributaria
     property IBSCBSTot: TIBSCBSTot read FIBSCBSTot write FIBSCBSTot;
+    property vTotDFe: Double read FvTotDFe write FvTotDFe;
   end;
 
   { TEndereco }
@@ -820,6 +822,7 @@ type
     FCOFINS: TCOFINS;
     FCOFINSEfet: TCOFINSEfet;
     FretTrib: TretTrib;
+    FIBSCBS: TIBSCBS;
   public
     constructor Create();
     destructor Destroy; override;
@@ -832,6 +835,8 @@ type
     property COFINS: TCOFINS         read FCOFINS     write FCOFINS;
     property COFINSEfet: TCOFINSEfet read FCOFINSEfet write FCOFINSEfet;
     property retTrib: TretTrib       read FretTrib    write FretTrib;
+    // Reforma Tributaria
+    property IBSCBS: TIBSCBS read FIBSCBS  write FIBSCBS;
   end;
 
   { TgMedicao }
@@ -991,7 +996,6 @@ type
     FinfAdProd: string;
     FgProcRef: TgProcRef;
     FgContab: TgContabCollection;
-    FIBSCBS: TIBSCBS;
 
     procedure SetgTarif(const Value: TgTarifCollection);
     procedure SetgAdBand(const Value: TgAdBandCollection);
@@ -1010,8 +1014,6 @@ type
     property gProcRef: TgProcRef         read FgProcRef  write FgProcRef;
     property gContab: TgContabCollection read FgContab   write SetgContab;
     property infAdProd: string           read FinfAdProd write FinfAdProd;
-    // Reforma Tributaria
-    property IBSCBS: TIBSCBS read FIBSCBS  write FIBSCBS;
   end;
 
   { TdetItemAnt }
@@ -1768,6 +1770,7 @@ begin
   vCOFINSEfet := Source.vCOFINSEfet;
   vIRRF       := Source.vIRRF;
   IBSCBSTot := Source.IBSCBSTot;
+  vTotDFe := Source.vTotDFe;
 end;
 
 constructor TTotal.Create;
@@ -1959,6 +1962,9 @@ begin
   ICMS.Assign(Source.ICMS);
   PIS.Assign(Source.PIS);
   COFINS.Assign(Source.COFINS);
+  COFINSEfet.Assign(Source.COFINSEfet);
+  retTrib.Assign(Source.retTrib);
+  IBSCBS := Source.IBSCBS;
 end;
 
 constructor TImposto.Create;
@@ -1971,6 +1977,7 @@ begin
   FCOFINS     := TCOFINS.Create;
   FCOFINSEfet := TCOFINSEfet.Create;
   FretTrib    := TretTrib.Create;
+  FIBSCBS := TIBSCBS.Create;
 end;
 
 destructor TImposto.Destroy;
@@ -1981,6 +1988,7 @@ begin
   FCOFINS.Free;
   FCOFINSEfet.Free;
   FretTrib.Free;
+  FIBSCBS.Free;
 
   inherited Destroy;
 end;
@@ -2109,7 +2117,6 @@ procedure TdetItem.Assign(Source: TdetItem);
 begin
   nItemAnt  := Source.nItemAnt;
   infAdProd := Source.infAdProd;
-  IBSCBS := Source.IBSCBS;
 
   gTarif.Assign(Source.gTarif);
   gAdBand.Assign(Source.gAdBand);
@@ -2129,7 +2136,6 @@ begin
   FImposto := TImposto.Create;
   FgProcRef := TgProcRef.Create;
   FgContab := TgContabCollection.Create;
-  FIBSCBS := TIBSCBS.Create;
 end;
 
 destructor TdetItem.Destroy;
@@ -2140,7 +2146,6 @@ begin
   FImposto.Free;
   FgProcRef.Free;
   FgContab.Free;
-  FIBSCBS.Free;
 
   inherited Destroy;
 end;

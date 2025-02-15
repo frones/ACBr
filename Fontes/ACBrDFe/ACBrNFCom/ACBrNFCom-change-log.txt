@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/02/2025
+-- ACBrNFComClass/ACBrNFComConsts --
+[+] Inclusão de novas contantes e ajustes nas novas classes para atender a Reforma Tributária.
+   Por: Italo Giurizzato Junior
+
 10/02/2025
 -- ACBrNFComClass --
 [+] Inclusão das novas classes para atender a Reforma Tributária.

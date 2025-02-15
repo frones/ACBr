@@ -194,6 +194,31 @@ resourcestring
   DSC_QTDPTSRESG = 'Qtd de pontos resgatados na data de referência';
   DSC_DREFRESGPTS = 'Data de resgate dos pontos';
 
+  // Reforma Tributária
+  DSC_CCLASSTRIB = 'Código de Classificação Tributária do IBS e CBS';
+  DSC_PIBSUF = 'Alíquota do IBS de competência das UF';
+  DSC_VTRIBOP = 'Valor bruto do tributo na operação';
+  DSC_PDIF = 'Percentual de diferimento';
+  DSC_VDIF = 'Valor do Diferimento';
+  DSC_VDEVTRIB = 'Valor do tributo devolvido';
+  DSC_PREDALIQ = 'Percentual da redução de alíquota';
+  DSC_PALIQEFET = 'Aliquota Efetiva do IBS de competência das UF que será aplicada a Base de Cálculo';
+  DSC_PALIQ = 'Valor da alíquota';
+  DSC_VDESON = 'Valor desonerado';
+  DSC_VIBSUF = 'Valor do IBS de competência da UF';
+  DSC_PCBS = 'Alíquota da CBS';
+  DSC_VCBS = 'Valor da CBS';
+  DSC_CCREDPRES = 'Código de Classificação do Crédito Presumido';
+  DSC_PCREDPRES = 'Percentual do Crédito Presumido';
+  DSC_VCREDPRES = 'Valor do Crédito Presumido';
+  DSC_VCREDPRESCONDSUS = 'Valor do Crédito Presumido em condição suspensiva.';
+
+  DSC_VBCCIBS = 'Total da Base de cálculo do IBS/CBS';
+  DSC_VIBSMUN = 'Total do IBS Municipal';
+  DSC_VIBSTOT = 'Total do IBS (IBS UF + IBS Mun)';
+
+  DSC_VTOTDEF = 'Valor total do documento fiscal';
+
 implementation
 
 end.

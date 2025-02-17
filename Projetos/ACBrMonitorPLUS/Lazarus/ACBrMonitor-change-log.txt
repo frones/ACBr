@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2025  
+-- ACBrMonitor.hnd --  
+[*] #TK-6137 Corrigido exemplos de respostas da DistribuicaoDFe adicionando informações para refletir retorno mais recente.  
+    Por: Júlio Cavalcanti e Diego Folieni
+
 10/02/2025
 -- ACBrMonitor.hnd --
 [*] #TK-6521 Incluído observação para as chaves TipoData, tpPer, TipoHora e tpHor. 

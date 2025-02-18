@@ -499,7 +499,8 @@ type
     FHeader_Operacao: String;
     FHeader_Indice: Integer;
     FHeader_Sistema_Origem: String;
-    FHeader_Agencia: Integer;
+    FHeader_Agencia: String;
+    FHeader_ContaCorrente: String;
     FHeader_Id_Origem: String;
     FHeader_Data_Hora: TDateTime;
     FHeader_Id_Processo: String;
@@ -543,7 +544,8 @@ type
     property Header_Operacao: String             read FHeader_Operacao             write FHeader_Operacao;
     property Header_Indice: Integer              read FHeader_Indice               write FHeader_Indice;
     property Header_Sistema_Origem: String       read FHeader_Sistema_Origem       write FHeader_Sistema_Origem;
-    property Header_Agencia: Integer             read FHeader_Agencia              write FHeader_Agencia;
+    property Header_Agencia: String              read FHeader_Agencia              write FHeader_Agencia;
+    property Header_ContaCorrente: String        read FHeader_ContaCorrente        write FHeader_ContaCorrente;
     property Header_Id_Origem: String            read FHeader_Id_Origem            write FHeader_Id_Origem;
     property Header_Data_Hora: TDateTime         read FHeader_Data_Hora            write FHeader_Data_Hora;
     property Header_Id_Processo: String          read FHeader_Id_Processo          write FHeader_Id_Processo;
@@ -791,6 +793,7 @@ begin
   Header_Indice:= RetEnvio.Header.Indice;
   Header_Sistema_Origem:= RetEnvio.Header.Sistema_Origem;
   Header_Agencia:= RetEnvio.Header.Agencia;
+  Header_ContaCorrente:= RetEnvio.Header.ContaCorrente;
   Header_Id_Origem:= RetEnvio.Header.Id_Origem;
   Header_Data_Hora:= RetEnvio.Header.Data_Hora;
   Header_Id_Processo:= RetEnvio.Header.Id_Processo;

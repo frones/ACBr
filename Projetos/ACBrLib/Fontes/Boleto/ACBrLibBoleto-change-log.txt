@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/02/2025
+-- ACBrLibBoletoRespostas --
+[+] Realizado inclusão e alteração das propriedades FHeader_Agencia e FHeader_ContaCorrente na classe TRetornoRegistroWeb.
+    Por: Victor Panda / Antonio Carlos Junior
+
 11/02/2025
 -- RetornoBanco.cs, RetornoTitulo.cs --
 [*] #TK-6596 - Novos campos na leitura de retornos de cobrança.

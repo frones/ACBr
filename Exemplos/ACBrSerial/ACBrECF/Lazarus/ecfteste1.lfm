@@ -17,6 +17,7 @@ object Form1: TForm1
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
+  LCLVersion = '3.8.0.0'
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23

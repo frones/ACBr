@@ -639,12 +639,7 @@ begin
 
   // MsgErro já está na String Nativa da IDE... por isso deve usar "CreateDef"
   if not Tratado then
-  begin
-    if Assigned(E) and (E is EACBrDFeException) then
-      raise E
-    else
-      raise EACBrDFeException.CreateDef(MsgErro);
-  end;
+    raise EACBrDFeException.CreateDef(MsgErro);
 end;
 
 procedure TACBrDFe.SetMAIL(AValue: TACBrMail);

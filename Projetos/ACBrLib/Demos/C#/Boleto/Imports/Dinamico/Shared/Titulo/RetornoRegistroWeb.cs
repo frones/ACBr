@@ -33,7 +33,9 @@ namespace ACBrLib.Boleto
 
         public string Header_Sistema_Origem { get; set; }
 
-        public int Header_Agencia { get; set; }
+        public string Header_Agencia { get; set; }
+
+        public string Header_ContaCorrente { get; set; }
 
         public string Header_Id_Origem { get; set; }
 

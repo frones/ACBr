@@ -230,6 +230,12 @@ begin
         if not Tratado then raise;
       end;
 
+      on E: EACBrDFeException do
+      begin
+        FPDFeOwner.FazerLog('ERRO: ' + E.Message, Tratado);
+        if not Tratado then raise;
+      end;
+
       on E: Exception do
       begin
         Result := False;

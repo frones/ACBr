@@ -442,12 +442,12 @@ begin
     ReadCardTypeSet := [rct_MAGNETIC, rct_M1, rct_M2, rct_EMV_CONTACT, rct_TIB, rct_CONTACTLESS_STRIPE, rct_CONTACTLESS_EMV, rct_TYPED];
 
   if (Inicio <> 0) then
-    Params.startDate := DateTimeToUnix(Inicio)
+    Params.startDate := DateTimeToUnixMilliseconds(Inicio)
   else
     Params.startDate := 0;
 
   if (Fim <> 0) then
-    Params.endDate := DateTimeToUnix(Fim)
+    Params.endDate := DateTimeToUnixMilliseconds(Fim)
   else
     Params.endDate := 0;
 
@@ -482,9 +482,9 @@ begin
     begin
       for i := 0 to num-1 do
       begin
-        TefResp := TACBrTEFRespTPag.Create;
         t := TEFTPagAPI.ObterTransacao(lt, i);
         TEFTPagAPI.TransacaoToStr(t, sl);
+        TefResp := TACBrTEFRespTPag.Create;
         TefResp.SetStrings(sl);
         ListaTransacoes.Add(TefResp);
       end;

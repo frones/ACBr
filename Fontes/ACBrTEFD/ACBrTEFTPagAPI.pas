@@ -315,6 +315,9 @@ procedure CallBackProcess(code: Cardinal; process: PAnsiChar); cdecl;
 procedure CallBackError(code: Cardinal; error: PAnsiChar); cdecl;
 procedure CallBackSuccess(success: PAnsiChar); cdecl;
 
+function DateTimeToUnixMilliseconds(const AValue: TDateTime): Int64;
+function UnixMillisecondsToDateTime(const AValue: Int64): TDateTime;
+
 var
  vTEFTPagAPI : TACBrTEFTPagAPI;
 
@@ -444,6 +447,20 @@ begin
   end;
 end;
 
+{ Days between TDateTime basis (12/31/1899) and Unix time_t basis (1/1/1970) }
+
+const
+  UnixDateDelta = 25569;
+
+function DateTimeToUnixMilliseconds(const AValue: TDateTime): Int64;
+begin
+  Result := Round((AValue - UnixDateDelta) * 86400 * 1000);
+end;
+
+function UnixMillisecondsToDateTime(const AValue: Int64): TDateTime;
+begin
+  Result := IncMilliSecond(UnixEpoch, AValue);
+end;
 
 { TACBrTEFTPagAPI }
 
@@ -610,28 +627,30 @@ end;
 
 procedure TACBrTEFTPagAPI.TransacaoToStr(
   ATransaction: TACBrTEFTPagTransactionPartial; sl: TStringList);
+var
+  d: TDateTime;
+  s: String;
 begin
   sl.Clear;
-  with ATransaction do
-  begin
-    sl.Values['nsuRequest'] := Trim(String(nsuRequest));
-    sl.Values['amount'] := IntToStr(amount);
-    sl.Values['typeTransaction'] := Trim(String(typeTransaction));
-    sl.Values['installments'] := IntToStr(installments);
-    sl.Values['transactionStatus'] := IntToStr(transactionStatus);
-    sl.Values['date'] := FormatDateTime('YYYYMMDDHHNNSS', UnixToDateTime(date));
-    sl.Values['nsuResponse'] := Trim(String(nsuResponse));
-    sl.Values['reasonUndo'] := IntToStr(reasonUndo);
-    sl.Values['transactionReceipt'] := TrimRight(String(transactionReceipt));
-    sl.Values['brand'] := TrimRight(String(brand));
-    sl.Values['authentication'] := IntToStr(authentication);
-    sl.Values['entryMode'] := IntToStr(entryMode);
-    sl.Values['merchantCode'] := Trim(String(merchantCode));
-    sl.Values['nsuAcquirer'] := Trim(String(nsuAcquirer));
-    sl.Values['authAcquirer'] := Trim(String(authAcquirer));
-    sl.Values['printReceipt'] := IfThen(printReceipt,'1','0');
-    sl.Values['panMasked'] := Trim(String(panMasked));
-  end;
+  sl.Values['nsuRequest'] := Trim(String(ATransaction.nsuRequest));
+  sl.Values['amount'] := IntToStr(ATransaction.amount);
+  sl.Values['typeTransaction'] := Trim(String(ATransaction.typeTransaction));
+  sl.Values['installments'] := IntToStr(ATransaction.installments);
+  sl.Values['transactionStatus'] := IntToStr(ATransaction.transactionStatus);
+  d := UnixMillisecondsToDateTime(ATransaction.date);
+  s := FormatDateTime('YYYYMMDDHHNNSS', d);
+  sl.Values['date'] := s;
+  sl.Values['nsuResponse'] := Trim(String(ATransaction.nsuResponse));
+  sl.Values['reasonUndo'] := IntToStr(ATransaction.reasonUndo);
+  sl.Values['transactionReceipt'] := TrimRight(String(ATransaction.transactionReceipt));
+  sl.Values['brand'] := TrimRight(String(ATransaction.brand));
+  sl.Values['authentication'] := IntToStr(ATransaction.authentication);
+  sl.Values['entryMode'] := IntToStr(ATransaction.entryMode);
+  sl.Values['merchantCode'] := Trim(String(ATransaction.merchantCode));
+  sl.Values['nsuAcquirer'] := Trim(String(ATransaction.nsuAcquirer));
+  sl.Values['authAcquirer'] := Trim(String(ATransaction.authAcquirer));
+  sl.Values['printReceipt'] := IfThen(ATransaction.printReceipt,'1','0');
+  sl.Values['panMasked'] := Trim(String(ATransaction.panMasked));
 end;
 
 procedure TACBrTEFTPagAPI.GravarLog(const AString: AnsiString; Traduz: Boolean);

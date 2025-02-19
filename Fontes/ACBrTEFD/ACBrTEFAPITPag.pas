@@ -51,6 +51,7 @@ type
   TACBrTEFRespTPag = class( TACBrTEFResp )
   public
     procedure ConteudoToProperty; override;
+    procedure SetStrings(AStringList: TStrings);
   end;
 
 
@@ -102,8 +103,10 @@ type
 
     procedure AbortarTransacaoEmAndamento; override;
 
-    procedure ObterListaDeTransacoes(Lista: TACBrTEFRespostas; Inicio, Fim: TDateTime;
-       TransactionStatusSet: TACBrTEFTPagTransactionStatusSet; ReadCardTypeSet: TACBrTEFTPagReadCardTypeSet);
+    procedure ObterListaDeTransacoes(ListaTransacoes: TACBrTEFRespostas;
+      Inicio: TDateTime = 0; Fim: TDateTime = 0;
+      TransactionStatusSet: TACBrTEFTPagTransactionStatusSet = [];
+      ReadCardTypeSet: TACBrTEFTPagReadCardTypeSet = []);
 
     property TEFTPagAPI: TACBrTEFTPagAPI read GetTEFTPagAPI;
   end;
@@ -111,7 +114,7 @@ type
 implementation
 
 uses
-  TypInfo, Math,
+  TypInfo, Math, DateUtils,
   ACBrUtil.Strings;
 
 { TACBrTEFRespTPag }
@@ -201,6 +204,23 @@ begin
   Confirmar := Confirmar or (QtdLinhasComprovante > 0);
 end;
 
+procedure TACBrTEFRespTPag.SetStrings(AStringList: TStrings);
+var
+  i: Integer;
+  AChave, AValue: String;
+begin
+  Clear;
+
+  for i := 0 to AStringList.Count-1 do
+  begin
+    AChave := AStringList.Names[i];
+    AValue := AStringList.ValueFromIndex[i];
+    Conteudo.GravaInformacao(AChave, AValue);
+  end;
+
+  ConteudoToProperty;
+end;
+
 { TACBrTEFAPIClassTPag }
 
 constructor TACBrTEFAPIClassTPag.Create(AACBrTEFAPI: TACBrTEFAPIComum);
@@ -266,24 +286,8 @@ begin
 end;
 
 procedure TACBrTEFAPIClassTPag.InterpretarRespostaAPI;
-var
-  i: Integer;
-  AChave, AValue: String;
 begin
-  fpACBrTEFAPI.UltimaRespostaTEF.ViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
-
-  with GetTEFTPagAPI do
-  begin
-    for i := 0 to DadosDaTransacao.Count-1 do
-    begin
-      AChave := DadosDaTransacao.Names[i];
-      AValue := DadosDaTransacao.ValueFromIndex[i];
-
-      fpACBrTEFAPI.UltimaRespostaTEF.Conteudo.GravaInformacao(AChave, AValue);
-    end;
-
-    fpACBrTEFAPI.UltimaRespostaTEF.ConteudoToProperty;
-  end;
+  TACBrTEFRespTPag( fpACBrTEFAPI.UltimaRespostaTEF ).SetStrings(GetTEFTPagAPI.DadosDaTransacao);
 end;
 
 function TACBrTEFAPIClassTPag.EfetuarPagamento(ValorPagto: Currency;
@@ -415,40 +419,80 @@ begin
   inherited AbortarTransacaoEmAndamento;
 end;
 
-procedure TACBrTEFAPIClassTPag.ObterListaDeTransacoes(Lista: TACBrTEFRespostas;
+procedure TACBrTEFAPIClassTPag.ObterListaDeTransacoes(ListaTransacoes: TACBrTEFRespostas;
   Inicio, Fim: TDateTime;
   TransactionStatusSet: TACBrTEFTPagTransactionStatusSet;
   ReadCardTypeSet: TACBrTEFTPagReadCardTypeSet);
 var
   Params: TACBrTEFTPagTransactionFilter;
+  lt: PACBrTEFTPagTransactionPartial;
+  t: TACBrTEFTPagTransactionPartial;
+  TefResp: TACBrTEFRespTPag;
+  num, error, i: LongInt;
+  ts: TACBrTEFTPagTransactionStatus;
+  rc: TACBrTEFTPagReadCardType;
+  sl: TStringList;
 begin
-  Lista.Clear;
-  Params.startDate := TimeStampToMSecs( DateTimeToTimeStamp(Inicio) );
-  Params.endDate := TimeStampToMSecs( DateTimeToTimeStamp(Fim) );
+  ListaTransacoes.Clear;
 
-  for i := 0 to Length(TransactionStatusSet)-1  do
-    Params.status[i] := Integer(TransactionStatusSet[i]);
-  Params.statusSize := Length(TransactionStatusSet);
-  for i := 0 to Length(ReadCardTypeSet)-1  do
-    Params.readCardType[i] := Integer(ReadCardTypeSet[i]);
-  Params.readCardTypeSize := Length(ReadCardTypeSet);
+  if (TransactionStatusSet = []) then
+    TransactionStatusSet := [ts_CONFIRMED, ts_UNDONE, ts_PENDING, ts_PENDING_CONFIRMATION, ts_UNDO, ts_PENDING_UNDO, ts_REJECTED, ts_CANCELLED];
 
-      list := TEFTPagAPI.ObterListaTransacoes(Params, l, e);
-      try
-        for i := 0 to l-1 do
-        begin
-          t := TEFTPagAPI.ObterTransacao(list, i);
-          s := 'date: '+FormatDateTime('YYYYMMDDHHNNSS', TimeStampToDateTime(MSecsToTimeStamp(t.date)))+', '+
-               'nsuRequest: '+Trim(String(t.nsuRequest)) +', '+
-               'nsuResponse: '+Trim(String(t.nsuResponse)) +', '+
-               'nsuAcquirer: '+Trim(String(t.nsuAcquirer)) +', '+
-               'amount: '+ IntToStr(t.amount);
-          AdicionarLinhaLog(s);
-        end;
-      finally
-        TEFTPagAPI.LiberarListaTransacoes(list, l);
+  if (ReadCardTypeSet = []) then
+    ReadCardTypeSet := [rct_MAGNETIC, rct_M1, rct_M2, rct_EMV_CONTACT, rct_TIB, rct_CONTACTLESS_STRIPE, rct_CONTACTLESS_EMV, rct_TYPED];
+
+  if (Inicio <> 0) then
+    Params.startDate := DateTimeToUnix(Inicio)
+  else
+    Params.startDate := 0;
+
+  if (Fim <> 0) then
+    Params.endDate := DateTimeToUnix(Fim)
+  else
+    Params.endDate := 0;
+
+  num := 0;
+  for ts := low(TACBrTEFTPagTransactionStatus) to High(TACBrTEFTPagTransactionStatus)  do
+  begin
+    if (ts in TransactionStatusSet) then
+    begin
+      Params.status[num] := Integer(ts);
+      Inc(num)
+    end;
+  end;
+  Params.statusSize := num;
+
+  num := 0;
+  for rc := low(TACBrTEFTPagReadCardType) to High(TACBrTEFTPagReadCardType)  do
+  begin
+    if (rc in ReadCardTypeSet) then
+    begin
+      Params.readCardType[num] := Integer(rc);
+      Inc(num)
+    end;
+  end;
+  Params.readCardTypeSize := num;
+
+  num := 0;
+  error := -1;
+  lt := TEFTPagAPI.ObterListaTransacoes(Params, num, error);
+  sl := TStringList.Create;
+  try
+    if (error = 0) then
+    begin
+      for i := 0 to num-1 do
+      begin
+        TefResp := TACBrTEFRespTPag.Create;
+        t := TEFTPagAPI.ObterTransacao(lt, i);
+        TEFTPagAPI.TransacaoToStr(t, sl);
+        TefResp.SetStrings(sl);
+        ListaTransacoes.Add(TefResp);
       end;
-
+    end;
+  finally
+    sl.Free;
+    TEFTPagAPI.LiberarListaTransacoes(lt, num);
+  end;
 end;
 
 end.

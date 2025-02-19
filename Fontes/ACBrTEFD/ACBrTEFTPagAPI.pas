@@ -296,6 +296,8 @@ type
     procedure LiberarListaTransacoes(TransactionList: PACBrTEFTPagTransactionPartial; num: LongInt);
     procedure ObterUltimaTransacao(LastTransactionType: Cardinal; var errorCode: LongInt);
 
+    procedure TransacaoToStr(ATransaction: TACBrTEFTPagTransactionPartial; sl: TStringList);
+
     property DadosDaTransacao: TStringList read fDadosDaTransacao;
 
     property OnExibeMensagem: TACBrTEFTPagExibeMensagem read fOnExibeMensagem
@@ -319,7 +321,7 @@ var
 implementation
 
 uses
-  TypInfo, StrUtils,
+  TypInfo, StrUtils, DateUtils,
   ACBrUtil.FilesIO,
   ACBrUtil.Strings;
 
@@ -601,28 +603,34 @@ begin
   p := xTPagLastTransactionStore(LastTransactionType, errorCode);
   if (errorCode = ReturnCode_OK) and Assigned(p) then
   begin
-    with p^ do
-    begin
-      fDadosDaTransacao.Values['nsuRequest'] := Trim(String(nsuRequest));
-      fDadosDaTransacao.Values['amount'] := IntToStr(amount);
-      fDadosDaTransacao.Values['typeTransaction'] := Trim(String(typeTransaction));
-      fDadosDaTransacao.Values['installments'] := IntToStr(installments);
-      fDadosDaTransacao.Values['transactionStatus'] := IntToStr(transactionStatus);
-      fDadosDaTransacao.Values['date'] := FormatDateTime('YYYYMMDDHHNNSS', TimeStampToDateTime(MSecsToTimeStamp(date)));
-      fDadosDaTransacao.Values['nsuResponse'] := Trim(String(nsuResponse));
-      fDadosDaTransacao.Values['reasonUndo'] := IntToStr(reasonUndo);
-      fDadosDaTransacao.Values['transactionReceipt'] := TrimRight(String(transactionReceipt));
-      fDadosDaTransacao.Values['brand'] := TrimRight(String(brand));
-      fDadosDaTransacao.Values['authentication'] := IntToStr(authentication);
-      fDadosDaTransacao.Values['entryMode'] := IntToStr(entryMode);
-      fDadosDaTransacao.Values['merchantCode'] := Trim(String(merchantCode));
-      fDadosDaTransacao.Values['nsuAcquirer'] := Trim(String(nsuAcquirer));
-      fDadosDaTransacao.Values['authAcquirer'] := Trim(String(authAcquirer));
-      fDadosDaTransacao.Values['printReceipt'] := IfThen(printReceipt,'1','0');
-      fDadosDaTransacao.Values['panMasked'] := Trim(String(panMasked));
-    end;
-
+    TransacaoToStr(p^, fDadosDaTransacao);
     LiberarListaTransacoes(p, -1);
+  end;
+end;
+
+procedure TACBrTEFTPagAPI.TransacaoToStr(
+  ATransaction: TACBrTEFTPagTransactionPartial; sl: TStringList);
+begin
+  sl.Clear;
+  with ATransaction do
+  begin
+    sl.Values['nsuRequest'] := Trim(String(nsuRequest));
+    sl.Values['amount'] := IntToStr(amount);
+    sl.Values['typeTransaction'] := Trim(String(typeTransaction));
+    sl.Values['installments'] := IntToStr(installments);
+    sl.Values['transactionStatus'] := IntToStr(transactionStatus);
+    sl.Values['date'] := FormatDateTime('YYYYMMDDHHNNSS', UnixToDateTime(date));
+    sl.Values['nsuResponse'] := Trim(String(nsuResponse));
+    sl.Values['reasonUndo'] := IntToStr(reasonUndo);
+    sl.Values['transactionReceipt'] := TrimRight(String(transactionReceipt));
+    sl.Values['brand'] := TrimRight(String(brand));
+    sl.Values['authentication'] := IntToStr(authentication);
+    sl.Values['entryMode'] := IntToStr(entryMode);
+    sl.Values['merchantCode'] := Trim(String(merchantCode));
+    sl.Values['nsuAcquirer'] := Trim(String(nsuAcquirer));
+    sl.Values['authAcquirer'] := Trim(String(authAcquirer));
+    sl.Values['printReceipt'] := IfThen(printReceipt,'1','0');
+    sl.Values['panMasked'] := Trim(String(panMasked));
   end;
 end;
 

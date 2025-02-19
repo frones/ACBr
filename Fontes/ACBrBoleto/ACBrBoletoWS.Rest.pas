@@ -198,9 +198,6 @@ begin
   httpsend.ProxyPort := BoletoWS.ProxyPort;
   httpsend.ProxyUser := BoletoWS.ProxyUser;
   httpsend.ProxyPass := BoletoWS.ProxyPass;
-
-  if (BoletoWS.TimeOut <> 0) then
-    httpsend.TimeOut := BoletoWS.TimeOut;
 end;
 
 procedure TBoletoWSREST.setDefinirAccept(const AValue: String);

@@ -1,33 +1,33 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÃ§Ã£o com equipa- }
-{ mentos de AutomaÃ§Ã£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  VocÃª pode obter a Ãºltima versÃ£o desse arquivo na pagina do  Projeto ACBr    }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca Ã© software livre; vocÃª pode redistribuÃ­-la e/ou modificÃ¡-la }
-{ sob os termos da LicenÃ§a PÃºblica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a versÃ£o 2.1 da LicenÃ§a, ou (a seu critÃ©rio) }
-{ qualquer versÃ£o posterior.                                                   }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca Ã© distribuÃ­da na expectativa de que seja Ãºtil, porÃ©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÃ­cita de COMERCIABILIDADE OU      }
-{ ADEQUAÃ‡ÃƒO A UMA FINALIDADE ESPECÃFICA. Consulte a LicenÃ§a PÃºblica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENÃ‡A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÃª deve ter recebido uma cÃ³pia da LicenÃ§a PÃºblica Geral Menor do GNU junto}
-{ com esta biblioteca; se nÃ£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÃ§o 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÃª tambÃ©m pode obter uma copia da licenÃ§a em:                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel SimÃµes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - TatuÃ­ - SP - 18270-170         }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -40,6 +40,9 @@ uses
   Classes, SysUtils,
   ACBrBase,
   ACBrTEFComum, ACBrTEFAPI, ACBrTEFAPIComum, ACBrTEFTPagAPI;
+
+resourcestring
+  sACBrTPagErroModalidadeNaoSuportada = 'Modalidade %s não suportada';
 
 type
 
@@ -58,6 +61,7 @@ type
     function GetTEFTPagAPI: TACBrTEFTPagAPI;
     procedure QuandoGravarLogAPI(const ALogLine: String; var Tratado: Boolean);
     procedure QuandoExibirMensagemAPI(const Mensagem: String);
+    procedure DoException(const AErrorMsg: String);
 
   protected
     procedure InterpretarRespostaAPI; override;
@@ -98,20 +102,103 @@ type
 
     procedure AbortarTransacaoEmAndamento; override;
 
+    procedure ObterListaDeTransacoes(Lista: TACBrTEFRespostas; Inicio, Fim: TDateTime;
+       TransactionStatusSet: TACBrTEFTPagTransactionStatusSet; ReadCardTypeSet: TACBrTEFTPagReadCardTypeSet);
+
     property TEFTPagAPI: TACBrTEFTPagAPI read GetTEFTPagAPI;
   end;
 
 implementation
 
 uses
-  TypInfo,
+  TypInfo, Math,
   ACBrUtil.Strings;
 
 { TACBrTEFRespTPag }
 
 procedure TACBrTEFRespTPag.ConteudoToProperty;
+var
+  LinChave, s: String;
+  Linha: TACBrTEFLinha;
+  i: Integer;
 begin
-  inherited ConteudoToProperty;
+  ImagemComprovante1aVia.Clear;
+  ImagemComprovante2aVia.Clear;
+  Debito := False;
+  Credito := False;
+  Digitado := False;
+  TaxaServico := 0;
+  DataHoraTransacaoCancelada := 0;
+  DataHoraTransacaoLocal := 0;
+
+  for i := 0 to Conteudo.Count - 1 do
+  begin
+    Linha := Conteudo.Linha[i];
+    LinChave := Linha.Chave;
+
+    if (LinChave = 'msgError') then
+      TextoEspecialOperador := Linha.Informacao.AsString
+    else if (LinChave = 'msgSuccess') then
+    begin
+      TextoEspecialOperador := Linha.Informacao.AsString;
+      TextoEspecialCliente := TextoEspecialOperador;
+    end;
+    if (LinChave = 'nsuRequest') then
+      Trailer := Linha.Informacao.AsString
+    else if (LinChave = 'amount') then
+      ValorTotal := Linha.Informacao.AsInt64/100
+    else if (LinChave = 'typeTransaction') then
+    begin
+      ModalidadePagto := UpperCase(Linha.Informacao.AsString);
+      if (ModalidadePagto = 'CREDIT') then
+        Credito := True
+      else if (ModalidadePagto = 'DEBIT') then
+        Debito := True
+      else if (ModalidadePagto = 'VOUCHER') then
+        Voucher := True;
+    end
+    else if (LinChave = 'installments') then
+      QtdParcelas := Linha.Informacao.AsInteger
+    else if (LinChave = 'transactionStatus') then
+    begin
+      StatusTransacao := Linha.Informacao.AsString;
+      Sucesso := (StrToIntDef(StatusTransacao, -1) = Integer(ts_CONFIRMED));
+    end
+    else if (LinChave = 'date') then
+      DataHoraTransacaoHost := Linha.Informacao.AsTimeStampSQL
+    else if (LinChave = 'nsuResponse') then
+      NSU_TEF := Linha.Informacao.AsString
+    //else if (LinChave = 'reasonUndo') then
+    //  ModalidadePagtoDescrita := Linha.Informacao.AsString;
+    else if (LinChave = 'transactionReceipt') then
+    begin
+      s := StringReplace(Linha.Informacao.AsString, '@', sLineBreak, [rfReplaceAll]);
+      ImagemComprovante1aVia.Text := 'VIA CLIENTE' + sLineBreak + s;
+      ImagemComprovante2aVia.Text := 'VIA ESTABELECIMENTO' + sLineBreak + s;
+    end
+    else if (LinChave = 'brand') then
+      Rede := Linha.Informacao.AsString
+    else if (LinChave = 'authentication') then
+      Autenticacao := Linha.Informacao.AsString
+    else if (LinChave = 'entryMode') then
+      TipoTransacao := Linha.Informacao.AsInteger
+    else if (LinChave = 'merchantCode') then
+      DocumentoVinculado := Linha.Informacao.AsString
+    else if (LinChave = 'nsuAcquirer') then
+      NSU := Linha.Informacao.AsString
+    else if (LinChave = 'authAcquirer') then
+      CodigoAutorizacaoTransacao := Linha.Informacao.AsString
+    else if (LinChave = 'panMasked') then
+    begin
+      BIN := Linha.Informacao.AsString;
+      NFCeSAT.UltimosQuatroDigitos := RightStr(BIN, 4);
+    end
+    else
+      ProcessarTipoInterno(Linha);
+  end;
+
+  QtdLinhasComprovante := max(ImagemComprovante1aVia.Count, ImagemComprovante2aVia.Count);
+  Confirmar := Confirmar or (QtdLinhasComprovante > 0);
 end;
 
 { TACBrTEFAPIClassTPag }
@@ -131,8 +218,13 @@ end;
 
 destructor TACBrTEFAPIClassTPag.Destroy;
 begin
-  //fTEFTPagAPI.Free;
+  //fTEFTPagAPI.Free;  // Libera em ACBrTEFTPagAPI.finalization;
   inherited Destroy;
+end;
+
+function TACBrTEFAPIClassTPag.GetTEFTPagAPI: TACBrTEFTPagAPI;
+begin
+  Result := ACBrTEFTPagAPI.GetTEFTPagAPI;
 end;
 
 procedure TACBrTEFAPIClassTPag.Inicializar;
@@ -156,11 +248,6 @@ begin
   inherited;
 end;
 
-function TACBrTEFAPIClassTPag.GetTEFTPagAPI: TACBrTEFTPagAPI;
-begin
-  Result := ACBrTEFTPagAPI.GetTEFTPagAPI;
-end;
-
 procedure TACBrTEFAPIClassTPag.QuandoGravarLogAPI(const ALogLine: String;
   var Tratado: Boolean);
 begin
@@ -173,9 +260,30 @@ begin
   TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem( Mensagem, telaTodas, -1);
 end;
 
-procedure TACBrTEFAPIClassTPag.InterpretarRespostaAPI;
+procedure TACBrTEFAPIClassTPag.DoException(const AErrorMsg: String);
 begin
-  inherited InterpretarRespostaAPI;
+  fpACBrTEFAPI.DoException(AErrorMsg);
+end;
+
+procedure TACBrTEFAPIClassTPag.InterpretarRespostaAPI;
+var
+  i: Integer;
+  AChave, AValue: String;
+begin
+  fpACBrTEFAPI.UltimaRespostaTEF.ViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
+
+  with GetTEFTPagAPI do
+  begin
+    for i := 0 to DadosDaTransacao.Count-1 do
+    begin
+      AChave := DadosDaTransacao.Names[i];
+      AValue := DadosDaTransacao.ValueFromIndex[i];
+
+      fpACBrTEFAPI.UltimaRespostaTEF.Conteudo.GravaInformacao(AChave, AValue);
+    end;
+
+    fpACBrTEFAPI.UltimaRespostaTEF.ConteudoToProperty;
+  end;
 end;
 
 function TACBrTEFAPIClassTPag.EfetuarPagamento(ValorPagto: Currency;
@@ -210,19 +318,76 @@ begin
   Params.isTyped := 0;
   Params.installment := Parcelas;
 
-  ret := GetTEFTPagAPI.ExecutarTransacao(Params);
+  ret := GetTEFTPagAPI.Transacao(Params);
+  if (ret = 0) then
+    GetTEFTPagAPI.ObterUltimaTransacao(LastTransactionType_TRANSACTION, ret);
+
+  Result := (ret = 0);
 end;
 
 function TACBrTEFAPIClassTPag.EfetuarAdministrativa(
   CodOperacaoAdm: TACBrTEFOperacao): Boolean;
+var
+  sl: TStringList;
+  ItemSel: Integer;
+  ret: LongInt;
 begin
-  Result := inherited EfetuarAdministrativa(CodOperacaoAdm);
+  Result := False;
+  ItemSel := -1;
+
+  case CodOperacaoAdm of
+    tefopReimpressao:
+      ItemSel := 0;
+    tefopAdministrativo:
+      begin
+        sl := TStringList.Create;
+        try
+          sl.Add(ACBrStr('Reimpressão'));
+          sl.Add(ACBrStr('Atualizar Tabelas'));
+          sl.Add(ACBrStr('Cancelar última Transação'));
+          sl.Add(ACBrStr('Manutenção (Reset)'));
+          TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( 'Menu Administrativo', sl, ItemSel );
+        finally
+          sl.Free;
+        end;
+      end;
+    else
+      DoException(ACBrStr(Format(sACBrTEFAPIAdministrativaNaoSuportada,
+        ['EfetuarAdministrativa( '+GetEnumName(TypeInfo(TACBrTEFOperacao),
+        integer(CodOperacaoAdm) )+' )', ClassName])));
+  end;
+
+  case ItemSel of
+    0:  // Reimpressão
+      begin
+        ret := -1;
+        GetTEFTPagAPI.UltimoRecibo(True, False, True, ret);
+        Result := (ret = 0);
+      end;
+
+    1:  // Atualizar Tabelas
+      begin
+        ret := GetTEFTPagAPI.AtualizarTabelas;
+        Result := (ret = 0);
+      end;
+
+    2:
+      Result := CancelarTransacao( fpACBrTEFAPI.UltimaRespostaTEF.NSU,
+                                   fpACBrTEFAPI.UltimaRespostaTEF.CodigoAutorizacaoTransacao,
+                                   fpACBrTEFAPI.UltimaRespostaTEF.DataHoraTransacaoHost,
+                                   fpACBrTEFAPI.UltimaRespostaTEF.ValorTotal );
+    3:  // Manutenção
+      begin
+        ret := GetTEFTPagAPI.ReiniciarTerminal;
+        Result := (ret = 0);
+      end;
+  end;
 end;
 
 function TACBrTEFAPIClassTPag.EfetuarAdministrativa(const CodOperacaoAdm: string
   ): Boolean;
 begin
-  Result := inherited EfetuarAdministrativa(CodOperacaoAdm);
+  Result := EfetuarAdministrativa( TACBrTEFOperacao(StrToIntDef(CodOperacaoAdm, 0)) );
 end;
 
 function TACBrTEFAPIClassTPag.CancelarTransacao(const NSU,
@@ -236,18 +401,54 @@ end;
 procedure TACBrTEFAPIClassTPag.FinalizarTransacao(const Rede, NSU,
   CodigoFinalizacao: String; AStatus: TACBrTEFStatusTransacao);
 begin
-  inherited FinalizarTransacao(Rede, NSU, CodigoFinalizacao, AStatus);
+  { Em TPag, não há necessidade de enviar a 3a perna (CNF, NCF) }
 end;
 
 procedure TACBrTEFAPIClassTPag.ResolverTransacaoPendente(
   AStatus: TACBrTEFStatusTransacao);
 begin
-  inherited ResolverTransacaoPendente(AStatus);
+  { Em TPag, não há o conceito de Transacao Pendente }
 end;
 
 procedure TACBrTEFAPIClassTPag.AbortarTransacaoEmAndamento;
 begin
   inherited AbortarTransacaoEmAndamento;
+end;
+
+procedure TACBrTEFAPIClassTPag.ObterListaDeTransacoes(Lista: TACBrTEFRespostas;
+  Inicio, Fim: TDateTime;
+  TransactionStatusSet: TACBrTEFTPagTransactionStatusSet;
+  ReadCardTypeSet: TACBrTEFTPagReadCardTypeSet);
+var
+  Params: TACBrTEFTPagTransactionFilter;
+begin
+  Lista.Clear;
+  Params.startDate := TimeStampToMSecs( DateTimeToTimeStamp(Inicio) );
+  Params.endDate := TimeStampToMSecs( DateTimeToTimeStamp(Fim) );
+
+  for i := 0 to Length(TransactionStatusSet)-1  do
+    Params.status[i] := Integer(TransactionStatusSet[i]);
+  Params.statusSize := Length(TransactionStatusSet);
+  for i := 0 to Length(ReadCardTypeSet)-1  do
+    Params.readCardType[i] := Integer(ReadCardTypeSet[i]);
+  Params.readCardTypeSize := Length(ReadCardTypeSet);
+
+      list := TEFTPagAPI.ObterListaTransacoes(Params, l, e);
+      try
+        for i := 0 to l-1 do
+        begin
+          t := TEFTPagAPI.ObterTransacao(list, i);
+          s := 'date: '+FormatDateTime('YYYYMMDDHHNNSS', TimeStampToDateTime(MSecsToTimeStamp(t.date)))+', '+
+               'nsuRequest: '+Trim(String(t.nsuRequest)) +', '+
+               'nsuResponse: '+Trim(String(t.nsuResponse)) +', '+
+               'nsuAcquirer: '+Trim(String(t.nsuAcquirer)) +', '+
+               'amount: '+ IntToStr(t.amount);
+          AdicionarLinhaLog(s);
+        end;
+      finally
+        TEFTPagAPI.LiberarListaTransacoes(list, l);
+      end;
+
 end;
 
 end.

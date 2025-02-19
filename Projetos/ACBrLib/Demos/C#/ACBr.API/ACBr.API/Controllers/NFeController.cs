@@ -66,7 +66,7 @@ namespace ACBr.API.Controllers
                     notaFiscal.Identificacao.cNF = 400;
                     notaFiscal.Identificacao.natOp = "COMPRA DE MERCADORIA IMPORTADA PARA COMERCIALIZAÇÃO";
                     notaFiscal.Identificacao.indPag = IndicadorPagamento.ipVista;
-                    notaFiscal.Identificacao.mod = ModeloNFe.moNFe;
+                    notaFiscal.Identificacao.modelo = ModeloNFe.moNFe;
                     notaFiscal.Identificacao.Serie = "1";
                     notaFiscal.Identificacao.nNF = numeroNF;
                     notaFiscal.Identificacao.dhEmi = DateTime.Now;
@@ -104,7 +104,7 @@ namespace ACBr.API.Controllers
                     notaFiscal.Emitente.cPais = 1058;
                     notaFiscal.Emitente.xPais = "BRASIL";
                     notaFiscal.Emitente.Fone = "(11)9999-9999";
-                    notaFiscal.Emitente.cMunFG = 3554003;
+                    //notaFiscal.Emitente.cMunFG = 3554003;
 
                     //Destinatario
                     notaFiscal.Destinatario.idEstrangeiro = "";

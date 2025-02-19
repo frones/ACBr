@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\NFe\Imports\Dinamico\MT\ACBrLib.NFe.csproj" />
+    <ProjectReference Include="..\..\NFe\Imports\Dinamico\MT\ACBrLib.NFeMT.csproj" />
   </ItemGroup>
 
 </Project>

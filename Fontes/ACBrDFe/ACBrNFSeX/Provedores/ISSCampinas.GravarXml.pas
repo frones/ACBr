@@ -469,6 +469,7 @@ begin
   inherited Configuracao;
 
   FormatoAliq := tcDe2;
+  GerarNSRps := False;
 end;
 
 end.

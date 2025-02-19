@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/02/2025
+-- ACBrTEFDestaxaComum --
+[*] Suporte da Destaxa solicitou que fosse adicionado sleep antes de enviar o comando de coleta, 
+    pois o client V$Pague não está recebendo o comando quando ele acontece no mesmo instante.
+
 14/02/2025
 -- ACBrTEFScopeAPI --
 [*] Ajuste para o caso da rotina 'ScopeConsultaPP' retornar 'RCS_PP_NAO_ENCONTRADO'

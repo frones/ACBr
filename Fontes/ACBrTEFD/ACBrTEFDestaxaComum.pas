@@ -1379,6 +1379,7 @@ begin
   ColetaResposta.Clear;
 
   try
+    Sleep(100);
     Transmitir(ColetaRequisicao.AsString);
   except
     // 10054-Connection reset by peer; 10057-Socket is not connected

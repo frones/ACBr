@@ -1,0 +1,15 @@
+object LibCupomVerdeDM: TLibCupomVerdeDM
+  OldCreateOrder = False
+  Height = 154
+  HorizontalOffset = 2256
+  VerticalOffset = 373
+  Width = 160
+  object ACBrCupomVerde1: TACBrCupomVerde
+    ProxyPort = '8080'
+    ContentsEncodingCompress = []
+    NivelLog = 0
+    Ambiente = cvaNenhum
+    Left = 64
+    Top = 56
+  end
+end

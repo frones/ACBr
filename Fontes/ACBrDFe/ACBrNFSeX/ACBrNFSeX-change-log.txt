@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/02/2025
+-- ACBrNFSeXServicos --
+[+] #TK-6619: Incluída a cidade de Nova Mamore/RO, o provedor é Fiorilli.
+  Por: C4Dev - Maiquel
+
 19/02/2025
 -- ISSCampinas.Provider, ISSCampinas.GravarXML --
 [*] #TK-6632: Ajustes visando correto consumo do web service da versão 2.03

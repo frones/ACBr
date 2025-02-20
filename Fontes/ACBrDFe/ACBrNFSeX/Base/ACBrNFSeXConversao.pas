@@ -6223,6 +6223,8 @@ var
       5101605: CodTOM := '9031'; // Barao De Melgaco/MT';
       5101704: CodTOM := '9033'; // Barra Do Bugres/MT';
       5101803: CodTOM := '9035'; // Barra Do Garcas/MT';
+      // Falta informar corretamente o código TOM da nova cidade
+      5101837: CodTOM := '0000'; // Boa Esperanca do Norte/MT
       5101852: CodTOM := '1078'; // Bom Jesus Do Araguaia/MT';
       5101902: CodTOM := '9873'; // Brasnorte/MT';
       5102504: CodTOM := '9047'; // Caceres/MT';
@@ -11854,6 +11856,8 @@ begin
     9031: CodIBGE := 5101605; // Barao De Melgaco/MT
     9033: CodIBGE := 5101704; // Barra Do Bugres/MT
     9035: CodIBGE := 5101803; // Barra Do Garcas/MT
+    // Falta informar corretamente o código TOM da nova cidade
+    0000: CodIBGE := 5101837; // Boa Esperanca do Norte/MT
     1078: CodIBGE := 5101852; // Bom Jesus Do Araguaia/MT
     9873: CodIBGE := 5101902; // Brasnorte/MT
     9047: CodIBGE := 5102504; // Caceres/MT

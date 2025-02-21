@@ -41,9 +41,6 @@ uses
   ACBrBase,
   ACBrTEFComum, ACBrTEFAPI, ACBrTEFAPIComum, ACBrTEFTPagAPI;
 
-resourcestring
-  sACBrTPagErroModalidadeNaoSuportada = 'Modalidade %s não suportada';
-
 type
 
   { TACBrTEFRespTPag }
@@ -61,6 +58,7 @@ type
   private
     function GetTEFTPagAPI: TACBrTEFTPagAPI;
     procedure QuandoGravarLogAPI(const ALogLine: String; var Tratado: Boolean);
+    procedure QuandoTransacaoEmAndamentoAPI( EstadoOperacao: TACBrTEFTPagEstadoOperacao; out Cancelar: Boolean);
     procedure QuandoExibirMensagemAPI(const Mensagem: String);
     procedure DoException(const AErrorMsg: String);
 
@@ -73,6 +71,7 @@ type
 
     procedure Inicializar; override;
     procedure DesInicializar; override;
+    procedure Autenticar; override;
 
     function EfetuarPagamento(
       ValorPagto: Currency;
@@ -123,7 +122,7 @@ procedure TACBrTEFRespTPag.ConteudoToProperty;
 var
   LinChave, s: String;
   Linha: TACBrTEFLinha;
-  i: Integer;
+  i, st: Integer;
 begin
   ImagemComprovante1aVia.Clear;
   ImagemComprovante2aVia.Clear;
@@ -165,19 +164,28 @@ begin
     else if (LinChave = 'transactionStatus') then
     begin
       StatusTransacao := Linha.Informacao.AsString;
-      Sucesso := (StrToIntDef(StatusTransacao, -1) = Integer(ts_CONFIRMED));
+      st := StrToIntDef(StatusTransacao, -1);
+      Sucesso := (st = Integer(ts_CONFIRMED)) or (st = Integer(ts_CANCELLED));
     end
     else if (LinChave = 'date') then
       DataHoraTransacaoHost := Linha.Informacao.AsTimeStampSQL
     else if (LinChave = 'nsuResponse') then
-      NSU_TEF := Linha.Informacao.AsString
+    begin
+      NSU_TEF := Linha.Informacao.AsString;
+      Finalizacao := NSU_TEF;
+    end
     //else if (LinChave = 'reasonUndo') then
     //  ModalidadePagtoDescrita := Linha.Informacao.AsString;
     else if (LinChave = 'transactionReceipt') then
     begin
       s := StringReplace(Linha.Informacao.AsString, '@', sLineBreak, [rfReplaceAll]);
-      ImagemComprovante1aVia.Text := 'VIA CLIENTE' + sLineBreak + s;
-      ImagemComprovante2aVia.Text := 'VIA ESTABELECIMENTO' + sLineBreak + s;
+      if (copy(s,1,11) = 'REIMPRESSAO') then
+        ImagemComprovante1aVia.Text := s
+      else
+      begin
+        ImagemComprovante1aVia.Text := 'VIA CLIENTE' + sLineBreak + s;
+        ImagemComprovante2aVia.Text := 'VIA ESTABELECIMENTO' + sLineBreak + s;
+      end;
     end
     else if (LinChave = 'brand') then
       Rede := Linha.Informacao.AsString
@@ -202,6 +210,7 @@ begin
 
   QtdLinhasComprovante := max(ImagemComprovante1aVia.Count, ImagemComprovante2aVia.Count);
   Confirmar := Confirmar or (QtdLinhasComprovante > 0);
+  Sucesso := Sucesso or (QtdLinhasComprovante > 0);
 end;
 
 procedure TACBrTEFRespTPag.SetStrings(AStringList: TStrings);
@@ -233,6 +242,7 @@ begin
   begin
     OnGravarLog := QuandoGravarLogAPI;
     OnExibeMensagem := QuandoExibirMensagemAPI;
+    OnTransacaoEmAndamento := QuandoTransacaoEmAndamentoAPI;
   end;
 end;
 
@@ -268,11 +278,26 @@ begin
   inherited;
 end;
 
+procedure TACBrTEFAPIClassTPag.Autenticar;
+begin
+  GetTEFTPagAPI.Conectar;
+end;
+
 procedure TACBrTEFAPIClassTPag.QuandoGravarLogAPI(const ALogLine: String;
   var Tratado: Boolean);
 begin
   fpACBrTEFAPI.GravarLog(ALogLine);
   Tratado := True;
+end;
+
+procedure TACBrTEFAPIClassTPag.QuandoTransacaoEmAndamentoAPI(
+  EstadoOperacao: TACBrTEFTPagEstadoOperacao; out Cancelar: Boolean);
+var
+  i: Integer;
+begin
+  i := Integer(EstadoOperacao);
+  Cancelar := False;
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoEsperarOperacao(TACBrTEFAPIOperacaoAPI(i), Cancelar);
 end;
 
 procedure TACBrTEFAPIClassTPag.QuandoExibirMensagemAPI(const Mensagem: String);
@@ -335,13 +360,17 @@ var
   sl: TStringList;
   ItemSel: Integer;
   ret: LongInt;
+  s: String;
 begin
+  GetTEFTPagAPI.DadosDaTransacao.Clear;
   Result := False;
   ItemSel := -1;
 
   case CodOperacaoAdm of
     tefopReimpressao:
       ItemSel := 0;
+    tefopCancelamento:
+      ItemSel := 2;
     tefopAdministrativo:
       begin
         sl := TStringList.Create;
@@ -364,9 +393,14 @@ begin
   case ItemSel of
     0:  // Reimpressão
       begin
-        ret := -1;
-        GetTEFTPagAPI.UltimoRecibo(True, False, True, ret);
-        Result := (ret = 0);
+        with GetTEFTPagAPI do
+        begin
+          ret := -1;
+          s := UltimoRecibo(True, False, True, ret);
+          Result := (ret = 0);
+          if Result then
+            DadosDaTransacao.Values['transactionReceipt'] := s;
+        end;
       end;
 
     1:  // Atualizar Tabelas
@@ -384,6 +418,8 @@ begin
       begin
         ret := GetTEFTPagAPI.ReiniciarTerminal;
         Result := (ret = 0);
+        if Result then
+          Autenticar;
       end;
   end;
 end;
@@ -397,9 +433,43 @@ end;
 function TACBrTEFAPIClassTPag.CancelarTransacao(const NSU,
   CodigoAutorizacaoTransacao: string; DataHoraTransacao: TDateTime;
   Valor: Double; const CodigoFinalizacao: string; const Rede: string): Boolean;
+var
+  nsuResponse: String;
+  ret: LongInt;
+  Lista: TACBrTEFRespostas;
+  i: Integer;
 begin
-  Result := inherited CancelarTransacao(NSU, CodigoAutorizacaoTransacao,
-    DataHoraTransacao, Valor, CodigoFinalizacao, Rede);
+  nsuResponse := '';
+
+  // TPag usa o nsuResponse ou NSU_TEF para Cancelamento, ConteudoToProperty salva em 'TEFResp.Finalizacao'
+  if (CodigoFinalizacao <> '') then
+    nsuResponse := CodigoFinalizacao
+  else
+  begin
+    if (NSU <> '') then
+    begin
+      Lista := TACBrTEFRespostas.Create;
+      try
+        ObterListaDeTransacoes(Lista);
+        for i := 0 to Lista.Count-1 do
+        begin
+          if (Lista[i].NSU = NSU) then
+          begin
+            nsuResponse := Lista[i].Finalizacao;
+            Break;
+          end;
+        end;
+      finally
+        Lista.Free;
+      end;
+    end;
+  end;
+
+  ret := GetTEFTPagAPI.Cancelamento(nsuResponse, CardType_NONE);
+  if (ret = 0) then
+    GetTEFTPagAPI.ObterUltimaTransacao(LastTransactionType_CANCELLATION, ret);
+
+  Result := (ret = 0);
 end;
 
 procedure TACBrTEFAPIClassTPag.FinalizarTransacao(const Rede, NSU,
@@ -416,11 +486,11 @@ end;
 
 procedure TACBrTEFAPIClassTPag.AbortarTransacaoEmAndamento;
 begin
-  inherited AbortarTransacaoEmAndamento;
+  GetTEFTPagAPI.AbortarTransacao;
 end;
 
-procedure TACBrTEFAPIClassTPag.ObterListaDeTransacoes(ListaTransacoes: TACBrTEFRespostas;
-  Inicio, Fim: TDateTime;
+procedure TACBrTEFAPIClassTPag.ObterListaDeTransacoes(
+  ListaTransacoes: TACBrTEFRespostas; Inicio: TDateTime; Fim: TDateTime;
   TransactionStatusSet: TACBrTEFTPagTransactionStatusSet;
   ReadCardTypeSet: TACBrTEFTPagReadCardTypeSet);
 var

@@ -47,9 +47,11 @@ const
   {$ENDIF}
 
 resourcestring
-  sErrLibJaInicializda = 'Biblioteca TPag já foi inicializada';
+  sErrLibJaInicializada = 'Biblioteca TPag já foi inicializada';
   sErrEventoNaoAtribuido = 'Evento %s não atribuido';
   sErrCNPJNaoInformado = 'CNPJEmpresa não informado';
+  sErrNaoInicializada = 'Biblioteca TPag não inicializada';
+  sErrNSUNaoInformado = 'NSU não informado';
 
 const
   CreditType_NO_INSTALLMENT = 0;
@@ -213,9 +215,21 @@ type
 
   TACBrTEFTPagExibeMensagem = procedure( const Mensagem: String) of object;
 
+  TACBrTEFTPagEstadoOperacao = ( tpagEstFluxoAPI,
+                                 tpagEstAguardaUsuario,
+                                 tpagEstPinPad,
+                                 tpagEstPinPadLerCartao,
+                                 tpagEstPinPadDigitacao,
+                                 tpagEstRemoveCartao,
+                                 tpagEstLeituraQRCode );
+
+  TACBrTEFTPagTransacaoEmAndamento = procedure(
+    EstadoOperacao: TACBrTEFTPagEstadoOperacao; out Cancelar: Boolean) of object;
+
   TACBrTPagCallBackProcess = procedure(code: Cardinal; process: PAnsiChar); cdecl;
   TACBrTPagCallBackError = procedure(code: Cardinal; error: PAnsiChar); cdecl;
   TACBrTPagCallBackSuccess = procedure(success: PAnsiChar); cdecl;
+  TACBrTPagCallAbortProcess = function: LongInt; cdecl;
 
   { TACBrTEFTPagAPI }
 
@@ -223,17 +237,20 @@ type
   private
     fCarregada: Boolean;
     fCNPJEmpresa: String;
-    fConectado: Boolean;
     fInicializada: Boolean;
+    fEmTransacao: Boolean;
+    fConectada: Boolean;
     fPathLib: String;
     fOnGravarLog: TACBrTEFTPagGravarLog;
     fOnExibeMensagem: TACBrTEFTPagExibeMensagem;
     fDadosDaTransacao: TStringList;
+    fOnTransacaoEmAndamento: TACBrTEFTPagTransacaoEmAndamento;
 
   private
     xTPagConfiguration: function( messageProcess: TACBrTPagCallBackProcess;
                                   messageError: TACBrTPagCallBackError;
-                                  messageSuccess: TACBrTPagCallBackSuccess): LongInt; cdecl;
+                                  messageSuccess: TACBrTPagCallBackSuccess;
+                                  abortProcess: TACBrTPagCallAbortProcess): LongInt; cdecl;
 
     xTPagInitialization: function(identification: PAnsiChar): LongInt; cdecl;
 
@@ -268,6 +285,7 @@ type
     procedure ClearMethodPointers;
 
     procedure DoException(const AErrorMsg: String );
+    procedure PrepararInicioDeTrancao;
 
   public
     constructor Create;
@@ -279,15 +297,18 @@ type
 
     property Carregada: Boolean read fCarregada;
     property Inicializada: Boolean read fInicializada write SetInicializada;
-    property Conectado: Boolean read fConectado;
+    property Conectada: Boolean read fConectada;
+    property EmTransacao: Boolean read fEmTransacao;
 
     property OnGravarLog: TACBrTEFTPagGravarLog read fOnGravarLog write fOnGravarLog;
 
     procedure Inicializar;
     procedure DesInicializar;
+    procedure Conectar;
 
     function Transacao(Params: TACBrTEFTPagTransactionParams): LongInt;
-    function Cancelamento(nsuResponse: String; CardType: Cardinal): LongInt;
+    procedure AbortarTransacao;
+    function Cancelamento(const nsuResponse: String; CardType: Cardinal): LongInt;
     function AtualizarTabelas: LongInt;
     function ReiniciarTerminal: LongInt;
     function UltimoRecibo(EhConsumidor, EhCancelamento, EhReimpressao: Boolean; var errorCode: LongInt): String;
@@ -302,6 +323,9 @@ type
 
     property OnExibeMensagem: TACBrTEFTPagExibeMensagem read fOnExibeMensagem
       write fOnExibeMensagem;
+    property OnTransacaoEmAndamento: TACBrTEFTPagTransacaoEmAndamento read fOnTransacaoEmAndamento
+      write fOnTransacaoEmAndamento;
+
     procedure GravarLog(const AString: AnsiString; Traduz: Boolean = False);
     procedure ExibirMensagem(const AMsg: String);
 
@@ -314,6 +338,7 @@ function ReturnCodesToStr(ReturnCode: LongInt): String;
 procedure CallBackProcess(code: Cardinal; process: PAnsiChar); cdecl;
 procedure CallBackError(code: Cardinal; error: PAnsiChar); cdecl;
 procedure CallBackSuccess(success: PAnsiChar); cdecl;
+function CallBackAbortProcess: LongInt; cdecl;
 
 function DateTimeToUnixMilliseconds(const AValue: TDateTime): Int64;
 function UnixMillisecondsToDateTime(const AValue: Int64): TDateTime;
@@ -324,7 +349,7 @@ var
 implementation
 
 uses
-  TypInfo, StrUtils, DateUtils,
+  TypInfo, StrUtils, DateUtils, Math,
   ACBrUtil.FilesIO,
   ACBrUtil.Strings;
 
@@ -408,7 +433,7 @@ begin
 
   with GetTEFTPagAPI do
   begin
-    GravarLog( Format('   Callback Process: %d %s ', [code, s] ));
+    GravarLog( Format('   Callback Process: %d - %s ', [code, s] ));
     ExibirMensagem(s);
   end;
 end;
@@ -424,7 +449,7 @@ begin
 
   with GetTEFTPagAPI do
   begin
-    GravarLog( Format('   Callback Error: %d %s ', [code, s] ));
+    GravarLog( Format('   Callback Error: %d - %s ', [code, s] ));
     ExibirMensagem(s);
     DadosDaTransacao.Values['msgError'] := s;
   end;
@@ -444,6 +469,28 @@ begin
     GravarLog(  Format('   Callback Sucess: %s ', [s] ));
     ExibirMensagem(s);
     DadosDaTransacao.Values['msgSuccess'] := s;
+  end;
+end;
+
+function CallBackAbortProcess: LongInt; cdecl;
+var
+  estado: TACBrTEFTPagEstadoOperacao;
+  Cancelar: Boolean;
+begin
+  Result:= 0;  // Continuar..
+
+  with GetTEFTPagAPI do
+  begin
+    if Assigned(OnTransacaoEmAndamento) then
+    begin
+      estado := tpagEstPinPad;
+      Cancelar := False;
+      GravarLog('  OnTransacaoEmAndamento( '+GetEnumName(TypeInfo(TACBrTEFTPagEstadoOperacao), integer(estado))+' )');
+      OnTransacaoEmAndamento(estado, Cancelar);
+      GravarLog('    Cancelar: '+BoolToStr(Cancelar, True) );
+      if Cancelar then
+        Result := 1;  // Abortar
+    end;
   end;
 end;
 
@@ -468,12 +515,14 @@ constructor TACBrTEFTPagAPI.Create;
 begin
   inherited;
 
-  fOnGravarLog := nil;
-  fOnExibeMensagem := nil;
+  fOnGravarLog := Nil;
+  fOnExibeMensagem := Nil;
+  fOnTransacaoEmAndamento := Nil;
 
   fCarregada := False;
   fInicializada := False;
-  fConectado := False;
+  fCarregada := False;
+  fEmTransacao := False;
   fPathLib := '';
   fCNPJEmpresa := '';
   fDadosDaTransacao := TStringList.Create;
@@ -482,8 +531,9 @@ end;
 destructor TACBrTEFTPagAPI.Destroy;
 begin
   fDadosDaTransacao.Free;
-  fOnGravarLog := nil;
-  fOnExibeMensagem := nil;
+  fOnGravarLog := Nil;
+  fOnExibeMensagem := Nil;
+  fOnTransacaoEmAndamento := Nil;
   inherited Destroy;
 end;
 
@@ -494,22 +544,21 @@ begin
   if fInicializada then
     Exit;
 
-  fConectado := False;
+  fEmTransacao := False;
   GravarLog('TACBrTEFTPagAPI.Inicializar');
 
   if (fCNPJEmpresa = '') then
     DoException(sErrCNPJNaoInformado);
 
+  if not Assigned(fOnTransacaoEmAndamento) then
+    DoException(Format(sErrEventoNaoAtribuido, ['OnTransacaoEmAndamento']));
   if not Assigned(fOnExibeMensagem) then
     DoException(Format(sErrEventoNaoAtribuido, ['OnExibeMensagem']));
 
   LoadLibFunctions;
   GravarLog('  call - Configuration');
-  ret := xTPagConfiguration( CallBackProcess, CallBackError, CallBackSuccess );
-  TratarErroTPag(ret);
-
-  GravarLog('  call - Initialization('+fCNPJEmpresa+')');
-  ret := xTPagInitialization(PAnsiChar(AnsiString(fCNPJEmpresa)));
+  ret := xTPagConfiguration( CallBackProcess, CallBackError, CallBackSuccess, CallBackAbortProcess );
+  GravarLog('   ret - '+IntToStr(ret));
   TratarErroTPag(ret);
 
   fInicializada := True;
@@ -523,12 +572,26 @@ begin
   GravarLog('TACBrTEFTPagAPI.DesInicializar');
   UnLoadLibFunctions;
   fInicializada := False;
+  fConectada := False;
 end;
 
-function TACBrTEFTPagAPI.Transacao(Params: TACBrTEFTPagTransactionParams
-  ): LongInt;
+procedure TACBrTEFTPagAPI.Conectar;
+var
+  ret: LongInt;
 begin
-  fDadosDaTransacao.Clear;
+  if fConectada then
+    Exit;
+
+  GravarLog('  call - Initialization('+fCNPJEmpresa+')');
+  ret := xTPagInitialization(PAnsiChar(AnsiString(fCNPJEmpresa)));
+  GravarLog('   ret - '+IntToStr(ret));
+  TratarErroTPag(ret);
+  fConectada := True;
+end;
+
+function TACBrTEFTPagAPI.Transacao(Params: TACBrTEFTPagTransactionParams): LongInt;
+begin
+  PrepararInicioDeTrancao;
   GravarLog('  call - Transaction' + sLineBreak +
             '    Params.amount: '+IntToStr(Params.amount)+ sLineBreak +
             '    Params.creditType: '+ IntToStr(Params.creditType) + sLineBreak +
@@ -537,28 +600,59 @@ begin
             '    Params.installment: '+IntToStr(Params.installment)+ sLineBreak +
             '    Params.isTyped: '+IntToStr(Params.isTyped) );
 
-  Result := xTPagTransaction(Params);
-  fDadosDaTransacao.Values['ret'] := IntToStr(Result);
+  fEmTransacao := True;
+  try
+    Result := xTPagTransaction(Params);
+    GravarLog('   ret - '+IntToStr(Result));
+    fDadosDaTransacao.Values['ret'] := IntToStr(Result);
+  finally
+    fEmTransacao := False;
+  end;
 end;
 
-function TACBrTEFTPagAPI.Cancelamento(nsuResponse: String; CardType: Cardinal): LongInt;
+procedure TACBrTEFTPagAPI.AbortarTransacao;
 begin
-  fDadosDaTransacao.Clear;
+  fEmTransacao := False;
+end;
+
+function TACBrTEFTPagAPI.Cancelamento(const nsuResponse: String;
+  CardType: Cardinal): LongInt;
+var
+  s: AnsiString;
+begin
+  PrepararInicioDeTrancao;
   GravarLog('  call - Cancellation( '+nsuResponse+', '+IntToStr(CardType)+' )' );
-  Result := xTPagCancellation(PAnsiChar(AnsiString(nsuResponse)), CardType);
-  fDadosDaTransacao.Values['ret'] := IntToStr(Result);
+
+  s := Trim(nsuResponse);
+  if (s = '') then
+    DoException(sErrNSUNaoInformado);
+
+  fEmTransacao := True;
+  try
+    Result := xTPagCancellation(PAnsiChar(s), CardType);
+    GravarLog('   ret - '+IntToStr(Result));
+    fDadosDaTransacao.Values['ret'] := IntToStr(Result);
+  finally
+    fEmTransacao := False;
+  end;
 end;
 
 function TACBrTEFTPagAPI.AtualizarTabelas: LongInt;
 begin
+  PrepararInicioDeTrancao;
   GravarLog('  call - UpdateTable');
   Result := xTPagUpdateTable;
+  GravarLog('   ret - '+IntToStr(Result));
 end;
 
 function TACBrTEFTPagAPI.ReiniciarTerminal: LongInt;
 begin
+  PrepararInicioDeTrancao;
   GravarLog('  call - ResetTerminal');
   Result := xTPagResetTerminal;
+  GravarLog('   ret - '+IntToStr(Result));
+  if (Result = ReturnCode_OK) then
+    fConectada := False;
 end;
 
 function TACBrTEFTPagAPI.UltimoRecibo(EhConsumidor, EhCancelamento,
@@ -566,7 +660,7 @@ function TACBrTEFTPagAPI.UltimoRecibo(EhConsumidor, EhCancelamento,
 var
   p: PAnsiChar;
 begin
-  fDadosDaTransacao.Clear;
+  PrepararInicioDeTrancao;
   GravarLog('  call - LastReceipt( '+
     BoolToStr(EhConsumidor, True) + ', '+
     BoolToStr(EhCancelamento, True) + ', '+
@@ -574,20 +668,25 @@ begin
 
   errorCode := -1;
   p := xTPagLastReceipt(EhConsumidor, EhCancelamento, EhReimpressao, errorCode);
-  if (errorCode = 0) then
+  GravarLog('   ret - '+IntToStr(errorCode));
+  if (errorCode = ReturnCode_OK) then
     Result := String(p)
   else
     Result := '';
+
+  GravarLog('   LastReceipt:' + sLineBreak + Result);
 end;
 
 function TACBrTEFTPagAPI.ObterListaTransacoes(
   Params: TACBrTEFTPagTransactionFilter; var num, errorCode: LongInt
   ): PACBrTEFTPagTransactionPartial;
 begin
+  PrepararInicioDeTrancao;
   errorCode := -1;
   num := 0;
   GravarLog('  call - ListTransactionsStore');
   Result := xTPagListTransactionsStore(Params, num, errorCode);
+  GravarLog('   ret - '+IntToStr(errorCode)+', num - '+IntToStr(num));
 end;
 
 function TACBrTEFTPagAPI.ObterTransacao(
@@ -608,16 +707,16 @@ begin
   xTPagFreeTransactionPartialList(TransactionList, num);
 end;
 
-
 procedure TACBrTEFTPagAPI.ObterUltimaTransacao(LastTransactionType: Cardinal;
   var errorCode: LongInt);
 var
   p: PACBrTEFTPagTransactionPartial;
 begin
-  fDadosDaTransacao.Clear;
+  PrepararInicioDeTrancao;
   errorCode := -1;
-  GravarLog('  call - LastTransactionStore');
+  GravarLog('  call - LastTransactionStore( '+IntToStr(LastTransactionType)+' )');
   p := xTPagLastTransactionStore(LastTransactionType, errorCode);
+  GravarLog('   ret - '+IntToStr(errorCode));
   if (errorCode = ReturnCode_OK) and Assigned(p) then
   begin
     TransacaoToStr(p^, fDadosDaTransacao);
@@ -702,7 +801,7 @@ begin
   GravarLog('TACBrTEFTPagAPI.SetPathLib( '+AValue+' )');
 
   if fInicializada then
-    DoException(sErrLibJaInicializda);
+    DoException(sErrLibJaInicializada);
 
   fPathLib := PathWithDelim(ExtractFilePath(AValue));
 end;
@@ -796,6 +895,12 @@ begin
 
   GravarLog('TACBrTEFTPagAPI: '+AErrorMsg);
   raise EACBrTEFTPagAPI.Create(ACBrStr(AErrorMsg));
+end;
+
+procedure TACBrTEFTPagAPI.PrepararInicioDeTrancao;
+begin
+  Conectar;
+  fDadosDaTransacao.Clear;
 end;
 
 procedure TACBrTEFTPagAPI.TratarErroTPag(AErrorCode: LongInt);

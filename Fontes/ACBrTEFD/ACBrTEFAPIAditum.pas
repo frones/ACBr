@@ -840,7 +840,7 @@ begin
     sl := TStringList.Create;
     try
       sl.Add('Teste PinPad');
-      sl.Add('Reimpressão');
+      sl.Add(ACBrStr('Reimpressão'));
       ItemSel := -1;
       TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( 'Menu Administrativo', sl, ItemSel );
       if (ItemSel = 0) then

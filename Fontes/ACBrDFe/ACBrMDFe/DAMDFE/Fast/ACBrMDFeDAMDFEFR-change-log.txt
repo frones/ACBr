@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/02/2025
+-- ACBrMDFeDAMDFEFR --
+[*] Ajustes para impressão correta do RNTRC do proprietário do veículo reboque.
+  Por: Limber Software
+
 10/10/2019
 -- ACBrMDFeDAMDFEFR --
 [*] Ajustes para impressão no DAMDFE os campos cMunDescarga e xMunDescarga.

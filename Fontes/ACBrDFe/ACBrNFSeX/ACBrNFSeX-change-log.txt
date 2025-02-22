@@ -42,8 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+22/02/2025
+-- BHISS.Provider --
+[*] #TK-6621: Possível solução para a leitura do XML de retorno que não esta
+    em UTF-8
+  Por: Italo Giurizzato Junior
+
 20/02/2025
 -- ACBrNFSeXServicos --
+[+] Incluída a cidade de Inhacora/RS, o provedor é IPM versão 1.01
+  Por: HPR Sistemas
 [+] #TK-6619: Incluída a cidade de Nova Mamore/RO, o provedor é Fiorilli.
   Por: C4Dev - Maiquel
 

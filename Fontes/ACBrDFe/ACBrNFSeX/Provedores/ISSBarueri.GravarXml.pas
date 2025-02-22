@@ -246,7 +246,7 @@ begin
     FConteudoTxt.LineBreak := CRLF;
     {$ENDIF}
   {$ENDIF}
-
+{
   if NFSe.IdentificacaoRemessa = '' then
     NFSe.IdentificacaoRemessa := NFSe.IdentificacaoRps.Numero;
 
@@ -254,10 +254,10 @@ begin
     GerarRegistroTipo1(FormatDateTime('yyyymmddzzz', Now))
   else
     GerarRegistroTipo1(NFSe.IdentificacaoRemessa);
-
+}
   GerarRegistroTipo2;
   GerarRegistroTipo3;
-  GerarRegistroTipo9;
+//  GerarRegistroTipo9;
 
   Result := True;
 end;

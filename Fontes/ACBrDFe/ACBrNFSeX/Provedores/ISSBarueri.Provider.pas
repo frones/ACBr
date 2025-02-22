@@ -366,6 +366,7 @@ begin
     ModoEnvio := meLoteAssincrono;
     ConsultaNFSe := False;
     FormatoArqRecibo := tfaTxt;
+    NumMaxRpsEnviar := 1000;
 
     ServicosDisponibilizados.EnviarLoteAssincrono := True;
     ServicosDisponibilizados.ConsultarSituacao := True;
@@ -470,17 +471,58 @@ procedure TACBrNFSeProviderISSBarueri.GerarMsgDadosEmitir(
 var
   XML, NumeroRps: String;
   Emitente: TEmitenteConfNFSe;
+  Registro1, Registro9, AIdentificacaoRemessa: string;
+  Nota: TNotaFiscal;
+  ValorServicos, ValorTotalRetencoes: Double;
+  I: Integer;
 begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
-  NumeroRps := TACBrNFSeX(FAOwner).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
+  ValorServicos := 0;
+  ValorTotalRetencoes := 0;
 
-  if (EstaVazio(NumeroRps)) then
-    NumeroRps := FormatDateTime('yyyymmddzzz', Now);
+  for I := 0 to TACBrNFSeX(FAOwner).NotasFiscais.Count - 1 do
+  begin
+    Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
+
+    if I = 0 then
+    begin
+      AIdentificacaoRemessa := Nota.NFSe.IdentificacaoRemessa;
+
+      if AIdentificacaoRemessa = '' then
+        AIdentificacaoRemessa := Nota.NFSe.IdentificacaoRps.Numero;
+
+      if Nota.NFSe.StatusRps = srCancelado then
+        AIdentificacaoRemessa := FormatDateTime('yyyymmddzzz', Now);
+
+      Registro1 := '1' +
+                   PadRight(Emitente.InscMun, 7, ' ') +
+                   'PMB002'+
+                   PadLeft(AIdentificacaoRemessa, 11, '0') + CRLF;
+
+    end;
+
+    ValorServicos := ValorServicos +
+                     Nota.NFSe.Servico.Valores.ValorServicos;
+
+    ValorTotalRetencoes := ValorTotalRetencoes +
+                           Nota.NFSe.Servico.Valores.ValorIr +
+                           Nota.NFSe.Servico.Valores.ValorPis +
+                           Nota.NFSe.Servico.Valores.ValorCofins +
+                           Nota.NFSe.Servico.Valores.ValorCsll;
+
+  end;
+
+  Registro9 := '9' +
+        PadRight(IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count + 2), 7, ' ') +
+        PadLeft(FloatToStr(ValorServicos * 100), 15, '0') +
+        PadLeft(FloatToStr(ValorTotalRetencoes * 100), 15, '0') + CRLF;
+
+  Params.Xml := Registro1 + Params.Xml + Registro9;
 
   XML := '<NFeLoteEnviarArquivo xmlns="http://www.barueri.sp.gov.br/nfe">';
   XML := XML + '<InscricaoMunicipal>' + Emitente.InscMun + '</InscricaoMunicipal>';
   XML := XML + '<CPFCNPJContrib>' + Emitente.CNPJ + '</CPFCNPJContrib>';
-  XML := XML + '<NomeArquivoRPS>' + Format('Rps-0%s.txt', [NumeroRps]) + '</NomeArquivoRPS>';
+  XML := XML + '<NomeArquivoRPS>' + Format('Rps-0%s.txt', [AIdentificacaoRemessa]) + '</NomeArquivoRPS>';
   XML := XML + '<ApenasValidaArq>false</ApenasValidaArq>';
   XML := XML + '<ArquivoRPSBase64>' + string(EncodeBase64(AnsiString(Params.Xml))) + '</ArquivoRPSBase64>';
   XML := XML + '</NFeLoteEnviarArquivo>';

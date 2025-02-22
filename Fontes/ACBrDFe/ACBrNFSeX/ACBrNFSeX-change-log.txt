@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 22/02/2025
+-- ISSBarueri.GravarXml/ISSBarueri.Provider --
+[*] #TK-6628: Ajustes para que seja possível o envio de um lote contendo até
+    1000 RPS.
+  Por: Italo Giurizzato Junior
 -- BHISS.Provider --
 [*] #TK-6621: Possível solução para a leitura do XML de retorno que não esta
     em UTF-8

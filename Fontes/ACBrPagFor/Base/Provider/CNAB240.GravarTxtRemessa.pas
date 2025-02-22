@@ -135,6 +135,8 @@ type
     }
     procedure GeraSegmentoZ(mSegmentoZList: TSegmentoZList); virtual;
 
+    procedure GeraSegmento5(mSegmento5List: TSegmento5List); virtual;
+
     procedure ValidarLinha(const Tipo: string); virtual;
     procedure IncluirLinha; virtual;
 
@@ -326,6 +328,11 @@ begin
   IncluirLinha;
 end;
 
+procedure TArquivoW_CNAB240.GeraSegmento5(mSegmento5List: TSegmento5List);
+begin
+  // Somente o Bradesco tem esse Segmento
+end;
+
 procedure TArquivoW_CNAB240.GeraSegmentoA(I: Integer);
 var
   J: Integer;
@@ -375,9 +382,11 @@ begin
       ValidarLinha('A');
       IncluirLinha;
 
-      {opcionais do segmento A}
       GeraSegmentoB(SegmentoB);
+      {opcionais do segmento A}
       GeraSegmentoC(SegmentoC);
+      GeraSegmento5(Segmento5);
+      GeraSegmentoZ(SegmentoZ);
     end;
   end;
 end;
@@ -521,11 +530,11 @@ begin
       ValidarLinha('J');
       IncluirLinha;
 
-      {opcionais segmento J}
       GeraSegmentoJ52(SegmentoJ52);
       GeraSegmentoJ53(SegmentoJ53);
-//      GeraSegmentoB(SegmentoB);
-//      GeraSegmentoC(SegmentoC);
+      {opcionais segmento J}
+      GeraSegmento5(Segmento5);
+      GeraSegmentoZ(SegmentoZ);
     end;
   end;
 end;
@@ -956,8 +965,8 @@ begin
 
       {opcionais segmento O}
       GeraSegmentoW(SegmentoW);
+      GeraSegmento5(Segmento5);
       GeraSegmentoZ(SegmentoZ);
-      GeraSegmentoB(SegmentoB);
     end;
   end;
 end;
@@ -1127,6 +1136,8 @@ begin
 
     GeraSegmentoJ(I);
 
+    GeraSegmentoO(I);
+
     GeraSegmentoN1(I);
     GeraSegmentoN2(I);
     GeraSegmentoN3(I);
@@ -1134,8 +1145,6 @@ begin
     GeraSegmentoN567(I);
     GeraSegmentoN8(I);
     GeraSegmentoN9(I);
-
-    GeraSegmentoO(I);
 
     GeraRegistro5(I);
 

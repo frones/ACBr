@@ -927,7 +927,7 @@ begin
 
     {opcionais segmento O}
     LerSegmentoW(PagFor.Lote.Last.SegmentoO.Last.SegmentoW, nLinha);
-    LerSegmentoB(PagFor.Lote.Last.SegmentoO.Last.SegmentoB, nLinha);
+//    LerSegmentoB(PagFor.Lote.Last.SegmentoO.Last.SegmentoB, nLinha);
     LerSegmentoZ(PagFor.Lote.Last.SegmentoO.Last.SegmentoZ, nLinha);
 
     Linha := ArquivoTXT.Strings[nLinha+1];

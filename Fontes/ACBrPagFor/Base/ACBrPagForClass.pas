@@ -770,6 +770,66 @@ type
     property Items[Index: Integer]: TSegmentoZ read GetItem write SetItem; default;
   end;
 
+  // Estrutura do Segmento 5 (Opcional)
+
+  TSegmento5 = class(TObject)
+  private
+    FListaDebito: string;
+    FHorarioDebito: TDateTime;
+    FCodLancamento: Integer;
+    FSegLinhaExtrato: Integer;
+    FUsoEmpresa: string;
+    FTipoDocumento: Integer;
+    FNumeroDocumento: string;
+    FSerieDocumento: string;
+    FDataEmissao: TDateTime;
+    FNomeReclamante: string;
+    FNumeroProcesso: string;
+    FPISPASEP: string;
+    FVersao: string;
+    FHorarioEfetivacao: TDateTime;
+    FCodReceita: string;
+    FCodMunicipio: Integer;
+    FPlaca: string;
+    FNumeroAIIM: string;
+    FInscDividaAtiva: string;
+    FExercicio: Integer;
+    FCotaUnica: string;
+    FCodOcorrencia: string;
+  public
+    property ListaDebito: string read FListaDebito write FListaDebito;
+    property HorarioDebito: TDateTime read FHorarioDebito write FHorarioDebito;
+    property CodLancamento: Integer read FCodLancamento write FCodLancamento;
+    property SegLinhaExtrato: Integer read FSegLinhaExtrato write FSegLinhaExtrato;
+    property UsoEmpresa: string read FUsoEmpresa write FUsoEmpresa;
+    property TipoDocumento: Integer read FTipoDocumento write FTipoDocumento;
+    property NumeroDocumento: string read FNumeroDocumento write FNumeroDocumento;
+    property SerieDocumento: string read FSerieDocumento write FSerieDocumento;
+    property DataEmissao: TDateTime read FDataEmissao write FDataEmissao;
+    property NomeReclamante: string read FNomeReclamante write FNomeReclamante;
+    property NumeroProcesso: string read FNumeroProcesso write FNumeroProcesso;
+    property PISPASEP: string read FPISPASEP write FPISPASEP;
+    property Versao: string read FVersao write FVersao;
+    property HorarioEfetivacao: TDateTime read FHorarioEfetivacao write FHorarioEfetivacao;
+    property CodReceita: string read FCodReceita write FCodReceita;
+    property CodMunicipio: Integer read FCodMunicipio write FCodMunicipio;
+    property Placa: string read FPlaca write FPlaca;
+    property NumeroAIIM: string read FNumeroAIIM write FNumeroAIIM;
+    property InscDividaAtiva: string read FInscDividaAtiva write FInscDividaAtiva;
+    property Exercicio: Integer read FExercicio write FExercicio;
+    property CotaUnica: string read FCotaUnica write FCotaUnica;
+    property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
+  end;
+
+  TSegmento5List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TSegmento5;
+    procedure SetItem(Index: Integer; Value: TSegmento5);
+  public
+    function New: TSegmento5;
+    function Last: TSegmento5;
+    property Items[Index: Integer]: TSegmento5 read GetItem write SetItem; default;
+  end;
 
   // Lote: Pagamento Através de Crédito em Conta, Cheque, OP, DOC, TED ou
   //       Pagamento com Autenticação
@@ -801,16 +861,16 @@ type
     FSegmentoB: TSegmentoBList;
     FSegmentoC: TSegmentoCList;
     FSegmentoE: TSegmentoEList;
-//    FSegmentoF: TSegmentoFList;
     FSegmentoZ: TSegmentoZList;
+    FSegmento5: TSegmento5List;
 
     procedure SetSegmentoB(const Value: TSegmentoBList);
     procedure SetSegmentoC(const Value: TSegmentoCList);
     procedure SetSegmentoE(const Value: TSegmentoEList);
-//    procedure SetSegmentoF(const Value: TSegmentoFList);
     procedure SetSegmentoZ(const Value: TSegmentoZList);
-    function GetPagamentoLiberado: Boolean;
 
+    function GetPagamentoLiberado: Boolean;
+    procedure SetSegmento5(const Value: TSegmento5List);
   public
     constructor Create;
     destructor Destroy; override;
@@ -831,9 +891,8 @@ type
     property SegmentoB: TSegmentoBList read FSegmentoB write SetSegmentoB;
     property SegmentoC: TSegmentoCList read FSegmentoC write SetSegmentoC;
     property SegmentoE: TSegmentoEList read FSegmentoE write SetSegmentoE;
-//    property SegmentoF: TSegmentoFList read FSegmentoF write SetSegmentoF;
     property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
-  end;
+    property Segmento5: TSegmento5List read FSegmento5 write SetSegmento5;  end;
 
   TSegmentoAList = class(TObjectList)
   private
@@ -1097,21 +1156,20 @@ type
     FReferenciaSacado: string;
     FCodigoMoeda: Integer;
     FCodOcorrencia: string;
+    FNossoNumero: string;
+    FSeuNumero: string;
     FSegmentoJ52: TSegmentoJ52List;
     FSegmentoJ53: TSegmentoJ53List;
     FSegmentoJ99: TSegmentoJ99List;
-//    FSegmentoB: TSegmentoBList;
-//    FSegmentoC: TSegmentoCList;
+    FSegmento5: TSegmento5List;
     FSegmentoZ: TSegmentoZList;
-    FNossoNumero: string;
-    FSeuNumero: string;
 
     procedure SetSegmentoJ52(const Value: TSegmentoJ52List);
     procedure SetSegmentoJ53(const Value: TSegmentoJ53List);
     procedure SetSegmentoJ99(const Value: TSegmentoJ99List);
-//    procedure SetSegmentoB(const Value: TSegmentoBList);
-//    procedure SetSegmentoC(const Value: TSegmentoCList);
+    procedure SetSegmento5(const Value: TSegmento5List);
     procedure SetSegmentoZ(const Value: TSegmentoZList);
+
     function GetPagamentoLiberado: Boolean;
   public
     constructor Create;
@@ -1133,14 +1191,13 @@ type
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
     property NossoNumero: string read FNossoNumero write FNossoNumero;
     property PagamentoLiberado: Boolean read GetPagamentoLiberado;
+    // Usado pela Caixa
+    property SeuNumero: string read FSeuNumero write FSeuNumero;
     property SegmentoJ52: TSegmentoJ52List read FSegmentoJ52 write SetSegmentoJ52;
     property SegmentoJ53: TSegmentoJ53List read FSegmentoJ53 write SetSegmentoJ53;
     property SegmentoJ99: TSegmentoJ99List read FSegmentoJ99 write SetSegmentoJ99;
-//    property SegmentoB: TSegmentoBList read FSegmentoB write SetSegmentoB;
-//    property SegmentoC: TSegmentoCList read FSegmentoC write SetSegmentoC;
+    property Segmento5: TSegmento5List read FSegmento5 write SetSegmento5;
     property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
-    // Usado pela Caixa
-    property SeuNumero: string read FSeuNumero write FSeuNumero;
   end;
 
   TSegmentoJList = class(TObjectList)
@@ -1574,16 +1631,18 @@ type
     FSeuNumero         : string; // Tamanho 20
     FNossoNumero       : string; // Tamanho 20
     FCodOcorrencia : string;
-    FSegmentoW: TSegmentoWList;
-    FSegmentoZ: TSegmentoZList;
-    FSegmentoB: TSegmentoBList;
     FQuantidadeMoeda: Double;
     FValorPago: Double;
     FNotaFiscal: Integer;
 
+    FSegmentoW: TSegmentoWList;
+    FSegmento5: TSegmento5List;
+    FSegmentoZ: TSegmentoZList;
+
     procedure SetSegmentoW(const Value: TSegmentoWList);
+    procedure SetSegmento5(const Value: TSegmento5List);
     procedure SetSegmentoZ(const Value: TSegmentoZList);
-    procedure SetSegmentoB(const Value: TSegmentoBList);
+
     function GetPagamentoLiberado: Boolean;
   public
     constructor Create;
@@ -1599,13 +1658,13 @@ type
     property SeuNumero: string read FSeuNumero write FSeuNumero;
     property NossoNumero: string read FNossoNumero write FNossoNumero;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property SegmentoW: TSegmentoWList read FSegmentoW write SetSegmentoW;
-    property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
-    property SegmentoB: TSegmentoBList read FSegmentoB write SetSegmentoB;
     property QuantidadeMoeda: Double read FQuantidadeMoeda write FQuantidadeMoeda;
     property ValorPago: Double read FValorPago write FValorPago;
     property NotaFiscal: Integer read FNotaFiscal write FNotaFiscal;
     property PagamentoLiberado: Boolean read GetPagamentoLiberado;
+    property SegmentoW: TSegmentoWList read FSegmentoW write SetSegmentoW;
+    property Segmento5: TSegmento5List read FSegmento5 write SetSegmento5;
+    property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
   end;
 
   TSegmentoOList = class(TObjectList)
@@ -1638,6 +1697,7 @@ type
     FSegmentoN9: TSegmentoN9List;
     FSegmentoO: TSegmentoOList;
     FSegmentoW: TSegmentoWList;
+    FSegmento5: TSegmento5List;
 
     procedure SetSegmentoA(const Value: TSegmentoAList);
     procedure SetSegmentoE(const Value: TSegmentoEList);
@@ -1652,6 +1712,7 @@ type
     procedure SetSegmentoN9(const Value: TSegmentoN9List);
     procedure SetSegmentoO(const Value: TSegmentoOList);
     procedure SetSegmentoW(const Value: TSegmentoWList);
+    procedure SetSegmento5(const Value: TSegmento5List);
   public
     constructor Create;
     destructor Destroy; override;
@@ -1671,6 +1732,7 @@ type
     property SegmentoN9: TSegmentoN9List read FSegmentoN9 write SetSegmentoN9;
     property SegmentoO: TSegmentoOList read FSegmentoO write SetSegmentoO;
     property SegmentoW: TSegmentoWList read FSegmentoW write SetSegmentoW;
+    property Segmento5: TSegmento5List read FSegmento5 write SetSegmento5;
 
     property Registro5: TRegistro5 read FRegistro5 write FRegistro5;
   end;
@@ -1930,7 +1992,7 @@ begin
   FSegmentoB := TSegmentoBList.Create;
   FSegmentoC := TSegmentoCList.Create;
   FSegmentoE := TSegmentoEList.Create;
-//  FSegmentoF := TSegmentoFList.Create{(Self)};
+  FSegmento5 := TSegmento5List.Create;
   FSegmentoZ := TSegmentoZList.Create;
 end;
 
@@ -1941,7 +2003,7 @@ begin
   FSegmentoB.Free;
   FSegmentoC.Free;
   FSegmentoE.Free;
-//  FSegmentoF.Free;
+  FSegmento5.Free;
   FSegmentoZ.Free;
 
   inherited Destroy;
@@ -1971,6 +2033,11 @@ begin
   end;
 end;
 
+procedure TSegmentoA.SetSegmento5(const Value: TSegmento5List);
+begin
+  FSegmento5 := Value;
+end;
+
 procedure TSegmentoA.SetSegmentoB(const Value: TSegmentoBList);
 begin
   FSegmentoB := Value;
@@ -1985,12 +2052,7 @@ procedure TSegmentoA.SetSegmentoE(const Value: TSegmentoEList);
 begin
   FSegmentoE := Value;
 end;
-{
-procedure TSegmentoA.SetSegmentoF(const Value: TSegmentoFList);
-begin
-  FSegmentoF := Value;
-end;
-}
+
 procedure TSegmentoA.SetSegmentoZ(const Value: TSegmentoZList);
 begin
   FSegmentoZ := Value;
@@ -2125,8 +2187,7 @@ begin
   FSegmentoJ52 := TSegmentoJ52List.Create;
   FSegmentoJ53 := TSegmentoJ53List.Create;
   FSegmentoJ99 := TSegmentoJ99List.Create;
-//  FSegmentoB := TSegmentoBList.Create;
-//  FSegmentoC := TSegmentoCList.Create;
+  FSegmento5 := TSegmento5List.Create;
   FSegmentoZ := TSegmentoZList.Create;
 end;
 
@@ -2135,45 +2196,22 @@ begin
   FSegmentoJ52.Free;
   FSegmentoJ53.Free;
   FSegmentoJ99.Free;
-//  FSegmentoB.Free;
-//  FSegmentoC.Free;
+  FSegmento5.Free;
   FSegmentoZ.Free;
 
   inherited Destroy;
 end;
 
 function TSegmentoJ.GetPagamentoLiberado: Boolean;
-//var
-//  I: Integer;
 begin
   Result := POS(CodOcorrencia, PAGAMENTO_LIBERADO_BANCO) > 0;
-  {
-  if Result then
-  begin
-    for I := 0 to SegmentoB.Count - 1 do
-      if Result then
-        Result := POS(SegmentoB.Items[I].CodOcorrencia, PAGAMENTO_LIBERADO_BANCO) > 0;
-
-    if not Result then
-      Exit;
-
-    for I := 0 to SegmentoC.Count - 1 do
-      if Result then
-        Result := POS(SegmentoC.Items[I].CodOcorrencia, PAGAMENTO_LIBERADO_BANCO) > 0;
-  end;
-  }
 end;
-{
-procedure TSegmentoJ.SetSegmentoB(const Value: TSegmentoBList);
+
+procedure TSegmentoJ.SetSegmento5(const Value: TSegmento5List);
 begin
-  FSegmentoB := Value;
+  FSegmento5 := Value;
 end;
 
-procedure TSegmentoJ.SetSegmentoC(const Value: TSegmentoCList);
-begin
-  FSegmentoC := Value;
-end;
-}
 procedure TSegmentoJ.SetSegmentoJ52(const Value: TSegmentoJ52List);
 begin
   FSegmentoJ52 := Value;
@@ -2488,15 +2526,15 @@ begin
   inherited Create;
 
   FSegmentoW := TSegmentoWList.Create;
+  FSegmento5 := TSegmento5List.Create;
   FSegmentoZ := TSegmentoZList.Create;
-  FSegmentoB := TSegmentoBList.Create;
 end;
 
 destructor TSegmentoO.Destroy;
 begin
   FSegmentoW.Free;
+  FSegmento5.Free;
   FSegmentoZ.Free;
-  FSegmentoB.Free;
 
   inherited Destroy;
 end;
@@ -2504,6 +2542,11 @@ end;
 function TSegmentoO.GetPagamentoLiberado: Boolean;
 begin
   Result := POS(CodOcorrencia, PAGAMENTO_LIBERADO_BANCO) > 0;
+end;
+
+procedure TSegmentoO.SetSegmento5(const Value: TSegmento5List);
+begin
+  FSegmento5 := Value;
 end;
 
 procedure TSegmentoO.SetSegmentoW(const Value: TSegmentoWList);
@@ -2514,11 +2557,6 @@ end;
 procedure TSegmentoO.SetSegmentoZ(const Value: TSegmentoZList);
 begin
   FSegmentoZ := Value;
-end;
-
-procedure TSegmentoO.SetSegmentoB(const Value: TSegmentoBList);
-begin
-  FSegmentoB := Value;
 end;
 
 { TSegmentoOList }
@@ -2673,6 +2711,11 @@ begin
   FRegistro5.Free;
 
   inherited Destroy;
+end;
+
+procedure TLote.SetSegmento5(const Value: TSegmento5List);
+begin
+  FSegmento5 := Value;
 end;
 
 procedure TLote.SetSegmentoA(const Value: TSegmentoAList);
@@ -3281,6 +3324,28 @@ begin
 end;
 
 procedure TSegmentoJ53List.SetItem(Index: Integer; Value: TSegmentoJ53);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TSegmento5List }
+
+function TSegmento5List.GetItem(Index: Integer): TSegmento5;
+begin
+  Result := TSegmento5(inherited GetItem(Index));
+end;
+
+function TSegmento5List.Last: TSegmento5;
+begin
+  Result := TSegmento5(inherited Last);
+end;
+
+function TSegmento5List.New: TSegmento5;
+begin
+  Result := TSegmento5.Create;
+end;
+
+procedure TSegmento5List.SetItem(Index: Integer; Value: TSegmento5);
 begin
   inherited SetItem(Index, Value);
 end;

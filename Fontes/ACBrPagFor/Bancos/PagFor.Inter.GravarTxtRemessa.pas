@@ -323,7 +323,7 @@ begin
       {opcionais segmento O}
       GeraSegmentoW(SegmentoW);
       GeraSegmentoZ(SegmentoZ);
-      GeraSegmentoB(SegmentoB);
+//      GeraSegmentoB(SegmentoB);
     end;
   end;
 end;

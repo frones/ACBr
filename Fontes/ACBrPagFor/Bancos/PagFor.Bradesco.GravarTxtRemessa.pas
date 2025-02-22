@@ -52,6 +52,8 @@ type
     procedure GeraSegmentoB(mSegmentoBList: TSegmentoBList); override;
 
     procedure GeraSegmentoJ52(mSegmentoJ52List: TSegmentoJ52List); override;
+
+    procedure GeraSegmento5(mSegmento5List: TSegmento5List); override;
   end;
 
 implementation
@@ -278,6 +280,78 @@ begin
       end;
 
       ValidarLinha('J52');
+      IncluirLinha;
+    end;
+  end;
+end;
+
+procedure TArquivoW_Bradesco.GeraSegmento5(mSegmento5List: TSegmento5List);
+var
+  J: Integer;
+begin
+  for J := 0 to mSegmento5List.Count - 1 do
+  begin
+    FpLinha := '';
+
+    with mSegmento5List.Items[J] do
+    begin
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDoRegistroNoLote);
+
+      GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
+      GravarCampo(FQtdeLotes, 4, tcInt);
+      GravarCampo('3', 1, tcStr);
+      GravarCampo(FSequencialDoRegistroNoLote, 5, tcInt);
+      GravarCampo('5', 1, tcStr);
+      GravarCampo(' ', 3, tcStr);
+      GravarCampo(ListaDebito, 9, tcStr);
+      GravarCampo(HorarioDebito, 6, tcHor);
+      GravarCampo(CodLancamento, 5, tcInt);
+      GravarCampo(SegLinhaExtrato, 5, tcInt);
+      GravarCampo(UsoEmpresa, 50, tcStr);
+      GravarCampo(TipoDocumento, 3, tcInt);
+      GravarCampo(NumeroDocumento, 15, tcStr);
+      GravarCampo(SerieDocumento, 2, tcStr);
+      GravarCampo(' ', 15, tcStr);
+      GravarCampo(DataEmissao, 8, tcDat);
+
+      case PagFor.Lote[0].Registro1.Servico.FormaLancamento of
+        flCreditoContaCorrente, flChequePagamento, flDocTed, flOPDisposicao,
+        flPagamentoAutenticacao:
+          begin
+            GravarCampo(NomeReclamante, 30, tcStr, True);
+            GravarCampo(NumeroProcesso, 25, tcStr);
+            GravarCampo(PISPASEP, 15, tcStr);
+            GravarCampo(' ', 25, tcStr);
+            GravarCampo(' ', 10, tcStr);
+          end;
+
+        flLiquidacaoTitulosOutrosBancos:
+          begin
+            GravarCampo(' ', 95, tcStr);
+            GravarCampo(' ', 10, tcStr);
+          end;
+
+        flTributoDARFNormal, flTributoGPS, flTributoDARFSimples, flTributoIPTU,
+        flTributoDARJ, flTributoGARESPICMS, flTributoGARESPDR, flTributoGARESPITCMD,
+        flTributoIPVA, flTributoLicenciamento, flTributoDPVAT, flTributoGNRe:
+          begin
+            GravarCampo(Versao, 3, tcStr);
+            GravarCampo(HorarioEfetivacao, 6, tcHor);
+            GravarCampo(CodReceita, 6, tcStr);
+            GravarCampo(CodMunicipio, 4, tcInt);
+            GravarCampo(Placa, 7, tcStr);
+            GravarCampo(NumeroAIIM, 9, tcStr);
+            GravarCampo(InscDividaAtiva, 13, tcStr);
+            GravarCampo(Exercicio, 4, tcInt);
+            GravarCampo(CotaUnica, 10, tcStr);
+            GravarCampo(' ', 33, tcStr);
+            GravarCampo(' ', 10, tcStr);
+          end;
+      end;
+
+      ValidarLinha('5');
       IncluirLinha;
     end;
   end;

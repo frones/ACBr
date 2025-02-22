@@ -102,6 +102,8 @@ type
 
     procedure LerSegmentoZ(mSegmentoZList: TSegmentoZList; nLinha: Integer); virtual;
 
+    procedure LerSegmento5(mSegmento5List: TSegmento5List; nLinha: Integer); virtual;
+
     procedure LerLote;
     procedure GerarAvisos(const aCodOcorrencia, aSegmento, aSegmentoFilho,
                           aSeuNumero: string);
@@ -517,6 +519,11 @@ begin
   PagFor.Registro9.Totais.QtdeContasConciliadas := LerCampo(Linha, 30, 6, tcInt);
 end;
 
+procedure TArquivoR_CNAB240.LerSegmento5(mSegmento5List: TSegmento5List; nLinha: Integer);
+begin
+  // Somente o Bradesco tem esse Segmento
+end;
+
 procedure TArquivoR_CNAB240.LerSegmentoA(nLinha: Integer);
 var
   mOk: Boolean;
@@ -573,15 +580,14 @@ begin
   Linha := ArquivoTXT.Strings[nLinha+1];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
-  while Pos(RegSeg, '3B/3C/3D/3E/3F/3Z/') > 0 do
+  while Pos(RegSeg, '3B/3C/3D/35/3Z/') > 0 do
   begin
     Inc(nLinha); //próxima linha do txt a ser lida
     {opcionais do segmento A}
     LerSegmentoB(PagFor.Lote.Last.SegmentoA.Last.SegmentoB, nLinha);
     LerSegmentoC(PagFor.Lote.Last.SegmentoA.Last.SegmentoC, nLinha);
-//    LerSegmentoE(PagFor.Lote.Last.SegmentoA.Last.SegmentoE, I);
-//    LerSegmentoF(PagFor.Lote.Last.SegmentoA.Last.SegmentoF, I);
-//    LerSegmentoZ(PagFor.Lote.Last.SegmentoA.Last.SegmentoZ, I);
+    LerSegmento5(PagFor.Lote.Last.SegmentoA.Last.Segmento5, nLinha);
+    LerSegmentoZ(PagFor.Lote.Last.SegmentoA.Last.SegmentoZ, nLinha);
 
     for x := 0 to PagFor.Lote.Last.SegmentoA.Last.SegmentoB.Count - 1 do
     begin
@@ -600,25 +606,25 @@ begin
           PagFor.Lote.Last.SegmentoA.Last.Credito.SeuNumero);
       end;
     end;
-    (*
-    for x := 0 to PagFor.Lote.Last.SegmentoA.Last.SegmentoE.Count - 1 do
+
+    for x := 0 to PagFor.Lote.Last.SegmentoA.Last.Segmento5.Count - 1 do
     begin
-      with PagFor.Lote.Last.SegmentoA.Last.SegmentoE.Items[x] do
+      with PagFor.Lote.Last.SegmentoA.Last.Segmento5.Items[x] do
       begin
         GerarAvisos(CodOcorrencia, 'A', 'E',
           PagFor.Lote.Last.SegmentoA.Last.Credito.SeuNumero);
       end;
     end;
 
-    for x := 0 to PagFor.Lote.Last.SegmentoA.Last.SegmentoF.Count - 1 do
+    for x := 0 to PagFor.Lote.Last.SegmentoA.Last.SegmentoZ.Count - 1 do
     begin
-      with PagFor.Lote.Last.SegmentoA.Last.SegmentoF.Items[x] do
+      with PagFor.Lote.Last.SegmentoA.Last.SegmentoZ.Items[x] do
       begin
         GerarAvisos(CodOcorrencia, 'A', 'F',
           PagFor.Lote.Last.SegmentoA.Last.Credito.SeuNumero);
       end;
     end;
-    *)
+
 
     Linha := ArquivoTXT.Strings[nLinha+1];
     RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
@@ -917,7 +923,7 @@ begin
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
   RegOpc := LerCampo(Linha, 18, 2, tcStr);
 
-  while (Pos(RegSeg, '3B/3C/3D/3E/3F/3Z/') > 0) or
+  while (Pos(RegSeg, '3B/3C/3D/35/3Z/') > 0) or
         (RegSeg = '3J') and (Pos(RegOpc, '52/99/') > 0) do
   begin
     Inc(nLinha); //próxima linha do txt a ser lida
@@ -926,8 +932,7 @@ begin
     LerSegmentoJ52(PagFor.Lote.Last.SegmentoJ.Last.SegmentoJ52, nLinha);
     LerSegmentoJ53(PagFor.Lote.Last.SegmentoJ.Last.SegmentoJ53, nLinha);
     LerSegmentoJ99(PagFor.Lote.Last.SegmentoJ.Last.SegmentoJ99, nLinha);
-//    LerSegmentoB(PagFor.Lote.Last.SegmentoJ.Last.SegmentoB, I);
-//    LerSegmentoC(PagFor.Lote.Last.SegmentoJ.Last.SegmentoC, I);
+    LerSegmento5(PagFor.Lote.Last.SegmentoJ.Last.Segmento5, nLinha);
     LerSegmentoZ(PagFor.Lote.Last.SegmentoJ.Last.SegmentoZ, nLinha);
 
     Linha := ArquivoTXT.Strings[nLinha+1];
@@ -1435,13 +1440,13 @@ begin
   Linha := ArquivoTXT.Strings[nLinha+1];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
-  while Pos(RegSeg, '3Z') > 0 do
+  while Pos(RegSeg, '3W/35/3Z') > 0 do
   begin
     Inc(nLinha); //próxima linha do txt a ser lida
 
     {opcionais segmento O}
     LerSegmentoW(PagFor.Lote.Last.SegmentoO.Last.SegmentoW, nLinha);
-    LerSegmentoB(PagFor.Lote.Last.SegmentoO.Last.SegmentoB, nLinha);
+    LerSegmento5(PagFor.Lote.Last.SegmentoO.Last.Segmento5, nLinha);
     LerSegmentoZ(PagFor.Lote.Last.SegmentoO.Last.SegmentoZ, nLinha);
 
     Linha := ArquivoTXT.Strings[nLinha+1];

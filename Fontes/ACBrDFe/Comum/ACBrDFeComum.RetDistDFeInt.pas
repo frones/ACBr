@@ -806,6 +806,9 @@ begin
       if ANode.Name = LowerCase(FptpDFe) + 'OSProc' then
         LerDocumento(ANode, Indice);
 
+      if ANode.Name = LowerCase(FptpDFe) + 'SimpProc' then
+        LerDocumento(ANode, Indice);
+
       if ANode.Name = 'GTVeProc' then
         LerDocumento(ANode, Indice);
 
@@ -910,6 +913,7 @@ function TRetDistDFeInt.LerXMLFromFile(Const CaminhoArquivo: string;
 var
   ArqDist: TStringList;
   xml: string;
+  I: Integer;
 begin
   ArqDist := TStringList.Create;
   try
@@ -920,6 +924,19 @@ begin
     XmlRetorno := ArqDist.Text;
 
     Result := LerXml;
+
+    for I := 0 to docZip.Count - 1 do
+    begin
+      xml := docZip[I].XML;
+
+      if (xml <> '') then
+      begin
+        if (FOwner.Configuracoes.Arquivos.Salvar) then
+        begin
+          FOwner.Gravar(docZip[I].NomeArq, xml);
+        end;
+      end;
+    end;
   finally
     ArqDist.Free;
   end;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/02/2025
+-- ACBrDFeComum.RetDistDFeInt --
+[*] Ajustes para identificar o CT-e Simplificado.
+   Por: Italo Giurizzato Junior
+
 18/10/2024
 -- ACBrDFeComum.RetDistDFeInt --
 [-] Correções visando a leitura correta do XML de retorno quando este contem

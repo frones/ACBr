@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/02/2025
+-- ACBrCTeWebServices --
+[*] #TK-6647: Ajustes para identificar o CT-e Simplificado no DistribuicaoDFe.
+   Por: galegoga
+
 14/02/2025
 -- ACBrCTe.Classes/ACBrCTe.Consts --
 [+] Inclusão de novas contantes e ajustes nas novas classes para atender a Reforma Tributária.

@@ -43,6 +43,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+23/02/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6659: A cidade de Embu-Guaçu/SP vai continuar usando o Ginfes até 01/04/2025
+    quando vai ser alterado para o Giss.
+  Por: C4Dev
+[*] #TK-6657: A cidade de Pirajui/SP trocou a URL de produção o provedor continua o mesmo.
+  Por: Fabio Tellini
+[*] #TK-6655: A cidade de São Felix do Araguaia/MT trocou de provedor, agora é Centi.
+  Por: Diego Reckziegel
+
 22/02/2025
 -- ISSBarueri.GravarXml/ISSBarueri.Provider --
 [*] #TK-6628: Ajustes para que seja possível o envio de um lote contendo até

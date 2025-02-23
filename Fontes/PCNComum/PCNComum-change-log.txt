@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+23/02/2025
+-- pcnRetDistDFeInt --
+[*] Ajustes para identificar o CT-e Simplificado.
+   Por: galegoga
+
 10/02/2025
 -- pcnConversao --
 [+] acrescentado o enumerador: schprocCTeSimp ao tipo TSchemaDFe.

@@ -556,6 +556,7 @@ begin
 
           if (oLeitorInfZip.rExtrai(1, LowerCase(FtpDFe) + 'Proc') <> '') or
              (oLeitorInfZip.rExtrai(1, LowerCase(FtpDFe) + 'OSProc') <> '') or
+			 (oLeitorInfZip.rExtrai(1, LowerCase(FtpDFe) + 'SimpProc') <> '') or
              (oLeitorInfZip.rExtrai(1, 'GTVeProc') <> '') then
           begin
             FdocZip.Items[i].XML := InserirDeclaracaoXMLSeNecessario(oLeitorInfZip.Grupo);

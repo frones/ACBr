@@ -346,15 +346,18 @@ begin
     Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_deducao', 1, 15, 0,
                                 NFSe.Servico.ItemServico[I].ValorDeducoes, ''));
 
+    Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_desconto_incondicional', 1, 15, 0,
+                       NFSe.Servico.ItemServico[I].DescontoIncondicionado, ''));
+
     if NFSe.Servico.ItemServico[I].SituacaoTributaria = 3 then
       Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_issrf', 1, 15, 1,
-                         NFSe.Servico.ItemServico[I].ValorISSRetido, DSC_VISS))
+                          NFSe.Servico.ItemServico[I].ValorISSRetido, DSC_VISS))
     else
       Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_issrf', 1, 15, 0,
                          NFSe.Servico.ItemServico[I].ValorISSRetido, DSC_VISS));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'cno', 1, 15, 0,
-                                   NFSe.Servico.ItemServico[I].CodCNO, ''));
+                                       NFSe.Servico.ItemServico[I].CodCNO, ''));
   end;
 
   if NFSe.Servico.ItemServico.Count > 10 then

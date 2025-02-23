@@ -44,6 +44,16 @@ Símbolo : Significado
 
 
 23/02/2025
+-- ISSBarueri.GravarXml --
+[*] #TK-6651: Alteração visando gerar o arquivo com o código do pais do tomador
+    extrangeiro.
+  Por: Breno Silva
+-- IPM.GravarXml/IPM.LerXml --
+[*] #TK-6650: Incluido o campo para gerar e ler o valor do desconto incondicionado.
+  Por: Willian Carminatt
+-- ACBrNFSeXNotasFiscais/SmarAPD.LerXml --
+[*] #TK-6649: Ajustes para ler corretamente um lote de notas.
+  Por: Ray Hildebrant
 -- ACBrNFSeXServicos --
 [*] #TK-6659: A cidade de Embu-Guaçu/SP vai continuar usando o Ginfes até 01/04/2025
     quando vai ser alterado para o Giss.

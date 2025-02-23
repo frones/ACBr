@@ -2393,7 +2393,7 @@ var
     TagF[05] := '<nfse>';             // Provedor IPM
     TagF[06] := '<Nota>';
     TagF[07] := '<NFe>';
-    TagF[08] := '<tbnfd>';
+    TagF[08] := '<nfdok ';            // SmarAPD possui o atributo numeronfd
     TagF[09] := '<nfs>';
     TagF[10] := '<nfeRpsNotaFiscal>'; // Provedor EL
     TagF[11] := '<notasFiscais>';     // Provedor EL
@@ -2420,7 +2420,7 @@ var
     TagF[05] := '</nfse>';             // Provedor IPM
     TagF[06] := '</Nota>';
     TagF[07] := '</NFe>';
-    TagF[08] := '</tbnfd>';
+    TagF[08] := '</nfdok>';            // SmarAPD
     TagF[09] := '</nfs>';
     TagF[10] := '</nfeRpsNotaFiscal>'; // Provedor EL
     TagF[11] := '</notasFiscais>';     // Provedor EL

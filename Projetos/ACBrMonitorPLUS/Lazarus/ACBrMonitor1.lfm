@@ -28115,6 +28115,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Height = 25
                       Top = 18
                       Width = 223
+                      Font.CharSet = ANSI_CHARSET
+                      Font.Height = -13
+                      ParentFont = False
                       TabOrder = 2
                     end
                     object Label197: TLabel
@@ -28129,6 +28132,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Height = 25
                       Top = 114
                       Width = 416
+                      Font.CharSet = ANSI_CHARSET
+                      Font.Height = -13
+                      ParentFont = False
                       TabOrder = 4
                     end
                     object edtNumeroEmitenteNFSe: TEdit
@@ -28136,6 +28142,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Height = 25
                       Top = 114
                       Width = 223
+                      Font.CharSet = ANSI_CHARSET
+                      Font.Height = -13
+                      ParentFont = False
                       TabOrder = 5
                     end
                     object Label290: TLabel
@@ -28157,6 +28166,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Height = 25
                       Top = 160
                       Width = 188
+                      Font.CharSet = ANSI_CHARSET
+                      Font.Height = -13
+                      ParentFont = False
                       TabOrder = 6
                     end
                     object edtComplementoEmitenteNFSe: TEdit
@@ -28164,6 +28176,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Height = 25
                       Top = 161
                       Width = 216
+                      Font.CharSet = ANSI_CHARSET
+                      Font.Height = -13
+                      ParentFont = False
                       TabOrder = 7
                     end
                     object Label292: TLabel
@@ -28185,6 +28200,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Height = 25
                       Top = 161
                       Width = 223
+                      Font.CharSet = ANSI_CHARSET
+                      Font.Height = -13
+                      ParentFont = False
                       TabOrder = 8
                     end
                     object edtEmailEmitenteNFSe: TEdit
@@ -28192,6 +28210,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Height = 25
                       Top = 206
                       Width = 416
+                      Font.CharSet = ANSI_CHARSET
+                      Font.Height = -13
+                      ParentFont = False
                       TabOrder = 9
                     end
                     object Label294: TLabel
@@ -28213,6 +28234,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Height = 25
                       Top = 206
                       Width = 223
+                      Font.CharSet = ANSI_CHARSET
+                      Font.Height = -13
+                      ParentFont = False
                       TabOrder = 10
                     end
                   end

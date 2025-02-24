@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/02/2025
+-- ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts, DoACBrNFSeUnit --
+[*] #TK-6556 Adiciona informações de endereço opcionais para o emitente para usar no DANFSe quando não houver no XML.
+  Por: Diego Folieni 
+
 17/02/2025  
 -- ACBrMonitor.hnd --  
 [*] #TK-6137 Corrigido exemplos de respostas da DistribuicaoDFe adicionando informações para refletir retorno mais recente.  

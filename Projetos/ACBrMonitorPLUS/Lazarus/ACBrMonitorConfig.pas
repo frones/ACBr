@@ -771,6 +771,14 @@ type
     NomePrefeitura: string;
     CNPJPrefeitura: string;
     NomeLongoNFSe : boolean;
+    IEEmitente: string;
+    EnderecoEmitente: string;
+    NumeroEmitente: string;
+    BairroEmitente: string;
+    ComplementoEmitente: string;
+    CEPEmitente: string;
+    EmailEmitente: string;
+    FoneEmitente: string;
   end;
 
 
@@ -1630,6 +1638,14 @@ begin
       Ini.WriteString( CSecNFSE, CKeyNFSeNomePrefeitura, NomePrefeitura );
       Ini.WriteString( CSecNFSE, CKeyNFSeCNPJPrefeitura, CNPJPrefeitura );
       Ini.WriteBool( CSecNFSE, CKeyNFSeNomeLongoNFSe, NomeLongoNFSe );
+      Ini.WriteString( CSecNFSe, CKeyNFSeIEEmitente, IEEmitente );
+      Ini.WriteString( CSecNFSe, CKeyNFSeEnderecoEmitente, EnderecoEmitente );
+      Ini.WriteString( CSecNFSe, CKeyNFSeNumeroEmitente, NumeroEmitente );
+      Ini.WriteString( CSecNFSe, CKeyNFSeBairroEmitente, BairroEmitente );
+      Ini.WriteString( CSecNFSe, CKeyNFSeComplementoEmitente, ComplementoEmitente);
+      Ini.WriteString( CSecNFSe, CKeyNFSeCEPEmitente, CEPEmitente );
+      Ini.WriteString( CSecNFSe, CKeyNFSeEmailEmitente, EmailEmitente );
+      Ini.WriteString( CSecNFSe, CKeyNFSeFoneEmitente, FoneEmitente );
 
     end;
 
@@ -2438,6 +2454,14 @@ begin
       NomePrefeitura := ini.ReadString( CSecNFSE, CKeyNFSeNomePrefeitura, NomePrefeitura);
       CNPJPrefeitura := ini.ReadString( CSecNFSE, CKeyNFSeCNPJPrefeitura, CNPJPrefeitura);
       NomeLongoNFSe  := ini.ReadBool( CSecNFSE, CKeyNFSeNomeLongoNFSe, NomeLongoNFSe);
+      IEEmitente := Ini.ReadString( CSecNFSe, CKeyNFSeIEEmitente, IEEmitente );
+      EnderecoEmitente := Ini.ReadString( CSecNFSe, CKeyNFSeEnderecoEmitente, EnderecoEmitente );
+      NumeroEmitente := Ini.ReadString( CSecNFSe, CKeyNFSeNumeroEmitente, NumeroEmitente );
+      BairroEmitente := Ini.ReadString( CSecNFSe, CKeyNFSeBairroEmitente, BairroEmitente );
+      ComplementoEmitente := Ini.ReadString( CSecNFSe, CKeyNFSeComplementoEmitente, ComplementoEmitente);
+      CEPEmitente := Ini.ReadString( CSecNFSe, CKeyNFSeCEPEmitente, CEPEmitente );
+      EmailEmitente := Ini.ReadString( CSecNFSe, CKeyNFSeEmailEmitente, EmailEmitente );
+      FoneEmitente:= Ini.ReadString( CSecNFSe, CKeyNFSeFoneEmitente, FoneEmitente );
     end;
 
   finally

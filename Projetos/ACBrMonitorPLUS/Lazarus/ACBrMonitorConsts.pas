@@ -1451,6 +1451,16 @@ const
   CKeyNFSeNomePrefeitura =                  'NomePrefeitura';
   CKeyNFSeCNPJPrefeitura =                  'CNPJPrefeitura';
   CKeyNFSeNomeLongoNFSe =                   'NomeLongoNFSe';
+  CKeyNFSeIEEmitente =                      'IEEmitente';
+  CKeyNFSeEnderecoEmitente =                'EnderecoEmitente';
+  CKeyNFSeNumeroEmitente =                  'NumeroEmitente';
+  CKeyNFSeBairroEmitente =                  'BairroEmitente';
+  CKeyNFSeComplementoEmitente =             'ComplementoEmitente';
+  CKeyNFSeCEPEmitente =                     'CEPEmitente';
+  CKeyNFSeEmailEmitente =                   'EmailEmitente';
+  CKeyNFSeFoneEmitente =                    'FoneEmitente';
+
+
 
 
 implementation

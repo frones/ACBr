@@ -17381,12 +17381,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 549
         Top = 1
         Width = 1129
-        ActivePage = tsACBrBoleto
+        ActivePage = tsDFe
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 11
+        TabIndex = 16
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -25366,12 +25366,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 519
             Top = 0
             Width = 1121
-            ActivePage = tsDiretoriosDFe
+            ActivePage = tsWebServiceDFe
             Align = alClient
             Font.Height = -13
             Images = ImageList1
             ParentFont = False
-            TabIndex = 4
+            TabIndex = 1
             TabOrder = 0
             OnChange = pgDFeChange
             object tsCertificadoDFe: TTabSheet
@@ -27528,51 +27528,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Caption = 'NFS-e'
                   ClientHeight = 459
                   ClientWidth = 1105
-                  object cbxMontarPathSchemas: TCheckBox
-                    Left = 432
-                    Height = 19
-                    Top = 192
-                    Width = 251
-                    Caption = 'Montar automaticamente o Path dos Schemas'
-                    Font.CharSet = ANSI_CHARSET
-                    Font.Color = clBlack
-                    Font.Height = -12
-                    Font.Name = 'Segoe UI Light'
-                    Font.Pitch = fpVariable
-                    Font.Quality = fqDraft
-                    ParentFont = False
-                    TabOrder = 0
-                  end
-                  object cbxConsultarLoteAposEnvio: TCheckBox
-                    Left = 432
-                    Height = 19
-                    Top = 216
-                    Width = 149
-                    Caption = 'Consultar Lote Após Envio'
-                    Font.CharSet = ANSI_CHARSET
-                    Font.Color = clBlack
-                    Font.Height = -12
-                    Font.Name = 'Segoe UI Light'
-                    Font.Pitch = fpVariable
-                    Font.Quality = fqDraft
-                    ParentFont = False
-                    TabOrder = 1
-                  end
-                  object cbxConsultarAposCancelar: TCheckBox
-                    Left = 432
-                    Height = 19
-                    Top = 240
-                    Width = 140
-                    Caption = 'Consultar Após Cancelar'
-                    Font.CharSet = ANSI_CHARSET
-                    Font.Color = clBlack
-                    Font.Height = -12
-                    Font.Name = 'Segoe UI Light'
-                    Font.Pitch = fpVariable
-                    Font.Quality = fqDraft
-                    ParentFont = False
-                    TabOrder = 2
-                  end
                   object gbxAutenticacaoNFSe: TGroupBox
                     Left = 544
                     Height = 168
@@ -27590,7 +27545,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Font.Style = [fsItalic]
                     ParentBackground = False
                     ParentFont = False
-                    TabOrder = 3
+                    TabOrder = 1
                     object Label264: TLabel
                       Left = 6
                       Height = 15
@@ -27729,7 +27684,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Font.Style = [fsItalic]
                     ParentBackground = False
                     ParentFont = False
-                    TabOrder = 4
+                    TabOrder = 0
                     object Label263: TLabel
                       Left = 8
                       Height = 15
@@ -28060,12 +28015,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   end
                   object gbxEmitenteNFSe: TGroupBox
                     Left = 8
-                    Height = 120
+                    Height = 265
                     Top = 184
-                    Width = 416
+                    Width = 672
                     Caption = 'Emitente'
-                    ClientHeight = 98
-                    ClientWidth = 412
+                    ClientHeight = 243
+                    ClientWidth = 668
                     Font.CharSet = ANSI_CHARSET
                     Font.Color = clBlack
                     Font.Height = -13
@@ -28075,7 +28030,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Font.Style = [fsItalic]
                     ParentBackground = False
                     ParentFont = False
-                    TabOrder = 5
+                    TabOrder = 2
                     object Label270: TLabel
                       Left = 6
                       Height = 15
@@ -28118,8 +28073,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object edtIMEmitenteNFSe: TEdit
                       Left = 208
                       Height = 25
-                      Top = 18
-                      Width = 190
+                      Top = 16
+                      Width = 216
                       Font.Height = -13
                       ParentFont = False
                       TabOrder = 1
@@ -28143,27 +28098,195 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 8
                       Height = 25
                       Top = 67
-                      Width = 392
+                      Width = 648
                       Font.Height = -13
+                      ParentFont = False
+                      TabOrder = 3
+                    end
+                    object Label196: TLabel
+                      Left = 433
+                      Height = 17
+                      Top = -2
+                      Width = 69
+                      Caption = 'Ins. Estadual'
+                    end
+                    object edtIEEmitenteNFSe: TEdit
+                      Left = 433
+                      Height = 25
+                      Top = 18
+                      Width = 223
+                      TabOrder = 2
+                    end
+                    object Label197: TLabel
+                      Left = 8
+                      Height = 17
+                      Top = 96
+                      Width = 50
+                      Caption = 'Endereço'
+                    end
+                    object edtEnderecoEmitenteNFSe: TEdit
+                      Left = 8
+                      Height = 25
+                      Top = 114
+                      Width = 416
+                      TabOrder = 4
+                    end
+                    object edtNumeroEmitenteNFSe: TEdit
+                      Left = 433
+                      Height = 25
+                      Top = 114
+                      Width = 223
+                      TabOrder = 5
+                    end
+                    object Label290: TLabel
+                      Left = 433
+                      Height = 17
+                      Top = 96
+                      Width = 46
+                      Caption = 'Número'
+                    end
+                    object Label291: TLabel
+                      Left = 8
+                      Height = 17
+                      Top = 145
+                      Width = 34
+                      Caption = 'Bairro'
+                    end
+                    object edtBairroEmitenteNFSe: TEdit
+                      Left = 8
+                      Height = 25
+                      Top = 160
+                      Width = 188
+                      TabOrder = 6
+                    end
+                    object edtComplementoEmitenteNFSe: TEdit
+                      Left = 208
+                      Height = 25
+                      Top = 161
+                      Width = 216
+                      TabOrder = 7
+                    end
+                    object Label292: TLabel
+                      Left = 208
+                      Height = 17
+                      Top = 145
+                      Width = 77
+                      Caption = 'Complemento'
+                    end
+                    object Label293: TLabel
+                      Left = 433
+                      Height = 17
+                      Top = 145
+                      Width = 22
+                      Caption = 'CEP'
+                    end
+                    object edtCEPEmitenteNFSE: TEdit
+                      Left = 433
+                      Height = 25
+                      Top = 161
+                      Width = 223
+                      TabOrder = 8
+                    end
+                    object edtEmailEmitenteNFSe: TEdit
+                      Left = 8
+                      Height = 25
+                      Top = 206
+                      Width = 416
+                      TabOrder = 9
+                    end
+                    object Label294: TLabel
+                      Left = 8
+                      Height = 17
+                      Top = 190
+                      Width = 36
+                      Caption = 'E-Mail'
+                    end
+                    object Label295: TLabel
+                      Left = 433
+                      Height = 17
+                      Top = 190
+                      Width = 26
+                      Caption = 'Fone'
+                    end
+                    object edtFoneEmitenteNFSe: TEdit
+                      Left = 433
+                      Height = 25
+                      Top = 206
+                      Width = 223
+                      TabOrder = 10
+                    end
+                  end
+                  object gbxOpcoesNFSe: TGroupBox
+                    Left = 688
+                    Height = 113
+                    Top = 192
+                    Width = 272
+                    Caption = 'Opções'
+                    ClientHeight = 91
+                    ClientWidth = 268
+                    ParentBackground = False
+                    TabOrder = 3
+                    object cbxMontarPathSchemas: TCheckBox
+                      Left = 9
+                      Height = 19
+                      Top = 3
+                      Width = 251
+                      Caption = 'Montar automaticamente o Path dos Schemas'
+                      Font.CharSet = ANSI_CHARSET
+                      Font.Color = clBlack
+                      Font.Height = -12
+                      Font.Name = 'Segoe UI Light'
+                      Font.Pitch = fpVariable
+                      Font.Quality = fqDraft
+                      ParentFont = False
+                      TabOrder = 0
+                    end
+                    object cbxConsultarLoteAposEnvio: TCheckBox
+                      Left = 9
+                      Height = 19
+                      Top = 22
+                      Width = 149
+                      Caption = 'Consultar Lote Após Envio'
+                      Font.CharSet = ANSI_CHARSET
+                      Font.Color = clBlack
+                      Font.Height = -12
+                      Font.Name = 'Segoe UI Light'
+                      Font.Pitch = fpVariable
+                      Font.Quality = fqDraft
+                      ParentFont = False
+                      TabOrder = 1
+                    end
+                    object cbxConsultarAposCancelar: TCheckBox
+                      Left = 9
+                      Height = 19
+                      Top = 42
+                      Width = 140
+                      Caption = 'Consultar Após Cancelar'
+                      Font.CharSet = ANSI_CHARSET
+                      Font.Color = clBlack
+                      Font.Height = -12
+                      Font.Name = 'Segoe UI Light'
+                      Font.Pitch = fpVariable
+                      Font.Quality = fqDraft
                       ParentFont = False
                       TabOrder = 2
                     end
-                  end
-                  object cbxNomeLongoNFSe: TCheckBox
-                    Left = 432
-                    Height = 19
-                    Top = 264
-                    Width = 115
-                    Caption = 'Nome Longo NFSe'
-                    Font.CharSet = ANSI_CHARSET
-                    Font.Color = clBlack
-                    Font.Height = -12
-                    Font.Name = 'Segoe UI Light'
-                    Font.Pitch = fpVariable
-                    Font.Quality = fqDraft
-                    ParentFont = False
-                    TabOrder = 6
-                    OnClick = cbxNomeLongoNFSeClick
+                    object cbxNomeLongoNFSe: TCheckBox
+                      Left = 9
+                      Height = 19
+                      Top = 63
+                      Width = 115
+                      Caption = 'Nome Longo NFSe'
+                      Font.CharSet = ANSI_CHARSET
+                      Font.Color = clBlack
+                      Font.Height = -12
+                      Font.Name = 'Segoe UI Light'
+                      Font.Pitch = fpVariable
+                      Font.Quality = fqDraft
+                      ParentFont = False
+                      TabOrder = 3
+                      OnClick = cbxNomeLongoNFSeClick
+                    end
                   end
                 end
               end
@@ -34959,7 +35082,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object Splitter2: TSplitter
     Left = 211
-    Height = 762
+    Height = 757
     Top = 30
     Width = 5
     Color = clMenu

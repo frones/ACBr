@@ -388,28 +388,61 @@ end;
 { Params: 0 - CNPJ do emitente da NFSe
           1 - Inscrição Municipal do emitente da NFSe
           2 - Razão Social do emitente da NFSe
+          3 - Arquivo INI com todas as informações.
 }
 procedure TMetodoSetEmitente.Executar;
 var
-  ACNPJEmitente, AIMEmitente, ARazaoSocial: String;
+  ACNPJEmitente, AIMEmitente, ARazaoSocial, AINIStr: String;
+  AINIFile: TMemIniFile;
 begin
   ACNPJEmitente := fpCmd.Params(0);
   AIMEmitente   := fpCmd.Params(1);
   ARazaoSocial  := fpCmd.Params(2);
+  AIniStr       := fpCmd.Params(3);
 
-  with TACBrObjetoNFSe(fpObjetoDono) do
-  begin
-    ACBrNFSeX.Configuracoes.Geral.Emitente.CNPJ :=  ACNPJEmitente;
-    ACBrNFSeX.Configuracoes.Geral.Emitente.InscMun := AIMEmitente;
-    ACBrNFSeX.Configuracoes.Geral.Emitente.RazSocial := ARazaoSocial;
+  AINIFile := TMemIniFile.Create('');
+  try
+    if Trim(AIniStr) <> '' then
+      LerIniArquivoOuString(AINIStr, AINIFile);
 
-    with MonitorConfig.NFSE do
+    with TACBrObjetoNFSe(fpObjetoDono) do
     begin
-      CNPJEmitente := ACNPJEmitente;
-      IMEmitente := AIMEmitente;
-      NomeEmitente := ARazaoSocial;
+      ACBrNFSeX.Configuracoes.Geral.Emitente.CNPJ :=  ACNPJEmitente;
+      ACBrNFSeX.Configuracoes.Geral.Emitente.InscMun := AIMEmitente;
+      ACBrNFSeX.Configuracoes.Geral.Emitente.RazSocial := ARazaoSocial;
+
+      //Dados do emitente (OPCIONAIS)...
+      if AINIFile.SectionExists('DadosEmitente') then
+      begin
+        ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.InscricaoEstadual := AINIFile.ReadString('DadosEmitente', 'IE', '');
+        ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.Endereco := AINIFile.ReadString('DadosEmitente', 'Endereco', '');
+        ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.Numero := AINIFile.ReadString('DadosEmitente', 'Numero', '');
+        ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.Bairro := AINIFile.ReadString('DadosEmitente', 'Bairro', '');
+        ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.Complemento := AINIFile.ReadString('DadosEmitente', 'Complemento', '');
+        ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.CEP := AINIFile.ReadString('DadosEmitente', 'CEP', '');
+        ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.Email := AINIFile.ReadString('DadosEmitente', 'Email', '');
+        ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.Telefone := AINIFile.ReadString('DadosEmitente', 'Telefone', '');
+      end;
+
+
+      with MonitorConfig.NFSE do
+      begin
+        CNPJEmitente := ACNPJEmitente;
+        IMEmitente := AIMEmitente;
+        NomeEmitente := ARazaoSocial;
+        IEEmitente := ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.InscricaoEstadual;
+        EnderecoEmitente := ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.Endereco;
+        NumeroEmitente := ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.Numero;
+        BairroEmitente := ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.Bairro;
+        ComplementoEmitente := ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.Complemento;
+        CEPEmitente := ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.CEP;
+        EmailEmitente := ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.Email;
+        FoneEmitente := ACBrNFSeX.Configuracoes.Geral.Emitente.DadosEmitente.Telefone;
+      end;
+      MonitorConfig.SalvarArquivo;
     end;
-    MonitorConfig.SalvarArquivo;
+  finally
+    AIniFile.Free;
   end;
 end;
 

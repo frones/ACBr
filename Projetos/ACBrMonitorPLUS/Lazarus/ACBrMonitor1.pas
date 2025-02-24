@@ -520,6 +520,14 @@ type
     edEntTXT: TEdit;
     edIBGECodNome: TEdit;
     edConsultarGTIN: TEdit;
+    edtEnderecoEmitenteNFSe: TEdit;
+    edtNumeroEmitenteNFSe: TEdit;
+    edtBairroEmitenteNFSe: TEdit;
+    edtComplementoEmitenteNFSe: TEdit;
+    edtCEPEmitenteNFSE: TEdit;
+    edtEmailEmitenteNFSe: TEdit;
+    edtFoneEmitenteNFSe: TEdit;
+    edtIEEmitenteNFSe: TEdit;
     edtBoletoKeySoftwareHouse: TEdit;
     edtQuebraDeLinha: TEdit;
     edtConsCNPJ: TEdit;
@@ -767,6 +775,7 @@ type
     grbWsConfig: TGroupBox;
     grbMargem: TGroupBox;
     gbConsCNPJ: TGroupBox;
+    gbxOpcoesNFSe: TGroupBox;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
@@ -845,6 +854,8 @@ type
     Label118: TLabel;
     Label152: TLabel;
     Label189: TLabel;
+    Label196: TLabel;
+    Label197: TLabel;
     Label260: TLabel;
     Label261: TLabel;
     Label262: TLabel;
@@ -875,6 +886,12 @@ type
     Label287: TLabel;
     Label288: TLabel;
     Label289: TLabel;
+    Label290: TLabel;
+    Label291: TLabel;
+    Label292: TLabel;
+    Label293: TLabel;
+    Label294: TLabel;
+    Label295: TLabel;
     lblConsCNPJ: TLabel;
     lblConsCNPJProvedor: TLabel;
     lblConCNPJSenha: TLabel;
@@ -5956,6 +5973,14 @@ begin
     edtNomePrefeitura.Text             := NomePrefeitura;
     edtCNPJPrefeitura.Text             := CNPJPrefeitura;
     cbxNomeLongoNFSe.Checked           := NomeLongoNFSe;
+    edtIEEmitenteNFSe.Text             := IEEmitente;
+    edtEnderecoEmitenteNFSe.Text       := EnderecoEmitente;
+    edtNumeroEmitenteNFSe.Text         := NumeroEmitente;
+    edtBairroEmitenteNFSe.Text         := BairroEmitente;
+    edtComplementoEmitenteNFSe.Text    := ComplementoEmitente;
+    edtCEPEmitenteNFSE.Text            := CEPEmitente;
+    edtEmailEmitenteNFSe.Text          := EmailEmitente;
+    edtFoneEmitenteNFSe.Text           := FoneEmitente;
   end;
 
   {Parametro DFe}
@@ -7255,6 +7280,14 @@ begin
       NomePrefeitura         := edtNomePrefeitura.Text;
       CNPJPrefeitura         := edtCNPJPrefeitura.Text;
       NomeLongoNFSe          := cbxNomeLongoNFSe.Checked;
+      IEEmitente             := edtIEEmitenteNFSe.Text;
+      EnderecoEmitente       := edtEnderecoEmitenteNFSe.Text;
+      NumeroEmitente         := edtNumeroEmitenteNFSe.Text;
+      BairroEmitente         := edtBairroEmitenteNFSe.Text;
+      ComplementoEmitente    := edtComplementoEmitenteNFSe.Text;
+      CEPEmitente            := edtCEPEmitenteNFSE.Text;
+      EmailEmitente          := edtEmailEmitenteNFSe.Text;
+      FoneEmitente           := edtFoneEmitenteNFSe.Text;
     end;
 
     { Parametros DFe }
@@ -12123,6 +12156,16 @@ begin
     TConfiguracoesNFSe(Configuracoes).Geral.Emitente.WSChaveAcesso := edtChaveAcessoNFSe.Text;
     TConfiguracoesNFSe(Configuracoes).Geral.Emitente.WSChaveAutoriz := edtChaveAutenticacaoNFSe.Text;
     TConfiguracoesNFSe(Configuracoes).Geral.Emitente.WSFraseSecr := edtFraseSecretaNFSe.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.DadosEmitente.InscricaoEstadual := edtIEEmitenteNFSe.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.DadosEmitente.Endereco := edtEnderecoEmitenteNFSe.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.DadosEmitente.Numero := edtNumeroEmitenteNFSe.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.DadosEmitente.Bairro := edtBairroEmitenteNFSe.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.DadosEmitente.Complemento := edtComplementoEmitenteNFSe.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.DadosEmitente.CEP := edtCEPEmitenteNFSE.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.DadosEmitente.UF := edtUFCidade.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.DadosEmitente.Municipio := edtNomeCidade.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.DadosEmitente.Email := edtEmailEmitenteNFSe.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.DadosEmitente.Telefone := edtFoneEmitenteNFSe.Text;
 
     with TConfiguracoesNFSe(Configuracoes).Arquivos do
     begin

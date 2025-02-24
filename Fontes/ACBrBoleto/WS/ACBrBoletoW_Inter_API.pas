@@ -452,7 +452,7 @@ end;
 procedure TBoletoW_Inter_API.GerarPagador(AJson: TACBrJSONObject);
 var
   LJsonDadosPagador: TACBrJSONObject;
-
+  LTelefone : String;
 begin
   if Assigned(ATitulo) and Assigned(AJson) then
   begin
@@ -469,7 +469,20 @@ begin
     LJsonDadosPagador.AddPair('cep',OnlyNumber(ATitulo.Sacado.CEP));
     LJsonDadosPagador.AddPair('cidade',ATitulo.Sacado.Cidade);
     LJsonDadosPagador.AddPair('uf',ATitulo.Sacado.UF);
-    LJsonDadosPagador.AddPair('telefone',IfThen(ATitulo.Sacado.Fone = '', '0', ATitulo.Sacado.Fone));
+
+
+    LTelefone := OnlyNumber(ATitulo.Sacado.Fone);
+
+    if Length(LTelefone) = 0 then
+      LTelefone := '0';
+
+    if Length(LTelefone) >= 10  then
+    begin
+      LJsonDadosPagador.AddPair('ddd',copy(LTelefone,0,2));
+      LJsonDadosPagador.AddPair('telefone',copy(LTelefone,3,Length(LTelefone)));
+    end else
+      LJsonDadosPagador.AddPair('telefone', LTelefone);
+
     LJsonDadosPagador.AddPair('email',ATitulo.Sacado.Email);
 
 

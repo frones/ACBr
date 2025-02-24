@@ -154,20 +154,20 @@ begin
 end;
 
 function TACBrCotacao.GetURLMoedas: String;
-var
-  StrTmp: String;
-  PosCp: Integer;
+//var
+//  StrTmp: String;
+//  PosCp: Integer;
 begin
-  Self.HTTPGet('https://ptax.bcb.gov.br/ptax_internet/consultarTabelaMoedas.do?method=consultaTabelaMoedas');
+  (*Self.HTTPGet('https://ptax.bcb.gov.br/ptax_internet/consultarTabelaMoedas.do?method=consultaTabelaMoedas');
   StrTmp := DecodeToString(HTTPResponse, RespIsUTF8);
 
   PosCp := Pos('https://www4.bcb.gov.br/Download/fechamento/', StrTmp);
   StrTmp := Copy(StrTmp, PosCp, Length(StrTmp) - PosCp);
 
   PosCp := Pos('.csv', strTmp) + 3;
-  StrTmp := Copy(StrTmp, 0, PosCp);
+  StrTmp := Copy(StrTmp, 0, PosCp);*)
 
-  Result := StrTmp;
+  Result := 'https://svn.code.sf.net/p/acbr/code/trunk2/Exemplos/ACBrTCP/ACBrCotacao/Tabelas/ArqMoedas.csv';
 end;
 
 function TACBrCotacao.GetURLTabela(const AData: TDateTime): String;

@@ -320,6 +320,9 @@ begin
 
     NFSe.dhRecebimento := Now;
     NFSe.SituacaoNfse := snNormal;
+
+    if ObterConteudo(AuxNode.Childrens.FindAnyNs('statusNFSe'), tcStr) = 'CANCELADA' then
+      NFSe.SituacaoNfse := snCancelado;
   end;
 end;
 

@@ -53,7 +53,7 @@ type
     function PreencherNotaRespostaConsultaNFSe(Node, parentNode: TACBrXmlNode;
       Response: TNFSeConsultaNFSeResponse): Boolean;
     procedure LerCancelamento(ANode: TACBrXmlNode;
-      Response: TNFSeWebserviceResponse);
+      Response: TNFSeWebserviceResponse); virtual;
 
     procedure LerSubstituicao(const ANode: TACBrXmlNode; const Response: TNFSeWebServiceResponse);
 

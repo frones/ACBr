@@ -68,6 +68,8 @@ type
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
+    procedure LerCancelamento(ANode: TACBrXmlNode;
+      Response: TNFSeWebserviceResponse); override;
   public
     function NaturezaOperacaoDescricao(const t: TnfseNaturezaOperacao): string; override;
   end;
@@ -252,6 +254,31 @@ begin
       raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
+end;
+
+procedure TACBrNFSeProviderThema.LerCancelamento(ANode: TACBrXmlNode;
+  Response: TNFSeWebserviceResponse);
+var
+  AuxNodeCanc, ANodeNfseCancelamento: TACBrXmlNode;
+begin
+  ANodeNfseCancelamento := ANode.Childrens.FindAnyNs('NfseCancelamento');
+
+  if ANodeNfseCancelamento <> nil then
+  begin
+    AuxNodeCanc := ANodeNfseCancelamento.Childrens.FindAnyNs('Confirmacao');
+
+    if AuxNodeCanc <> nil then
+    begin
+      Response.DataCanc := ObterConteudoTag(AuxNodeCanc.Childrens.FindAnyNs('DataHoraCancelamento'), FpFormatoDataHora);
+
+      Response.SucessoCanc := Response.DataCanc > 0;
+    end;
+
+    Response.DescSituacao := '';
+
+    if (Response.DataCanc > 0) and (Response.SucessoCanc) then
+      Response.DescSituacao := 'Nota Cancelada';
   end;
 end;
 

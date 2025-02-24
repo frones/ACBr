@@ -50,9 +50,11 @@ type
 
     procedure Configuracao; override;
 
-    procedure LerCancelamento(const ANode: TACBrXmlNode; const Response: TNFSeWebServiceResponse);
+    procedure LerCancelamento(const ANode: TACBrXmlNode;
+      const Response: TNFSeWebServiceResponse); virtual;
 
-    procedure LerSubstituicao(const ANode: TACBrXmlNode; const Response: TNFSeWebServiceResponse);
+    procedure LerSubstituicao(const ANode: TACBrXmlNode;
+      const Response: TNFSeWebServiceResponse);
 
     function PreencherNotaRespostaConsultaLoteRps(Node, parentNode: TACBrXmlNode;
       Response: TNFSeConsultaLoteRpsResponse): Boolean;
@@ -2559,12 +2561,14 @@ begin
     if Assigned(AuxNode) then
     begin
       Response.DataCanc := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
-      Response.DescSituacao := '';
+
+      Response.SucessoCanc := Response.DataCanc > 0;
     end;
 
-    if Response.DataCanc > 0 then
-      Response.DescSituacao := 'Nota Cancelada';
+    Response.DescSituacao := '';
 
+    if (Response.DataCanc > 0) and (Response.SucessoCanc) then
+      Response.DescSituacao := 'Nota Cancelada';
   end;
 end;
 

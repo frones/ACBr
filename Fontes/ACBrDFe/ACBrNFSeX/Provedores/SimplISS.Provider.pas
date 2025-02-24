@@ -96,6 +96,9 @@ type
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
     function PrepararRpsParaLote(const aXml: string): string; override;
+
+    procedure LerCancelamento(const ANode: TACBrXmlNode;
+      const Response: TNFSeWebServiceResponse); override;
   public
     function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string; override;
     function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao; override;
@@ -443,6 +446,31 @@ begin
       raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
+end;
+
+procedure TACBrNFSeProviderSimplISS203.LerCancelamento(
+  const ANode: TACBrXmlNode; const Response: TNFSeWebServiceResponse);
+var
+  AuxNode, ANodeNfseCancelamento: TACBrXmlNode;
+begin
+  ANodeNfseCancelamento := ANode.Childrens.FindAnyNs('NfseCancelamento');
+
+  if ANodeNfseCancelamento <> nil then
+  begin
+    AuxNode := ANodeNfseCancelamento.Childrens.FindAnyNs('Confirmacao');
+
+    if Assigned(AuxNode) then
+    begin
+      Response.DataCanc := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataHoraCancelamento'), FpFormatoDataHora);
+
+      Response.SucessoCanc := Response.DataCanc > 0;
+    end;
+
+    Response.DescSituacao := '';
+
+    if (Response.DataCanc > 0) and (Response.SucessoCanc) then
+      Response.DescSituacao := 'Nota Cancelada';
   end;
 end;
 

@@ -44,6 +44,15 @@ Símbolo : Significado
 
 
 23/02/2025
+-- ISSCambe.LerXml --
+[*] #TK-6656: Incluída a leitura da tag: statusNFSe.
+  Por: Marciano Bandeira
+-- ACBrNFSeXProviderABRASFv2/SimplISS.Provider --
+[*] #TK-6654: Alteração visando ler o grupo de NfseCancelada corretamente.
+  Por: Jhoni Conzatti/Italo Giurizzato Junior
+-- ACBrNFSeXProviderABRASFv1/Thema.Provider --
+[*] #TK-6653: Alteração visando ler o grupo de NfseCancelada corretamente.
+  Por: Jhoni Conzatti/Italo Giurizzato Junior
 -- ISSBarueri.GravarXml --
 [*] #TK-6651: Alteração visando gerar o arquivo com o código do pais do tomador
     extrangeiro.

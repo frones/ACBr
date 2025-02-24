@@ -68,6 +68,12 @@ const
 
   CSessaoConsultaCNPJ = 'ConsultaCNPJ';
 
+  CSessaoNFe = 'NFe';
+  CSessaoCTe = 'CTe';
+  CSessaoMDFe = 'MDFe';
+
+  CChaveCSRT = 'CSRT';
+
   CSessaoSistema = 'Sistema';
   CChaveVersao = 'Versao';
   CChaveDescricao = 'Descricao';

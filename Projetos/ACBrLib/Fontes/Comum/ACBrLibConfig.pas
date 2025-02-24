@@ -1107,13 +1107,18 @@ begin
       GravarLog(ClassName + '.PrecisaCriptografar(' + ASessao + ',' + AChave + ')', logParanoico);
 
     Result := (AChave = CChaveSenha) and
-              ( (ASessao = CSessaoProxy) or
-                (ASessao = CSessaoEmail) or
-                (ASessao = CSessaoDFe)
-
-              ) or (
-              (ASessao = CSessaoConsultaCNPJ) and ((AChave = CChaveSenha) or (AChave = CChaveUsuario))
-              );
+              ((ASessao = CSessaoProxy) or
+               (ASessao = CSessaoEmail) or
+               (ASessao = CSessaoDFe)) or
+              ((ASessao = CSessaoConsultaCNPJ) and
+               ((AChave = CChaveSenha) or
+                (AChave = CChaveUsuario))) or
+              ((ASessao = CSessaoNFe) and
+               (AChave = CChaveCSRT)) or
+              ((ASessao = CSessaoCTe) and
+               (AChave = CChaveCSRT)) or
+              ((ASessao = CSessaoMDFe) and
+               (AChave = CChaveCSRT));
 
     if (Config.Log.Nivel > logCompleto) then
       GravarLog(ClassName + '.PrecisaCriptografar - Feito Result: ' + BoolToStr(Result, True), logParanoico);

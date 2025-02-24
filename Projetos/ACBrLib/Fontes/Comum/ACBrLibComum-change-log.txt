@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/02/2025
+-- ACBrLibConfig, ACBrLibConsts --
+[*] Criptografia da propriedade CSRT - #TK-6625
+   Por: Antonio Carlos Junior
+
 06/02/2025
 -- ACBrComum.php --
 [*] Sem TK: Removida trava da CarregaContents() quando não for identificado ambiente gráfico

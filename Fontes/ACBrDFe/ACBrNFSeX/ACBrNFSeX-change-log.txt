@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/02/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6663: A cidade de Senador Canedo/GO trocou a URL de produção o provedor continua o mesmo.
+  Por: Prime Software
+[+] #TK-6661: Incluída a cidade de Moema/MG, o provedor é Pronim versão 2.02
+  Por: Bruno Italo
+
 23/02/2025
 -- ISSCambe.LerXml --
 [*] #TK-6656: Incluída a leitura da tag: statusNFSe.

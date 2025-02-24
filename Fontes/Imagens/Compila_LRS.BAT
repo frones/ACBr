@@ -34,7 +34,7 @@ echo "****************************************"
 echo.
 
 :Serial
-%1\tools\lazres.exe ACBrSerial.lrs TACBrECF.png TACBrGAV.png TACBrCHQ.png TACBrLCB.png TACBrDIS.png TACBrBAL.png TACBrTER.png TACBrETQ.png TACBrRFD.png TACBrSMS.png TACBrPosPrinter.png TACBrECFVirtualNaoFiscal.png
+%1\tools\lazres.exe ACBrSerial.lrs TACBrECF.png TACBrGAV.png TACBrCHQ.png TACBrLCB.png TACBrDIS.png TACBrBAL.png TACBrTER.png TACBrETQ.png TACBrRFD.png TACBrSMS.png TACBrPosPrinter.png TACBrECFVirtualNaoFiscal.png TACBrAbecsPinPad.png
 move ACBrSerial.lrs ..\ACBrSerial
 echo.
 echo "****************************************"

@@ -37,6 +37,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/02/2025
+-- ACBrUtil.DateTime --
+[+] Adicionado os métodos:
+  function UnixDateTimeBase: TDateTime;
+  function DateTimeToUnixMilliseconds(const AValue: TDateTime): Int64;
+  function UnixMillisecondsToDateTime(const AValue: Int64): TDateTime;
+  (por: DSA)
+
 05/02/2025
 -- ACBrUtil.Math --
 [*] Revert na rotina HexToAscii para evitar resultados inexperados.

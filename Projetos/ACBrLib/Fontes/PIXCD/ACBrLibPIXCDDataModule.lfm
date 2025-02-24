@@ -20,6 +20,7 @@ inherited LibPIXCDDM: TLibPIXCDDM
   end
   object ACBrPSPBancoDoBrasil1: TACBrPSPBancoDoBrasil[3]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    QuandoReceberRespostaHttp = ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp
     Left = 352
     Top = 40
   end

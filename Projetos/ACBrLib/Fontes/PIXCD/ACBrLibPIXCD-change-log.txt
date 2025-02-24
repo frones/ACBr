@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/02/2025
+-- ACBrLibPIXCDDataModule.pas --
+[*] Implementado evento ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp para retornar informações do Pagador (Nome, CPF/CNPJ) utilizado apenas no PSP Banco do Brasil.
+#TK-6644 - AcbrpixCD.dll não retorna informações do pagador.
+  Por: Antonio Carlos Junior
+
 31/12/2024
 -- ACBrLibPIXCDBase --
 [*] Mapeando exceção EACBrPixHttpException no método MateraIncluirChavePix para exibir o 

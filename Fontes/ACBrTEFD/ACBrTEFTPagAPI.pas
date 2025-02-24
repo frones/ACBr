@@ -340,18 +340,16 @@ procedure CallBackError(code: Cardinal; error: PAnsiChar); cdecl;
 procedure CallBackSuccess(success: PAnsiChar); cdecl;
 function CallBackAbortProcess: LongInt; cdecl;
 
-function DateTimeToUnixMilliseconds(const AValue: TDateTime): Int64;
-function UnixMillisecondsToDateTime(const AValue: Int64): TDateTime;
-
 var
  vTEFTPagAPI : TACBrTEFTPagAPI;
 
 implementation
 
 uses
-  TypInfo, StrUtils, DateUtils, Math,
+  TypInfo, StrUtils, Math,
   ACBrUtil.FilesIO,
-  ACBrUtil.Strings;
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime;
 
 function GetTEFTPagAPI: TACBrTEFTPagAPI;
 begin
@@ -492,21 +490,6 @@ begin
         Result := 1;  // Abortar
     end;
   end;
-end;
-
-{ Days between TDateTime basis (12/31/1899) and Unix time_t basis (1/1/1970) }
-
-const
-  UnixDateDelta = 25569;
-
-function DateTimeToUnixMilliseconds(const AValue: TDateTime): Int64;
-begin
-  Result := Round((AValue - UnixDateDelta) * 86400 * 1000);
-end;
-
-function UnixMillisecondsToDateTime(const AValue: Int64): TDateTime;
-begin
-  Result := IncMilliSecond(UnixEpoch, AValue);
 end;
 
 { TACBrTEFTPagAPI }

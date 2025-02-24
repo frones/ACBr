@@ -19,7 +19,7 @@
       </Parsing>
       <Linking>
         <Debugging>
-          <DebugInfoType Value="dsDwarf3"/>
+          <DebugInfoType Value="dsDwarf2Set"/>
           <UseHeaptrc Value="True"/>
           <TrashVariables Value="True"/>
           <UseExternalDbgSyms Value="True"/>
@@ -34,7 +34,7 @@
     <Description Value="ACBr - Transferência Eletrônica de Fundos (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Major="4" Minor="3" Release="9"/>
-    <Files Count="32">
+    <Files Count="36">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -149,21 +149,37 @@
         <UnitName Value="ACBrTEFDElgin"/>
       </Item28>
       <Item29>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDestaxaComum.pas"/>
-        <UnitName Value="ACBrTEFDestaxaComum"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIStoneAutoTEF.pas"/>
+        <UnitName Value="ACBrTEFAPIStoneAutoTEF"/>
       </Item29>
       <Item30>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIDestaxa.pas"/>
-        <UnitName Value="ACBrTEFAPIDestaxa"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIAditum.pas"/>
+        <UnitName Value="ACBrTEFAPIAditum"/>
       </Item30>
       <Item31>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFScopeAPI.pas"/>
-        <UnitName Value="ACBrTEFScopeAPI"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDestaxaComum.pas"/>
+        <UnitName Value="ACBrTEFDestaxaComum"/>
       </Item31>
       <Item32>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIDestaxa.pas"/>
+        <UnitName Value="ACBrTEFAPIDestaxa"/>
+      </Item32>
+      <Item33>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFScopeAPI.pas"/>
+        <UnitName Value="ACBrTEFScopeAPI"/>
+      </Item33>
+      <Item34>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIScope.pas"/>
         <UnitName Value="ACBrTEFAPIScope"/>
-      </Item32>
+      </Item34>
+      <Item35>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFAPITPag.pas"/>
+        <UnitName Value="ACBrTEFAPITPag"/>
+      </Item35>
+      <Item36>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFTPagAPI.pas"/>
+        <UnitName Value="ACBrTEFTPagAPI"/>
+      </Item36>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">

@@ -113,7 +113,8 @@ type
 implementation
 
 uses
-  TypInfo, Math, DateUtils,
+  TypInfo, Math, StrUtils,
+  ACBrUtil.DateTime,
   ACBrUtil.Strings;
 
 { TACBrTEFRespTPag }

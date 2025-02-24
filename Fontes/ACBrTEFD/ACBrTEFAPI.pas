@@ -56,7 +56,8 @@ type
                       tefStoneAutoTEF,
                       tefAditumAPI,
                       tefScopeAPI,
-                      tefDestaxaAPI);
+                      tefDestaxaAPI,
+                      tefTPag);
 
   TACBrTEFAPIExibicaoQRCode = ( qrapiNaoSuportado,
                                 qrapiAuto,
@@ -279,7 +280,8 @@ uses
   ACBrTEFAPIStoneAutoTEF,
   ACBrTEFAPIAditum,
   ACBrTEFAPIScope,
-  ACBrTEFAPIDestaxa;
+  ACBrTEFAPIDestaxa,
+  ACBrTEFAPITPag;
 
 { TACBrTEFAPIClass }
 
@@ -617,6 +619,7 @@ begin
     tefAditumAPI   : fpTEFAPIClass := TACBrTEFAPIClassAditum.Create( Self );
     tefScopeAPI    : fpTEFAPIClass := TACBrTEFAPIClassScope.Create( Self );
     tefDestaxaAPI  : fpTEFAPIClass := TACBrTEFAPIClassDestaxa.Create( Self );
+    tefTPag        : fpTEFAPIClass := TACBrTEFAPIClassTPag.Create( Self );
   else
     fpTEFAPIClass := TACBrTEFAPIClass.Create( Self );
   end;

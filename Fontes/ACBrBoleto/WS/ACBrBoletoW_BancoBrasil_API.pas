@@ -83,6 +83,7 @@ type
     procedure AlteraDataVencimento(AJsonObject: TACBrJSONObject);
     procedure AtribuirDesconto(AJsonObject: TACBrJSONObject);
     procedure AlteracaoDesconto(AJsonObject: TACBrJSONObject);
+    procedure AlterarValorNominal(AJsonObject: TACBrJSONObject);
     procedure AlteracaoDataDesconto(AJsonObject: TACBrJSONObject);
     procedure AlterarProtesto(AJsonObject: TACBrJSONObject);
     procedure AtribuirAbatimento(AJsonObject: TACBrJSONObject);
@@ -512,6 +513,10 @@ begin
         LJsonObject.AddPair('indicadorNegativar', 'S');
         AtribuirNegativacao(LJsonObject);
       end;
+      toRemessaAlteracaoValorNominal:  begin
+        LJsonObject.AddPair('indicadorNovoValorNominal', 'S');
+        AlterarValorNominal(LJsonObject);
+      end;
     end;
 
     FPDadosMsg := LJsonObject.ToJSON;
@@ -862,6 +867,24 @@ begin
     LJsonAlterarProtestoObject.AddPair('quantidadeDiasProtesto', ATitulo.DiasDeProtesto);
   finally
     AJsonObject.AddPair('protesto', LJsonAlterarProtestoObject);
+  end;
+end;
+
+procedure TBoletoW_BancoBrasil_API.AlterarValorNominal(AJsonObject: TACBrJSONObject);
+var
+  LJsonAlterarValorNominalObject: TACBrJSONObject;
+begin
+  if not Assigned(ATitulo) or not Assigned(AJsonObject) or (ATitulo.ValorDocumento = 0) then
+    Exit;
+
+  LJsonAlterarValorNominalObject := TACBrJSONObject.Create;
+  try
+    if (ATitulo.ValorDocumento > 0) then
+    begin
+      LJsonAlterarValorNominalObject.AddPair('novoValorNominal', ATitulo.ValorDocumento);
+    end;
+  finally
+    AJsonObject.AddPair('alteracaoValor', LJsonAlterarValorNominalObject);
   end;
 end;
 

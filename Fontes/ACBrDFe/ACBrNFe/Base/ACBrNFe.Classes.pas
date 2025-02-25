@@ -2496,15 +2496,29 @@ type
     property hashCSRT: string read FhashCSRT write FhashCSRT;
   end;
 
-  { Tdefensivo }
+  { TdefensivoCollectionItem }
 
-  Tdefensivo = class(TObject)
+  TdefensivoCollectionItem = class(TObject)
   private
     FnReceituario: string;
     FCPFRespTec: string;
   public
+    procedure Assign(Source: TdefensivoCollectionItem);
+
     property nReceituario: string read FnReceituario write FnReceituario;
     property CPFRespTec: string read FCPFRespTec write FCPFRespTec;
+  end;
+
+  { TdefensivoCollection }
+
+  TdefensivoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TdefensivoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TdefensivoCollectionItem);
+  public
+    function Add: TdefensivoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New.'{$EndIf};
+    function New: TdefensivoCollectionItem;
+    property Items[Index: Integer]: TdefensivoCollectionItem read GetItem write SetItem; default;
   end;
 
   { TguiaTransito }
@@ -2528,12 +2542,15 @@ type
 
   Tagropecuario = class(TObject)
   private
-    Fdefensivo: Tdefensivo;
+    Fdefensivo: TdefensivoCollection;
     FguiaTransito: TguiaTransito;
+
+    procedure Setdefensivo(const Value: TdefensivoCollection);
   public
     constructor Create;
     destructor Destroy; override;
-    property defensivo: Tdefensivo read Fdefensivo write Fdefensivo;
+
+    property defensivo: TdefensivoCollection read Fdefensivo write Setdefensivo;
     property guiaTransito: TguiaTransito read FguiaTransito write FguiaTransito;
   end;
 
@@ -4828,7 +4845,8 @@ end;
 constructor Tagropecuario.Create;
 begin
   inherited Create;
-  Fdefensivo := Tdefensivo.Create;
+
+  Fdefensivo := TdefensivoCollection.Create;
   FguiaTransito := TguiaTransito.Create;
 end;
 
@@ -4837,6 +4855,43 @@ begin
   Fdefensivo.Free;
   FguiaTransito.Free;
   inherited;
+end;
+
+procedure Tagropecuario.Setdefensivo(const Value: TdefensivoCollection);
+begin
+  Fdefensivo := Value;
+end;
+
+{ TdefensivoCollectionItem }
+
+procedure TdefensivoCollectionItem.Assign(Source: TdefensivoCollectionItem);
+begin
+  nReceituario := Source.nReceituario;
+  CPFRespTec := Source.CPFRespTec;
+end;
+
+{ TdefensivoCollection }
+
+function TdefensivoCollection.Add: TdefensivoCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TdefensivoCollection.GetItem(Index: Integer): TdefensivoCollectionItem;
+begin
+  Result := TdefensivoCollectionItem(inherited Items[Index]);
+end;
+
+function TdefensivoCollection.New: TdefensivoCollectionItem;
+begin
+  Result := TdefensivoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TdefensivoCollection.SetItem(Index: Integer;
+  Value: TdefensivoCollectionItem);
+begin
+  inherited Items[Index] := Value;
 end;
 
 { TgCompraGov }

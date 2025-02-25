@@ -371,15 +371,18 @@ end;
 procedure TNFeXmlReader.LerAgropecuario(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  i: Integer;
+  ANodes: TACBrXmlNodeArray;
 begin
   if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('defensivo');
-
-  if Assigned(AuxNode) then
+  ANodes := ANode.Childrens.FindAll('defensivo');
+  for i := 0 to Length(ANodes) - 1 do
   begin
-    NFe.agropecuario.defensivo.nReceituario := ObterConteudo(AuxNode.Childrens.FindAnyNs('nReceituario'), tcStr);
-    NFe.agropecuario.defensivo.CPFRespTec := ObterConteudo(AuxNode.Childrens.FindAnyNs('CPFRespTec'), tcStr);
+    NFe.agropecuario.defensivo.New;
+
+    NFe.agropecuario.defensivo[i].nReceituario := ObterConteudo(AuxNode.Childrens.FindAnyNs('nReceituario'), tcStr);
+    NFe.agropecuario.defensivo[i].CPFRespTec := ObterConteudo(AuxNode.Childrens.FindAnyNs('CPFRespTec'), tcStr);
   end;
 
   AuxNode := ANode.Childrens.FindAnyNs('guiaTransito');

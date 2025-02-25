@@ -1226,17 +1226,24 @@ begin
 
   if Leitor.rExtrai(1, 'agropecuario') <> '' then
   begin
-    if Leitor.rExtrai(2, 'defensivo') <> '' then
-    begin
-      NFe.agropecuario.defensivo.nReceituario := Leitor.rCampo(tcStr, 'nReceituario');
-      NFe.agropecuario.defensivo.CPFRespTec := Leitor.rCampo(tcStr, 'CPFRespTec');
-    end else
     if Leitor.rExtrai(2, 'guiaTransito') <> '' then
     begin
       NFe.agropecuario.guiaTransito.UFGuia := Leitor.rCampo(tcStr, 'UFGuia');
       NFe.agropecuario.guiaTransito.tpGuia := StrToTtpGuia(Leitor.rCampo(tcStr, 'tpGuia'));
       NFe.agropecuario.guiaTransito.serieGuia := Leitor.rCampo(tcStr, 'serieGuia');
       NFe.agropecuario.guiaTransito.nGuia := Leitor.rCampo(tcInt, 'nGuia');
+    end
+    else
+    begin
+      i := 0;
+      NFe.agropecuario.defensivo.Clear;
+      while Leitor.rExtrai(2, 'defensivo', '', i + 1) <> '' do
+      begin
+        NFe.agropecuario.defensivo.New;
+        NFe.agropecuario.defensivo[i].nReceituario := Leitor.rCampo(tcStr, 'nReceituario');
+        NFe.agropecuario.defensivo[i].CPFRespTec := Leitor.rCampo(tcStr, 'CPFRespTec');
+        inc(i);
+      end;
     end;
   end;
 
@@ -1256,7 +1263,6 @@ begin
   end;
 
   Result := true;
-
 end;
 
 end.

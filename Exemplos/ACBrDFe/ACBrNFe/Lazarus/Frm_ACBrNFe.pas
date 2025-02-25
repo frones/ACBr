@@ -1019,6 +1019,8 @@ var
 //    Reboque: TreboqueCollectionItem;
 //    Lacre: TLacresCollectionItem;
 //    ProcReferenciado: TprocRefCollectionItem;
+//  Agropecuario: Tagropecuario;
+//  Defensivo: TdefensivoCollectionItem;
   InfoPgto: TpagCollectionItem;
 begin
   NotaF := ACBrNFe1.NotasFiscais.Add;
@@ -1300,6 +1302,22 @@ begin
   Arma.nCano  := 0;
   Arma.descr  := '';
   *)
+
+//Campos específicos para agropecuario / defensivo
+// Devemos gerar somente o grupo defensivo ou o grupo guiaTransito
+(*
+  Defensivo := Agropecuario.defensivo.Add;
+  Defensivo.nReceituario := '123';
+  Defensivo.CPFRespTec := '12345678901';
+*)
+
+//Campos específicos para agropecuario / guiaTransito
+(*
+  Agropecuario.guiaTransito.tpGuia := tpgGuiaFlorestal;
+  Agropecuario.guiaTransito.UFGuia := 'SP';
+  Agropecuario.guiaTransito.serieGuia := '1';
+  Agropecuario.guiaTransito.nGuia := '1';
+*)
 
 //Campos específicos para venda de combustível(distribuidoras)
 

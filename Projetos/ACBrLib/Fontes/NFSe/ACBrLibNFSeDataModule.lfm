@@ -1,4 +1,6 @@
 inherited LibNFSeDM: TLibNFSeDM
+  OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
   Height = 209
   HorizontalOffset = 735
   VerticalOffset = 326
@@ -17,39 +19,10 @@ inherited LibNFSeDM: TLibNFSeDM
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    DANFSE = ACBrNFSeXDANFSeRL1
     Left = 40
     Top = 86
   end
-  object ACBrNFSeXDANFSeRL1: TACBrNFSeXDANFSeRL[1]
-    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
-    MargemInferior = 8
-    MargemSuperior = 8
-    MargemEsquerda = 6
-    MargemDireita = 5.1
-    ExpandeLogoMarcaConfig.Altura = 0
-    ExpandeLogoMarcaConfig.Esquerda = 0
-    ExpandeLogoMarcaConfig.Topo = 0
-    ExpandeLogoMarcaConfig.Largura = 0
-    ExpandeLogoMarcaConfig.Dimensionar = False
-    ExpandeLogoMarcaConfig.Esticar = True
-    CasasDecimais.Formato = tdetInteger
-    CasasDecimais.qCom = 2
-    CasasDecimais.vUnCom = 2
-    CasasDecimais.MaskqCom = ',0.00'
-    CasasDecimais.MaskvUnCom = ',0.00'
-    CasasDecimais.Aliquota = 2
-    CasasDecimais.MaskAliquota = ',0.00'
-    ACBrNFSe = ACBrNFSeX1
-    Cancelada = False
-    Provedor = proNenhum
-    TamanhoFonte = 6
-    FormatarNumeroDocumentoNFSe = True
-    Producao = snSim
-    Left = 152
-    Top = 86
-  end
-  object ACBrMail1: TACBrMail[2]
+  object ACBrMail1: TACBrMail[1]
     Host = '127.0.0.1'
     Port = '25'
     SetSSL = False

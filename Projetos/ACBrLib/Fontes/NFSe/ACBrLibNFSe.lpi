@@ -549,22 +549,25 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="5">
+    <RequiredPackages Count="6">
       <Item1>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBr_NFSeXDanfseFPDF"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_NFSeXDanfseRL"/>
+        <PackageName Value="ACBrTCP"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_NFSeX"/>
+        <PackageName Value="ACBr_NFSeXDanfseRL"/>
       </Item3>
       <Item4>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBr_NFSeX"/>
       </Item4>
       <Item5>
-        <PackageName Value="FCL"/>
+        <PackageName Value="LCL"/>
       </Item5>
+      <Item6>
+        <PackageName Value="FCL"/>
+      </Item6>
     </RequiredPackages>
     <Units Count="15">
       <Unit0>

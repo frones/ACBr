@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/02/2025
+-- ACBrLibNFSeConsoleMT.lpi, ACBrLibNFSeConsoleMTDemo.lpi --
+[+] Adicionado novo Projeto, 100% CONSOLE e MT versão Pro e Demonstração.
+[+] Compatível com compilação em Linux 64 e Android 32 e 64
+    Por: Antonio Carlos Junior / Elton Barbosa / Victor Gonzales
+
 16/10/2024
 -- Diversos --
 [+] #TK-4956-2: Implementados programas de exemplo em PHP da NFSe ST e MT.

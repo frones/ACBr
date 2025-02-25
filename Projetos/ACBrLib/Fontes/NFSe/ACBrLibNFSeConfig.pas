@@ -38,11 +38,15 @@ interface
 uses
   Classes, SysUtils, IniFiles,
   ACBrLibComum, ACBrLibConfig, DFeReportConfig,
-  ACBrNFSeXDANFSeRLClass, ACBrNFSeXConversao, ACBrNFSeXConfiguracoes, ACBrXmlBase;
+  {$IfNDef NOREPORT}
+  ACBrNFSeXDANFSeRLClass,
+  {$EndIf}
+  ACBrNFSeXDANFSeFPDFClass,
+  ACBrNFSeXConversao, ACBrNFSeXConfiguracoes, ACBrXmlBase, ACBrDFeReport;
 
 type
-   { TDANFSeReportConfig }
-  TDANFSeReportConfig = class(TDFeReportConfig<TACBrNFSeXDANFSeRL>)
+  { TDANFSeReportConfig }
+  TDANFSeReportConfig = class(TDFeReportConfig<TACBrDFeReport>)
   private
     FPrestadorLogo: String;
     FPrefeitura: String;
@@ -78,7 +82,7 @@ type
   protected
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
-    procedure ApplyChild(const DFeReport: TACBrNFSeXDANFSeRL; const Lib: TACBrLib); override;
+    procedure ApplyChild(const DFeReport: TACBrDFeReport; const Lib: TACBrLib); override;
     procedure DefinirValoresPadroesChild; override;
 
   public
@@ -111,7 +115,6 @@ type
     property FormatarNumeroDocumentoNFSe: Boolean read FFormatarNumeroDocumentoNFSe write FFormatarNumeroDocumentoNFSe;
     property Producao: TnfseSimNao   read FProducao     write FProducao;
     property DetalharServico: Boolean read FDetalharServico write FDetalharServico default False;
-
   end;
 
   { TLibNFSeConfig }
@@ -152,7 +155,7 @@ end;
 
 function TDANFSeReportConfig.StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
 begin
-      Result := StrToEnumerado(ok, s,
+  Result := StrToEnumerado(ok, s,
                            ['1', '0'],
                            [snSim, snNao]);
 end;
@@ -224,9 +227,20 @@ begin
   AIni.WriteString(CSessaoDANFSE, CChaveProducao, SimNaoToStr(FProducao));
 end;
 
-procedure TDANFSeReportConfig.ApplyChild(const DFeReport: TACBrNFSeXDANFSeRL; const Lib: TACBrLib);
+procedure TDANFSeReportConfig.ApplyChild(const DFeReport: TACBrDFeReport; const Lib: TACBrLib);
+var
+   {$ifNDef NOREPORT}
+     LDANFSe: TACBrNFSeXDANFSeRL;
+   {$Else}
+     LDANFSe: TACBrNFSeXDANFSeFPDF;
+   {$EndIf}
 begin
-  with DFeReport do
+  {$ifNDef NOREPORT}
+     LDANFSe := TACBrNFSeXDANFSeRL(DFeReport);
+   {$Else}
+     LDANFSe := TACBrNFSeXDANFSeFPDF(DFeReport);
+   {$EndIf}
+  with LDANFSe do
   begin
     Prestador.Logo := FPrestadorLogo;
     Prestador.RazaoSocial := FPrestadorRazaoSocial;
@@ -259,26 +273,26 @@ end;
 
 procedure TDANFSeReportConfig.DefinirValoresPadroesChild;
 begin
-  FPrestadorLogo := '';
-  FPrefeitura := '';
-  FPrestadorRazaoSocial := '';
-  FPrestadorNomeFantasia := '';
-  FPrestadorEndereco := '';
-  FPrestadorComplemento := '';
-  FPrestadorFone := '';
-  FPrestadorMunicipio := '';
+  FPrestadorLogo := EmptyStr;
+  FPrefeitura := EmptyStr;
+  FPrestadorRazaoSocial := EmptyStr;
+  FPrestadorNomeFantasia := EmptyStr;
+  FPrestadorEndereco := EmptyStr;
+  FPrestadorComplemento := EmptyStr;
+  FPrestadorFone := EmptyStr;
+  FPrestadorMunicipio := EmptyStr;
   FTamanhoFonte := 6;
-  FOutrasInformacaoesImp := '';
-  FPrestadorInscMunicipal := '';
-  FPrestadorEMail := '';
-  FPrestadorUF := '';
-  FTomadorInscEstadual := '';
-  FTomadorInscMunicipal := '';
-  FAtividade := '';
-  FTomadorFone := '';
-  FTomadorEndereco := '';
-  FTomadorComplemento := '';
-  FTomadorEmail := '';
+  FOutrasInformacaoesImp := EmptyStr;
+  FPrestadorInscMunicipal := EmptyStr;
+  FPrestadorEMail := EmptyStr;
+  FPrestadorUF := EmptyStr;
+  FTomadorInscEstadual := EmptyStr;
+  FTomadorInscMunicipal := EmptyStr;
+  FAtividade := EmptyStr;
+  FTomadorFone := EmptyStr;
+  FTomadorEndereco := EmptyStr;
+  FTomadorComplemento := EmptyStr;
+  FTomadorEmail := EmptyStr;
   FFormatarNumeroDocumentoNFSe := True;
   FNFSeCancelada := False;
   FDetalharServico := False;

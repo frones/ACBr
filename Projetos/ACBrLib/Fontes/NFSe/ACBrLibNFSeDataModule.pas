@@ -36,7 +36,13 @@ unit ACBrLibNFSeDataModule;
 interface
 
 uses
-  Classes, SysUtils, ACBrNFSeX, ACBrMail, ACBrNFSeXDANFSeRLClass,
+  Classes, SysUtils,
+  ACBrNFSeX,
+  {$IfNDef NOREPORT}
+  ACBrNFSeXDANFSeRLClass,
+  {$EndIf}
+  ACBrMail,
+  ACBrNFSeXDANFSeFPDFClass,
   ACBrLibDataModule;
 
 type
@@ -46,7 +52,18 @@ type
   TLibNFSeDM = class(TLibDataModule)
     ACBrMail1: TACBrMail;
     ACBrNFSeX1: TACBrNFSeX;
-    ACBrNFSeXDANFSeRL1: TACBrNFSeXDANFSeRL;
+    {$IfNDef NOREPORT}
+    FDANFSeFortes: TACBrNFSeXDANFSeRL;
+    {$Else}
+    FDANFSeFPDF: TACBrNFSeXDANFSeFPDF;
+    {$EndIf}
+
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
+
+  protected
+    procedure FreeReports;
+
   private
     procedure AplicarConfigMail;
 
@@ -74,12 +91,46 @@ begin
   pLibConfig := TLibNFSeConfig(Lib.Config);
   ACBrNFSeX1.Configuracoes.Assign(pLibConfig.NFSe);
   ACBrNFSeX1.Configuracoes.WebServices.LerParams;
+  {$IfNDef NOREPORT}
+  ACBrNFSeX1.DANFSE := FDANFSeFortes;
+  {$Else}
+  ACBrNFSeX1.DANFSE := FDANFSeFPDF;
+  {$EndIf}
 
 {$IFDEF Demo}
+  GravarLog('Modo DEMO - Forçando ambiente para Homologação', logNormal);
   ACBrNFSeX1.Configuracoes.WebServices.Ambiente := taHomologacao;
 {$ENDIF}
 
   AplicarConfigMail;
+end;
+
+procedure TLibNFSeDM.DataModuleCreate(Sender: TObject);
+begin
+  {$IfNDef NOREPORT}
+    FDANFSeFortes := TACBrNFSeXDANFSeRL.Create(Self);
+  {$Else}
+    FDANFSeFPDF := TACBrNFSeXDANFSeFPDF.Create(Self);
+  {$EndIf}
+end;
+
+procedure TLibNFSeDM.DataModuleDestroy(Sender: TObject);
+begin
+  {$IfNDef NOREPORT}
+    FreeAndNil(FDANFSeFortes);
+  {$Else}
+    FreeAndNil(FDANFSeFPDF);
+  {$EndIf}
+end;
+
+procedure TLibNFSeDM.FreeReports;
+begin
+  ACBrNFSeX1.DANFSE := nil;
+  {$IfNDef NOREPORT}
+  if Assigned(FDANFSeFortes) then FreeAndNil(FDANFSeFortes);
+  {$Else}
+  if Assigned(FDANFSeFPDF) then FreeAndNil(FDANFSeFPDF);
+  {$EndIf}
 end;
 
 procedure TLibNFSeDM.AplicarConfigMail;
@@ -115,26 +166,45 @@ begin
 
   GravarLog('ConfigurarImpressao - Iniciado', logNormal);
 
-  ACBrNFSeXDANFSeRL1 := TACBrNFSeXDANFSeRL.Create(nil);
-  ACBrNFSeX1.DANFSE := ACBrNFSeXDANFSeRL1;
+  {$IfNDef NOREPORT}
+  FDANFSeFortes := TACBrNFSeXDANFSeRL.Create(nil);
+  ACBrNFSeX1.DANFSE := FDANFSeFortes;
+  {$Else}
+  FDANFSeFPDF := TACBrNFSeXDANFSeFPDF.Create(nil);
+  ACBrNFSeX1.DANFSE := FDANFSeFPDF;
+  {$EndIf}
 
-   if GerarPDF then
+  if GerarPDF then
   begin
     if (LibConfig.DANFSe.PathPDF <> '') then
       if not DirectoryExists(PathWithDelim(LibConfig.DANFSe.PathPDF))then
         ForceDirectories(PathWithDelim(LibConfig.DANFSe.PathPDF));
   end;
 
-  LibConfig.DANFSe.Apply(ACBrNFSeXDANFSeRL1, Lib);
+  {$ifNDef NOREPORT}
+   LibConfig.DANFSe.Apply(FDANFSeFortes, Lib);
 
   if NaoEstaVazio(NomeImpressora) then
-    ACBrNFSeXDANFSeRL1.Impressora := NomeImpressora;
+    FDANFSeFortes.Impressora := NomeImpressora;
 
   if NaoEstaVazio(MostrarPreview) then
-    ACBrNFSeXDANFSeRL1.MostraPreview := StrToBoolDef(MostrarPreview, False);
+    FDANFSeFortes.MostraPreview := StrToBoolDef(MostrarPreview, False);
 
   if NaoEstaVazio(Cancelada) then
-    ACBrNFSeXDANFSeRL1.Cancelada := StrToBoolDef(Cancelada, False);
+    FDANFSeFortes.Cancelada := StrToBoolDef(Cancelada, False);
+
+  {$Else}
+  LibConfig.DANFSe.Apply(FDANFSeFPDF, Lib);
+
+  if NaoEstaVazio(NomeImpressora) then
+     FDANFSeFPDF.Impressora := NomeImpressora;
+
+  if NaoEstaVazio(MostrarPreview) then
+     FDANFSeFPDF.MostraPreview := StrToBoolDef(MostrarPreview, False);
+
+  if NaoEstaVazio(Cancelada) then
+     FDANFSeFPDF.Cancelada := StrToBoolDef(Cancelada, False);
+  {$EndIf}
 
   GravarLog('ConfigurarImpressao - Feito', logNormal);
 end;
@@ -142,10 +212,7 @@ end;
 procedure TLibNFSeDM.FinalizarImpressao();
 begin
    GravarLog('FinalizarImpressao - Iniciado', logNormal);
-
-   ACBrNFSeX1.DANFSE := nil;
-   if Assigned(ACBrNFSeXDANFSeRL1) then FreeAndNil(ACBrNFSeXDANFSeRL1);
-
+   FreeReports;
    GravarLog('FinalizarImpressao - Feito', logNormal);
 end;
 

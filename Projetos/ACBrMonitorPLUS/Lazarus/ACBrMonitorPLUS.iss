@@ -34,10 +34,10 @@
 
 #ifDef App64bits
   #define MyAppExeName "ACBrMonitor64.exe"
-  #define ECFTesteExeName "ECFTeste64.exe"
+;  #define ECFTesteExeName "ECFTeste64.exe"
 #else
   #define MyAppExeName "ACBrMonitor.exe"
-  #define ECFTesteExeName "ECFTeste.exe"
+;  #define ECFTesteExeName "ECFTeste.exe"
 #endif
 
 #define MyAppVersion GetFileVersion(MyAppExeName)
@@ -90,7 +90,7 @@ Name: firewallopen; Description: "Liberar {#MyAppName}, porta 3434, no Firewall 
 ; Aplicação
 Source: {#MyAppExeName}; DestDir: {app}; Flags: ignoreversion sign; Components: programa
 Source: {#ACBrMonitorPLUSDir}\banner_acbrmonitor.gif; DestDir: {app}; Flags: ignoreversion; Components: programa
-Source: {#ACBrDIR}\Exemplos\ACBrSerial\ACBrECF\Lazarus\{#ECFTesteExeName}; DestDir: {app}; Flags: ignoreversion sign; Components: programa
+;Source: {#ACBrDIR}\Exemplos\ACBrSerial\ACBrECF\Lazarus\{#ECFTesteExeName}; DestDir: {app}; Flags: ignoreversion sign; Components: programa
 Source: {#ACBrMonitorPLUSDir}\PRICETAB.TXT; DestDir: {app}; Flags: onlyifdoesntexist; Components: programa
 ;Arquivos com URLs
 Source: {#ACBrDIR}\Fontes\ACBrDFe\ACBrNFe\ACBrNFeServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
@@ -186,7 +186,7 @@ Filename: {app}\{#MyAppUrlName}; Section: InternetShortcut; Key: URL; String: {#
 
 [Icons]
 Name: {group}\{#MyAppName}; Filename: {app}\{#MyAppExeName}; WorkingDir: {app}; Components: programa
-Name: {group}\Programa ECFTeste; Filename: {app}\{#ECFTesteExeName}; WorkingDir: {app}; Components: programa
+;Name: {group}\Programa ECFTeste; Filename: {app}\{#ECFTesteExeName}; WorkingDir: {app}; Components: programa
 ;Name: {group}\Manual do ACBrMonitor; Filename: {app}\ACBrMonitor.chm; WorkingDir: {app}; Components: help
 Name: {group}\Pasta Exemplos; Filename: {app}\Exemplos\; Components: exemplos
 Name: {userdesktop}\{#MyAppName}; Filename: {app}\{#MyAppExeName}; WorkingDir: {app}; Tasks: desktopicon

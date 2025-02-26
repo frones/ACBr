@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 26/02/2025
+-- IPM.GravarXml --
+[*] #TK-6677: Alteração visando gerar a tag nfse_teste para as versões 1.00 e 1.01
+  Por: Maico Smaniotto
 -- ACBrNFSeXServicos --
 [*] #TK-6677: Incluído as URLs dos link da cidade de Santa Rosa/RS.
   Por: Maico Smaniotto

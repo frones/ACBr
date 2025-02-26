@@ -142,8 +142,7 @@ begin
      aceitar a NFS-e (vai entender), o provedor retorna o seguinte "erro":
      NFS-e válida para emissão.
      }
-    if  VersaoNFSe = ve100 then
-        NFSeNode.AppendChild(AddNode(tcStr, '#3', 'nfse_teste', 1, 1, 1, '1', ''));
+    NFSeNode.AppendChild(AddNode(tcStr, '#3', 'nfse_teste', 1, 1, 1, '1', ''));
   end
   else
   begin

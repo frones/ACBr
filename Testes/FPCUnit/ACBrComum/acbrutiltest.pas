@@ -309,6 +309,22 @@ type
     procedure Comlexo;
   end;
 
+  { DecodeHTMLEntitiesTest }
+
+  DecodeHTMLEntitiesTest = class(TTestCase)
+  published
+    procedure Vazio;
+    procedure Normal;
+    procedure EntidadesHTML_Comuns;
+    procedure EntidadesHTML_Monetarias;
+    procedure EntidadesHTML_AcentuadasUpperCase;
+    procedure EntidadesHTML_AcentuadasLowerCase;
+    procedure HexCodes_Comuns;
+    procedure HexCodes_Monetarias;
+    procedure HexCodes_AcentuadosUpperCase;
+    procedure HexCodes_AcentuadosLowerCase;
+  end;
+
   { BinaryStringToStringTest }
 
   BinaryStringToStringTest = class(TTestCase)
@@ -1520,6 +1536,165 @@ begin
   CheckEquals('312C4D6FFF', AsciiToHex('1,Mo'+chr(255)) );
 end;
 
+{ DecodeHTMLEntitiesTest }
+
+procedure DecodeHTMLEntitiesTest.Vazio;
+begin
+  CheckEquals('', DecodeHTMLEntities(''));
+end;
+
+procedure DecodeHTMLEntitiesTest.Normal;
+begin
+  CheckEquals('Texto com acentuaзгo sem entнdades', DecodeHTMLEntities('Texto com acentuaзгo sem entнdades'));
+end;
+
+procedure DecodeHTMLEntitiesTest.EntidadesHTML_Comuns;
+begin
+  CheckEquals(' ' , DecodeHTMLEntities('&nbsp;'));
+  CheckEquals('&' , DecodeHTMLEntities('&amp;'));
+  CheckEquals('<' , DecodeHTMLEntities('&lt;'));
+  CheckEquals('>' , DecodeHTMLEntities('&gt;'));
+  CheckEquals('"', DecodeHTMLEntities('&quot;'));
+  CheckEquals('''', DecodeHTMLEntities('&#39;'));
+end;
+
+procedure DecodeHTMLEntitiesTest.EntidadesHTML_Monetarias;
+begin
+  CheckEquals('ў', DecodeHTMLEntities('&cent;'));
+  CheckEquals('Ј', DecodeHTMLEntities('&pound;'));
+  CheckEquals('Ґ', DecodeHTMLEntities('&yen;'));
+  CheckEquals('Ђ', DecodeHTMLEntities('&euro;'));
+  CheckEquals('©', DecodeHTMLEntities('&copy;'));
+  CheckEquals('®', DecodeHTMLEntities('&reg;'));
+end;
+
+procedure DecodeHTMLEntitiesTest.EntidadesHTML_AcentuadasUpperCase;
+begin
+  CheckEquals('А', DecodeHTMLEntities('&Agrave;'));
+  CheckEquals('Б', DecodeHTMLEntities('&Aacute;'));
+  CheckEquals('В', DecodeHTMLEntities('&Acirc;'));
+  CheckEquals('Г', DecodeHTMLEntities('&Atilde;'));
+  CheckEquals('Д', DecodeHTMLEntities('&Auml;'));
+  CheckEquals('З', DecodeHTMLEntities('&Ccedil;'));
+  CheckEquals('И', DecodeHTMLEntities('&Egrave;'));
+  CheckEquals('Й', DecodeHTMLEntities('&Eacute;'));
+  CheckEquals('К', DecodeHTMLEntities('&Ecirc;'));
+  CheckEquals('Л', DecodeHTMLEntities('&Euml;'));
+  CheckEquals('М', DecodeHTMLEntities('&Igrave;'));
+  CheckEquals('Н', DecodeHTMLEntities('&Iacute;'));
+  CheckEquals('О', DecodeHTMLEntities('&Icirc;'));
+  CheckEquals('П', DecodeHTMLEntities('&Iuml;'));
+  CheckEquals('Т', DecodeHTMLEntities('&Ograve;'));
+  CheckEquals('У', DecodeHTMLEntities('&Oacute;'));
+  CheckEquals('Ф', DecodeHTMLEntities('&Ocirc;'));
+  CheckEquals('Х', DecodeHTMLEntities('&Otilde;'));
+  CheckEquals('Ц', DecodeHTMLEntities('&Ouml;'));
+  CheckEquals('Щ', DecodeHTMLEntities('&Ugrave;'));
+  CheckEquals('Ъ', DecodeHTMLEntities('&Uacute;'));
+  CheckEquals('Ы', DecodeHTMLEntities('&Ucirc;'));
+  CheckEquals('Ь', DecodeHTMLEntities('&Uuml;'));
+end;
+
+procedure DecodeHTMLEntitiesTest.EntidadesHTML_AcentuadasLowerCase;
+begin
+  CheckEquals('а', DecodeHTMLEntities('&agrave;'));
+  CheckEquals('б', DecodeHTMLEntities('&aacute;'));
+  CheckEquals('в', DecodeHTMLEntities('&acirc;'));
+  CheckEquals('г', DecodeHTMLEntities('&atilde;'));
+  CheckEquals('д', DecodeHTMLEntities('&auml;'));
+  CheckEquals('з', DecodeHTMLEntities('&ccedil;'));
+  CheckEquals('и', DecodeHTMLEntities('&egrave;'));
+  CheckEquals('й', DecodeHTMLEntities('&eacute;'));
+  CheckEquals('к', DecodeHTMLEntities('&ecirc;'));
+  CheckEquals('л', DecodeHTMLEntities('&euml;'));
+  CheckEquals('м', DecodeHTMLEntities('&igrave;'));
+  CheckEquals('н', DecodeHTMLEntities('&iacute;'));
+  CheckEquals('о', DecodeHTMLEntities('&icirc;'));
+  CheckEquals('п', DecodeHTMLEntities('&iuml;'));
+  CheckEquals('т', DecodeHTMLEntities('&ograve;'));
+  CheckEquals('у', DecodeHTMLEntities('&oacute;'));
+  CheckEquals('ф', DecodeHTMLEntities('&ocirc;'));
+  CheckEquals('х', DecodeHTMLEntities('&otilde;'));
+  CheckEquals('ц', DecodeHTMLEntities('&ouml;'));
+  CheckEquals('щ', DecodeHTMLEntities('&ugrave;'));
+  CheckEquals('ъ', DecodeHTMLEntities('&uacute;'));
+  CheckEquals('ы', DecodeHTMLEntities('&ucirc;'));
+  CheckEquals('ь', DecodeHTMLEntities('&uuml;'));
+end;
+
+procedure DecodeHTMLEntitiesTest.HexCodes_Comuns;
+begin
+  CheckEquals('&' , DecodeHTMLEntities('&#x26;'));
+  CheckEquals('<' , DecodeHTMLEntities('&#x3C;'));
+  CheckEquals('>' , DecodeHTMLEntities('&#x3E;'));
+  CheckEquals('"', DecodeHTMLEntities('&#x22;'));
+  CheckEquals('''', DecodeHTMLEntities('&#x27;'));
+end;
+
+procedure DecodeHTMLEntitiesTest.HexCodes_Monetarias;
+begin
+  CheckEquals('ў', DecodeHTMLEntities('&#xA2;'));
+  CheckEquals('Ј', DecodeHTMLEntities('&#xA3;'));
+  CheckEquals('Ґ', DecodeHTMLEntities('&#xA5;'));
+  CheckEquals('Ђ', DecodeHTMLEntities('&#x20AC;'));
+  CheckEquals('©', DecodeHTMLEntities('&#xA9;'));
+  CheckEquals('®', DecodeHTMLEntities('&#xAE;'));
+end;
+
+procedure DecodeHTMLEntitiesTest.HexCodes_AcentuadosUpperCase;
+begin
+  CheckEquals('А', DecodeHTMLEntities('&#xC0;'));
+  CheckEquals('Б', DecodeHTMLEntities('&#xC1;'));
+  CheckEquals('В', DecodeHTMLEntities('&#xC2;'));
+  CheckEquals('Г', DecodeHTMLEntities('&#xC3;'));
+  CheckEquals('Д', DecodeHTMLEntities('&#xC4;'));
+  CheckEquals('З', DecodeHTMLEntities('&#xC7;'));
+  CheckEquals('И', DecodeHTMLEntities('&#xC8;'));
+  CheckEquals('Й', DecodeHTMLEntities('&#xC9;'));
+  CheckEquals('К', DecodeHTMLEntities('&#xCA;'));
+  CheckEquals('Л', DecodeHTMLEntities('&#xCB;'));
+  CheckEquals('М', DecodeHTMLEntities('&#xCC;'));
+  CheckEquals('Н', DecodeHTMLEntities('&#xCD;'));
+  CheckEquals('О', DecodeHTMLEntities('&#xCE;'));
+  CheckEquals('П', DecodeHTMLEntities('&#xCF;'));
+  CheckEquals('Т', DecodeHTMLEntities('&#xD2;'));
+  CheckEquals('У', DecodeHTMLEntities('&#xD3;'));
+  CheckEquals('Ф', DecodeHTMLEntities('&#xD4;'));
+  CheckEquals('Х', DecodeHTMLEntities('&#xD5;'));
+  CheckEquals('Ц', DecodeHTMLEntities('&#xD6;'));
+  CheckEquals('Щ', DecodeHTMLEntities('&#xD9;'));
+  CheckEquals('Ъ', DecodeHTMLEntities('&#xDA;'));
+  CheckEquals('Ы', DecodeHTMLEntities('&#xDB;'));
+  CheckEquals('Ь', DecodeHTMLEntities('&#xDC;'));
+end;
+
+procedure DecodeHTMLEntitiesTest.HexCodes_AcentuadosLowerCase;
+begin
+  CheckEquals('а', DecodeHTMLEntities('&#xE0;'));
+  CheckEquals('б', DecodeHTMLEntities('&#xE1;'));
+  CheckEquals('в', DecodeHTMLEntities('&#xE2;'));
+  CheckEquals('г', DecodeHTMLEntities('&#xE3;'));
+  CheckEquals('д', DecodeHTMLEntities('&#xE4;'));
+  CheckEquals('з', DecodeHTMLEntities('&#xE7;'));
+  CheckEquals('и', DecodeHTMLEntities('&#xE8;'));
+  CheckEquals('й', DecodeHTMLEntities('&#xE9;'));
+  CheckEquals('к', DecodeHTMLEntities('&#xEA;'));
+  CheckEquals('л', DecodeHTMLEntities('&#xEB;'));
+  CheckEquals('м', DecodeHTMLEntities('&#xEC;'));
+  CheckEquals('н', DecodeHTMLEntities('&#xED;'));
+  CheckEquals('о', DecodeHTMLEntities('&#xEE;'));
+  CheckEquals('п', DecodeHTMLEntities('&#xEF;'));
+  CheckEquals('т', DecodeHTMLEntities('&#xF2;'));
+  CheckEquals('у', DecodeHTMLEntities('&#xF3;'));
+  CheckEquals('ф', DecodeHTMLEntities('&#xF4;'));
+  CheckEquals('х', DecodeHTMLEntities('&#xF5;'));
+  CheckEquals('ц', DecodeHTMLEntities('&#xF6;'));
+  CheckEquals('щ', DecodeHTMLEntities('&#xF9;'));
+  CheckEquals('ъ', DecodeHTMLEntities('&#xFA;'));
+  CheckEquals('ы', DecodeHTMLEntities('&#xFB;'));
+  CheckEquals('ь', DecodeHTMLEntities('&#xFC;'));
+end;
+
 { HexToAsciiTest }
 
 procedure HexToAsciiTest.Simples;
@@ -1529,52 +1704,52 @@ end;
 
 procedure HexToAsciiTest.Comlexo;
 begin
-  CheckEquals(ACBrStr('1,Mo'+chr(255)), HexToAscii('312C4D6FFF') );
+  CheckEquals('1,Mo'+chr(255), HexToAscii('312C4D6FFF') );
 end;
 
 procedure HexToAsciiTest.CompletoCaracteresEspeciais;
 begin
-  CheckEquals(ACBrStr('&'), HexToAscii('26'));
-  CheckEquals(ACBrStr('<'), HexToAscii('3C'));
-  CheckEquals(ACBrStr('>'), HexToAscii('3E'));
-  CheckEquals(ACBrStr('А'), HexToAscii('C0'));
-  CheckEquals(ACBrStr('Б'), HexToAscii('C1'));
-  CheckEquals(ACBrStr('Г'), HexToAscii('C3'));
-  CheckEquals(ACBrStr('В'), HexToAscii('C2'));
-  CheckEquals(ACBrStr('а'), HexToAscii('E0'));
-  CheckEquals(ACBrStr('б'), HexToAscii('E1'));
-  CheckEquals(ACBrStr('г'), HexToAscii('E3'));
-  CheckEquals(ACBrStr('в'), HexToAscii('E2'));
-  CheckEquals(ACBrStr('И'), HexToAscii('C8'));
-  CheckEquals(ACBrStr('Й'), HexToAscii('C9'));
-  CheckEquals(ACBrStr('К'), HexToAscii('CA'));
-  CheckEquals(ACBrStr('и'), HexToAscii('E8'));
-  CheckEquals(ACBrStr('й'), HexToAscii('E9'));
-  CheckEquals(ACBrStr('к'), HexToAscii('EA'));
-  CheckEquals(ACBrStr('М'), HexToAscii('CC'));
-  CheckEquals(ACBrStr('Н'), HexToAscii('CD'));
-  CheckEquals(ACBrStr('О'), HexToAscii('CE'));
-  CheckEquals(ACBrStr('м'), HexToAscii('EC'));
-  CheckEquals(ACBrStr('н'), HexToAscii('ED'));
-  CheckEquals(ACBrStr('о'), HexToAscii('EE'));
-  CheckEquals(ACBrStr('Т'), HexToAscii('D2'));
-  CheckEquals(ACBrStr('У'), HexToAscii('D3'));
-  CheckEquals(ACBrStr('Х'), HexToAscii('D5'));
-  CheckEquals(ACBrStr('Ф'), HexToAscii('D4'));
-  CheckEquals(ACBrStr('т'), HexToAscii('F2'));
-  CheckEquals(ACBrStr('у'), HexToAscii('F3'));
-  CheckEquals(ACBrStr('х'), HexToAscii('F5'));
-  CheckEquals(ACBrStr('ф'), HexToAscii('F4'));
-  CheckEquals(ACBrStr('Щ'), HexToAscii('D9'));
-  CheckEquals(ACBrStr('Ъ'), HexToAscii('DA'));
-  CheckEquals(ACBrStr('Ы'), HexToAscii('DB'));
-  CheckEquals(ACBrStr('щ'), HexToAscii('F9'));
-  CheckEquals(ACBrStr('ъ'), HexToAscii('FA'));
-  CheckEquals(ACBrStr('ы'), HexToAscii('FB'));
-  CheckEquals(ACBrStr('З'), HexToAscii('C7'));
-  CheckEquals(ACBrStr('з'), HexToAscii('E7'));
-  CheckEquals(ACBrStr('С'), HexToAscii('D1'));
-  CheckEquals(ACBrStr('с'), HexToAscii('F1'));
+  CheckEquals('&', HexToAscii('26'));
+  CheckEquals('<', HexToAscii('3C'));
+  CheckEquals('>', HexToAscii('3E'));
+  CheckEquals('А', HexToAscii('C0'));
+  CheckEquals('Б', HexToAscii('C1'));
+  CheckEquals('Г', HexToAscii('C3'));
+  CheckEquals('В', HexToAscii('C2'));
+  CheckEquals('а', HexToAscii('E0'));
+  CheckEquals('б', HexToAscii('E1'));
+  CheckEquals('г', HexToAscii('E3'));
+  CheckEquals('в', HexToAscii('E2'));
+  CheckEquals('И', HexToAscii('C8'));
+  CheckEquals('Й', HexToAscii('C9'));
+  CheckEquals('К', HexToAscii('CA'));
+  CheckEquals('и', HexToAscii('E8'));
+  CheckEquals('й', HexToAscii('E9'));
+  CheckEquals('к', HexToAscii('EA'));
+  CheckEquals('М', HexToAscii('CC'));
+  CheckEquals('Н', HexToAscii('CD'));
+  CheckEquals('О', HexToAscii('CE'));
+  CheckEquals('м', HexToAscii('EC'));
+  CheckEquals('н', HexToAscii('ED'));
+  CheckEquals('о', HexToAscii('EE'));
+  CheckEquals('Т', HexToAscii('D2'));
+  CheckEquals('У', HexToAscii('D3'));
+  CheckEquals('Х', HexToAscii('D5'));
+  CheckEquals('Ф', HexToAscii('D4'));
+  CheckEquals('т', HexToAscii('F2'));
+  CheckEquals('у', HexToAscii('F3'));
+  CheckEquals('х', HexToAscii('F5'));
+  CheckEquals('ф', HexToAscii('F4'));
+  CheckEquals('Щ', HexToAscii('D9'));
+  CheckEquals('Ъ', HexToAscii('DA'));
+  CheckEquals('Ы', HexToAscii('DB'));
+  CheckEquals('щ', HexToAscii('F9'));
+  CheckEquals('ъ', HexToAscii('FA'));
+  CheckEquals('ы', HexToAscii('FB'));
+  CheckEquals('З', HexToAscii('C7'));
+  CheckEquals('з', HexToAscii('E7'));
+  CheckEquals('С', HexToAscii('D1'));
+  CheckEquals('с', HexToAscii('F1'));
 end;
 
 procedure HexToAsciiTest.DesCriptografia;
@@ -2917,6 +3092,7 @@ initialization
   _RegisterTest('ACBrComum.ACBrUtil', LEStrToIntTest);
   _RegisterTest('ACBrComum.ACBrUtil', HexToAsciiTest);
   _RegisterTest('ACBrComum.ACBrUtil', AsciiToHexTest);
+  _RegisterTest('ACBrComum.ACBrUtil', DecodeHTMLEntitiesTest);
   _RegisterTest('ACBrComum.ACBrUtil', BinaryStringToStringTest);
   _RegisterTest('ACBrComum.ACBrUtil', StringToBinaryStringTest);
   _RegisterTest('ACBrComum.ACBrUtil', StripHTMLTest);

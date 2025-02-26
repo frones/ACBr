@@ -13,7 +13,7 @@
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFSeX\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="438">
+    <Files Count="441">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -1767,7 +1767,19 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSMap.Provider.pas"/>
         <UnitName Value="ISSMap.Provider"/>
       </Item438>
-    </Files>
+      <Item439>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Aspec.GravarJson.pas"/>
+        <UnitName Value="Aspec.GravarJson"/>
+      </Item439>
+      <Item440>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Aspec.LerJson.pas"/>
+        <UnitName Value="Aspec.LerJson"/>
+      </Item440>
+      <Item441>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Aspec.Provider.pas"/>
+        <UnitName Value="Aspec.Provider"/>
+      </Item441>
+   </Files>
     <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="ACBrDFeComum"/>

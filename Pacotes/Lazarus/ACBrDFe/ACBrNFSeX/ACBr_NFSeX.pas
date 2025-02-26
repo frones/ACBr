@@ -126,7 +126,8 @@ uses
   Kalana.GravarXml, Kalana.LerXml, Kalana.Provider, NFEletronica.GravarXml, 
   NFEletronica.LerXml, NFEletronica.Provider, XTRTecnologia.GravarJson, 
   XTRTecnologia.LerJson, XTRTecnologia.Provider, ISSMap.GravarXml, 
-  ISSMap.LerXml, ISSMap.Provider, LazarusPackageIntf;
+  ISSMap.LerXml, ISSMap.Provider, Aspec.GravarJson, Aspec.LerJson, 
+  Aspec.Provider, LazarusPackageIntf;
 
 implementation
 

@@ -99,6 +99,7 @@ implementation
 uses
   ACBrUtil.Base,
   ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
   StrUtils;
 
 { TLeitor }
@@ -239,7 +240,7 @@ begin
 
   case Tipo of
     tcStr:
-      result := ReverterFiltroTextoXML(ConteudoTag);
+      result := DecodeHTMLEntities(ConteudoTag);
 
     tcDat:
       begin

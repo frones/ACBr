@@ -10,6 +10,7 @@ Adm                  2.01
 ADPM                 2.00
 AEG                  2.02
 Agili                1.00  08/09/2022
+Aspec                1.00
 AssessorPublico      1.00  23/08/2022
 Asten                2.02
 Bauhaus              1.00  20/10/2022

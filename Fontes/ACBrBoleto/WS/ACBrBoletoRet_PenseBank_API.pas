@@ -130,8 +130,8 @@ begin
               begin
                 LJsonViolacao := LJsonViolacoes.ItemAsJSONObject[X];
 
-                LMensagemRejeicao := ARetornoWS.CriarRejeicaoLista;
-                LMensagemRejeicao.Codigo := LJsonViolacao.AsString['codigo'];
+                LMensagemRejeicao          := ARetornoWS.CriarRejeicaoLista;
+                LMensagemRejeicao.Codigo   := LJsonViolacao.AsString['codigo'];
                 LMensagemRejeicao.Mensagem := LJsonViolacao.AsString['mensagem'];
               end;
             end
@@ -140,12 +140,19 @@ begin
               LJsonViolacoes := LJsonObject.AsJSONArray['errors'];
               for X := 0 to LJsonViolacoes.Count - 1 do
               begin
-                LJsonViolacao := LJsonViolacoes.ItemAsJSONObject[X];
-
-                LMensagemRejeicao := ARetornoWS.CriarRejeicaoLista;
-                LMensagemRejeicao.Codigo := LJsonViolacao.AsString['code'];
+                LJsonViolacao              := LJsonViolacoes.ItemAsJSONObject[X];
+                LMensagemRejeicao          := ARetornoWS.CriarRejeicaoLista;
+                LMensagemRejeicao.Codigo   := LJsonViolacao.AsString['code'];
                 LMensagemRejeicao.Mensagem := LJsonViolacao.AsString['message'];
               end;
+
+               if (LMensagemRejeicao.Mensagem = '') and (LMensagemRejeicao.Codigo = '') then
+               begin
+                 LMensagemRejeicao          := ARetornoWS.CriarRejeicaoLista;
+                 LMensagemRejeicao.Codigo   := LJsonObject.AsString['statusCode'];
+                 LMensagemRejeicao.Mensagem := LJsonObject.AsString['error'];
+               end
+
             end;
           end;
         end;
@@ -268,7 +275,7 @@ var
 begin
   Result := True;
 
-  LListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
+  LListaRetorno                := ACBrBoleto.CriarRetornoWebNaLista;
   LListaRetorno.HTTPResultCode := HTTPResultCode;
   LListaRetorno.JSONEnvio      := EnvWs;
 
@@ -297,10 +304,9 @@ begin
             begin
               for X := 0 to LJsonViolacoes.Count - 1 do
               begin
-                LJsonViolacao := LJsonViolacoes.ItemAsJSONObject[X];
-
-                LMensagemRejeicao := LListaRetorno.CriarRejeicaoLista;
-                LMensagemRejeicao.Codigo := LJsonViolacao.AsString['codigo'];
+                LJsonViolacao              := LJsonViolacoes.ItemAsJSONObject[X];
+                LMensagemRejeicao          := LListaRetorno.CriarRejeicaoLista;
+                LMensagemRejeicao.Codigo   := LJsonViolacao.AsString['codigo'];
                 LMensagemRejeicao.Mensagem := LJsonViolacao.AsString['mensagem'];
               end;
             end
@@ -309,10 +315,9 @@ begin
               LJsonViolacoes := LJsonObject.AsJSONArray['erros'];
               for X := 0 to LJsonViolacoes.Count - 1 do
               begin
-                LJsonViolacao := LJsonViolacoes.ItemAsJSONObject[X];
-
-                LMensagemRejeicao := LListaRetorno.CriarRejeicaoLista;
-                LMensagemRejeicao.Codigo := LJsonViolacao.AsString['code'];
+                LJsonViolacao              := LJsonViolacoes.ItemAsJSONObject[X];
+                LMensagemRejeicao          := LListaRetorno.CriarRejeicaoLista;
+                LMensagemRejeicao.Codigo   := LJsonViolacao.AsString['code'];
                 LMensagemRejeicao.Mensagem := LJsonViolacao.AsString['message'];
               end;
             end;

@@ -484,6 +484,7 @@ var
   i: Integer;
   AChave, AValue: String;
 begin
+  fpACBrTEFAPI.UltimaRespostaTEF.Clear;
   fpACBrTEFAPI.UltimaRespostaTEF.ViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
 
   for i := 0 to fTEFScopeAPI.DadosDaTransacao.Count-1 do
@@ -816,6 +817,7 @@ var
   OpScope: TACBrTEFScopeOperacao;
   Param1: String;
 begin
+  fTEFScopeAPI.DadosDaTransacao.Clear;
   Result := False;
   if CodOperacaoAdm = tefopAdministrativo then
     CodOperacaoAdm := PerguntarMenuAdmScope;
@@ -1102,6 +1104,7 @@ function TACBrTEFAPIClassScope.ExecutarTransacaoScopeSessaoUnica(
 var
   ret: LongInt;
 begin
+  fTEFScopeAPI.DadosDaTransacao.Clear;
   Result := False;
   if fTEFScopeAPI.SessaoAberta then
     fTEFScopeAPI.FecharSessaoTEF;

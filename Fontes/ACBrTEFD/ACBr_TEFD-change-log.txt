@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2025
+-- ACBrTEFAPIScope --
+[-] Ajustes para apagar respostas da transação anterior em EfetuarAdministrativa
+    (por: DSA)
+
 24/02/2025
 -- ACBrTEFAPI, ACBrTEFTPagAPI, ACBrTEFAPITPag --
 [+] Adicionado novo modelo de TEF "TPag", do Grupo Transire

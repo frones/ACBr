@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2025
+-- ACBrUtil.XMLHTML --
+[+] #TK-6581: Adiciona funções GetNamedEntitie e DecodeHTMLEntities
+  Por: André Ferreira de Moraes
+
 24/02/2025
 -- ACBrUtil.DateTime --
 [+] Adicionado os métodos:

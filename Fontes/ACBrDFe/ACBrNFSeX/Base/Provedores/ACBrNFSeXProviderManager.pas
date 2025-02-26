@@ -171,6 +171,7 @@ uses
 
   // Provedores que tem layout próprio
   Agili.Provider,
+  Aspec.Provider,
   AssessorPublico.Provider,
   Bauhaus.Provider,
   Conam.Provider,
@@ -239,6 +240,7 @@ begin
       proADPM:  Result := TACBrNFSeProviderADPM203.Create(ACBrNFSe);
       proAEG:   Result := TACBrNFSeProviderAEG202.Create(ACBrNFSe);
       proAgili: Result := TACBrNFSeProviderAgili.Create(ACBrNFSe);
+      proAspec: Result := TACBrNFSeProviderAspec.Create(ACBrNFSe);
 
       proAssessorPublico:
         Result := TACBrNFSeProviderAssessorPublico.Create(ACBrNFSe);

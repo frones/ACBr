@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 26/02/2025
+-- Diversos --
+[+] #TK-6673: Implementado o provedor Aspec versão 1.00
+  Por: Willian Delan/Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6668: A cidade de Tres Lagos/MS trocou a URL de produção o provedor continua o mesmo.
   Por: Fabio Tellini

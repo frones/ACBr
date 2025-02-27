@@ -1663,6 +1663,21 @@ begin
         TipoOperacao := ftransacoes[i].tipoOperacao;
         Descricao := ftransacoes[i].descricao;
         InfoComplementar := ftransacoes[i].titulo;
+        Identificador:= ftransacoes[i].idTransacao;
+        case ftransacoes[i].tipoTransacao of
+          ittBoletoCobranca: CPFCNPJ := ftransacoes[i].boletoCobranca.cpfCnpj;
+          ittPagamento: CPFCNPJ      := ftransacoes[i].pagamento.cpfCnpj;
+          ittPix:
+            if ftransacoes[i].tipoOperacao = etoDebito then
+              CPFCNPJ := ftransacoes[i].pix.cpfCnpjRecebedor
+            else
+              CPFCNPJ := ftransacoes[i].pix.cpfCnpjPagador;
+          ittTransferencia:
+            if ftransacoes[i].tipoOperacao = etoDebito then
+              CPFCNPJ := ftransacoes[i].transferencia.cpfCnpjRecebedor
+            else
+              CPFCNPJ := ftransacoes[i].transferencia.cpfCnpjPagador;
+        end;
       end;
     end;
   end;

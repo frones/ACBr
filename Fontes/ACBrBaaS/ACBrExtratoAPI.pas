@@ -1,35 +1,35 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
-{ - Elias C√©sar Vieira                                                         }
+{ - Elias CÈsar Vieira                                                         }
 { - Daniel Infocotidiano                                                       }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
+{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
 {******************************************************************************}   
 
 {$I ACBr.inc}
@@ -51,7 +51,8 @@ type
   TACBrExtratoAPIBancoConsulta = (
     bccNenhum,
     bccBancoDoBrasil,
-    bccInter
+    bccInter,
+    bccSicoob
   );
 
   TACBrExtratoAPITipoOperacao = (
@@ -73,8 +74,11 @@ type
     fpNumeroDocumento: String;
     fpTipoOperacao: TACBrExtratoAPITipoOperacao;
     fpValor: Double;
+    FIdentificador    : string;
+    FCPFCNPJ          : string;
   public
     procedure Clear;
+    property Identificador: string read FIdentificador write FIdentificador;
     property NumeroDocumento: String read fpNumeroDocumento write fpNumeroDocumento;
     property DataLancamento: TDateTime read fpDataLancamento write fpDataLancamento;
     property DataMovimento: TDateTime read fpDataMovimento write fpDataMovimento;
@@ -82,6 +86,7 @@ type
     property Descricao: String read fpDescricao write fpDescricao;
     property InfoComplementar: String read fpInfoComplementar write fpInfoComplementar;
     property Valor: Double read fpValor write fpValor;
+    property CPFCNPJ: string read FCPFCNPJ write FCPFCNPJ;
   end;
 
   { TACBrExtratoLancamentos }
@@ -95,26 +100,35 @@ type
     procedure Insert(aIndex: Integer; aLancamento: TACBrExtratoLancamento);
     function New: TACBrExtratoLancamento;
     property Items[aIndex: Integer]: TACBrExtratoLancamento read GetItem write SetItem; default;
+    function IsEmpty: Boolean;
   end;
 
   { TACBrExtratoConsultado }
 
   TACBrExtratoConsultado = class(TACBrAPISchema)
-  private
-    function GetLancamentos: TACBrExtratoLancamentos;
   protected
     fpLancamentos: TACBrExtratoLancamentos;
     fpRegistrosPaginaAtual: Integer;
     fpTotalPaginas: Integer;
     fpTotalRegistros: Integer;
+    FSaldoAnterior        : Currency;
+    FSaldoAtual           : Currency;
+    FSaldoBloqueado       : Currency;
+    FSaldoLimite          : Currency;
+    function GetLancamentos: TACBrExtratoLancamentos; virtual;
   public
     destructor Destroy; override;
     procedure Clear; override;
+    function IsEmpty: Boolean; override;
 
     property TotalPaginas: Integer read fpTotalPaginas;
     property TotalRegistros: Integer read fpTotalRegistros;
     property RegistrosPaginaAtual: Integer read fpRegistrosPaginaAtual;
     property Lancamentos: TACBrExtratoLancamentos read GetLancamentos;
+    property SaldoAnterior: Currency read FSaldoAnterior;
+    property SaldoAtual: Currency read FSaldoAtual;
+    property SaldoLimite: Currency read FSaldoLimite;
+    property SaldoBloqueado: Currency read FSaldoBloqueado;
   end;
 
   { TACBrExtratoErro }
@@ -214,7 +228,7 @@ type
 implementation
 
 uses
-  ACBrExtratoAPIBB, ACBrExtratoAPIInter; 
+ ACBrUtil.Base, ACBrExtratoAPIBB, ACBrExtratoAPIInter, ACBrExtratoAPISicoob;
 
 function TipoLancamentoToString(const aTipo: TACBrExtratoAPITipoOperacao): String;
 begin
@@ -250,6 +264,7 @@ end;
 
 procedure TACBrExtratoLancamento.Clear;
 begin
+  FIdentificador     := '';  
   fpDataLancamento := 0;
   fpDataMovimento := 0;
   fpDescricao := EmptyStr;
@@ -257,6 +272,7 @@ begin
   fpNumeroDocumento := EmptyStr;
   fpTipoOperacao := etoNenhum;
   fpValor := 0;
+  FCPFCNPJ           := '';
 end;
 
 { TACBrExtratoConsultado }
@@ -266,6 +282,13 @@ begin
   if (not Assigned(fpLancamentos)) then
     fpLancamentos := TACBrExtratoLancamentos.Create;
   Result := fpLancamentos;
+end;
+
+function TACBrExtratoConsultado.IsEmpty: Boolean;
+begin
+  Result := Inherited IsEmpty and Lancamentos.IsEmpty and EstaZerado(fpTotalPaginas) and
+    EstaZerado(fpTotalRegistros) and EstaZerado(FSaldoAnterior) and EstaZerado(FSaldoAtual) and
+    EstaZerado(FSaldoLimite) and EstaZerado(FSaldoBloqueado);
 end;
 
 destructor TACBrExtratoConsultado.Destroy;
@@ -282,6 +305,10 @@ begin
   fpTotalPaginas := 0;
   fpTotalRegistros := 0;
   fpRegistrosPaginaAtual := 0;
+  FSaldoAnterior         := 0;
+  FSaldoAtual            := 0;
+  FSaldoBloqueado        := 0;
+  FSaldoLimite           := 0;
 end;
 
 { TACBrExtratoLancamentos }
@@ -304,6 +331,11 @@ end;
 procedure TACBrExtratoLancamentos.Insert(aIndex: Integer; aLancamento: TACBrExtratoLancamento);
 begin
   inherited Insert(aIndex, aLancamento);
+end;
+
+function TACBrExtratoLancamentos.IsEmpty: Boolean;
+begin
+  Result := Self.Count = 0;
 end;
 
 function TACBrExtratoLancamentos.New: TACBrExtratoLancamento;
@@ -434,8 +466,9 @@ begin
   case aValue of
     bccBancoDoBrasil: fBanco := TACBrExtratoAPIBB.Create(Self);
     bccInter: fBanco := TACBrExtratoAPIInter.Create(Self);
-  else
-    fBanco := TACBrExtratoAPIBancoClass.Create(Self);
+    bccSicoob: fBanco := TACBrExtratoAPISicoob.Create(Self);
+  else 
+	fBanco := TACBrExtratoAPIBancoClass.Create(Self);
   end;
 
   fBanco.ArqLOG := fLogArquivo;

@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2025
+-- ACBrExtratoAPI --
+[+] Implementação do banco Sicoob, com adição das propriedades "Identificador" e "CPFCNPJ".
+    https://www.projetoacbr.com.br/forum/topic/81600-colabora%C3%A7%C3%A3o-implementa%C3%A7%C3%A3o-do-banco-sicoob-no-acbrextratoapi/
+  Por: Delcio
+
 14/01/2025
 -- ACBrSchemasPagamentosAPI --
 [+] Implementação dos métodos para Pagamento em Lote.

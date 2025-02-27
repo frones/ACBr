@@ -39,7 +39,9 @@ interface
 uses
   Classes, SysUtils, StrUtils,
   ACBrBPeConfiguracoes,
-  ACBrBPeClass, ACBrBPeXmlReader, ACBrBPeXmlWriter,
+  ACBrBPeClass,
+  ACBrBPeXmlReader, ACBrBPeXmlWriter,
+  ACBrBPeIniReader, ACBrBPeIniWriter,
 //  pcnConversao,
   ACBrBPeConversao;
 
@@ -50,8 +52,12 @@ type
   TBilhete = class(TCollectionItem)
   private
     FBPe: TBPe;
+    // Xml
     FBPeW: TBPeXmlWriter;
     FBPeR: TBPeXmlReader;
+    // Ini
+    FBPeIniR: TBPeIniReader;
+    FBPeIniW: TBPeIniWriter;
 
     FConfiguracoes: TConfiguracoesBPe;
     FXMLAssinado: String;
@@ -189,8 +195,13 @@ begin
   inherited Create(Collection2);
 
   FBPe := TBPe.Create;
+  // Xml
   FBPeW := TBPeXmlWriter.Create(FBPe);
   FBPeR := TBPeXmlReader.Create(FBPe);
+  // Ini
+  FBPeIniR := TBPeIniReader.Create(FBPe);
+  FBPeIniW := TBPeIniWriter.Create(FBPe);
+
   FConfiguracoes := TACBrBPe(TBilhetes(Collection).ACBrBPe).Configuracoes;
 
   FBPe.Ide.tpBPe := tbNormal;
@@ -207,8 +218,13 @@ end;
 
 destructor TBilhete.Destroy;
 begin
+  // Xml
   FBPeW.Free;
   FBPeR.Free;
+  // Ini
+  FBPeIniR.Free;
+  FBPeIniW.Free;
+
   FBPe.Free;
 
   inherited Destroy;
@@ -267,7 +283,7 @@ begin
 
     Document := TACBrXmlDocument.Create;
     try
-      try
+//      try
         Document.LoadFromXml(FXMLOriginal);
         ANode := Document.Root;
 
@@ -284,25 +300,20 @@ begin
           BPe.signature.SignatureValue := ObterConteudoTag(SignatureNode.Childrens.FindAnyNs('SignatureValue'), tcStr);
           BPe.signature.X509Certificate := ObterConteudoTag(X509DataNode.Childrens.FindAnyNs('X509Certificate'), tcStr);
         end;
-      except
+//      except
         //Result := False;
-      end;
+//      end;
     finally
       FreeAndNil(Document);
     end;
 
     if Configuracoes.Geral.ModeloDF = moBPe then
     begin
-//      with TACBrBPe(TBilhetes(Collection).ACBrBPe) do
-//      begin
-      BPe.infBPeSupl.qrCodBPe := GetURLQRCode(BPe.Ide.cUF,
-                                              BPe.Ide.tpAmb,
-                                              BPe.infBPe.ID);
+      BPe.infBPeSupl.qrCodBPe := GetURLQRCode(BPe.Ide.cUF, BPe.Ide.tpAmb, BPe.infBPe.ID);
 
       BPe.infBPeSupl.boardPassBPe := GetURLConsultaBPe(BPe.Ide.cUF, BPe.Ide.tpAmb);
 
       GerarXML;
-//      end;
     end;
 
     if Configuracoes.Arquivos.Salvar and
@@ -587,253 +598,8 @@ begin
 end;
 
 function TBilhete.GerarBPeIni: String;
-var
-  I: integer;
-  sSecao: string;
-  INIRec: TMemIniFile;
-  IniBPe: TStringList;
-  Ok: Boolean;
 begin
-  Result := '';
-
-  if not ValidarChave(BPe.infBPe.ID) then
-    raise EACBrBPeException.Create('BPe Inconsistente para gerar INI. Chave Inválida.');
-
-  INIRec := TMemIniFile.Create('');
-  try
-    with FBPe do
-    begin
-      INIRec.WriteString('infBPe', 'versao', VersaoBPeToStr(DblToVersaoBPe(Ok, infBPe.versao)));
-
-      INIRec.WriteInteger('ide', 'cUF', ide.cUF);
-      INIRec.WriteInteger('ide', 'mod', Ide.modelo);
-      INIRec.WriteInteger('ide', 'serie', Ide.serie);
-      INIRec.WriteInteger('ide', 'nBP', Ide.nBP);
-      INIRec.WriteInteger('ide', 'cBP', Ide.cBP);
-      INIRec.WriteString('ide', 'modal', ModalBPeToStr(Ide.modal));
-      INIRec.WriteString('ide', 'dhEmi', DateTimeToStr(Ide.dhEmi));
-      INIRec.WriteString('ide', 'tpEmis', TipoEmissaoToStr(Ide.tpEmis));
-      INIRec.WriteString('ide', 'verProc', Ide.verProc);
-      INIRec.WriteString('ide', 'tpBPe', tpBPeToStr(Ide.tpBPe));
-      INIRec.WriteString('ide','indPres', PresencaCompradorToStr(Ide.indPres));
-      INIRec.WriteString('ide', 'UFIni', Ide.UFIni);
-      INIRec.WriteInteger('ide', 'cMunIni', Ide.cMunIni);
-      INIRec.WriteString('ide', 'UFFim', Ide.UFFim);
-      INIRec.WriteInteger('ide', 'cMunFim', Ide.cMunFim);
-      INIRec.WriteString('ide', 'dhCont', DateTimeToStr(Ide.dhCont));
-      INIRec.WriteString('ide', 'xJust', Ide.xJust);
-
-      // Emitente
-
-      INIRec.WriteString('emit', 'CNPJ', Emit.CNPJ);
-      INIRec.WriteString('emit', 'IE', Emit.IE);
-      INIRec.WriteString('emit', 'IEST', Emit.IEST);
-      INIRec.WriteString('emit', 'xNome', Emit.xNome);
-      INIRec.WriteString('emit', 'xFant', Emit.xFant);
-      INIRec.WriteString('emit', 'TAR', Emit.TAR);
-      INIRec.WriteString('emit', 'CRT', CRTToStr(Emit.CRT));
-
-      INIRec.WriteString('emit', 'xLgr', Emit.enderEmit.xLgr);
-      INIRec.WriteString('emit', 'nro', Emit.enderEmit.nro);
-      INIRec.WriteString('emit', 'xCpl', Emit.enderEmit.xCpl);
-      INIRec.WriteString('emit', 'xBairro', Emit.enderEmit.xBairro);
-      INIRec.WriteInteger('emit', 'cMun', Emit.enderEmit.cMun);
-      INIRec.WriteString('emit', 'xMun', Emit.enderEmit.xMun);
-      INIRec.WriteInteger('emit', 'CEP', Emit.enderEmit.CEP);
-      INIRec.WriteString('emit', 'UF', Emit.enderEmit.UF);
-      INIRec.WriteString('emit', 'fone', Emit.enderEmit.fone);
-      INIRec.WriteString('emit', 'email', Emit.enderEmit.Email);
-
-      // Comprador
-
-      INIRec.WriteString('comp', 'xNome', comp.xNome);
-      INIRec.WriteString('comp', 'CNPJCPF', comp.CNPJCPF);
-      INIRec.WriteString('comp', 'idEstrangeiro', comp.idEstrangeiro);
-      INIRec.WriteString('comp', 'IE', comp.IE);
-
-      INIRec.WriteString('comp', 'xLgr', comp.EnderComp.xLgr);
-      INIRec.WriteString('comp', 'nro', comp.EnderComp.nro);
-      INIRec.WriteString('comp', 'xCpl', comp.EnderComp.xCpl);
-      INIRec.WriteString('comp', 'xBairro', comp.EnderComp.xBairro);
-      INIRec.WriteInteger('comp', 'cMun', comp.EnderComp.cMun);
-      INIRec.WriteString('comp', 'xMun', comp.EnderComp.xMun);
-      INIRec.WriteInteger('comp', 'CEP', comp.EnderComp.CEP);
-      INIRec.WriteString('comp', 'UF', comp.EnderComp.UF);
-      INIRec.WriteInteger('comp', 'cPais', comp.EnderComp.cPais);
-      INIRec.WriteString('comp', 'xPais', comp.EnderComp.xPais);
-      INIRec.WriteString('comp', 'fone', comp.EnderComp.fone);
-      INIRec.WriteString('comp', 'email', Comp.EnderComp.email);
-
-      // Agencia
-
-      INIRec.WriteString('agencia', 'xNome', agencia.xNome);
-      INIRec.WriteString('agencia', 'CNPJ', agencia.CNPJ);
-
-      INIRec.WriteString('agencia', 'xLgr', agencia.EnderAgencia.xLgr);
-      INIRec.WriteString('agencia', 'nro', agencia.EnderAgencia.nro);
-      INIRec.WriteString('agencia', 'xCpl', agencia.EnderAgencia.xCpl);
-      INIRec.WriteString('agencia', 'xBairro', agencia.EnderAgencia.xBairro);
-      INIRec.WriteInteger('agencia', 'cMun', agencia.EnderAgencia.cMun);
-      INIRec.WriteString('agencia', 'xMun', agencia.EnderAgencia.xMun);
-      INIRec.WriteInteger('agencia', 'CEP', agencia.EnderAgencia.CEP);
-      INIRec.WriteString('agencia', 'UF', agencia.EnderAgencia.UF);
-      INIRec.WriteInteger('agencia', 'cPais', agencia.EnderAgencia.cPais);
-      INIRec.WriteString('agencia', 'xPais', agencia.EnderAgencia.xPais);
-      INIRec.WriteString('agencia', 'fone', agencia.EnderAgencia.fone);
-      INIRec.WriteString('agencia', 'email', agencia.EnderAgencia.email);
-
-      // Informações dos BP-e de Substituição
-
-      INIRec.WriteString('infBPeSub', 'chBPe', infBPeSub.chBPe);
-      INIRec.WriteString('infBPeSub', 'tpSub', tpSubstituicaoToStr(infBpeSub.tpSub));
-
-      // Informações da Passagem
-
-      INIRec.WriteString('infPassagem', 'cLocOrig', infPassagem.cLocOrig);
-      INIRec.WriteString('infPassagem', 'xLocOrig', infPassagem.xLocOrig);
-      INIRec.WriteString('infPassagem', 'cLocDest', infPassagem.cLocDest);
-      INIRec.WriteString('infPassagem', 'xLocDest', infPassagem.xLocDest);
-      INIRec.WriteString('infPassagem', 'dhEmb', DateTimeToStr(infPassagem.dhEmb));
-      INIRec.WriteString('infPassagem', 'dhValidade', DateTimeToStr(infPassagem.dhValidade));
-
-      // Informações do Passageiro
-
-      if infPassagem.infPassageiro.xNome <> '' then
-      begin
-        INIRec.WriteString('infPassageiro', 'xNome', infPassagem.infPassageiro.xNome);
-        INIRec.WriteString('infPassageiro', 'CPF', infPassagem.infPassageiro.CPF);
-        INIRec.WriteString('infPassageiro', 'tpDoc', tpDocumentoToStr(infPassagem.infPassageiro.tpDoc));
-        INIRec.WriteString('infPassageiro', 'nDoc', infPassagem.infPassageiro.nDoc);
-        INIRec.WriteString('infPassageiro', 'xDoc', infPassagem.infPassageiro.xDoc);
-        INIRec.WriteString('infPassageiro', 'dNasc', DateToStr(infPassagem.infPassageiro.dNasc));
-        INIRec.WriteString('infPassageiro', 'fone', infPassagem.infPassageiro.Fone);
-        INIRec.WriteString('infPassageiro', 'email', infPassagem.infPassageiro.Email);
-      end;
-
-      // Informações da Viagem
-
-      for i := 0 to infViagem.Count - 1 do
-      begin
-        sSecao := 'infViagem' + IntToStrZero(i + 1, 3);
-
-        INIRec.WriteString(sSecao, 'cPercurso', infViagem[i].cPercurso);
-        INIRec.WriteString(sSecao, 'xPercurso', infViagem[i].xPercurso);
-        INIRec.WriteString(sSecao, 'tpViagem', tpViagemToStr(infViagem[i].tpViagem));
-        INIRec.WriteString(sSecao, 'tpServ', tpServicoToStr(infViagem[i].tpServ));
-        INIRec.WriteString(sSecao, 'tpAcomodacao', tpAcomodacaoToStr(infViagem[i].tpAcomodacao));
-        INIRec.WriteString(sSecao, 'tpTrecho', tpTrechoToStr(infViagem[i].tpTrecho));
-        INIRec.WriteString(sSecao, 'dhViagem', DateTimeToStr(infViagem[i].dhViagem));
-        INIRec.WriteString(sSecao, 'dhConexao', DateTimeToStr(infViagem[i].dhConexao));
-        INIRec.WriteString(sSecao, 'prefixo', infViagem[i].Prefixo);
-        INIRec.WriteInteger(sSecao, 'poltrona', infViagem[i].Poltrona);
-        INIRec.WriteString(sSecao, 'plataforma', infViagem[i].Plataforma);
-
-        // Informações da Travessia
-
-        if infViagem[i].infTravessia.tpVeiculo <> tvNenhum then
-        begin
-          INIRec.WriteString(sSecao, 'tpVeiculo', tpVeiculoToStr(infViagem[i].infTravessia.tpVeiculo));
-          INIRec.WriteString(sSecao, 'sitVeiculo', SitVeiculoToStr(infViagem[i].infTravessia.sitVeiculo));
-        end;
-      end;
-
-      // Informações sobre os Valores do BPe
-
-      INIRec.WriteFloat('infValorBPe', 'vBP', infValorBPe.vBP);
-      INIRec.WriteFloat('infValorBPe', 'vDesconto', infValorBPe.vDesconto);
-      INIRec.WriteFloat('infValorBPe', 'vPgto', infValorBPe.vPgto);
-      INIRec.WriteFloat('infValorBPe', 'vTroco', infValorBPe.vTroco);
-      INIRec.WriteString('infValorBPe', 'tpDesconto', tpDescontoToStr(infValorBPe.tpDesconto));
-      INIRec.WriteString('infValorBPe', 'xDesconto', infValorBPe.xDesconto);
-      INIRec.WriteString('infValorBPe', 'cDesconto', infValorBPe.cDesconto);
-
-      // Informações da Viagem
-
-      for i := 0 to infValorBPe.Comp.Count - 1 do
-      begin
-        sSecao := 'Comp' + IntToStrZero(i + 1, 3);
-
-        INIRec.WriteString(sSecao, 'tpComp', tpComponenteToStr(infValorBPe.Comp[i].tpComp));
-        INIRec.WriteFloat(sSecao, 'vComp', infValorBPe.Comp[i].vComp);
-      end;
-
-      // ICMS
-
-      INIRec.WriteString('ICMS', 'CST', CSTICMSTOStr(Imp.ICMS.CST));
-      INIRec.WriteFloat('ICMS', 'vBC', Imp.ICMS.vBC);
-      INIRec.WriteFloat('ICMS', 'pICMS', Imp.ICMS.pICMS);
-      INIRec.WriteFloat('ICMS', 'vICMS', Imp.ICMS.vICMS);
-      INIRec.WriteFloat('ICMS', 'pRedBC', Imp.ICMS.pRedBC);
-      INIRec.WriteFloat('ICMS', 'vCred', Imp.ICMS.vCred);
-      INIRec.WriteFloat('ICMS', 'vICMSDeson', Imp.ICMS.vICMSDeson);
-      INIRec.WriteString('ICMS', 'cBenef', Imp.ICMS.cBenef);
-      INIRec.WriteFloat('ICMS', 'vTotTrib', Imp.vTotTrib);
-      INIRec.WriteString('ICMS', 'infAdFisco', Imp.infAdFisco);
-
-      // ICMSUFFim
-
-      INIRec.WriteFloat('ICMSUFFim', 'vBCUFFim', Imp.ICMSUFFim.vBCUFFim);
-      INIRec.WriteFloat('ICMSUFFim', 'pFCPUFFim', Imp.ICMSUFFim.pFCPUFFim);
-      INIRec.WriteFloat('ICMSUFFim', 'pICMSUFFim', Imp.ICMSUFFim.pICMSUFFim);
-      INIRec.WriteFloat('ICMSUFFim', 'pICMSInter', Imp.ICMSUFFim.pICMSInter);
-      INIRec.WriteFloat('ICMSUFFim', 'pICMSInterPart', Imp.ICMSUFFim.pICMSInterPart);
-      INIRec.WriteFloat('ICMSUFFim', 'vFCPUFFim', Imp.ICMSUFFim.vFCPUFFim);
-      INIRec.WriteFloat('ICMSUFFim', 'vICMSUFFim', Imp.ICMSUFFim.vICMSUFFim);
-      INIRec.WriteFloat('ICMSUFFim', 'vICMSUFIni', Imp.ICMSUFFim.vICMSUFIni);
-
-      // Pagamento
-
-      for i := 0 to pag.Count - 1 do
-      begin
-        sSecao := 'pag' + IntToStrZero(i + 1, 2);
-
-        INIRec.WriteString(sSecao, 'tPag', FormaPagamentoBPeToStr(pag[I].tPag));
-        INIRec.WriteString(sSecao, 'xPag', pag[I].xPag);
-        INIRec.WriteString(sSecao, 'nDocPag', pag[I].nDocPag);
-        INIRec.WriteFloat(sSecao, 'vPag', pag[I].vPag);
-        INIRec.WriteString(sSecao, 'tpIntegra', tpIntegraToStr(pag[I].tpIntegra));
-        INIRec.WriteString(sSecao, 'CNPJ', pag[I].CNPJ);
-        INIRec.WriteString(sSecao, 'tBand', BandeiraCardToStr(pag[I].tBand));
-        INIRec.WriteString(sSecao, 'xBand', pag[I].xBand);
-        INIRec.WriteString(sSecao, 'cAut', pag[I].cAut);
-        INIRec.WriteString(sSecao, 'nsuTrans', pag[I].nsuTrans);
-        INIRec.WriteString(sSecao, 'nsuHost', pag[I].nsuHost);
-        INIRec.WriteInteger(sSecao, 'nParcelas', pag[I].nParcelas);
-        INIRec.WriteString(sSecao, 'infAdCard', pag[I].infAdCard);
-      end;
-
-      // Autorizados a baixar o XML
-
-      for i := 0 to autXML.Count - 1 do
-      begin
-        sSecao := 'autXML' + IntToStrZero(i + 1, 2);
-
-        INIRec.WriteString(sSecao, 'CNPJCPF', autXML.Items[i].CNPJCPF);
-      end;
-
-      // Informações Adicionais
-
-      INIRec.WriteString('infAdic', 'infAdFisco', InfAdic.infAdFisco);
-      INIRec.WriteString('infAdic', 'infCpl', InfAdic.infCpl);
-
-      // Informações do Responsável Técnico
-
-      INIRec.WriteString('infRespTec', 'CNPJ', infRespTec.CNPJ);
-      INIRec.WriteString('infRespTec', 'xContato', infRespTec.xContato);
-      INIRec.WriteString('infRespTec', 'email', infRespTec.email);
-      INIRec.WriteString('infRespTec', 'fone', infRespTec.fone);
-    end;
-
-    IniBPe := TStringList.Create;
-    try
-      INIRec.GetStrings(IniBPe);
-      Result := StringReplace(IniBPe.Text, sLineBreak + sLineBreak, sLineBreak, [rfReplaceAll]);
-    finally
-      IniBPe.Free;
-    end;
-  finally
-    INIRec.Free;
-  end;
+  Result := FBPeIniW.GravarIni;
 end;
 
 function TBilhete.CalcularNomeArquivo: String;
@@ -973,312 +739,16 @@ begin
 end;
 
 function TBilhete.LerArqIni(const AIniString: String): Boolean;
-var
-  INIRec: TMemIniFile;
-  sSecao, sFim: String;
-  OK: Boolean;
-  I: Integer;
-  ItemPag: TpagCollectionItem;
-  IteminfViagem: TInfViagemCollectionItem;
-  ItemComp: TCompCollectionItem;
 begin
+  FBPeIniR.VersaoDF := FConfiguracoes.Geral.VersaoDF;
+  FBPeIniR.Ambiente := Integer(FConfiguracoes.WebServices.Ambiente);
+  FBPeIniR.tpEmis := FConfiguracoes.Geral.FormaEmissaoCodigo;
+
+  FBPeIniR.LerIni(AIniString);
+
+  GerarXML;
+
   Result := True;
-
-  INIRec := TMemIniFile.Create('');
-  try
-    LerIniArquivoOuString(AIniString, INIRec);
-
-    with FBPe do
-    begin
-      infBPe.versao := StringToFloatDef(INIRec.ReadString('infBPe', 'versao', VersaoBPeToStr(FConfiguracoes.Geral.VersaoDF)),0);
-
-      Ide.tpAmb   := StrToTipoAmbiente(OK, INIRec.ReadString(sSecao, 'tpAmb', IntToStr(Integer(FConfiguracoes.WebServices.Ambiente))));
-      Ide.modelo  := INIRec.ReadInteger('ide', 'mod', 63);
-      Ide.serie   := INIRec.ReadInteger('ide', 'serie', 1);
-      Ide.nBP     := INIRec.ReadInteger('ide', 'nBP', 0);
-      Ide.cBP     := INIRec.ReadInteger('ide', 'cBP', 0);
-      Ide.modal   := StrToModalBPe(OK, INIRec.ReadString('ide', 'modal', '1'));
-      Ide.dhEmi   := StringToDateTime(INIRec.ReadString('ide', 'dhEmi', '0'));
-      Ide.tpEmis  := StrToTipoEmissao(OK, INIRec.ReadString(sSecao, 'tpEmis', IntToStr(FConfiguracoes.Geral.FormaEmissaoCodigo)));
-      Ide.verProc := INIRec.ReadString('ide', 'verProc', 'ACBrBPe');
-      Ide.tpBPe   := StrTotpBPe(OK, INIRec.ReadString('ide', 'tpBPe', '0'));
-      Ide.indPres := StrToPresencaComprador(OK, INIRec.ReadString('ide', 'indPres', '1'));
-      Ide.UFIni   := INIRec.ReadString('ide', 'UFIni', '');
-      Ide.cMunIni := INIRec.ReadInteger('ide', 'cMunIni', 0);
-      Ide.UFFim   := INIRec.ReadString('ide', 'UFFim', '');
-      Ide.cMunFim := INIRec.ReadInteger('ide', 'cMunFim', 0);
-      Ide.dhCont  := StringToDateTime(INIRec.ReadString('ide', 'dhCont', '0'));
-      Ide.xJust   := INIRec.ReadString('ide', 'xJust', '');
-
-      //
-      // Seção [emit] Emitente do BP-e
-      //
-      Emit.CNPJ  := INIRec.ReadString('emit', 'CNPJ', '');
-      Emit.IE    := INIRec.ReadString('emit', 'IE', '');
-      Emit.IEST  := INIRec.ReadString('emit', 'IEST', '');
-      Emit.xNome := INIRec.ReadString('emit', 'xNome', '');
-      Emit.xFant := INIRec.ReadString('emit', 'xFant', '');
-      Emit.IM    := INIRec.ReadString('emit', 'IM', '');
-      Emit.CNAE  := INIRec.ReadString('emit', 'CNAE', '');
-      Emit.CRT   := StrToCRT(OK, INIRec.ReadString('emit', 'CRT', '3'));
-      Emit.TAR   := INIRec.ReadString('emit', 'TAR', '');
-
-      Emit.enderEmit.xLgr    := INIRec.ReadString('emit', 'xLgr', '');
-      Emit.enderEmit.nro     := INIRec.ReadString('emit', 'nro', '');
-      Emit.enderEmit.xCpl    := INIRec.ReadString('emit', 'xCpl', '');
-      Emit.enderEmit.xBairro := INIRec.ReadString('emit', 'xBairro', '');
-      Emit.enderEmit.cMun    := INIRec.ReadInteger('emit', 'cMun', 0);
-      Emit.enderEmit.xMun    := INIRec.ReadString('emit', 'xMun', '');
-      Emit.enderEmit.CEP     := INIRec.ReadInteger('emit', 'CEP', 0);
-      Emit.enderEmit.UF      := INIRec.ReadString('emit', 'UF', '');
-      Emit.enderEmit.fone    := INIRec.ReadString('emit', 'fone', '');
-      Emit.enderEmit.Email   := INIRec.ReadString('emit', 'Email', '');
-
-      ide.cUF := INIRec.ReadInteger('ide', 'cUF', UFparaCodigoUF(Emit.enderEmit.UF));
-
-      //
-      // Seção [comp] Comprador
-      //
-      Comp.xNome         := INIRec.ReadString('comp', 'xNome', '');
-      Comp.CNPJCPF       := INIRec.ReadString('comp', 'CNPJCPF', '');
-      Comp.idEstrangeiro := INIRec.ReadString('comp', 'idEstrangeiro', '');
-      Comp.IE            := INIRec.ReadString('comp', 'IE', '');
-
-      Comp.enderComp.xLgr    := INIRec.ReadString('comp', 'xLgr', '');
-      Comp.enderComp.nro     := INIRec.ReadString('comp', 'nro', '');
-      Comp.enderComp.xCpl    := INIRec.ReadString('comp', 'xCpl', '');
-      Comp.enderComp.xBairro := INIRec.ReadString('comp', 'xBairro', '');
-      Comp.enderComp.cMun    := INIRec.ReadInteger('comp', 'cMun', 0);
-      Comp.enderComp.xMun    := INIRec.ReadString('comp', 'xMun', '');
-      Comp.enderComp.CEP     := INIRec.ReadInteger('comp', 'CEP', 0);
-      Comp.enderComp.UF      := INIRec.ReadString('comp', 'UF', '');
-      Comp.EnderComp.cPais   := INIRec.ReadInteger('comp', 'cPais', 0);
-      Comp.EnderComp.xPais   := INIRec.ReadString('comp', 'xPais', '');
-      Comp.enderComp.fone    := INIRec.ReadString('comp', 'fone', '');
-      Comp.enderComp.Email   := INIRec.ReadString('comp', 'Email', '');
-
-      //
-      // Seção [Agencia] Agência que comercializou o BP-e
-      //
-      Agencia.xNome := INIRec.ReadString('Agencia', 'xNome', '');
-      Agencia.CNPJ  := INIRec.ReadString('Agencia', 'CNPJ', '');
-
-      Agencia.enderAgencia.xLgr    := INIRec.ReadString('Agencia', 'xLgr', '');
-      Agencia.enderAgencia.nro     := INIRec.ReadString('Agencia', 'nro', '');
-      Agencia.enderAgencia.xCpl    := INIRec.ReadString('Agencia', 'xCpl', '');
-      Agencia.enderAgencia.xBairro := INIRec.ReadString('Agencia', 'xBairro', '');
-      Agencia.enderAgencia.cMun    := INIRec.ReadInteger('Agencia', 'cMun', 0);
-      Agencia.enderAgencia.xMun    := INIRec.ReadString('Agencia', 'xMun', '');
-      Agencia.enderAgencia.CEP     := INIRec.ReadInteger('Agencia', 'CEP', 0);
-      Agencia.enderAgencia.UF      := INIRec.ReadString('Agencia', 'UF', '');
-      Agencia.enderAgencia.cPais   := INIRec.ReadInteger('Agencia', 'cPais', 0);
-      Agencia.enderAgencia.xPais   := INIRec.ReadString('Agencia', 'xPais', '');
-      Agencia.enderAgencia.fone    := INIRec.ReadString('Agencia', 'fone', '');
-      Agencia.enderAgencia.Email   := INIRec.ReadString('Agencia', 'Email', '');
-
-      //
-      // Seção [infBPeSub] Informações do BP-e Substituido
-      //
-      if INIRec.ReadString('infBPeSub', 'chBPe', '') <> '' then
-      begin
-        infBPeSub.chBPe := INIRec.ReadString('infBPeSub', 'chBPe', '');
-        infBPeSub.tpSub := StrTotpSubstituicao(OK, INIRec.ReadString('infBPeSub', 'tpSub', '1'));
-      end;
-
-      //
-      // Seção [infPassagem] Informações da Passagem
-      //
-      infPassagem.cLocOrig   := INIRec.ReadString('infPassagem', 'cLocOrig', '');
-      infPassagem.xLocOrig   := INIRec.ReadString('infPassagem', 'xLocOrig', '');
-      infPassagem.cLocDest   := INIRec.ReadString('infPassagem', 'cLocDest', '');
-      infPassagem.xLocDest   := INIRec.ReadString('infPassagem', 'xLocDest', '');
-      infPassagem.dhEmb      := StringToDateTime(INIRec.ReadString('infPassagem', 'dhEmb', '0'));
-      infPassagem.dhValidade := StringToDateTime(INIRec.ReadString('infPassagem', 'dhValidade', '0'));
-
-      //
-      // Seção [infPassageiro] Informações do Passageiro
-      //
-      infPassagem.infPassageiro.xNome := INIRec.ReadString('infPassageiro', 'xNome', '');
-      infPassagem.infPassageiro.CPF   := INIRec.ReadString('infPassageiro', 'CPF', '');
-      infPassagem.infPassageiro.tpDoc := StrTotpDocumento(OK, INIRec.ReadString('infPassageiro', 'tpDoc', '1'));
-      infPassagem.infPassageiro.nDoc  := INIRec.ReadString('infPassageiro', 'nDoc', '');
-      infPassagem.infPassageiro.xDoc  := INIRec.ReadString('infPassageiro', 'xDoc', '');
-      infPassagem.infPassageiro.dNasc := StringToDateTime(INIRec.ReadString('infPassageiro', 'dNasc', '0'));
-      infPassagem.infPassageiro.fone  := INIRec.ReadString('infPassageiro', 'fone', '');
-      infPassagem.infPassageiro.Email := INIRec.ReadString('infPassageiro', 'Email', '');
-
-      //
-      // Seção [infViagemxxx] Informações da Viagem
-      //
-      I := 1;
-      while true do
-      begin
-        sSecao := 'infViagem' + IntToStrZero(I, 3);
-        sFim   := INIRec.ReadString(sSecao, 'cPercurso', 'FIM');
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        IteminfViagem := infViagem.New;
-
-        IteminfViagem.cPercurso    := sFim;
-        IteminfViagem.xPercurso    := INIRec.ReadString(sSecao, 'xPercurso', '');
-        IteminfViagem.tpViagem     := StrTotpViagem(OK, INIRec.ReadString(sSecao, 'tpViagem', '00'));
-        IteminfViagem.tpServ       := StrTotpServico(OK, INIRec.ReadString(sSecao, 'tpServ', '1'));
-        IteminfViagem.tpAcomodacao := StrTotpAcomodacao(OK, INIRec.ReadString(sSecao, 'tpAcomodacao', '1'));
-        IteminfViagem.tpTrecho     := StrTotpTrecho(OK, INIRec.ReadString(sSecao, 'tpTrecho', '1'));
-        IteminfViagem.dhViagem     := StringToDateTime(INIRec.ReadString(sSecao, 'dhViagem', '0'));
-        IteminfViagem.dhConexao    := StringToDateTime(INIRec.ReadString(sSecao, 'dhConexao', '0'));
-        IteminfViagem.Prefixo      := INIRec.ReadString(sSecao, 'Prefixo', '');
-        IteminfViagem.Poltrona     := INIRec.ReadInteger(sSecao, 'Poltrona', 0);
-        IteminfViagem.Plataforma   := INIRec.ReadString(sSecao, 'Plataforma', '');
-
-        //
-        // Informações da Travessia
-        //
-        if INIRec.ReadString(sSecao, 'tpVeiculo', '') <> '' then
-        begin
-          IteminfViagem.infTravessia.tpVeiculo  := StrTotpVeiculo(OK, INIRec.ReadString(sSecao, 'tpVeiculo', '01'));
-          IteminfViagem.infTravessia.sitVeiculo := StrToSitVeiculo(OK, INIRec.ReadString(sSecao, 'sitVeiculo', '01'));
-        end;
-
-        Inc(I);
-      end;
-
-      //
-      // Seção [infValorBPe] Informações dos Valores do BP-e
-      //
-      infValorBPe.vBP        := StringToFloatDef(INIRec.ReadString('infValorBPe', 'vBP', ''), 0);
-      infValorBPe.vDesconto  := StringToFloatDef(INIRec.ReadString('infValorBPe', 'vDesconto', ''), 0);
-      infValorBPe.vPgto      := StringToFloatDef(INIRec.ReadString('infValorBPe', 'vPgto', ''), 0);
-      infValorBPe.vTroco     := StringToFloatDef(INIRec.ReadString('infValorBPe', 'vTroco', ''), 0);
-      infValorBPe.tpDesconto := StrTotpDesconto(OK, INIRec.ReadString('infValorBPe', 'tpDesconto', '01'));
-      infValorBPe.xDesconto  := INIRec.ReadString('infValorBPe', 'xDesconto', '');
-      infValorBPe.cDesconto  := INIRec.ReadString('infValorBPe', 'cDesconto', '');
-
-      //
-      // Seção [Compxxx] Componentes do Valor do BPe
-      //
-      I := 1;
-      while true do
-      begin
-        sSecao := 'Comp' + IntToStrZero(I, 3);
-        sFim   := INIRec.ReadString(sSecao, 'tpComp', 'FIM');
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        ItemComp := infValorBPe.Comp.New;
-        ItemComp.tpComp := StrTotpComponente(OK, sFim);
-        ItemComp.vComp  := StringToFloatDef(INIRec.ReadString(sSecao, 'vComp', ''), 0);
-
-        Inc(I);
-      end;
-
-      //
-      // Seção [ICMS] Informacoes relativas aos Impostos
-      //
-      sSecao := 'ICMS';
-      sFim   := INIRec.ReadString(sSecao, 'CST', 'FIM');
-
-      if (sFim <> 'FIM') then
-      begin
-        Imp.ICMS.CST    := StrToCSTICMS(OK, sFim);
-        Imp.ICMS.pRedBC := StringToFloatDef(INIRec.ReadString(sSecao, 'pRedBC', ''), 0);
-        Imp.ICMS.vBC    := StringToFloatDef(INIRec.ReadString(sSecao, 'vBC', ''), 0);
-        Imp.ICMS.pICMS  := StringToFloatDef(INIRec.ReadString(sSecao, 'pICMS', ''), 0);
-        Imp.ICMS.vICMS  := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMS', ''), 0);
-        Imp.ICMS.vCred  := StringToFloatDef(INIRec.ReadString(sSecao, 'vCred', ''), 0);
-
-        Imp.ICMS.pRedBCOutraUF := StringToFloatDef(INIRec.ReadString(sSecao, 'pRedBCOutraUF', ''), 0);
-        Imp.ICMS.vBCOutraUF    := StringToFloatDef(INIRec.ReadString(sSecao, 'vBCOutraUF', ''), 0);
-        Imp.ICMS.pICMSOutraUF  := StringToFloatDef(INIRec.ReadString(sSecao, 'pICMSOutraUF', ''), 0);
-        Imp.ICMS.vICMSOutraUF  := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMSOutraUF', ''), 0);
-
-        Imp.ICMS.vICMSDeson := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMSDeson', ''), 0);
-        Imp.ICMS.cBenef     := INIRec.ReadString(sSecao, 'cBenef', '');
-
-        Imp.vTotTrib   := StringToFloatDef(INIRec.ReadString(sSecao, 'vTotTrib', ''), 0);
-        Imp.infAdFisco := INIRec.ReadString(sSecao, 'infAdFisco', '');
-      end;
-
-      if StringToFloatDef(INIRec.ReadString('ICMSUFFim', 'pICMSInterPart', ''), 0) <> 0 then
-      begin
-        Imp.ICMSUFFim.vBCUFFim       := StringToFloatDef(INIRec.ReadString('ICMSUFFim', 'vBCUFFim', ''), 0);
-        Imp.ICMSUFFim.pFCPUFFim      := StringToFloatDef(INIRec.ReadString('ICMSUFFim', 'pFCPUFFim', ''), 0);
-        Imp.ICMSUFFim.pICMSUFFim     := StringToFloatDef(INIRec.ReadString('ICMSUFFim', 'pICMSUFFim', ''), 0);
-        Imp.ICMSUFFim.pICMSInter     := StringToFloatDef(INIRec.ReadString('ICMSUFFim', 'pICMSInter', ''), 0);
-        Imp.ICMSUFFim.pICMSInterPart := StringToFloatDef(INIRec.ReadString('ICMSUFFim', 'pICMSInterPart', ''), 0);
-        Imp.ICMSUFFim.vFCPUFFim      := StringToFloatDef(INIRec.ReadString('ICMSUFFim', 'vFCPUFFim', ''), 0);
-        Imp.ICMSUFFim.vICMSUFFim     := StringToFloatDef(INIRec.ReadString('ICMSUFFim', 'vICMSUFFim', ''), 0);
-        Imp.ICMSUFFim.vICMSUFIni     := StringToFloatDef(INIRec.ReadString('ICMSUFFim', 'vICMSUFIni', ''), 0);
-      end;
-
-      //
-      // Seção [Pagxx] Dados do Pagamento 01-10
-      //
-      I := 1 ;
-      while true do
-      begin
-        sSecao := 'pag'+IntToStrZero(I,2) ;
-        sFim   := INIRec.ReadString(sSecao, 'tpag', 'FIM');
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break ;
-
-        ItemPag := Pag.New;
-
-        ItemPag.tPag    := StrToFormaPagamentoBPe(OK, sFim);
-        ItemPag.xPag    := INIRec.ReadString(sSecao, 'xPag', '');
-        ItemPag.nDocPag := INIRec.ReadString(sSecao, 'nDocPag', '');
-        ItemPag.vPag    := StringToFloatDef(INIRec.ReadString(sSecao, 'vPag', ''), 0);
-
-        ItemPag.tpIntegra := StrTotpIntegra(Ok, INIRec.ReadString(sSecao, 'tpIntegra', ''));
-        ItemPag.CNPJ      := INIRec.ReadString(sSecao, 'CNPJ', '');
-        ItemPag.tBand     := StrToBandeiraCard(OK, INIRec.ReadString(sSecao, 'tBand', '99'));
-        ItemPag.xBand     := INIRec.ReadString(sSecao, 'xBand', '');
-        ItemPag.cAut      := INIRec.ReadString(sSecao, 'cAut', '');
-        ItemPag.nsuTrans  := INIRec.ReadString(sSecao, 'nsuTrans', '');
-        ItemPag.nsuHost   := INIRec.ReadString(sSecao, 'nsuHost', '');
-        ItemPag.nParcelas := INIRec.ReadInteger(sSecao, 'nParcelas', 1);
-        ItemPag.infAdCard := INIRec.ReadString(sSecao, 'infAdCard', '');
-
-        Inc(I);
-      end;
-
-      //
-      // Seção [auxXMLxx] Autorizados para Download do XML do BPe 01-10
-      //
-      I := 1 ;
-      while true do
-      begin
-        sSecao := 'autXML' + IntToStrZero(I,2) ;
-        sFim   := OnlyNumber(INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM'));
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break ;
-
-        autXML.New.CNPJCPF := sFim;
-
-        Inc(I);
-      end;
-
-      //
-      // Seção [infAdic] Informações Adicionais
-      //
-      InfAdic.infAdFisco := INIRec.ReadString('infAdic','infAdFisco', '');
-      InfAdic.infCpl     := INIRec.ReadString('infAdic','infCpl', '');
-
-      sSecao := 'infRespTec';
-      if INIRec.SectionExists(sSecao) then
-      begin
-        infRespTec.CNPJ     := INIRec.ReadString(sSecao, 'CNPJ', '');
-        infRespTec.xContato := INIRec.ReadString(sSecao, 'xContato', '');
-        infRespTec.email    := INIRec.ReadString(sSecao, 'email', '');
-        infRespTec.fone     := INIRec.ReadString(sSecao, 'fone', '');
-      end;
-    end;
-
-    GerarXML;
-  finally
-     INIRec.Free;
-  end;
 end;
 
 { TBilhetes }
@@ -1526,8 +996,8 @@ begin
     end
     else
     begin
-      ABPeXML := copy(XMLStr, 1, N + 6);
-      XMLStr := Trim(copy(XMLStr, N + 6, length(XMLStr)));
+      ABPeXML := copy(XMLStr, 1, N + 7);
+      XMLStr := Trim(copy(XMLStr, N + 7, length(XMLStr)));
     end;
 
     with Self.Add do

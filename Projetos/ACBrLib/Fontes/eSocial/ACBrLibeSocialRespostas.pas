@@ -40,7 +40,7 @@ interface
 
 uses
   Classes, SysUtils, contnrs, ACBrLibResposta, ACBrLibConfig, ACBrLibeSocialConsts, ACBreSocial,
-  pcnAuxiliar, pcesConversaoeSocial;
+  pcnAuxiliar, pcesConversaoeSocial, pcesRetornoClass;
 
 type
 
@@ -311,18 +311,29 @@ type
     FIdEvento : String;
     FNRecibo : String;
     FXML : String;
+    FcdResposta: Integer;
+    FdescResposta: String;
+    FcdRespostaProcessamento: Integer;
+    FdescRespostaProcessamento: String;
+    FOcorrenciasProcessamento: TObjectList;
 
   public
     constructor Create(const ItemID: Integer; const ATipo: TACBrLibRespostaTipo;
       const AFormato: TACBrLibCodificacao); reintroduce;
 
     procedure Processar(const ACBreSocial: TACBreSocial; const ACont: Integer );
+    destructor Destroy; override;
+
 
   published
     property IdEvento: String read FIdEvento write FIdEvento;
     property NRecibo: String read FNRecibo write FNRecibo;
     property XML: String read FXML write FXML;
-
+    property cdResposta: Integer read FcdResposta write FcdResposta;
+    property descResposta: String read FdescResposta write FdescResposta;
+    property cdRespostaProcessamento: Integer read FcdRespostaProcessamento write FcdRespostaProcessamento;
+    property descRespostaProcessamento: String read FdescRespostaProcessamento write FdescRespostaProcessamento;
+    property OcorrenciasProcessamento: TObjectList read FOcorrenciasProcessamento;
   end;
 
   { TConsultaEventos}
@@ -330,7 +341,10 @@ type
   TConsultaEventos = class(TPadraoeSocialResposta)
   private
     FPathNome: String;
-    FItem: TObjectList;
+    FcdResposta: Integer;
+    FdescResposta: String;
+    FArquivos: TObjectList;
+    FOcorrencias: TObjectList;
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
@@ -340,8 +354,32 @@ type
 
   published
     property PathNome: String read FPathNome write FPathNome;
-    property Item: TObjectList read FItem;
+    property cdResposta: Integer read FcdResposta write FcdResposta;
+    property descResposta: String read FdescResposta write FdescResposta;
+    property Arquivos: TObjectList read FArquivos;
+    property Ocorrencias: TObjectList read FOcorrencias;
 
+  end;
+
+  { TOcorrenciaeSocial }
+
+  TOcorrenciaeSocial = class(TACBrLibRespostaBase)
+  private
+    FCodigo: Integer;
+    FDescricao: String;
+    FTipo: Byte;
+    FLocalizacao: String;
+  public
+    constructor Create(const AItemID: Integer; const ATipo: TACBrLibRespostaTipo;
+      const AFormato: TACBrLibCodificacao); reintroduce; overload;
+
+    procedure Processar(const Ocorrencia: TOcorrenciasCollectionItem); overload;
+    procedure Processar(const Ocorrencia: TOcorrenciasProcCollectionItem); overload;
+  published
+    property Codigo: Integer read FCodigo write FCodigo;
+    property Descricao: String read FDescricao write FDescricao;
+    property Tipo: Byte read FTipo write FTipo;
+    property Localizacao: String read FLocalizacao write FLocalizacao;
   end;
 
 implementation
@@ -355,31 +393,43 @@ constructor TConsultaEventos.Create(const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespConsulta, ATipo, AFormato);
-  FItem := TObjectList.Create(true);
+  FArquivos := TObjectList.Create(true);
+  FOcorrencias := TObjectList.Create(true);
 end;
 
 procedure TConsultaEventos.Processar(const ACBreSocial: TACBreSocial);
 var
   i: Integer;
-  Item : TConsultaIdentEvento;
+  Arquivo : TConsultaIdentEvento;
+  Ocorrencia: TOcorrenciaeSocial;
 begin
   PathNome := ACBreSocial.WebServices.DownloadEventos.PathNome;
+  cdResposta := ACBreSocial.WebServices.DownloadEventos.RetDownloadEvt.Status.cdResposta;
+  descResposta := ACBreSocial.WebServices.DownloadEventos.RetDownloadEvt.Status.descResposta;
 
-  for i := 0 to ACBreSocial.WebServices.ConsultaLote.RetConsultaLote.Status.Ocorrencias.Count - 1 do
+  for i := 0 to Pred(ACBreSocial.WebServices.DownloadEventos.RetDownloadEvt.Status.Ocorrencias.Count) do
   begin
-    Item := TConsultaIdentEvento.Create(i+1, Tipo, Codificacao);
-    Item.Processar(ACBreSocial, i);
-    FItem.Add(Item);
+    Ocorrencia := TOcorrenciaeSocial.Create(i+1, Tipo, Codificacao);
+    Ocorrencia.Processar(ACBreSocial.WebServices.DownloadEventos.RetDownloadEvt.Status.Ocorrencias.Items[i]);
+    Ocorrencias.Add(Ocorrencia);
+  end;
 
+  for i := 0 to Pred(ACBreSocial.WebServices.DownloadEventos.RetDownloadEvt.Arquivo.Count) do
+  begin
+    Arquivo := TConsultaIdentEvento.Create(i+1, Tipo, Codificacao);
+    Arquivo.Processar(ACBreSocial, i);
+    Arquivos.Add(Arquivo);
   end;
 
 end;
 
 destructor TConsultaEventos.Destroy;
 begin
-  FItem.Clear;
-  FItem.Destroy;
+  FArquivos.Clear;
+  FArquivos.Destroy;
 
+  FOcorrencias.Clear;
+  FOcorrencias.Destroy;
   inherited Destroy;
 end;
 
@@ -510,25 +560,72 @@ begin
 
 end;
 
+{ TOcorrenciaeSocial }
+
+constructor TOcorrenciaeSocial.Create(const AItemID: Integer;
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespOcorrencia + IntToStrZero(AItemID, 2), ATipo, AFormato);
+end;
+
+procedure TOcorrenciaeSocial.Processar(const Ocorrencia: TOcorrenciasCollectionItem);
+begin
+  Tipo := Ocorrencia.Tipo;
+  Codigo := Ocorrencia.Codigo;
+  Descricao := Ocorrencia.Descricao;
+  Localizacao := Ocorrencia.Localizacao;
+end;
+
+procedure TOcorrenciaeSocial.Processar(const Ocorrencia: TOcorrenciasProcCollectionItem);
+begin
+  Tipo := Ocorrencia.Tipo;
+  Codigo := Ocorrencia.Codigo;
+  Descricao := Ocorrencia.Descricao;
+  Localizacao := Ocorrencia.Localizacao;
+end;
+
 { TConsultaIdentEvento }
 
 constructor TConsultaIdentEvento.Create(const ItemID: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
-  inherited Create(CSessaoRespConsulta + IntToStrZero(ItemID,1), ATipo, AFormato);
+  inherited Create(CSessaoRespConsultaIdentEventos + IntToStrZero(ItemID,2), ATipo, AFormato);
+
+  FOcorrenciasProcessamento := TObjectList.Create(true);
 end;
 
 procedure TConsultaIdentEvento.Processar(const ACBreSocial: TACBreSocial;
   const ACont: Integer);
+var
+  Ocorrencia: TOcorrenciaeSocial;
+  i: Integer;
+  LTituloSessao: String;
 begin
   with ACBreSocial.WebServices.DownloadEventos.RetDownloadEvt do
   begin
     IdEvento := Arquivo.Items[ACont].Id;
     NRecibo := Arquivo.Items[ACont].nrRec;
     XML := Arquivo.Items[ACont].XML;
+    cdResposta := Arquivo.Items[ACont].Status.cdResposta;
+    descResposta := Arquivo.Items[ACont].Status.descResposta;
+    cdRespostaProcessamento :=  Arquivo.Items[ACont].Processamento.cdResposta;
+    descRespostaProcessamento := Arquivo.Items[ACont].Processamento.descResposta;
 
+    for i := 0 to Pred(Arquivo.Items[ACont].Processamento.Ocorrencias.Count) do
+    begin
+      LTituloSessao := CSessaoRespOcorrenciaProcessamento + '_' + IdEvento + '_' + IntToStrZero(i+1,2);
+      Ocorrencia := TOcorrenciaeSocial.Create(LTituloSessao, Tipo, Codificacao);
+      Ocorrencia.Processar(ACBreSocial.WebServices.DownloadEventos.RetDownloadEvt.Arquivo.Items[ACont].Processamento.Ocorrencias.Items[i]);
+      FOcorrenciasProcessamento.Add(Ocorrencia);
+    end;
   end;
+end;
 
+destructor TConsultaIdentEvento.Destroy;
+begin
+  FOcorrenciasProcessamento.Clear;
+  FOcorrenciasProcessamento.Destroy;
+  inherited Destroy;
 end;
 
 { TConsultaTotEventos }

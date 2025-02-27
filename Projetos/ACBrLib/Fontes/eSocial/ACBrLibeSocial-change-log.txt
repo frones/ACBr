@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2025
+-- ACBRLibeSocialConsts, ACBrLibeSocialRespostas --
+[*] TK-6455: Ajustes visando melhorar a resposta do comando DownloadEventos.
+   Por: Diego Folieni
+
 07/02/2025
 -- ACBrLibeSocialConsoleMT.lpi, ACBrLibeSocialConsoleMTDemo.lpi --
 [+] Adicionado novo Projeto, 100% CONSOLE e MT versão Pro e Demonstração.

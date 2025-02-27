@@ -46,6 +46,7 @@ const
   CSessaoRespEnvio = 'Envio';
   CSessaoRespConsulta = 'Consulta';
   CSessaoRespOcorrencia = 'Ocorrencia';
+  CSessaoRespOcorrenciaProcessamento = 'OcorrenciaProcessamento';
   CSessaoRespConsultaTot = 'Tot';
   CSessaoRespConsultaIdentEventos = 'ConsultaIdentEventos';
   CSessaoRespConsultaIdentEventosRecibo = 'ConsultaIdentEventoRecibo';

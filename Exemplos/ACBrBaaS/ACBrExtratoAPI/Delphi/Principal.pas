@@ -97,6 +97,19 @@ type
     tsConfigBB: TTabSheet;
     tsConsulta: TTabSheet;
     tsConfig: TTabSheet;
+    tsConfigSicoob: TTabSheet;
+    gbConfigSicoob: TGroupBox;
+    pnConfigSicoob: TPanel;
+    lbSicoobClientID: TLabel;
+    Label3: TLabel;
+    lbSicoobErroChavePrivada: TLabel;
+    btSicoobAcharChavePrivada: TSpeedButton;
+    btSicoobAcharCertificado: TSpeedButton;
+    Label7: TLabel;
+    lbSicoobErroCertificado: TLabel;
+    edSicoobClientID: TEdit;
+    edSicoobChavePrivada: TEdit;
+    edSicoobCertificado: TEdit;
     procedure btBBAcharCertificadoClick(Sender: TObject);
     procedure btBBAcharChavePrivadaClick(Sender: TObject);
     procedure btConfigLogArquivoClick(Sender: TObject);
@@ -115,6 +128,11 @@ type
     procedure edInterCertificadoExit(Sender: TObject);
     procedure edInterChavePrivadaExit(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure edSicoobArqsChange(Sender: TObject);
+    procedure btSicoobAcharChavePrivadaClick(Sender: TObject);
+    procedure btSicoobAcharCertificadoClick(Sender: TObject);
+    procedure edSicoobChavePrivadaExit(Sender: TObject);
+    procedure edSicoobCertificadoExit(Sender: TObject);
   private
     procedure LerConfiguracao;
     procedure GravarConfiguracao;
@@ -267,6 +285,22 @@ begin
   lbInterErroChavePrivada.Caption := ValidarChavePrivada(edInterChavePrivada.Text);
 end;
 
+procedure TfrPrincipal.edSicoobArqsChange(Sender: TObject);
+begin
+  lbSicoobErroChavePrivada.Caption := EmptyStr;
+  lbSicoobErroCertificado.Caption := EmptyStr;
+end;
+
+procedure TfrPrincipal.edSicoobCertificadoExit(Sender: TObject);
+begin
+  lbSicoobErroCertificado.Caption := ValidarCertificado(edSicoobCertificado.Text);
+end;
+
+procedure TfrPrincipal.edSicoobChavePrivadaExit(Sender: TObject);
+begin
+  lbSicoobErroChavePrivada.Caption := ValidarChavePrivada(edSicoobChavePrivada.Text);
+end;
+
 procedure TfrPrincipal.FormCreate(Sender: TObject);
 var
   i: TACBrExtratoAPIBancoConsulta;
@@ -316,6 +350,10 @@ begin
     edInterClientSecret.Text := wIni.ReadString('Inter', 'ClientSecret', EmptyStr);
     edInterCertificado.Text := wIni.ReadString('Inter', 'Certificado', EmptyStr);
     edInterChavePrivada.Text := wIni.ReadString('Inter', 'ChavePrivada', EmptyStr);
+
+    edSicoobClientID.Text := wIni.ReadString('Sicoob', 'ClientID', EmptyStr);
+    edSicoobCertificado.Text := wIni.ReadString('Sicoob', 'Certificado', EmptyStr);
+    edSicoobChavePrivada.Text := wIni.ReadString('Sicoob', 'ChavePrivada', EmptyStr);
   finally
     wIni.Free;
   end;
@@ -351,6 +389,10 @@ begin
     wIni.WriteString('Inter', 'ClientSecret', edInterClientSecret.Text);
     wIni.WriteString('Inter', 'Certificado', edInterCertificado.Text);
     wIni.WriteString('Inter', 'ChavePrivada', edInterChavePrivada.Text);
+
+    wIni.WriteString('Sicoob', 'ClientID', edSicoobClientID.Text);
+    wIni.WriteString('Sicoob', 'Certificado', edSicoobCertificado.Text);
+    wIni.WriteString('Sicoob', 'ChavePrivada', edSicoobChavePrivada.Text);
   finally
     wIni.Free;
   end;
@@ -396,6 +438,15 @@ begin
     ACBrExtratoAPI1.Banco.ArquivoCertificado := edInterCertificado.Text;
     ACBrExtratoAPI1.Banco.ArquivoChavePrivada := edInterChavePrivada.Text;
   end;
+
+  if (ACBrExtratoAPI1.BancoConsulta = bccSicoob) then
+  begin
+    ACBrExtratoAPI1.Banco.ClientID := edSicoobClientID.Text;
+    ACBrExtratoAPI1.Banco.ClientSecret := '';
+    ACBrExtratoAPI1.Banco.ArquivoCertificado := edSicoobCertificado.Text;
+    ACBrExtratoAPI1.Banco.ArquivoChavePrivada := edSicoobChavePrivada.Text;
+  end;
+
 end;
 
 function TfrPrincipal.ValidarCertificado(aArq: String): String;
@@ -447,6 +498,22 @@ begin
     Result := ExtractFileName(Result);
 end;
 
+procedure TfrPrincipal.btSicoobAcharChavePrivadaClick(Sender: TObject);
+begin
+  OpenDialog1.FileName := edInterChavePrivada.Text;
+  if OpenDialog1.Execute then
+    edSicoobChavePrivada.Text := RemoverPathAplicacao(OpenDialog1.FileName);
+  lbSicoobErroChavePrivada.Caption := ValidarChavePrivada(edSicoobChavePrivada.Text);
+end;
+
+procedure TfrPrincipal.btSicoobAcharCertificadoClick(Sender: TObject);
+begin
+  OpenDialog1.FileName := edInterCertificado.Text;
+  if OpenDialog1.Execute then
+    edSicoobCertificado.Text := RemoverPathAplicacao(OpenDialog1.FileName);
+  lbSicoobErroCertificado.Caption := ValidarCertificado(edSicoobCertificado.Text);
+end;
+
 function TfrPrincipal.AdicionarPathAplicacao(const aArquivo: String): String;
 begin
   Result := Trim(aArquivo);
@@ -461,16 +528,29 @@ begin
   if EstaZerado(ACBrExtratoAPI1.ExtratoConsultado.Lancamentos.Count) then
     Exit;
 
-  gdLancamentos.RowCount := 1;
+  gdLancamentos.RowCount := ACBrExtratoAPI1.ExtratoConsultado.Lancamentos.Count + 1;
+  gdLancamentos.FixedRows := 1;
+
+  gdLancamentos.Cells[0, 0] := 'Item';
+  gdLancamentos.Cells[1, 0] := 'Data de lançamento';
+  gdLancamentos.Cells[2, 0] := 'Data de movimento';
+  gdLancamentos.Cells[3, 0] := 'Documento';
+  gdLancamentos.Cells[4, 0] := 'Descrição';
+  gdLancamentos.Cells[5, 0] := 'Valor';
+  gdLancamentos.Cells[6, 0] := 'Identificador';
+  gdLancamentos.Cells[7, 0] := 'CPF/CNPJ';
+
   with ACBrExtratoAPI1.ExtratoConsultado do
   begin
-    gdLancamentos.RowCount := Lancamentos.Count + 1;
     for i := 0 to Lancamentos.Count - 1 do
     begin
       gdLancamentos.Cells[0, i+1] := IntToStr(i+1);
       gdLancamentos.Cells[1, i+1] := FormatDateBr(Lancamentos[i].dataLancamento);
-      gdLancamentos.Cells[3, i+1] := Lancamentos[i].Descricao;
-      gdLancamentos.Cells[4, i+1] := FloatToString(Lancamentos[i].Valor);
+      gdLancamentos.Cells[3, i+1] := Lancamentos[i].NumeroDocumento;
+      gdLancamentos.Cells[4, i+1] := Lancamentos[i].Descricao;
+      gdLancamentos.Cells[5, i+1] := FormatFloatBr(Lancamentos[i].Valor);
+      gdLancamentos.Cells[6, i+1] := Lancamentos[i].Identificador;
+      gdLancamentos.Cells[7, i+1] := Lancamentos[i].CPFCNPJ;
 
       if (Lancamentos[i].dataMovimento > 0) then
         gdLancamentos.Cells[2, i+1] := FormatDateBr(Lancamentos[i].dataMovimento);
@@ -482,6 +562,7 @@ procedure TfrPrincipal.ConfigurarOwnerBancos;
 begin
   gbConfigBB.Parent := pnConfigBancos;
   gbConfigInter.Parent := pnConfigBancos;
+  gbConfigSicoob.Parent := pnConfigBancos;
 end;
 
 procedure TfrPrincipal.AvaliarInterfaceConfig;
@@ -497,6 +578,7 @@ begin
 
   gbConfigBB.Visible := (ACBrExtratoAPI1.BancoConsulta = bccBancoDoBrasil);
   gbConfigInter.Visible := (ACBrExtratoAPI1.BancoConsulta = bccInter);
+  gbConfigSicoob.Visible := (ACBrExtratoAPI1.BancoConsulta = bccSicoob);
 end;
 
 function TfrPrincipal.NomeArquivoConfiguracao: String;

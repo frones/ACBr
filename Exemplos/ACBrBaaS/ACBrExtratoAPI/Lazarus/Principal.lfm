@@ -65,6 +65,8 @@ object frPrincipal: TfrPrincipal
         Height = 419
         Top = 120
         Width = 655
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        ColCount = 8
         FixedCols = 0
         RowCount = 1
         TabOrder = 3
@@ -72,11 +74,14 @@ object frPrincipal: TfrPrincipal
           64
           107
           101
+          120
           249
           93
+          224
+          146
         )
         Cells = (
-          5
+          8
           0
           0
           'ID'
@@ -88,10 +93,19 @@ object frPrincipal: TfrPrincipal
           'Data Movimento'
           3
           0
-          'Descrição'
+          'Documento'
           4
           0
+          'Descrição'
+          5
+          0
           'Valor'
+          6
+          0
+          'Identificador'
+          7
+          0
+          'CPF/CNPJ'
         )
       end
       object edInicio: TDateEdit
@@ -718,6 +732,146 @@ object frPrincipal: TfrPrincipal
                   Width = 89
                   Caption = '(Não informado)'
                   ParentColor = False
+                end
+              end
+            end
+          end
+          object tsConfigSicoob: TTabSheet
+            Caption = 'tsConfigSicoob'
+            ClientHeight = 292
+            ClientWidth = 649
+            object pnConfigInter1: TPanel
+              Left = 0
+              Height = 292
+              Top = 0
+              Width = 649
+              Align = alClient
+              BevelOuter = bvNone
+              ClientHeight = 292
+              ClientWidth = 649
+              TabOrder = 0
+              object gbConfigSicoob: TGroupBox
+                Left = 0
+                Height = 292
+                Top = 0
+                Width = 649
+                Align = alClient
+                Caption = 'Sicoob'
+                ClientHeight = 272
+                ClientWidth = 645
+                TabOrder = 0
+                Visible = False
+                object pnConfigSicoob: TPanel
+                  Left = 0
+                  Height = 272
+                  Top = 0
+                  Width = 645
+                  Align = alClient
+                  BevelOuter = bvNone
+                  ClientHeight = 272
+                  ClientWidth = 645
+                  TabOrder = 0
+                  object lbSicoobClientID: TLabel
+                    Left = 15
+                    Height = 15
+                    Top = 10
+                    Width = 45
+                    Caption = 'Client ID'
+                    ParentColor = False
+                  end
+                  object edSicoobClientID: TEdit
+                    Left = 15
+                    Height = 23
+                    Top = 25
+                    Width = 615
+                    TabOrder = 0
+                  end
+                  object edSicoobChavePrivada: TEdit
+                    Left = 16
+                    Height = 23
+                    Top = 71
+                    Width = 596
+                    Anchors = [akTop, akLeft, akRight]
+                    AutoSize = False
+                    TabOrder = 1
+                    Text = 'InterChavePrivada.key'
+                    OnChange = edSicoobArqsChange
+                    OnExit = edSicoobChavePrivadaExit
+                  end
+                  object lbSicoobChavePrivada: TLabel
+                    Left = 16
+                    Height = 15
+                    Top = 56
+                    Width = 120
+                    Caption = 'Arquivo Chave Privada'
+                    ParentColor = False
+                  end
+                  object lbSicoobErroChavePrivada: TLabel
+                    Left = 145
+                    Height = 15
+                    Top = 56
+                    Width = 89
+                    Caption = '(Não informado)'
+                    ParentColor = False
+                  end
+                  object btSicoobAcharChavePrivada: TSpeedButton
+                    Left = 611
+                    Height = 23
+                    Top = 71
+                    Width = 24
+                    Anchors = [akTop, akRight]
+                    Font.Color = clWindowText
+                    Font.Height = -11
+                    Font.Name = 'MS Sans Serif'
+                    ImageIndex = 9
+                    OnClick = btSicoobAcharChavePrivadaClick
+                    ShowHint = True
+                    ParentFont = False
+                    ParentShowHint = False
+                  end
+                  object btSicoobAcharCertificado: TSpeedButton
+                    Left = 611
+                    Height = 23
+                    Top = 121
+                    Width = 24
+                    Anchors = [akTop, akRight]
+                    Font.Color = clWindowText
+                    Font.Height = -11
+                    Font.Name = 'MS Sans Serif'
+                    ImageIndex = 9
+                    OnClick = btSicoobAcharCertificadoClick
+                    ShowHint = True
+                    ParentFont = False
+                    ParentShowHint = False
+                  end
+                  object edSicoobCertificado: TEdit
+                    Left = 16
+                    Height = 23
+                    Top = 121
+                    Width = 596
+                    Anchors = [akTop, akLeft, akRight]
+                    AutoSize = False
+                    TabOrder = 2
+                    Text = 'InterCertificado.pem'
+                    OnChange = edSicoobArqsChange
+                    OnExit = edSicoobCertificadoExit
+                  end
+                  object lbSicoobCertificado: TLabel
+                    Left = 16
+                    Height = 15
+                    Top = 106
+                    Width = 130
+                    Caption = 'Arquivo Certificado PEM'
+                    ParentColor = False
+                  end
+                  object lbSicoobErroCertificado: TLabel
+                    Left = 156
+                    Height = 15
+                    Top = 106
+                    Width = 89
+                    Caption = '(Não informado)'
+                    ParentColor = False
+                  end
                 end
               end
             end

@@ -88,16 +88,19 @@ object frPrincipal: TfrPrincipal
         Top = 120
         Width = 655
         Height = 419
+        Anchors = [akLeft, akTop, akRight, akBottom]
+        ColCount = 8
         FixedCols = 0
-        RowCount = 1
-        FixedRows = 0
         TabOrder = 3
         ColWidths = (
           64
           107
           101
+          100
           249
-          93)
+          93
+          250
+          150)
       end
       object edInicio: TDateTimePicker
         Left = 376
@@ -704,6 +707,138 @@ object frPrincipal: TfrPrincipal
                   Text = 'InterCertificado.pem'
                   OnChange = edInterArqsChange
                   OnExit = edInterCertificadoExit
+                end
+              end
+            end
+          end
+          object tsConfigSicoob: TTabSheet
+            Caption = 'tsConfigSicoob'
+            ImageIndex = 2
+            object gbConfigSicoob: TGroupBox
+              Left = 0
+              Top = 0
+              Width = 689
+              Height = 292
+              Align = alClient
+              Caption = 'Sicoob'
+              TabOrder = 0
+              Visible = False
+              object pnConfigSicoob: TPanel
+                Left = 2
+                Top = 15
+                Width = 685
+                Height = 275
+                Align = alClient
+                BevelOuter = bvNone
+                TabOrder = 0
+                DesignSize = (
+                  685
+                  275)
+                object lbSicoobClientID: TLabel
+                  Left = 15
+                  Top = 10
+                  Width = 40
+                  Height = 13
+                  Caption = 'Client ID'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object Label3: TLabel
+                  Left = 15
+                  Top = 58
+                  Width = 109
+                  Height = 13
+                  Caption = 'Arquivo Chave Privada'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbSicoobErroChavePrivada: TLabel
+                  Left = 144
+                  Top = 58
+                  Width = 75
+                  Height = 13
+                  Caption = '(N'#227'o informado)'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object btSicoobAcharChavePrivada: TSpeedButton
+                  Left = 647
+                  Top = 73
+                  Width = 24
+                  Height = 23
+                  Anchors = [akTop, akRight]
+                  Font.Charset = DEFAULT_CHARSET
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Font.Style = []
+                  ParentFont = False
+                  ParentShowHint = False
+                  ShowHint = True
+                  OnClick = btSicoobAcharChavePrivadaClick
+                end
+                object btSicoobAcharCertificado: TSpeedButton
+                  Left = 647
+                  Top = 123
+                  Width = 24
+                  Height = 23
+                  Anchors = [akTop, akRight]
+                  Font.Charset = DEFAULT_CHARSET
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Font.Style = []
+                  ParentFont = False
+                  ParentShowHint = False
+                  ShowHint = True
+                  OnClick = btSicoobAcharCertificadoClick
+                end
+                object Label7: TLabel
+                  Left = 15
+                  Top = 108
+                  Width = 115
+                  Height = 13
+                  Caption = 'Arquivo Certificado PEM'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbSicoobErroCertificado: TLabel
+                  Left = 155
+                  Top = 108
+                  Width = 75
+                  Height = 13
+                  Caption = '(N'#227'o informado)'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object edSicoobClientID: TEdit
+                  Left = 15
+                  Top = 25
+                  Width = 615
+                  Height = 21
+                  TabOrder = 0
+                end
+                object edSicoobChavePrivada: TEdit
+                  Left = 15
+                  Top = 73
+                  Width = 632
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  AutoSize = False
+                  TabOrder = 1
+                  OnChange = edSicoobArqsChange
+                  OnExit = edSicoobChavePrivadaExit
+                end
+                object edSicoobCertificado: TEdit
+                  Left = 15
+                  Top = 123
+                  Width = 632
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  AutoSize = False
+                  TabOrder = 2
+                  OnChange = edSicoobArqsChange
+                  OnExit = edSicoobCertificadoExit
                 end
               end
             end

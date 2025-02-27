@@ -1,0 +1,1 @@
+Salve nesta pasta a ACBrNCMs64.dll ST e as dependências para x64.

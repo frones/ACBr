@@ -249,6 +249,9 @@ type
     Label30: TLabel;
     cbModeloDF: TComboBox;
     btnExcessoBagagem: TButton;
+    tsOutros: TTabSheet;
+    btnLerArqINI: TButton;
+    btnGerarArqINI: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -304,6 +307,8 @@ type
     procedure btnNaoEmbarqueClick(Sender: TObject);
     procedure btnAlteracaoPoltronaClick(Sender: TObject);
     procedure btnExcessoBagagemClick(Sender: TObject);
+    procedure btnLerArqINIClick(Sender: TObject);
+    procedure btnGerarArqINIClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -1307,6 +1312,39 @@ begin
   LoadXML(ACBrBPe1.WebServices.EnvEvento.RetornoWS, WBResposta);
 end;
 
+procedure TfrmACBrBPe.btnGerarArqINIClick(Sender: TObject);
+var
+  vAux: string;
+  SaveDlg: TSaveDialog;
+  ArqINI: TStringList;
+begin
+  vAux := '1';
+  if not(InputQuery('Gerar Arquivo INI', 'Numero do Bilhete', vAux)) then
+    exit;
+
+  ACBrBPe1.Bilhetes.Clear;
+  AlimentarComponente(vAux);
+  ACBrBPe1.Bilhetes.GerarBPe;
+
+  ArqINI := TStringList.Create;
+  SaveDlg := TSaveDialog.Create(nil);
+  try
+    ArqINI.Text := ACBrBPe1.Bilhetes.GerarIni;
+
+    SaveDlg.Title := 'Escolha o local onde gerar o INI';
+    SaveDlg.DefaultExt := '*.INI';
+    SaveDlg.Filter := 'Arquivo INI(*.INI)|*.INI|Arquivo ini(*.ini)|*.ini|Todos os arquivos(*.*)|*.*';
+
+    if SaveDlg.Execute then
+      ArqINI.SaveToFile(SaveDlg.FileName);
+
+    memoLog.Lines.Add('Arquivo Salvo: ' + SaveDlg.FileName);
+  finally
+    SaveDlg.Free;
+    ArqINI.Free;
+  end;
+end;
+
 procedure TfrmACBrBPe.btnGerarPDFClick(Sender: TObject);
 var
   CarregarMaisXML: Boolean;
@@ -1475,6 +1513,42 @@ begin
     //  ShowMessage('ERRO: '+Erro)
 
     pgRespostas.ActivePageIndex := 0;
+  end;
+end;
+
+procedure TfrmACBrBPe.btnLerArqINIClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o Arquivo INI';
+  OpenDialog1.DefaultExt := '*.ini';
+  OpenDialog1.Filter :=
+    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrBPe1.Bilhetes.Clear;
+    ACBrBPe1.Bilhetes.LoadFromIni(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.Assinar;
+    ACBrBPe1.Bilhetes.GravarXML();
+
+    memoLog.Lines.Add('Arquivo gerado em: ' + ACBrBPe1.Bilhetes[0].NomeArq);
+
+    try
+      ACBrBPe1.Bilhetes.Validar;
+
+      if ACBrBPe1.Bilhetes[0].Alertas <> '' then
+        MemoDados.Lines.Add('Alertas: '+ACBrBPe1.Bilhetes[0].Alertas);
+
+      ShowMessage('Conhecimento de Transporte Eletrônico Valido');
+    except
+      on E: Exception do
+      begin
+        pgRespostas.ActivePage := Dados;
+        MemoDados.Lines.Add('Exception: ' + E.Message);
+        MemoDados.Lines.Add('Erro: ' + ACBrBPe1.Bilhetes[0].ErroValidacao);
+        MemoDados.Lines.Add('Erro Completo: ' + ACBrBPe1.Bilhetes[0].ErroValidacaoCompleto);
+      end;
+    end;
   end;
 end;
 

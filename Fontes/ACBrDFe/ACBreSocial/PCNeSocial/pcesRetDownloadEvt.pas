@@ -60,6 +60,7 @@ type
   TArquivoCollectionItem = class(TObject)
   private
     FStatus: TStatus;
+    FProcessamento: TProcessamento;
     FId: string;
     FnrRec: string;
     FXML: string;
@@ -68,6 +69,7 @@ type
     destructor Destroy; override;
 
     property Status: TStatus read FStatus write FStatus;
+    property Processamento: TProcessamento read FProcessamento write FProcessamento;
     property Id: string read FId write FId;
     property nrRec: string read FnrRec write FnrRec;
     property XML: string read FXML write FXML;
@@ -125,11 +127,13 @@ constructor TArquivoCollectionItem.Create;
 begin
   inherited Create;
   FStatus := TStatus.Create;
+  FProcessamento := TProcessamento.Create;
 end;
 
 destructor TArquivoCollectionItem.Destroy;
 begin
   FStatus.Free;
+  FProcessamento.Free;
 
   inherited;
 end;
@@ -156,7 +160,8 @@ end;
 function TRetDownloadEvt.LerXml: boolean;
 var
 //  ok: boolean;
-  i{, j, k}: Integer;
+  i, j{, k}: Integer;
+  LOcc: TOcorrenciasProcCollectionItem;
 begin
   Result := False;
   try
@@ -195,6 +200,32 @@ begin
             begin
               Arquivo.Items[i].nrRec := FLeitor.rAtributo('nrRec=', 'rec');
               Arquivo.Items[i].XML   := RetornarConteudoEntre(Leitor.Grupo, '>', '</rec');
+
+              if Leitor.rExtrai(6, 'eSocial') <> '' then
+              begin
+                if Leitor.rExtrai(7, 'retornoEvento') <> '' then
+                begin
+                  if Leitor.rExtrai(8, 'processamento') <> '' then
+                  begin
+                    Arquivo.Items[i].Processamento.cdResposta := Leitor.rCampo(tcInt, 'cdResposta');
+                    Arquivo.Items[i].Processamento.descResposta := Leitor.rCampo(tcStr, 'descResposta');
+
+                    if Leitor.rExtrai(9, 'ocorrencias') <> '' then
+                    begin
+                      j := 0;
+                      while Leitor.rExtrai(10, 'ocorrencia', '', j + 1) <> '' do
+                      begin
+                        LOcc := Arquivo.Items[i].Processamento.Ocorrencias.New;
+                        LOcc.Tipo := Leitor.rCampo(tcInt, 'tipo');
+                        LOcc.Codigo := Leitor.rCampo(tcInt, 'codigo');
+                        LOcc.Descricao := Leitor.rCampo(tcStr, 'descricao');
+                        LOcc.Localizacao := Leitor.rCampo(tcStr, 'localizacao');
+                        inc(j);
+                      end;
+                    end;
+                  end;
+                end;
+              end;
             end;
 
             inc(i);

@@ -12,7 +12,7 @@ uses
   ACBrBPeConversao, ACBrBPeEnvEvento, ACBrBPeRetConsSit, ACBrBPeRetEnvEvento, 
   ACBrBPe, ACBrBPeBilhetes, ACBrBPeConfiguracoes, ACBrBPeReg, 
   ACBrBPeWebServices, ACBrBPeDABPEClass, ACBrBPeConsts, ACBrBPeEventoClass, 
-  LazarusPackageIntf;
+  ACBrBPeIniReader, ACBrBPeIniWriter, LazarusPackageIntf;
 
 implementation
 

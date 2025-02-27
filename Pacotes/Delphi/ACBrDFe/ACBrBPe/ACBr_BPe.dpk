@@ -86,6 +86,8 @@ contains
   ACBrBPeClass in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeClass.pas',
   ACBrBPeConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeConsts.pas',
   ACBrBPeConversao in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeConversao.pas',
+  ACBrBPeIniReader in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeIniReader.pas',
+  ACBrBPeIniWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeIniWriter.pas',
   ACBrBPeXmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeXmlReader.pas',
   ACBrBPeXmlWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeXmlWriter.pas',
   

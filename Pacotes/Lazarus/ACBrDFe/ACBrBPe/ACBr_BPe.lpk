@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Bilhete de Passagem Eletrônica - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="16">
+    <Files Count="18">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeClass.pas"/>
         <UnitName Value="ACBrBPeClass"/>
@@ -81,6 +81,14 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\Servicos\ACBrBPeEventoClass.pas"/>
         <UnitName Value="ACBrBPeEventoClass"/>
       </Item16>
+      <Item17>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeIniReader.pas"/>
+        <UnitName Value="ACBrBPeIniReader"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeIniWriter.pas"/>
+        <UnitName Value="ACBrBPeIniWriter"/>
+      </Item18>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

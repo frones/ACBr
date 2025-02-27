@@ -108,7 +108,7 @@ type
     FRegistroD760Count: Integer;
     FRegistroD761Count: Integer;
 
-    procedure WriteRegistroD100(RegD001: TRegistroD001);
+    procedure WriteRegistroD100(RegD001: TRegistroD001); virtual;
     procedure WriteRegistroD101(RegD100: TRegistroD100);
     procedure WriteRegistroD110(RegD100: TRegistroD100);
     procedure WriteRegistroD120(RegD110: TRegistroD110);

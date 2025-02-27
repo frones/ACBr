@@ -63,7 +63,7 @@ TACBrBALModelo = (balNenhum, balFilizola, balToledo, balToledo2090, balToledo218
                   balMarelCG62XL, balWeightechWT3000_ABS, balToledo2090N, balToledoBCS21,
                   balPrecision, balDigitron_UL, balLibratekWT3000IR, balToledoTi420,
                   balWeightechWT27R_ETH, balCapital, balMarte, balLenkeLK2500,
-                  balWeighTRUTest, balUranoUDC, balSiciliano);
+                  balWeighTRUTest, balUranoUDC, balSiciliano, balTrentin);
 
 TACBrBALLePeso = procedure(Peso : Double; Resposta : AnsiString) of object ;
 
@@ -160,7 +160,7 @@ uses
   ACBrBALToledo2090N, ACBrBALToledoBCS21, ACBrBALPrecision,
   ACBrBALDigitron_UL, ACBrBALLibratekWT3000IR, ACBrBALToledoTi420,
   ACBrBALWeightechWT27R_ETH, ACBrBALCapital, ACBrBALMarte, ACBrBalLenkeLK2500,
-  ACBrBALWeighTRUTest, ACBrBALUranoUDC, ACBrBALSiciliano, ACBrUtil.Strings,
+  ACBrBALWeighTRUTest, ACBrBALUranoUDC, ACBrBALSiciliano, ACBrBALTrentin, ACBrUtil.Strings,
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF};
 
 { TACBrBAL }
@@ -272,6 +272,7 @@ begin
      balWeighTRUTest         : fsBAL := TACBrBALWeighTRUTest.Create(Self);
      balUranoUDC             : fsBal := TACBrBalUranoUDC.Create(Self);
      balSiciliano            : fsBal := TACBrBALSiciliano.Create(Self);
+     balTrentin              : fsBal := TACBrBALTrentin.Create(Self);
   else
      fsBAL := TACBrBALClass.Create(Self);
   end;

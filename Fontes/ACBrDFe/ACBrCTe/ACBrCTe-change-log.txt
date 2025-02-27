@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2025
+-- ACBrCTe.XmlWriter --
+[*] #TK-5814: Alteração visando contemplar a Reforma Tributária.
+  Por: Italo Giurizzato Junior
+
 23/02/2025
 -- ACBrCTeWebServices --
 [*] #TK-6647: Ajustes para identificar o CT-e Simplificado no DistribuicaoDFe.

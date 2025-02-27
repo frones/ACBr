@@ -46,6 +46,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2025
+-- ACBrTEFAPI --
+[-] Ajustes para compilar em Delphi FMX
+
+-- ACBrTEFMSitefAndroidAPI, ACBrTEFMSitefComum --
+[-] Correção de erro de compilação em Delphi Android FMX
+
+-- ACBrTEFScopeAPI --
+[*] Adicionada verificação se TEF foi inicializado em vários métodos
+    (por: DSA)
+
 26/02/2025
 -- ACBrTEFAPIScope --
 [-] Ajustes para apagar respostas da transação anterior em EfetuarAdministrativa

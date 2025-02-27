@@ -468,7 +468,7 @@ begin
   intent.putExtra( StringToJString(Key_ISDoubleValidation), StringToJString(ParametrosAdicionaisTransacao.ValueInfo[PWOPER_DOUBLEVALIDATION]));
 
   GravarLog('  '+Key_TimeoutColeta+': '+ParametrosAdicionaisTransacao.ValueInfo[PWOPER_TIMEOUT_COLETA]);
-  if (ParametrosAdicionaisTransacao.ValueInfo[PWOPER_TIMEOUT_COLETA] <> '') and (StrToIntDef(ParametrosAdicionaisTransacao.ValueInfo[PWOPER_TIMEOUT_COLETA], 0) > 0) then
+  if (StrToIntDef(ParametrosAdicionaisTransacao.ValueInfo[PWOPER_TIMEOUT_COLETA], 0) > 0) then
     intent.putExtra( StringToJString(Key_TimeoutColeta), StringToJString(ParametrosAdicionaisTransacao.ValueInfo[PWOPER_TIMEOUT_COLETA]));
 
   GravarLog('  '+Key_TokenRegistroTls+': '+ParametrosAdicionaisTransacao.ValueInfo[PWOPER_TOKEN_TLS]);

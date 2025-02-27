@@ -40,10 +40,18 @@ uses
   Classes,
   SysUtils,
   {$IfDef HAS_PNG}
-   Graphics, ACBrImage, ACBrDelphiZXingQRCode,
-   {$IfNDef FPC}
-    pngimage, Types,
-   {$EndIf}
+    {$IfDef FMX}
+      FMX.Graphics,
+    {$Else}
+      Graphics,
+    {$EndIf}
+    ACBrImage, ACBrDelphiZXingQRCode,
+    {$IfNDef FPC}
+      {$IfNDef FMX}
+        pngimage,
+      {$EndIf}
+      Types,
+    {$EndIf}
   {$EndIf}
   ACBrBase,
   ACBrTEFAPIComum;
@@ -262,9 +270,12 @@ type
       read fQuandoExibirQRCode write fQuandoExibirQRCode;
   end;
 
-  {$IfDef FPC}
-    {$IfDef HAS_PNG}
-    TPngImage = class(TPortableNetworkGraphic);
+  {$IfDef HAS_PNG}
+    {$IfDef FPC}
+      TPngImage = class(TPortableNetworkGraphic);
+    {$EndIf}
+    {$IfDef FMX}
+      TPngImage = TBitmap;  // FMX não tem classe TPngImage e usa PNG por Default
     {$EndIf}
   {$EndIf}
 
@@ -505,7 +516,11 @@ var
   png: TPngImage;
   ms: TMemoryStream;
   wimg: String;
-  r: TRect;
+  {$IfDef FMX}
+   r: TRectF;
+  {$Else}
+   r: TRect;
+  {$EndIf}
   w, h: Word;
 begin
   if Trim(DadosQRCode) = '' then
@@ -536,7 +551,16 @@ begin
     {$Else}
      png.ReSize(Tamanho, Tamanho);
     {$EndIf}
-    png.Canvas.StretchDraw(r, bmp);
+    {$IfDef FMX}
+     png.Canvas.BeginScene;
+     try
+       png.Canvas.DrawBitmap(bmp, bmp.BoundsF, r, 1);
+     finally
+       png.Canvas.EndScene;
+     end;
+    {$Else}
+     png.Canvas.StretchDraw(r, bmp);
+    {$EndIf}
     png.SaveToStream(ms);
     ms.Position := 0;
     CarregarImagemPinPad(wimg, ms, imgPNG);

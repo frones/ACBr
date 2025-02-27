@@ -55,9 +55,12 @@ const
   PWOPER_OTP              = 5; // Código OTP
   PWOPER_ACESSIBILIDADEVISUAL = 6; // Campo para definir se a acessibilidade visual deve ser habilitada: 0 – Para desabilitar (valor padrão) 1 – Para habilitar
   PWOPER_TIPOPINPAD       = 7; //Tipo de pinpad ANDROID_USB ou ANDROID_BT
+  PWOPER_TIMEOUT_COLETA   = 8;
+  PWOPER_TOKEN_TLS        = 9;
   PWOPER_ADMIN            = 110;  // Acessa qualquer transação que não seja disponibilizada pelo comando PWOPER_SALE. Um menu é apresentado para o operador selecionar a transação desejada.
   PWOPER_SALEVOID         = 200;  // (Cancelamento de venda) Cancela uma transação PWOPER_SALE, realizando a transferência de fundos inversa
   PWOPER_REPRINT          = 114;  // Obtém o último comprovante gerado por uma transação
+
 
   //==========================================================================================
   //   Tipos de dados que podem ser informados pela Automação

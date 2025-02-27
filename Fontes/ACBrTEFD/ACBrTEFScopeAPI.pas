@@ -52,7 +52,8 @@ const
   CScopeINi = 'scope.ini';
 
 resourcestring
-  sErrLibJaInicializda = 'Biblioteca ScopeAPI já foi inicializada';
+  sErrLibJaInicializada = 'Biblioteca ScopeAPI já foi inicializada';
+  sErrLibNaoInicializada = 'Biblioteca ScopeAPI ainda NÃO foi carregada';
   sErrDirTrabalhoInvalido = 'Diretório de Trabalho não encontrado: %s';
   sErrScopeINIInvalido = 'Arquivo de Configuração ' + CScopeINI + ' não encontrado em: %s';
   sErrEndServNaoEncontrado = 'Endereço do Servidor não encontrado em '+CScopeINi;
@@ -1556,6 +1557,7 @@ type
     procedure AbrirComunicacaoScope;
     procedure FecharComunicacaoScope;
 
+    procedure VerificarCarregada;
     procedure VerificarSeEstaConectadoScope;
     procedure VerificarSeMantemConexaoScope;
     procedure VerificarSessaoTEFAnterior;
@@ -1820,7 +1822,7 @@ begin
   GravarLog('TACBrTEFScopeAPI.SetPathLib( '+AValue+' )');
 
   if fInicializada then
-    DoException(sErrLibJaInicializda);
+    DoException(sErrLibJaInicializada);
 
   fPathLib := PathWithDelim(ExtractFilePath(AValue));
 end;
@@ -1851,7 +1853,7 @@ begin
   GravarLog('TACBrTEFScopeAPI.SetDiretorioTrabalho( '+AValue+' )');
 
   if fInicializada then
-    DoException(sErrLibJaInicializda);
+    DoException(sErrLibJaInicializada);
 
   fDiretorioTrabalho := AValue;
 end;
@@ -1875,7 +1877,7 @@ begin
     Exit;
 
   if fInicializada then
-    DoException(sErrLibJaInicializda);
+    DoException(sErrLibJaInicializada);
 
   if (AValue = '') then
     fEmpresa := AValue
@@ -1889,7 +1891,7 @@ begin
     Exit;
 
   if fInicializada then
-    DoException(sErrLibJaInicializda);
+    DoException(sErrLibJaInicializada);
 
   if (AValue = '') then
     fFilial := AValue
@@ -1903,7 +1905,7 @@ begin
     Exit;
 
   if fInicializada then
-    DoException(sErrLibJaInicializda);
+    DoException(sErrLibJaInicializada);
 
   if (AValue = '') then
     fPDV := AValue
@@ -1920,7 +1922,7 @@ begin
   GravarLog('TACBrTEFScopeAPI.SetControleConexao( '+BoolToStr(AValue, True)+' )');
 
   if fInicializada then
-    DoException(sErrLibJaInicializda);
+    DoException(sErrLibJaInicializada);
 
   fControleConexao := AValue;
 end;
@@ -1931,7 +1933,7 @@ begin
     Exit;
 
   if fInicializada then
-    DoException(sErrLibJaInicializda);
+    DoException(sErrLibJaInicializada);
 
   fEnderecoIP := Trim(AValue);
 end;
@@ -1943,7 +1945,7 @@ begin
     Exit;
 
   if fInicializada then
-    DoException(sErrLibJaInicializda);
+    DoException(sErrLibJaInicializada);
 
   fPortaTCP := Trim(AValue);
 end;
@@ -2183,6 +2185,12 @@ begin
   raise EACBrTEFScopeAPI.Create(ACBrStr(AErrorMsg));
 end;
 
+procedure TACBrTEFScopeAPI.VerificarCarregada;
+begin
+  if not fCarregada then
+    DoException(sErrLibNaoInicializada);
+end;
+
 procedure TACBrTEFScopeAPI.VerificarDiretorioDeTrabalho;
 begin
   if (fDiretorioTrabalho = '') then
@@ -2414,6 +2422,7 @@ var
   ret: longint;
   pszData: PAnsiChar;
 begin
+  VerificarCarregada;
   Result := '';
   pszData := AllocMem(13);
   try
@@ -2437,6 +2446,7 @@ var
   ret: longint;
   pszData: PAnsiChar;
 begin
+  VerificarCarregada;
   Result := '';
   pszData := AllocMem(48);
   try
@@ -2458,6 +2468,7 @@ var
   ret: LongInt;
   s: AnsiString;
 begin
+  VerificarCarregada;
   s := AnsiString(FormatarMsgPinPad(MsgPinPad));
   GravarLog('ScopePPDisplay( '+s+' )');
   ret := xScopePPDisplay(PAnsiChar(s));
@@ -2475,6 +2486,7 @@ var
 const
   BUFFER_SIZE = 1024;
 begin
+  VerificarCarregada;
   Result := '';
   GravarLog('ScopePPStartGetData( '+IntToStr(Dado)+', '+IntToStr(MinLen)+', '+IntToStr(MaxLen)+' )');
   ret := xScopePPStartGetData(Dado, MinLen, MaxLen);
@@ -2528,6 +2540,7 @@ var
 const
   BUFFER_SIZE = 10;
 begin
+  VerificarCarregada;
   Result := -1;
   Lista := '';
   for i := 0 to Opcoes.Count-1 do
@@ -2585,6 +2598,7 @@ var
   sLista, s: String;
   p, l: Integer;
 begin
+  VerificarCarregada;
   sLista := '';
   pLista := AllocMem(2048);
   try
@@ -2619,6 +2633,7 @@ var
   ct: AnsiChar;
   ptInfoFile: stABECS_PPFILE_INFO;
 begin
+  VerificarCarregada;
   warq := Trim(Arquivo);
   if (warq = '') then
     Exit;
@@ -2654,6 +2669,7 @@ var
   ret: LongInt;
   s: AnsiString;
 begin
+  VerificarCarregada;
   s := AnsiString(TratarNomeImagemPinPad(NomeImagem));
   GravarLog('ScopePPMMDisplayImage( '+s+' )');
   ret := xScopePPMMDisplayImage(PAnsiChar(s));
@@ -2667,6 +2683,7 @@ var
   ret: LongInt;
   s: AnsiString;
 begin
+  VerificarCarregada;
   s := AnsiString(TratarNomeImagemPinPad(NomeImagem));
   GravarLog('ScopePPMMFileDelete( '+s+' )');
   ret := xScopePPMMFileDelete(PAnsiChar(s));
@@ -2680,6 +2697,7 @@ var
   Dados: PAnsiChar;
   ret: LongInt;
 begin
+  VerificarCarregada;
   if (fInformacoesPinPad = '') then
   begin
     Result := '';

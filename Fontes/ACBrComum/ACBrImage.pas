@@ -693,7 +693,7 @@ end;
      QRCodeBitmap.Height := QRCode.Rows;
 
      {$IfDef FMX}
-     if QRCodeBitmap.Map(TMapAccess.Read, BitMapData) then
+     if QRCodeBitmap.Map(TMapAccess.Write, BitMapData) then
      try
      {$EndIf}
        for Row := 0 to QRCode.Rows - 1 do

@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2025
+-- ACBrImage --
+[-] Correção em 'PintarQRCode', para funcionar em FMX
+    (por: DSA)
+
 26/02/2025
 -- ACBrUtil.XMLHTML --
 [+] #TK-6581: Adiciona funções GetNamedEntitie e DecodeHTMLEntities

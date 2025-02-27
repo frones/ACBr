@@ -1561,15 +1561,6 @@ type
 
   { Tseletivo }
 
-  Tseletivo = class(TObject)
-  private
-    FcstImpSel: Integer;
-    FcClassTribImpSel: Integer;
-  public
-    property cstImpSel: Integer read FcstImpSel write FcstImpSel;
-    property cClassTribImpSel: Integer read FcClassTribImpSel write FcClassTribImpSel;
-  end;
-
   { TgImpSel }
 
   TgImpSel = class(TObject)
@@ -1579,6 +1570,20 @@ type
   public
     property uTrib: Double read FuTrib write FuTrib;
     property qTrib: Double read FqTrib write FqTrib;
+  end;
+
+  Tseletivo = class(TObject)
+  private
+    FcstImpSel: Integer;
+    FcClassTribImpSel: Integer;
+    FgImpSel: TgImpSel;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property cstImpSel: Integer read FcstImpSel write FcstImpSel;
+    property cClassTribImpSel: Integer read FcClassTribImpSel write FcClassTribImpSel;
+    property gImpSel: TgImpSel read FgImpSel write FgImpSel;
   end;
 
   { TgIBSCBSValores }
@@ -1627,14 +1632,12 @@ type
   Ttrib = class(TObject)
   private
     Fseletivo: Tseletivo;
-    FgImpSel: TgImpSel;
     FgIBSCBS: TgIBSCBS;
   public
     constructor Create;
     destructor Destroy; override;
 
     property seletivo: Tseletivo read Fseletivo write Fseletivo;
-    property gImpSel: TgImpSel read FgImpSel write FgImpSel;
     property gIBSCBS: TgIBSCBS read FgIBSCBS write FgIBSCBS;
   end;
 
@@ -2856,14 +2859,12 @@ begin
   inherited Create;
 
   Fseletivo := Tseletivo.Create;
-  FgImpSel := TgImpSel.Create;
   FgIBSCBS := TgIBSCBS.Create;
 end;
 
 destructor Ttrib.Destroy;
 begin
   Fseletivo.Free;
-  FgImpSel.Free;
   FgIBSCBS.Free;
 
   inherited Destroy;
@@ -2939,6 +2940,22 @@ begin
   FgSel.Free;
   FgIBS.Free;
   FgCBS.Free;
+
+  inherited Destroy;
+end;
+
+{ Tseletivo }
+
+constructor Tseletivo.Create;
+begin
+  inherited Create;
+
+  FgImpSel := TgImpSel.Create;
+end;
+
+destructor Tseletivo.Destroy;
+begin
+  FgImpSel.Free;
 
   inherited Destroy;
 end;

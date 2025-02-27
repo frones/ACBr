@@ -82,7 +82,7 @@ type
     fcodigoHistorico: String;
     fdataLancamento: TDateTime;
     fdataMovimento: TDateTime;
-    findicadorTipoLancamento: Integer;
+    findicadorTipoLancamento: String;
     fnumeroContaContrapartida: String;
     fnumeroCpfCnpjContrapartida: Integer;
     fnumeroDocumento: Int64;
@@ -102,7 +102,7 @@ type
     function IsEmpty: Boolean; override;
     procedure Assign(aSource: TACBrExtratoBBLancamento);
 
-    property indicadorTipoLancamento: Integer read findicadorTipoLancamento write findicadorTipoLancamento;
+    property indicadorTipoLancamento: String read findicadorTipoLancamento write findicadorTipoLancamento;
     property dataLancamento: TDateTime read fdataLancamento write fdataLancamento;
     property dataMovimento: TDateTime read fdataMovimento write fdataMovimento;
     property codigoAgenciaOrigem: Integer read fcodigoAgenciaOrigem write fcodigoAgenciaOrigem;
@@ -495,7 +495,7 @@ begin
 
   Result := (HTTPResultCode = HTTP_OK);
   if Result then
-    ExtratoConsultado.AsJSON := HTTPResponse
+    ExtratoConsultado.AsJSON := UTF8ToNativeString(HTTPResponse)
   else
   begin
     ExtratoBBErros.AsJSON := HTTPResponse;
@@ -755,7 +755,7 @@ begin
   fnumeroDocumento := 0;
   fvalorLancamento := 0;
   fcodigoAgenciaOrigem := 0;
-  findicadorTipoLancamento := 0;
+  findicadorTipoLancamento := '';
   fcodigoBancoContrapartida := 0;  
   fcodigoAgenciaContrapartida := 0;
   fnumeroCpfCnpjContrapartida := 0;
@@ -777,7 +777,7 @@ begin
     EstaZerado(fnumeroDocumento) and
     EstaZerado(fvalorLancamento) and
     EstaZerado(fcodigoAgenciaOrigem) and
-    EstaZerado(findicadorTipoLancamento) and
+    EstaVazio(findicadorTipoLancamento) and
     EstaZerado(fcodigoBancoContrapartida) and
     EstaZerado(fcodigoAgenciaContrapartida) and
     EstaZerado(fnumeroCpfCnpjContrapartida) and

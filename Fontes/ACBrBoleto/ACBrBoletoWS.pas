@@ -252,10 +252,9 @@ uses
   ACBrBoletoW_Cora,
   ACBrBoletoRet_Cora,
   ACBrBoletoW_Kobana,
-  ACBrBoletoRet_Kobana//,
-  //ACBrBoletoW_BTGPactual,
-  //ACBrBoletoRet_BTGPactual
-  ;
+  ACBrBoletoRet_Kobana,
+  ACBrBoletoW_BTGPactual,
+  ACBrBoletoRet_BTGPactual;
 
   { TRetornoEnvioClass }
 
@@ -484,11 +483,11 @@ begin
         FBoletoWSClass := TBoletoW_Cora.Create(Self);
         FRetornoBanco  := TRetornoEnvio_Cora.Create(FBoleto);
       end;
-    //cobBTGPactual :
-    //  begin
-    //    FBoletoWSClass := TBoletoW_BTGPactual.Create(Self);
-    //    FRetornoBanco  := TRetornoEnvio_BTGPactual.Create(FBoleto);
-    //  end;
+    cobBTGPactual :
+      begin
+        FBoletoWSClass := TBoletoW_BTGPactual.Create(Self);
+        FRetornoBanco  := TRetornoEnvio_BTGPactual.Create(FBoleto);
+      end;
     else
       FBoletoWSClass := TBoletoWSClass.Create(Self);
       FRetornoBanco  := TRetornoEnvioClass.Create(FBoleto);

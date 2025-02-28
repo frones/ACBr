@@ -411,6 +411,14 @@
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoSulcredi.pas"/>
         <UnitName Value="ACBrBancoSulcredi"/>
       </Item97>
+	  <Item98>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_BTGPactual.pas"/>
+        <UnitName Value="ACBrBoletoW_BTGPactual"/>
+      </Item98>
+	  <Item99>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_BTGPactual.pas"/>
+        <UnitName Value="ACBrBoletoRet_BTGPactual"/>
+      </Item99>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

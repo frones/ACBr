@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/02/2025
+-- ACBrNFe.Classes --
+[-]  incluido o gCompraGov no Create e no Destroy da classe Ide.
+   Por: Italo Giurizzato Junior
+
 25/02/2025
 -- Diversos --
 [+] Ajustes na escrita e leitura do XML para atender a Reforma Tributária.

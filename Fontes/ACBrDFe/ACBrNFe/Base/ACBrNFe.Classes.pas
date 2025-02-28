@@ -2963,12 +2963,16 @@ end;
 constructor TIde.Create;
 begin
   inherited Create;
+
   FNFref := TNFrefCollection.Create();
+  FgCompraGov := TgCompraGov.Create;
 end;
 
 destructor TIde.Destroy;
 begin
   FNFref.Free;
+  FgCompraGov.Free;
+
   inherited;
 end;
 

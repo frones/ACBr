@@ -4,7 +4,9 @@ unit ACBrBALTrentin;
 
 interface
 
-uses ACBrBALClass, Classes;
+uses
+  ACBrBALClass,
+  Classes;
 
 const STX = #02;
       CR  = #13;
@@ -27,7 +29,13 @@ type
 
 implementation
 
-uses ACBrBAL, ACBrUtil.Strings, DateUtils, StrUtils, Math, System.SysUtils;
+uses
+  ACBrBAL,
+  ACBrUtil.Strings,
+  DateUtils,
+  StrUtils,
+  Math,
+  SysUtils;
 
 { TACBrBALTrentin }
 

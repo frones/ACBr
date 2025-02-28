@@ -38,26 +38,21 @@ interface
 
 uses
   SysUtils, Classes, Variants, StrUtils,
-  ACBrBase, ACBrDFeSSL,
-  ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXNotasFiscais,
-  ACBrNFSeXClass, ACBrNFSeXConversao,
-  ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderProprio, ACBrJSON,
-  ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
+  ACBrXmlBase,
+  ACBrNFSeXClass,
+  ACBrNFSeXConversao,
+  ACBrNFSeXGravarXml,
+  ACBrNFSeXLerXml,
+  ACBrNFSeXProviderProprio,
+  ACBrJSON,
+  ACBrNFSeXWebserviceBase,
+  ACBrNFSeXWebservicesResponse;
 
 type
 
   TACBrNFSeXWebserviceAspec = class(TACBrNFSeXWebserviceRest)
-  protected
-    procedure SetHeaders(aHeaderReq: THTTPHeader); override;
-
   public
     function GerarNFSe(const ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
-    function Cancelar(const ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -79,18 +74,6 @@ type
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
-    procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
-    procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
-
-    procedure PrepararConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
-    procedure TratarRetornoConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
-
-    procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
-    procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
-
-    procedure PrepararSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse); override;
-    procedure TratarRetornoSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse); override;
-
     procedure ProcessarMensagemDeErros(LJson: TACBrJSONObject;
                                      Response: TNFSeWebserviceResponse);
   end;
@@ -98,10 +81,10 @@ type
 implementation
 
 uses
-  synacode,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
   ACBrDFeException,
-  ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
+  ACBrNFSeXConsts,
   Aspec.GravarJson, Aspec.LerJson;
 
 { TACBrNFSeProviderAspec }
@@ -126,10 +109,6 @@ begin
     Autenticacao.RequerChaveAutorizacao := True;
 
     ServicosDisponibilizados.EnviarUnitario := True;
-    ServicosDisponibilizados.ConsultarRps := True;
-    ServicosDisponibilizados.ConsultarNfse := True;
-    ServicosDisponibilizados.CancelarNfse := True;
-    ServicosDisponibilizados.SubstituirNFSe := True;
   end;
 
   SetXmlNameSpace('');
@@ -161,7 +140,7 @@ begin
   if URL <> '' then
   begin
     URL := URL + FpPath;
-    Result := TACBrNFSeXWebserviceaspec.Create(FAOwner, AMetodo, URL, FpMethod);
+    Result := TACBrNFSeXWebserviceAspec.Create(FAOwner, AMetodo, URL, FpMethod);
   end
   else
   begin
@@ -212,8 +191,7 @@ end;
 procedure TACBrNFSeProviderAspec.TratarRetornoEmitir
   (Response: TNFSeEmiteResponse);
 var
-  jDocument, jNfse: TACBrJSONObject;
-  JSONArray: TACBrJSONArray;
+  jDocument: TACBrJSONObject;
   AErro: TNFSeEventoCollectionItem;
   AJsonString: string;
 begin
@@ -292,354 +270,16 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderAspec.PrepararConsultaNFSeporRps(
-  Response: TNFSeConsultaNFSeporRpsResponse);
-var
-  AErro: TNFSeEventoCollectionItem;
-begin
-  if EstaVazio(Response.NumeroRps) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod102;
-    AErro.Descricao := ACBrStr(Desc102);
-    Exit;
-  end;
-
-  Response.ArquivoEnvio := '?NumeroRps=' +
-    Response.NumeroRps;
-
-  FpPath := Response.ArquivoEnvio;
-  FpMethod := 'GET';
-end;
-
-procedure TACBrNFSeProviderAspec.TratarRetornoConsultaNFSeporRps(
-  Response: TNFSeConsultaNFSeporRpsResponse);
-var
-  jDocument, jRps, jNfse, jCancel: TACBrJSONObject;
-  AErro: TNFSeEventoCollectionItem;
-  NumRps: string;
-  ANota: TNotaFiscal;
-begin
-  if Response.ArquivoRetorno = '' then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod201;
-    AErro.Descricao := ACBrStr(Desc201);
-    Exit
-  end;
-
-  jDocument := TACBrJSONObject.Parse(Response.ArquivoRetorno);
-
-  try
-    try
-      ProcessarMensagemDeErros(jDocument, Response);
-      Response.Sucesso := (Response.Erros.Count = 0);
-
-      if Response.Sucesso then
-      begin
-        jNfse := jDocument.AsJSONObject['DadosNfse'];
-        jRps := jNfse.AsJSONObject['Rps'];
-        NumRps := jRps.AsString['Numero'];
-
-        if Assigned(jNfse) then
-        begin
-          with Response do
-          begin
-            NumeroNota := jNfse.AsString['NumeroNfse'];
-            SerieNota := jRps.AsString['Serie'];
-            Data := jNfse.AsISODateTime['DataEmissao'];
-            Link := jNfse.AsString['LinkNfse'];
-            Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
-            Protocolo := jNfse.AsString['CodigoValidacao'];
-            Situacao := jNfse.AsString['SituacaoNfse'];
-            NumeroLote := NumRps;
-
-            if Situacao = '2' then
-            begin
-              DescSituacao := 'Cancelada';
-              jCancel := jNfse.AsJSONObject['Cancelamento'];
-              DataCanc := jCancel.AsISODate['Data'];
-            end
-            else
-              DescSituacao := 'Normal';
-          end;
-
-          if NumRps <> '' then
-            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
-          else
-            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(Response.NumeroNota);
-
-          ANota := CarregarXmlNfse(ANota, Response.ArquivoRetorno);
-          SalvarXmlNfse(ANota);
-        end;
-      end;
-    except
-      on E: Exception do
-      begin
-        Response.Sucesso := False;
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod999;
-        AErro.Descricao := ACBrStr(Desc999 + E.Message);
-      end;
-    end;
-  finally
-    FreeAndNil(jDocument);
-  end;
-end;
-
-procedure TACBrNFSeProviderAspec.PrepararConsultaNFSeporNumero(
-  Response: TNFSeConsultaNFSeResponse);
-var
-  AErro: TNFSeEventoCollectionItem;
-begin
-  if EstaVazio(Response.InfConsultaNFSe.NumeroIniNFSe) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod108;
-    AErro.Descricao := ACBrStr(Desc108);
-    Exit;
-  end;
-
-  Response.ArquivoEnvio := '?NumeroNfse=' +
-    Response.InfConsultaNFSe.NumeroIniNFSe;
-
-  FpPath := Response.ArquivoEnvio;
-  FpMethod := 'GET';
-end;
-
-procedure TACBrNFSeProviderAspec.TratarRetornoConsultaNFSeporNumero
-  (Response: TNFSeConsultaNFSeResponse);
-var
-  jDocument, jRps, jNfse, jCancel: TACBrJSONObject;
-  AErro: TNFSeEventoCollectionItem;
-  NumRps: string;
-  ANota: TNotaFiscal;
-begin
-  if Response.ArquivoRetorno = '' then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod201;
-    AErro.Descricao := ACBrStr(Desc201);
-    Exit
-  end;
-
-  if Response.InfConsultaNFSe.tpRetorno = trXml then
-  begin
-    jDocument := TACBrJSONObject.Parse(Response.ArquivoRetorno);
-
-    try
-      try
-        ProcessarMensagemDeErros(jDocument, Response);
-        Response.Sucesso := (Response.Erros.Count = 0);
-
-        if Response.Sucesso then
-        begin
-          jNfse := jDocument.AsJSONObject['DadosNfse'];
-          jRps := jNfse.AsJSONObject['Rps'];
-          NumRps := jRps.AsString['Numero'];
-
-          if Assigned(jNfse) then
-          begin
-            with Response do
-            begin
-              NumeroNota := jNfse.AsString['NumeroNfse'];
-              SerieNota := jRps.AsString['Serie'];
-              Data := jNfse.AsISODateTime['DataEmissao'];
-              Link := jNfse.AsString['LinkNfse'];
-              Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
-              Protocolo := jNfse.AsString['CodigoValidacao'];
-              Situacao := jNfse.AsString['SituacaoNfse'];
-              NumeroLote := NumRps;
-
-              if Situacao = '2' then
-              begin
-                DescSituacao := 'Cancelada';
-                jCancel := jNfse.AsJSONObject['Cancelamento'];
-                DataCanc := jCancel.AsISODate['Data'];
-              end
-              else
-                DescSituacao := 'Normal';
-            end;
-
-            if NumRps <> '' then
-              ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
-            else
-              ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(Response.NumeroNota);
-
-            ANota := CarregarXmlNfse(ANota, Response.ArquivoRetorno);
-            SalvarXmlNfse(ANota);
-          end;
-        end;
-      except
-        on E: Exception do
-        begin
-          Response.Sucesso := False;
-          AErro := Response.Erros.New;
-          AErro.Codigo := Cod999;
-          AErro.Descricao := ACBrStr(Desc999 + E.Message);
-        end;
-      end;
-    finally
-      FreeAndNil(jDocument);
-    end;
-  end;
-end;
-
-procedure TACBrNFSeProviderAspec.PrepararCancelaNFSe(
-  Response: TNFSeCancelaNFSeResponse);
-var
-  AErro: TNFSeEventoCollectionItem;
-  Emitente: TEmitenteConfNFSe;
-  jo: TACBrJSONObject;
-begin
-  if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod108;
-    AErro.Descricao := ACBrStr(Desc108);
-    Exit;
-  end;
-
-  if EstaVazio(Response.InfCancelamento.MotCancelamento) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod110;
-    AErro.Descricao := ACBrStr(Desc110);
-    Exit;
-  end;
-
-  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
-
-  jo := TACBrJSONObject.Create;
-  try
-    with Response.InfCancelamento do
-      jo
-        .AddPairJSONObject('DadosNota', EmptyStr)
-        .AsJSONObject['DadosNota']
-          .AddPair('Numero', StrToIntDef(NumeroNFSe, 0))
-          .AddPair('Cancelamento', TACBrJSONObject.Create
-                                     .AddPair('Motivo', MotCancelamento))
-          .AddPair('Prestador', TACBrJSONObject.Create
-                                  .AddPair('InscricaoMunicipal', StrToIntDef(OnlyNumber(Emitente.InscMun), 0)));
-    Response.ArquivoEnvio := jo.ToJSON;
-  finally
-    jo.Free;
-  end;
-
-  FpMethod := 'POST';
-  FpPath := '';
-end;
-
-procedure TACBrNFSeProviderAspec.TratarRetornoCancelaNFSe
-  (Response: TNFSeCancelaNFSeResponse);
-var
-  jDocument, jNfse: TACBrJSONObject;
-  AErro: TNFSeEventoCollectionItem;
-//  ANota: TNotaFiscal;
-begin
-  if Response.ArquivoRetorno = '' then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod201;
-    AErro.Descricao := ACBrStr(Desc201);
-    Exit
-  end;
-
-  jDocument := TACBrJSONObject.Parse(Response.ArquivoRetorno);
-
-  try
-    try
-      ProcessarMensagemDeErros(jDocument, Response);
-      Response.Sucesso := (Response.Erros.Count = 0);
-
-      if Response.Sucesso then
-      begin
-        jNfse := jDocument.AsJSONObject['DadosNfse'];
-
-        if Assigned(jNfse) then
-        begin
-          with Response do
-          begin
-            NumeroNota := jNfse.AsString['Numero'];
-            DataCanc := jNfse.AsISODate['DataCancelamento'];
-          end;
-        end;
-      end;
-    except
-      on E: Exception do
-      begin
-        Response.Sucesso := False;
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod999;
-        AErro.Descricao := ACBrStr(Desc999 + E.Message);
-      end;
-    end;
-  finally
-    FreeAndNil(jDocument);
-  end;
-end;
-
-procedure TACBrNFSeProviderAspec.PrepararSubstituiNFSe(
-  Response: TNFSeSubstituiNFSeResponse);
-begin
-  inherited;
-
-end;
-
-procedure TACBrNFSeProviderAspec.TratarRetornoSubstituiNFSe(
-  Response: TNFSeSubstituiNFSeResponse);
-begin
-  inherited;
-
-end;
-
 { TACBrNFSeXWebserviceaspec }
 
-procedure TACBrNFSeXWebserviceaspec.SetHeaders(aHeaderReq: THTTPHeader);
-begin
-//  aHeaderReq.AddHeader('Authorization',
-//             TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSChaveAutoriz);
-end;
-
-function TACBrNFSeXWebserviceaspec.GerarNFSe(const ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceAspec.GerarNFSe(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
   Result := Executar('', AMSG, [], []);
 end;
 
-function TACBrNFSeXWebserviceaspec.ConsultarNFSePorRps(const ACabecalho,
-  AMSG: String): string;
-begin
-  FPMsgOrig := AMSG;
-
-  Result := Executar('', AMSG, [], []);
-end;
-
-function TACBrNFSeXWebserviceaspec.ConsultarNFSe(const ACabecalho,
-  AMSG: String): string;
-begin
-  FPMsgOrig := AMSG;
-
-  Result := Executar('', AMSG, [], []);
-end;
-
-function TACBrNFSeXWebserviceaspec.Cancelar(const ACabecalho, AMSG: String): string;
-begin
-  FPMsgOrig := AMSG;
-
-  Result := Executar('', AMSG, [], []);
-end;
-
-function TACBrNFSeXWebserviceaspec.SubstituirNFSe(const ACabecalho,
-  AMSG: String): string;
-begin
-  FPMsgOrig := AMSG;
-
-  Result := Executar('', AMSG, [], []);
-end;
-
-function TACBrNFSeXWebserviceaspec.TratarXmlRetornado(
+function TACBrNFSeXWebserviceAspec.TratarXmlRetornado(
   const aXML: string): string;
 begin
   Result := inherited TratarXmlRetornado(aXML);

@@ -280,6 +280,7 @@ begin
     ValoresNfse.ValorIss         := ObterConteudo(AuxNode.Childrens.FindAnyNs('iss'), tcDe2);
 
     Servico.ItemListaServico := ObterConteudo(AuxNode.Childrens.FindAnyNs('servico'), tcStr);
+    Servico.xItemListaServico := ItemListaServicoDescricao(Servico.ItemListaServico);
     Servico.Discriminacao    := ObterConteudo(AuxNode.Childrens.FindAnyNs('descricao'), tcStr);
     Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
                                                     sLineBreak, [rfReplaceAll]);

@@ -246,6 +246,8 @@ begin
         if (ItemListaServico = '00.00') and (ObterConteudo(ANodes[i].Childrens.FindAnyNs('nrServico'), tcStr) <> '') then
           ItemListaServico := PadLeft(ObterConteudo(ANodes[i].Childrens.FindAnyNs('nrServico'), tcStr), 5, '0');
 
+        xItemListaServico := ItemListaServicoDescricao(ItemListaServico);
+
         ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vlServico'), tcDe2);
         Aliquota := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vlAliquota'), tcDe2);
 
@@ -279,6 +281,7 @@ begin
       if i = 0 then
       begin
         NFSe.Servico.ItemListaServico := NFSe.Servico.ItemServico[i].ItemListaServico;
+        NFSe.Servico.xItemListaServico := ItemListaServicoDescricao(NFSe.Servico.ItemListaServico);
         NFSe.Servico.Valores.Aliquota := NFSe.Servico.ItemServico[i].Aliquota;
       end;
 

@@ -279,6 +279,7 @@ begin
 
     Servico.CodigoMunicipio := ObterConteudo(ANode.Childrens.FindAnyNs('loc'), tcStr);
     Servico.ItemListaServico := ObterConteudo(ANode.Childrens.FindAnyNs('iteser1'), tcStr);
+    Servico.xItemListaServico := ItemListaServicoDescricao(Servico.ItemListaServico);
 
     if ObterConteudo(ANode.Childrens.FindAnyNs('ret'), tcStr) = 'SIM' then
       Servico.Valores.IssRetido := stRetencao

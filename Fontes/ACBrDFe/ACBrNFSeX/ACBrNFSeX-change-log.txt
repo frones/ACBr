@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/02/2025
+-- ACBrNFSeXServicos --
+[+] #TK-6682: Incluída a cidade de São Simão/GO, o provedor é Centi versão 2.02
+  Por: C4Dev
+[*] #TK-6681: A cidade de Agua Azul do Norte/PA trocou as URLs de produção.
+  Por: Joemil
+[*] #TK-6680: Acrescentado a URL de homologação para a cidade de Balsas/MA.
+  Por: Sady Martins
+
 27/02/2025
 -- PadraoNacional.GravarXml --
 [*] #TK-5828: Alteração visando contemplar a Reforma Tributária.

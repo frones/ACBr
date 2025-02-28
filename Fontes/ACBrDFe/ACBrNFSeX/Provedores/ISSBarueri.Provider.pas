@@ -469,7 +469,7 @@ end;
 procedure TACBrNFSeProviderISSBarueri.GerarMsgDadosEmitir(
   Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
 var
-  XML, NumeroRps: String;
+  XML: String;
   Emitente: TEmitenteConfNFSe;
   Registro1, Registro9, AIdentificacaoRemessa: string;
   Nota: TNotaFiscal;

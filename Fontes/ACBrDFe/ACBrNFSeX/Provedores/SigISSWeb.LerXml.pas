@@ -180,6 +180,7 @@ begin
     VerificarSeConteudoEhLista(Servico.Discriminacao);
 
     Servico.ItemListaServico := ObterConteudo(ANode.Childrens.FindAnyNs('id_codigo_servico'), tcStr);
+    Servico.xItemListaServico := ItemListaServicoDescricao(Servico.ItemListaServico);
 
     Servico.Valores.ValorServicos := ObterConteudo(ANode.Childrens.FindAnyNs('valor_nf'), tcDe2);
     Servico.Valores.ValorDeducoes := ObterConteudo(ANode.Childrens.FindAnyNs('deducao'), tcDe2);

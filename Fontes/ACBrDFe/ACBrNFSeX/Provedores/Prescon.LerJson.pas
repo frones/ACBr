@@ -231,6 +231,7 @@ begin
   begin
     Servico := NFSe.Servico;
     Servico.ItemListaServico := ObterConteudo(AuxNode.Childrens.FindAnyNs('codigo'), tcStr);
+    Servico.xItemListaServico := ItemListaServicoDescricao(Servico.ItemListaServico);
     Servico.Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('descricao'), tcStr);
     Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
                                                     sLineBreak, [rfReplaceAll]);

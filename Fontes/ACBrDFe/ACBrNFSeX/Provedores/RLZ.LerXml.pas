@@ -101,6 +101,7 @@ begin
         ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor'), tcDe2);
         DescontoIncondicionado := ObterConteudo(ANodes[i].Childrens.FindAnyNs('deducao'), tcDe2);
         ItemListaServico := ObterConteudo(ANodes[i].Childrens.FindAnyNs('codigoservico'), tcStr);
+        xItemListaServico := ItemListaServicoDescricao(ItemListaServico);
         Aliquota := ObterConteudo(ANodes[i].Childrens.FindAnyNs('aliquota'), tcDe2);
         ValorINSS := ObterConteudo(ANodes[i].Childrens.FindAnyNs('inss'), tcDe2);
         ValorTotal := ObterConteudo(ANodes[i].Childrens.FindAnyNs('total'), tcDe2);

@@ -95,6 +95,7 @@ begin
     begin
       CodigoItemServico := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ItemListaServico'), tcStr);
       ItemListaServico := NormatizarItemListaServico(CodigoItemServico);
+      xItemListaServico := ItemListaServicoDescricao(ItemListaServico);
 
       CodigoCnae := ObterConteudo(ANodes[i].Childrens.FindAnyNs('CodigoCnae'), tcStr);
       Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Descricao'), tcStr);

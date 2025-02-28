@@ -175,6 +175,7 @@ begin
           Servico.CodigoTributacaoMunicipio := jsAux.AsString['Codigo'];
           Servico.CodigoCnae := jsAux.AsString['CodigoCnae'];
           Servico.ItemListaServico := jsAux.AsString['CodigoLc116'];
+          Servico.xItemListaServico := ItemListaServicoDescricao(Servico.ItemListaServico);
         end;
       end
       else

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/02/2025
+-- WebFisco.GravarXml --
+[*] #TK-6695: Alteração visando gerar os dados da fatura.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] #TK-6696: Incluída a cidade de Laurentino/SC, o provedor é IPM versão 1.01
   Por: Willian Delan

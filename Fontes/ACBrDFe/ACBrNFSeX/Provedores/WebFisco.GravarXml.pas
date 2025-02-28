@@ -166,11 +166,25 @@ begin
 
   for i := 1 to 6 do
   begin
-    NFSeNode.AppendChild(AddNode(tcStr, '#', 'f' + IntToStr(i) + 'n', 1, 15, 1,
+    if NFSe.CondicaoPagamento.Parcelas[i].Parcela <> '' then
+      NFSeNode.AppendChild(AddNode(tcStr, '#', 'f' + IntToStr(i) + 'n', 1, 15, 1,
+                  NFSe.CondicaoPagamento.Parcelas[i].Parcela, '', True, xAtrib))
+    else
+      NFSeNode.AppendChild(AddNode(tcStr, '#', 'f' + IntToStr(i) + 'n', 1, 15, 1,
                                                          '', '', True, xAtrib));
-    NFSeNode.AppendChild(AddNode(tcStr, '#', 'f' + IntToStr(i) + 'd', 1, 10, 1,
+
+    if NFSe.CondicaoPagamento.Parcelas[i].DataVencimento > 0 then
+      NFSeNode.AppendChild(AddNode(tcDat, '#', 'f' + IntToStr(i) + 'd', 1, 10, 1,
+           NFSe.CondicaoPagamento.Parcelas[i].DataVencimento, '', True, xAtrib))
+    else
+      NFSeNode.AppendChild(AddNode(tcStr, '#', 'f' + IntToStr(i) + 'd', 1, 10, 1,
                                                          '', '', True, xAtrib));
-    NFSeNode.AppendChild(AddNode(tcStr, '#', 'f' + IntToStr(i) + 'v', 1, 12, 1,
+
+    if NFSe.CondicaoPagamento.Parcelas[i].Valor > 0 then
+      NFSeNode.AppendChild(AddNode(tcDe2, '#', 'f' + IntToStr(i) + 'v', 1, 12, 1,
+                    NFSe.CondicaoPagamento.Parcelas[i].Valor, '', True, xAtrib))
+    else
+      NFSeNode.AppendChild(AddNode(tcStr, '#', 'f' + IntToStr(i) + 'v', 1, 12, 1,
                                                          '', '', True, xAtrib));
   end;
 

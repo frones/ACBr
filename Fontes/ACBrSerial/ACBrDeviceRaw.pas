@@ -53,7 +53,7 @@ type
   public
     procedure Conectar(const APorta: String; const ATimeOutMilissegundos: Integer); override;
     procedure EnviaString(const AString: AnsiString); override;
-    
+
     procedure AcharPortasRAW(const AStringList: TStrings);
     function GetLabelPrinterIndex(APrinterName: String): Integer;
   end;
@@ -104,32 +104,31 @@ begin
 end;
 
 function TACBrDeviceRaw.GetLabelPrinterIndex(APrinterName: String): Integer;
-{$IfDef FMX}
- var
-   PrinterSys: TPrinter;
-   i: Integer;
-{$EndIf}
+var
+ PrinterSys: TPrinter;
+ {$IfDef FMX}
+  i: Integer;
+ {$EndIf}
 begin
-  {$IfDef FMX}
-   PrinterSys := Printer;
-   if Assigned(PrinterSys) then
+  Result := -1;
+  PrinterSys := Printer;
+  if Assigned(PrinterSys) then
+  begin
+    {$IfDef FMX}
      for i := 0 to PrinterSys.Count - 1 do
        if AnsiContainsText(PrinterSys.Printers[i].Title, APrinterName) then
          Exit(i);
-
-   Result := -1;
-  {$Else}
-   Result := Printer.Printers.IndexOf(APrinterName);
-  {$EndIf}
+    {$Else}
+     Result := PrinterSys.Printers.IndexOf(APrinterName)
+    {$EndIf}
+  end;
 end;
 
 function TACBrDeviceRaw.GetPrinterIndex: Integer;
 var
   PrnName: String;
   PrnIndex: Integer;
-  {$IfDef FMX}
-   PrinterSys: TPrinter;
-  {$EndIf}
+  PrinterSys: TPrinter;
 
   function RetornaNome(const ANome: string): string;
   begin
@@ -137,7 +136,7 @@ var
     Result := Copy(Result, pos('\', Result) + 1, Length(Result));
   end;
 
-  function RetornaPorta: Integer;
+  function RetornaPorta(PrinterSys: TPrinter; PrnName: String): Integer;
   {$IfDef MSWINDOWS}
    var
      I: Integer;
@@ -151,7 +150,7 @@ var
      begin
        for I := 0 to Pred(Printer{$IfNDef FMX}.Printers{$EndIf}.Count) do
        begin
-         VName := Printer.Printers[I]{$IfDef FMX}.Title{$EndIf};
+         VName := PrinterSys.Printers[I]{$IfDef FMX}.Title{$EndIf};
          if pos('\\', Copy(VName, 1, 2)) > 0 then
          begin
            if SameText(PrnName, RetornaNome(VName)) then
@@ -172,44 +171,44 @@ begin
   if (copy(UpperCase(PrnName), 1, 4) = 'RAW:') then
     PrnName := copy(PrnName, 5, Length(PrnName)) ;
 
-  if (PrnName = '*') then
+  PrinterSys := Printer;
+
+  if Assigned(PrinterSys) then
   begin
-    {$IfDef FMX}
-     PrnIndex := 0;
-     PrinterSys := Printer;
-     if Assigned(PrinterSys) then
-     begin
+    if (PrnName = '*') then
+    begin
+      {$IfDef FMX}
+       PrnIndex := 0;
        if Assigned(PrinterSys.ActivePrinter) then
        begin
          PrnName := PrinterSys.ActivePrinter.Title;
-         PrnIndex := RetornaPorta;
+         PrnIndex := RetornaPorta(PrinterSys, PrnName);
        end
        else
        begin
          if (PrinterSys.Count = 0) then
            DoException( Exception.Create(ACBrStr(cACBrDeviceSemImpressoraPadrao)));
        end;
-     end
-     else
-       DoException( Exception.Create(ACBrStr(cACBrDeviceSemImpressoraPadrao)));
-    {$Else}
-     PrnIndex := Printer.PrinterIndex;
-     if (PrnIndex < 0) then
-     begin
-       if Printer.Printers.Count > 0 then
-         PrnIndex := 0
-       else
-         DoException( Exception.Create(ACBrStr(cACBrDeviceSemImpressoraPadrao)));
-     end;
-    {$EndIf}
+      {$Else}
+       PrnIndex := PrinterSys.PrinterIndex;
+       if (PrnIndex < 0) then
+       begin
+         if PrinterSys.Printers.Count > 0 then
+           PrnIndex := 0
+         else
+           DoException( Exception.Create(ACBrStr(cACBrDeviceSemImpressoraPadrao)));
+       end;
+      {$EndIf}
+    end
+    else
+    begin
+      PrnIndex := RetornaPorta(PrinterSys, PrnName);
+      if (PrnIndex < 0) then
+        DoException( Exception.CreateFmt(ACBrStr(cACBrDeviceImpressoraNaoEncontrada), [PrnName]));
+    end;
   end
   else
-  begin
-    PrnIndex := RetornaPorta;
-
-    if (PrnIndex < 0) then
-      DoException( Exception.CreateFmt(ACBrStr(cACBrDeviceImpressoraNaoEncontrada), [PrnName]));
-  end;
+    DoException( Exception.Create(ACBrStr(cACBrDeviceSemImpressoraPadrao)));
 
   Result := PrnIndex;
   GravaLog('  '+IntToStr(Result));
@@ -219,30 +218,37 @@ end;
 {$IfDef FPC}
  procedure TACBrDeviceRaw.EnviaString(const AString: AnsiString);
  var
+   PrinterSys: TPrinter;
    PrnIndex: Integer;
    Written: integer;
    OldRawMode: Boolean;
  begin
    GravaLog('  TACBrDeviceRaw.EnviaStringFPC');
-   PrnIndex := GetPrinterIndex;
-   Printer.PrinterIndex := PrnIndex;
-   Printer.Title := GetNomeDocumento;
 
-   OldRawMode := Printer.RawMode;
-   Printer.RawMode := True;
-   try
-     Printer.BeginDoc;
-     Written := 0;
-     Printer.Write(AString[1], Length(AString), Written);
-     Printer.EndDoc;
-   finally
-     Printer.RawMode := OldRawMode;
+   PrinterSys := Printer;
+   if Assigned(PrinterSys) then
+   begin
+     PrnIndex := GetPrinterIndex;
+     PrinterSys.PrinterIndex := PrnIndex;
+     PrinterSys.Title := GetNomeDocumento;
+
+     OldRawMode := PrinterSys.RawMode;
+     PrinterSys.RawMode := True;
+     try
+       PrinterSys.BeginDoc;
+       Written := 0;
+       PrinterSys.Write(AString[1], Length(AString), Written);
+       PrinterSys.EndDoc;
+     finally
+       PrinterSys.RawMode := OldRawMode;
+     end;
    end;
  end;
 {$Else}
  {$IfDef MSWINDOWS}
   procedure TACBrDeviceRaw.EnviaString(const AString: AnsiString);
   var
+    PrinterSys: TPrinter;
     PrnIndex: Integer;
     PrnName: String;
     HandlePrn: THandle;
@@ -251,27 +257,31 @@ end;
     DocInfo1: TDocInfo1;
   begin
     GravaLog('  TACBrDeviceRaw.EnviaStringWindows');
-    PrnIndex := GetPrinterIndex;
+    PrinterSys := Printer;
 
-    PrnName := Printer.Printers[PrnIndex]{$IfDef FMX}.Title{$EndIf};
-    if not OpenPrinter(PChar(PrnName), HandlePrn, nil) then
-      DoException( Exception.CreateFmt(ACBrStr(cACBrDeviceImpressoraNaoEncontrada), [PrnName]));
+    if Assigned(PrinterSys) then
+    begin
+      PrnIndex := GetPrinterIndex;
+      PrnName := PrinterSys.Printers[PrnIndex]{$IfDef FMX}.Title{$EndIf};
+      if not OpenPrinter(PChar(PrnName), HandlePrn, nil) then
+        DoException( Exception.CreateFmt(ACBrStr(cACBrDeviceImpressoraNaoEncontrada), [PrnName]));
 
-    try
-      with DocInfo1 do
-      begin
-        DocName := GetNomeDocumento;
-        pDocName := PChar(DocName);
-        pOutputFile := Nil;
-        pDataType := 'RAW';
+      try
+        with DocInfo1 do
+        begin
+          DocName := GetNomeDocumento;
+          pDocName := PChar(DocName);
+          pOutputFile := Nil;
+          pDataType := 'RAW';
+        end;
+
+        StartDocPrinter(HandlePrn, 1, @DocInfo1);
+        WritePrinter(HandlePrn, PAnsiChar(AString), Length(AString), N);
+        EndPagePrinter(HandlePrn);
+        EndDocPrinter(HandlePrn);
+      finally
+        ClosePrinter(HandlePrn);
       end;
-
-      StartDocPrinter(HandlePrn, 1, @DocInfo1);
-      WritePrinter(HandlePrn, PAnsiChar(AString), Length(AString), N);
-      EndPagePrinter(HandlePrn);
-      EndDocPrinter(HandlePrn);
-    finally
-      ClosePrinter(HandlePrn);
     end;
   end;
  {$Else}  // Delphi, Linux

@@ -39,6 +39,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/02/2025
+-- ACBrDeviceRaw --
+[*] Ajustes para tornar o código mais resiliente, em situações que não houver uma
+    classe padrão TPrinter
+    (por: DSA)
+
+28/02/2025
 --ACBrBalTrentin--
 [-] corrigido formatsetings.
   por: Ricardo Neitzer / Revisado por: Alexandre de Paula

@@ -45,6 +45,8 @@ Símbolo : Significado
 
 28/02/2025
 -- ACBrNFSeXServicos --
+[+] #TK-6696: Incluída a cidade de Laurentino/SC, o provedor é IPM versão 1.01
+  Por: Willian Delan
 [+] #TK-6682: Incluída a cidade de São Simão/GO, o provedor é Centi versão 2.02
   Por: C4Dev
 [*] #TK-6681: A cidade de Agua Azul do Norte/PA trocou as URLs de produção.

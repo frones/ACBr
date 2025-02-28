@@ -474,7 +474,7 @@ begin
 
       end else
       begin
-        LJsonJurosObject.AddPair('valor', 3);
+        LJsonJurosObject.AddPair('codigo', 3);
         AJson.AddPair('juros', LJsonJurosObject);
       end;
    end;

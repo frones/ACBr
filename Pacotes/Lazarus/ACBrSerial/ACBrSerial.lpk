@@ -35,7 +35,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="9"/>
-    <Files Count="94">
+    <Files Count="95">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSerialReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -413,6 +413,10 @@
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrAbecsPinPad.pas"/>
         <UnitName Value="ACBrAbecsPinPad"/>
       </Item94>
+      <Item95>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBALTrentin.pas"/>
+        <UnitName Value="ACBrBALTrentin"/>
+      </Item95>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="3">

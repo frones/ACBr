@@ -167,6 +167,7 @@ contains
   ACBrWinUSBDevice in '..\..\..\Fontes\ACBrSerial\ACBrWinUSBDevice.pas',
   ACBrBALSelfCheckout in '..\..\..\Fontes\ACBrSerial\ACBrBALSelfCheckout.pas',
   ACBrBALSiciliano in '..\..\..\Fontes\ACBrSerial\ACBrBALSiciliano.pas',
-  ACBrAbecsPinPad in '..\..\..\Fontes\ACBrSerial\ACBrAbecsPinPad.pas';
+  ACBrAbecsPinPad in '..\..\..\Fontes\ACBrSerial\ACBrAbecsPinPad.pas',
+  ACBrBALTrentin in '..\..\..\Fontes\ACBrSerial\ACBrBALTrentin.pas';
 
 end.

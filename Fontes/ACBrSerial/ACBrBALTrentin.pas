@@ -32,6 +32,7 @@ implementation
 uses
   ACBrBAL,
   ACBrUtil.Strings,
+  ACBrConsts,
   DateUtils,
   StrUtils,
   Math,
@@ -101,12 +102,12 @@ begin
         Exit;
 
     { Ajustando o separador de Decimal corretamente }
-    wResposta := StringReplace(wResposta, '.', FormatSettings.DecimalSeparator, [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, ',', FormatSettings.DecimalSeparator, [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, ',', DecimalSeparator, [rfReplaceAll]);
 
     try
         { Já existe ponto decimal ? }
-        if  Pos(FormatSettings.DecimalSeparator, wResposta) > 0 then
+        if  Pos(DecimalSeparator, wResposta) > 0 then
             Result := StrToFloat(wResposta)
         else
             Result := (StrToInt(wResposta) / fpDecimais);

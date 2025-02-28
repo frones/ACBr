@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/02/2025
+-- ACBrNFSeXServicos --
+[+] #TK-6623: Incluída a cidade de Miracatu/SP, o provedor é Sistemas4R versão 2.00
+  Por: Rodrigo Guelf/Italo Giurizzato Junior
 -- WebFisco.GravarXml --
 [*] #TK-6695: Alteração visando gerar os dados da fatura.
   Por: Italo Giurizzato Junior

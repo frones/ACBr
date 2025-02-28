@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/02/2025
+-- ACBrSchemasMatera --
+[-] Correção de memory-leak
+	por: Tales Mendes de Camargo / Rev.: Alexandre de Paula
+
 05/02/2025
 -- ACBrPIXPSPInter --
 [*] Adicionado endereço Sandbox do PSP Inter

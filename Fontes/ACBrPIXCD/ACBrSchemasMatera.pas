@@ -7519,9 +7519,6 @@ end;
 constructor TMateraAliasResponseV2.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
-  faliasAccountHolder := TMateraAliasAccountHolder.Create('aliasAccountHolder');
-  fpsp := TMateraPSP.Create('psp');
-  faccountDestination := TMateraDestinationAccount.Create('accountDestination');
   faliasHolderAddress := TMateraaliasHolderAddress.Create('aliasHolderAddress');
   fpersonStatistics := TMaterapersonStatistics.Create('personStatistics');
   faliasStatistics := TMateraaliasStatistics.Create('aliasStatistics');
@@ -7530,12 +7527,10 @@ end;
 
 destructor TMateraAliasResponseV2.destroy;
 begin
-  faliasAccountHolder.Free;
-  fpsp.Free;
-  faccountDestination.Free;
   faliasHolderAddress.Free;
   fpersonStatistics.Free;
   faliasStatistics.Free;
+  inherited;
 end;
 
 procedure TMateraAliasResponseV2.Clear;

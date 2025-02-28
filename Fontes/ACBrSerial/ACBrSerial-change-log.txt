@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/02/2025
+--ACBrBalTrentin--
+[-] corrigido formatsetings.
+  por: Ricardo Neitzer / Revisado por: Alexandre de Paula
+
 10/05/2024
 -- ACBrETQ -- 
 [+] Corrigido a função GerarStreamBase64 para evitar falhas.

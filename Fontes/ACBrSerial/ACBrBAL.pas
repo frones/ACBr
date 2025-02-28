@@ -159,7 +159,7 @@ uses
   ACBrBALWeightechWT1000, ACBrBALMarelCG62XL, ACBrBALWeightechWT3000_ABS,
   ACBrBALToledo2090N, ACBrBALToledoBCS21, ACBrBALPrecision,
   ACBrBALDigitron_UL, ACBrBALLibratekWT3000IR, ACBrBALToledoTi420,
-  ACBrBALWeightechWT27R_ETH, ACBrBALCapital, ACBrBALMarte, ACBrBalLenkeLK2500,
+  ACBrBALWeightechWT27R_ETH, ACBrBALCapital, ACBrBALMarte, ACBrBALLenkeLK2500,
   ACBrBALWeighTRUTest, ACBrBALUranoUDC, ACBrBALSiciliano, ACBrBALTrentin, ACBrUtil.Strings,
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF};
 

@@ -160,39 +160,42 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="btnLimparLista" min="-2" pref="129" max="-2" attributes="0"/>
+                          <Component id="btnValidarRegra" max="32767" attributes="0"/>
+                          <Component id="btnCarregarIni" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnImprimir" alignment="0" pref="154" max="32767" attributes="0"/>
+                          <Component id="btnCriarEnviar" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="btnImprimirPDF" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnEnviarEmail" pref="147" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="btnValidarRegra" max="32767" attributes="0"/>
-                                  <Component id="btnCarregarIni" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnImprimir" alignment="0" pref="151" max="32767" attributes="0"/>
-                                  <Component id="btnCriarEnviar" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jButton2" max="32767" attributes="0"/>
+                                  <Component id="btnEnviarSincrono" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="btnAssinar" min="-2" pref="129" max="-2" attributes="0"/>
+                                  <Component id="btnEnviarAssincrono" alignment="1" min="-2" pref="129" max="-2" attributes="0"/>
+                                  <Component id="btnCarregarXml" min="-2" pref="129" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="btnSalvarPDFStream" max="32767" attributes="0"/>
+                                  <Component id="btnAssinar" pref="129" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="btnGerarChave" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <Component id="btnImprimirPDF" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnEnviarEmail" pref="140" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="jButton2" max="32767" attributes="0"/>
-                                          <Component id="btnEnviarSincrono" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="btnEnviarAssincrono" alignment="1" min="-2" pref="129" max="-2" attributes="0"/>
-                                          <Component id="btnCarregarXml" min="-2" pref="129" max="-2" attributes="0"/>
-                                      </Group>
+                                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                      <Component id="btnLimparLista" min="-2" pref="129" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -231,8 +234,11 @@
                           <Component id="btnGerarChave" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnLimparLista" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="35" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnLimparLista" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnSalvarPDFStream" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="33" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -342,6 +348,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="btnSalvarPDFStream">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Salvar PDF Stream"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarPDFStreamActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel15">
@@ -369,7 +383,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnConsultaChave" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="43" max="32767" attributes="0"/>
+                      <EmptySpace pref="55" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -453,13 +467,13 @@
                           <Component id="btnImprimirEvento" max="32767" attributes="0"/>
                           <Component id="btnCarregarEvento" max="32767" attributes="0"/>
                           <Component id="btnCancelarNFe" max="32767" attributes="0"/>
-                          <Component id="btnEnviarEmailEvento" alignment="0" pref="151" max="32767" attributes="0"/>
+                          <Component id="btnEnviarEmailEvento" alignment="0" pref="162" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnEnviarEvento" pref="152" max="32767" attributes="0"/>
-                          <Component id="btnLimparListaEvento" pref="152" max="32767" attributes="0"/>
-                          <Component id="btnImprimirEventoPDF" alignment="0" pref="152" max="32767" attributes="0"/>
+                          <Component id="btnEnviarEvento" pref="162" max="32767" attributes="0"/>
+                          <Component id="btnLimparListaEvento" pref="162" max="32767" attributes="0"/>
+                          <Component id="btnImprimirEventoPDF" alignment="0" pref="162" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="144" max="-2" attributes="0"/>
                   </Group>
@@ -634,7 +648,7 @@
                       <Component id="btnDFePorNSU" min="-2" pref="135" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnDFePorUltNSU" min="-2" pref="135" max="-2" attributes="0"/>
-                      <EmptySpace pref="35" max="32767" attributes="0"/>
+                      <EmptySpace pref="56" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -781,7 +795,7 @@
                                           <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="0" pref="83" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="93" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -1045,7 +1059,7 @@
                                           <Component id="ckbSalvarSOAP" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="ckbVisualizar" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="0" pref="58" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="68" max="32767" attributes="0"/>
                                   </Group>
                                   <Component id="jPanel20" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jPanel23" alignment="0" max="32767" attributes="0"/>
@@ -1650,7 +1664,7 @@
                                       <Component id="jLabel30" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel31" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="0" pref="192" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="204" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
@@ -1770,7 +1784,7 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="0" pref="155" max="32767" attributes="0"/>
+                                              <EmptySpace min="0" pref="165" max="32767" attributes="0"/>
                                           </Group>
                                           <Component id="txtArqNFe" alignment="0" max="32767" attributes="0"/>
                                       </Group>
@@ -1781,7 +1795,7 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="0" pref="109" max="32767" attributes="0"/>
+                                              <EmptySpace min="0" pref="119" max="32767" attributes="0"/>
                                           </Group>
                                           <Component id="txtArqInu" alignment="0" max="32767" attributes="0"/>
                                       </Group>
@@ -1806,7 +1820,7 @@
                                           <Component id="txtSalvarXMLDistribuicao" alignment="0" max="32767" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="0" pref="136" max="32767" attributes="0"/>
+                                              <EmptySpace min="0" pref="146" max="32767" attributes="0"/>
                                           </Group>
                                           <Component id="txtArqEvento" alignment="0" max="32767" attributes="0"/>
                                       </Group>
@@ -2167,7 +2181,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="rdbRetrato" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="124" max="32767" attributes="0"/>
+                          <EmptySpace pref="130" max="32767" attributes="0"/>
                           <Component id="rdbPaisagem" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
@@ -2565,7 +2579,7 @@
                                       <Component id="ckbSSL" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="ckbTLS" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="0" pref="117" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="129" max="32767" attributes="0"/>
                               </Group>
                               <Component id="txtSenha" alignment="0" max="32767" attributes="0"/>
                           </Group>

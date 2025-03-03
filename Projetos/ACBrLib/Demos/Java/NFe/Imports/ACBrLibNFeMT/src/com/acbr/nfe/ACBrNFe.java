@@ -94,6 +94,8 @@ public final class ACBrNFe extends ACBrLibBase {
     int NFE_Assinar(Pointer libHandler);
 
     int NFE_Validar(Pointer libHandler);
+    
+    int NFE_SalvarPDF(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
 
     int NFE_ValidarRegrasdeNegocios( Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize );
 
@@ -319,6 +321,17 @@ public final class ACBrNFe extends ACBrLibBase {
     int ret = ACBrNFeLib.INSTANCE.NFE_Validar(getHandle());
     checkResult( ret );
   }
+  
+  public String salvarPDF() throws Exception {
+    ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+    IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+    int ret = ACBrNFeLib.INSTANCE.NFE_SalvarPDF(getHandle(), buffer, bufferLen);
+    checkResult(ret);
+
+    return processResult(buffer, bufferLen);
+  }   
+  
 
   public String validarRegrasdeNegocios() throws Exception {
     ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );

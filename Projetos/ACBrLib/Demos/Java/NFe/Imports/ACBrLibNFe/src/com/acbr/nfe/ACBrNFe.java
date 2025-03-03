@@ -92,6 +92,8 @@ public final class ACBrNFe extends ACBrLibBase {
         int NFE_Assinar();
 
         int NFE_Validar();
+        
+        int NFE_SalvarPDF(ByteBuffer buffer, IntByReference bufferSize);
 
         int NFE_ValidarRegrasdeNegocios(ByteBuffer buffer, IntByReference bufferSize);
 
@@ -324,6 +326,16 @@ public final class ACBrNFe extends ACBrLibBase {
 
         return processResult(buffer, bufferLen);
     }
+    
+        public String salvarPDF() throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = ACBrNFeLib.INSTANCE.NFE_SalvarPDF(buffer, bufferLen);
+        checkResult(ret);
+        return processResult(buffer, bufferLen);
+    }   
+
 
     public String verificarAssinatura() throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
@@ -558,6 +570,7 @@ public final class ACBrNFe extends ACBrLibBase {
         int ret = ACBrNFeLib.INSTANCE.NFE_ImprimirPDF();
         checkResult(ret);
     }
+    
 
     public void imprimirEvento(String eArquivoXmlNFe, String eArquivoXmlEvento) throws Exception {
         int ret = ACBrNFeLib.INSTANCE.NFE_ImprimirEvento(toUTF8(eArquivoXmlNFe), toUTF8(eArquivoXmlEvento));

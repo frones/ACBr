@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/03/2025
+-- PadraoNacional.Provider --
+[*] Melhorias no retorno dos eventos para identificar que a nota foi cancelada.
+  Por: Italo Giurizzato Junior
+
 28/02/2025
 -- ACBrNFSeXServicos --
 [+] #TK-6623: Incluída a cidade de Miracatu/SP, o provedor é Sistemas4R versão 2.00

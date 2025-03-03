@@ -778,6 +778,19 @@ begin
             Response.idEvento := IDEvento;
             Response.tpEvento := StrTotpEvento(Ok, Copy(IDEvento, 51, 6));
 
+            case Response.tpEvento of
+              teCancelamento:
+                begin
+                  Response.SucessoCanc := True;
+                  Response.DescSituacao := 'Nota Cancelada';
+                end
+            else
+              begin
+                Response.SucessoCanc := False;
+                Response.DescSituacao := '';
+              end;
+            end;
+
             ANode := ANode.Childrens.FindAnyNs('pedRegEvento');
             ANode := ANode.Childrens.FindAnyNs('infPedReg');
 

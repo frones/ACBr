@@ -19,7 +19,7 @@
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
       <RevisionNr Value="2"/>
-      <BuildNr Value="201"/>
+      <BuildNr Value="204"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCEP - Biblioteca para consulta Endereços e CEPs" InternalName="ACBrLibCEP" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="CEP" ProductVersion="0.0.1.30"/>
     </VersionInfo>
@@ -27,7 +27,7 @@
       <Macro1 Name="ACBrDir" Value="$Env(ACBR_HOME)"/>
       <Macro2 Name="LCLWidgetType" Value="nogui"/>
     </MacroValues>
-    <BuildModes Count="4">
+    <BuildModes Count="5">
       <Item1 Name="i386-CDECL-DEBUG" Default="True"/>
       <Item2 Name="Linux-x86_64">
         <MacroValues Count="2">
@@ -38,7 +38,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\Console\libacbrcep64"/>
+            <Filename Value="bin\Linux\CONSOLE-MT\libacbrcep64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrComum;..\..\..\..\Fontes\ACBrComum"/>
@@ -69,7 +69,43 @@
           </Other>
         </CompilerOptions>
       </Item2>
-      <Item3 Name="android-armeabi-v7a">
+      <Item3 Name="Linux-i386">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Linux\CONSOLE-MT\libacbrcep32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrComum;..\..\..\..\Fontes\ACBrComum"/>
+            <OtherUnitFiles Value="..\Comum;$(ACBrDir)\Fontes\ACBrComum;$(ACBrDir)\Fontes\ACBrDiversos;$(ACBrDir)\Fontes\ACBrOpenSSL;$(ACBrDir)\Fontes\ACBrTCP;$(ACBrDir)\Fontes\Terceiros\synalist;$(ACBrDir)\Fontes\Terceiros\GZIPUtils;$(ACBrDir)\Fontes\Terceiros\FastStringReplace;..\..\..\..\Fontes\Terceiros\synalist;..\..\..\..\Fontes\ACBrComum;..\..\..\..\Fontes\Terceiros\GZIPUtils;..\..\..\..\Fontes\Terceiros\FastStringReplace;..\..\..\..\Fontes\ACBrOpenSSL;..\..\..\..\Fontes\ACBrTCP"/>
+            <UnitOutputDirectory Value="lib\CONSOLE-$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <DebugInfoType Value="dsDwarf3"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item3>
+      <Item4 Name="android-armeabi-v7a">
         <MacroValues Count="3">
           <Macro1 Name="ACBrDir" Value="$Env(ACBR_HOME)"/>
           <Macro2 Name="LCLWidgetType" Value="nogui"/>
@@ -115,8 +151,8 @@
 -XParm-linux-androideabi-"/>
           </Other>
         </CompilerOptions>
-      </Item3>
-      <Item4 Name="android-arm64-v8a">
+      </Item4>
+      <Item5 Name="android-arm64-v8a">
         <MacroValues Count="3">
           <Macro1 Name="ACBrDir" Value="$Env(ACBR_HOME)"/>
           <Macro2 Name="LCLWidgetType" Value="nogui"/>
@@ -159,7 +195,7 @@
 -XPaarch64-linux-android-"/>
           </Other>
         </CompilerOptions>
-      </Item4>
+      </Item5>
       <SharedMatrixOptions Count="3">
         <Item1 ID="426319760571" Modes="android-armeabi-v7a,Linux-x86_64,i386-CDECL-DEBUG,android-arm64-v8a" Type="IDEMacro" MacroName="ACBrDir" Value="$Env(ACBR_HOME)"/>
         <Item2 ID="674480765109" Modes="i386-CDECL-DEBUG,Linux-x86_64,android-armeabi-v7a,android-arm64-v8a" Type="IDEMacro" MacroName="LCLWidgetType" Value="nogui"/>

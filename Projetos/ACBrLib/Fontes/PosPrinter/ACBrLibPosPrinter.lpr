@@ -41,7 +41,7 @@ uses
     cmem, // the c memory manager is on some systems much faster for multi-threading
    {$ENDIF}
   {$ENDIF}
-  Interfaces, printer4lazarus, sysutils, Classes,
+  Interfaces, sysutils, Classes,
   ACBrLibConfig, ACBrLibComum,
   {$IFDEF MT}ACBrLibPosPrinterMT{$ELSE}ACBrLibPosPrinterST{$ENDIF},
   ACBrLibPosPrinterConfig, ACBrLibPosPrinterDataModule;

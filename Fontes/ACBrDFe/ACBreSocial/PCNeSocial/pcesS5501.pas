@@ -59,32 +59,87 @@ uses
   pcesCommon, pcesConversaoeSocial, Dialogs;
 
 type
-  TS5501 = class;
-  TEvtTribProcTrab = class;
-  TIdeProc = class;
-  TInfoTributosCollection = class;
-  TInfoTributosCollectionItem = class;
-  TInfoCRContribCollection = class;
-  TInfoCRContribCollectionItem = class;
-  TInfoCRIRRFCollection = class;
-  TInfoCRIRRFCollectionItem = class;
-
-  TS5501 = class(TInterfacedObject, IEventoeSocial)
+  TInfoCRContribCollectionItem = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FEvtTribProcTrab: TEvtTribProcTrab;
+    FtpCR: string;
+    FvrCR: double;
+  public
+    property tpCR: string read FtpCR write FtpCR;
+    property vrCR: double read FvrCR write FvrCR;
+  end;
 
-    function GetXml : string;
-    procedure SetXml(const Value: string);
-    function GetTipoEvento : TTipoEvento;
+  TInfoCRContribCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TInfoCRContribCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfoCRContribCollectionItem);
+  public
+    function New: TInfoCRContribCollectionItem;
+    property Items[Index: Integer]: TInfoCRContribCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TInfoTributosCollectionItem = class(TObject)
+  private
+    FPerRef: string;
+    FinfoCRContrib: TInfoCRContribCollection;
+
+    function getInfoCRContrib(): TInfoCRContribCollection;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    function instInfoCRContrib(): boolean;
+
+    property perRef: string read FPerRef write FPerRef;
+    property infoCRContrib: TInfoCRContribCollection read getInfoCRContrib write FinfoCRContrib;
+ end;
+
+  TInfoTributosCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TInfoTributosCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfoTributosCollectionItem);
+  public
+    function New: TInfoTributosCollectionItem;
+    property Items[Index: Integer]: TInfoTributosCollectionItem read GetItem write SetItem;
+  end;
+
+  TInfoCRIRRFCollectionItem = class(TObject)
+  private
+    FtpCR: string;
+    FvrCR: double;
+  public
+    property tpCR: string read FtpCR write FtpCR;
+    property vrCR: double read FvrCR write FvrCR;
+  end;
+
+  TInfoCRIRRFCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TInfoCRIRRFCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfoCRIRRFCollectionItem);
+  public
+    function New: TInfoCRIRRFCollectionItem;
+    property Items[Index: Integer]: TInfoCRIRRFCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TIdeProc = class(TObject)
+  private
+    FNrProcTrab: string;
+    FPerApur: string;
+    FInfoTributos: TInfoTributosCollection;
+    FinfoCRIRRF: TInfoCRIRRFCollection;
+
+    function getInfoTributos(): TInfoTributosCollection;
+    function getInfoCRIRRF(): TInfoCRIRRFCollection;
   public
     constructor Create;
     destructor Destroy; override;
 
-    function GetEvento : TObject;
-    property Xml: String read GetXml write SetXml;
-    property TipoEvento: TTipoEvento read GetTipoEvento;
-    property evtTribProcTrab: TEvtTribProcTrab read FEvtTribProcTrab write FEvtTribProcTrab;
+    function instInfoTributos(): boolean;
+    function instInfoCRIRRF(): boolean;
+
+    property nrProcTrab: string read FNrProcTrab write FNrProcTrab;
+    property perApur: string read FPerApur write FPerApur;
+    property infoTributos: TInfoTributosCollection read getInfoTributos write FInfoTributos;
+    property infoCRIRRF: TInfoCRIRRFCollection read getInfoCRIRRF write FinfoCRIRRF;
   end;
 
   TEvtTribProcTrab = class(TObject)
@@ -111,87 +166,22 @@ type
     property VersaoDF: TVersaoeSocial read FVersaoDF write FVersaoDF;
   end;
 
-  TIdeProc = class(TObject)
+  TS5501 = class(TInterfacedObject, IEventoeSocial)
   private
-    FNrProcTrab: string;
-    FPerApur: string;
-    FInfoTributos: TInfoTributosCollection;
-    FinfoCRIRRF: TInfoCRIRRFCollection;
+    FTipoEvento: TTipoEvento;
+    FEvtTribProcTrab: TEvtTribProcTrab;
 
-    function getInfoTributos(): TInfoTributosCollection;
-    function getInfoCRIRRF(): TInfoCRIRRFCollection;
+    function GetXml : string;
+    procedure SetXml(const Value: string);
+    function GetTipoEvento : TTipoEvento;
   public
     constructor Create;
     destructor Destroy; override;
 
-    function instInfoTributos(): boolean;
-    function instInfoCRIRRF(): boolean;
-
-    property nrProcTrab: string read FNrProcTrab write FNrProcTrab;
-    property perApur: string read FPerApur write FPerApur;
-    property infoTributos: TInfoTributosCollection read getInfoTributos write FInfoTributos;
-    property infoCRIRRF: TInfoCRIRRFCollection read getInfoCRIRRF write FinfoCRIRRF;
-  end;
-
-  TInfoTributosCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TInfoTributosCollectionItem;
-    procedure SetItem(Index: Integer; Value: TInfoTributosCollectionItem);
-  public
-    function New: TInfoTributosCollectionItem;
-    property Items[Index: Integer]: TInfoTributosCollectionItem read GetItem write SetItem;
-  end;
-
-  TInfoTributosCollectionItem = class(TObject)
-  private
-    FPerRef: string;
-    FinfoCRContrib: TInfoCRContribCollection;
-
-    function getInfoCRContrib(): TInfoCRContribCollection;
-  public
-    constructor Create;
-    destructor  Destroy; override;
-
-    function instInfoCRContrib(): boolean;
-
-    property perRef: string read FPerRef write FPerRef;
-    property infoCRContrib: TInfoCRContribCollection read getInfoCRContrib write FinfoCRContrib;
- end;
-
-  TInfoCRContribCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TInfoCRContribCollectionItem;
-    procedure SetItem(Index: Integer; Value: TInfoCRContribCollectionItem);
-  public
-    function New: TInfoCRContribCollectionItem;
-    property Items[Index: Integer]: TInfoCRContribCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TInfoCRContribCollectionItem = class(TObject)
-  private
-    FtpCR: string;
-    FvrCR: double;
-  public
-    property tpCR: string read FtpCR write FtpCR;
-    property vrCR: double read FvrCR write FvrCR;
-  end;
-
-  TInfoCRIRRFCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TInfoCRIRRFCollectionItem;
-    procedure SetItem(Index: Integer; Value: TInfoCRIRRFCollectionItem);
-  public
-    function New: TInfoCRIRRFCollectionItem;
-    property Items[Index: Integer]: TInfoCRIRRFCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TInfoCRIRRFCollectionItem = class(TObject)
-  private
-    FtpCR: string;
-    FvrCR: double;
-  public
-    property tpCR: string read FtpCR write FtpCR;
-    property vrCR: double read FvrCR write FvrCR;
+    function GetEvento : TObject;
+    property Xml: String read GetXml write SetXml;
+    property TipoEvento: TTipoEvento read GetTipoEvento;
+    property evtTribProcTrab: TEvtTribProcTrab read FEvtTribProcTrab write FEvtTribProcTrab;
   end;
 
 implementation
@@ -396,7 +386,6 @@ var
   ok: Boolean;
   i, j: Integer;
 begin
-  Result := False;
   try
     FXML := Leitor.Arquivo;
 

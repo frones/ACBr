@@ -58,34 +58,67 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2416Collection = class;
-  TS2416CollectionItem = class;
-  TEvtCdBenAlt = class;
-  TIdeBeneficio = class;
-  TInfoBenAlteracao = class;
-  TDadosBeneficio = class;
-  TInfoPenMorte = class;
-  TSuspensao = class;
-
-  TS2416Collection = class(TeSocialCollection)
+  TIdeBeneficio = class(TObject)
   private
-    function GetItem(Index: Integer): TS2416CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2416CollectionItem);
+    FCpfBenef: string;
+    FNrBeneficio: string;
   public
-    function Add: TS2416CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2416CollectionItem;
-    property Items[Index: Integer]: TS2416CollectionItem read GetItem write SetItem; default;
+    property cpfBenef: String read FCpfBenef write FCpfBenef;
+    property nrBeneficio: string read FNrBeneficio write FNrBeneficio;
   end;
 
-  TS2416CollectionItem = class(TObject)
+  TInfoPenMorte = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FEvtCdBenAlt : TEvtCdBenAlt;
+    FTpTpPenMorte: tpTpPenMorte;
   public
-    constructor Create(AOwner: TComponent);
+    property tpPenMorte: tpTpPenMorte read FTpTpPenMorte write FTpTpPenMorte;
+  end;
+
+  TSuspensao = class(TObject)
+  private
+    FMtvSuspensao: tpMtvSuspensao;
+    FDscSuspensao: string;
+  public
+    property mtvSuspensao: tpMtvSuspensao read FMtvSuspensao write FMtvSuspensao;
+    property dscSuspensao: string read FDscSuspensao write FDscSuspensao;
+  end;
+
+  TDadosBeneficio = class(TObject)
+  private
+    FTpBeneficio: integer;
+    FTpPlanRP: tpPlanRP;
+    FDsc: String;
+    FIndSuspensao: TpSimNao;
+    FInfoPenMorte: TInfoPenMorte;
+    FSuspensao: TSuspensao;
+
+    function getInfoPenMorte(): TInfoPenMorte;
+    function getSuspensao(): TSuspensao;
+  public
+    constructor Create;
     destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtCdBenAlt: TEvtCdBenAlt read FEvtCdBenAlt write FEvtCdBenAlt;
+
+    function infoPenMorteInst(): Boolean;
+    function SuspensaoInst(): Boolean;
+
+    property tpBeneficio: integer read FTpBeneficio write FTpBeneficio;
+    property tpPlanRP: tpPlanRP read FTpPlanRP write FTpPlanRP;
+    property dsc: String read FDsc write FDsc;
+    property indSuspensao: TpSimNao read FIndSuspensao write FIndSuspensao;
+    property infoPenMorte: TInfoPenMorte read getInfoPenMorte write FInfoPenMorte;
+    property suspensao: TSuspensao read getSuspensao write FSuspensao;
+  end;
+
+  TInfoBenAlteracao = class(TObject)
+  private
+    FDtAltBeneficio: TDateTime;
+    FDadosBeneficio: TDadosBeneficio;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property dtAltBeneficio: TDateTime read FDtAltBeneficio write FDtAltBeneficio;
+    property dadosBeneficio: TDadosBeneficio read FDadosBeneficio write FDadosBeneficio;
   end;
 
   TEvtCdBenAlt = class(TeSocialEvento)
@@ -113,67 +146,25 @@ type
     property InfoBenAlteracao: TInfoBenAlteracao read FInfoBenAlteracao write FInfoBenAlteracao;
   end;
 
-  TIdeBeneficio = class(TObject)
+  TS2416CollectionItem = class(TObject)
   private
-    FCpfBenef: string;
-    FNrBeneficio: string;
+    FTipoEvento: TTipoEvento;
+    FEvtCdBenAlt : TEvtCdBenAlt;
   public
-    property cpfBenef: String read FCpfBenef write FCpfBenef;
-    property nrBeneficio: string read FNrBeneficio write FNrBeneficio;
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtCdBenAlt: TEvtCdBenAlt read FEvtCdBenAlt write FEvtCdBenAlt;
   end;
 
-  TInfoBenAlteracao = class(TObject)
+  TS2416Collection = class(TeSocialCollection)
   private
-    FDtAltBeneficio: TDateTime;
-    FDadosBeneficio: TDadosBeneficio;
+    function GetItem(Index: Integer): TS2416CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2416CollectionItem);
   public
-    constructor Create;
-    destructor Destroy; override;
-
-    property dtAltBeneficio: TDateTime read FDtAltBeneficio write FDtAltBeneficio;
-    property dadosBeneficio: TDadosBeneficio read FDadosBeneficio write FDadosBeneficio;
-  end;
-  
-  TDadosBeneficio = class(TObject)
-  private
-    FTpBeneficio: integer;
-    FTpPlanRP: tpPlanRP;
-    FDsc: String;
-    FIndSuspensao: TpSimNao;
-    FInfoPenMorte: TInfoPenMorte;
-    FSuspensao: TSuspensao;
-    
-    function getInfoPenMorte(): TInfoPenMorte;
-    function getSuspensao(): TSuspensao;
-  public
-    constructor Create;
-    destructor Destroy; override;
-    
-    function infoPenMorteInst(): Boolean;
-    function SuspensaoInst(): Boolean;
-    
-    property tpBeneficio: integer read FTpBeneficio write FTpBeneficio;
-    property tpPlanRP: tpPlanRP read FTpPlanRP write FTpPlanRP;
-    property dsc: String read FDsc write FDsc;
-    property indSuspensao: TpSimNao read FIndSuspensao write FIndSuspensao;
-    property infoPenMorte: TInfoPenMorte read getInfoPenMorte write FInfoPenMorte;
-    property suspensao: TSuspensao read getSuspensao write FSuspensao;
-  end;
-  
-  TInfoPenMorte = class(TObject)
-  private
-    FTpTpPenMorte: tpTpPenMorte;
-  public
-    property tpPenMorte: tpTpPenMorte read FTpTpPenMorte write FTpTpPenMorte;
-  end;
-  
-  TSuspensao = class(TObject)
-  private
-    FMtvSuspensao: tpMtvSuspensao;
-    FDscSuspensao: string;
-  public
-    property mtvSuspensao: tpMtvSuspensao read FMtvSuspensao write FMtvSuspensao;
-    property dscSuspensao: string read FDscSuspensao write FDscSuspensao;
+    function Add: TS2416CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2416CollectionItem;
+    property Items[Index: Integer]: TS2416CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -387,9 +378,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtCdBenAlt');
-
-//    Validar(schevtCdBenAlt);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -401,7 +389,7 @@ function TEvtCdBenAlt.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   Ok: Boolean;
-  sSecao, sFim: String;
+  sSecao: String;
 begin
   Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
 

@@ -60,103 +60,17 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2500Collection = class;
-  TS2500CollectionItem = class;
-  TEvtProcTrab = class;
-  TIdeEmpregadorS2500 = class;
-  TIdeResp = class;
-  TInfoProcesso = class;
-  TDadosCompl = class;
-  TInfoProcJud = class;
-  TInfoCCP = class;
-  TIdeTrab = class;
-  TDependenteCollectionS2500 = class;
-  TDependenteCollectionItemS2500 = class;
-  TInfoContrCollection = class;
-  TInfoContrCollectionItem = class;
-  TInfoCompl = class;
-  TRemuneracaoCollection = class;
-  TRemuneracaoCollectionItem = class;
-  TInfoVinc = class;
-  TInfoDeslig = class;
-  TInfoTerm = class;
-  TMudCategAtivCollection = class;
-  TMudCategAtivCollectionItem = class;
-  TUnicContrCollection = class;
-  TUnicContrCollectionItem = class;
-  TIdeEstab = class;
-  TInfoVlr = class;
-  TAbonoCollection = class;
-  TAbonoCollectionItem = class;
-  TIdePeriodoCollection = class;
-  TIdePeriodoCollectionItem = class;
-  TbaseCalculo = class;
-  TInfoFGTS = class;
-  TBaseMudCateg = class;
-
-  TS2500Collection = class(TeSocialCollection)
+  TIdeResp = class(TObject)
   private
-    function GetItem(Index: Integer): TS2500CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2500CollectionItem);
+    FtpInsc: tpTpInsc;
+    FnrInsc: string;
+    FdtAdmRespDir: TDateTime;
+    FmatRespDir: string;
   public
-    function New: TS2500CollectionItem;
-    property Items[Index: Integer]: TS2500CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS2500CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtProcTrab: TEvtProcTrab;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtProcTrab: TEvtProcTrab read FEvtProcTrab write FEvtProcTrab;
-  end;
-
-  TEvtProcTrab = class(TESocialEvento)
-  private
-    FideEvento: TIdeEvento2;
-    FideEmpregador: TIdeEmpregadorS2500;
-    FideTrab: TIdeTrab;
-    FinfoProcesso: TInfoProcesso;
-
-    procedure GerarIdeEmpregador(obj: TIdeEmpregadorS2500);
-    procedure GerarIdeResp(obj: TIdeResp);
-    procedure GerarInfoProcesso(obj: TinfoProcesso);
-    procedure GerarIdeTrab(Obj: TideTrab);
-    procedure GerarInfoContr(obj: TinfoContrCollection);
-    procedure GerarDependente(obj: TDependenteCollectionS2500);
-    procedure GerarDadosCompl(Obj: TdadosCompl);
-    procedure GerarInfoCompl(obj: TinfoCompl);
-    procedure GerarInfoProcJud(Obj: TInfoProcJud);
-    procedure GerarInfoCCP(Obj: TInfoCCP);
-    procedure GerarRemuneracao(obj: TRemuneracaoCollection);
-    procedure GerarInfoVinc(obj: TinfoVinc);
-    procedure GerarInfoTerm(obj: TinfoTerm);
-    procedure GerarSucessaoVinc(obj: TsucessaoVinc);
-    procedure GerarInfoDeslig(obj: TinfoDeslig);
-    procedure GerarMudCategAtiv(obj: TMudCategAtivCollection);
-    procedure GerarUnicContr(obj: TUnicContrCollection);
-    procedure GerarIdeEstab(obj: TIdeEstab);
-    procedure GerarInfoVlr(obj: TInfoVlr);
-    procedure GerarAbono(obj: TAbonoCollection);
-    procedure GerarIdePeriodo(obj: TIdePeriodoCollection);
-    procedure GerarBaseCalculo(obj: TbaseCalculo);
-    procedure GerarInfoFGTS(obj: TinfoFGTS);
-    procedure GerarBaseMudCateg(obj: TbaseMudCateg);
-  public
-    constructor Create(AACBreSocial: TObject); override;
-    destructor  Destroy; override;
-
-    function GerarXML: boolean; override;
-    function LerArqIni(const AIniString: String): Boolean;
-
-    property ideEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-    property ideEmpregador: TIdeEmpregadorS2500 read FIdeEmpregador write FIdeEmpregador;
-    property ideTrab: TIdeTrab read FIdeTrab write FIdeTrab;
-    property infoProcesso: TInfoProcesso read FInfoProcesso write FInfoProcesso;
+    property tpInsc: tpTpInsc read FTpInsc write FTpInsc;
+    property nrInsc: string read FNrInsc write FNrInsc;
+    property dtAdmRespDir: TDateTime read FdtAdmRespDir write FdtAdmRespDir;
+    property matRespDir: string read FmatRespDir write FmatRespDir;
   end;
 
   TIdeEmpregadorS2500 = class(TInscricao)
@@ -173,110 +87,6 @@ type
     property ideResp: TIdeResp read getIdeResp write FIdeResp;
   end;
 
-  TIdeResp = class(TObject)
-  private
-    FtpInsc: tpTpInsc;
-    FnrInsc: string;
-    FdtAdmRespDir: TDateTime;
-    FmatRespDir: string;
-  public
-    property tpInsc: tpTpInsc read FTpInsc write FTpInsc;
-    property nrInsc: string read FNrInsc write FNrInsc;
-    property dtAdmRespDir: TDateTime read FdtAdmRespDir write FdtAdmRespDir;
-    property matRespDir: string read FmatRespDir write FmatRespDir;
-  end;
-
-  TInfoProcesso = class(TObject)
-  private
-    Forigem: tpOrigemProc;
-    FnrProcTrab: string;
-    FobsProcTrab: string;
-    FdadosCompl: TDadosCompl;
-  public
-    constructor Create;
-    destructor  Destroy; override;
-
-    property origem: tpOrigemProc read Forigem write Forigem;
-    property nrProcTrab: string read FNrProcTrab write FNrProcTrab;
-    property obsProcTrab: string read FObsProcTrab write FObsProcTrab;
-    property dadosCompl: TDadosCompl read FDadosCompl write FDadosCompl;
-  end;
-
-  TDadosCompl = class(TObject)
-  private
-    FinfoProcJud: TInfoProcJud;
-    FinfoCCP: TInfoCCP;
-
-    function getInfoProcJud(): TInfoProcJud;
-    function getInfoCCP(): TInfoCCP;
-  public
-    constructor Create;
-    destructor  Destroy; override;
-
-    function instInfoProcJud(): boolean;
-    function instInfoCCP(): boolean;
-
-    property infoCCP: TInfoCCP read getInfoCCP write FInfoCCP;
-    property infoProcJud: TInfoProcJud read getInfoProcJud write FInfoProcJud;
-  end;
-
-  TInfoProcJud = class(TObject)
-  private
-    FdtSent: TDateTime;
-    FufVara: string;
-    FcodMunic: Integer;
-    FidVara: Integer;
-  public
-    property dtSent: TDateTime read FDtSent write FDtSent;
-    property ufVara: string read FUfVara write FUfVara;
-    property codMunic: Integer read FCodMunic write FCodMunic;
-    property idVara: Integer read FIdVara write FIdVara;
-  end;
-
-  TInfoCCP = class(TObject)
-  private
-    FdtCCP: TDateTime;
-    FtpCCP: tpTpCCP;
-    FcnpjCCP: string;
-  public
-    property dtCCP: TDateTime read FdtCCP write FdtCCP;
-    property tpCCP: tpTpCCP read FtpCCP write FtpCCP;
-    property cnpjCCP: string read FcnpjCCP write FcnpjCCP;
-  end;
-
-  TIdeTrab = class(TObject)
-  private
-    FcpfTrab: string;
-    FnmTrab: string;
-    FdtNascto: TDateTime;
-    Fdependente: TDependenteCollectionS2500;
-    FinfoContr: TInfoContrCollection;
-
-    function getDependenteS2500(): TDependenteCollectionS2500;
-    function getInfoContr(): TInfoContrCollection;
-  public
-    constructor Create;
-    destructor  Destroy; override;
-
-    function instDependenteS2500(): boolean;
-    function instInfoContr(): boolean;
-
-    property cpfTrab: string read FCpfTrab write FCpfTrab;
-    property nmTrab: string read FNmTrab write FNmTrab;
-    property dtNascto: TDateTime read FDtNascto write FDtNascto;
-    property dependente: TDependenteCollectionS2500 read getDependenteS2500 write FDependente;
-    property infoContr: TInfoContrCollection read getInfoContr write FInfoContr;
-  end;
-
-  TDependenteCollectionS2500 = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TDependenteCollectionItemS2500;
-    procedure SetItem(Index: Integer; Value: TDependenteCollectionItemS2500);
-  public
-    function New: TDependenteCollectionItemS2500;
-    property Items[Index: Integer]: TDependenteCollectionItemS2500 read GetItem write SetItem; default;
-  end;
-
   TDependenteCollectionItemS2500 = class(TObject)
   private
     FcpfDep: string;
@@ -288,94 +98,13 @@ type
     property descDep: string read FDescDep write FDescDep;
   end;
 
-  TInfoContrCollection = class(TACBrObjectList)
+  TDependenteCollectionS2500 = class(TACBrObjectList)
   private
-    function GetItem(Index: Integer): TInfoContrCollectionItem;
-    procedure SetItem(Index: Integer; Value: TInfoContrCollectionItem);
+    function GetItem(Index: Integer): TDependenteCollectionItemS2500;
+    procedure SetItem(Index: Integer; Value: TDependenteCollectionItemS2500);
   public
-    function New: TInfoContrCollectionItem;
-    property Items[Index: Integer]: TInfoContrCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TInfoContrCollectionItem = class(TObject)
-  private
-    FtpContr: tpTpContrS2500;
-    FindContr: tpSimNao;
-    FdtAdmOrig: TDateTime;
-    FindReint: tpSimNaoFacultativo;
-    FindCateg: tpSimNao;
-    FindNatAtiv: tpSimNao;
-    FindMotDeslig: tpSimNao;
-    FindUnic: tpSimNaoFacultativo;
-    Fmatricula: string;
-    FcodCateg: Integer;
-    FdtInicio: TDateTime;
-    FinfoCompl: TInfoCompl;
-    FmudCategAtiv: TMudCategAtivCollection;
-    FunicContr: TUnicContrCollection;
-    FideEstab: TIdeEstab;
-
-    function getMudCategAtiv(): TMudCategAtivCollection;
-    function getInfoCompl(): TInfoCompl;
-    function getUnicContr(): TUnicContrCollection;
-  public
-    constructor Create;
-    destructor  Destroy; override;
-
-    function instMudCategAtiv(): boolean;
-    function instInfoCompl(): boolean;
-    function instUnicContr(): boolean;
-
-    property tpContr: tpTpContrS2500 read FTpContr write FTpContr;
-    property indContr: tpSimNao read FIndContr write FIndContr;
-    property dtAdmOrig: TDateTime read FDtAdmOrig write FDtAdmOrig;
-    property indReint: tpSimNaoFacultativo read FIndReint write FIndReint;
-    property indCateg: tpSimNao read FIndCateg write FIndCateg;
-    property indNatAtiv: tpSimNao read FIndNatAtiv write FIndNatAtiv;
-    property indMotDeslig: tpSimNao read FIndMotDeslig write FIndMotDeslig;
-    property indUnic: tpSimNaoFacultativo read FIndUnic write FIndUnic;
-    property matricula: string read FMatricula write FMatricula;
-    property codCateg: Integer read FCodCateg write FCodCateg;
-    property dtInicio: TDateTime read FDtInicio write FDtInicio;
-    property infoCompl: TInfoCompl read getInfoCompl write FInfoCompl;
-    property mudCategAtiv: TMudCategAtivCollection read getMudCategAtiv write FMudCategAtiv;
-    property unicContr: TUnicContrCollection read getUnicContr write FUnicContr;
-    property ideEstab: TIdeEstab read FIdeEstab write FIdeEstab;
-  end;
-
-  TInfoCompl = class(TObject)
-  private
-    FcodCBO: string;
-    FnatAtividade: tpNatAtividade;
-    Fremuneracao: TRemuneracaoCollection;
-    FinfoVinc: TInfoVinc;
-    FinfoTerm: TInfoTerm;
-
-    function getRemuneracao(): TRemuneracaoCollection;
-    function getInfoVinc(): TInfoVinc;
-    function getInfoTerm(): TInfoTerm;
-  public
-    constructor Create;
-    destructor  Destroy; override;
-
-    function instRemuneracao(): boolean;
-    function instInfoVinc(): boolean;
-    function instInfoTerm(): boolean;
-
-    property codCBO: string read FCodCBO write FCodCBO;
-    property natAtividade: tpNatAtividade read FNatAtividade write FNatAtividade;
-    property remuneracao: TRemuneracaoCollection read getRemuneracao write FRemuneracao;
-    property infoVinc: TInfoVinc read getInfoVinc write FInfoVinc;
-    property infoTerm: TInfoTerm read getInfoTerm write FInfoTerm;
-  end;
-
-  TRemuneracaoCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TRemuneracaoCollectionItem;
-    procedure SetItem(Index: Integer; Value: TRemuneracaoCollectionItem);
-  public
-    function New: TRemuneracaoCollectionItem;
-    property Items[Index: Integer]: TRemuneracaoCollectionItem read GetItem write SetItem; default;
+    function New: TDependenteCollectionItemS2500;
+    property Items[Index: Integer]: TDependenteCollectionItemS2500 read GetItem write SetItem; default;
   end;
 
   TRemuneracaoCollectionItem = class(TRemuneracao)
@@ -389,6 +118,32 @@ type
     property vrSalFx: Double read FvrSalFx write FvrSalFx;
     property undSalFixo: tpUndSalFixo read FundSalFixo write FundSalFixo;
     property dscSalVar: string read FdscSalVar write FdscSalVar;
+  end;
+
+  TRemuneracaoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TRemuneracaoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TRemuneracaoCollectionItem);
+  public
+    function New: TRemuneracaoCollectionItem;
+    property Items[Index: Integer]: TRemuneracaoCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TInfoDeslig = class(TObject)
+  private
+    FdtDeslig: TDateTime;
+    FmtvDeslig: string;
+    FdtProjFimAPI: TDateTime;
+    FpensAlim: tpPensaoAlim;
+    FpercAliment: Double;
+    FvrAlim: Double;
+  public
+    property dtDeslig: TDateTime read FdtDeslig write FdtDeslig;
+    property mtvDeslig: string read FmtvDeslig write FmtvDeslig;
+    property dtProjFimAPI: TDateTime read FdtProjFimAPI write FdtProjFimAPI;
+    property pensAlim: tpPensaoAlim read FpensAlim write FpensAlim;
+    property percAliment: Double read FpercAliment write FpercAliment;
+    property vrAlim: Double read FvrAlim write FvrAlim;
   end;
 
   TInfoVinc = class(TObject)
@@ -425,23 +180,6 @@ type
     property observacoes: TObservacoesCollection read getObservacoes write FObservacoes;
   end;
 
-  TInfoDeslig = class(TObject)
-  private
-    FdtDeslig: TDateTime;
-    FmtvDeslig: string;
-    FdtProjFimAPI: TDateTime;
-    FpensAlim: tpPensaoAlim;
-    FpercAliment: Double;
-    FvrAlim: Double;
-  public
-    property dtDeslig: TDateTime read FdtDeslig write FdtDeslig;
-    property mtvDeslig: string read FmtvDeslig write FmtvDeslig;
-    property dtProjFimAPI: TDateTime read FdtProjFimAPI write FdtProjFimAPI;
-    property pensAlim: tpPensaoAlim read FpensAlim write FpensAlim;
-    property percAliment: Double read FpercAliment write FpercAliment;
-    property vrAlim: Double read FvrAlim write FvrAlim;
-  end;
-
   TInfoTerm = class(TObject)
   private
     FdtTerm: TDateTime;
@@ -451,13 +189,30 @@ type
     property mtvDesligTSV: string read FmtvDesligTSV write FmtvDesligTSV;
   end;
 
-  TMudCategAtivCollection = class(TACBrObjectList)
+  TInfoCompl = class(TObject)
   private
-    function GetItem(Index: Integer): TMudCategAtivCollectionItem;
-    procedure SetItem(Index: Integer; Value: TMudCategAtivCollectionItem);
+    FcodCBO: string;
+    FnatAtividade: tpNatAtividade;
+    Fremuneracao: TRemuneracaoCollection;
+    FinfoVinc: TInfoVinc;
+    FinfoTerm: TInfoTerm;
+
+    function getRemuneracao(): TRemuneracaoCollection;
+    function getInfoVinc(): TInfoVinc;
+    function getInfoTerm(): TInfoTerm;
   public
-    function New: TMudCategAtivCollectionItem;
-    property Items[Index: Integer]: TMudCategAtivCollectionItem read GetItem write SetItem; default;
+    constructor Create;
+    destructor  Destroy; override;
+
+    function instRemuneracao(): boolean;
+    function instInfoVinc(): boolean;
+    function instInfoTerm(): boolean;
+
+    property codCBO: string read FCodCBO write FCodCBO;
+    property natAtividade: tpNatAtividade read FNatAtividade write FNatAtividade;
+    property remuneracao: TRemuneracaoCollection read getRemuneracao write FRemuneracao;
+    property infoVinc: TInfoVinc read getInfoVinc write FInfoVinc;
+    property infoTerm: TInfoTerm read getInfoTerm write FInfoTerm;
   end;
 
   TMudCategAtivCollectionItem = class(TObject)
@@ -471,13 +226,13 @@ type
     property dtMudCategAtiv: TDateTime read FdtMudCategAtiv write FdtMudCategAtiv;
   end;
 
-  TUnicContrCollection = class(TACBrObjectList)
+  TMudCategAtivCollection = class(TACBrObjectList)
   private
-    function GetItem(Index: Integer): TUnicContrCollectionItem;
-    procedure SetItem(Index: Integer; Value: TUnicContrCollectionItem);
+    function GetItem(Index: Integer): TMudCategAtivCollectionItem;
+    procedure SetItem(Index: Integer; Value: TMudCategAtivCollectionItem);
   public
-    function New: TUnicContrCollectionItem;
-    property Items[Index: Integer]: TUnicContrCollectionItem read GetItem write SetItem; default;
+    function New: TMudCategAtivCollectionItem;
+    property Items[Index: Integer]: TMudCategAtivCollectionItem read GetItem write SetItem; default;
   end;
 
   TUnicContrCollectionItem = class(TObject)
@@ -491,69 +246,13 @@ type
     property dtInicio: TDateTime read FdtInicio write FdtInicio;
   end;
 
-  TIdeEstab = class(TObject)
+  TUnicContrCollection = class(TACBrObjectList)
   private
-    FtpInsc: tpTpInsc;
-    FnrInsc: string;
-    FinfoVlr: TInfoVlr;
+    function GetItem(Index: Integer): TUnicContrCollectionItem;
+    procedure SetItem(Index: Integer; Value: TUnicContrCollectionItem);
   public
-    constructor Create;
-    destructor  Destroy; override;
-
-    property tpInsc: tpTpInsc read FTpInsc write FTpInsc;
-    property nrInsc: string read FNrInsc write FNrInsc;
-    property infoVlr: TInfoVlr read FInfoVlr write FInfoVlr;
-  end;
-
-  TInfoVlr = class(TObject)
-  private
-    FcompIni: string;
-    FcompFim: string;
-    FrepercProc: tpRepercProc;
-    FvrRemun: double;
-    FvrAPI: double;
-    Fvr13API: double;
-    FvrInden: double;
-    FvrBaseIndenFGTS: double;
-    FpagDiretoResc: tpSimNaoFacultativo;
-    FindReperc: tpIndReperc;
-    FindenSD: tpSimFacultativo;
-    FindenAbono: tpSimFacultativo;
-    Fabono: TAbonoCollection;
-    FidePeriodo: TIdePeriodoCollection;
-
-    function getAbono(): TAbonoCollection;
-    function getIdePeriodo(): TIdePeriodoCollection;
-  public
-    constructor Create;
-    destructor  Destroy; override;
-
-    function instAbono(): boolean;
-    function instIdePeriodo(): boolean;
-
-    property compIni: string read FcompIni write FcompIni;
-    property compFim: string read FcompFim write FcompFim;
-    property repercProc: tpRepercProc read FrepercProc write FrepercProc;
-    property vrRemun: double read FvrRemun write FvrRemun;
-    property vrAPI: double read FvrAPI write FvrAPI;
-    property vr13API: double read Fvr13API write Fvr13API;
-    property vrInden: double read FvrInden write FvrInden;
-    property vrBaseIndenFGTS: double read FvrBaseIndenFGTS write FvrBaseIndenFGTS;
-    property pagDiretoResc: tpSimNaoFacultativo read FpagDiretoResc write FpagDiretoResc;
-    property indReperc: tpIndReperc read FindReperc write FindReperc;
-    property abono: TAbonoCollection read getAbono write Fabono;
-    property indenSD: tpSimFacultativo read FindenSD write FindenSD;
-    property indenAbono: tpSimFacultativo read FindenAbono write FindenAbono;
-    property idePeriodo: TIdePeriodoCollection read getIdePeriodo write FIdePeriodo;
-  end;
-
-  TAbonoCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TAbonoCollectionItem;
-    procedure SetItem(Index: Integer; Value: TAbonoCollectionItem);
-  public
-    function New: TAbonoCollectionItem;
-    property Items[Index: Integer]: TAbonoCollectionItem read GetItem write SetItem; default;
+    function New: TUnicContrCollectionItem;
+    property Items[Index: Integer]: TUnicContrCollectionItem read GetItem write SetItem; default;
   end;
 
   TAbonoCollectionItem = class(TObject)
@@ -565,39 +264,13 @@ type
     property anoBase: string read FanoBase write FanoBase;
   end;
 
-  TIdePeriodoCollection = class(TACBrObjectList)
+  TAbonoCollection = class(TACBrObjectList)
   private
-    function GetItem(Index: Integer): TIdePeriodoCollectionItem;
-    procedure SetItem(Index: Integer; Value: TIdePeriodoCollectionItem);
+    function GetItem(Index: Integer): TAbonoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TAbonoCollectionItem);
   public
-    function New: TIdePeriodoCollectionItem;
-    property Items[Index: Integer]: TIdePeriodoCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TIdePeriodoCollectionItem = class(TObject)
-  private
-    FperRef: string;
-    FbaseCalculo: TBaseCalculo;
-    FinfoFGTS: TInfoFGTS;
-    FbaseMudCateg: TBaseMudCateg;
-    FinfoInterm: TinfoIntermCollection;
-
-    function getInfoFGTS(): TInfoFGTS;
-    function getBaseMudCateg(): TBaseMudCateg;
-    function getInfoInterm: TinfoIntermCollection;
-  public
-    constructor Create;
-    destructor  Destroy; override;
-
-    function instInfoFGTS(): boolean;
-    function instBaseMudCateg(): boolean;
-    function infoIntermInst(): boolean;
-
-    property perRef: string read FperRef write FperRef;
-    property baseCalculo: TBaseCalculo read FbaseCalculo write FbaseCalculo;
-    property infoFGTS: TInfoFgts read getInfoFGTS write FInfoFGTS;
-    property baseMudCateg: TBaseMudCateg read getBaseMudCateg write FbaseMudCateg;
-    property infoInterm: TinfoIntermCollection read getInfoInterm write FinfoInterm;
+    function New: TAbonoCollectionItem;
+    property Items[Index: Integer]: TAbonoCollectionItem read GetItem write SetItem; default;
   end;
 
   TBaseCalculo = class(TObject)
@@ -646,6 +319,299 @@ type
   public
    property codCateg: integer read FcodCateg write FcodCateg;
    property vrBcCPrev: double read FvrBcCPrev write FvrBcCPrev;
+  end;
+
+  TIdePeriodoCollectionItem = class(TObject)
+  private
+    FperRef: string;
+    FbaseCalculo: TBaseCalculo;
+    FinfoFGTS: TInfoFGTS;
+    FbaseMudCateg: TBaseMudCateg;
+    FinfoInterm: TinfoIntermCollection;
+
+    function getInfoFGTS(): TInfoFGTS;
+    function getBaseMudCateg(): TBaseMudCateg;
+    function getInfoInterm: TinfoIntermCollection;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    function instInfoFGTS(): boolean;
+    function instBaseMudCateg(): boolean;
+    function infoIntermInst(): boolean;
+
+    property perRef: string read FperRef write FperRef;
+    property baseCalculo: TBaseCalculo read FbaseCalculo write FbaseCalculo;
+    property infoFGTS: TInfoFgts read getInfoFGTS write FInfoFGTS;
+    property baseMudCateg: TBaseMudCateg read getBaseMudCateg write FbaseMudCateg;
+    property infoInterm: TinfoIntermCollection read getInfoInterm write FinfoInterm;
+  end;
+
+  TIdePeriodoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TIdePeriodoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TIdePeriodoCollectionItem);
+  public
+    function New: TIdePeriodoCollectionItem;
+    property Items[Index: Integer]: TIdePeriodoCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TInfoVlr = class(TObject)
+  private
+    FcompIni: string;
+    FcompFim: string;
+    FrepercProc: tpRepercProc;
+    FvrRemun: double;
+    FvrAPI: double;
+    Fvr13API: double;
+    FvrInden: double;
+    FvrBaseIndenFGTS: double;
+    FpagDiretoResc: tpSimNaoFacultativo;
+    FindReperc: tpIndReperc;
+    FindenSD: tpSimFacultativo;
+    FindenAbono: tpSimFacultativo;
+    Fabono: TAbonoCollection;
+    FidePeriodo: TIdePeriodoCollection;
+
+    function getAbono(): TAbonoCollection;
+    function getIdePeriodo(): TIdePeriodoCollection;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    function instAbono(): boolean;
+    function instIdePeriodo(): boolean;
+
+    property compIni: string read FcompIni write FcompIni;
+    property compFim: string read FcompFim write FcompFim;
+    property repercProc: tpRepercProc read FrepercProc write FrepercProc;
+    property vrRemun: double read FvrRemun write FvrRemun;
+    property vrAPI: double read FvrAPI write FvrAPI;
+    property vr13API: double read Fvr13API write Fvr13API;
+    property vrInden: double read FvrInden write FvrInden;
+    property vrBaseIndenFGTS: double read FvrBaseIndenFGTS write FvrBaseIndenFGTS;
+    property pagDiretoResc: tpSimNaoFacultativo read FpagDiretoResc write FpagDiretoResc;
+    property indReperc: tpIndReperc read FindReperc write FindReperc;
+    property abono: TAbonoCollection read getAbono write Fabono;
+    property indenSD: tpSimFacultativo read FindenSD write FindenSD;
+    property indenAbono: tpSimFacultativo read FindenAbono write FindenAbono;
+    property idePeriodo: TIdePeriodoCollection read getIdePeriodo write FIdePeriodo;
+  end;
+
+  TIdeEstab = class(TObject)
+  private
+    FtpInsc: tpTpInsc;
+    FnrInsc: string;
+    FinfoVlr: TInfoVlr;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    property tpInsc: tpTpInsc read FTpInsc write FTpInsc;
+    property nrInsc: string read FNrInsc write FNrInsc;
+    property infoVlr: TInfoVlr read FInfoVlr write FInfoVlr;
+  end;
+
+  TInfoContrCollectionItem = class(TObject)
+  private
+    FtpContr: tpTpContrS2500;
+    FindContr: tpSimNao;
+    FdtAdmOrig: TDateTime;
+    FindReint: tpSimNaoFacultativo;
+    FindCateg: tpSimNao;
+    FindNatAtiv: tpSimNao;
+    FindMotDeslig: tpSimNao;
+    FindUnic: tpSimNaoFacultativo;
+    Fmatricula: string;
+    FcodCateg: Integer;
+    FdtInicio: TDateTime;
+    FinfoCompl: TInfoCompl;
+    FmudCategAtiv: TMudCategAtivCollection;
+    FunicContr: TUnicContrCollection;
+    FideEstab: TIdeEstab;
+
+    function getMudCategAtiv(): TMudCategAtivCollection;
+    function getInfoCompl(): TInfoCompl;
+    function getUnicContr(): TUnicContrCollection;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    function instMudCategAtiv(): boolean;
+    function instInfoCompl(): boolean;
+    function instUnicContr(): boolean;
+
+    property tpContr: tpTpContrS2500 read FTpContr write FTpContr;
+    property indContr: tpSimNao read FIndContr write FIndContr;
+    property dtAdmOrig: TDateTime read FDtAdmOrig write FDtAdmOrig;
+    property indReint: tpSimNaoFacultativo read FIndReint write FIndReint;
+    property indCateg: tpSimNao read FIndCateg write FIndCateg;
+    property indNatAtiv: tpSimNao read FIndNatAtiv write FIndNatAtiv;
+    property indMotDeslig: tpSimNao read FIndMotDeslig write FIndMotDeslig;
+    property indUnic: tpSimNaoFacultativo read FIndUnic write FIndUnic;
+    property matricula: string read FMatricula write FMatricula;
+    property codCateg: Integer read FCodCateg write FCodCateg;
+    property dtInicio: TDateTime read FDtInicio write FDtInicio;
+    property infoCompl: TInfoCompl read getInfoCompl write FInfoCompl;
+    property mudCategAtiv: TMudCategAtivCollection read getMudCategAtiv write FMudCategAtiv;
+    property unicContr: TUnicContrCollection read getUnicContr write FUnicContr;
+    property ideEstab: TIdeEstab read FIdeEstab write FIdeEstab;
+  end;
+
+  TInfoContrCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TInfoContrCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfoContrCollectionItem);
+  public
+    function New: TInfoContrCollectionItem;
+    property Items[Index: Integer]: TInfoContrCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TIdeTrab = class(TObject)
+  private
+    FcpfTrab: string;
+    FnmTrab: string;
+    FdtNascto: TDateTime;
+    Fdependente: TDependenteCollectionS2500;
+    FinfoContr: TInfoContrCollection;
+
+    function getDependenteS2500(): TDependenteCollectionS2500;
+    function getInfoContr(): TInfoContrCollection;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    function instDependenteS2500(): boolean;
+    function instInfoContr(): boolean;
+
+    property cpfTrab: string read FCpfTrab write FCpfTrab;
+    property nmTrab: string read FNmTrab write FNmTrab;
+    property dtNascto: TDateTime read FDtNascto write FDtNascto;
+    property dependente: TDependenteCollectionS2500 read getDependenteS2500 write FDependente;
+    property infoContr: TInfoContrCollection read getInfoContr write FInfoContr;
+  end;
+
+  TInfoProcJud = class(TObject)
+  private
+    FdtSent: TDateTime;
+    FufVara: string;
+    FcodMunic: Integer;
+    FidVara: Integer;
+  public
+    property dtSent: TDateTime read FDtSent write FDtSent;
+    property ufVara: string read FUfVara write FUfVara;
+    property codMunic: Integer read FCodMunic write FCodMunic;
+    property idVara: Integer read FIdVara write FIdVara;
+  end;
+
+  TInfoCCP = class(TObject)
+  private
+    FdtCCP: TDateTime;
+    FtpCCP: tpTpCCP;
+    FcnpjCCP: string;
+  public
+    property dtCCP: TDateTime read FdtCCP write FdtCCP;
+    property tpCCP: tpTpCCP read FtpCCP write FtpCCP;
+    property cnpjCCP: string read FcnpjCCP write FcnpjCCP;
+  end;
+
+  TDadosCompl = class(TObject)
+  private
+    FinfoProcJud: TInfoProcJud;
+    FinfoCCP: TInfoCCP;
+
+    function getInfoProcJud(): TInfoProcJud;
+    function getInfoCCP(): TInfoCCP;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    function instInfoProcJud(): boolean;
+    function instInfoCCP(): boolean;
+
+    property infoCCP: TInfoCCP read getInfoCCP write FInfoCCP;
+    property infoProcJud: TInfoProcJud read getInfoProcJud write FInfoProcJud;
+  end;
+
+  TInfoProcesso = class(TObject)
+  private
+    Forigem: tpOrigemProc;
+    FnrProcTrab: string;
+    FobsProcTrab: string;
+    FdadosCompl: TDadosCompl;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    property origem: tpOrigemProc read Forigem write Forigem;
+    property nrProcTrab: string read FNrProcTrab write FNrProcTrab;
+    property obsProcTrab: string read FObsProcTrab write FObsProcTrab;
+    property dadosCompl: TDadosCompl read FDadosCompl write FDadosCompl;
+  end;
+
+  TEvtProcTrab = class(TESocialEvento)
+  private
+    FideEvento: TIdeEvento2;
+    FideEmpregador: TIdeEmpregadorS2500;
+    FideTrab: TIdeTrab;
+    FinfoProcesso: TInfoProcesso;
+
+    procedure GerarIdeEmpregador(obj: TIdeEmpregadorS2500);
+    procedure GerarIdeResp(obj: TIdeResp);
+    procedure GerarInfoProcesso(obj: TinfoProcesso);
+    procedure GerarIdeTrab(Obj: TideTrab);
+    procedure GerarInfoContr(obj: TinfoContrCollection);
+    procedure GerarDependente(obj: TDependenteCollectionS2500);
+    procedure GerarDadosCompl(Obj: TdadosCompl);
+    procedure GerarInfoCompl(obj: TinfoCompl);
+    procedure GerarInfoProcJud(Obj: TInfoProcJud);
+    procedure GerarInfoCCP(Obj: TInfoCCP);
+    procedure GerarRemuneracao(obj: TRemuneracaoCollection);
+    procedure GerarInfoVinc(obj: TinfoVinc);
+    procedure GerarInfoTerm(obj: TinfoTerm);
+    procedure GerarSucessaoVinc(obj: TsucessaoVinc);
+    procedure GerarInfoDeslig(obj: TinfoDeslig);
+    procedure GerarMudCategAtiv(obj: TMudCategAtivCollection);
+    procedure GerarUnicContr(obj: TUnicContrCollection);
+    procedure GerarIdeEstab(obj: TIdeEstab);
+    procedure GerarInfoVlr(obj: TInfoVlr);
+    procedure GerarAbono(obj: TAbonoCollection);
+    procedure GerarIdePeriodo(obj: TIdePeriodoCollection);
+    procedure GerarBaseCalculo(obj: TbaseCalculo);
+    procedure GerarInfoFGTS(obj: TinfoFGTS);
+    procedure GerarBaseMudCateg(obj: TbaseMudCateg);
+  public
+    constructor Create(AACBreSocial: TObject); override;
+    destructor  Destroy; override;
+
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property ideEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property ideEmpregador: TIdeEmpregadorS2500 read FIdeEmpregador write FIdeEmpregador;
+    property ideTrab: TIdeTrab read FIdeTrab write FIdeTrab;
+    property infoProcesso: TInfoProcesso read FInfoProcesso write FInfoProcesso;
+  end;
+
+  TS2500CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtProcTrab: TEvtProcTrab;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtProcTrab: TEvtProcTrab read FEvtProcTrab write FEvtProcTrab;
+  end;
+
+  TS2500Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS2500CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2500CollectionItem);
+  public
+    function New: TS2500CollectionItem;
+    property Items[Index: Integer]: TS2500CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -1742,6 +1708,7 @@ begin
 
   Gerador.wCampo(tcDe2, '', 'vrBcCpMensal',    1, 14, 1, obj.vrBcCpMensal);
   Gerador.wCampo(tcDe2, '', 'vrBcCp13',        1, 14, NrOcorrBcCp, obj.vrBcCp13);
+
   if VersaoDF <= veS01_01_00 then
   begin
     Gerador.wCampo(tcDe2, '', 'vrBcFgts',        1, 14, 1, obj.vrBcFgts);
@@ -1851,9 +1818,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtProcTrab');
-
-//    Validar(schevtProcTrab);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

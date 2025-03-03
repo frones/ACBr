@@ -636,11 +636,11 @@ type
 
   tpNacProf               = (ttpProfissionalBrasileiro, ttpProfissionalEstrangeiro);
 
-  TVersaoeSocial          = (ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00, veS01_02_00, veS01_03_00);
+  TVersaoeSocial          = ({ve02_04_01, ve02_04_02, ve02_05_00, }veS01_00_00, veS01_01_00, veS01_02_00, veS01_03_00);
 const
-  TVersaoeSocialArrayStrings : array[TVersaoeSocial] of string = ('02_04_01', '02_04_02', '02_05_00', 'S01_00_00', 'S01_01_00', 'S01_02_00', 'S01_03_00');
-  TVersaoeSocialSchemasArrayStrings : array[TVersaoeSocial] of string = ('v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00', 'v_S_01_01_00', 'v_S_01_02_00', 'v_S_01_03_00');
-  TVersaoeSocialArrayReals : array[TVersaoeSocial] of Real = (2.0401, 2.0402, 2.0500, 10.0000, 10.1000, 10.2000, 10.3000);
+  TVersaoeSocialArrayStrings : array[TVersaoeSocial] of string = ({'02_04_01', '02_04_02', '02_05_00', }'S01_00_00', 'S01_01_00', 'S01_02_00', 'S01_03_00');
+  TVersaoeSocialSchemasArrayStrings : array[TVersaoeSocial] of string = ({'v02_04_01', 'v02_04_02', 'v02_05_00', }'v_S_01_00_00', 'v_S_01_01_00', 'v_S_01_02_00', 'v_S_01_03_00');
+  TVersaoeSocialArrayReals : array[TVersaoeSocial] of Real = ({2.0401, 2.0402, 2.0500, }10.0000, 10.1000, 10.2000, 10.3000);
 
 type
 
@@ -820,7 +820,7 @@ const
 const
     __LAST_VERSION = High(TVersaoeSocial); // A última versão setada em TVersaoeSocial
 
-    __ARRAY_MATRIX_EVENTO_INFO: array [1 .. 77] of TRecMatrixEventoInfo =
+    __ARRAY_MATRIX_EVENTO_INFO: array [1 .. 63] of TRecMatrixEventoInfo =
     (
     // Eventos a partir do leiaute veS01_00_03 (S-1.3)
     (TipoEvento: teS2555                   ; TipoEventoString: 'S-2555'                    ; VersaoeSocialDe: veS01_03_00; VersaoeSocialAte: __LAST_VERSION; EventoString: 'evtConsolidContProc'        ; Schema: schEvtConsolidContProc     ; StrEventoToTipoEvento: 'evtConsolidContProc'        ; Observacao: ''),
@@ -895,10 +895,10 @@ const
     (TipoEvento: teInsApo                  ; TipoEventoString: 'S-EVTINSAPO'               ; VersaoeSocialDe: veS01_00_00; VersaoeSocialAte: __LAST_VERSION; EventoString: 'evtInsApo'                  ; Schema: schevtInsApo               ; StrEventoToTipoEvento: 'evtInsApo'                  ; Observacao: 'Evento não identificado'),
     (TipoEvento: teRetornoEnvioLoteEventos ; TipoEventoString: 'S-RETORNOENVIOLOTEEVENTOS' ; VersaoeSocialDe: veS01_00_00; VersaoeSocialAte: __LAST_VERSION; EventoString: 'evtRetornoEnvioLoteEventos' ; Schema: schRetornoEnvioLoteEventos ; StrEventoToTipoEvento: 'evtRetornoEnvioLoteEventos' ; Observacao: 'Evento operacional'),
     (TipoEvento: teRetornoEvento           ; TipoEventoString: 'S-RETORNOEVENTO'           ; VersaoeSocialDe: veS01_00_00; VersaoeSocialAte: __LAST_VERSION; EventoString: 'evtRetornoEvento'           ; Schema: schRetornoEvento           ; StrEventoToTipoEvento: 'evtRetornoEvento'           ; Observacao: 'Evento operacional'),
-    (TipoEvento: teRetornoProcessamentoLote; TipoEventoString: 'S-RETORNOPROCESSAMENTOLOTE'; VersaoeSocialDe: veS01_00_00; VersaoeSocialAte: __LAST_VERSION; EventoString: 'evtRetornoProcessamentoLote'; Schema: schRetornoProcessamentoLote; StrEventoToTipoEvento: 'evtRetornoProcessamentoLote'; Observacao: 'Evento operacional'),
+    (TipoEvento: teRetornoProcessamentoLote; TipoEventoString: 'S-RETORNOPROCESSAMENTOLOTE'; VersaoeSocialDe: veS01_00_00; VersaoeSocialAte: __LAST_VERSION; EventoString: 'evtRetornoProcessamentoLote'; Schema: schRetornoProcessamentoLote; StrEventoToTipoEvento: 'evtRetornoProcessamentoLote'; Observacao: 'Evento operacional')
 
     // Eventos exclusivos para o leiaute ve02_05_00
-    (TipoEvento: teS1030                   ; TipoEventoString: 'S-1030'                    ; VersaoeSocialDe: ve02_05_00 ; VersaoeSocialAte: ve02_05_00 ; EventoString: 'evtTabCargo'                ; Schema: schevtTabCargo             ; StrEventoToTipoEvento: 'evtTabCargo'                ; Observacao: ''),
+    {(TipoEvento: teS1030                   ; TipoEventoString: 'S-1030'                    ; VersaoeSocialDe: ve02_05_00 ; VersaoeSocialAte: ve02_05_00 ; EventoString: 'evtTabCargo'                ; Schema: schevtTabCargo             ; StrEventoToTipoEvento: 'evtTabCargo'                ; Observacao: ''),
     (TipoEvento: teS1035                   ; TipoEventoString: 'S-1035'                    ; VersaoeSocialDe: ve02_05_00 ; VersaoeSocialAte: ve02_05_00 ; EventoString: 'evtTabCarreira'             ; Schema: schevtTabCarreira          ; StrEventoToTipoEvento: 'evtTabCarreira'             ; Observacao: ''),
     (TipoEvento: teS1040                   ; TipoEventoString: 'S-1040'                    ; VersaoeSocialDe: ve02_05_00 ; VersaoeSocialAte: ve02_05_00 ; EventoString: 'evtTabFuncao'               ; Schema: schevtTabFuncao            ; StrEventoToTipoEvento: 'evtTabFuncao'               ; Observacao: ''),
     (TipoEvento: teS1050                   ; TipoEventoString: 'S-1050'                    ; VersaoeSocialDe: ve02_05_00 ; VersaoeSocialAte: ve02_05_00 ; EventoString: 'evtTabHorTur'               ; Schema: schevtTabHorTur            ; StrEventoToTipoEvento: 'evtTabHorContratual'        ; Observacao: 'TeventoString <> StrEventoToTipoEvento'),
@@ -911,7 +911,7 @@ const
     (TipoEvento: teS2245                   ; TipoEventoString: 'S-2245'                    ; VersaoeSocialDe: ve02_05_00 ; VersaoeSocialAte: ve02_05_00 ; EventoString: 'evtTreiCap'                 ; Schema: schEvtTreiCap              ; StrEventoToTipoEvento: 'evtTreiCap'                 ; Observacao: ''),
     (TipoEvento: teS2250                   ; TipoEventoString: 'S-2250'                    ; VersaoeSocialDe: ve02_05_00 ; VersaoeSocialAte: ve02_05_00 ; EventoString: 'evtAvPrevio'                ; Schema: schevtAvPrevio             ; StrEventoToTipoEvento: 'evtAvPrevio'                ; Observacao: ''),
     (TipoEvento: teS2260                   ; TipoEventoString: 'S-2260'                    ; VersaoeSocialDe: ve02_05_00 ; VersaoeSocialAte: ve02_05_00 ; EventoString: 'evtConvInterm'              ; Schema: schevtConvInterm           ; StrEventoToTipoEvento: 'evtConvInterm'              ; Observacao: ''),
-    (TipoEvento: teS5012                   ; TipoEventoString: 'S-5012'                    ; VersaoeSocialDe: ve02_05_00 ; VersaoeSocialAte: ve02_05_00 ; EventoString: 'evtIRRF'                    ; Schema: schevtIrrf                 ; StrEventoToTipoEvento: 'S-5012'                     ; Observacao: 'TeventoString <> StrEventoToTipoEvento')
+    (TipoEvento: teS5012                   ; TipoEventoString: 'S-5012'                    ; VersaoeSocialDe: ve02_05_00 ; VersaoeSocialAte: ve02_05_00 ; EventoString: 'evtIRRF'                    ; Schema: schevtIrrf                 ; StrEventoToTipoEvento: 'S-5012'                     ; Observacao: 'TeventoString <> StrEventoToTipoEvento')}
     );
 
 function GetMatrixEventoInfo(AInfoEventoMatrix: TMatrixEventoInfo; ASearchValue: string; AVersaoeSocial: TVersaoeSocial): TRecMatrixEventoInfo;
@@ -2573,9 +2573,9 @@ end;
 function VersaoeSocialToDbl(const t: TVersaoeSocial): Real;
 begin
   case t of
-    ve02_04_01:  result := 2.0401;
-    ve02_04_02:  result := 2.0402;
-    ve02_05_00:  result := 2.0500;
+//    ve02_04_01:  result := 2.0401;
+//    ve02_04_02:  result := 2.0402;
+//    ve02_05_00:  result := 2.0500;
     veS01_00_00: result := 10.0000;
     veS01_01_00: result := 10.1000;
     veS01_02_00: result := 10.2000;
@@ -2589,13 +2589,13 @@ function DblToVersaoeSocial(out ok: Boolean; const d: Real): TVersaoeSocial;
 begin
   ok := True;
 
-  if (d = 2.0401)  then
+  {if (d = 2.0401)  then
     result := ve02_04_01
   else if (d = 2.0402)  then
     result := ve02_04_02
   else if (d = 2.0500)  then
     result := ve02_05_00
-  else if (d = 10.0000)  then
+  else }if (d = 10.0000)  then
     result := veS01_00_00
   else if (d = 10.1000)  then
     result := veS01_01_00

@@ -61,51 +61,6 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2400Collection = class;
-  TS2400CollectionItem = class;
-  TEvtCdBenefIn = class;
-  TBeneficiario = class;
-
-  TS2400Collection = class(TeSocialCollection)
-  private
-    function GetItem(Index: Integer): TS2400CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2400CollectionItem);
-  public
-    function Add: TS2400CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2400CollectionItem;
-    property Items[Index: Integer]: TS2400CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS2400CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtCdBenefIn : TEvtCdBenefIn;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtCdBenefIn: TEvtCdBenefIn read FEvtCdBenefIn write FEvtCdBenefIn;
-  end;
-
-  TEvtCdBenefIn = class(TeSocialEvento)
-  private
-    FIdeEvento: TIdeEvento2;
-    FIdeEmpregador: TIdeEmpregador;
-    FBeneficiario: TBeneficiario;
-    
-    procedure GerarBeneficiario(pBeneficiario: TBeneficiario);
-  public
-    constructor Create(AACBreSocial: TObject); override;
-    destructor Destroy; override;
-
-    function GerarXML: boolean; override;
-    function LerArqIni(const AIniString: String): Boolean;
-
-    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property Beneficiario: TBeneficiario read FBeneficiario write FBeneficiario;
-  end;
-
   TBeneficiario = class(TObject)
   private
     FCpfBenef: string;
@@ -122,7 +77,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    
+
     property cpfBenef: String read FCpfBEnef write FCpfBEnef;
     property nmBenefic: string read FNmBenefic write FNmBenefic;
     property dtNascto: TDateTime read FDtNascto write FDtNascto;
@@ -134,6 +89,46 @@ type
     property dtIncFisMen: TDateTime read FDtIncFisMen write FDtIncFisMen;
     property endereco: TEndereco read FEndereco write FEndereco;
     property dependente: TDependenteCollection read FDependente write FDependente;
+  end;
+
+  TEvtCdBenefIn = class(TeSocialEvento)
+  private
+    FIdeEvento: TIdeEvento2;
+    FIdeEmpregador: TIdeEmpregador;
+    FBeneficiario: TBeneficiario;
+
+    procedure GerarBeneficiario(pBeneficiario: TBeneficiario);
+  public
+    constructor Create(AACBreSocial: TObject); override;
+    destructor Destroy; override;
+
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property Beneficiario: TBeneficiario read FBeneficiario write FBeneficiario;
+  end;
+
+  TS2400CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtCdBenefIn : TEvtCdBenefIn;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtCdBenefIn: TEvtCdBenefIn read FEvtCdBenefIn write FEvtCdBenefIn;
+  end;
+
+  TS2400Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS2400CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2400CollectionItem);
+  public
+    function Add: TS2400CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2400CollectionItem;
+    property Items[Index: Integer]: TS2400CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -261,9 +256,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'EvtCdBenefIn');
-
-//    Validar(schEvtCdBenefIn);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

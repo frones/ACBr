@@ -58,31 +58,22 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2418Collection = class;
-  TS2418CollectionItem = class;
-  TEvtReativBen = class;
-  TIdeBeneficio = class;
-  TInfoReativ = class;
-
-  TS2418Collection = class(TeSocialCollection)
+  TIdeBeneficio = class(TObject)
   private
-    function GetItem(Index: Integer): TS2418CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2418CollectionItem);
+    FCpfBenef: string;
+    FNrBeneficio: string;
   public
-    function Add: TS2418CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2418CollectionItem;
-    property Items[Index: Integer]: TS2418CollectionItem read GetItem write SetItem; default;
+    property cpfBenef: String read FCpfBenef write FCpfBenef;
+    property nrBeneficio: string read FNrBeneficio write FNrBeneficio;
   end;
 
-  TS2418CollectionItem = class(TObject)
+  TInfoReativ = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FEvtReativBen : TEvtReativBen;
+    FDtEfetReativ: TDateTime;
+    FDtEfeito: TDateTime;
   public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtReativBen: TEvtReativBen read FEvtReativBen write FEvtReativBen;
+    property dtEfetReativ: TDateTime read FDtEfetReativ write FDtEfetReativ;
+    property dtEfeito: TDateTime read FDtEfeito write FDtEfeito;
   end;
 
   TEvtReativBen = class(TeSocialEvento)
@@ -106,25 +97,28 @@ type
     property ideBeneficio: TIdeBeneficio read FIdeBeneficio write FIdeBeneficio;
     property infoReativ: TInfoReativ read FInfoReativ write FInfoReativ;
   end;
-  
-  TIdeBeneficio = class(TObject)
+
+  TS2418CollectionItem = class(TObject)
   private
-    FCpfBenef: string;
-    FNrBeneficio: string;
+    FTipoEvento: TTipoEvento;
+    FEvtReativBen : TEvtReativBen;
   public
-    property cpfBenef: String read FCpfBenef write FCpfBenef;
-    property nrBeneficio: string read FNrBeneficio write FNrBeneficio;
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtReativBen: TEvtReativBen read FEvtReativBen write FEvtReativBen;
   end;
 
-  TInfoReativ = class(TObject)
+  TS2418Collection = class(TeSocialCollection)
   private
-    FDtEfetReativ: TDateTime;
-    FDtEfeito: TDateTime;
+    function GetItem(Index: Integer): TS2418CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2418CollectionItem);
   public
-    property dtEfetReativ: TDateTime read FDtEfetReativ write FDtEfetReativ;
-    property dtEfeito: TDateTime read FDtEfeito write FDtEfeito;
+    function Add: TS2418CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2418CollectionItem;
+    property Items[Index: Integer]: TS2418CollectionItem read GetItem write SetItem; default;
   end;
-  
+
 implementation
 
 uses
@@ -235,9 +229,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'EvtReativBen');
-
-//    Validar(schEvtReativBen);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -249,7 +240,7 @@ function TEvtReativBen.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   Ok: Boolean;
-  sSecao, sFim: String;
+  sSecao: String;
 begin
   Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
 

@@ -58,30 +58,20 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS3000Collection = class;
-  TS3000CollectionItem = class;
-  TEvtExclusao = class;
-  TInfoExclusao = class;
-
-  TS3000Collection = class(TeSocialCollection)
+  TInfoExclusao = class(TObject)
   private
-    function GetItem(Index: Integer): TS3000CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS3000CollectionItem);
+    FtpEvento: TTipoEvento;
+    FnrRecEvt: string;
+    FIdeTrabalhador: TideTrabalhador2;
+    FIdeFolhaPagto: TIdeFolhaPagto;
   public
-    function Add: TS3000CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS3000CollectionItem;
-    property Items[Index: Integer]: TS3000CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS3000CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtExclusao: TEvtExclusao;
-  public
-    constructor Create(AOwner: TComponent);
+    constructor Create;
     destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtExclusao: TEvtExclusao read FEvtExclusao write FEvtExclusao;
+
+    property tpEvento: TTipoEvento read FtpEvento write FtpEvento;
+    property nrRecEvt: string read FnrRecEvt write FnrRecEvt;
+    property IdeTrabalhador: TideTrabalhador2 read FIdeTrabalhador write FIdeTrabalhador;
+    property IdeFolhaPagto: TIdeFolhaPagto read FIdeFolhaPagto write FIdeFolhaPagto;
   end;
 
   TEvtExclusao = class(TESocialEvento)
@@ -102,20 +92,25 @@ type
     property InfoExclusao: TInfoExclusao read FInfoExclusao write FInfoExclusao;
   end;
 
-  TInfoExclusao = class(TObject)
+  TS3000CollectionItem = class(TObject)
   private
-    FtpEvento: TTipoEvento;
-    FnrRecEvt: string;
-    FIdeTrabalhador: TideTrabalhador2;
-    FIdeFolhaPagto: TIdeFolhaPagto;
+    FTipoEvento: TTipoEvento;
+    FEvtExclusao: TEvtExclusao;
   public
-    constructor Create;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtExclusao: TEvtExclusao read FEvtExclusao write FEvtExclusao;
+  end;
 
-    property tpEvento: TTipoEvento read FtpEvento write FtpEvento;
-    property nrRecEvt: string read FnrRecEvt write FnrRecEvt;
-    property IdeTrabalhador: TideTrabalhador2 read FIdeTrabalhador write FIdeTrabalhador;
-    property IdeFolhaPagto: TIdeFolhaPagto read FIdeFolhaPagto write FIdeFolhaPagto;
+  TS3000Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS3000CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS3000CollectionItem);
+  public
+    function Add: TS3000CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS3000CollectionItem;
+    property Items[Index: Integer]: TS3000CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -236,9 +231,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtExclusao');
-
-//    Validar(schevtExclusao);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

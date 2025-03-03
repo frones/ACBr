@@ -54,31 +54,96 @@ uses
   pcesCommon, pcesConversaoeSocial;
 
 type
-  TevtFGTSProcTrab = class;
-  TideProc = class;
-  TinfoTrabFGTSCollection = class;
-  TinfoTrabFGTSCollectionItem = class;
-  TinfoFGTSProcTrab = class;
-  TideEstab = class;
-  TbasePerRefCollection = class;
-  TbasePerRefCollectionItem = class;
-
-  TS5503 = class(TInterfacedObject, IEventoeSocial)
+  TideProc = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FevtFGTSProcTrab: TevtFGTSProcTrab;
+    Forigem: tpOrigemProc;
+    FnrProcTrab: string;
+  public
+    property origem: tpOrigemProc read Forigem;
+    property nrProcTrab: string read FnrProcTrab;
+  end;
 
-    function GetXml : string;
-    procedure SetXml(const Value: string);
-    function GetTipoEvento : TTipoEvento;
+  TbasePerRefCollectionItem = class(TObject)
+  private
+    FperRef: string;
+    FcodCateg: integer;
+    FtpValorProcTrab: integer;
+    FremFGTSProcTrab: double;
+    FdpsFGTSProcTrab: double;
+    FremFGTSSefip: double;
+    FdpsFGTSSefip: double;
+    FremFGTSDecAnt: double;
+    FdpsFGTSDecAnt: double;
+  public
+    property perRef: string read FperRef;
+    property codCateg: integer read FcodCateg;
+    property tpValorProcTrab: integer read FtpValorProcTrab;
+    property remFGTSProcTrab: double read FremFGTSProcTrab;
+    property dpsFGTSProcTrab: double read FdpsFGTSProcTrab;
+    property remFGTSSefip: double read FremFGTSSefip;
+    property dpsFGTSSefip: double read FdpsFGTSSefip;
+    property remFGTSDecAnt: double read FremFGTSDecAnt;
+    property dpsFGTSDecAnt: double read FdpsFGTSDecAnt;
+  end;
+
+  TbasePerRefCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TbasePerRefCollectionItem;
+    procedure SetItem(Index: Integer; Value: TbasePerRefCollectionItem);
+  public
+    function New: TbasePerRefCollectionItem;
+    property Items[Index: Integer]: TbasePerRefCollectionItem read GetItem write SetItem;
+  end;
+
+  TideEstab = class(TObject)
+  private
+    FtpInsc: tpTpInsc;
+    FnrInsc: string;
+    FbasePerRef: TbasePerRefCollection;
   public
     constructor Create;
     destructor Destroy; override;
 
-    function GetEvento : TObject;
-    property Xml: String read GetXml write SetXml;
-    property TipoEvento: TTipoEvento read GetTipoEvento;
-    property evtFGTSProcTrab: TevtFGTSProcTrab read FevtFGTSProcTrab write FevtFGTSProcTrab;
+    property tpInsc: tpTpInsc read FtpInsc;
+    property nrInsc: string read FnrInsc;
+    property basePerRef: TbasePerRefCollection read FbasePerRef;
+  end;
+
+  TinfoFGTSProcTrab = class(TObject)
+  private
+    FtotalFGTS: double;
+    FideEstab: TideEstab;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property totalFGTS: double read FtotalFGTS;
+    property ideEstab: TideEstab read FideEstab;
+  end;
+
+  TInfoTrabFGTSCollectionItem = class(TObject)
+  private
+    Fmatricula: String;
+    FcodCateg: Integer;
+    FcategOrig: Integer;
+    FinfoFGTSProcTrab: TinfoFGTSProcTrab;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property matricula       : string  read Fmatricula;
+    property codCateg        : Integer read FcodCateg;
+    property categOrig       : Integer read FcategOrig;
+    property infoFGTSProcTrab: TinfoFGTSProcTrab read FinfoFGTSProcTrab;
+  end;
+
+  TInfoTrabFGTSCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TInfoTrabFGTSCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfoTrabFGTSCollectionItem);
+  public
+    function New: TInfoTrabFGTSCollectionItem;
+    property Items[Index: Integer]: TInfoTrabFGTSCollectionItem read GetItem write SetItem;
   end;
 
   TevtFGTSProcTrab = class(TObject)
@@ -110,96 +175,22 @@ type
     property VersaoDF       : TVersaoeSocial read FVersaoDF write FVersaoDF;
   end;
 
-  TideProc = class(TObject)
+  TS5503 = class(TInterfacedObject, IEventoeSocial)
   private
-    Forigem: tpOrigemProc;
-    FnrProcTrab: string;
-  public
-    property origem: tpOrigemProc read Forigem;
-    property nrProcTrab: string read FnrProcTrab;
-  end;
+    FTipoEvento: TTipoEvento;
+    FevtFGTSProcTrab: TevtFGTSProcTrab;
 
-  TInfoTrabFGTSCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TInfoTrabFGTSCollectionItem;
-    procedure SetItem(Index: Integer; Value: TInfoTrabFGTSCollectionItem);
-  public
-    function New: TInfoTrabFGTSCollectionItem;
-    property Items[Index: Integer]: TInfoTrabFGTSCollectionItem read GetItem write SetItem;
-  end;
-
-  TInfoTrabFGTSCollectionItem = class(TObject)
-  private
-    Fmatricula: String;
-    FcodCateg: Integer;
-    FcategOrig: Integer;
-    FinfoFGTSProcTrab: TinfoFGTSProcTrab;
+    function GetXml : string;
+    procedure SetXml(const Value: string);
+    function GetTipoEvento : TTipoEvento;
   public
     constructor Create;
     destructor Destroy; override;
 
-    property matricula       : string  read Fmatricula;
-    property codCateg        : Integer read FcodCateg;
-    property categOrig       : Integer read FcategOrig;
-    property infoFGTSProcTrab: TinfoFGTSProcTrab read FinfoFGTSProcTrab;
-  end;
-
-  TinfoFGTSProcTrab = class(TObject)
-  private
-    FtotalFGTS: double;
-    FideEstab: TideEstab;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property totalFGTS: double read FtotalFGTS;
-    property ideEstab: TideEstab read FideEstab;
-  end;
-
-  TideEstab = class(TObject)
-  private
-    FtpInsc: tpTpInsc;
-    FnrInsc: string;
-    FbasePerRef: TbasePerRefCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property tpInsc: tpTpInsc read FtpInsc;
-    property nrInsc: string read FnrInsc;
-    property basePerRef: TbasePerRefCollection read FbasePerRef;
-  end;
-
-  TbasePerRefCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TbasePerRefCollectionItem;
-    procedure SetItem(Index: Integer; Value: TbasePerRefCollectionItem);
-  public
-    function New: TbasePerRefCollectionItem;
-    property Items[Index: Integer]: TbasePerRefCollectionItem read GetItem write SetItem;
-  end;
-
-  TbasePerRefCollectionItem = class(TObject)
-  private
-    FperRef: string;
-    FcodCateg: integer;
-    FtpValorProcTrab: integer;
-    FremFGTSProcTrab: double;
-    FdpsFGTSProcTrab: double;
-    FremFGTSSefip: double;
-    FdpsFGTSSefip: double;
-    FremFGTSDecAnt: double;
-    FdpsFGTSDecAnt: double;
-  public
-    property perRef: string read FperRef;
-    property codCateg: integer read FcodCateg;
-    property tpValorProcTrab: integer read FtpValorProcTrab;
-    property remFGTSProcTrab: double read FremFGTSProcTrab;
-    property dpsFGTSProcTrab: double read FdpsFGTSProcTrab;
-    property remFGTSSefip: double read FremFGTSSefip;
-    property dpsFGTSSefip: double read FdpsFGTSSefip;
-    property remFGTSDecAnt: double read FremFGTSDecAnt;
-    property dpsFGTSDecAnt: double read FdpsFGTSDecAnt;
+    function GetEvento : TObject;
+    property Xml: String read GetXml write SetXml;
+    property TipoEvento: TTipoEvento read GetTipoEvento;
+    property evtFGTSProcTrab: TevtFGTSProcTrab read FevtFGTSProcTrab write FevtFGTSProcTrab;
   end;
 
 implementation

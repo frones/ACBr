@@ -58,31 +58,26 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2420Collection = class;
-  TS2420CollectionItem = class;
-  TEvtCdBenTerm = class;
-  TIdeBeneficio = class;
-  TInfoBenTermino = class;
-
-  TS2420Collection = class(TeSocialCollection)
+  TIdeBeneficio = class(TObject)
   private
-    function GetItem(Index: Integer): TS2420CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2420CollectionItem);
+    FCpfBenef: string;
+    FNrBeneficio: string;
   public
-    function Add: TS2420CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2420CollectionItem;
-    property Items[Index: Integer]: TS2420CollectionItem read GetItem write SetItem; default;
+    property cpfBenef: String read FCpfBenef write FCpfBenef;
+    property nrBeneficio: string read FNrBeneficio write FNrBeneficio;
   end;
 
-  TS2420CollectionItem = class(TObject)
+  TInfoBenTermino = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FEvtCdBenTerm : TEvtCdBenTerm;
+    FDtTermBeneficio: TDateTime;
+    FMtvTermino: tpMtvTermino;
+    FCnpjOrgaoSuc: string;
+    FNovoCpf: string;
   public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtCdBenTerm: TEvtCdBenTerm read FEvtCdBenTerm write FEvtCdBenTerm;
+    property dtTermBeneficio: TDateTime read FDtTermBeneficio write FDtTermBeneficio;
+    property mtvTermino: tpMtvTermino read FMtvTermino write FMtvTermino;
+    property cnpjOrgaoSuc: string read FCnpjOrgaoSuc write FCnpjOrgaoSuc;
+    property novoCPF: string read FNovoCpf write FNovoCpf;
   end;
 
   TEvtCdBenTerm = class(TeSocialEvento)
@@ -106,29 +101,28 @@ type
     property ideBeneficio: TIdeBeneficio read FIdeBeneficio write FIdeBeneficio;
     property infoBenTermino: TInfoBenTermino read FInfoBenTermino write FInfoBenTermino;
   end;
-  
-  TIdeBeneficio = class(TObject)
+
+  TS2420CollectionItem = class(TObject)
   private
-    FCpfBenef: string;
-    FNrBeneficio: string;
+    FTipoEvento: TTipoEvento;
+    FEvtCdBenTerm : TEvtCdBenTerm;
   public
-    property cpfBenef: String read FCpfBenef write FCpfBenef;
-    property nrBeneficio: string read FNrBeneficio write FNrBeneficio;
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtCdBenTerm: TEvtCdBenTerm read FEvtCdBenTerm write FEvtCdBenTerm;
   end;
 
-  TInfoBenTermino = class(TObject)
+  TS2420Collection = class(TeSocialCollection)
   private
-    FDtTermBeneficio: TDateTime;
-    FMtvTermino: tpMtvTermino;
-    FCnpjOrgaoSuc: string;
-    FNovoCpf: string;    
+    function GetItem(Index: Integer): TS2420CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2420CollectionItem);
   public
-    property dtTermBeneficio: TDateTime read FDtTermBeneficio write FDtTermBeneficio;
-    property mtvTermino: tpMtvTermino read FMtvTermino write FMtvTermino;
-    property cnpjOrgaoSuc: string read FCnpjOrgaoSuc write FCnpjOrgaoSuc;
-    property novoCPF: string read FNovoCpf write FNovoCpf;
+    function Add: TS2420CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2420CollectionItem;
+    property Items[Index: Integer]: TS2420CollectionItem read GetItem write SetItem; default;
   end;
-  
+
 implementation
 
 uses
@@ -241,9 +235,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'EvtCdBenTerm');
-
-//    Validar(schEvtCdBenTerm);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -255,7 +246,7 @@ function TEvtCdBenTerm.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   Ok: Boolean;
-  sSecao, sFim: String;
+  sSecao: String;
 begin
   Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
 

@@ -52,6 +52,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/03/2025
+-- Diversos --
+[*] Remoção de código que eram usados por versões antigas, ou seja, antes das
+    versões Simplificadas.
+    Remoção realizada nos eventos não periódicos (2190 até 2399).
+Por: Italo Giurizzato Junior
+
 27/02/2025
 -- pcesRetDownloadRetEvt -
 [*] #TK-6455: Alteração visando melhorar a resposta do comando DownloadEventos.

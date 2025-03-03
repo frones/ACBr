@@ -60,125 +60,26 @@ uses
   pcesCommon, pcesConversaoeSocial;
 
 type
-  TInfoIrrfCollectionItem = class;
-  TbasesIrrfCollection = class;
-  TbasesIrrfCollectionItem = class;
-  TirrfCollection = class;
-  TirrfCollectionItem = class;
-  TideTrabalhador4 = class;
-  TdmDevCollection = class;
-  TdmDevCollectionItem = class;
-  TinfoirCollection = class;
-  TinfoirCollectionItem = class;
-  TidePgtoExt = class;
-  TEvtIrrfBenef = class;
-  TtotApurMenCollection = class;
-  TtotApurMenCollectionItem = class;
-  TtotApurDiaCollection = class;
-  TtotApurDiaCollectionItem = class;
-  TInfoPgtoExt = class;
-  TInfoProcJudRubCollection = class;
-  TInfoProcJudRubCollectionItem = class;
-  TinfoIRComplemCollection = class;
-  TinfoIRComplemCollectionItem = class;
-  TideDepCollection = class;
-  TideDepCollectionItem = class;
-  TinfoIRCRCollection = class;
-  TinfoIRCRCollectionItem = class;
-  TdedDepenCollection = class;
-  TdedDepenCollectionItem = class;
-  TpenAlimCollection = class;
-  TpenAlimCollectionItem = class;
-  TprevidComplCollection = class;
-  TprevidComplCollectionItem = class;
-  TinfoProcRetCollection = class;
-  TinfoProcRetCollectionItem = class;
-  TinfoValoresCollection = class;
-  TinfoValoresCollectionItem = class;
-  TdedSuspCollection = class;
-  TdedSuspCollectionItem = class;
-  TbenefPenCollection = class;
-  TbenefPenCollectionItem = class;
-  TplanSaudeCollection = class;
-  TplanSaudeCollectionItem = class;
-  TinfoDepSauCollection = class;
-  TinfoDepSauCollectionItem = class;
-  TInfoReembMedCollection = class;
-  TInfoReembMedCollectionItem = class;
-  TdetReembTitCollection = class;
-  TdetReembTitCollectionItem = class;
-  TinfoReembDepCollection = class;
-  TinfoReembDepCollectionItem = class;
-  TdetReembDepCollection = class;
-  TdetReembDepCollectionItem = class;
-  TtotInfoIR = class;
-  TconsolidApurMenCollection = class;
-  TconsolidApurMenCollectionItem = class;
-
-  TS5002 = class(TInterfacedObject, IEventoeSocial)
+  TInfoProcJudRubCollectionItem = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FEvtirrfBenef: TEvtirrfBenef;
-
-    function GetXml : string;
-    procedure SetXml(const Value: string);
-    function GetTipoEvento : TTipoEvento;
+    FnrProc: string;
+    FufVara: string;
+    FcodMunic: integer;
+    FidVara: integer;
   public
-    constructor Create;
-    destructor Destroy; override;
-
-    function GetEvento : TObject;
-    property Xml: String read GetXml write SetXml;
-    property TipoEvento: TTipoEvento read GetTipoEvento write FTipoEvento;
-    property EvtirrfBenef: TEvtirrfBenef read FEvtirrfBenef write FEvtirrfBenef;
+    property nrProc: string read FnrProc;
+    property ufVara: string read FufVara;
+    property codMunic: integer read FcodMunic;
+    property idVara: integer read FidVara;
   end;
 
-  TInfoDep = class(TObject)
+  TInfoProcJudRubCollection = class(TACBrObjectList)
   private
-    FvrDedDep: Double;
+    function GetItem(Index: Integer): TInfoProcJudRubCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfoProcJudRubCollectionItem);
   public
-    property vrDedDep: Double read FvrDedDep;
-  end;
-
-  TInfoIrrfCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TInfoIrrfCollectionItem;
-    procedure SetItem(Index: Integer; Value: TInfoIrrfCollectionItem);
-  public
-    function Add: TInfoIrrfCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TInfoIrrfCollectionItem;
-    property Items[Index: Integer]: TInfoIrrfCollectionItem read GetItem write SetItem;
-  end;
-
-  TInfoIrrfCollectionItem = class(TObject)
-  private
-    FCodCateg: integer;
-    FindResBr: String;
-    FbasesIrrf: TbasesIrrfCollection;
-    Firrf: TirrfCollection;
-    FidePgtoExt: TidePgtoExt;
-
-    procedure SetbasesIrrf(const Value: TbasesIrrfCollection);
-    procedure Setirrf(const Value: TirrfCollection);
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property CodCateg: integer read FCodCateg;
-    property indResBr: String read FindResBr;
-    property basesIrrf: TbasesIrrfCollection read FbasesIrrf write SetbasesIrrf;
-    property irrf: TirrfCollection read Firrf write Setirrf;
-    property idePgtoExt: TidePgtoExt read FidePgtoExt;
-  end;
-
-  TinfoIRCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TinfoIRCollectionItem;
-    procedure SetItem(Index: Integer; Value: TinfoIRCollectionItem);
-  public
-    function Add: TinfoIRCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TinfoIRCollectionItem;
-    property Items[Index: Integer]: TinfoIRCollectionItem read GetItem write SetItem;
+    function New: TInfoProcJudRubCollectionItem;
+    property Items[Index: Integer]: TInfoProcJudRubCollectionItem read GetItem write SetItem;
   end;
 
   TinfoIRCollectionItem = class(TObject)
@@ -202,137 +103,14 @@ type
     property infoProcJudRub: TinfoProcJudRubCollection read getInfoProcJudRub write FinfoProcJudRub;
   end;
 
-  TdmDevCollection = class(TACBrObjectList)
+  TinfoIRCollection = class(TACBrObjectList)
   private
-    function GetItem(Index: Integer): TdmDevCollectionItem;
-    procedure SetItem(Index: Integer; Value: TdmDevCollectionItem);
+    function GetItem(Index: Integer): TinfoIRCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfoIRCollectionItem);
   public
-    function Add: TdmDevCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TdmDevCollectionItem;
-    property Items[Index: Integer]: TdmDevCollectionItem read GetItem write SetItem;
-  end;
-
-  TdmDevCollectionItem = class(TObject)
-  private
-    FperRef     : String;
-    FideDmDev   : String;
-    FtpPgto     : Integer;
-    FdtPgto     : TDateTime;
-    FcodCateg   : Integer;
-    FinfoIR     : TinfoIRCollection;
-    FtotApurMen : TtotApurMenCollection;
-    FtotApurDia : TtotApurDiaCollection;
-    FinfoRRA    : TInfoRRA;
-    FInfoPgtoExt: TInfoPgtoExt;
-
-    function getInfoIR(): TInfoIRCollection;
-    function getTotApurMen(): TTotApurMenCollection;
-    function getTotApurDia(): TTotApurDiaCollection;
-    function getInfoRRA(): TInfoRRA;
-    function getInfoPgtoExt(): TInfoPgtoExt;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function infoIRInst(): Boolean;
-    function totApurMenInst(): Boolean;
-    function totApurDiaInst(): Boolean;
-    function infoRRAInst(): Boolean;
-    function infoPgtoExtInst(): Boolean;
-
-    property perRef     : String read FperRef;
-    property ideDmDev   : String read FideDmDev;
-    property tpPgto     : Integer read FtpPgto;
-    property dtPgto     : TDateTime read FdtPgto;
-    property codCateg   : Integer read FcodCateg;
-    property infoIR     : TInfoIRCollection read getInfoIR write FinfoIR;
-    property totApurMen : TtotApurMenCollection read getTotApurMen write FtotApurMen;
-    property totApurDia : TtotApurDiaCollection read getTotApurDia write FtotApurDia;
-    property infoRRA    : TInfoRRA read getInfoRRA write FinfoRRA;
-    property infoPgtoExt: TInfoPgtoExt read getInfoPgtoExt write FInfoPgtoExt;
-  end;
-
-  TideTrabalhador4 = class(TIdeTrabalhador3)
-  private
-    FcpfBenef: string;
-    FdmDev: TdmDevCollection;
-    FtotInfoIR: TtotInfoIR;
-    FinfoIRComplem: TinfoIRComplemCollection;
-
-    function getDmDev: TDmDevCollection;
-    function getInfoIRComplem: TInfoIRComplemCollection;
-    function getTotInfoIR: TtotInfoIR;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function dmDevInst(): boolean;
-    function infoIRComplemInst(): boolean;
-    function totInfoIRInst(): boolean;
-
-    property cpfBenef: string read FcpfBenef;
-    property dmDev: TdmDevCollection read getDmDev write FdmDev;
-    property totInfoIR: TtotInfoIR read getTotInfoIR write FtotInfoIR;
-    property infoIRComplem: TinfoIRComplemCollection read getInfoIRComplem write FinfoIRComplem;
-  end;
-
-  TbasesIrrfCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TbasesIrrfCollectionItem;
-    procedure SetItem(Index: Integer; Value: TbasesIrrfCollectionItem);
-  public
-    function Add: TbasesIrrfCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TbasesIrrfCollectionItem;
-    property Items[Index: Integer]: TbasesIrrfCollectionItem read GetItem write SetItem;
-  end;
-
-  TbasesIrrfCollectionItem = class(TObject)
-  private
-    Fvalor: Double;
-    FtpValor: Integer;
-  public
-    property tpValor: Integer read FtpValor;
-    property valor: Double read Fvalor;
-  end;
-
-  TirrfCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TirrfCollectionItem;
-    procedure SetItem(Index: Integer; Value: TirrfCollectionItem);
-  public
-    function Add: TirrfCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TirrfCollectionItem;
-    property Items[Index: Integer]: TirrfCollectionItem read GetItem write SetItem;
-  end;
-
-  TirrfCollectionItem = class(TObject)
-  private
-    FtpCR: string;
-    FvrIrrfDesc: Double;
-  public
-    property tpCR: string read FtpCR;
-    property vrIrrfDesc: Double read FvrIrrfDesc;
-  end;
-
-  TidePgtoExt = class(TObject)
-  private
-    FidePais: TidePais;
-    FendExt: TendExt;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property idePais: TidePais read FidePais write FidePais;
-    property endExt: TendExt read FendExt write FendExt;
-  end;
-
-  TTotApurMenCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TTotApurMenCollectionItem;
-    procedure SetItem(Index: Integer; Value: TTotApurMenCollectionItem);
-  public
-    function New: TTotApurMenCollectionItem;
-    property Items[Index: Integer]: TTotApurMenCollectionItem read GetItem write SetItem;
+    function Add: TinfoIRCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfoIRCollectionItem;
+    property Items[Index: Integer]: TinfoIRCollectionItem read GetItem write SetItem;
   end;
 
   TTotApurMenCollectionItem = class
@@ -386,13 +164,13 @@ type
     property vlrCRMenSusp: Double read FVlrCRMenSusp;
   end;
 
-  TTotApurDiaCollection = class(TACBrObjectList)
+  TTotApurMenCollection = class(TACBrObjectList)
   private
-    function GetItem(Index: Integer): TTotApurDiaCollectionItem;
-    procedure SetItem(Index: Integer; Value: TTotApurDiaCollectionItem);
+    function GetItem(Index: Integer): TTotApurMenCollectionItem;
+    procedure SetItem(Index: Integer; Value: TTotApurMenCollectionItem);
   public
-    function New: TTotApurDiaCollectionItem;
-    property Items[Index: Integer]: TTotApurDiaCollectionItem read GetItem write SetItem;
+    function New: TTotApurMenCollectionItem;
+    property Items[Index: Integer]: TTotApurMenCollectionItem read GetItem write SetItem;
   end;
 
   TTotApurDiaCollectionItem = class
@@ -414,36 +192,13 @@ type
     property vlrCRDiaSusp: Double read FVlrCRDiaSusp;
   end;
 
-  TEvtIrrfBenef = class(TObject)
+  TTotApurDiaCollection = class(TACBrObjectList)
   private
-    FLeitor: TLeitor;
-    FId: String;
-    FXML: String;
-
-    FIdeEvento      : TIdeEvento5;
-    FIdeEmpregador  : TIdeEmpregador;
-    FIdeTrabalhador : TIdeTrabalhador4;
-    FInfoDep        : TInfoDep;
-    FInfoIrrf       : TInfoIrrfCollection;
-    FVersaoDF       : TVersaoeSocial;
-
-    procedure SetInfoIrrf(const Value: TInfoIrrfCollection);
+    function GetItem(Index: Integer): TTotApurDiaCollectionItem;
+    procedure SetItem(Index: Integer; Value: TTotApurDiaCollectionItem);
   public
-    constructor Create;
-    destructor  Destroy; override;
-
-    function LerXML: boolean;
-    function SalvarINI: boolean;
-
-    property IdeEvento      : TIdeEvento5 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador  : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property IdeTrabalhador : TIdeTrabalhador4 read FIdeTrabalhador write FIdeTrabalhador;
-    property InfoDep        : TInfoDep read FInfoDep write FInfoDep;
-    property InfoIrrf       : TInfoIrrfCollection read FInfoIrrf write SetInfoIrrf;
-    property Leitor         : TLeitor read FLeitor write FLeitor;
-    property Id             : String read FId;
-    property XML            : String read FXML;
-    property VersaoDF       : TVersaoeSocial read FVersaoDF write FVersaoDF;
+    function New: TTotApurDiaCollectionItem;
+    property Items[Index: Integer]: TTotApurDiaCollectionItem read GetItem write SetItem;
   end;
 
   TInfoPgtoExt = class(TObject)
@@ -464,479 +219,54 @@ type
     property endExt: TEndExtV110 read FEndExtV110 write FEndExtV110;
   end;
 
-  TInfoProcJudRubCollection = class(TACBrObjectList)
+  TdmDevCollectionItem = class(TObject)
   private
-    function GetItem(Index: Integer): TInfoProcJudRubCollectionItem;
-    procedure SetItem(Index: Integer; Value: TInfoProcJudRubCollectionItem);
-  public
-    function New: TInfoProcJudRubCollectionItem;
-    property Items[Index: Integer]: TInfoProcJudRubCollectionItem read GetItem write SetItem;
-  end;
+    FperRef     : String;
+    FideDmDev   : String;
+    FtpPgto     : Integer;
+    FdtPgto     : TDateTime;
+    FcodCateg   : Integer;
+    FinfoIR     : TinfoIRCollection;
+    FtotApurMen : TtotApurMenCollection;
+    FtotApurDia : TtotApurDiaCollection;
+    FinfoRRA    : TInfoRRA;
+    FInfoPgtoExt: TInfoPgtoExt;
 
-  TInfoProcJudRubCollectionItem = class(TObject)
-  private
-    FnrProc: string;
-    FufVara: string;
-    FcodMunic: integer;
-    FidVara: integer;
-  public
-    property nrProc: string read FnrProc;
-    property ufVara: string read FufVara;
-    property codMunic: integer read FcodMunic;
-    property idVara: integer read FidVara;
-  end;
-
-  TinfoIRComplemCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TinfoIRComplemCollectionItem;
-    procedure SetItem(Index: Integer; Value: TinfoIRComplemCollectionItem);
-  public
-    function New: TinfoIRComplemCollectionItem;
-    property Items[Index: Integer]: TinfoIRComplemCollectionItem read GetItem write SetItem;
-  end;
-
-  TinfoIRComplemCollectionItem = class(TObject)
-  private
-    FdtLaudo: TDateTime;
-    FperAnt: TPerAnt;
-    FideDep: TideDepCollection;
-    FinfoIRCR: TinfoIRCRCollection;
-    FplanSaude: TplanSaudeCollection;
-    FinfoReembMed: TinfoReembMedCollection;
-
-    function getIdeDep: TideDepCollection;
-    function getInfoIRCR: TinfoIRCRCollection;
-    function getPlanSaude: TplanSaudeCollection;
-    function getInfoReembMed: TinfoReembMedCollection;
+    function getInfoIR(): TInfoIRCollection;
+    function getTotApurMen(): TTotApurMenCollection;
+    function getTotApurDia(): TTotApurDiaCollection;
+    function getInfoRRA(): TInfoRRA;
+    function getInfoPgtoExt(): TInfoPgtoExt;
   public
     constructor Create;
     destructor Destroy; override;
 
-    function ideDepInst: boolean;
-    function infoIRCRInst: boolean;
-    function planSaudeInst: boolean;
-    function infoReembMedInst: boolean;
+    function infoIRInst(): Boolean;
+    function totApurMenInst(): Boolean;
+    function totApurDiaInst(): Boolean;
+    function infoRRAInst(): Boolean;
+    function infoPgtoExtInst(): Boolean;
 
-    property dtLaudo: TDateTime read FdtLaudo;
-    property perAnt: TperAnt read FPerAnt;
-    property ideDep: TideDepCollection read getIdeDep write FideDep;
-    property infoIRCR: TinfoIRCRCollection read getInfoIRCR write FinfoIRCR;
-    property planSaude: TplanSaudeCollection read getPlanSaude write FplanSaude;
-    property infoReembMed: TinfoReembMedCollection read getInfoReembMed write FinfoReembMed;
+    property perRef     : String read FperRef;
+    property ideDmDev   : String read FideDmDev;
+    property tpPgto     : Integer read FtpPgto;
+    property dtPgto     : TDateTime read FdtPgto;
+    property codCateg   : Integer read FcodCateg;
+    property infoIR     : TInfoIRCollection read getInfoIR write FinfoIR;
+    property totApurMen : TtotApurMenCollection read getTotApurMen write FtotApurMen;
+    property totApurDia : TtotApurDiaCollection read getTotApurDia write FtotApurDia;
+    property infoRRA    : TInfoRRA read getInfoRRA write FinfoRRA;
+    property infoPgtoExt: TInfoPgtoExt read getInfoPgtoExt write FInfoPgtoExt;
   end;
 
-  TideDepCollection = class(TACBrObjectList)
+  TdmDevCollection = class(TACBrObjectList)
   private
-    function GetItem(Index: Integer): TIdeDepCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TIdeDepCollectionItem);
+    function GetItem(Index: Integer): TdmDevCollectionItem;
+    procedure SetItem(Index: Integer; Value: TdmDevCollectionItem);
   public
-    function New: TIdeDepCollectionItem;
-    property Items[Index: Integer]: TIdeDepCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TideDepCollectionItem = class(TObject)
-  private
-    FcpfDep: string;
-    FdtNascto: TDateTime;
-    Fnome: string;
-    FdepIRRF: tpSimNaoFacultativo;
-    FtpDep: tpTpDep;
-    FdescrDep: string;
-  public
-    property cpfDep: string read FcpfDep;
-    property dtNascto: TDateTime read FdtNascto;
-    property nome: string read Fnome;
-    property depIRRF: tpSimNaoFacultativo read FdepIRRF;
-    property tpDep: tpTpDep read FtpDep;
-    property descrDep: string read FdescrDep;
-  end;
-
-  TinfoIRCRCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TinfoIRCRCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TinfoIRCRCollectionItem);
-  public
-    function New: TinfoIRCRCollectionItem;
-    property Items[Index: Integer]: TinfoIRCRCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TinfoIRCRCollectionItem = class(TObject)
-  private
-    FtpCR: string;
-    FdedDepen: TdedDepenCollection;
-    FpenAlim: TpenAlimCollection;
-    FprevidCompl: TprevidComplCollection;
-    FinfoProcRet: TinfoProcRetCollection;
-
-    function getDedDepen: TdedDepenCollection;
-    function getPenAlim: TpenAlimCollection;
-    function getPrevidCompl: TprevidComplCollection;
-    function getInfoProcRet: TinfoProcRetCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function dedDepenInst: boolean;
-    function penAlimInst: boolean;
-    function previdComplInst: boolean;
-    function infoProcRetInst: boolean;
-
-    property tpCR: string read FtpCR;
-    property dedDepen: TdedDepenCollection read getDedDepen write FdedDepen;
-    property penAlim: TpenAlimCollection read getPenAlim write FpenAlim;
-    property previdCompl: TprevidComplCollection read getPrevidCompl write FprevidCompl;
-    property infoProcRet: TinfoProcRetCollection read getInfoProcRet write FinfoProcRet;
-  end;
-
-  TdedDepenCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TdedDepenCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TdedDepenCollectionItem);
-  public
-    function New: TdedDepenCollectionItem;
-    property Items[Index: Integer]: TdedDepenCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TdedDepenCollectionItem = class(TObject)
-  private
-    FtpRend: integer;
-    FcpfDep: string;
-    FvlrDedDep: double;
-  public
-    property tpRend: integer read FtpRend;
-    property cpfDep: string read FcpfDep;
-    property vlrDedDep: double read FvlrDedDep;
-  end;
-
-  TpenAlimCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TpenAlimCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TpenAlimCollectionItem);
-  public
-    function New: TpenAlimCollectionItem;
-    property Items[Index: Integer]: TpenAlimCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TpenAlimCollectionItem = class(TObject)
-  private
-    FtpRend: integer;
-    FcpfDep: string;
-    FvlrDedPenAlim: double;
-  public
-    property tpRend: integer read FtpRend;
-    property cpfDep: string read FcpfDep;
-    property vlrDedPenAlim: double read FvlrDedPenAlim;
-  end;
-
-  TprevidComplCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TprevidComplCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TprevidComplCollectionItem);
-  public
-    function New: TprevidComplCollectionItem;
-    property Items[Index: Integer]: TprevidComplCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TprevidComplCollectionItem = class(TObject)
-  private
-    FtpPrev: tpTpPrev;
-    FcnpjEntidPC: string;
-    FvlrDedPC: double;
-    FvlrDedPC13: double;
-    FvlrPatrocFunp: double;
-    FvlrPatrocFunp13: double;
-  public
-    property tpPrev: tpTpPrev read FtpPrev;
-    property cnpjEntidPC: string read FcnpjEntidPC;
-    property vlrDedPC: double read FvlrDedPC;
-    property vlrDedPC13: double read FvlrDedPC13;
-    property vlrPatrocFunp: double read FvlrPatrocFunp;
-    property vlrPatrocFunp13: double read FvlrPatrocFunp13;
-  end;
-
-  TinfoProcRetCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TinfoProcRetCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TinfoProcRetCollectionItem);
-  public
-    function New: TinfoProcRetCollectionItem;
-    property Items[Index: Integer]: TinfoProcRetCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TinfoProcRetCollectionItem = class(TObject)
-  private
-    FtpProcRet: tpTpProcRet;
-    FnrProcRet: string;
-    FcodSusp: integer;
-    FinfoValores: TinfoValoresCollection;
-
-    function getInfoValores: TinfoValoresCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function infoValoresInst: boolean;
-
-    property tpProcRet: tpTpProcRet read FtpProcRet;
-    property nrProcRet: string read FnrProcRet;
-    property codSusp: integer read FcodSusp;
-    property infoValores: TinfoValoresCollection read getInfoValores write FinfoValores;
-  end;
-
-  TinfoValoresCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TinfoValoresCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TinfoValoresCollectionItem);
-  public
-    function New: TinfoValoresCollectionItem;
-    property Items[Index: Integer]: TinfoValoresCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TinfoValoresCollectionItem = class(TObject)
-  private
-    FindApuracao: tpIndApuracao;
-    FvlrNRetido: double;
-    FvlrDepJud: double;
-    FvlrCmpAnoCal: double;
-    FvlrCmpAnoAnt: double;
-    FvlrRendSusp: double;
-    FdedSusp: TdedSuspCollection;
-
-    function getDedSusp: TdedSuspCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function dedSuspInst: boolean;
-
-    property indApuracao: tpIndApuracao read FindApuracao;
-    property vlrNRetido: double read FvlrNRetido;
-    property vlrDepJud: double read FvlrDepJud;
-    property vlrCmpAnoCal: double read FvlrCmpAnoCal;
-    property vlrCmpAnoAnt: double read FvlrCmpAnoAnt;
-    property vlrRendSusp: double read FvlrRendSusp;
-    property dedSusp: TdedSuspCollection read getDedSusp write FdedSusp;
-  end;
-
-  TdedSuspCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TdedSuspCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TdedSuspCollectionItem);
-  public
-    function New: TdedSuspCollectionItem;
-    property Items[Index: Integer]: TdedSuspCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TdedSuspCollectionItem = class(TObject)
-  private
-    FindTpDeducao: tpIndTpDeducao;
-    FvlrDedSusp: double;
-    FcnpjEntidPC: string;
-    FvlrPatrocFunp: double;
-    FbenefPen: TbenefPenCollection;
-
-   function getBenefPen: TbenefPenCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function benefPenInst: boolean;
-
-    property indTpDeducao: tpIndTpDeducao read FindTpDeducao;
-    property vlrDedSusp: double read FvlrDedSusp;
-    property cnpjEntidPC: string read FcnpjEntidPC;
-    property vlrPatrocFunp: double read FvlrPatrocFunp;
-    property benefPen: TbenefPenCollection read getBenefPen write Fbenefpen;
-  end;
-
-  TbenefPenCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TbenefPenCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TbenefPenCollectionItem);
-  public
-    function New: TbenefPenCollectionItem;
-    property Items[Index: Integer]: TbenefPenCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TbenefPenCollectionItem = class(TObject)
-  private
-    FcpfDep: string;
-    FvlrDepenSusp: double;
-  public
-    property cpfDep: string read FcpfDep;
-    property vlrDepenSusp: double read FvlrDepenSusp;
-  end;
-
-  TplanSaudeCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TplanSaudeCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TplanSaudeCollectionItem);
-  public
-    function New: TplanSaudeCollectionItem;
-    property Items[Index: Integer]: TplanSaudeCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TplanSaudeCollectionItem = class(TObject)
-  private
-    FcnpjOper: string;
-    FregANS: string;
-    FvlrSaudeTit: double;
-    FinfoDepSau: TinfoDepSauCollection;
-
-    function getInfoDepSau: TinfoDepSauCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function infoDepSauInst: boolean;
-
-    property cnpjOper: string read FcnpjOper;
-    property regANS: string read FregANS;
-    property vlrSaudeTit: double read FvlrSaudeTit;
-    property infoDepSau: TinfoDepSauCollection read getInfoDepSau write FinfoDepSau;
-  end;
-
-  TinfoDepSauCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TinfoDepSauCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TinfoDepSauCollectionItem);
-  public
-    function New: TinfoDepSauCollectionItem;
-    property Items[Index: Integer]: TinfoDepSauCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TinfoDepSauCollectionItem = class(TObject)
-  private
-    FcpfDep: string;
-    FvlrSaudeDep: double;
-  public
-    property cpfDep: string read FcpfDep;
-    property vlrSaudeDep: double read FvlrSaudeDep;
-  end;
-
-  TInfoReembMedCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TinfoReembMedCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TinfoReembMedCollectionItem);
-  public
-    function New: TinfoReembMedCollectionItem;
-    property Items[Index: Integer]: TinfoReembMedCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TInfoReembMedCollectionItem = class(TObject)
-  private
-    FindOrgReemb: string;
-    FcnpjOper: string;
-    FregANS: string;
-    FdetReembTit: TdetReembTitCollection;
-    FinfoReembDep: TinfoReembDepCollection;
-
-    function getDetReembTit: TdetReembTitCollection;
-    function getInfoReembDep: TinfoReembDepCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function detReembTitInst: boolean;
-    function infoReembDepInst: boolean;
-
-    property indOrgReemb: string read FindOrgReemb;
-    property cnpjOper: string read FcnpjOper;
-    property regANS: string read FregANS;
-    property detReembTit: TdetReembTitCollection read getDetReembTit write FdetReembTit;
-    property infoReembDep: TinfoReembDepCollection read getInfoReembDep write FinfoReembDep;
-  end;
-
-  TdetReembTitCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TdetReembTitCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TdetReembTitCollectionItem);
-  public
-    function New: TdetReembTitCollectionItem;
-    property Items[Index: Integer]: TdetReembTitCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TdetReembTitCollectionItem = class(TObject)
-  private
-    FtpInsc: tpTpInsc;
-    FnrInsc: string;
-    FvlrReemb: double;
-    FvlrReembAnt: double;
-  public
-    property tpInsc: tpTpInsc read FtpInsc;
-    property nrInsc: string read FnrInsc;
-    property vlrReemb: double read FvlrReemb;
-    property vlrReembAnt: double read FvlrReembAnt;
-  end;
-
-  TinfoReembDepCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TinfoReembDepCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TinfoReembDepCollectionItem);
-  public
-    function New: TinfoReembDepCollectionItem;
-    property Items[Index: Integer]: TinfoReembDepCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TinfoReembDepCollectionItem = class(TObject)
-  private
-    FcpfBenef: string;
-    FdetReembDep: TdetReembDepCollection;
-
-    function getDepReembDep: TdetReembDepCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function detReembDepInst: boolean;
-
-    property cpfBenef: string read FcpfBenef;
-    property detReembDep: TdetReembDepCollection read getDepReembDep write FdetReembDep;
-  end;
-
-  TdetReembDepCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TdetReembDepCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TdetReembDepCollectionItem);
-  public
-    function New: TdetReembDepCollectionItem;
-    property Items[Index: Integer]: TdetReembDepCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TdetReembDepCollectionItem = class(TObject)
-  private
-    FtpInsc: tpTpInsc;
-    FnrInsc: string;
-    FvlrReemb: double;
-    FvlrReembAnt: double;
-  public
-    property tpInsc: tpTpInsc read FtpInsc;
-    property nrInsc: string read FnrInsc;
-    property vlrReemb: double read FvlrReemb;
-    property vlrReembAnt: double read FvlrReembAnt;
-  end;
-
-  TtotInfoIR = class(TObject)
-  private
-    FconsolidApurMen: TconsolidApurMenCollection;
-
-    function getconsolidApurMen(): TconsolidApurMenCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function consolidApurMenInst(): boolean;
-
-    property consolidApurMen: TconsolidApurMenCollection read getconsolidApurMen write FconsolidApurMen;
-  end;
-
-  TconsolidApurMenCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TconsolidApurMenCollectionItem;
-    procedure SetItem(Index: Integer; const Value: TconsolidApurMenCollectionItem);
-  public
-    function New: TconsolidApurMenCollectionItem;
-    property Items[Index: Integer]: TconsolidApurMenCollectionItem read GetItem write SetItem; default;
+    function Add: TdmDevCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TdmDevCollectionItem;
+    property Items[Index: Integer]: TdmDevCollectionItem read GetItem write SetItem;
   end;
 
   TconsolidApurMenCollectionItem = class(TObject)
@@ -984,6 +314,621 @@ type
     property vlrJurosMora: Double read FvlrJurosMora;
     property vlrIsenOutros: Double read FvlrIsenOutros;
     property descRendimento: string read FdescRendimento;
+  end;
+
+  TconsolidApurMenCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TconsolidApurMenCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TconsolidApurMenCollectionItem);
+  public
+    function New: TconsolidApurMenCollectionItem;
+    property Items[Index: Integer]: TconsolidApurMenCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TtotInfoIR = class(TObject)
+  private
+    FconsolidApurMen: TconsolidApurMenCollection;
+
+    function getconsolidApurMen(): TconsolidApurMenCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function consolidApurMenInst(): boolean;
+
+    property consolidApurMen: TconsolidApurMenCollection read getconsolidApurMen write FconsolidApurMen;
+  end;
+
+  TideDepCollectionItem = class(TObject)
+  private
+    FcpfDep: string;
+    FdtNascto: TDateTime;
+    Fnome: string;
+    FdepIRRF: tpSimNaoFacultativo;
+    FtpDep: tpTpDep;
+    FdescrDep: string;
+  public
+    property cpfDep: string read FcpfDep;
+    property dtNascto: TDateTime read FdtNascto;
+    property nome: string read Fnome;
+    property depIRRF: tpSimNaoFacultativo read FdepIRRF;
+    property tpDep: tpTpDep read FtpDep;
+    property descrDep: string read FdescrDep;
+  end;
+
+  TideDepCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TIdeDepCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TIdeDepCollectionItem);
+  public
+    function New: TIdeDepCollectionItem;
+    property Items[Index: Integer]: TIdeDepCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TdedDepenCollectionItem = class(TObject)
+  private
+    FtpRend: integer;
+    FcpfDep: string;
+    FvlrDedDep: double;
+  public
+    property tpRend: integer read FtpRend;
+    property cpfDep: string read FcpfDep;
+    property vlrDedDep: double read FvlrDedDep;
+  end;
+
+  TdedDepenCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TdedDepenCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TdedDepenCollectionItem);
+  public
+    function New: TdedDepenCollectionItem;
+    property Items[Index: Integer]: TdedDepenCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TpenAlimCollectionItem = class(TObject)
+  private
+    FtpRend: integer;
+    FcpfDep: string;
+    FvlrDedPenAlim: double;
+  public
+    property tpRend: integer read FtpRend;
+    property cpfDep: string read FcpfDep;
+    property vlrDedPenAlim: double read FvlrDedPenAlim;
+  end;
+
+  TpenAlimCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TpenAlimCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TpenAlimCollectionItem);
+  public
+    function New: TpenAlimCollectionItem;
+    property Items[Index: Integer]: TpenAlimCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TprevidComplCollectionItem = class(TObject)
+  private
+    FtpPrev: tpTpPrev;
+    FcnpjEntidPC: string;
+    FvlrDedPC: double;
+    FvlrDedPC13: double;
+    FvlrPatrocFunp: double;
+    FvlrPatrocFunp13: double;
+  public
+    property tpPrev: tpTpPrev read FtpPrev;
+    property cnpjEntidPC: string read FcnpjEntidPC;
+    property vlrDedPC: double read FvlrDedPC;
+    property vlrDedPC13: double read FvlrDedPC13;
+    property vlrPatrocFunp: double read FvlrPatrocFunp;
+    property vlrPatrocFunp13: double read FvlrPatrocFunp13;
+  end;
+
+  TprevidComplCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TprevidComplCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TprevidComplCollectionItem);
+  public
+    function New: TprevidComplCollectionItem;
+    property Items[Index: Integer]: TprevidComplCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TbenefPenCollectionItem = class(TObject)
+  private
+    FcpfDep: string;
+    FvlrDepenSusp: double;
+  public
+    property cpfDep: string read FcpfDep;
+    property vlrDepenSusp: double read FvlrDepenSusp;
+  end;
+
+  TbenefPenCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TbenefPenCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TbenefPenCollectionItem);
+  public
+    function New: TbenefPenCollectionItem;
+    property Items[Index: Integer]: TbenefPenCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TdedSuspCollectionItem = class(TObject)
+  private
+    FindTpDeducao: tpIndTpDeducao;
+    FvlrDedSusp: double;
+    FcnpjEntidPC: string;
+    FvlrPatrocFunp: double;
+    FbenefPen: TbenefPenCollection;
+
+   function getBenefPen: TbenefPenCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function benefPenInst: boolean;
+
+    property indTpDeducao: tpIndTpDeducao read FindTpDeducao;
+    property vlrDedSusp: double read FvlrDedSusp;
+    property cnpjEntidPC: string read FcnpjEntidPC;
+    property vlrPatrocFunp: double read FvlrPatrocFunp;
+    property benefPen: TbenefPenCollection read getBenefPen write Fbenefpen;
+  end;
+
+  TdedSuspCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TdedSuspCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TdedSuspCollectionItem);
+  public
+    function New: TdedSuspCollectionItem;
+    property Items[Index: Integer]: TdedSuspCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfoValoresCollectionItem = class(TObject)
+  private
+    FindApuracao: tpIndApuracao;
+    FvlrNRetido: double;
+    FvlrDepJud: double;
+    FvlrCmpAnoCal: double;
+    FvlrCmpAnoAnt: double;
+    FvlrRendSusp: double;
+    FdedSusp: TdedSuspCollection;
+
+    function getDedSusp: TdedSuspCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function dedSuspInst: boolean;
+
+    property indApuracao: tpIndApuracao read FindApuracao;
+    property vlrNRetido: double read FvlrNRetido;
+    property vlrDepJud: double read FvlrDepJud;
+    property vlrCmpAnoCal: double read FvlrCmpAnoCal;
+    property vlrCmpAnoAnt: double read FvlrCmpAnoAnt;
+    property vlrRendSusp: double read FvlrRendSusp;
+    property dedSusp: TdedSuspCollection read getDedSusp write FdedSusp;
+  end;
+
+  TinfoValoresCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfoValoresCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TinfoValoresCollectionItem);
+  public
+    function New: TinfoValoresCollectionItem;
+    property Items[Index: Integer]: TinfoValoresCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfoProcRetCollectionItem = class(TObject)
+  private
+    FtpProcRet: tpTpProcRet;
+    FnrProcRet: string;
+    FcodSusp: integer;
+    FinfoValores: TinfoValoresCollection;
+
+    function getInfoValores: TinfoValoresCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function infoValoresInst: boolean;
+
+    property tpProcRet: tpTpProcRet read FtpProcRet;
+    property nrProcRet: string read FnrProcRet;
+    property codSusp: integer read FcodSusp;
+    property infoValores: TinfoValoresCollection read getInfoValores write FinfoValores;
+  end;
+
+  TinfoProcRetCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfoProcRetCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TinfoProcRetCollectionItem);
+  public
+    function New: TinfoProcRetCollectionItem;
+    property Items[Index: Integer]: TinfoProcRetCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfoIRCRCollectionItem = class(TObject)
+  private
+    FtpCR: string;
+    FdedDepen: TdedDepenCollection;
+    FpenAlim: TpenAlimCollection;
+    FprevidCompl: TprevidComplCollection;
+    FinfoProcRet: TinfoProcRetCollection;
+
+    function getDedDepen: TdedDepenCollection;
+    function getPenAlim: TpenAlimCollection;
+    function getPrevidCompl: TprevidComplCollection;
+    function getInfoProcRet: TinfoProcRetCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function dedDepenInst: boolean;
+    function penAlimInst: boolean;
+    function previdComplInst: boolean;
+    function infoProcRetInst: boolean;
+
+    property tpCR: string read FtpCR;
+    property dedDepen: TdedDepenCollection read getDedDepen write FdedDepen;
+    property penAlim: TpenAlimCollection read getPenAlim write FpenAlim;
+    property previdCompl: TprevidComplCollection read getPrevidCompl write FprevidCompl;
+    property infoProcRet: TinfoProcRetCollection read getInfoProcRet write FinfoProcRet;
+  end;
+
+  TinfoIRCRCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfoIRCRCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TinfoIRCRCollectionItem);
+  public
+    function New: TinfoIRCRCollectionItem;
+    property Items[Index: Integer]: TinfoIRCRCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfoDepSauCollectionItem = class(TObject)
+  private
+    FcpfDep: string;
+    FvlrSaudeDep: double;
+  public
+    property cpfDep: string read FcpfDep;
+    property vlrSaudeDep: double read FvlrSaudeDep;
+  end;
+
+  TinfoDepSauCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfoDepSauCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TinfoDepSauCollectionItem);
+  public
+    function New: TinfoDepSauCollectionItem;
+    property Items[Index: Integer]: TinfoDepSauCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TplanSaudeCollectionItem = class(TObject)
+  private
+    FcnpjOper: string;
+    FregANS: string;
+    FvlrSaudeTit: double;
+    FinfoDepSau: TinfoDepSauCollection;
+
+    function getInfoDepSau: TinfoDepSauCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function infoDepSauInst: boolean;
+
+    property cnpjOper: string read FcnpjOper;
+    property regANS: string read FregANS;
+    property vlrSaudeTit: double read FvlrSaudeTit;
+    property infoDepSau: TinfoDepSauCollection read getInfoDepSau write FinfoDepSau;
+  end;
+
+  TplanSaudeCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TplanSaudeCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TplanSaudeCollectionItem);
+  public
+    function New: TplanSaudeCollectionItem;
+    property Items[Index: Integer]: TplanSaudeCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TdetReembTitCollectionItem = class(TObject)
+  private
+    FtpInsc: tpTpInsc;
+    FnrInsc: string;
+    FvlrReemb: double;
+    FvlrReembAnt: double;
+  public
+    property tpInsc: tpTpInsc read FtpInsc;
+    property nrInsc: string read FnrInsc;
+    property vlrReemb: double read FvlrReemb;
+    property vlrReembAnt: double read FvlrReembAnt;
+  end;
+
+  TdetReembTitCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TdetReembTitCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TdetReembTitCollectionItem);
+  public
+    function New: TdetReembTitCollectionItem;
+    property Items[Index: Integer]: TdetReembTitCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TdetReembDepCollectionItem = class(TObject)
+  private
+    FtpInsc: tpTpInsc;
+    FnrInsc: string;
+    FvlrReemb: double;
+    FvlrReembAnt: double;
+  public
+    property tpInsc: tpTpInsc read FtpInsc;
+    property nrInsc: string read FnrInsc;
+    property vlrReemb: double read FvlrReemb;
+    property vlrReembAnt: double read FvlrReembAnt;
+  end;
+
+  TdetReembDepCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TdetReembDepCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TdetReembDepCollectionItem);
+  public
+    function New: TdetReembDepCollectionItem;
+    property Items[Index: Integer]: TdetReembDepCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfoReembDepCollectionItem = class(TObject)
+  private
+    FcpfBenef: string;
+    FdetReembDep: TdetReembDepCollection;
+
+    function getDepReembDep: TdetReembDepCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function detReembDepInst: boolean;
+
+    property cpfBenef: string read FcpfBenef;
+    property detReembDep: TdetReembDepCollection read getDepReembDep write FdetReembDep;
+  end;
+
+  TinfoReembDepCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfoReembDepCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TinfoReembDepCollectionItem);
+  public
+    function New: TinfoReembDepCollectionItem;
+    property Items[Index: Integer]: TinfoReembDepCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TInfoReembMedCollectionItem = class(TObject)
+  private
+    FindOrgReemb: string;
+    FcnpjOper: string;
+    FregANS: string;
+    FdetReembTit: TdetReembTitCollection;
+    FinfoReembDep: TinfoReembDepCollection;
+
+    function getDetReembTit: TdetReembTitCollection;
+    function getInfoReembDep: TinfoReembDepCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function detReembTitInst: boolean;
+    function infoReembDepInst: boolean;
+
+    property indOrgReemb: string read FindOrgReemb;
+    property cnpjOper: string read FcnpjOper;
+    property regANS: string read FregANS;
+    property detReembTit: TdetReembTitCollection read getDetReembTit write FdetReembTit;
+    property infoReembDep: TinfoReembDepCollection read getInfoReembDep write FinfoReembDep;
+  end;
+
+  TInfoReembMedCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfoReembMedCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TinfoReembMedCollectionItem);
+  public
+    function New: TinfoReembMedCollectionItem;
+    property Items[Index: Integer]: TinfoReembMedCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfoIRComplemCollectionItem = class(TObject)
+  private
+    FdtLaudo: TDateTime;
+    FperAnt: TPerAnt;
+    FideDep: TideDepCollection;
+    FinfoIRCR: TinfoIRCRCollection;
+    FplanSaude: TplanSaudeCollection;
+    FinfoReembMed: TinfoReembMedCollection;
+
+    function getIdeDep: TideDepCollection;
+    function getInfoIRCR: TinfoIRCRCollection;
+    function getPlanSaude: TplanSaudeCollection;
+    function getInfoReembMed: TinfoReembMedCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function ideDepInst: boolean;
+    function infoIRCRInst: boolean;
+    function planSaudeInst: boolean;
+    function infoReembMedInst: boolean;
+
+    property dtLaudo: TDateTime read FdtLaudo;
+    property perAnt: TperAnt read FPerAnt;
+    property ideDep: TideDepCollection read getIdeDep write FideDep;
+    property infoIRCR: TinfoIRCRCollection read getInfoIRCR write FinfoIRCR;
+    property planSaude: TplanSaudeCollection read getPlanSaude write FplanSaude;
+    property infoReembMed: TinfoReembMedCollection read getInfoReembMed write FinfoReembMed;
+  end;
+
+  TinfoIRComplemCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfoIRComplemCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfoIRComplemCollectionItem);
+  public
+    function New: TinfoIRComplemCollectionItem;
+    property Items[Index: Integer]: TinfoIRComplemCollectionItem read GetItem write SetItem;
+  end;
+
+  TideTrabalhador4 = class(TIdeTrabalhador3)
+  private
+    FcpfBenef: string;
+    FdmDev: TdmDevCollection;
+    FtotInfoIR: TtotInfoIR;
+    FinfoIRComplem: TinfoIRComplemCollection;
+
+    function getDmDev: TDmDevCollection;
+    function getInfoIRComplem: TInfoIRComplemCollection;
+    function getTotInfoIR: TtotInfoIR;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function dmDevInst(): boolean;
+    function infoIRComplemInst(): boolean;
+    function totInfoIRInst(): boolean;
+
+    property cpfBenef: string read FcpfBenef;
+    property dmDev: TdmDevCollection read getDmDev write FdmDev;
+    property totInfoIR: TtotInfoIR read getTotInfoIR write FtotInfoIR;
+    property infoIRComplem: TinfoIRComplemCollection read getInfoIRComplem write FinfoIRComplem;
+  end;
+
+  TInfoDep = class(TObject)
+  private
+    FvrDedDep: Double;
+  public
+    property vrDedDep: Double read FvrDedDep;
+  end;
+
+  TbasesIrrfCollectionItem = class(TObject)
+  private
+    Fvalor: Double;
+    FtpValor: Integer;
+  public
+    property tpValor: Integer read FtpValor;
+    property valor: Double read Fvalor;
+  end;
+
+  TbasesIrrfCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TbasesIrrfCollectionItem;
+    procedure SetItem(Index: Integer; Value: TbasesIrrfCollectionItem);
+  public
+    function Add: TbasesIrrfCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TbasesIrrfCollectionItem;
+    property Items[Index: Integer]: TbasesIrrfCollectionItem read GetItem write SetItem;
+  end;
+
+  TirrfCollectionItem = class(TObject)
+  private
+    FtpCR: string;
+    FvrIrrfDesc: Double;
+  public
+    property tpCR: string read FtpCR;
+    property vrIrrfDesc: Double read FvrIrrfDesc;
+  end;
+
+  TirrfCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TirrfCollectionItem;
+    procedure SetItem(Index: Integer; Value: TirrfCollectionItem);
+  public
+    function Add: TirrfCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TirrfCollectionItem;
+    property Items[Index: Integer]: TirrfCollectionItem read GetItem write SetItem;
+  end;
+
+  TidePgtoExt = class(TObject)
+  private
+    FidePais: TidePais;
+    FendExt: TendExt;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property idePais: TidePais read FidePais write FidePais;
+    property endExt: TendExt read FendExt write FendExt;
+  end;
+
+  TInfoIrrfCollectionItem = class(TObject)
+  private
+    FCodCateg: integer;
+    FindResBr: String;
+    FbasesIrrf: TbasesIrrfCollection;
+    Firrf: TirrfCollection;
+    FidePgtoExt: TidePgtoExt;
+
+    procedure SetbasesIrrf(const Value: TbasesIrrfCollection);
+    procedure Setirrf(const Value: TirrfCollection);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property CodCateg: integer read FCodCateg;
+    property indResBr: String read FindResBr;
+    property basesIrrf: TbasesIrrfCollection read FbasesIrrf write SetbasesIrrf;
+    property irrf: TirrfCollection read Firrf write Setirrf;
+    property idePgtoExt: TidePgtoExt read FidePgtoExt;
+  end;
+
+  TInfoIrrfCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TInfoIrrfCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfoIrrfCollectionItem);
+  public
+    function Add: TInfoIrrfCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoIrrfCollectionItem;
+    property Items[Index: Integer]: TInfoIrrfCollectionItem read GetItem write SetItem;
+  end;
+
+  TEvtIrrfBenef = class(TObject)
+  private
+    FLeitor: TLeitor;
+    FId: String;
+    FXML: String;
+
+    FIdeEvento      : TIdeEvento5;
+    FIdeEmpregador  : TIdeEmpregador;
+    FIdeTrabalhador : TIdeTrabalhador4;
+    FInfoDep        : TInfoDep;
+    FInfoIrrf       : TInfoIrrfCollection;
+    FVersaoDF       : TVersaoeSocial;
+
+    procedure SetInfoIrrf(const Value: TInfoIrrfCollection);
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    function LerXML: boolean;
+    function SalvarINI: boolean;
+
+    property IdeEvento      : TIdeEvento5 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador  : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeTrabalhador : TIdeTrabalhador4 read FIdeTrabalhador write FIdeTrabalhador;
+    property InfoDep        : TInfoDep read FInfoDep write FInfoDep;
+    property InfoIrrf       : TInfoIrrfCollection read FInfoIrrf write SetInfoIrrf;
+    property Leitor         : TLeitor read FLeitor write FLeitor;
+    property Id             : String read FId;
+    property XML            : String read FXML;
+    property VersaoDF       : TVersaoeSocial read FVersaoDF write FVersaoDF;
+  end;
+
+  TS5002 = class(TInterfacedObject, IEventoeSocial)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtirrfBenef: TEvtirrfBenef;
+
+    function GetXml : string;
+    procedure SetXml(const Value: string);
+    function GetTipoEvento : TTipoEvento;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function GetEvento : TObject;
+    property Xml: String read GetXml write SetXml;
+    property TipoEvento: TTipoEvento read GetTipoEvento write FTipoEvento;
+    property EvtirrfBenef: TEvtirrfBenef read FEvtirrfBenef write FEvtirrfBenef;
   end;
 
 implementation
@@ -2187,9 +2132,6 @@ begin
       begin
         IdeEvento.nrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
 
-        if VersaoDF <= ve02_05_00 then
-          IdeEvento.IndApuracao  := eSStrToIndApuracao(ok, leitor.rCampo(tcStr, 'IndApuracao'));
-
         IdeEvento.perApur := leitor.rCampo(tcStr, 'perApur');
       end; { ideEvento }
 
@@ -2201,527 +2143,451 @@ begin
 
       if leitor.rExtrai(1, 'ideTrabalhador') <> '' then
       begin
-        if VersaoDF <= ve02_05_00 then
-          IdeTrabalhador.cpfTrab := leitor.rCampo(tcStr, 'cpfTrab')
-        else
-          IdeTrabalhador.FcpfBenef := leitor.rCampo(tcStr, 'cpfBenef');
+        IdeTrabalhador.FcpfBenef := leitor.rCampo(tcStr, 'cpfBenef');
       end; { ideTrabalhador }
 
-      if VersaoDF <= ve02_05_00 then
+      i := 0;
+      while Leitor.rExtrai(2, 'dmDev', '', i + 1) <> '' do
       begin
-        if leitor.rExtrai(2, 'infoDep') <> '' then
-          infoDep.FvrDedDep := leitor.rCampo(tcDe2, 'vrDedDep');
-
-        i := 0;
-        while Leitor.rExtrai(2, 'infoIrrf', '', i + 1) <> '' do
+        with IdeTrabalhador.DmDev do
         begin
-          with InfoIrrf do
-          begin
-            New;
-            Items[i].FCodCateg := leitor.rCampo(tcInt, 'codCateg');
-            Items[i].FindResBr := leitor.rCampo(tcStr, 'indResBr');
-          end;
-
-          j := 0;
-          while Leitor.rExtrai(3, 'basesIrrf', '', j + 1) <> '' do
-          begin
-            with InfoIrrf.Items[i].basesIrrf do
-            begin
-              New;
-              Items[j].FtpValor := leitor.rCampo(tcInt, 'tpValor');
-              Items[j].Fvalor   := leitor.rCampo(tcDe2, 'valor');
-            end;
-
-            inc(j);
-          end; { basesIrrf }
-
-          j := 0;
-          while Leitor.rExtrai(3, 'irrf', '', j + 1) <> '' do
-          begin
-            with InfoIrrf.Items[i].irrf do
-            begin
-              New;
-              Items[j].FtpCR       := leitor.rCampo(tcStr, 'tpCR');
-              Items[j].FvrIrrfDesc := leitor.rCampo(tcDe2, 'vrIrrfDesc');
-            end;
-
-            inc(j);
-          end; { irrf }
-
-          if leitor.rExtrai(3, 'idePgtoExt') <> '' then
-          begin
-            if leitor.rExtrai(4, 'idePais') <> '' then
-            begin
-              with InfoIrrf.Items[i].idePgtoExt.idePais do
-              begin
-                codPais  := leitor.rCampo(tcStr, 'codPais');
-                indNIF   := eSStrToIndNIF(ok, leitor.rCampo(tcStr, 'indNIF'));
-                nifBenef := leitor.rCampo(tcStr, 'nifBenef');
-              end;
-            end; { idePais }
-
-            if leitor.rExtrai(4, 'endExt') <> '' then
-            begin
-              with InfoIrrf.Items[i].idePgtoExt.endExt do
-              begin
-                dscLograd := leitor.rCampo(tcStr, 'dscLograd');
-                nrLograd  := leitor.rCampo(tcStr, 'nrLograd');
-                complem   := leitor.rCampo(tcStr, 'complem');
-                bairro    := leitor.rCampo(tcStr, 'bairro');
-                nmCid     := leitor.rCampo(tcStr, 'nmCid');
-                codPostal := leitor.rCampo(tcStr, 'codPostal');
-              end;
-            end; { endExt }
-          end; { idePgtoExt }
-
-          inc(i);
+          New;
+          Items[i].FperRef   := leitor.rCampo(tcStr, 'perRef');
+          Items[i].FideDmDev := leitor.rCampo(tcStr, 'ideDmDev');
+          Items[i].FtpPgto   := leitor.rCampo(tcInt, 'tpPgto');
+          Items[i].FdtPgto   := leitor.rCampo(tcDat, 'dtPgto');
+          Items[i].FcodCateg := leitor.rCampo(tcInt, 'codCateg');
         end;
-      end  { infoIrrf }
-      else
-      begin
-        i := 0;
-        while Leitor.rExtrai(2, 'dmDev', '', i + 1) <> '' do
+
+        j := 0;
+        while Leitor.rExtrai(3, 'infoIR', '', j + 1) <> '' do
         begin
-          with IdeTrabalhador.DmDev do
-          begin
-            New;
-            Items[i].FperRef   := leitor.rCampo(tcStr, 'perRef');
-            Items[i].FideDmDev := leitor.rCampo(tcStr, 'ideDmDev');
-            Items[i].FtpPgto   := leitor.rCampo(tcInt, 'tpPgto');
-            Items[i].FdtPgto   := leitor.rCampo(tcDat, 'dtPgto');
-            Items[i].FcodCateg := leitor.rCampo(tcInt, 'codCateg');
-          end;
-
-          j := 0;
-          while Leitor.rExtrai(3, 'infoIR', '', j + 1) <> '' do
-          begin
-            IdeTrabalhador.DmDev.Items[i].infoIR.New;
-            IdeTrabalhador.DmDev.Items[i].infoIR.Items[j].FtpInfoIR       := leitor.rCampo(tcInt, 'tpInfoIR');
-            IdeTrabalhador.DmDev.Items[i].infoIR.Items[j].Fvalor          := leitor.rCampo(tcDe2, 'valor');
-            IdeTrabalhador.DmDev.Items[i].infoIR.Items[j].FdescRendimento := leitor.rCampo(tcStr, 'descRendimento');
-
-            if VersaoDF >= veS01_02_00 then
-            begin
-              k := 0;
-              while Leitor.rExtrai(4, 'infoProcJudRub', '', k + 1) <> '' do
-              begin
-                with IdeTrabalhador.DmDev.Items[i].infoIR.Items[j].infoProcJudRub do
-                begin
-                  New;
-                  Items[k].FnrProc   := leitor.rCampo(tcStr, 'nrProc');
-                  Items[k].FufVara   := leitor.rCampo(tcStr, 'ufVara');
-                  Items[k].FcodMunic := leitor.rCampo(tcInt, 'codMunic');
-                  Items[k].FidVara   := leitor.rCampo(tcInt, 'idVara');
-                end;
-
-                inc(k);
-              end; { infoProcJudRub }
-            end;
-
-            inc(j);
-          end; { infoIR }
-
-          j := 0;
-          while Leitor.rExtrai(3, 'totApurMen', '', j + 1) <> '' do
-          begin
-            with IdeTrabalhador.DmDev.Items[i].totApurMen do
-            begin
-              New;
-              Items[j].FCRMen                := leitor.rCampo(tcStr, 'CRMen');
-
-              if VersaoDF > veS01_02_00 then
-              begin
-                Items[j].FvlrRendTrib        := leitor.rCampo(tcDe2, 'vlrRendTrib');
-                Items[j].FvlrRendTrib13      := leitor.rCampo(tcDe2, 'vlrRendTrib13');
-                Items[j].FvlrPrevOficial     := leitor.rCampo(tcDe2, 'vlrPrevOficial');
-                Items[j].FvlrPrevOficial13   := leitor.rCampo(tcDe2, 'vlrPrevOficial13');
-              end;
-
-              Items[j].FvlrCRMen             := leitor.rCampo(tcDe2, 'vlrCRMen');
-
-              if VersaoDF > veS01_02_00 then
-              begin
-                Items[j].FvlrCR13Men         := leitor.rCampo(tcDe2, 'vlrCR13Men');
-                Items[j].FvlrParcIsenta65    := leitor.rCampo(tcDe2, 'vlrParcIsenta65');
-                Items[j].FvlrParcIsenta65Dec := leitor.rCampo(tcDe2, 'vlrParcIsenta65Dec');
-                Items[j].FvlrDiarias         := leitor.rCampo(tcDe2, 'vlrDiarias');
-                Items[j].FvlrAjudaCusto      := leitor.rCampo(tcDe2, 'vlrAjudaCusto');
-                Items[j].FvlrIndResContrato  := leitor.rCampo(tcDe2, 'vlrIndResContrato');
-                Items[j].FvlrAbonoPec        := leitor.rCampo(tcDe2, 'vlrAbonoPec');
-                Items[j].FvlrRendMoleGrave   := leitor.rCampo(tcDe2, 'vlrRendMoleGrave');
-                Items[j].FvlrRendMoleGrave13 := leitor.rCampo(tcDe2, 'vlrRendMoleGrave13');
-                Items[j].FvlrAuxMoradia      := leitor.rCampo(tcDe2, 'vlrAuxMoradia');
-                Items[j].FvlrBolsaMedico     := leitor.rCampo(tcDe2, 'vlrBolsaMedico');
-                Items[j].FvlrBolsaMedico13   := leitor.rCampo(tcDe2, 'vlrBolsaMedico13');
-                Items[j].FvlrJurosMora       := leitor.rCampo(tcDe2, 'vlrJurosMora');
-                Items[j].FvlrIsenOutros      := leitor.rCampo(tcDe2, 'vlrIsenOutros');
-                Items[j].FdescRendimento     := leitor.rCampo(tcStr, 'descRendimento');
-              end;
-
-              if VersaoDF < veS01_02_00 then
-                Items[j].FvlrCRMenSusp := leitor.rCampo(tcDe2, 'vlrCRMenSusp');
-            end;
-
-            inc(j);
-          end; { totApurMen }
-
-          j := 0;
-          while Leitor.rExtrai(3, 'totApurDia', '', j + 1) <> '' do
-          begin
-            with IdeTrabalhador.DmDev.Items[i].totApurDia do
-            begin
-              New;
-              Items[j].FperApurDia     := leitor.rCampo(tcInt, 'perApurDia');
-              Items[j].FCRDia          := leitor.rCampo(tcStr, 'CRDia');
-
-              if VersaoDF > veS01_02_00 then
-              begin
-                Items[j].FfrmTribut    := leitor.rCampo(tcInt, 'frmTribut');
-                Items[j].FpaisResidExt := leitor.rCampo(tcInt, 'paisResidExt');
-                Items[j].FvlrPagoDia   := leitor.rCampo(tcDe2, 'vlrPagoDia');
-              end;
-
-              Items[j].FvlrCRDia       := leitor.rCampo(tcDe2, 'vlrCRDia');
-
-              if VersaoDF < veS01_02_00 then
-                Items[j].FvlrCRDiaSusp := leitor.rCampo(tcDe2, 'vlrCRDiaSusp');
-            end;
-
-            inc(j);
-          end; { totApurDia }
+          IdeTrabalhador.DmDev.Items[i].infoIR.New;
+          IdeTrabalhador.DmDev.Items[i].infoIR.Items[j].FtpInfoIR       := leitor.rCampo(tcInt, 'tpInfoIR');
+          IdeTrabalhador.DmDev.Items[i].infoIR.Items[j].Fvalor          := leitor.rCampo(tcDe2, 'valor');
+          IdeTrabalhador.DmDev.Items[i].infoIR.Items[j].FdescRendimento := leitor.rCampo(tcStr, 'descRendimento');
 
           if VersaoDF >= veS01_02_00 then
           begin
-            if leitor.rExtrai(3, 'infoRRA') <> '' then
+            k := 0;
+            while Leitor.rExtrai(4, 'infoProcJudRub', '', k + 1) <> '' do
             begin
-              with IdeTrabalhador.DmDev.Items[i].infoRRA do
+              with IdeTrabalhador.DmDev.Items[i].infoIR.Items[j].infoProcJudRub do
               begin
-                tpProcRRA   := eSStrToTpProcRRA(ok, leitor.rCampo(tcStr, 'tpProcRRA'));
-                nrProcRRA   := leitor.rCampo(tcStr, 'nrProcRRA');
-                descRRA     := leitor.rCampo(tcStr, 'descRRA');
-                qtdMesesRRA := leitor.rCampo(tcDe1, 'qtdMesesRRA');
+                New;
+                Items[k].FnrProc   := leitor.rCampo(tcStr, 'nrProc');
+                Items[k].FufVara   := leitor.rCampo(tcStr, 'ufVara');
+                Items[k].FcodMunic := leitor.rCampo(tcInt, 'codMunic');
+                Items[k].FidVara   := leitor.rCampo(tcInt, 'idVara');
               end;
 
-              if leitor.rExtrai(4, 'despProcJud') <> '' then
-              begin
-                with IdeTrabalhador.DmDev.Items[i].infoRRA.despProcJud do
-                begin
-                  vlrDespCustas    := leitor.rCampo(tcDe2, 'vlrDespCustas');
-                  vlrDespAdvogados := leitor.rCampo(tcDe2, 'vlrDespAdvogados');
-                end;
-              end; { despProcJud }
+              inc(k);
+            end; { infoProcJudRub }
+          end;
 
-              j := 0;
-              while Leitor.rExtrai(4, 'ideAdv', '', j + 1) <> '' do
-              begin
-                with IdeTrabalhador.DmDev.Items[i].infoRRA.ideAdv do
-                begin
-                  New;
-                  Items[j].tpInsc := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
-                  Items[j].nrInsc := leitor.rCampo(tcStr, 'nrInsc');
-                  Items[j].vlrAdv := leitor.rCampo(tcDe2, 'vlrAdv');
-                end;
+          inc(j);
+        end; { infoIR }
 
-                inc(j);
-              end; { ideADV }
-            end; { infoRRA }
-
-            if leitor.rExtrai(3, 'infoPgtoExt') <> '' then
-            begin
-              IdeTrabalhador.DmDev.Items[i].infoPgtoExt.FpaisResidExt := leitor.rCampo(tcInt, 'paisResidExt');
-              IdeTrabalhador.DmDev.Items[i].infoPgtoExt.FindNIF       := eSStrToIndNIF(ok, leitor.rCampo(tcStr, 'indNIF'));
-              IdeTrabalhador.DmDev.Items[i].infoPgtoExt.FnifBenef     := leitor.rCampo(tcStr, 'nifBenef');
-              IdeTrabalhador.DmDev.Items[i].infoPgtoExt.FfrmTribut    := leitor.rCampo(tcInt, 'frmTribut');
-
-              if leitor.rExtrai(4, 'endExt') <> '' then
-              begin
-                IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.endDscLograd := leitor.rCampo(tcStr, 'endDscLograd');
-                IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.endNrLograd  := leitor.rCampo(tcStr, 'endNrLograd');
-                IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.endComplem   := leitor.rCampo(tcStr, 'endComplem');
-                IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.endBairro    := leitor.rCampo(tcStr, 'endBairro');
-                IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.endCidade    := leitor.rCampo(tcStr, 'endCidade');
-                IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.endEstado    := leitor.rCampo(tcStr, 'endEstado');
-                IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.endCodPostal := leitor.rCampo(tcStr, 'endCodPostal');
-                IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.telef        := leitor.rCampo(tcStr, 'telef');
-              end; { endExt }
-            end; { infoPgtoExt }
+        j := 0;
+        while Leitor.rExtrai(3, 'totApurMen', '', j + 1) <> '' do
+        begin
+          with IdeTrabalhador.DmDev.Items[i].totApurMen do
+          begin
+            New;
+            Items[j].FCRMen                := leitor.rCampo(tcStr, 'CRMen');
 
             if VersaoDF > veS01_02_00 then
             begin
-              if leitor.rExtrai(2, 'totInfoIR') <> '' then
-              begin
-
-                j := 0;
-                while Leitor.rExtrai(3, 'consolidApurMen', '', j + 1) <> '' do
-                begin
-                  with IdeTrabalhador.totInfoIR.consolidApurMen do
-                  begin
-                    New;
-                    Items[j].FCRMen              := leitor.rCampo(tcStr, 'CRMen');
-                    Items[j].FvlrRendTrib        := leitor.rCampo(tcDe2, 'vlrRendTrib');
-                    Items[j].FvlrRendTrib13      := leitor.rCampo(tcDe2, 'vlrRendTrib13');
-                    Items[j].FvlrPrevOficial     := leitor.rCampo(tcDe2, 'vlrPrevOficial');
-                    Items[j].FvlrPrevOficial13   := leitor.rCampo(tcDe2, 'vlrPrevOficial13');
-                    Items[j].FvlrCRMen           := leitor.rCampo(tcDe2, 'vlrCRMen');
-                    Items[j].FvlrCR13Men         := leitor.rCampo(tcDe2, 'vlrCR13Men');
-                    Items[j].FvlrParcIsenta65    := leitor.rCampo(tcDe2, 'vlrParcIsenta65');
-                    Items[j].FvlrParcIsenta65Dec := leitor.rCampo(tcDe2, 'vlrParcIsenta65Dec');
-                    Items[j].FvlrDiarias         := leitor.rCampo(tcDe2, 'vlrDiarias');
-                    Items[j].FvlrAjudaCusto      := leitor.rCampo(tcDe2, 'vlrAjudaCusto');
-                    Items[j].FvlrIndResContrato  := leitor.rCampo(tcDe2, 'vlrIndResContrato');
-                    Items[j].FvlrAbonoPec        := leitor.rCampo(tcDe2, 'vlrAbonoPec');
-                    Items[j].FvlrRendMoleGrave   := leitor.rCampo(tcDe2, 'vlrRendMoleGrave');
-                    Items[j].FvlrRendMoleGrave13 := leitor.rCampo(tcDe2, 'vlrRendMoleGrave13');
-                    Items[j].FvlrAuxMoradia      := leitor.rCampo(tcDe2, 'vlrAuxMoradia');
-                    Items[j].FvlrBolsaMedico     := leitor.rCampo(tcDe2, 'vlrBolsaMedico');
-                    Items[j].FvlrBolsaMedico13   := leitor.rCampo(tcDe2, 'vlrBolsaMedico13');
-                    Items[j].FvlrJurosMora       := leitor.rCampo(tcDe2, 'vlrJurosMora');
-                    Items[j].FvlrIsenOutros      := leitor.rCampo(tcDe2, 'vlrIsenOutros');
-                    Items[j].FdescRendimento     := leitor.rCampo(tcStr, 'descRendimento');
-                  end; { consolidApurMen }
-
-                  inc(j);
-                end;
-              end; { totInfoIR }
+              Items[j].FvlrRendTrib        := leitor.rCampo(tcDe2, 'vlrRendTrib');
+              Items[j].FvlrRendTrib13      := leitor.rCampo(tcDe2, 'vlrRendTrib13');
+              Items[j].FvlrPrevOficial     := leitor.rCampo(tcDe2, 'vlrPrevOficial');
+              Items[j].FvlrPrevOficial13   := leitor.rCampo(tcDe2, 'vlrPrevOficial13');
             end;
+
+            Items[j].FvlrCRMen             := leitor.rCampo(tcDe2, 'vlrCRMen');
+
+            if VersaoDF > veS01_02_00 then
+            begin
+              Items[j].FvlrCR13Men         := leitor.rCampo(tcDe2, 'vlrCR13Men');
+              Items[j].FvlrParcIsenta65    := leitor.rCampo(tcDe2, 'vlrParcIsenta65');
+              Items[j].FvlrParcIsenta65Dec := leitor.rCampo(tcDe2, 'vlrParcIsenta65Dec');
+              Items[j].FvlrDiarias         := leitor.rCampo(tcDe2, 'vlrDiarias');
+              Items[j].FvlrAjudaCusto      := leitor.rCampo(tcDe2, 'vlrAjudaCusto');
+              Items[j].FvlrIndResContrato  := leitor.rCampo(tcDe2, 'vlrIndResContrato');
+              Items[j].FvlrAbonoPec        := leitor.rCampo(tcDe2, 'vlrAbonoPec');
+              Items[j].FvlrRendMoleGrave   := leitor.rCampo(tcDe2, 'vlrRendMoleGrave');
+              Items[j].FvlrRendMoleGrave13 := leitor.rCampo(tcDe2, 'vlrRendMoleGrave13');
+              Items[j].FvlrAuxMoradia      := leitor.rCampo(tcDe2, 'vlrAuxMoradia');
+              Items[j].FvlrBolsaMedico     := leitor.rCampo(tcDe2, 'vlrBolsaMedico');
+              Items[j].FvlrBolsaMedico13   := leitor.rCampo(tcDe2, 'vlrBolsaMedico13');
+              Items[j].FvlrJurosMora       := leitor.rCampo(tcDe2, 'vlrJurosMora');
+              Items[j].FvlrIsenOutros      := leitor.rCampo(tcDe2, 'vlrIsenOutros');
+              Items[j].FdescRendimento     := leitor.rCampo(tcStr, 'descRendimento');
+            end;
+
+            if VersaoDF < veS01_02_00 then
+              Items[j].FvlrCRMenSusp := leitor.rCampo(tcDe2, 'vlrCRMenSusp');
           end;
 
-          inc(i);
-        end; { dmDev }
+          inc(j);
+        end; { totApurMen }
 
-        z := 0;
-        while Leitor.rExtrai(2, 'infoIRComplem', '', z + 1) <> '' do
+        j := 0;
+        while Leitor.rExtrai(3, 'totApurDia', '', j + 1) <> '' do
         begin
-          IdeTrabalhador.infoIRComplem.New;
-          IdeTrabalhador.infoIRComplem.Items[z].FdtLaudo := leitor.rCampo(tcDat, 'dtLaudo');
+          with IdeTrabalhador.DmDev.Items[i].totApurDia do
+          begin
+            New;
+            Items[j].FperApurDia     := leitor.rCampo(tcInt, 'perApurDia');
+            Items[j].FCRDia          := leitor.rCampo(tcStr, 'CRDia');
+
+            if VersaoDF > veS01_02_00 then
+            begin
+              Items[j].FfrmTribut    := leitor.rCampo(tcInt, 'frmTribut');
+              Items[j].FpaisResidExt := leitor.rCampo(tcInt, 'paisResidExt');
+              Items[j].FvlrPagoDia   := leitor.rCampo(tcDe2, 'vlrPagoDia');
+            end;
+
+            Items[j].FvlrCRDia       := leitor.rCampo(tcDe2, 'vlrCRDia');
+
+            if VersaoDF < veS01_02_00 then
+              Items[j].FvlrCRDiaSusp := leitor.rCampo(tcDe2, 'vlrCRDiaSusp');
+          end;
+
+          inc(j);
+        end; { totApurDia }
+
+        if VersaoDF >= veS01_02_00 then
+        begin
+          if leitor.rExtrai(3, 'infoRRA') <> '' then
+          begin
+            with IdeTrabalhador.DmDev.Items[i].infoRRA do
+            begin
+              tpProcRRA   := eSStrToTpProcRRA(ok, leitor.rCampo(tcStr, 'tpProcRRA'));
+              nrProcRRA   := leitor.rCampo(tcStr, 'nrProcRRA');
+              descRRA     := leitor.rCampo(tcStr, 'descRRA');
+              qtdMesesRRA := leitor.rCampo(tcDe1, 'qtdMesesRRA');
+            end;
+
+            if leitor.rExtrai(4, 'despProcJud') <> '' then
+            begin
+              with IdeTrabalhador.DmDev.Items[i].infoRRA.despProcJud do
+              begin
+                vlrDespCustas    := leitor.rCampo(tcDe2, 'vlrDespCustas');
+                vlrDespAdvogados := leitor.rCampo(tcDe2, 'vlrDespAdvogados');
+              end;
+            end; { despProcJud }
+
+            j := 0;
+            while Leitor.rExtrai(4, 'ideAdv', '', j + 1) <> '' do
+            begin
+              with IdeTrabalhador.DmDev.Items[i].infoRRA.ideAdv do
+              begin
+                New;
+                Items[j].tpInsc := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
+                Items[j].nrInsc := leitor.rCampo(tcStr, 'nrInsc');
+                Items[j].vlrAdv := leitor.rCampo(tcDe2, 'vlrAdv');
+              end;
+
+              inc(j);
+            end; { ideADV }
+          end; { infoRRA }
+
+          if leitor.rExtrai(3, 'infoPgtoExt') <> '' then
+          begin
+            IdeTrabalhador.DmDev.Items[i].infoPgtoExt.FpaisResidExt := leitor.rCampo(tcInt, 'paisResidExt');
+            IdeTrabalhador.DmDev.Items[i].infoPgtoExt.FindNIF       := eSStrToIndNIF(ok, leitor.rCampo(tcStr, 'indNIF'));
+            IdeTrabalhador.DmDev.Items[i].infoPgtoExt.FnifBenef     := leitor.rCampo(tcStr, 'nifBenef');
+            IdeTrabalhador.DmDev.Items[i].infoPgtoExt.FfrmTribut    := leitor.rCampo(tcInt, 'frmTribut');
+
+            if leitor.rExtrai(4, 'endExt') <> '' then
+            begin
+              IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.endDscLograd := leitor.rCampo(tcStr, 'endDscLograd');
+              IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.endNrLograd  := leitor.rCampo(tcStr, 'endNrLograd');
+              IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.endComplem   := leitor.rCampo(tcStr, 'endComplem');
+              IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.endBairro    := leitor.rCampo(tcStr, 'endBairro');
+              IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.endCidade    := leitor.rCampo(tcStr, 'endCidade');
+              IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.endEstado    := leitor.rCampo(tcStr, 'endEstado');
+              IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.endCodPostal := leitor.rCampo(tcStr, 'endCodPostal');
+              IdeTrabalhador.DmDev.Items[i].infoPgtoExt.endExt.telef        := leitor.rCampo(tcStr, 'telef');
+            end; { endExt }
+          end; { infoPgtoExt }
 
           if VersaoDF > veS01_02_00 then
           begin
-            if leitor.rExtrai(3, 'perAnt') <> '' then
+            if leitor.rExtrai(2, 'totInfoIR') <> '' then
             begin
-              IdeTrabalhador.infoIRComplem.Items[z].perAnt.perRefAjuste  := leitor.rCampo(tcStr, 'perRefAjuste');
-              IdeTrabalhador.infoIRComplem.Items[z].perAnt.nrRec1210Orig := leitor.rCampo(tcStr, 'nrRec1210Orig');
-            end;
+
+              j := 0;
+              while Leitor.rExtrai(3, 'consolidApurMen', '', j + 1) <> '' do
+              begin
+                with IdeTrabalhador.totInfoIR.consolidApurMen do
+                begin
+                  New;
+                  Items[j].FCRMen              := leitor.rCampo(tcStr, 'CRMen');
+                  Items[j].FvlrRendTrib        := leitor.rCampo(tcDe2, 'vlrRendTrib');
+                  Items[j].FvlrRendTrib13      := leitor.rCampo(tcDe2, 'vlrRendTrib13');
+                  Items[j].FvlrPrevOficial     := leitor.rCampo(tcDe2, 'vlrPrevOficial');
+                  Items[j].FvlrPrevOficial13   := leitor.rCampo(tcDe2, 'vlrPrevOficial13');
+                  Items[j].FvlrCRMen           := leitor.rCampo(tcDe2, 'vlrCRMen');
+                  Items[j].FvlrCR13Men         := leitor.rCampo(tcDe2, 'vlrCR13Men');
+                  Items[j].FvlrParcIsenta65    := leitor.rCampo(tcDe2, 'vlrParcIsenta65');
+                  Items[j].FvlrParcIsenta65Dec := leitor.rCampo(tcDe2, 'vlrParcIsenta65Dec');
+                  Items[j].FvlrDiarias         := leitor.rCampo(tcDe2, 'vlrDiarias');
+                  Items[j].FvlrAjudaCusto      := leitor.rCampo(tcDe2, 'vlrAjudaCusto');
+                  Items[j].FvlrIndResContrato  := leitor.rCampo(tcDe2, 'vlrIndResContrato');
+                  Items[j].FvlrAbonoPec        := leitor.rCampo(tcDe2, 'vlrAbonoPec');
+                  Items[j].FvlrRendMoleGrave   := leitor.rCampo(tcDe2, 'vlrRendMoleGrave');
+                  Items[j].FvlrRendMoleGrave13 := leitor.rCampo(tcDe2, 'vlrRendMoleGrave13');
+                  Items[j].FvlrAuxMoradia      := leitor.rCampo(tcDe2, 'vlrAuxMoradia');
+                  Items[j].FvlrBolsaMedico     := leitor.rCampo(tcDe2, 'vlrBolsaMedico');
+                  Items[j].FvlrBolsaMedico13   := leitor.rCampo(tcDe2, 'vlrBolsaMedico13');
+                  Items[j].FvlrJurosMora       := leitor.rCampo(tcDe2, 'vlrJurosMora');
+                  Items[j].FvlrIsenOutros      := leitor.rCampo(tcDe2, 'vlrIsenOutros');
+                  Items[j].FdescRendimento     := leitor.rCampo(tcStr, 'descRendimento');
+                end; { consolidApurMen }
+
+                inc(j);
+              end;
+            end; { totInfoIR }
+          end;
+        end;
+
+        inc(i);
+      end; { dmDev }
+
+      z := 0;
+      while Leitor.rExtrai(2, 'infoIRComplem', '', z + 1) <> '' do
+      begin
+        IdeTrabalhador.infoIRComplem.New;
+        IdeTrabalhador.infoIRComplem.Items[z].FdtLaudo := leitor.rCampo(tcDat, 'dtLaudo');
+
+        if VersaoDF > veS01_02_00 then
+        begin
+          if leitor.rExtrai(3, 'perAnt') <> '' then
+          begin
+            IdeTrabalhador.infoIRComplem.Items[z].perAnt.perRefAjuste  := leitor.rCampo(tcStr, 'perRefAjuste');
+            IdeTrabalhador.infoIRComplem.Items[z].perAnt.nrRec1210Orig := leitor.rCampo(tcStr, 'nrRec1210Orig');
+          end;
+        end;
+
+        j := 0;
+        while Leitor.rExtrai(3, 'ideDep', '', j + 1) <> '' do
+        begin
+          with IdeTrabalhador.infoIRComplem.Items[z].ideDep do
+          begin
+            New;
+            Items[j].FcpfDep   := leitor.rCampo(tcStr, 'cpfDep');
+            Items[j].FdepIRRF  := eSStrToSimNaoFacultativo(ok, leitor.rCampo(tcStr, 'depIRRF'));
+            Items[j].FdtNascto := leitor.rCampo(tcDat, 'dtNascto');
+            Items[j].Fnome     := leitor.rCampo(tcStr, 'nome');
+            Items[j].FtpDep    := eSStrToTpDep(ok, leitor.rCampo(tcStr, 'tpDep'));
+            Items[j].FdescrDep := leitor.rCampo(tcStr, 'descrDep');
           end;
 
-          j := 0;
-          while Leitor.rExtrai(3, 'ideDep', '', j + 1) <> '' do
+          inc(j);
+        end; { ideDep }
+
+        j := 0;
+        while Leitor.rExtrai(3, 'infoIRCR', '', j + 1) <> '' do
+        begin
+          with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR do
           begin
-            with IdeTrabalhador.infoIRComplem.Items[z].ideDep do
+            New;
+            Items[j].FtpCR := leitor.rCampo(tcStr, 'tpCR');
+          end;
+
+          k := 0;
+          while Leitor.rExtrai(4, 'dedDepen', '', k + 1) <> '' do
+          begin
+            with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR.Items[j].dedDepen do
             begin
               New;
-              Items[j].FcpfDep   := leitor.rCampo(tcStr, 'cpfDep');
-              Items[j].FdepIRRF  := eSStrToSimNaoFacultativo(ok, leitor.rCampo(tcStr, 'depIRRF'));
-              Items[j].FdtNascto := leitor.rCampo(tcDat, 'dtNascto');
-              Items[j].Fnome     := leitor.rCampo(tcStr, 'nome');
-              Items[j].FtpDep    := eSStrToTpDep(ok, leitor.rCampo(tcStr, 'tpDep'));
-              Items[j].FdescrDep := leitor.rCampo(tcStr, 'descrDep');
+              Items[k].FtpRend    := leitor.rCampo(tcInt, 'tpRend');
+              Items[k].FcpfDep    := leitor.rCampo(tcStr, 'cpfDep');
+              Items[k].FvlrDedDep := leitor.rCampo(tcDe2, 'vlrDedDep');
             end;
 
-            inc(j);
-          end; { ideDep }
+            inc(k);
+          end; { dedDepen }
 
-          j := 0;
-          while Leitor.rExtrai(3, 'infoIRCR', '', j + 1) <> '' do
+          k := 0;
+          while Leitor.rExtrai(4, 'penAlim', '', k + 1) <> '' do
           begin
-            with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR do
+            with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR.Items[j].penAlim do
             begin
               New;
-              Items[j].FtpCR := leitor.rCampo(tcStr, 'tpCR');
+              Items[k].FtpRend        := leitor.rCampo(tcInt, 'tpRend');
+              Items[k].FcpfDep        := leitor.rCampo(tcStr, 'cpfDep');
+              Items[k].FvlrDedPenAlim := leitor.rCampo(tcDe2, 'vlrDedPenAlim');
             end;
 
-            k := 0;
-            while Leitor.rExtrai(4, 'dedDepen', '', k + 1) <> '' do
+            inc(k);
+          end; { penAlim }
+
+          k := 0;
+          while Leitor.rExtrai(4, 'previdCompl', '', k + 1) <> '' do
+          begin
+            with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR.Items[j].previdCompl do
             begin
-              with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR.Items[j].dedDepen do
+              New;
+              Items[k].FtpPrev          := eSStrTotpTpPrev(ok, leitor.rCampo(tcStr, 'tpPrev'));
+              Items[k].FcnpjEntidPC     := leitor.rCampo(tcStr, 'cnpjEntidPC');
+              Items[k].FvlrDedPC        := leitor.rCampo(tcDe2, 'vlrDedPC');
+              Items[k].FvlrDedPC13      := leitor.rCampo(tcDe2, 'vlrDedPC13');
+              Items[k].FvlrPatrocFunp   := leitor.rCampo(tcDe2, 'vlrPatrocFunp');
+              Items[k].FvlrPatrocFunp13 := leitor.rCampo(tcDe2, 'vlrPatrocFunp13');
+            end;
+
+            inc(k);
+          end; { previdCompl }
+
+          k := 0;
+          while Leitor.rExtrai(4, 'infoProcRet', '', k + 1) <> '' do
+          begin
+            with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR.Items[j].infoProcRet do
+            begin
+              New;
+              Items[k].FtpProcRet := eSStrTotpTpProcRet(ok, leitor.rCampo(tcStr, 'tpProcRet'));
+              Items[k].FnrProcRet := leitor.rCampo(tcStr, 'nrProcRet');
+              Items[k].FcodSusp   := leitor.rCampo(tcInt, 'codSusp');
+            end;
+
+            l := 0;
+            while Leitor.rExtrai(5, 'infoValores', '', l + 1) <> '' do
+            begin
+              with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR.Items[j].infoProcRet.Items[k].infoValores do
               begin
                 New;
-                Items[k].FtpRend    := leitor.rCampo(tcInt, 'tpRend');
-                Items[k].FcpfDep    := leitor.rCampo(tcStr, 'cpfDep');
-                Items[k].FvlrDedDep := leitor.rCampo(tcDe2, 'vlrDedDep');
+                Items[l].FindApuracao  := eSStrToIndApuracao(ok, leitor.rCampo(tcStr, 'indApuracao'));
+                Items[l].FvlrNRetido   := leitor.rCampo(tcDe2, 'vlrNRetido');
+                Items[l].FvlrDepJud    := leitor.rCampo(tcDe2, 'vlrDepJud');
+                Items[l].FvlrCmpAnoCal := leitor.rCampo(tcDe2, 'vlrCmpAnoCal');
+                Items[l].FvlrCmpAnoAnt := leitor.rCampo(tcDe2, 'vlrCmpAnoAnt');
+                Items[l].FvlrRendSusp  := leitor.rCampo(tcDe2, 'vlrRendSusp');
               end;
 
-              inc(k);
-            end; { dedDepen }
-
-            k := 0;
-            while Leitor.rExtrai(4, 'penAlim', '', k + 1) <> '' do
-            begin
-              with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR.Items[j].penAlim do
+              m := 0;
+              while Leitor.rExtrai(5, 'dedSusp', '', m + 1) <> '' do
               begin
-                New;
-                Items[k].FtpRend        := leitor.rCampo(tcInt, 'tpRend');
-                Items[k].FcpfDep        := leitor.rCampo(tcStr, 'cpfDep');
-                Items[k].FvlrDedPenAlim := leitor.rCampo(tcDe2, 'vlrDedPenAlim');
-              end;
-
-              inc(k);
-            end; { penAlim }
-
-            k := 0;
-            while Leitor.rExtrai(4, 'previdCompl', '', k + 1) <> '' do
-            begin
-              with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR.Items[j].previdCompl do
-              begin
-                New;
-                Items[k].FtpPrev          := eSStrTotpTpPrev(ok, leitor.rCampo(tcStr, 'tpPrev'));
-                Items[k].FcnpjEntidPC     := leitor.rCampo(tcStr, 'cnpjEntidPC');
-                Items[k].FvlrDedPC        := leitor.rCampo(tcDe2, 'vlrDedPC');
-                Items[k].FvlrDedPC13      := leitor.rCampo(tcDe2, 'vlrDedPC13');
-                Items[k].FvlrPatrocFunp   := leitor.rCampo(tcDe2, 'vlrPatrocFunp');
-                Items[k].FvlrPatrocFunp13 := leitor.rCampo(tcDe2, 'vlrPatrocFunp13');
-              end;
-
-              inc(k);
-            end; { previdCompl }
-
-            k := 0;
-            while Leitor.rExtrai(4, 'infoProcRet', '', k + 1) <> '' do
-            begin
-              with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR.Items[j].infoProcRet do
-              begin
-                New;
-                Items[k].FtpProcRet := eSStrTotpTpProcRet(ok, leitor.rCampo(tcStr, 'tpProcRet'));
-                Items[k].FnrProcRet := leitor.rCampo(tcStr, 'nrProcRet');
-                Items[k].FcodSusp   := leitor.rCampo(tcInt, 'codSusp');
-              end;
-
-              l := 0;
-              while Leitor.rExtrai(5, 'infoValores', '', l + 1) <> '' do
-              begin
-                with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR.Items[j].infoProcRet.Items[k].infoValores do
+                with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR.Items[j].infoProcRet.Items[k].infoValores.Items[l].dedSusp do
                 begin
                   New;
-                  Items[l].FindApuracao  := eSStrToIndApuracao(ok, leitor.rCampo(tcStr, 'indApuracao'));
-                  Items[l].FvlrNRetido   := leitor.rCampo(tcDe2, 'vlrNRetido');
-                  Items[l].FvlrDepJud    := leitor.rCampo(tcDe2, 'vlrDepJud');
-                  Items[l].FvlrCmpAnoCal := leitor.rCampo(tcDe2, 'vlrCmpAnoCal');
-                  Items[l].FvlrCmpAnoAnt := leitor.rCampo(tcDe2, 'vlrCmpAnoAnt');
-                  Items[l].FvlrRendSusp  := leitor.rCampo(tcDe2, 'vlrRendSusp');
+                  Items[m].FindTpDeducao  := eSStrTotpIndTpDeducao(ok, leitor.rCampo(tcStr, 'indTpDeducao'));
+                  Items[m].FvlrDedSusp    := leitor.rCampo(tcDe2, 'vlrDedSusp');
+                  Items[m].FcnpjEntidPC   := leitor.rCampo(tcStr, 'cnpjEntidPC');
+                  Items[m].FvlrPatrocFunp := leitor.rCampo(tcDe2, 'vlrPatrocFunp');
                 end;
 
-                m := 0;
-                while Leitor.rExtrai(5, 'dedSusp', '', m + 1) <> '' do
+                n := 0;
+                while Leitor.rExtrai(6, 'benefPen', '', n + 1) <> '' do
                 begin
-                  with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR.Items[j].infoProcRet.Items[k].infoValores.Items[l].dedSusp do
+                  with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR.Items[j].infoProcRet.Items[k].infoValores.Items[l].dedSusp.Items[m].benefPen do
                   begin
                     New;
-                    Items[m].FindTpDeducao  := eSStrTotpIndTpDeducao(ok, leitor.rCampo(tcStr, 'indTpDeducao'));
-                    Items[m].FvlrDedSusp    := leitor.rCampo(tcDe2, 'vlrDedSusp');
-                    Items[m].FcnpjEntidPC   := leitor.rCampo(tcStr, 'cnpjEntidPC');
-                    Items[m].FvlrPatrocFunp := leitor.rCampo(tcDe2, 'vlrPatrocFunp');
+                    Items[n].FcpfDep       := leitor.rCampo(tcStr, 'cpfDep');
+                    Items[n].FvlrDepenSusp := leitor.rCampo(tcDe2, 'vlrDepenSusp');
                   end;
 
-                  n := 0;
-                  while Leitor.rExtrai(6, 'benefPen', '', n + 1) <> '' do
-                  begin
-                    with IdeTrabalhador.infoIRComplem.Items[z].infoIRCR.Items[j].infoProcRet.Items[k].infoValores.Items[l].dedSusp.Items[m].benefPen do
-                    begin
-                      New;
-                      Items[n].FcpfDep       := leitor.rCampo(tcStr, 'cpfDep');
-                      Items[n].FvlrDepenSusp := leitor.rCampo(tcDe2, 'vlrDepenSusp');
-                    end;
+                  inc(n);
+                end; { benefPen }
 
-                    inc(n);
-                  end; { benefPen }
+                inc(m);
+              end; { dedSusp }
 
-                  inc(m);
-                end; { dedSusp }
+              inc(l);
+            end; { infoValores }
 
-                inc(l);
-              end; { infoValores }
+            inc(k);
+          end; { infoProcRet }
 
-              inc(k);
-            end; { infoProcRet }
+          inc(j);
+        end; { infoIRCR }
 
-            inc(j);
-          end; { infoIRCR }
-
-          j := 0;
-          while Leitor.rExtrai(3, 'planSaude', '', j + 1) <> '' do
+        j := 0;
+        while Leitor.rExtrai(3, 'planSaude', '', j + 1) <> '' do
+        begin
+          with IdeTrabalhador.infoIRComplem.Items[z].planSaude do
           begin
-            with IdeTrabalhador.infoIRComplem.Items[z].planSaude do
+            New;
+            Items[j].FcnpjOper    := leitor.rCampo(tcStr, 'cnpjOper');
+            Items[j].FregANS      := leitor.rCampo(tcStr, 'regANS');
+            Items[j].FvlrSaudeTit := leitor.rCampo(tcDe2, 'vlrSaudeTit');
+          end;
+
+          k := 0;
+          while Leitor.rExtrai(4, 'infoDepSau', '', k + 1) <> '' do
+          begin
+            with IdeTrabalhador.infoIRComplem.Items[z].planSaude.Items[j].infoDepSau do
             begin
               New;
-              Items[j].FcnpjOper    := leitor.rCampo(tcStr, 'cnpjOper');
-              Items[j].FregANS      := leitor.rCampo(tcStr, 'regANS');
-              Items[j].FvlrSaudeTit := leitor.rCampo(tcDe2, 'vlrSaudeTit');
+              Items[k].FcpfDep      := leitor.rCampo(tcStr, 'cpfDep');
+              Items[k].FvlrSaudeDep := leitor.rCampo(tcDe2, 'vlrSaudeDep');
             end;
 
-            k := 0;
-            while Leitor.rExtrai(4, 'infoDepSau', '', k + 1) <> '' do
-            begin
-              with IdeTrabalhador.infoIRComplem.Items[z].planSaude.Items[j].infoDepSau do
-              begin
-                New;
-                Items[k].FcpfDep      := leitor.rCampo(tcStr, 'cpfDep');
-                Items[k].FvlrSaudeDep := leitor.rCampo(tcDe2, 'vlrSaudeDep');
-              end;
+            inc(k);
+          end; { infoDepSau }
 
-              inc(k);
-            end; { infoDepSau }
+          inc(j);
+        end; { planSaude }
 
-            inc(j);
-          end; { planSaude }
-
-          j := 0;
-          while Leitor.rExtrai(3, 'infoReembMed', '', j + 1) <> '' do
+        j := 0;
+        while Leitor.rExtrai(3, 'infoReembMed', '', j + 1) <> '' do
+        begin
+          with IdeTrabalhador.infoIRComplem.Items[z].infoReembMed do
           begin
-            with IdeTrabalhador.infoIRComplem.Items[z].infoReembMed do
+            New;
+            Items[j].FindOrgReemb := leitor.rCampo(tcStr, 'indOrgReemb');
+            Items[j].FcnpjOper    := leitor.rCampo(tcStr, 'cnpjOper');
+            Items[j].FregANS      := leitor.rCampo(tcStr, 'regANS');
+          end;
+
+          k := 0;
+          while Leitor.rExtrai(4, 'detReembTit', '', k + 1) <> '' do
+          begin
+            with IdeTrabalhador.infoIRComplem.Items[z].infoReembMed.Items[j].detReembTit do
             begin
               New;
-              Items[j].FindOrgReemb := leitor.rCampo(tcStr, 'indOrgReemb');
-              Items[j].FcnpjOper    := leitor.rCampo(tcStr, 'cnpjOper');
-              Items[j].FregANS      := leitor.rCampo(tcStr, 'regANS');
+              Items[k].FtpInsc      := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
+              Items[k].FnrInsc      := leitor.rCampo(tcStr, 'nrInsc');
+              Items[k].FvlrReemb    := leitor.rCampo(tcDe2, 'vlrReemb');
+              Items[k].FvlrReembAnt := leitor.rCampo(tcDe2, 'vlrReembAnt');
             end;
 
-            k := 0;
-            while Leitor.rExtrai(4, 'detReembTit', '', k + 1) <> '' do
+            inc(k);
+          end; { detReembTit }
+
+          k := 0;
+          while Leitor.rExtrai(4, 'infoReembDep', '', k + 1) <> '' do
+          begin
+            with IdeTrabalhador.infoIRComplem.Items[z].infoReembMed.Items[j].infoReembDep do
             begin
-              with IdeTrabalhador.infoIRComplem.Items[z].infoReembMed.Items[j].detReembTit do
+              New;
+              Items[k].FcpfBenef := leitor.rCampo(tcStr, 'cpfBenef');
+            end;
+
+            l := 0;
+            while Leitor.rExtrai(5, 'detReembDep', '', l + 1) <> '' do
+            begin
+              with IdeTrabalhador.infoIRComplem.Items[z].infoReembMed.Items[j].infoReembDep.Items[k].detReembDep do
               begin
                 New;
-                Items[k].FtpInsc      := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
-                Items[k].FnrInsc      := leitor.rCampo(tcStr, 'nrInsc');
-                Items[k].FvlrReemb    := leitor.rCampo(tcDe2, 'vlrReemb');
-                Items[k].FvlrReembAnt := leitor.rCampo(tcDe2, 'vlrReembAnt');
+                Items[l].FtpInsc      := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
+                Items[l].FnrInsc      := leitor.rCampo(tcStr, 'nrInsc');
+                Items[l].FvlrReemb    := leitor.rCampo(tcDe2, 'vlrReemb');
+                Items[l].FvlrReembAnt := leitor.rCampo(tcDe2, 'vlrReembAnt');
               end;
 
-              inc(k);
-            end; { detReembTit }
+              inc(l);
+            end; { detReembDep }
 
-            k := 0;
-            while Leitor.rExtrai(4, 'infoReembDep', '', k + 1) <> '' do
-            begin
-              with IdeTrabalhador.infoIRComplem.Items[z].infoReembMed.Items[j].infoReembDep do
-              begin
-                New;
-                Items[k].FcpfBenef := leitor.rCampo(tcStr, 'cpfBenef');
-              end;
+            inc(k);
+          end; { infoReembDep }
 
-              l := 0;
-              while Leitor.rExtrai(5, 'detReembDep', '', l + 1) <> '' do
-              begin
-                with IdeTrabalhador.infoIRComplem.Items[z].infoReembMed.Items[j].infoReembDep.Items[k].detReembDep do
-                begin
-                  New;
-                  Items[l].FtpInsc      := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
-                  Items[l].FnrInsc      := leitor.rCampo(tcStr, 'nrInsc');
-                  Items[l].FvlrReemb    := leitor.rCampo(tcDe2, 'vlrReemb');
-                  Items[l].FvlrReembAnt := leitor.rCampo(tcDe2, 'vlrReembAnt');
-                end;
-
-                inc(l);
-              end; { detReembDep }
-
-              inc(k);
-            end; { infoReembDep }
-
-            inc(j);
-          end; { infoReembMed }
-          inc(z);
-        end; { infoIRComplem }
-      end;
+          inc(j);
+        end; { infoReembMed }
+        inc(z);
+      end; { infoIRComplem }
 
       Result := True;
     end; { evtIrrfBenef }

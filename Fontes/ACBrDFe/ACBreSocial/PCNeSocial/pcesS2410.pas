@@ -58,37 +58,133 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2410Collection = class;
-  TS2410CollectionItem = class;
-  TEvtCdBenIn = class;
-  TBeneficiario = class;
-  TInfoBenInicio = class;
-  TDadosBeneficio = class;
-  TInfoPenMorte = class;
-  TInstPenMorte = class;
-  TSucessaoBenef = class;
-  TMudancaCPF = class;
-  TInfoBenTermino = class;
-
-  TS2410Collection = class(TeSocialCollection)
+  TBeneficiario = class(TObject)
   private
-    function GetItem(Index: Integer): TS2410CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2410CollectionItem);
+    FCpfBenef: string;
+    FMatricula: string;
+    FCnpjOrigem: string;
   public
-    function Add: TS2410CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2410CollectionItem;
-    property Items[Index: Integer]: TS2410CollectionItem read GetItem write SetItem; default;
+    property cpfBenef: String read FCpfBenef write FCpfBenef;
+    property matricula: string read FMatricula write FMatricula;
+    property cnpjOrigem: string read FCnpjOrigem write FCnpjOrigem;
   end;
 
-  TS2410CollectionItem = class(TObject)
+  TInstPenMorte = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FEvtCdBenIn : TEvtCdBenIn;
+    FCpfInst: string;
+    FDtInst: TDateTime;
   public
-    constructor Create(AOwner: TComponent);
+    property cpfInst: string read FCpfInst write FCpfInst;
+    property dtInst: TDateTime read FDtInst write FDtInst;
+  end;
+
+  TInfoPenMorte = class(TObject)
+  private
+    FTpTpPenMorte: tpTpPenMorte;
+    FInstPenMorte: TInstPenMorte;
+
+    function getInstPenMorte(): TInstPenMorte;
+  public
+    constructor Create;
     destructor Destroy; override;
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtCdBenIn: TEvtCdBenIn read FEvtCdBenIn write FEvtCdBenIn;
+
+    function instPenMorteInst(): Boolean;
+
+    property tpPenMorte: tpTpPenMorte read FTpTpPenMorte write FTpTpPenMorte;
+    property instPenMorte: TInstPenMorte read getInstPenMorte write FInstPenMorte;
+  end;
+
+  TDadosBeneficio = class(TObject)
+  private
+    FTpBeneficio: integer;
+    FTpPlanRP: tpPlanRP;
+    FDsc: String;
+    FIndDecJud: TpSimNaoFacultativo;
+
+    FInfoPenMorte: TInfoPenMorte;
+
+    function getInfoPenMorte(): TInfoPenMorte;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function infoPenMorteInst(): Boolean;
+
+    property tpBeneficio: integer read FTpBeneficio write FTpBeneficio;
+    property tpPlanRP: tpPlanRP read FTpPlanRP write FTpPlanRP;
+    property dsc: String read FDsc write FDsc;
+    property indDecJud: TpSimNaoFacultativo read FIndDecJud write FIndDecJud;
+    property infoPenMorte: TInfoPenMorte read getInfoPenMorte write FInfoPenMorte;
+  end;
+
+  TSucessaoBenef = class(TObject)
+  private
+    FCnpjOrgaoAnt: string;
+    FNrBeneficioAnt: string;
+    FDtTransf: TDateTime;
+    FObservacao: string;
+  public
+    property cnpjOrgaoAnt: string read FCnpjOrgaoAnt write FCnpjOrgaoAnt;
+    property nrBeneficioAnt: string read FNrBeneficioAnt write FNrBeneficioAnt;
+    property dtTransf: TDateTime read FDtTransf write FDtTransf;
+    property observacao: string read FObservacao write FObservacao;
+  end;
+
+  TInfoBenTermino = class(TObject)
+  private
+    FDtTermBeneficio: TDateTime;
+    FMtvTermino: tpMotCessBenef;
+  public
+    property dtTermBeneficio: TDateTime read FDtTermBeneficio write FDtTermBeneficio;
+    property mtvTermino: tpMotCessBenef read FMtvTermino write FMtvTermino;
+  end;
+
+  TMudancaCPF2410 = class(TObject)
+  private
+    FCpfAnt: string;
+    FNrBeneficioAnt: string;
+    FDtAltCPF: TDateTime;
+    FObservacao: string;
+  public
+    property cpfAnt: string read FCpfAnt write FCpfAnt;
+    property nrBeneficioAnt: string read FNrBeneficioAnt write FNrBeneficioAnt;
+    property dtAltCPF: TDateTime read FDtAltCPF write FDtAltCPF;
+    property observacao: string read FObservacao write FObservacao;
+  end;
+
+  TInfoBenInicio = class(TObject)
+  private
+    FCadIni: tpSimNao;
+    FIndSitBenef: tpIndSitBenef;
+    FNrBeneficio: string;
+    FDtIniBeneficio: TDateTime;
+    FDtPublic: TDateTime;
+
+    FDadosBeneficio: TDadosBeneficio;
+    FSucessaoBenef: TSucessaoBenef;
+    FMudancaCPF: TMudancaCPF2410;
+    FInfoBenTermino: TInfoBenTermino;
+
+    function getSucessaoBenef: TSucessaoBenef;
+    function getMudancaCPF: TMudancaCPF2410;
+    function getInfoBenTermino: TInfoBenTermino;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function infoSucessaoBenefInst(): Boolean;
+    function infoMudancaCPFInst(): Boolean;
+    function infoBenTerminoInst(): Boolean;
+
+    property cadIni: tpSimNao read FCadIni write FCadIni;
+    property indSitBenef: tpIndSitBenef read FIndSitBenef write FIndSitBenef;
+    property nrBeneficio: string read FNrBeneficio write FNrBeneficio;
+    property dtIniBeneficio: TDateTime read FDtIniBeneficio write FDtIniBeneficio;
+    property dtPublic: TDateTime read FDtPublic write FDtPublic;
+    property dadosBeneficio: TDadosBeneficio read FDadosBeneficio write FDadosBeneficio;
+    property sucessaoBenef: TSucessaoBenef read getSucessaoBenef write FSucessaoBenef;
+    property mudancaCPF: TMudancaCPF2410 read getMudancaCPF write FMudancaCPF;
+    property infoBenTermino: TInfoBenTermino read getInfoBenTermino write FInfoBenTermino;
   end;
 
   TEvtCdBenIn = class(TeSocialEvento)
@@ -105,7 +201,7 @@ type
     procedure GerarInfoBenTermino(pinfoBenTermino: TInfoBenTermino);
     procedure GerarInstPenMorte(pInstPenMorte: TInstPenMorte);
     procedure GerarSucessaoBenef(pSucessaoBenef: TSucessaoBenef);
-    procedure GerarMudancaCPF(pMudancaCPF: TMudancaCPF);
+    procedure GerarMudancaCPF(pMudancaCPF: TMudancaCPF2410);
   public
     constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
@@ -119,133 +215,25 @@ type
     property InfoBenInicio: TInfoBenInicio read FInfoBenInicio write FInfoBenInicio;
   end;
 
-  TInfoBenTermino = class(TObject)
+  TS2410CollectionItem = class(TObject)
   private
-    FDtTermBeneficio: TDateTime;
-    FMtvTermino: tpMotCessBenef;
+    FTipoEvento: TTipoEvento;
+    FEvtCdBenIn : TEvtCdBenIn;
   public
-    property dtTermBeneficio: TDateTime read FDtTermBeneficio write FDtTermBeneficio;
-    property mtvTermino: tpMotCessBenef read FMtvTermino write FMtvTermino;
-  end;
-  
-  TInstPenMorte = class(TObject)
-  private
-    FCpfInst: string;
-    FDtInst: TDateTime;
-  public
-    property cpfInst: string read FCpfInst write FCpfInst;
-    property dtInst: TDateTime read FDtInst write FDtInst;
-  end;
-
-  TInfoPenMorte = class(TObject)
-  private
-    FTpTpPenMorte: tpTpPenMorte;
-    FInstPenMorte: TInstPenMorte;
-    
-    function getInstPenMorte(): TInstPenMorte;
-  public
-    constructor Create;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-    
-    function instPenMorteInst(): Boolean;
-    
-    property tpPenMorte: tpTpPenMorte read FTpTpPenMorte write FTpTpPenMorte;
-    property instPenMorte: TInstPenMorte read getInstPenMorte write FInstPenMorte;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtCdBenIn: TEvtCdBenIn read FEvtCdBenIn write FEvtCdBenIn;
   end;
 
-  TSucessaoBenef = class(TObject)
+  TS2410Collection = class(TeSocialCollection)
   private
-    FCnpjOrgaoAnt: string;
-    FNrBeneficioAnt: string;
-    FDtTransf: TDateTime;
-    FObservacao: string;
+    function GetItem(Index: Integer): TS2410CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2410CollectionItem);
   public
-    property cnpjOrgaoAnt: string read FCnpjOrgaoAnt write FCnpjOrgaoAnt;
-    property nrBeneficioAnt: string read FNrBeneficioAnt write FNrBeneficioAnt;
-    property dtTransf: TDateTime read FDtTransf write FDtTransf;
-    property observacao: string read FObservacao write FObservacao;
-  end;
-  
-  TMudancaCPF = class(TObject)
-  private
-    FCpfAnt: string;
-    FNrBeneficioAnt: string;
-    FDtAltCPF: TDateTime;
-    FObservacao: string;
-  public
-    property cpfAnt: string read FCpfAnt write FCpfAnt;
-    property nrBeneficioAnt: string read FNrBeneficioAnt write FNrBeneficioAnt;
-    property dtAltCPF: TDateTime read FDtAltCPF write FDtAltCPF;
-    property observacao: string read FObservacao write FObservacao;
-  end;
-  
-  TInfoBenInicio = class(TObject)
-  private
-    FCadIni: tpSimNao;
-    FIndSitBenef: tpIndSitBenef;
-    FNrBeneficio: string;
-    FDtIniBeneficio: TDateTime;
-    FDtPublic: TDateTime;
-    
-    FDadosBeneficio: TDadosBeneficio;
-    FSucessaoBenef: TSucessaoBenef;
-    FMudancaCPF: TMudancaCPF;
-    FInfoBenTermino: TInfoBenTermino;
-    
-    function getSucessaoBenef: TSucessaoBenef;
-    function getMudancaCPF: TMudancaCPF;
-    function getInfoBenTermino: TInfoBenTermino;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function infoSucessaoBenefInst(): Boolean;
-    function infoMudancaCPFInst(): Boolean;
-    function infoBenTerminoInst(): Boolean;
-    
-    property cadIni: tpSimNao read FCadIni write FCadIni;
-    property indSitBenef: tpIndSitBenef read FIndSitBenef write FIndSitBenef;
-    property nrBeneficio: string read FNrBeneficio write FNrBeneficio;
-    property dtIniBeneficio: TDateTime read FDtIniBeneficio write FDtIniBeneficio;
-    property dtPublic: TDateTime read FDtPublic write FDtPublic;
-    property dadosBeneficio: TDadosBeneficio read FDadosBeneficio write FDadosBeneficio;
-    property sucessaoBenef: TSucessaoBenef read getSucessaoBenef write FSucessaoBenef;
-    property mudancaCPF: TMudancaCPF read getMudancaCPF write FMudancaCPF;
-    property infoBenTermino: TInfoBenTermino read getInfoBenTermino write FInfoBenTermino;
-  end;
-
-  TDadosBeneficio = class(TObject)
-  private
-    FTpBeneficio: integer;
-    FTpPlanRP: tpPlanRP;
-    FDsc: String;
-    FIndDecJud: TpSimNaoFacultativo;
-    
-    FInfoPenMorte: TInfoPenMorte;
-    
-    function getInfoPenMorte(): TInfoPenMorte;
-  public
-    constructor Create;
-    destructor Destroy; override;
-    
-    function infoPenMorteInst(): Boolean;
-    
-    property tpBeneficio: integer read FTpBeneficio write FTpBeneficio;
-    property tpPlanRP: tpPlanRP read FTpPlanRP write FTpPlanRP;
-    property dsc: String read FDsc write FDsc;
-    property indDecJud: TpSimNaoFacultativo read FIndDecJud write FIndDecJud;
-    property infoPenMorte: TInfoPenMorte read getInfoPenMorte write FInfoPenMorte;
-  end;
-
-  TBeneficiario = class(TObject)
-  private
-    FCpfBenef: string;
-    FMatricula: string;
-    FCnpjOrigem: string;
-  public
-    property cpfBenef: String read FCpfBenef write FCpfBenef;
-    property matricula: string read FMatricula write FMatricula;
-    property cnpjOrigem: string read FCnpjOrigem write FCnpjOrigem;
+    function Add: TS2410CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2410CollectionItem;
+    property Items[Index: Integer]: TS2410CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -326,10 +314,10 @@ begin
   Result := FSucessaoBenef;
 end;
 
-function TInfoBenInicio.getMudancaCPF: TMudancaCPF;
+function TInfoBenInicio.getMudancaCPF: TMudancaCPF2410;
 begin
   if not(Assigned(FMudancaCPF)) then
-    FMudancaCPF := TMudancaCPF.Create;
+    FMudancaCPF := TMudancaCPF2410.Create;
   Result := FMudancaCPF;
 end;
 
@@ -478,7 +466,7 @@ begin
   Gerador.wGrupo('/sucessaoBenef');
 end;
 
-procedure TEvtCdBenIn.GerarMudancaCPF(pMudancaCPF: TMudancaCPF);
+procedure TEvtCdBenIn.GerarMudancaCPF(pMudancaCPF: TMudancaCPF2410);
 begin
   if pMudancaCPF.cpfAnt = '' then
     Exit;
@@ -583,9 +571,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'EvtCdBenIn');
-
-//    Validar(schEvtCdBenIn);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

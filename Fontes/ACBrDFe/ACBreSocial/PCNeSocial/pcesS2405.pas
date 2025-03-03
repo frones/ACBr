@@ -58,42 +58,35 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2405Collection = class;
-  TS2405CollectionItem = class;
-  TEvtCdBenefAlt = class;
-  TIdeBenef = class;
-  TAlteracao = class;
-  TDadosBenef = class;
-  
-  TS2405Collection = class(TeSocialCollection)
-  private
-    function GetItem(Index: Integer): TS2405CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2405CollectionItem);
-  public
-    function Add: TS2405CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2405CollectionItem;
-    property Items[Index: Integer]: TS2405CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS2405CollectionItem = class(TObject)
-  private
-    FTipoEvento: TTipoEvento;
-    FEvtCdBenefAlt: TEvtCdBenefAlt;
-  public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-    
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtCdBenefAlt: TEvtCdBenefAlt read FEvtCdBenefAlt write FEvtCdBenefAlt;
-  end;
-
   TIdeBenef = class(TObject)
   private
     FCpfBenef: string;
   public
     property CpfBenef: string read FCpfBenef write FCpfBenef;
   end;
-  
+
+  TDadosBenef = class(TObject)
+  private
+    FNmBenefic: string;
+    FSexo: string;
+    FRacaCor: integer;
+    FEstCiv: integer;
+    FIncFisMen: TpSimNao;
+    FEndereco: TEndereco;
+    FDependente: TDependenteCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property nmBenefic: string read FNmBenefic write FNmBenefic;
+    property sexo: string read FSexo write FSexo;
+    property racaCor: integer read FRacaCor write FRacaCor;
+    property estCiv: integer read FEstCiv write FEstCiv;
+    property incFisMen: TpSimNao read FIncFisMen write FIncFisMen;
+    property endereco: TEndereco read FEndereco write FEndereco;
+    property dependente: TDependenteCollection read FDependente write FDependente;
+  end;
+
   TAlteracao = class(TObject)
   private
     FDtAlteracao: TDateTime;
@@ -101,18 +94,18 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    
+
     property DtAlteracao: TDateTime read FDtAlteracao write FDtAlteracao;
     property DadosBenef: TDadosBenef read FDadosBenef write FDadosBenef;
   end;
-  
+
   TEvtCdBenefAlt = class(TeSocialEvento)
   private
     FIdeEvento: TIdeEvento2;
     FIdeEmpregador: TIdeEmpregador;
     FIdeBenef: TIdeBenef;
     FAlteracao: TAlteracao;
-    
+
     procedure GerarIdeBenef(pIdeBenef: TIdeBenef);
     procedure GerarAlteracao(pAlteracao: TAlteracao);
     procedure GerarDadosBenef(pDadosBenef: TDadosBenef);
@@ -128,27 +121,27 @@ type
     property IdeBenef: TIdeBenef read FIdeBenef write FIdeBenef;
     property Alteracao: TAlteracao read FAlteracao write FAlteracao;
   end;
-  
-  TDadosBenef = class(TObject)
+
+  TS2405CollectionItem = class(TObject)
   private
-    FNmBenefic: string;
-    FSexo: string;
-    FRacaCor: integer;
-    FEstCiv: integer;
-    FIncFisMen: TpSimNao;
-    FEndereco: TEndereco;
-    FDependente: TDependenteCollection;
+    FTipoEvento: TTipoEvento;
+    FEvtCdBenefAlt: TEvtCdBenefAlt;
   public
-    constructor Create;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-    
-    property nmBenefic: string read FNmBenefic write FNmBenefic;
-    property sexo: string read FSexo write FSexo;
-    property racaCor: integer read FRacaCor write FRacaCor;
-    property estCiv: integer read FEstCiv write FEstCiv;
-    property incFisMen: TpSimNao read FIncFisMen write FIncFisMen;
-    property endereco: TEndereco read FEndereco write FEndereco;
-    property dependente: TDependenteCollection read FDependente write FDependente;
+
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtCdBenefAlt: TEvtCdBenefAlt read FEvtCdBenefAlt write FEvtCdBenefAlt;
+  end;
+
+  TS2405Collection = class(TeSocialCollection)
+  private
+    function GetItem(Index: Integer): TS2405CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2405CollectionItem);
+  public
+    function Add: TS2405CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2405CollectionItem;
+    property Items[Index: Integer]: TS2405CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -312,9 +305,6 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'EvtCdBenefAlt');
-
-//    Validar(schEvtCdBenefAlt);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;

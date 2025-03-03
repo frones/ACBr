@@ -61,7 +61,6 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador, pcnLeitor;
 
 type
-
   TIdeProc = class(TObject)
   private
     FnrProcTrab: String;
@@ -198,11 +197,12 @@ begin
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-
   except
     on E:Exception do
       raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
+
+  Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 
 function TEvtConsolidContProc.LerArqIni(const AIniString: String): Boolean;

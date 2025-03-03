@@ -64,34 +64,13 @@ uses
 	pcesConversaoeSocial;
 
 type
-  TS5012 = class;
-  TInfoIRRF = class;
-  TInfoCRContribCollection = class;
-  TInfoCRContribCollectionItem = class;
-  TInfoCRMenCollection = class;
-  TInfoCRMenCollectionItem = class;
-  TInfoCRDiaCollection = class;
-  TInfoCRDiaCollectionItem = class;
-
-  TEvtIrrf = class;
-
-  TS5012 = class(TInterfacedObject, IEventoeSocial)
+  TInfoCRContribCollectionItem = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FEvtIrrf: TEvtIrrf;
-
-    function GetXml : string;
-    procedure SetXml(const Value: string);
-    function GetTipoEvento : TTipoEvento;
+    FtpCR: String;
+    FvrCR: Double;
   public
-    constructor Create;
-    destructor Destroy; override;
-
-    function GetEvento : TObject;
-    property Xml: String read GetXml write SetXml;
-    property TipoEvento: TTipoEvento read GetTipoEvento;
-    property EvtIrrf: TEvtIrrf read FEvtIrrf write FEvtIrrf;
-
+    property tpCR: String read FtpCR;
+    property vrCR: Double read FvrCR;
   end;
 
   TInfoCRContribCollection = class(TACBrObjectList)
@@ -104,13 +83,46 @@ type
     property Items[Index: Integer]: TInfoCRContribCollectionItem read GetItem write SetItem;
   end;
 
-  TInfoCRContribCollectionItem = class(TObject)
+  TInfoCRMenCollectionItem = class
   private
-    FtpCR: String;
-    FvrCR: Double;
+   FCRMen: string;
+   FVrCRMen: Double;
+   FVrCRMenSusp: Double;
   public
-    property tpCR: String read FtpCR;
-    property vrCR: Double read FvrCR;
+   property CRMen: string read FCRMen;
+   property vrCRMen: Double read FVrCRMen;
+   property vrCRMenSusp: Double read FVrCRMenSusp;
+  end;
+
+  TInfoCRMenCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TInfoCRMenCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfoCRMenCollectionItem);
+  public
+    function New: TInfoCRMenCollectionItem;
+    property Items[Index: Integer]: TInfoCRMenCollectionItem read GetItem write SetItem;
+  end;
+
+  TInfoCRDiaCollectionItem = class
+  private
+   FPerApurDia: Integer;
+   FCRDia: string;
+   FVrCRDia: Double;
+   FVrCRDiaSusp: Double;
+  public
+   property perApurDia: Integer read FPerApurDia;
+   property CRDia: string read FCRDia;
+   property vrCRDia: Double read FVrCRDia;
+   property vrCRDiaSusp: Double read FVrCRDiaSusp;
+  end;
+
+  TInfoCRDiaCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TInfoCRDiaCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfoCRDiaCollectionItem);
+  public
+    function New: TInfoCRDiaCollectionItem;
+    property Items[Index: Integer]: TInfoCRDiaCollectionItem read GetItem write SetItem;
   end;
 
   TInfoIRRF = class(TObject)
@@ -161,46 +173,22 @@ type
     property VersaoDF: TVersaoeSocial read FVersaoDF write FVersaoDF;
   end;
 
-  TInfoCRMenCollection = class(TACBrObjectList)
+  TS5012 = class(TInterfacedObject, IEventoeSocial)
   private
-    function GetItem(Index: Integer): TInfoCRMenCollectionItem;
-    procedure SetItem(Index: Integer; Value: TInfoCRMenCollectionItem);
-  public
-    function New: TInfoCRMenCollectionItem;
-    property Items[Index: Integer]: TInfoCRMenCollectionItem read GetItem write SetItem;
-  end;
+    FTipoEvento: TTipoEvento;
+    FEvtIrrf: TEvtIrrf;
 
-  TInfoCRMenCollectionItem = class
-  private
-   FCRMen: string;
-   FVrCRMen: Double;
-   FVrCRMenSusp: Double;
+    function GetXml : string;
+    procedure SetXml(const Value: string);
+    function GetTipoEvento : TTipoEvento;
   public
-   property CRMen: string read FCRMen;
-   property vrCRMen: Double read FVrCRMen;
-   property vrCRMenSusp: Double read FVrCRMenSusp;
-  end;
+    constructor Create;
+    destructor Destroy; override;
 
-  TInfoCRDiaCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TInfoCRDiaCollectionItem;
-    procedure SetItem(Index: Integer; Value: TInfoCRDiaCollectionItem);
-  public
-    function New: TInfoCRDiaCollectionItem;
-    property Items[Index: Integer]: TInfoCRDiaCollectionItem read GetItem write SetItem;
-  end;
-
-  TInfoCRDiaCollectionItem = class
-  private
-   FPerApurDia: Integer;
-   FCRDia: string;
-   FVrCRDia: Double;
-   FVrCRDiaSusp: Double;
-  public
-   property perApurDia: Integer read FPerApurDia;
-   property CRDia: string read FCRDia;
-   property vrCRDia: Double read FVrCRDia;
-   property vrCRDiaSusp: Double read FVrCRDiaSusp;
+    function GetEvento : TObject;
+    property Xml: String read GetXml write SetXml;
+    property TipoEvento: TTipoEvento read GetTipoEvento;
+    property EvtIrrf: TEvtIrrf read FEvtIrrf write FEvtIrrf;
   end;
 
 implementation
@@ -277,7 +265,6 @@ var
   i: Integer;
   s: String;
 begin
-  Result := False;
   try
     FXML := Leitor.Arquivo;
 
@@ -303,45 +290,31 @@ begin
         infoIRRF.FnrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
         infoIRRF.FindExistInfo := leitor.rCampo(tcInt, 'indExistInfo');
 
-        if VersaoDF <= ve02_05_00 then
+        i := 0;
+        while Leitor.rExtrai(3, 'infoCRMen', '', i + 1) <> '' do
         begin
-          i := 0;
-          while Leitor.rExtrai(3, 'infoCRContrib', '', i + 1) <> '' do
-          begin
-            infoIRRF.infoCRContrib.New;
-            infoIRRF.infoCRContrib.Items[i].FtpCR := leitor.rCampo(tcStr, 'tpCR');
-            infoIRRF.infoCRContrib.Items[i].FvrCR := leitor.rCampo(tcDe2, 'vrCR');
-            inc(i);
-          end;
-        end
-        else if VersaoDF >= veS01_01_00 then
+          InfoIRRF.InfoCRMen.New;
+          InfoIRRF.InfoCRMen.Items[i].FCRMen       := leitor.rCampo(tcStr, 'CRMen');
+          InfoIRRF.InfoCRMen.Items[i].FvrCRMen     := leitor.rCampo(tcDe2, 'vrCRMen');
+
+          if VersaoDF <= veS01_01_00 then
+            InfoIRRF.InfoCRMen.Items[i].FvrCRMenSusp := leitor.rCampo(tcDe2, 'vrCRMenSusp');
+
+          inc(i);
+        end;
+
+        i := 0;
+        while Leitor.rExtrai(3, 'infoCRDia', '', i + 1) <> '' do
         begin
-          i := 0;
-          while Leitor.rExtrai(3, 'infoCRMen', '', i + 1) <> '' do
-          begin
-            InfoIRRF.InfoCRMen.New;
-            InfoIRRF.InfoCRMen.Items[i].FCRMen       := leitor.rCampo(tcStr, 'CRMen');
-            InfoIRRF.InfoCRMen.Items[i].FvrCRMen     := leitor.rCampo(tcDe2, 'vrCRMen');
+          InfoIRRF.InfoCRDia.New;
+          InfoIRRF.InfoCRDia.Items[i].FperApurDia  := leitor.rCampo(tcInt, 'perApurDia');
+          InfoIRRF.InfoCRDia.Items[i].FCRDia       := leitor.rCampo(tcStr, 'CRDia');
+          InfoIRRF.InfoCRDia.Items[i].FvrCRDia     := leitor.rCampo(tcDe2, 'vrCRDia');
 
-            if VersaoDF <= veS01_01_00 then
-              InfoIRRF.InfoCRMen.Items[i].FvrCRMenSusp := leitor.rCampo(tcDe2, 'vrCRMenSusp');
+          if VersaoDF <= veS01_01_00 then
+            InfoIRRF.InfoCRDia.Items[i].FvrCRDiaSusp := leitor.rCampo(tcDe2, 'vrCRDiaSusp');
 
-            inc(i);
-          end;
-
-          i := 0;
-          while Leitor.rExtrai(3, 'infoCRDia', '', i + 1) <> '' do
-          begin
-            InfoIRRF.InfoCRDia.New;
-            InfoIRRF.InfoCRDia.Items[i].FperApurDia  := leitor.rCampo(tcInt, 'perApurDia');
-            InfoIRRF.InfoCRDia.Items[i].FCRDia       := leitor.rCampo(tcStr, 'CRDia');
-            InfoIRRF.InfoCRDia.Items[i].FvrCRDia     := leitor.rCampo(tcDe2, 'vrCRDia');
-
-            if VersaoDF <= veS01_01_00 then
-              InfoIRRF.InfoCRDia.Items[i].FvrCRDiaSusp := leitor.rCampo(tcDe2, 'vrCRDiaSusp');
-
-            inc(i);
-          end;
+          inc(i);
         end;
       end;
     end;

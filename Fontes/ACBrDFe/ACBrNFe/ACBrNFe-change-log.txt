@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/03/2025
+-- ACBrNFe.XmlWriter --
+[*] Ajuste visando evitar erro caso não preencha cMunFGIBS
+   Por: Diego Folieni
+
 28/02/2025
 -- ACBrNFe.Classes --
 [-]  incluido o gCompraGov no Create e no Destroy da classe Ide.

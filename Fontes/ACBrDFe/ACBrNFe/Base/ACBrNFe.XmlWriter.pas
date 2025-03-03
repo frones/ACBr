@@ -527,11 +527,13 @@ begin
     wAlerta('B12', 'cMunFG', DSC_CMUNFG, ERR_MSG_INVALIDO);
 
   // Reforma Tributária
-  Result.AppendChild(AddNode(tcInt, 'B12a', 'cMunFGIBS', 07, 07, 0,
-    NFe.ide.cMunFGIBS, DSC_CMUNFGIBS));
-  if not ValidarMunicipio(NFe.ide.cMunFGIBS) then
-    wAlerta('B12', 'cMunFGIBS', DSC_CMUNFGIBS, ERR_MSG_INVALIDO);
-
+  if NFe.ide.cMunFGIBS > 0 then
+  begin
+    Result.AppendChild(AddNode(tcInt, 'B12a', 'cMunFGIBS', 07, 07, 0,
+      NFe.ide.cMunFGIBS, DSC_CMUNFGIBS));
+    if not ValidarMunicipio(NFe.ide.cMunFGIBS) then
+      wAlerta('B12', 'cMunFGIBS', DSC_CMUNFGIBS, ERR_MSG_INVALIDO);
+  end;
   if NFe.infNFe.Versao < 3 then
   begin
     (**)nodeArray := GerarIdeNFref;

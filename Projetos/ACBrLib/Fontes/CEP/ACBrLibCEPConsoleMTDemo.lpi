@@ -70,6 +70,10 @@
         </CompilerOptions>
       </Item2>
       <Item3 Name="Linux-i386">
+        <MacroValues Count="2">
+          <Macro1 Name="ACBrDir" Value="$Env(ACBR_HOME)"/>
+          <Macro2 Name="LCLWidgetType" Value="nogui"/>
+        </MacroValues>
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -199,8 +203,8 @@
         </CompilerOptions>
       </Item5>
       <SharedMatrixOptions Count="3">
-        <Item1 ID="426319760571" Modes="android-armeabi-v7a,Linux-x86_64,i386-CDECL-DEBUG,android-arm64-v8a" Type="IDEMacro" MacroName="ACBrDir" Value="$Env(ACBR_HOME)"/>
-        <Item2 ID="674480765109" Modes="i386-CDECL-DEBUG,Linux-x86_64,android-armeabi-v7a,android-arm64-v8a" Type="IDEMacro" MacroName="LCLWidgetType" Value="nogui"/>
+        <Item1 ID="426319760571" Modes="android-armeabi-v7a,Linux-x86_64,i386-CDECL-DEBUG,android-arm64-v8a,Linux-i386" Type="IDEMacro" MacroName="ACBrDir" Value="$Env(ACBR_HOME)"/>
+        <Item2 ID="674480765109" Modes="i386-CDECL-DEBUG,Linux-x86_64,android-armeabi-v7a,android-arm64-v8a,Linux-i386" Type="IDEMacro" MacroName="LCLWidgetType" Value="nogui"/>
         <Item3 ID="366060019559" Modes="android-armeabi-v7a,android-arm64-v8a" Type="IDEMacro" MacroName="NDK" Value="$Env(NDK_DIR)"/>
       </SharedMatrixOptions>
     </BuildModes>

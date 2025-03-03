@@ -5103,6 +5103,8 @@ begin
             memoLog.Lines.Add('Num. Seq. Evento: ' + IntToStr(nSeqEvento));
             memoLog.Lines.Add('ID do Evento    : ' + idEvento);
             memoLog.Lines.Add('Sucesso         : ' + BoolToStr(Sucesso, True));
+            memoLog.Lines.Add('Sucesso Canc.   : ' + BoolToStr(SucessoCanc, True));
+            memoLog.Lines.Add('Desc. Situação  : ' + DescSituacao);
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');

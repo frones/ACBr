@@ -5396,7 +5396,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 998
       end
       object rlbQuandoEntregaLinha1Coluna1: TRLDraw
-        Left = 720
+        Left = 647
         Height = 29
         Top = 1
         Width = 1
@@ -5423,7 +5423,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rlbQuandoEntregaLinha1Memo2: TRLLabel
         Tag = 10
-        Left = 722
+        Left = 650
         Height = 7
         Top = 3
         Width = 42
@@ -5500,7 +5500,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Left = 35
         Height = 14
         Top = 13
-        Width = 669
+        Width = 606
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -9
@@ -5510,10 +5510,10 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RLLquadroEntregaDocumento: TRLLabel
         Tag = 703
-        Left = 722
+        Left = 650
         Height = 14
         Top = 13
-        Width = 80
+        Width = 159
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -9

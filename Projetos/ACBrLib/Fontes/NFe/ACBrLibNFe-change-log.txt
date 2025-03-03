@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/03/2025
+-- ACBrLibNFeBase.pas --
+[+] #TK-6678: Criado componente de envio em tempo de execução, envia email atraves dos parametros conforme manual. 
+	https://www.projetoacbr.com.br/forum/topic/82072-acbrnfe-erro-enviaremail-com-mais-de-uma-nf-e-urgente	
+	Por: Daniel Morais InfoCodiano
 
 22/01/2025
 -- ACBrLibNFeConsts, ACBrLibNFeConfig --

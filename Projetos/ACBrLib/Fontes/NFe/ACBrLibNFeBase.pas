@@ -1629,8 +1629,9 @@ function TACBrLibNFe.EnviarEmail(const ePara, eXmlNFe: PAnsiChar; const AEnviaPD
 var
   Resposta, APara, AXmlNFe, AAssunto, ACC, AAnexos, AMensagem: string;
   slMensagemEmail, slCC, slAnexos: TStringList;
-  EhArquivo: boolean;
+  EhArquivo, LXmlCarregado: boolean;
   Resp: TLibNFeResposta;
+  LNFeEnviar : TACBrNFe;
 begin
   try
     APara := ConverterStringEntrada(ePara);
@@ -1648,68 +1649,72 @@ begin
 
     NFeDM.Travar;
 
+    LNFeEnviar := TACBrNFe.Create(NFeDM.ACBrNFe1);
+
     try
-      with NFeDM do
+      if (AEnviaPDF) then
+        NFeDM.ConfigurarImpressao('', True);
+
+      LNFeEnviar.MAIL := NFeDM.ACBrMail1;
+
+      LNFeEnviar.DANFE := NFeDM.ACBrNFe1.DANFE;
+
+      EhArquivo := StringEhArquivo(AXmlNFe);
+
+      if EhArquivo then
+        VerificarArquivoExiste(AXmlNFe);
+
+      if EhArquivo then
+        LXmlCarregado := LNFeEnviar.NotasFiscais.LoadFromFile(AXmlNFe)
+      else
+        LXmlCarregado := LNFeEnviar.NotasFiscais.LoadFromString(AXmlNFe);
+
+      if not LXmlCarregado then
+         raise EACBrLibException.Create(ErrEnvio, 'Erro Caminho ou conteudo do XML inválido, não foi possível fazer a leitura do conteúdo do XML');
+
+      if LNFeEnviar.NotasFiscais.Count = 0 then
+        raise EACBrLibException.Create(ErrEnvio, Format(SInfNFeCarregadas, [LNFeEnviar.NotasFiscais.Count]))
+      else
       begin
-        EhArquivo := StringEhArquivo(AXmlNFe);
+        slMensagemEmail := TStringList.Create;
+        slCC := TStringList.Create;
+        slAnexos := TStringList.Create;
 
-        if EhArquivo then
-          VerificarArquivoExiste(AXmlNFe);
+        Resp := TLibNFeResposta.Create('EnviaEmail', Config.TipoResposta, Config.CodResposta);
 
-        if EhArquivo then
-          ACBrNFe1.NotasFiscais.LoadFromFile(AXmlNFe)
-        else
-          ACBrNFe1.NotasFiscais.LoadFromString(AXmlNFe);
+        try
+          slMensagemEmail.DelimitedText := sLineBreak;
+          slMensagemEmail.Text := StringReplace(AMensagem, ';', sLineBreak, [rfReplaceAll]);
 
-        if ACBrNFe1.NotasFiscais.Count = 0 then
-          raise EACBrLibException.Create(ErrEnvio, Format(SInfNFeCarregadas, [ACBrNFe1.NotasFiscais.Count]))
-        else
-        begin
-          slMensagemEmail := TStringList.Create;
-          slCC := TStringList.Create;
-          slAnexos := TStringList.Create;
+          slCC.DelimitedText := sLineBreak;
+          slCC.Text := StringReplace(ACC, ';', sLineBreak, [rfReplaceAll]);
 
-          Resp := TLibNFeResposta.Create('EnviaEmail', Config.TipoResposta, Config.CodResposta);
+          slAnexos.DelimitedText := sLineBreak;
+          slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
-          try
-            with ACBrNFe1 do
-            begin
-              slMensagemEmail.DelimitedText := sLineBreak;
-              slMensagemEmail.Text := StringReplace(AMensagem, ';', sLineBreak, [rfReplaceAll]);
+          LNFeEnviar.NotasFiscais[0].EnviarEmail(
+              APara,
+              AAssunto,
+              slMensagemEmail,
+              AEnviaPDF, // Enviar PDF junto
+              slCC,      // Lista com emails que serão enviado cópias - TStrings
+              slAnexos); // Lista de slAnexos - TStrings
 
-              slCC.DelimitedText := sLineBreak;
-              slCC.Text := StringReplace(ACC, ';', sLineBreak, [rfReplaceAll]);
+          Resp.Msg := 'Email enviado com sucesso';
+          Resposta := Resp.Gerar;
 
-              slAnexos.DelimitedText := sLineBreak;
-              slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
-
-              if (AEnviaPDF) then
-                NFeDM.ConfigurarImpressao('', True);
-
-              NotasFiscais.Items[0].EnviarEmail(
-                  APara,
-                  AAssunto,
-                  slMensagemEmail,
-                  AEnviaPDF, // Enviar PDF junto
-                  slCC,      // Lista com emails que serão enviado cópias - TStrings
-                  slAnexos); // Lista de slAnexos - TStrings
-
-              Resp.Msg := 'Email enviado com sucesso';
-              Resposta := Resp.Gerar;
-
-              Result := SetRetorno(ErrOK, Resposta);
-            end;
-          finally
-            Resp.Free;
-            slCC.Free;
-            slAnexos.Free;
-            slMensagemEmail.Free;
-            if (AEnviaPDF) then NFeDM.FinalizarImpressao;
-          end;
+          Result := SetRetorno(ErrOK, Resposta);
+        finally
+          Resp.Free;
+          slCC.Free;
+          slAnexos.Free;
+          slMensagemEmail.Free;
+          if (AEnviaPDF) then NFeDM.FinalizarImpressao;
         end;
       end;
     finally
       NFeDM.Destravar;
+      LNFeEnviar.Free;
     end;
   except
     on E: EACBrLibException do

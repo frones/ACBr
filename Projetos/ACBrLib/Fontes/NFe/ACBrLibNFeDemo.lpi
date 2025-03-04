@@ -406,7 +406,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Linux\MT\Linux\acbrnfe64"/>
+            <Filename Value="bin\Demo\Linux\MT\acbrnfe64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -447,7 +447,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Linux\MT\Linux\acbrnfe32"/>
+            <Filename Value="bin\Demo\Linux\MT\acbrnfe32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>

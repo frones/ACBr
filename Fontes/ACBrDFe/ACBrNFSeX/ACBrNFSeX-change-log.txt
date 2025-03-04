@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+04/03/2025
+-- ACBrNFSeXServicos --
+[+] #TK-6702: Incluída a cidade de Pratapolis/MG, o provedor é eReceita versão 2.02
+  Por: Gabriel Bobello
+[*] #TK-6703: A cidade de Pontes E Lacerda/MT trocou de provedor, agora é Coplan
+    versão 2.01
+  Por: Diego Reckziegel
+
 03/03/2025
 -- PadraoNacional.Provider --
 [*] Melhorias no retorno dos eventos para identificar que a nota foi cancelada.

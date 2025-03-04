@@ -65,6 +65,9 @@ type
 
     procedure GerarMsgDadosConsultaNFSe(Response: TNFSeConsultaNFSeResponse;
       Params: TNFSeParamsResponse); override;
+
+    procedure GerarMsgDadosConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse;
+      Params: TNFSeParamsResponse); override;
   end;
 
 implementation
@@ -265,6 +268,31 @@ begin
       raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
+end;
+
+procedure TACBrNFSeProviderISSSJP.GerarMsgDadosConsultaLoteRps(
+  Response: TNFSeConsultaLoteRpsResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  with Params do
+  begin
+    IdAttr := ' Id="' + Response.NumeroLote + '" ';
+
+    Response.ArquivoEnvio := '<' + Prefixo + 'ConsultarLoteRpsEnvio' + IdAttr + NameSpace + '>' +
+                           '<' + Prefixo + 'Prestador>' +
+                             '<' + Prefixo2 + 'Cnpj>' +
+                               OnlyNumber(Emitente.CNPJ) +
+                             '</' + Prefixo2 + 'Cnpj>' +
+                             GetInscMunic(Emitente.InscMun, Prefixo2) +
+                           '</' + Prefixo + 'Prestador>' +
+                           '<' + Prefixo + 'Protocolo>' +
+                             Response.Protocolo +
+                           '</' + Prefixo + 'Protocolo>' +
+                         '</' + Prefixo + 'ConsultarLoteRpsEnvio>';
   end;
 end;
 

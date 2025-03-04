@@ -303,6 +303,8 @@ end;
 
 procedure TfrlXDANFSeRLISSnet.rbConstrucaoBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
+var
+  MostrarObra: Boolean;
 begin
   inherited;
 
@@ -322,6 +324,13 @@ begin
     rllMsgTeste.Visible := True;
     rllMsgTeste.Enabled := True;
   end;
+
+  MostrarObra := (rllCodObra.Caption <> '') or (rllCodART.Caption <> '');
+  rllTituloConstCivil.Visible := MostrarObra;
+  rllCodigoObra.Visible := MostrarObra;
+  rllCodObra.Visible := MostrarObra;
+  rllCodigoArt.Visible := MostrarObra;
+  rllCodART.Visible := MostrarObra;
 
   rllMsgTeste.Repaint;
 

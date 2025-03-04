@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 04/03/2025
+-- ACBrNFSeXDANFSeRLISSNet --
+[*] Alteração visando não imprimir os títulos do quadro referente a construção
+    civil quando não tiver no XML os dados sobre a obra.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXNotasFiscais/Prescon.GravarJson/Prescon.LerJson --
 [*] Alteração visando gerar o elemento tipoIss com o valor correto em função
     do valor atribuido ao campo: FrmRec

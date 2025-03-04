@@ -34,7 +34,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrNFe64"/>
+            <Filename Value="bin\Demo\Windows\ST\Cdecl\ACBrNFe64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -76,7 +76,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\StdCall\ACBrNFe32"/>
+            <Filename Value="bin\Demo\Windows\ST\StdCall\ACBrNFe32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -117,7 +117,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\StdCall\ACBrNFe64"/>
+            <Filename Value="bin\Demo\Windows\ST\StdCall\ACBrNFe64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -158,7 +158,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Linux\acbrnfe64"/>
+            <Filename Value="bin\Demo\Linux\ST\acbrnfe64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -199,7 +199,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Linux\acbrnfe32"/>
+            <Filename Value="bin\Demo\Linux\ST\acbrnfe32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -240,7 +240,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Cdecl\ACBrNFe32"/>
+            <Filename Value="bin\Demo\Windows\MT\Cdecl\ACBrNFe32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -282,7 +282,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Cdecl\ACBrNFe64"/>
+            <Filename Value="bin\Demo\Windows\MT\Cdecl\ACBrNFe64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -324,7 +324,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\StdCall\ACBrNFe32"/>
+            <Filename Value="bin\Demo\Windows\MT\StdCall\ACBrNFe32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -365,7 +365,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\StdCall\ACBrNFe64"/>
+            <Filename Value="bin\Demo\Windows\MT\StdCall\ACBrNFe64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -406,7 +406,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Linux\acbrnfe64"/>
+            <Filename Value="bin\Demo\Linux\MT\Linux\acbrnfe64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -447,7 +447,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Linux\acbrnfe32"/>
+            <Filename Value="bin\Demo\Linux\MT\Linux\acbrnfe32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -624,7 +624,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="bin\Demo\Cdecl\ACBrNFe32"/>
+      <Filename Value="bin\Demo\Windows\ST\Cdecl\ACBrNFe32"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>

@@ -416,8 +416,9 @@ begin
         verAplic := INIRec.ReadString(sSecao, 'verAplic', 'ACBrNFSeX-1.00');
         tpEmit := StrTotpEmit(Ok, INIRec.ReadString(sSecao, 'tpEmit', '1'));
 
-        //Provedor Governa
+        // Provedor Governa
         RegRec := StrToRegRec(Ok, INIRec.ReadString(sSecao, 'RegRec', ''));
+        // Provedor Governa e Prescon
         FrmRec := StrToFrmRec(Ok, INIRec.ReadString(sSecao, 'FrmRec', ''));
 
         InformacoesComplementares := INIRec.ReadString(sSecao, 'InformacoesComplementares', '');
@@ -425,7 +426,7 @@ begin
         EqptoRecibo := INIRec.ReadString(sSecao, 'EqptoRecibo', '');
         TipoRecolhimento := INIRec.ReadString(sSecao, 'TipoRecolhimento', '');
         TipoNota := INIRec.ReadInteger(sSecao, 'TipoNota', 0);
-        //Tecnos
+        // Provedor Tecnos
         SiglaUF := INIRec.ReadString(sSecao, 'SiglaUF', '');
         EspecieDocumento := INIRec.ReadInteger(sSecao, 'EspecieDocumento', 0);
         SerieTalonario := INIRec.ReadInteger(sSecao, 'SerieTalonario', 0);

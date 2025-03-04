@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 04/03/2025
+-- ACBrNFSeXNotasFiscais/Prescon.GravarJson/Prescon.LerJson --
+[*] Alteração visando gerar o elemento tipoIss com o valor correto em função
+    do valor atribuido ao campo: FrmRec
+  Por: Raphael Sanini/Italo Giurizzato Junior
 -- ISSSJP.Provider --
 [*] Alteração visando gerar o atributo ID na consulta ao lote.
   Por: Marcos Villatore/Italo Giurizzato Junior

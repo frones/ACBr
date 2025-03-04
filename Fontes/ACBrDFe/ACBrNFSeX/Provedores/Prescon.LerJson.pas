@@ -259,7 +259,7 @@ begin
                                          Servico.Valores.ValorIr +
                                          Servico.Valores.ValorCsll;
 
-          if ObterConteudo(AuxNode.Childrens.FindAnyNs('issretido'), tcStr) = '0' then
+    if ObterConteudo(AuxNode.Childrens.FindAnyNs('issretido'), tcStr) = '0' then
       NFSe.Servico.Valores.IssRetido := stNormal
     else
       NFSe.Servico.Valores.IssRetido := stRetencao;

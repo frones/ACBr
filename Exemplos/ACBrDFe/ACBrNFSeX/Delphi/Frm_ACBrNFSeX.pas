@@ -810,6 +810,14 @@ begin
       // TnfseStatusRPS = ( srNormal, srCancelado );
       StatusRps := srNormal;
 
+      // frmNenhum, frmNormal, frmRetidoNaFonte, frmSimplesNacional, frmFixoAnual,
+      // frmSemRecolhimento, frmDevidoOutroMunicipio, frmFixoMensal
+      {
+        O Provedor Prescon se utiliza somente dos valores: frmFixoAnual e frmFixoMensal
+        Já o provedor Governa se utiliza de todos os valores
+      }
+      FrmRec := frmFixoAnual;
+
       {=========================================================================
         Numero, Série e Tipo do Rps que esta sendo substituido por este
       =========================================================================}
@@ -2113,7 +2121,7 @@ begin
   Lote := '';
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAssessorPublico, proElotech,
        proInfisc, proIPM, proISSDSF, proEquiplano, proeGoverneISS, proGeisWeb,
-       proSiat, proISSSaoPaulo, proISSCampinas] then
+       proSiat, proISSSaoPaulo, proISSCampinas, proISSSJP] then
   begin
     if not (InputQuery('Consultar Lote', 'Número do Lote:', Lote)) then
       exit;

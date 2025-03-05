@@ -304,8 +304,8 @@
     </CodeGeneration>
     <Linking>
       <Debugging>
-        <GenerateDebugInfo Value="False"/>
-        <StripSymbols Value="True"/>
+        <UseHeaptrc Value="True"/>
+        <TrashVariables Value="True"/>
       </Debugging>
       <Options>
         <ExecutableType Value="Library"/>

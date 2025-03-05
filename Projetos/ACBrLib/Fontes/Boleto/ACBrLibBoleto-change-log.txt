@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/03/2025
+-- ACBrLibBoleto.lpi, ACBrLibBoletoDemo.lpi, ACBrLibBoletoConsoleMT.lpi e ACBrLibBoletoConsoleMTDemo.lpi--
+[*] Realizado ajustes nos paths para compilação com os novos scripts do Jenkins.
+    Por: Antonio Carlos Junior
+
 18/02/2025
 -- ACBrLibBoletoRespostas --
 [+] Realizado inclusão e alteração das propriedades FHeader_Agencia e FHeader_ContaCorrente na classe TRetornoRegistroWeb.

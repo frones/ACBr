@@ -12,7 +12,6 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <Title Value="ACBrLibAbecsPinpad"/>
-
       <ResourceType Value="res"/>
       <XPManifest>
         <DpiAware Value="True/PM"/>
@@ -23,7 +22,7 @@
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="44"/>
+      <BuildNr Value="46"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrAbecsPinpad - Biblioteca para comunicação com Pinpad" InternalName="ACBrLibAbecsPinpad" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="AbecsPinpad" ProductVersion="0.0.0.0"/>
     </VersionInfo>
@@ -223,7 +222,6 @@
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
-
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>

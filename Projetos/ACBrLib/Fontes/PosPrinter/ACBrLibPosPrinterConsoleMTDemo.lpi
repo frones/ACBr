@@ -98,6 +98,9 @@
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
           </Linking>
           <Other>
             <CustomOptions Value="-dDemo  -dMT -dNOGUI"/>

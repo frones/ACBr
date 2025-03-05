@@ -32,7 +32,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrETQ64"/>
+            <Filename Value="bin\Demo\Windows\ST\Cdecl\ACBrETQ64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -74,7 +74,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\StdCall\ACBrETQ32"/>
+            <Filename Value="bin\Demo\Windows\ST\StdCall\ACBrETQ32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -115,7 +115,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\StdCall\ACBrETQ64"/>
+            <Filename Value="bin\Demo\Windows\ST\StdCall\ACBrETQ64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -156,7 +156,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Linux\acbretq64"/>
+            <Filename Value="bin\Demo\Linux\ST\acbretq64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -197,7 +197,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Linux\acbretq32"/>
+            <Filename Value="bin\Demo\Linux\ST\acbretq32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -271,7 +271,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Cdecl\ACBrETQ32"/>
+            <Filename Value="bin\Demo\Windows\MT\Cdecl\ACBrETQ32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -312,7 +312,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Cdecl\ACBrETQ64"/>
+            <Filename Value="bin\Demo\Windows\MT\Cdecl\ACBrETQ64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -354,7 +354,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\StdCall\ACBrETQ32"/>
+            <Filename Value="bin\Demo\Windows\MT\StdCall\ACBrETQ32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -395,7 +395,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\StdCall\ACBrETQ64"/>
+            <Filename Value="bin\Demo\Windows\MT\StdCall\ACBrETQ64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -436,7 +436,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Linux\acbretq64"/>
+            <Filename Value="bin\Demo\Linux\MT\acbretq64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -477,7 +477,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Linux\acbretq32"/>
+            <Filename Value="bin\Demo\Linux\MT\acbretq32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -596,7 +596,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="bin\Demo\Cdecl\ACBrETQ32"/>
+      <Filename Value="bin\Demo\Windows\ST\Cdecl\ACBrETQ32"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>

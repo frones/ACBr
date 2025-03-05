@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using ACBrLib.Core;
@@ -520,6 +521,22 @@ namespace ACBrLib.CTe
             var ret = ExecuteMethod<int>(() => method());
 
             CheckResult(ret);
+        }
+
+        public async void ImprimirPDF(Stream aStream)
+        {
+            if (aStream == null) throw new ArgumentNullException(nameof(aStream));
+
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<CTE_SalvarPDF>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            var pdf = ProcessResult(buffer, bufferLen);
+            Base64ToStream(pdf, aStream);
         }
 
         public void ImprimirEvento(string eArquivoXmlCTe, string eArquivoXmlEvento)

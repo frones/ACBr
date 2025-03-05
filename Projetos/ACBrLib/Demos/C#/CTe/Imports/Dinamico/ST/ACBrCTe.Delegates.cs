@@ -152,6 +152,9 @@ namespace ACBrLib.CTe
         public delegate int CTE_ImprimirPDF();
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int CTE_SalvarPDF(StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int CTE_ImprimirEvento(string eArquivoXmlCTe, string eArquivoXmlEvento);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -211,6 +214,7 @@ namespace ACBrLib.CTe
             AddMethod<CTE_EnviarEmailEvento>("CTE_EnviarEmailEvento");
             AddMethod<CTE_Imprimir>("CTE_Imprimir");
             AddMethod<CTE_ImprimirPDF>("CTE_ImprimirPDF");
+            AddMethod<CTE_SalvarPDF>("CTE_SalvarPDF");
             AddMethod<CTE_ImprimirEvento>("CTE_ImprimirEvento");
             AddMethod<CTE_ImprimirEventoPDF>("CTE_ImprimirEventoPDF");
             AddMethod<CTE_ImprimirInutilizacao>("CTE_ImprimirInutilizacao");

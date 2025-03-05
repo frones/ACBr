@@ -1020,7 +1020,7 @@ namespace ACBrLib.CTe.Demo
         private string AlimentarDados()
         {
             var cte = new CTe();
-            
+
             //InfCTe
             cte.InfCTe.Versao = "3.0";
 
@@ -1081,8 +1081,8 @@ namespace ACBrLib.CTe.Demo
             cte.Complemento.TipoHora = TipoHorarioCTe.noIntervaloTempo;
             cte.Complemento.origCalc = "Sao Paulo";
             cte.Complemento.destCalc = "Campinas";
-            cte.Complemento.xObs = "Observação livre";           
-           
+            cte.Complemento.xObs = "Observação livre";
+
             var dProg = "23/06/2023";
             cte.Complemento.dProg = DateTime.Parse(dProg);
 
@@ -1138,7 +1138,7 @@ namespace ACBrLib.CTe.Demo
             cte.Remetente.UF = "SP";
             cte.Remetente.cPais = 1058;
             cte.Remetente.xPais = "BRASIL";
-            
+
             //Destinatário
             cte.Destinatario.CNPJCPF = "05481336000137";
             cte.Destinatario.IE = "12345678";
@@ -1219,9 +1219,9 @@ namespace ACBrLib.CTe.Demo
             var NFe = new InfNFeCTe();
             NFe.chave = "42210117089484000190550110000091001371413248";
             NFe.dPrev = DateTime.Parse("30/06/2023");
-            
+
             cte.GrupoInformacoesNormalSubstituto.infDoc.infNFe.Add(NFe);
-           
+
             cte.Rodoviario.RNTRC = "12345678";
 
             cte.GrupoInformacoesNormalSubstituto.cobr.fat.nFat = "123";
@@ -1239,6 +1239,36 @@ namespace ACBrLib.CTe.Demo
             cte.GrupoInformacoesNormalSubstituto.cobr.dup.Add(dup);
 
             return cte.ToString();
+        }
+
+        private async void btnSalvarPDF_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml CTe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
+
+                ACBrCTe.LimparLista();
+                ACBrCTe.CarregarXML(arquivoXml);
+
+                var nomeArquivo = Helpers.SaveFile("Salvar em PDF (*.pdf)|*.pdf|Todos os Arquivos (*.*)|*.*");
+
+                using (FileStream aStream = File.Create(nomeArquivo))
+                {
+                    ACBrCTe.ImprimirPDF(aStream);
+                    byte[] buffer = new Byte[aStream.Length];
+                    await aStream.ReadAsync(buffer, 0, buffer.Length);
+                    await aStream.FlushAsync();
+                    aStream.Seek(0, SeekOrigin.End);
+                    await aStream.WriteAsync(buffer, 0, buffer.Length);
+                }
+                rtbRespostas.AppendLine($"PDF Salvo em: {nomeArquivo}");
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

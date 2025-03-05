@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/03/2025
+-- ACBrLibConsultaCNPJ.lpi, ACBrLibConsultaCNPJDemo.lpi, ACBrLibConsultaCNPJConsoleMT.lpi e ACBrLibConsultaCNPJConsoleMTDemo.lpi--
+[*] Realizado ajustes nos paths para compilação com os novos scripts do Jenkins.
+    Por: Antonio Carlos Junior
+
 09/01/2025
 --- Diversos ---
 [+] TK-6388 Refatorado o programa de exemplo em PHP com a ACBrComum.php, métodos centralizados e página principal unificada entre MT e ST

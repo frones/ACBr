@@ -30,7 +30,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Cdecl\ACBrConsultaCNPJ64"/>
+            <Filename Value="bin\Windows\ST\Cdecl\ACBrConsultaCNPJ64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -71,7 +71,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\StdCall\ACBrConsultaCNPJ32"/>
+            <Filename Value="bin\Windows\ST\StdCall\ACBrConsultaCNPJ32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -112,7 +112,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\StdCall\ACBrConsultaCNPJ64"/>
+            <Filename Value="bin\Windows\ST\StdCall\ACBrConsultaCNPJ64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -153,7 +153,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Linux\acbrconsultacnpj64"/>
+            <Filename Value="bin\Linux\ST\acbrconsultacnpj64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -194,7 +194,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Linux\acbrconsultacnpj32"/>
+            <Filename Value="bin\Linux\ST\acbrconsultacnpj32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -270,7 +270,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Cdecl\ACBrConsultaCNPJ32"/>
+            <Filename Value="bin\Windows\MT\Cdecl\ACBrConsultaCNPJ32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -311,7 +311,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\StdCall\ACBrConsultaCNPJ32"/>
+            <Filename Value="bin\Windows\MT\StdCall\ACBrConsultaCNPJ32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -352,7 +352,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Cdecl\ACBrConsultaCNPJ64"/>
+            <Filename Value="bin\Windows\MT\Cdecl\ACBrConsultaCNPJ64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -393,7 +393,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\StdCall\ACBrConsultaCNPJ64"/>
+            <Filename Value="bin\Windows\MT\StdCall\ACBrConsultaCNPJ64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -434,7 +434,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\acbrconsultacnpj64"/>
+            <Filename Value="bin\Linux\MT\acbrconsultacnpj64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -475,7 +475,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\acbrconsultacnpj32"/>
+            <Filename Value="bin\Linux\MT\acbrconsultacnpj32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -589,7 +589,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="bin\Cdecl\ACBrConsultaCNPJ32"/>
+      <Filename Value="bin\Windows\ST\Cdecl\ACBrConsultaCNPJ32"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>

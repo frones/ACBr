@@ -440,7 +440,7 @@
           </Other>
         </CompilerOptions>
       </Item11>
-      <Item12 Name="Linux-i3861-MT">
+      <Item12 Name="Linux-i386-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>

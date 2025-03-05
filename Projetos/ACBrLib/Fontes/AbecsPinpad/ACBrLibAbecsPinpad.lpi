@@ -12,8 +12,11 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <Title Value="ACBrLibAbecsPinpad"/>
-      <UseAppBundle Value="False"/>
+
       <ResourceType Value="res"/>
+      <XPManifest>
+        <DpiAware Value="True/PM"/>
+      </XPManifest>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
@@ -31,7 +34,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Cdecl\ACBrAbecsPinpad64"/>
+            <Filename Value="bin\Windows\ST\Cdecl\ACBrAbecsPinpad64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -73,7 +76,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\StdCall\ACBrAbecsPinpad32"/>
+            <Filename Value="bin\Windows\ST\StdCall\ACBrAbecsPinpad32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -114,7 +117,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\StdCall\ACBrAbecsPinpad64"/>
+            <Filename Value="bin\Windows\ST\StdCall\ACBrAbecsPinpad64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -155,7 +158,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Linux\acbrabecspinpad64"/>
+            <Filename Value="bin\Linux\ST\acbrabecspinpad64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -196,7 +199,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Linux\acbrabecspinpad32"/>
+            <Filename Value="bin\Linux\ST\acbrabecspinpad32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -220,7 +223,7 @@
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
-              <UseLineInfoUnit Value="False"/>
+
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -277,7 +280,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Cdecl\ACBrAbecsPinpad32"/>
+            <Filename Value="bin\Windows\MT\Cdecl\ACBrAbecsPinpad32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -313,7 +316,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Cdecl\ACBrAbecsPinpad64"/>
+            <Filename Value="bin\Windows\MT\Cdecl\ACBrAbecsPinpad64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -355,7 +358,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\StdCall\ACBrAbecsPinpad32"/>
+            <Filename Value="bin\Windows\MT\StdCall\ACBrAbecsPinpad32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -396,7 +399,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\StdCall\ACBrAbecsPinpad64"/>
+            <Filename Value="bin\Windows\MT\StdCall\ACBrAbecsPinpad64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -437,7 +440,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\acbrabecspinpad64"/>
+            <Filename Value="bin\Linux\MT\acbrabecspinpad64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -478,7 +481,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\acbrabecspinpad32"/>
+            <Filename Value="bin\Linux\MT\acbrabecspinpad32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -601,7 +604,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="bin\Cdecl\ACBrAbecsPinpad32"/>
+      <Filename Value="bin\Windows\ST\Cdecl\ACBrAbecsPinpad32"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>

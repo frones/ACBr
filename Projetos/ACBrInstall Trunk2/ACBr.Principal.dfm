@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = lbInfo
+  ActiveControl = edtDirDestino
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Assistente de Instala'#231#227'o de Componente Projeto ACBr - Delphi'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 740
     Height = 630
-    ActivePage = wizPgInstalacao
+    ActivePage = wizPgConfiguracao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -12976,14 +12976,14 @@ object frmPrincipal: TfrmPrincipal
         Left = 6
         Top = 189
         Width = 545
-        Height = 241
+        Height = 253
         Caption = 'Op'#231#245'es de Instala'#231#227'o'
         TabOrder = 2
         object Label8: TLabel
           Left = 279
           Top = 16
           Width = 257
-          Height = 26
+          Height = 25
           Caption = 'BETA: A suite ACBr n'#227'o est'#225' 100% compativel com o C++ Builder.'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -12992,6 +12992,19 @@ object frmPrincipal: TfrmPrincipal
           Font.Style = []
           ParentFont = False
           WordWrap = True
+        end
+        object chkDeixarSomenteLIB: TCheckBox
+          Left = 6
+          Top = 40
+          Width = 291
+          Height = 17
+          Hint = 
+            '*Recomendado caso n'#227'o esteja alterando o componente. Quando marc' +
+            'ado n'#227' ir'#225' recompilar o componente na build das aplica'#231#245'es'
+          Caption = 'Deixar somente a pasta LibXX no Library Path do Delphi'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 1
         end
         object ckbBCB: TCheckBox
           Left = 6
@@ -13004,22 +13017,9 @@ object frmPrincipal: TfrmPrincipal
           ShowHint = True
           TabOrder = 0
         end
-        object chkDeixarSomenteLIB: TCheckBox
-          Left = 6
-          Top = 38
-          Width = 350
-          Height = 17
-          Hint = 
-            '*Recomendado caso n'#227'o esteja alterando o componente. Quando marc' +
-            'ado n'#227' ir'#225' recompilar o componente na build das aplica'#231#245'es'
-          Caption = 'Deixar somente a pasta LibXX no Library Path do Delphi'
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
-        end
         object ckbRemoverArquivosAntigos: TCheckBox
           Left = 6
-          Top = 62
+          Top = 65
           Width = 379
           Height = 17
           Hint = 'Remover todas as dependencias da ACBr dos discos do equipamento'
@@ -13030,7 +13030,7 @@ object frmPrincipal: TfrmPrincipal
         end
         object ckbUsarArquivoConfig: TCheckBox
           Left = 6
-          Top = 83
+          Top = 89
           Width = 305
           Height = 17
           Hint = 
@@ -13043,7 +13043,7 @@ object frmPrincipal: TfrmPrincipal
         end
         object ckbCopiarTodasDll: TCheckBox
           Left = 6
-          Top = 104
+          Top = 114
           Width = 350
           Height = 17
           Hint = 
@@ -13058,7 +13058,7 @@ object frmPrincipal: TfrmPrincipal
         end
         object rdgDLL: TRadioGroup
           Left = 19
-          Top = 125
+          Top = 136
           Width = 510
           Height = 86
           Caption = 'Local para onde ser'#227'o copiadas as DLL'#39's'
@@ -13073,7 +13073,7 @@ object frmPrincipal: TfrmPrincipal
         end
         object chkSobrescreverDLLs: TCheckBox
           Left = 6
-          Top = 215
+          Top = 228
           Width = 350
           Height = 17
           Hint = 'Se marcado vai sobrescrever as DLLs ao copiar caso encontre.'
@@ -13085,14 +13085,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object GroupBox1: TGroupBox
         Left = 6
-        Top = 436
+        Top = 448
         Width = 545
-        Height = 63
+        Height = 64
         Caption = 'Op'#231#245'es de Exportador de Relat'#243'rio'
         TabOrder = 3
         object chkExportadorFastPNG: TCheckBox
           Left = 6
-          Top = 37
+          Top = 38
           Width = 305
           Height = 17
           Hint = 
@@ -13106,7 +13106,7 @@ object frmPrincipal: TfrmPrincipal
         end
         object chkExportadorFastSVG: TCheckBox
           Left = 6
-          Top = 16
+          Top = 17
           Width = 305
           Height = 17
           Hint = 
@@ -13153,19 +13153,27 @@ object frmPrincipal: TfrmPrincipal
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
+        ExplicitWidth = 574
+        ExplicitHeight = 517
         inherited pnlBotoesMarcar: TPanel
           Top = 476
           Width = 574
+          ExplicitTop = 476
+          ExplicitWidth = 574
           inherited btnPacotesDesmarcarTodos: TSpeedButton
             Left = 524
+            ExplicitLeft = 524
           end
           inherited btnPacotesMarcarTodos: TSpeedButton
             Left = 474
+            ExplicitLeft = 474
           end
         end
         inherited ScrollBox1: TScrollBox
           Width = 568
           Height = 470
+          ExplicitWidth = 568
+          ExplicitHeight = 470
         end
       end
     end
@@ -13598,7 +13606,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 53
+        FrameIndex = 65
         Image.Data = {
           9A470500474946383961F401F401E64100FFCC80FFB2403FCF10F3FCF0D9F6D0
           59D5307FDF60B3ECA04CD2208CE27099E680E6F9E066D940CCF3C0BFEFB0A6E9
@@ -24629,7 +24637,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 6
+        FrameIndex = 1
         Image.Data = {
           E02E00004749463839613F012800F70300CECFD1A3A8AD727882FFFFFFE9EBEB
           414C5C8C9099D8D8DAB9BBC0E0E2E3535C6AC4C5C8636A76AFB1B7989CA38084

@@ -30,7 +30,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrPosPrinter64"/>
+            <Filename Value="bin\Demo\Windows\ST\Cdecl\ACBrPosPrinter64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -72,7 +72,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\StdCall\ACBrPosPrinter32"/>
+            <Filename Value="bin\Demo\Windows\ST\StdCall\ACBrPosPrinter32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -113,7 +113,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\StdCall\ACBrPosPrinter64"/>
+            <Filename Value="bin\Demo\Windows\ST\StdCall\ACBrPosPrinter64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -154,7 +154,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Linux\acbrposprinter64"/>
+            <Filename Value="bin\Demo\Linux\ST\acbrposprinter64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -195,7 +195,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Linux\acbrposprinter32"/>
+            <Filename Value="bin\Demo\Linux\ST\acbrposprinter32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -236,7 +236,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Cdecl\ACBrPosPrinter32"/>
+            <Filename Value="bin\Demo\Windows\MT\Cdecl\ACBrPosPrinter32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -277,7 +277,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Cdecl\ACBrPosPrinter64"/>
+            <Filename Value="bin\Demo\Windows\MT\Cdecl\ACBrPosPrinter64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -319,7 +319,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\StdCall\ACBrPosPrinter32"/>
+            <Filename Value="bin\Demo\Windows\MT\StdCall\ACBrPosPrinter32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -360,7 +360,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\StdCall\ACBrPosPrinter64"/>
+            <Filename Value="bin\Demo\Windows\MT\StdCall\ACBrPosPrinter64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -401,7 +401,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Linux\acbrposprinter64"/>
+            <Filename Value="bin\Demo\Linux\MT\acbrposprinter64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -442,7 +442,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Linux\acbrposprinter32"/>
+            <Filename Value="bin\Demo\Linux\MT\acbrposprinter32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -562,7 +562,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="bin\Demo\Cdecl\ACBrPosPrinter32"/>
+      <Filename Value="bin\Demo\Windows\ST\Cdecl\ACBrPosPrinter32"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>

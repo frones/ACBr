@@ -73,6 +73,11 @@ var
   xAtrib, strAux: string;
   i: Integer;
   valAux: Double;
+  LAuxVencimento: TDateTime;
+  function TemParcela(const AIndice: Integer): Boolean;
+  begin
+    Result := AIndice < NFSe.CondicaoPagamento.Parcelas.Count;
+  end;
 begin
   Configuracao;
 
@@ -166,23 +171,31 @@ begin
 
   for i := 1 to 6 do
   begin
-    if NFSe.CondicaoPagamento.Parcelas[i].Parcela <> '' then
-      NFSeNode.AppendChild(AddNode(tcStr, '#', 'f' + IntToStr(i) + 'n', 1, 15, 1,
-                  NFSe.CondicaoPagamento.Parcelas[i].Parcela, '', True, xAtrib))
-    else
-      NFSeNode.AppendChild(AddNode(tcStr, '#', 'f' + IntToStr(i) + 'n', 1, 15, 1,
-                                                         '', '', True, xAtrib));
+    strAux := '';
+    if TemParcela(i-1) then
+      strAux := NFSe.CondicaoPagamento.Parcelas[i-1].Parcela;
 
-    if NFSe.CondicaoPagamento.Parcelas[i].DataVencimento > 0 then
+    NFSeNode.AppendChild(AddNode(tcStr, '#', 'f' + IntToStr(i) + 'n', 1, 15, 1,
+                strAux, '', True, xAtrib));
+
+    LAuxVencimento := 0;
+    if TemParcela(i-1) then
+      LAuxVencimento := NFSe.CondicaoPagamento.Parcelas[i-1].DataVencimento;
+
+    if LAuxVencimento > 0 then
       NFSeNode.AppendChild(AddNode(tcDat, '#', 'f' + IntToStr(i) + 'd', 1, 10, 1,
-           NFSe.CondicaoPagamento.Parcelas[i].DataVencimento, '', True, xAtrib))
+           LAuxVencimento, '', True, xAtrib))
     else
       NFSeNode.AppendChild(AddNode(tcStr, '#', 'f' + IntToStr(i) + 'd', 1, 10, 1,
                                                          '', '', True, xAtrib));
 
-    if NFSe.CondicaoPagamento.Parcelas[i].Valor > 0 then
+    valAux := 0;
+    if TemParcela(i-1) then
+      valAux := NFSe.CondicaoPagamento.Parcelas[i-1].Valor;
+
+    if valAux > 0 then
       NFSeNode.AppendChild(AddNode(tcDe2, '#', 'f' + IntToStr(i) + 'v', 1, 12, 1,
-                    NFSe.CondicaoPagamento.Parcelas[i].Valor, '', True, xAtrib))
+                    NFSe.CondicaoPagamento.Parcelas[i-1].Valor, '', True, xAtrib))
     else
       NFSeNode.AppendChild(AddNode(tcStr, '#', 'f' + IntToStr(i) + 'v', 1, 12, 1,
                                                          '', '', True, xAtrib));

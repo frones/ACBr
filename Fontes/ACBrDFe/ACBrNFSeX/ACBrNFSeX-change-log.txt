@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/03/2025
+-- WebFisco.GravarXML --
+[*] #TK-6695: Ajuste visando correta geração dos dados da fatura no XML
+  Por: Diego Folieni 
 
 04/03/2025
 -- ACBrNFSeXDANFSeRLISSNet --

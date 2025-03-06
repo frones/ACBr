@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/03/2025
+-- ACBrLibeSocial.lpi, ACBrLibeSocialDemo.lpi, ACBrLibeSocialConsoleMT.lpi e ACBrLibeSocialConsoleMTDemo.lpi--
+[*] Realizado ajustes nos paths para compilação com os novos scripts do Jenkins.
+    Por: Antonio Carlos Junior
+
 27/02/2025
 -- ACBRLibeSocialConsts, ACBrLibeSocialRespostas --
 [*] TK-6455: Ajustes visando melhorar a resposta do comando DownloadEventos.

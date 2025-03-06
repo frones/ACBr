@@ -24,14 +24,14 @@
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBreSocial - Biblioteca para envio, consulta do eSocial" InternalName="ACBrLibeSocial" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="eSocial" ProductVersion="0.0.1.30"/>
     </VersionInfo>
-    <BuildModes Count="12">
+    <BuildModes Count="13">
       <Item1 Name="Win32-i386-CDECL" Default="True"/>
       <Item2 Name="Win64-x86_64-CDECL">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBreSocial64"/>
+            <Filename Value="bin\Demo\Windows\ST\Cdecl\ACBreSocial64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -73,7 +73,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\StdCall\ACBreSocial32"/>
+            <Filename Value="bin\Demo\Windows\ST\StdCall\ACBreSocial32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -114,7 +114,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\StdCall\ACBreSocial64"/>
+            <Filename Value="bin\Demo\Windows\ST\StdCall\ACBreSocial64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -155,7 +155,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Linux\acbresocial64"/>
+            <Filename Value="bin\Demo\Linux\ST\acbresocial64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -196,7 +196,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Linux\acbresocial32"/>
+            <Filename Value="bin\Demo\Linux\ST\acbresocial32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -273,7 +273,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Cdecl\ACBreSocial32"/>
+            <Filename Value="bin\Demo\Windows\MT\Cdecl\ACBreSocial32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -315,7 +315,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Cdecl\ACBreSocial64"/>
+            <Filename Value="bin\Demo\Windows\MT\Cdecl\ACBreSocial64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -352,12 +352,54 @@
           </Other>
         </CompilerOptions>
       </Item9>
-      <Item10 Name="Win64-x86_64-STDCALL-MT">
+      <Item10 Name="Win32-i386-STDCALL-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\StdCall\ACBreSocial64"/>
+            <Filename Value="bin\Demo\Windows\MT\StdCall\ACBreSocial32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dDemo -dMT -dSTDCALL -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item10>
+      <Item11 Name="Win64-x86_64-STDCALL-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Demo\Windows\MT\StdCall\ACBreSocial64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -393,13 +435,13 @@
             <CustomOptions Value="-dDemo -dMT -dSTDCALL -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item10>
-      <Item11 Name="Linux-x86_64-MT">
+      </Item11>
+      <Item12 Name="Linux-x86_64-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Linux\acbresocial64"/>
+            <Filename Value="bin\Demo\Linux\MT\acbresocial64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -435,13 +477,13 @@
             <CustomOptions Value="-dDemo -dMT -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item11>
-      <Item12 Name="Linux-i386-MT">
+      </Item12>
+      <Item13 Name="Linux-i386-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Linux\acbresocial32"/>
+            <Filename Value="bin\Demo\Linux\MT\acbresocial32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -477,7 +519,7 @@
             <CustomOptions Value="-dDemo -dMT -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item12>
+      </Item13>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -562,7 +604,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="bin\Demo\Cdecl\ACBreSocial32"/>
+      <Filename Value="bin\Demo\Windows\ST\Cdecl\ACBreSocial32"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>

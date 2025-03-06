@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/03/2025
+-- ACBrLibPIXCDDataModule.pas --
+[*] Adicionado propriedade Scopes para PSP Banrisul e C6Bank.
+    Por: Antonio Carlos Junior
+
 05/03/2025
 -- ACBrLibPIXCD.lpi, ACBrLibPIXCDDemo.lpi, ACBrLibPIXCDConsoleMT.lpi e ACBrLibPIXCDConsoleMTDemo.lpi--
 [*] Realizado ajustes nos paths para compilação com os novos scripts do Jenkins.

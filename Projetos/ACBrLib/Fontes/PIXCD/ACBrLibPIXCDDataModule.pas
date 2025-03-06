@@ -382,6 +382,7 @@ begin
       ClientSecret       := pLibPIXCDConfig.PIXCDBanrisul.ClientSecret;
       ArquivoCertificado := pLibPIXCDConfig.PIXCDBanrisul.ArquivoCertificado;
       SenhaPFX           := pLibPIXCDConfig.PIXCDBanrisul.SenhaPFX;
+      Scopes             := pLibPIXCDConfig.PIXCDBanrisul.Scopes;
     end;
 
     with ACBrPSPC6Bank1 do
@@ -391,6 +392,7 @@ begin
       ClientSecret        := pLibPIXCDConfig.PIXCDC6Bank.ClientSecret;
       ArquivoChavePrivada := pLibPIXCDConfig.PIXCDC6Bank.ArqChavePrivada;
       ArquivoCertificado  := pLibPIXCDConfig.PIXCDC6Bank.ArqCertificado;
+      Scopes              := pLibPIXCDConfig.PIXCDC6Bank.Scopes;
     end;
 
     {$IFDEF Demo}

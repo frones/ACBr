@@ -62,6 +62,8 @@ namespace ACBrLib.PIXCD
 
         public MercadoPagoConfig MercadoPago { get; }
 
+        public C6BankConfig C6Bank { get; }
+
         public Ambiente Ambiente
         {
             get => GetProperty<Ambiente>();

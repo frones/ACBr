@@ -65,6 +65,7 @@
 		<Compile Include="..\Shared\BradescoConfig.cs" Link="BradescoConfig.cs" />
 		<Compile Include="..\Shared\BancoBrasilConfig.cs" Link="BancoBrasilConfig.cs" />
 		<Compile Include="..\Shared\AilosConfig.cs" Link="AilosConfig.cs" />
+		<Compile Include="..\Shared\C6BankConfig.cs" Link="C6BankConfig.cs" />
 		<Compile Include="..\Shared\ACBrPIXCDConfig.cs" Link="ACBrPIXCDConfig.cs" />
 	</ItemGroup>
 	

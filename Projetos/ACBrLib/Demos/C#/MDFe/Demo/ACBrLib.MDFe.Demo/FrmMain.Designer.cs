@@ -82,6 +82,7 @@
             this.cmbUfDestino = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.btnOpenSSLInfo = new System.Windows.Forms.Button();
             this.btnObterCertificados = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label26 = new System.Windows.Forms.Label();
@@ -143,7 +144,7 @@
             this.label18 = new System.Windows.Forms.Label();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnOpenSSLInfo = new System.Windows.Forms.Button();
+            this.btnEnviarManifesto = new System.Windows.Forms.Button();
             this.btnGerarChaveMDFe = new System.Windows.Forms.Button();
             this.btnLimparLista = new System.Windows.Forms.Button();
             this.btnImprimirPDF = new System.Windows.Forms.Button();
@@ -178,7 +179,7 @@
             this.btnDFePorChave = new System.Windows.Forms.Button();
             this.btnCarregarConfiguracoes = new System.Windows.Forms.Button();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnEnviarManifesto = new System.Windows.Forms.Button();
+            this.btnSalvarPDF = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
@@ -825,6 +826,16 @@
             this.tabPage7.Text = "Certificados";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
+            // btnOpenSSLInfo
+            // 
+            this.btnOpenSSLInfo.Location = new System.Drawing.Point(6, 344);
+            this.btnOpenSSLInfo.Name = "btnOpenSSLInfo";
+            this.btnOpenSSLInfo.Size = new System.Drawing.Size(118, 23);
+            this.btnOpenSSLInfo.TabIndex = 22;
+            this.btnOpenSSLInfo.Text = "OpenSSLInfo";
+            this.btnOpenSSLInfo.UseVisualStyleBackColor = true;
+            this.btnOpenSSLInfo.Click += new System.EventHandler(this.btnOpenSSLInfo_Click);
+            // 
             // btnObterCertificados
             // 
             this.btnObterCertificados.Location = new System.Drawing.Point(6, 315);
@@ -1448,6 +1459,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnSalvarPDF);
             this.tabPage1.Controls.Add(this.btnEnviarManifesto);
             this.tabPage1.Controls.Add(this.btnGerarChaveMDFe);
             this.tabPage1.Controls.Add(this.btnLimparLista);
@@ -1469,15 +1481,15 @@
             this.tabPage1.Text = "Envio";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // btnOpenSSLInfo
+            // btnEnviarManifesto
             // 
-            this.btnOpenSSLInfo.Location = new System.Drawing.Point(6, 344);
-            this.btnOpenSSLInfo.Name = "btnOpenSSLInfo";
-            this.btnOpenSSLInfo.Size = new System.Drawing.Size(118, 23);
-            this.btnOpenSSLInfo.TabIndex = 22;
-            this.btnOpenSSLInfo.Text = "OpenSSLInfo";
-            this.btnOpenSSLInfo.UseVisualStyleBackColor = true;
-            this.btnOpenSSLInfo.Click += new System.EventHandler(this.btnOpenSSLInfo_Click);
+            this.btnEnviarManifesto.Location = new System.Drawing.Point(6, 157);
+            this.btnEnviarManifesto.Name = "btnEnviarManifesto";
+            this.btnEnviarManifesto.Size = new System.Drawing.Size(252, 23);
+            this.btnEnviarManifesto.TabIndex = 27;
+            this.btnEnviarManifesto.Text = "Enviar usando Classe Manifesto";
+            this.btnEnviarManifesto.UseVisualStyleBackColor = true;
+            this.btnEnviarManifesto.Click += new System.EventHandler(this.btnEnviarManifesto_Click);
             // 
             // btnGerarChaveMDFe
             // 
@@ -1829,15 +1841,15 @@
             // 
             this.errorProvider.ContainerControl = this;
             // 
-            // btnEnviarManifesto
+            // btnSalvarPDF
             // 
-            this.btnEnviarManifesto.Location = new System.Drawing.Point(6, 157);
-            this.btnEnviarManifesto.Name = "btnEnviarManifesto";
-            this.btnEnviarManifesto.Size = new System.Drawing.Size(252, 23);
-            this.btnEnviarManifesto.TabIndex = 27;
-            this.btnEnviarManifesto.Text = "Enviar usando Classe Manifesto";
-            this.btnEnviarManifesto.UseVisualStyleBackColor = true;
-            this.btnEnviarManifesto.Click += new System.EventHandler(this.btnEnviarManifesto_Click);
+            this.btnSalvarPDF.Location = new System.Drawing.Point(6, 123);
+            this.btnSalvarPDF.Name = "btnSalvarPDF";
+            this.btnSalvarPDF.Size = new System.Drawing.Size(118, 23);
+            this.btnSalvarPDF.TabIndex = 28;
+            this.btnSalvarPDF.Text = "Salvar PDF (Stream)";
+            this.btnSalvarPDF.UseVisualStyleBackColor = true;
+            this.btnSalvarPDF.Click += new System.EventHandler(this.btnSalvarPDF_Click);
             // 
             // FrmMain
             // 
@@ -2051,6 +2063,7 @@
         private System.Windows.Forms.Button btnIncCondutor;
         private System.Windows.Forms.Button btnEnviarManifesto;
         private System.Windows.Forms.Button btnOpenSSLInfo;
+        private System.Windows.Forms.Button btnSalvarPDF;
     }
 }
 

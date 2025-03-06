@@ -147,6 +147,9 @@ namespace ACBrLib.MDFe
         public delegate int MDFE_ImprimirPDF(IntPtr handle);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int MDFE_SalvarPDF(IntPtr handle, StringBuilder BUFFER, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int MDFE_ImprimirEvento(IntPtr handle, string eArquivoXmlNFe, string eArquivoXmlEvento);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -199,6 +202,7 @@ namespace ACBrLib.MDFe
             AddMethod<MDFE_EnviarEmailEvento>("MDFE_EnviarEmailEvento");
             AddMethod<MDFE_Imprimir>("MDFE_Imprimir");
             AddMethod<MDFE_ImprimirPDF>("MDFE_ImprimirPDF");
+            AddMethod<MDFE_SalvarPDF>("MDFE_SalvarPDF");
             AddMethod<MDFE_ImprimirEvento>("MDFE_ImprimirEvento");
             AddMethod<MDFE_ImprimirEventoPDF>("MDFE_ImprimirEventoPDF");
         }

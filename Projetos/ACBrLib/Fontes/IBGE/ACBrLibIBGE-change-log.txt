@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/03/2025
+-- ACBrLibIBGE.lpi, ACBrLibIBGEDemo.lpi, ACBrLibIBGEConsoleMT.lpi e ACBrLibIBGEConsoleMTDemo.lpi--
+[*] Realizado ajustes nos paths para compilação com os novos scripts do Jenkins.
+    Por: Antonio Carlos Junior
+
 19/02/2025
 -- Diversos --
 [+] #TK-4956-6: Implementados programas de exemplo em PHP do IBGE ST e MT.

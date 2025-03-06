@@ -30,7 +30,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrIBGE64"/>
+            <Filename Value="bin\Demo\Windows\ST\Cdecl\ACBrIBGE64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -71,7 +71,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\StdCall\ACBrIBGE32"/>
+            <Filename Value="bin\Demo\Windows\ST\StdCall\ACBrIBGE32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -112,7 +112,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\StdCall\ACBrIBGE64"/>
+            <Filename Value="bin\Demo\Windows\ST\StdCall\ACBrIBGE64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -153,7 +153,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Linux\libacbribge64"/>
+            <Filename Value="bin\Demo\Linux\ST\acbribge64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -194,7 +194,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Linux\libacbribge32"/>
+            <Filename Value="bin\Demo\Linux\ST\acbribge32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -269,7 +269,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Cdecl\ACBrIBGE32"/>
+            <Filename Value="bin\Demo\Windows\MT\Cdecl\ACBrIBGE32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -310,7 +310,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Cdecl\ACBrIBGE64"/>
+            <Filename Value="bin\Demo\Windows\MT\Cdecl\ACBrIBGE64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -351,7 +351,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\StdCall\ACBrIBGE32"/>
+            <Filename Value="bin\Demo\Windows\MT\StdCall\ACBrIBGE32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -392,7 +392,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\StdCall\ACBrIBGE64"/>
+            <Filename Value="bin\Demo\Windows\MT\StdCall\ACBrIBGE64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -433,7 +433,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Linux\libacbribge64"/>
+            <Filename Value="bin\Demo\Linux\MT\acbribge64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -474,7 +474,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Linux\libacbribge32"/>
+            <Filename Value="bin\Demo\Linux\MT\acbribge32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -593,7 +593,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="bin\Demo\Cdecl\ACBrIBGE32"/>
+      <Filename Value="bin\Demo\Windows\ST\Cdecl\ACBrIBGE32"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>

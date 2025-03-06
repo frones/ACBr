@@ -30,7 +30,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Cdecl\ACBrGTIN64"/>
+            <Filename Value="bin\Windows\ST\Cdecl\ACBrGTIN64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -72,7 +72,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\StdCall\ACBrGTIN32"/>
+            <Filename Value="bin\Windows\ST\StdCall\ACBrGTIN32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -114,7 +114,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\StdCall\ACBrGTIN64"/>
+            <Filename Value="bin\Windows\ST\StdCall\ACBrGTIN64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -156,7 +156,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Linux\acbrgtin64"/>
+            <Filename Value="bin\Linux\ST\acbrgtin64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -198,7 +198,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Linux\acbrgtin32"/>
+            <Filename Value="bin\Linux\ST\acbrgtin32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -235,7 +235,7 @@
           </Other>
         </CompilerOptions>
       </Item6>
-      <Item7 Name="i386 - CDECL - DEBUG">
+      <Item7 Name="Win32-i386-CDECL-DEBUG">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -275,7 +275,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Cdecl\ACBrGTIN32"/>
+            <Filename Value="bin\Windows\MT\Cdecl\ACBrGTIN32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -317,7 +317,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\StdCall\ACBrGTIN32"/>
+            <Filename Value="bin\Windows\MT\StdCall\ACBrGTIN32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -359,7 +359,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Cdecl\ACBrGTIN64"/>
+            <Filename Value="bin\Windows\MT\Cdecl\ACBrGTIN64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -401,7 +401,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\StdCall\ACBrGTIN64"/>
+            <Filename Value="bin\Windows\MT\StdCall\ACBrGTIN64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -443,7 +443,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\acbrgtin64"/>
+            <Filename Value="bin\Linux\MT\acbrgtin64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -485,7 +485,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\acbrgtin32"/>
+            <Filename Value="bin\Linux\MT\acbrgtin32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -597,7 +597,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="bin\Cdecl\ACBrGTIN32"/>
+      <Filename Value="bin\Windows\ST\Cdecl\ACBrGTIN32"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>

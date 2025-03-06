@@ -68,6 +68,7 @@
         Matera,
         Cielo,
         MercadoPago,
+        C6Bank,
         IBGE,
         AbecsPinpad,
         AbecsPinpad_Device

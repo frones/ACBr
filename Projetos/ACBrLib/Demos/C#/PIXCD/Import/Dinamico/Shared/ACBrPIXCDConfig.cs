@@ -26,6 +26,7 @@ namespace ACBrLib.PIXCD
             Matera = new MateraConfig(acbrlib);
             Cielo = new CieloConfig(acbrlib);
             MercadoPago = new MercadoPagoConfig(acbrlib);
+            C6Bank = new C6BankConfig(acbrlib);
         }
 
         #endregion Constructors

@@ -31,7 +31,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrSedex64"/>
+            <Filename Value="bin\Demo\Windows\ST\Cdecl\ACBrSedex64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -72,7 +72,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\StdCall\ACBrSedex32"/>
+            <Filename Value="bin\Demo\Windows\ST\StdCall\ACBrSedex32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -113,7 +113,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\StdCall\ACBrSedex64"/>
+            <Filename Value="bin\Demo\Windows\ST\StdCall\ACBrSedex64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -154,7 +154,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Linux\libacbrsedex64"/>
+            <Filename Value="bin\Demo\Linux\ST\libacbrsedex64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -195,7 +195,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Linux\libacbrsedex32"/>
+            <Filename Value="bin\Demo\Linux\ST\libacbrsedex32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -236,7 +236,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Cdecl\ACBrSedex32"/>
+            <Filename Value="bin\Demo\Windows\MT\Cdecl\ACBrSedex32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -277,7 +277,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Cdecl\ACBrSedex64"/>
+            <Filename Value="bin\Demo\Windows\MT\Cdecl\ACBrSedex64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -318,7 +318,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\StdCall\ACBrSedex32"/>
+            <Filename Value="bin\Demo\Windows\MT\StdCall\ACBrSedex32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -359,7 +359,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\StdCall\ACBrSedex64"/>
+            <Filename Value="bin\Demo\Windows\MT\StdCall\ACBrSedex64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -400,7 +400,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Linux\libacbrsedex64"/>
+            <Filename Value="bin\Demo\Linux\MT\libacbrsedex64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -441,7 +441,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\MT\Linux\libacbrsedex32"/>
+            <Filename Value="bin\Demo\Linux\MT\libacbrsedex32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -560,7 +560,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="bin\Demo\Cdecl\ACBrSedex32"/>
+      <Filename Value="bin\Demo\Windows\ST\Cdecl\ACBrSedex32"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>

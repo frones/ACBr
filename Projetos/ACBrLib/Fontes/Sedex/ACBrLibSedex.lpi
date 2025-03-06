@@ -31,7 +31,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Cdecl\ACBrSedex64"/>
+            <Filename Value="bin\Windows\ST\Cdecl\ACBrSedex64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -73,7 +73,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\StdCall\ACBrSedex32"/>
+            <Filename Value="bin\Windows\ST\StdCall\ACBrSedex32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -115,7 +115,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\StdCall\ACBrSedex64"/>
+            <Filename Value="bin\Windows\ST\StdCall\ACBrSedex64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -156,7 +156,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Linux\libacbrsedex64"/>
+            <Filename Value="bin\Linux\ST\libacbrsedex64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -197,7 +197,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Linux\libacbrsedex32"/>
+            <Filename Value="bin\Linux\ST\libacbrsedex32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -272,7 +272,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Cdecl\ACBrSedex32"/>
+            <Filename Value="bin\Windows\MT\Cdecl\ACBrSedex32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -313,7 +313,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Cdecl\ACBrSedex64"/>
+            <Filename Value="bin\Windows\MT\Cdecl\ACBrSedex64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -354,7 +354,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\StdCall\ACBrSedex32"/>
+            <Filename Value="bin\Windows\MT\StdCall\ACBrSedex32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -395,7 +395,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\StdCall\ACBrSedex64"/>
+            <Filename Value="bin\Windows\MT\StdCall\ACBrSedex64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -436,7 +436,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\libacbrsedex64"/>
+            <Filename Value="bin\Linux\MT\libacbrsedex64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -477,7 +477,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\libacbrsedex32"/>
+            <Filename Value="bin\Linux\MT\libacbrsedex32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -596,7 +596,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="bin\Cdecl\ACBrSedex32"/>
+      <Filename Value="bin\Windows\ST\Cdecl\ACBrSedex32"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>

@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/03/2025
+-- ACBrLibSedex.lpi, ACBrLibSedexDemo.lpi, ACBrLibSedexConsoleMT.lpi e ACBrLibSedexConsoleMTDemo.lpi--
+[*] Realizado ajustes nos paths para compilação com os novos scripts do Jenkins.
+    Por: Antonio Carlos Junior
+
 10/02/2025
 -- ACBrLibSedexConsoleMT.lpi, ACBrLibSedexConsoleMTDemo.lpi --
 [+] Adicionado novo Projeto, 100% CONSOLE e MT versão Pro e Demonstração.

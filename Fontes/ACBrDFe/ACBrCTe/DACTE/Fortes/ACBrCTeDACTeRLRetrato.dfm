@@ -1045,7 +1045,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object rllTipoCte: TRLLabel
         Left = 4
         Top = 137
-        Width = 76
+        Width = 168
         Height = 15
         AutoSize = False
         Color = clWhite
@@ -1060,7 +1060,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object rllTipoServico: TRLLabel
         Left = 178
         Top = 137
-        Width = 91
+        Width = 132
         Height = 15
         AutoSize = False
         Color = clWhite

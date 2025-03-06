@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/03/2025
+-- ACBrCTeDACTeRLRetrato --
+[*] Ajustado tamanho do tipo CTe e do tipo de serviço
+  Por: Alexandre de Paula
+
 06/02/2025
 -- ACBrCTeDACTeRLRetrato/ACBrCTeDACTeRLRetratoA5/ACBrCTeDAEventoRLRetrato --
 [*] TK-6539: Alterações visando a impressão de marca d'agua.

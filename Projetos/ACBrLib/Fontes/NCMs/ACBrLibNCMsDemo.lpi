@@ -237,7 +237,7 @@
           </Other>
         </CompilerOptions>
       </Item6>
-      <Item7 Name="i386 - CDECL - DEBUG">
+      <Item7 Name="Win32-i386-CDECL-DEBUG">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>

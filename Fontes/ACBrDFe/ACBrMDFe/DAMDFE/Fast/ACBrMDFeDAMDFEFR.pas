@@ -1138,15 +1138,15 @@ var i:integer;
 begin
   with cdsContratantes, FMDFe.rodo.infANTT do
   begin
-    Append;
     for I := 0 to infContratante.Count - 1 do
     begin
+      Append;
       if Length(infContratante[i].CNPJCPF)=11 then
         FieldByName('CNPJCPF').AsString         := FormatarCPF(infContratante[i].CNPJCPF)
       else
         FieldByName('CNPJCPF').AsString         := FormatarCNPJ(infContratante[i].CNPJCPF);
+      Post;
     end;
-    Post;
   end;
 end;
 

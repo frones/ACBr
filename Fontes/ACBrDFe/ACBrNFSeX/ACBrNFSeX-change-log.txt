@@ -42,6 +42,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/03/2025
+-- ACBrNFSeXServicos --
+[+] #TK-6718: Incluída a cidade de Monte Azul/MG, o provedor é Sintese versão 2.04
+  Por: João Antônio
+[*] #TK-6717: A cidade de Confresa/MT trocou de provedor, agora é Fiorilli.
+  Por: Diego Reckziegel/Luiz Eduardo Bodo
+[*] #TK-6716: A cidade de Ascurra/SC trocou a versão e a URL, mas o provedor continua
+    o mesmo.
+  Por: Celo_g
+[*] #TK-6708: A cidade de Guaratingueta/SP trocou as URL, mas o provedor continua
+    o mesmo.
+  Por: Datacaixa
+[*] #TK-6711: A cidade de Timon/MA trocou de provedor, agora é SpeedGov.
+  Por: C4Dev
+[*] #TK-6588: A cidade de Brusque/SC trocou a versão e a URL, mas o provedor continua
+    o mesmo.
+  Por: Ernesto Ricardo
+
 06/03/2025
 -- WebFisco.GravarXML --
 [*] #TK-6695: Ajuste visando correta geração dos dados da fatura no XML

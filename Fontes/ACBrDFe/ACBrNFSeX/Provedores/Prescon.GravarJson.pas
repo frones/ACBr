@@ -190,7 +190,7 @@ begin
       .AddPair('COFINS', NFSe.Servico.Valores.ValorCofins)
       .AddPair('PISPASEP', NFSe.Servico.Valores.ValorPis)
       .AddPair('CEPServico', NFSe.ConstrucaoCivil.Endereco.CEP)
-      .AddPair('PAISServico', NFSe.ConstrucaoCivil.Endereco.CodigoPais)
+      .AddPair('PAISServico', NFSe.ConstrucaoCivil.Endereco.xPais)
       .AddPair('descricao', NFSe.Servico.Discriminacao)
       .AddPair('atividade', FormatarItemServico(NFSe.Servico.ItemListaServico, FormatoItemListaServico))
       .AddPair('valor', NFSe.Servico.Valores.ValorServicos)

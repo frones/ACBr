@@ -183,7 +183,7 @@ begin
       LAuxVencimento := NFSe.CondicaoPagamento.Parcelas[i-1].DataVencimento;
 
     if LAuxVencimento > 0 then
-      NFSeNode.AppendChild(AddNode(tcDat, '#', 'f' + IntToStr(i) + 'd', 1, 10, 1,
+      NFSeNode.AppendChild(AddNode(tcDatVcto, '#', 'f' + IntToStr(i) + 'd', 1, 10, 1,
            LAuxVencimento, '', True, xAtrib))
     else
       NFSeNode.AppendChild(AddNode(tcStr, '#', 'f' + IntToStr(i) + 'd', 1, 10, 1,

@@ -364,8 +364,11 @@ begin
     Def.MascaraDeCaptura := '**/**'
   else if (aMascara = CDESTAXA_MASCARA_DECIMAL) then
     Def.MascaraDeCaptura := '@,@@'
-  else
-    Def.MascaraDeCaptura := aMascara;
+  else if (Pos('#', aMascara) > 0) then
+  begin
+    Def.TamanhoMaximo := Length(aMascara);
+    Def.MascaraDeCaptura := StringReplace(aMascara, '#', '*', [rfReplaceAll]);
+  end;
 
   case aTipo of
     dctNaoExibivel: Def.TipoDeEntrada := tedApenasLeitura;

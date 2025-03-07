@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/03/2025
+-- ACBrTEFAPIDestaxa --
+[*] Ajuste na máscara de números sem casa decimal.
+    por: Elias César
+
 27/02/2025
 -- ACBrTEFAPI --
 [-] Ajustes para compilar em Delphi FMX

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/03/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6715: A cidade de Canarana/MT mudou de provedor, agora é Betha 1.00
+  Por: C4Dev
+[+] #TK-6713: Incluída a cidade de Mamanguape/PB, o provedor é PublicSoft versão 2.03
+  Por: Prime Software
 -- WebFisco.GravarXML --
 [*] TK-6695: Ajuste visando geração da data das parcelas no formato correto.
   Por: Diego Folieni

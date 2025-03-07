@@ -41,17 +41,18 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
 07/03/2025
 -- ACBr.DANFSeX.FPDFA4Retrato.pas --
 [*] Ajuste para correção dos acentos no FPDF
   Por: Daniel de Morais InfoCotidiano/ Antonio Carlos Junior
-
-07/03/2025
 -- Prescon.GravarJson --
 [*] #TK-6719: Alteração visando gerar o Json com a descrição do Pais onde o serviço
     foi executado e não seu código.
   Por: Raphael Sanini
 -- ACBrNFSeXServicos --
+[*] #TK-6714: A cidade de Barretos/SP mudou de provedor, agora é RLZ versão 2.03
+  Por: jheanbistocchi 
 [+] #TK-6718: Incluída a cidade de Monte Azul/MG, o provedor é Sintese versão 2.04
   Por: João Antônio
 [*] #TK-6717: A cidade de Confresa/MT trocou de provedor, agora é Fiorilli.

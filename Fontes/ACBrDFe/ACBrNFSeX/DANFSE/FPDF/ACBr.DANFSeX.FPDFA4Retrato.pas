@@ -327,6 +327,7 @@ begin
   FFormatSettings := TFormatSettings.Create;
 {$ENDIF}
 {$ENDIF}
+  SetUTF8(False);
   FFormatSettings.DecimalSeparator := ',';
   FFormatSettings.ThousandSeparator := '.';
   SetFont('Times');

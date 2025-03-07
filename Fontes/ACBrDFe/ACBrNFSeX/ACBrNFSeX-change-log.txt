@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/03/2025
+-- ACBrNFSeXClass/PadraoNacional.GravarXml/PadraoNacional.LerXml --
+[*] #TK-5828: Alterações visando a reforma tributária.
+  Por: Italo Giurizzato Junior
 -- Sistemas4R.LerXml/Sistemas4R.Provider --
 [*] #TK-6700: Possível solução para o problema de leitura do XML da NFS-e.
   Por: Italo Giurizzato Junior

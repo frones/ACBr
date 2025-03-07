@@ -126,7 +126,7 @@ begin
   cbbProvedor.Items.Clear;
 
   for Provedor := Low(TACBrCNPJProvedorWS) to High(TACBrCNPJProvedorWS) do
-    cbbProvedor.Items.AddObject( GetEnumName(TypeInfo(TACBrCNPJProvedorWS), integer(Provedor) ), TObject(integer(Provedor)) );
+    cbbProvedor.Items.Add(GetEnumName(TypeInfo(Provedor),Integer(Provedor)));
 
   cbbProvedor.ItemIndex := 0;
 end;

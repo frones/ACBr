@@ -113,7 +113,7 @@ type
 
     function GerarTabulado(const xDescricao: string; const xCodigoItem: string;
       aQuantidade, aValorUnitario, aValorServico, aBaseCalculo,
-      aAliquota: Double): string;
+      aAliquota: Double; aDescontoIncondicionado: Double): string;
     function GerarJson(const xDescricao: string; const xCodigoItem: string;
       aQuantidade, aValorUnitario, aValorServico, aBaseCalculo,
       aAliquota: Double): string;
@@ -301,7 +301,8 @@ begin
                                   ItemServico[i].ValorUnitario,
                                   ItemServico[i].ValorTotal,
                                   ItemServico[i].BaseCalculo,
-                                  ItemServico[i].Aliquota);
+                                  ItemServico[i].Aliquota,
+                                  ItemServico[i].DescontoIncondicionado);
 
           fdJson:
             begin
@@ -361,7 +362,7 @@ end;
 
 function TNFSeWClass.GerarTabulado(const xDescricao, xCodigoItem: string;
   aQuantidade, aValorUnitario, aValorServico, aBaseCalculo,
-  aAliquota: Double): string;
+  aAliquota: Double; aDescontoIncondicionado: Double): string;
 begin
   Result := '[[Descricao=' + xDescricao + ']' +
              '[ItemServico=' + xCodigoItem + ']' +
@@ -369,7 +370,8 @@ begin
              '[ValorUnitario=' + FloatToString(aValorUnitario, Opcoes.DecimalChar) + ']' +
              '[ValorServico=' + FloatToString(aValorServico, Opcoes.DecimalChar) + ']' +
              '[ValorBaseCalculo=' + FloatToString(aBaseCalculo, Opcoes.DecimalChar) + ']' +
-             '[Aliquota=' + FloatToString(aAliquota, Opcoes.DecimalChar) + ']]';
+             '[Aliquota=' + FloatToString(aAliquota, Opcoes.DecimalChar) + ']' +
+             '[DescontoIncondicionado=' + FloatToString(aDescontoIncondicionado, Opcoes.DecimalChar) + ']]';
 end;
 
 function TNFSeWClass.GerarJson(const xDescricao, xCodigoItem: string;

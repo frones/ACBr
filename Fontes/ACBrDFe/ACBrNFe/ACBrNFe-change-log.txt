@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/03/2025
+-- ACBrNFeNotasFiscais --
+[*] #TK-6620: Removida a validação para cStat 737 que estava incorreta no ValidarRegrasDeNegocio.
+   Por: Diego Folieni 
+   
 03/03/2025
 -- ACBrNFe.XmlWriter --
 [*] Ajuste visando evitar erro caso não preencha cMunFGIBS

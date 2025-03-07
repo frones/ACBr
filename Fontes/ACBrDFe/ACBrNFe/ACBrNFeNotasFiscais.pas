@@ -1067,10 +1067,6 @@ begin
           if (NaoEstaVazio(Prod.veicProd.chassi)) then
             AdicionaErro('736-Rejeição: NFC-e com grupo de Veículos novos [nItem: '+IntToStr(Prod.nItem)+']');
 
-          GravaLog('Validar: 737-NCM info [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Prod.med.Count > 0) then
-            AdicionaErro('737-Rejeição: NFC-e com grupo de Medicamentos [nItem: '+IntToStr(Prod.nItem)+']');
-
           GravaLog('Validar: 738-NFCe grupo Armamentos [nItem: '+IntToStr(Prod.nItem)+']');
           if (Prod.arma.Count > 0) then
             AdicionaErro('738-Rejeição: NFC-e com grupo de Armamentos [nItem: '+IntToStr(Prod.nItem)+']');

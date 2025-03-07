@@ -46,15 +46,30 @@ type
   TNFSeR_Sistemas4R200 = class(TNFSeR_ABRASFv2)
   protected
 
+    function NormatizarXml(const aXml: string): string; override;
   public
 
   end;
 
 implementation
 
+uses
+  StrUtilsEx;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     Sistemas4R
 //==============================================================================
+
+{ TNFSeR_Sistemas4R200 }
+
+function TNFSeR_Sistemas4R200.NormatizarXml(const aXml: string): string;
+begin
+{$IfDef FPC}
+  Result := aXml;
+{$Else}
+  Result := FastStringReplace(aXml, '&', '&amp;', [rfReplaceAll]);
+{$EndIf}
+end;
 
 end.

@@ -180,6 +180,7 @@ begin
 
   Result := RemoverCaracteresDesnecessarios(Result);
   Result := ParseText(Result);
+  Result := StringReplace(Result, '&amp;', '&', [rfReplaceAll]);
   Result := RemoverIdentacao(Result);
 end;
 

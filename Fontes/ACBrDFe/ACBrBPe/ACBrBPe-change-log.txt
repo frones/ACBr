@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2025
+-- ACBrBPeClass/ACBrBPeXmlReader/ACBrBPeXmlWriter --
+[*] #TK-5814: Alteração visando contemplar a Reforma Tributária.
+  Por: Italo Giurizzato Junior
+
 27/02/2025
 -- ACBrBPeIniReader/ACBrBPeIniWriter --
 [*] O conteúdo das funções: GerarBPeIni e LerArqIni foram migrados para units

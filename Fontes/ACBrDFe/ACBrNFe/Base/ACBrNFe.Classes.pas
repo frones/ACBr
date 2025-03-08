@@ -1364,19 +1364,6 @@ type
     property vICMSUFRemet: Currency read FvICMSUFRemet write FvICMSUFRemet;
   end;
 
-  { Tseletivo }
-
-  Tseletivo = class(TObject)
-  private
-//italo    FCST: TCSTseletivo;
-    FcClassTrib: string;
-  public
-    procedure Assign(Source: Tseletivo);
-
-//italo    property CST: TCSTseletivo read FCST write FCST default cst00;
-    property cClassTrib: string read FcClassTrib write FcClassTrib;
-  end;
-
   { TgImpSel }
 
   TgImpSel = class(TObject)
@@ -1396,6 +1383,24 @@ type
     property uTrib: string read FuTrib write FuTrib;
     property qTrib: Double read FqTrib write FqTrib;
     property vImpSel: Double read FvImpSel write FvImpSel;
+  end;
+
+  { Tseletivo }
+
+  Tseletivo = class(TObject)
+  private
+    FCST: Integer;
+    FcClassTrib: Integer;
+    FgImpSel: TgImpSel;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Assign(Source: Tseletivo);
+
+    property CST: Integer read FCST write FCST;
+    property cClassTrib: Integer read FcClassTrib write FcClassTrib;
+    property gImpSel: TgImpSel read FgImpSel write FgImpSel;
   end;
 
   { TgDif }
@@ -1429,23 +1434,21 @@ type
     property pAliqEfet: Double read FpAliqEfet write FpAliqEfet;
   end;
 
-  { TgDesonUF }
+  { TgDeson }
 
-  TgDesonUF = class(TObject)
+  TgDeson = class(TObject)
   private
-//italo    FCST: Integer;
-    FcClassTrib: string;
+    FCST: Integer;
+    FcClassTrib: Integer;
     FvBC: Double;
     FpAliq: Double;
     FvDeson: Double;
-    FvIBSUF: Double;
   public
-//italo    property CST: Integer read FCST write FCST;
-    property cClassTrib: string read FcClassTrib write FcClassTrib;
+    property CST: Integer read FCST write FCST;
+    property cClassTrib: Integer read FcClassTrib write FcClassTrib;
     property vBC: Double read FvBC write FvBC;
     property pAliq: Double read FpAliq write FpAliq;
     property vDeson: Double read FvDeson write FvDeson;
-    property vIBSUF: Double read FvIBSUF write FvIBSUF;
   end;
 
   { TgIBSUF }
@@ -1457,7 +1460,8 @@ type
     FgDif: TgDif;
     FgDevTrib: TgDevTrib;
     FgRed: TgRed;
-    FgDeson: TgDesonUF;
+    FgDeson: TgDeson;
+    FvIBSUF: Double;
   public
     constructor Create;
     destructor Destroy; override;
@@ -1469,26 +1473,8 @@ type
     property gDif: TgDif read FgDif write FgDif;
     property gDevTrib: TgDevTrib read FgDevTrib write FgDevTrib;
     property gRed: TgRed read FgRed write FgRed;
-    property gDeson: TgDesonUF read FgDeson write FgDeson;
-  end;
-
-  { TgDesonMun }
-
-  TgDesonMun = class(TObject)
-  private
-//italo    FCST: Integer;
-    FcClassTrib: string;
-    FvBC: Double;
-    FpAliq: Double;
-    FvDeson: Double;
-    FvIBSMun: Double;
-  public
-//italo    property CST: Integer read FCST write FCST;
-    property cClassTrib: string read FcClassTrib write FcClassTrib;
-    property vBC: Double read FvBC write FvBC;
-    property pAliq: Double read FpAliq write FpAliq;
-    property vDeson: Double read FvDeson write FvDeson;
-    property vIBSMun: Double read FvIBSMun write FvIBSMun;
+    property gDeson: TgDeson read FgDeson write FgDeson;
+    property vIBSUF: Double read FvIBSUF write FvIBSUF;
   end;
 
   { TgIBSMun }
@@ -1500,7 +1486,8 @@ type
     FgDif: TgDif;
     FgDevTrib: TgDevTrib;
     FgRed: TgRed;
-    FgDeson: TgDesonMun;
+    FgDeson: TgDeson;
+    FvIBSMun: Double;
   public
     constructor Create;
     destructor Destroy; override;
@@ -1512,7 +1499,8 @@ type
     property gDif: TgDif read FgDif write FgDif;
     property gDevTrib: TgDevTrib read FgDevTrib write FgDevTrib;
     property gRed: TgRed read FgRed write FgRed;
-    property gDeson: TgDesonMun read FgDeson write FgDeson;
+    property gDeson: TgDeson read FgDeson write FgDeson;
+    property vIBSMun: Double read FvIBSMun write FvIBSMun;
   end;
 
   { TgIBSCBSCredPres }
@@ -1530,25 +1518,6 @@ type
     property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;
   end;
 
-  { TgDesonCBS }
-
-  TgDesonCBS = class(TObject)
-  private
-//italo    FCST: Integer;
-    FcClassTrib: string;
-    FvBC: Double;
-    FpAliq: Double;
-    FvDeson: Double;
-    FvCBS: Double;
-  public
-//italo    property CST: Integer read FCST write FCST;
-    property cClassTrib: string read FcClassTrib write FcClassTrib;
-    property vBC: Double read FvBC write FvBC;
-    property pAliq: Double read FpAliq write FpAliq;
-    property vDeson: Double read FvDeson write FvDeson;
-    property vCBS: Double read FvCBS write FvCBS;
-  end;
-
   { TgCBS }
 
   TgCBS = class(TObject)
@@ -1559,7 +1528,8 @@ type
     FgDif: TgDif;
     FgDevTrib: TgDevTrib;
     FgRed: TgRed;
-    FgDeson: TgDesonCBS;
+    FgDeson: TgDeson;
+    FvCBS: Double;
   public
     constructor Create;
     destructor Destroy; override;
@@ -1572,7 +1542,8 @@ type
     property gDif: TgDif read FgDif write FgDif;
     property gDevTrib: TgDevTrib read FgDevTrib write FgDevTrib;
     property gRed: TgRed read FgRed write FgRed;
-    property gDeson: TgDesonCBS read FgDeson write FgDeson;
+    property gDeson: TgDeson read FgDeson write FgDeson;
+    property vCBS: Double read FvCBS write FvCBS;
   end;
 
   { TgIBSCBS }
@@ -1610,7 +1581,7 @@ type
     FadRemIBSReten: Double;
     FvIBSMonoReten: Double;
     FpCredPresIBS: Double;
-    FvCRedPresIBS: Double;
+    FvCredPresIBS: Double;
     FpCredPresCBS: Double;
     FvCredPresCBS: Double;
     FpDifIBS: Double;
@@ -1631,7 +1602,7 @@ type
     property adRemIBSReten: Double read FadRemIBSReten write FadRemIBSReten;
     property vIBSMonoReten: Double read FvIBSMonoReten write FvIBSMonoReten;
     property pCredPresIBS: Double read FpCredPresIBS write FpCredPresIBS;
-    property vCRedPresIBS: Double read FvCRedPresIBS write FvCRedPresIBS;
+    property vCredPresIBS: Double read FvCredPresIBS write FvCredPresIBS;
     property pCredPresCBS: Double read FpCredPresCBS write FpCredPresCBS;
     property vCredPresCBS: Double read FvCredPresCBS write FvCredPresCBS;
     property pDifIBS: Double read FpDifIBS write FpDifIBS;
@@ -1647,10 +1618,9 @@ type
   TIBSCBSSel = class(TObject)
   private
     Fseletivo: Tseletivo;
-    FgImpSel: TgImpSel;
 
-//italo    FCST: Integer;
-    FcClassTrib: string;
+    FCST: Integer;
+    FcClassTrib: Integer;
     FindPerecimento: TindPerecimento;
 
     FgIBSCBS: TgIBSCBS;
@@ -1660,10 +1630,9 @@ type
     destructor Destroy; override;
 
     property seletivo: Tseletivo read Fseletivo write Fseletivo;
-    property gImpSel: TgImpSel read FgImpSel write FgImpSel;
 
-//italo    property CST: Integer read FCST write FCST;
-    property cClassTrib: string read FcClassTrib write FcClassTrib;
+    property CST: Integer read FCST write FCST;
+    property cClassTrib: Integer read FcClassTrib write FcClassTrib;
     property indPerecimento: TindPerecimento read FindPerecimento write FindPerecimento;
 
     property gIBSCBS: TgIBSCBS read FgIBSCBS write FgIBSCBS;
@@ -4914,7 +4883,6 @@ begin
   inherited Create;
 
   Fseletivo := Tseletivo.Create;
-  FgImpSel := TgImpSel.Create;
   FgIBSCBS := TgIBSCBS.Create;
   FgIBSCBSMono := TgIBSCBSMono.Create;
 end;
@@ -4922,7 +4890,6 @@ end;
 destructor TIBSCBSSel.Destroy;
 begin
   Fseletivo.Free;
-  FgImpSel.Free;
   FgIBSCBS.Free;
   FgIBSCBSMono.Free;
 
@@ -4935,6 +4902,20 @@ procedure Tseletivo.Assign(Source: Tseletivo);
 begin
 //italo  CST := Source.CST;
   cClassTrib := Source.cClassTrib;
+end;
+
+constructor Tseletivo.Create;
+begin
+  inherited Create;
+
+  FgImpSel := TgImpSel.Create;
+end;
+
+destructor Tseletivo.Destroy;
+begin
+  FgImpSel.Free;
+
+  inherited;
 end;
 
 { TgImpSel }
@@ -4990,6 +4971,7 @@ begin
   gDevTrib := Source.gDevTrib;
   gRed := Source.gRed;
   gDeson := Source.gDeson;
+  vIBSUF := Source.vIBSUF;
 end;
 
 constructor TgIBSUF.Create;
@@ -4999,7 +4981,7 @@ begin
   FgDif := TgDif.Create;
   FgDevTrib := TgDevTrib.Create;
   FgRed := TgRed.Create;
-  FgDeson := TgDesonUF.Create;
+  FgDeson := TgDeson.Create;
 end;
 
 destructor TgIBSUF.Destroy;
@@ -5022,6 +5004,7 @@ begin
   gDevTrib := Source.gDevTrib;
   gRed := Source.gRed;
   gDeson := Source.gDeson;
+  vIBSMun := Source.vIBSMun;
 end;
 
 constructor TgIBSMun.Create;
@@ -5031,7 +5014,7 @@ begin
   FgDif := TgDif.Create;
   FgDevTrib := TgDevTrib.Create;
   FgRed := TgRed.Create;
-  FgDeson := TgDesonMun.Create;
+  FgDeson := TgDeson.Create;
 end;
 
 destructor TgIBSMun.Destroy;
@@ -5055,6 +5038,7 @@ begin
   gDevTrib := Source.gDevTrib;
   gRed := Source.gRed;
   gDeson := Source.gDeson;
+  vCBS := Source.vCBS;
 end;
 
 constructor TgCBS.Create;
@@ -5065,7 +5049,7 @@ begin
   FgDif := TgDif.Create;
   FgDevTrib := TgDevTrib.Create;
   FgRed := TgRed.Create;
-  FgDeson := TgDesonCBS.Create;
+  FgDeson := TgDeson.Create;
 end;
 
 destructor TgCBS.Destroy;
@@ -5092,7 +5076,7 @@ begin
   adRemIBSREten := Source.adRemIBSREten;
   vIBSMonoReten := Source.vIBSMonoReten;
   pCredPresIBS := Source.pCredPresIBS;
-  vCRedPresIBS := Source.vCRedPresIBS;
+  vCredPresIBS := Source.vCredPresIBS;
   pCredPresCBS := Source.pCredPresCBS;
   vCredPresCBS := Source.vCredPresCBS;
   pDifIBS := Source.pDifIBS;

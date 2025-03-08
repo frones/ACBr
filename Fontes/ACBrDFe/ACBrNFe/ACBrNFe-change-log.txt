@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2025
+-- ACBrNFe.Classes/ACBrNFe.XmlReader/ACBrNFe.XmlWriter --
+[*] #TK-5816: Ajustes visando atender a Reforma Tributária.
+   Por: Italo Giurizzato Junior
+
 07/03/2025
 -- ACBrNFeNotasFiscais --
 [*] #TK-6620: Removida a validação para cStat 737 que estava incorreta no ValidarRegrasDeNegocio.

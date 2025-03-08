@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2025
+-- ACBrCTe.Classes/ACBrCTe.XmlReader/ACBrCTe.XmlWriter --
+[*] #TK-5814: Alteração visando contemplar a Reforma Tributária.
+  Por: Italo Giurizzato Junior
+
 27/02/2025
 -- ACBrCTe.XmlWriter --
 [*] #TK-5814: Alteração visando contemplar a Reforma Tributária.

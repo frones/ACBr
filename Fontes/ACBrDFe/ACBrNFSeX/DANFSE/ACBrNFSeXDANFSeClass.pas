@@ -142,6 +142,7 @@ type
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     function GetSeparadorPathPDF(const aInitialPath: String): String; override;
     procedure SetDadosPrestador;
+    procedure SetDadosTomador;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -151,9 +152,9 @@ type
     procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); overload; virtual;
     procedure ImprimirDANFSePDF(AStream: TStream; NFSe: TNFSe = nil); overload; virtual;
 
+    property Prestador: TPrestadorConfig read FPrestador;
   published
     property ACBrNFSe: TComponent  read FACBrNFSe write SetACBrNFSe;
-    property Prestador: TPrestadorConfig read FPrestador;
     property Tomador: TTomadorConfig read FTomador;
     property OutrasInformacaoesImp: String read FOutrasInformacaoesImp write FOutrasInformacaoesImp;
     property Prefeitura: String read FPrefeitura write FPrefeitura;
@@ -161,9 +162,9 @@ type
     property Cancelada: Boolean read FNFSeCancelada write FNFSeCancelada;
     property ImprimeCanhoto: Boolean read FImprimeCanhoto write FImprimeCanhoto default False;
     property TipoDANFSE: TTipoDANFSE read FTipoDANFSE write FTipoDANFSE default tpPadrao;
-    property Provedor: TNFSeProvedor read FProvedor write FProvedor;
     property TamanhoFonte: Integer read FTamanhoFonte write FTamanhoFonte;
     property FormatarNumeroDocumentoNFSe: Boolean read FFormatarNumeroDocumentoNFSe write FFormatarNumeroDocumentoNFSe;
+    property Provedor: TNFSeProvedor read FProvedor write FProvedor;
     property Producao: TnfseSimNao read FProducao write FProducao;
   end;
 
@@ -355,6 +356,32 @@ begin
     FPrestador.EMail := IfThen(Prestador.Contato.EMail <> '',
                               Prestador.Contato.EMail,
                               TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.EMail);
+  end;
+end;
+
+procedure TACBrNFSeXDANFSeClass.SetDadosTomador;
+begin
+  // Usar a configuração do ACBrNFSeX se no XML não conter os dados do tomador
+
+  with TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[0].NFSe do
+  begin
+    FTomador.InscricaoEstadual := IfThen(Tomador.IdentificacaoTomador.InscricaoEstadual <> '',
+      Tomador.IdentificacaoTomador.InscricaoEstadual, FTomador.InscricaoEstadual);
+
+    FTomador.InscricaoMunicipal := IfThen(Tomador.IdentificacaoTomador.InscricaoMunicipal <> '',
+      Tomador.IdentificacaoTomador.InscricaoMunicipal, FTomador.InscricaoMunicipal);
+
+    FTomador.Endereco := IfThen(Tomador.Endereco.Endereco <> '',
+                                  Tomador.Endereco.Endereco, FTomador.Endereco);
+
+    FTomador.Complemento := IfThen(Tomador.Endereco.Complemento <> '',
+                            Tomador.Endereco.Complemento, FTomador.Complemento);
+
+    FTomador.Fone := IfThen(Tomador.Contato.Telefone <> '',
+                                       Tomador.Contato.Telefone, FTomador.Fone);
+
+    FTomador.EMail := IfThen(Tomador.Contato.EMail <> '',
+                                         Tomador.Contato.EMail, FTomador.EMail);
   end;
 end;
 

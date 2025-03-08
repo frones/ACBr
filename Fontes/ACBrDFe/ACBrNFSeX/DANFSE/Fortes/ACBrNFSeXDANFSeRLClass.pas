@@ -87,6 +87,7 @@ var
   fqrXDANFSeRLRetrato: TfrlXDANFSeRL;
 begin
   SetDadosPrestador;
+  SetDadosTomador;
   Provedor := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor;
 
   case Provedor of
@@ -124,6 +125,7 @@ var
   fqrXDANFSeRLRetrato: TfrlXDANFSeRL;
 begin
   SetDadosPrestador;
+  SetDadosTomador;
   Provedor := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor;
 
   case Provedor of
@@ -165,6 +167,7 @@ var
   fqrXDANFSeRLRetrato: TfrlXDANFSeRL;
 begin
   SetDadosPrestador;
+  SetDadosTomador;
   Provedor := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor;
 
   case Provedor of

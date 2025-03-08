@@ -742,7 +742,7 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
         Brush.Style = bsClear
         DrawKind = dkLine
       end
-      object RLLabel5: TRLLabel
+      object lbIdentificacao: TRLLabel
         Left = 9
         Top = 30
         Width = 53

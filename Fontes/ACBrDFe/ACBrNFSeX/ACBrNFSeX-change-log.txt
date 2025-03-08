@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2025
+-- Diversos --
+[*] #TK-6666: A propriedade de configuração DadosEmitente foi ocultada do Object
+    Inspector pois é alimentada internamente pelo componente.
+  Por: Italo Giurizzato Junior
+
 07/03/2025
 -- ACBrNFSeXClass/PadraoNacional.GravarXml/PadraoNacional.LerXml --
 [*] #TK-5828: Alterações visando a reforma tributária.

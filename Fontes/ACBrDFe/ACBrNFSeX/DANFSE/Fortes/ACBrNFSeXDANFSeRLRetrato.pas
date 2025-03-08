@@ -632,11 +632,9 @@ begin
     else
       rllTomaCNPJ.Caption := FormatarCNPJouCPF(IdentificacaoTomador.CpfCnpj);
 
-    rllTomaInscMunicipal.Caption := IfThen(IdentificacaoTomador.InscricaoMunicipal <> '',
-      IdentificacaoTomador.InscricaoMunicipal, fpDANFSe.Tomador.InscricaoMunicipal);
+    rllTomaInscMunicipal.Caption := fpDANFSe.Tomador.InscricaoMunicipal;
 
-    rllTomaInscEstadual.Caption := IfThen(IdentificacaoTomador.InscricaoEstadual <> '',
-      IdentificacaoTomador.InscricaoEstadual, fpDANFSe.Tomador.InscricaoEstadual);
+    rllTomaInscEstadual.Caption := fpDANFSe.Tomador.InscricaoEstadual;
 
     if Endereco.Endereco <> '' then
     begin
@@ -655,17 +653,14 @@ begin
       rllTomaEndereco.Caption := Trim(fpDANFSe.Tomador.Endereco) + ' - CEP: ' +
         FormatarCEP(Endereco.CEP);
 
-    rllTomaComplemento.Caption := IfThen(Endereco.Complemento <> '',
-      Endereco.Complemento, fpDANFSe.Tomador.Complemento);
+    rllTomaComplemento.Caption := fpDANFSe.Tomador.Complemento;
 
     rllTomaMunicipio.Caption := Endereco.xMunicipio;
 
     rllTomaUF.Caption := Endereco.UF;
 
-    rllTomaTelefone.Caption := IfThen(Contato.Telefone <> '',
-      FormatarFone(Contato.Telefone), FormatarFone(fpDANFSe.Tomador.Fone));
-    rllTomaEmail.Caption := IfThen(Contato.Email <> '',
-      Contato.Email, fpDANFSe.Tomador.Email);
+    rllTomaTelefone.Caption := FormatarFone(fpDANFSe.Tomador.Fone);
+    rllTomaEmail.Caption := fpDANFSe.Tomador.Email;
   end;
 
   rllMsgTeste.Visible := (fpDANFSe.Producao = snNao);

@@ -500,6 +500,8 @@ procedure TACBrTEFSIWebAndroid.ObterDadosDaTransacao(AIntent: JIntent);
     Result := String(DecodeURL( AnsiString(JStringToString(AIntent.getStringExtra(StringToJString(name))))));
   end;
 
+const
+  cErroNoIntent = -6;   // 'Operacao cancelada pelo usuario (no pinpad).'
 var
   jsonTipoCampos    : string;
   js                : TACBrJSONObject;
@@ -509,6 +511,10 @@ begin
   if not Assigned(AIntent) then
   begin
     GravarLog('[ObterDadosDaTransacao] no Intent to read');
+
+    fDadosTransacao.Clear;
+    fDadosTransacao.ValueInfo[PWINFO_RET]          := IntToStr(cErroNoIntent);
+    fDadosTransacao.ValueInfo[PWINFO_RESULTMSG]    := traduzRetorno(cErroNoIntent);
     Exit;
   end;
 

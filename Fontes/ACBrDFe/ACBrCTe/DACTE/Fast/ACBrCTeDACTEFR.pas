@@ -2490,11 +2490,12 @@ begin
       FieldByName('dhEmi').AsDateTime := dhEmi;
 
       case tpCTe of
-        tcNormal: FieldByName('TpCT').AsString      := 'Normal';
-        tcComplemento: FieldByName('TpCT').AsString := 'Complemento';
-        tcAnulacao: FieldByName('TpCT').AsString    := 'Anulação';
-        tcSubstituto: FieldByName('TpCT').AsString  := 'Substituto';
-        tcCTeSimp: FieldByName('TpCT').AsString     := 'CTe Simplificado';
+        tcNormal: FieldByName('TpCT').AsString        := 'Normal';
+        tcComplemento: FieldByName('TpCT').AsString   := 'Complemento';
+        tcAnulacao: FieldByName('TpCT').AsString      := 'Anulação';
+        tcSubstituto: FieldByName('TpCT').AsString    := 'Substituto';
+        tcCTeSimp: FieldByName('TpCT').AsString       := 'CTe Simplificado';
+        tcSubstCTeSimpl: FieldByName('TpCT').AsString := 'CTe Simplificado - Substituto';
       end;
 
       FieldByName('cMunEmi').AsString := IntToStr(cMunEnv);

@@ -3712,6 +3712,7 @@ begin
   end;
 
   lbBradescoErroChavePrivada.Caption := e;
+  lbBradescoErroChavePrivada.Visible := True;
   imBradescoErroChavePrivada.Visible := (e <> 'OK');
 end;
 
@@ -3884,6 +3885,7 @@ begin
   end;
 
   lbBradescoErroCertificado.Caption := e;
+  lbBradescoErroCertificado.Visible := True;
   imBradescoErroCertificado.Visible := (e <> 'OK');
 end;
 
@@ -4094,6 +4096,7 @@ begin
   end;
 
   lbBradescoErroPFX.Caption := e;
+  lbBradescoErroPFX.Visible := True;
   imBradescoErroPFX.Visible := (e <> 'OK');
 end;
 
@@ -4232,10 +4235,17 @@ begin
     edBradescoChavePIX.Text := Ini.ReadString('Bradesco', 'ChavePIX', '');
     edBradescoClientID.Text := Ini.ReadString('Bradesco', 'ClientID', '');
     edBradescoClientSecret.Text := Ini.ReadString('Bradesco', 'ClientSecret', '');
-    edBradescoArqPFX.Text := Ini.ReadString('Bradesco', 'ArqPFX', edBradescoArqPFX.Text);
-    edBradescoSenhaPFX.Text := Ini.ReadString('Bradesco', 'SenhaPFX', '');
-    edBradescoArqChavePrivada.Text := Ini.ReadString('Bradesco', 'ArqChavePrivada', edBradescoArqChavePrivada.Text);
-    edBradescoArqCertificado.Text := Ini.ReadString('Bradesco', 'ArqCertificado', edBradescoArqCertificado.Text);
+    rgBradescoTipoCertificado.ItemIndex := Ini.ReadInteger('Bradesco', 'TipoCertificado', 1);
+    if EstaZerado(rgBradescoTipoCertificado.ItemIndex) then
+    begin
+      edBradescoArqPFX.Text := Ini.ReadString('Bradesco', 'ArqPFX', edBradescoArqPFX.Text);
+      edBradescoSenhaPFX.Text := Ini.ReadString('Bradesco', 'SenhaPFX', '');
+    end
+    else
+    begin
+      edBradescoArqChavePrivada.Text := Ini.ReadString('Bradesco', 'ArqChavePrivada', edBradescoArqChavePrivada.Text);
+      edBradescoArqCertificado.Text := Ini.ReadString('Bradesco', 'ArqCertificado', edBradescoArqCertificado.Text);
+    end;
 
     edInterChavePIX.Text := Ini.ReadString('Inter', 'ChavePIX', '');
     edInterClientID.Text := Ini.ReadString('Inter', 'ClientID', '');
@@ -4379,6 +4389,7 @@ begin
     Ini.WriteString('Bradesco', 'ChavePIX', edBradescoChavePIX.Text);
     Ini.WriteString('Bradesco', 'ClientID', edBradescoClientID.Text);
     Ini.WriteString('Bradesco', 'ClientSecret', edBradescoClientSecret.Text);
+    Ini.WriteInteger('Bradesco', 'TipoCertificado', rgBradescoTipoCertificado.ItemIndex);
     Ini.WriteString('Bradesco', 'ArqPFX', edBradescoArqPFX.Text);
     Ini.WriteString('Bradesco', 'SenhaPFX', edBradescoSenhaPFX.Text);
     Ini.WriteString('Bradesco', 'ArqChavePrivada', edBradescoArqChavePrivada.Text);

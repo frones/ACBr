@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/03/2025
+-- ACBrPixPSPBradesco --
+[*] Remoção de inclusão desnecessária da "Authorization" na Autenticação.
+    por: Elias César
+
 28/02/2025
 -- ACBrSchemasMatera --
 [-] Correção de memory-leak

@@ -427,6 +427,8 @@ type
     FClientSecret: String;
     FArqPFX: String;
     FSenhaPFX: AnsiString;
+    FArqChavePrivada: String;
+    FArqCertificado: String;
 
     public
     constructor Create;
@@ -439,6 +441,8 @@ type
     property ClientSecret: String read FClientSecret write FClientSecret;
     property ArqPFX: String read FArqPFX write FArqPFX;
     property SenhaPFX: AnsiString read FSenhaPFX write FSenhaPFX;
+    property ArqChavePrivada: String read FArqChavePrivada write FArqChavePrivada;
+    property ArqCertificado: String read FArqCertificado write FArqCertificado;
   end;
 
   { TPIXCDConfig }
@@ -779,6 +783,8 @@ begin
   FClientSecret := EmptyStr;
   FArqPFX := EmptyStr;
   FSenhaPFX := EmptyStr;
+  FArqChavePrivada := EmptyStr;
+  FArqCertificado := EmptyStr;
   FSessaoPSP := CSessaoPIXCDBradescoConfig;
 end;
 
@@ -790,6 +796,8 @@ begin
   ClientSecret:= AIni.ReadString(CSessaoPIXCDBradescoConfig, CChaveClientSecretBradesco, ClientSecret);
   ArqPFX := AIni.ReadString(CSessaoPIXCDBradescoConfig, CChaveArqPFXBradesco, ArqPFX);
   SenhaPFX := AIni.ReadString(CSessaoPIXCDBradescoConfig, CChaveSenhaPFXBradesco, SenhaPFX);
+  ArqChavePrivada := AIni.ReadString(CSessaoPIXCDBradescoConfig, CChaveArqChavePrivadaBradesco, ArqChavePrivada);
+  ArqCertificado := AIni.ReadString(CSessaoPIXCDBradescoConfig, CChaveArqCertificadoBradesco, ArqCertificado);
 end;
 
 procedure TPIXCDBradescoConfig.GravarIni(const AIni: TCustomIniFile);
@@ -800,6 +808,8 @@ begin
   AIni.WriteString(CSessaoPIXCDBradescoConfig, CChaveClientSecretBradesco, ClientSecret);
   AIni.WriteString(CSessaoPIXCDBradescoConfig, CChaveArqPFXBradesco, ArqPFX);
   AIni.WriteString(CSessaoPIXCDBradescoConfig, CChaveSenhaPFXBradesco, SenhaPFX);
+  AIni.WriteString(CSessaoPIXCDBradescoConfig, CChaveArqChavePrivadaBradesco, ArqChavePrivada);
+  AIni.WriteString(CSessaoPIXCDBradescoConfig, CChaveArqCertificadoBradesco, ArqCertificado);
 end;
 
 { TPIXCDSicrediConfig }

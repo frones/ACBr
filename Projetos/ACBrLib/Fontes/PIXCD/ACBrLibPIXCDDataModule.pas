@@ -222,6 +222,8 @@ begin
       ClientSecret := pLibPIXCDConfig.PIXCDBradesco.ClientSecret;
       ArquivoPFX   := pLibPIXCDConfig.PIXCDBradesco.ArqPFX;
       SenhaPFX     := pLibPIXCDConfig.PIXCDBradesco.SenhaPFX;
+      ArquivoChavePrivada := pLibPIXCDConfig.PIXCDBradesco.ArqChavePrivada;
+      ArquivoCertificado := pLibPIXCDConfig.PIXCDBradesco.ArqCertificado;
       Scopes       := pLibPIXCDConfig.PIXCDBradesco.Scopes;
     end;
 

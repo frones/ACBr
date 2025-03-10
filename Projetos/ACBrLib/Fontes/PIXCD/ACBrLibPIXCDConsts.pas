@@ -213,6 +213,8 @@ const
   CChaveClientSecretBradesco = 'ClientSecret';
   CChaveArqPFXBradesco = 'ArqPFX';
   CChaveSenhaPFXBradesco = 'SenhaPFX';
+  CChaveArqChavePrivadaBradesco = 'ArqChavePrivada';
+  CChaveArqCertificadoBradesco = 'ArqCertificado';
 
   CSessaoPIXCDSicrediConfig = 'Sicredi';
   CChavePIXSicredi = 'ChavePIX';

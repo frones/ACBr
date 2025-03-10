@@ -44,7 +44,9 @@ Símbolo : Significado
 
 10/03/2025
 -- ACBrNFSeXServicos --
-[*] #TK-6725: Incluída a cidade de Trairi/CE, provedor é SpeedGov.
+[+] #TK-6726: Incluída a cidade de Palmares do Sul/RS, provedor Pronim na versão 2.02
+  Por: Erick Borges 
+[+] #TK-6725: Incluída a cidade de Trairi/CE, provedor é SpeedGov.
   Por: atendimento1   
 
 08/03/2025

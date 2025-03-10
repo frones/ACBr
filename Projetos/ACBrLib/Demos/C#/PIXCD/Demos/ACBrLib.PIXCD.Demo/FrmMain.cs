@@ -120,6 +120,8 @@ namespace ACBrLibPIXCD.Demo
                 ACBrPIXCD.Config.Bradesco.ArqPFX = txtArquivoPFXBradesco.Text;
                 ACBrPIXCD.Config.Bradesco.SenhaPFX = txtSenhaCertificadoBradesco.Text;
                 ACBrPIXCD.Config.Bradesco.Scopes = txtScopesBradesco.Text;
+                ACBrPIXCD.Config.Bradesco.ArqChavePrivada = txtArquivoChavePrivadaBradesco.Text;
+                ACBrPIXCD.Config.Bradesco.ArqCertificado = txtArquivoCertificadoBradesco.Text;
 
                 //Sicredi
                 ACBrPIXCD.Config.Sicredi.ChavePIX = txtChavePIXSicredi.Text;
@@ -278,6 +280,8 @@ namespace ACBrLibPIXCD.Demo
             txtArquivoPFXBradesco.Text = ACBrPIXCD.Config.Bradesco.ArqPFX;
             txtSenhaCertificadoBradesco.Text = ACBrPIXCD.Config.Bradesco.SenhaPFX;
             txtScopesBradesco.Text = ACBrPIXCD.Config.Bradesco.Scopes;
+            txtArquivoChavePrivadaBradesco.Text = ACBrPIXCD.Config.Bradesco.ArqChavePrivada;
+            txtArquivoCertificadoBradesco.Text = ACBrPIXCD.Config.Bradesco.ArqCertificado;
 
             //Sicredi
             txtChavePIXSicredi.Text = ACBrPIXCD.Config.Sicredi.ChavePIX;
@@ -709,6 +713,16 @@ namespace ACBrLibPIXCD.Demo
         private void btnLimparRespostas_Click(object sender, EventArgs e)
         {
             rtbRespostas.Clear();
+        }
+
+        private void btnChavePrivadaBradesco_Click(object sender, EventArgs e)
+        {
+            txtArquivoChavePrivadaBradesco.Text = Helpers.OpenFile("Arquivos pem (*.pem)|*.pem|Todos os Arquivos (*.*)|*.*");
+        }
+
+        private void btnArqCertificadoBradesco_Click(object sender, EventArgs e)
+        {
+            txtArquivoCertificadoBradesco.Text = Helpers.OpenFile("Arquivos cer (*.cer)|*.cer|Todos os Arquivos (*.*)|*.*");
         }
     }
 }

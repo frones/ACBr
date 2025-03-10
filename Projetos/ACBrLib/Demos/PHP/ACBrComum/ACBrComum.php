@@ -67,16 +67,22 @@ function CarregaDll($dir, $nomeLib)
     {
         $dllPath = $dir . DIRECTORY_SEPARATOR . "ACBrLib" . DIRECTORY_SEPARATOR . "x" . $arquitetura . DIRECTORY_SEPARATOR;
 
-        if (!file_exists($dllPath . $biblioteca)){
-            echo json_encode(["mensagem" => "Biblioteca (.dll/.so) não encontrada no caminho especificado: " . $dllPath . $biblioteca]);
-            return -10;
+        if (!file_exists($dllPath . $biblioteca)) {
+            if (strpos(PHP_OS, 'WIN') === false)
+                $dllPath = "";
+            else{
+                echo json_encode(["mensagem" => "Biblioteca (.dll/.so) não encontrada no caminho especificado: " . $dllPath . $biblioteca]);
+                return -10;
+            }
         }
     }
 
-    $pathAtual = getenv('PATH');
-    if (strpos($pathAtual, $dllPath) === false) {
-        putenv("PATH=$dllPath;" . $pathAtual);
-    }    
+    if (!empty($dir)) {
+        $pathAtual = getenv('PATH');
+        if (strpos($pathAtual, $dllPath) === false) {
+            putenv("PATH=$dllPath;" . $pathAtual);
+        }    
+    }
     
     return $dllPath . $biblioteca;
 }
@@ -106,10 +112,22 @@ function CarregaContents($importsPath, $dllPath)
         putenv("DISPLAY=:99");
     }
 
-    $ffi = FFI::cdef(
-        file_get_contents($importsPath),
-        $dllPath
-    );
+    try {
+        $ffi = FFI::cdef(
+            file_get_contents($importsPath),
+            $dllPath
+        );
+    } catch (Throwable $e) {
+        if (strpos(PHP_OS, 'WIN') === false){
+            $erro = ", verifique se o arquivo foi salvo no caminho padrão da sua distribuição";
+        }
+        else {
+            $erro = "";
+        }
+
+        $erro = "Erro ao carregar a biblioteca$erro: " . $e->getMessage();
+        die($erro);
+    }   
 
     return $ffi;
 }

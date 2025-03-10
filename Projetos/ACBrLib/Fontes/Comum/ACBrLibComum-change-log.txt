@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/03/2025
+-- ACBrComum.php --
+[*] #TK-6733 - Controle para localizar a lib na pasta padrão de bibliotecas do linux
+   Por: Renato Rubinho
+
 24/02/2025
 -- ACBrLibConfig, ACBrLibConsts --
 [*] Criptografia da propriedade CSRT - #TK-6625

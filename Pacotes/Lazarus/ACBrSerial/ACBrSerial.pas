@@ -29,7 +29,8 @@ uses
   ACBrGAVImpressoraECF, ACBrGAVSerialGerbo, ACBrGAVSerialMenno, ACBrLCB, 
   ACBrPosPrinter, ACBrRFD, ACBrSMS, ACBrSMSClass, ACBrSMSDaruma, ACBrSMSZTE, 
   ACBrTER, ACBrTERClass, ACBrTERWilbor, ACBrSIN, ACBrAbecsPinPad, 
-  LazarusPackageIntf;
+  ACBrBALTrentin, ACBrBALWeightechWT3000IR_ABS, 
+  ACBrBALWeightechWT3000IR_ABS_Fm1Fm2Fm9, LazarusPackageIntf;
 
 implementation
 

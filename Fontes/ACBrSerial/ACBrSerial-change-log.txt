@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/03/2025
+-- ACBrBal --
+[+] Adicionado novo modelo balança Weightech WT3000IR ABS por Leandro Araújo. TK-6260. 
+Veja: https://www.projetoacbr.com.br/forum/topic/80667-implementa%C3%A7%C3%A3o-para-balan%C3%A7aindicador-de-pesagem-weightech-wt3000-ir-formatos-fm1-fm2-e-fm9/#comment-522308
+
 28/02/2025
 -- ACBrDeviceRaw --
 [*] Ajustes para tornar o código mais resiliente, em situações que não houver uma

@@ -73,6 +73,9 @@ contains
   ACBrBALMarte in '..\..\..\Fontes\ACBrSerial\ACBrBALMarte.pas',
   ACBrBALLenkeLK2500 in '..\..\..\Fontes\ACBrSerial\ACBrBALLenkeLK2500.pas',
   ACBrBALWeighTRUTest in '..\..\..\Fontes\ACBrSerial\ACBrBALWeighTRUTest.pas',
+  ACBrBALTrentin in '..\..\..\Fontes\ACBrSerial\ACBrBALTrentin.pas',
+  ACBrBALWeightechWT3000IR_ABS in '..\..\..\Fontes\ACBrSerial\ACBrBALWeightechWT3000IR_ABS.pas',
+  ACBrBALWeightechWT3000IR_ABS_Fm1Fm2Fm9 in '..\..\..\Fontes\ACBrSerial\ACBrBALWeightechWT3000IR_ABS_Fm1Fm2Fm9.pas',
   ACBrCHQ in '..\..\..\Fontes\ACBrSerial\ACBrCHQ.pas',
   ACBrCHQBematech in '..\..\..\Fontes\ACBrSerial\ACBrCHQBematech.pas',
   ACBrCHQChronos in '..\..\..\Fontes\ACBrSerial\ACBrCHQChronos.pas',
@@ -167,7 +170,6 @@ contains
   ACBrWinUSBDevice in '..\..\..\Fontes\ACBrSerial\ACBrWinUSBDevice.pas',
   ACBrBALSelfCheckout in '..\..\..\Fontes\ACBrSerial\ACBrBALSelfCheckout.pas',
   ACBrBALSiciliano in '..\..\..\Fontes\ACBrSerial\ACBrBALSiciliano.pas',
-  ACBrAbecsPinPad in '..\..\..\Fontes\ACBrSerial\ACBrAbecsPinPad.pas',
-  ACBrBALTrentin in '..\..\..\Fontes\ACBrSerial\ACBrBALTrentin.pas';
+  ACBrAbecsPinPad in '..\..\..\Fontes\ACBrSerial\ACBrAbecsPinPad.pas';
 
 end.

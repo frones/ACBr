@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu</title>
-    <link rel="icon" href="https://projetoacbr.com.br/wp-content/uploads/2020/02/favico-acbr.png" type="image/x-icon">
+    <link rel="icon" href="https://raw.githubusercontent.com/Projeto-ACBr-Oficial/Docker/main/PHP/img/favico-acbr.png" type="image/x-icon">
     <style>
         body {
             display: flex;
@@ -14,7 +14,7 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            background-image: url('https://projetoacbr.com.br/wp-content/uploads/2025/02/background-php-e1740514304960.jpg');
+            background-image: url('https://raw.githubusercontent.com/Projeto-ACBr-Oficial/Docker/main/PHP/img/background-php.jpg');
             background-size: cover; 
             background-position: center; 
         }
@@ -48,7 +48,7 @@
     </style>
 </head>
 <body>
-<a href="https://projetoacbr.com.br/"><img src="https://projetoacbr.com.br/wp-content/uploads/2020/02/favico-acbr.png" alt="ACBr Logo"></a>
+<a href="https://projetoacbr.com.br/"><img src="https://raw.githubusercontent.com/Projeto-ACBr-Oficial/Docker/main/PHP/img/favico-acbr.png" alt="ACBr Logo"></a>
     <nav>
         <ul>
             <li><a href="/Boleto/ACBrBoletoDemoMT.php">Boleto</a></li>

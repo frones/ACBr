@@ -241,7 +241,7 @@ begin
       Resp := TConsultaEventos.Create(TpResp, codUTF8);
       try
         Resp.Processar(ACBreSocial);
-        fpCmd.Resposta := Resp.Gerar;
+        fpCmd.Resposta := fpCmd.Resposta + sLineBreak + Resp.Gerar;
       finally
         Resp.Free;
       end;

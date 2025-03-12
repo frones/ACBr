@@ -1424,7 +1424,7 @@ const
 
   CValueTipoEmpregador =                    'tePessoaJuridica';
   CValueTipoContribuinte =                  'tcPessoaJuridica';
-  CvalueVersaoeSocial =                     '02_04_02';
+  CvalueVersaoeSocial =                     'S01_00_00';
   CvalueVersaoReinf =                       '1_03_02';
   CvalueVersaoQRCode =                      '0';
 

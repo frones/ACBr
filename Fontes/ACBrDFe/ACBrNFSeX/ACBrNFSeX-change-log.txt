@@ -44,6 +44,8 @@ Símbolo : Significado
 
 12/03/2025
 -- ACBrNFSeXServicos --
+[*] #TK-6741: Incuída a nova URL de produção(ainda não ativa) para Campinas/SP
+  Por: Denis W Ramalho
 [+] #TK-6755: Incluída a cidade de Quinze de Novembro/RS, provedor é o Pronim versão 2.02
   Por: Dércio Luis Zanatta 
 [*] Alterado endereço de homologação de Barretos/SP

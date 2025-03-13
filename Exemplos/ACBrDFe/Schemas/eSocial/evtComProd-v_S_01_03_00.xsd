@@ -26,7 +26,7 @@
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="ideEvento" type="T_ideEvento_folha_mensal_PF" />
-                            <xs:element name="ideEmpregador" type="T_ideEmpregador_cnpj" />
+                            <xs:element name="ideEmpregador" type="T_ideEmpregador" />
                             <xs:element name="infoComProd">
                                 <xs:annotation>
                                     <xs:documentation>Informação da comercialização de produção.</xs:documentation>

@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/03/2025
+-- pcesRetDownloadRetEvt -
+[*] #TK-6669: Atualizar o schema do S1260 para não validar cnpj
+  Por: Jeihcio Francis / Renato Rubinho
+
 03/03/2025
 -- Diversos --
 [*] Remoção de código que eram usados por versões antigas, ou seja, antes das

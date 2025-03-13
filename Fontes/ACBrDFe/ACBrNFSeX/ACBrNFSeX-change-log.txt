@@ -44,6 +44,8 @@ Símbolo : Significado
 
 12/03/2025
 -- ACBrNFSeXServicos --
+[+] #TK-6755: Incluída a cidade de Quinze de Novembro/RS, provedor é o Pronim versão 2.02
+  Por: Dércio Luis Zanatta 
 [*] Alterado endereço de homologação de Barretos/SP
   Por: Alexandre Faustinoni / Rev. Alexandre de Paula
 

@@ -1614,7 +1614,7 @@ type
 
     property PathLib: String read fPathLib write SetPathLib;
     property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
-    property ControleConexao: Boolean read fControleConexao write SetControleConexao default False;
+    property ControleConexao: Boolean read fControleConexao write SetControleConexao default True;
 
     property Empresa: String read fEmpresa write SetEmpresa;
     property Filial: String read fFilial write SetFilial;
@@ -1709,7 +1709,7 @@ begin
   fInicializada := False;
   fConectado := False;
   fSessaoAberta := False;
-  fControleConexao := False;
+  fControleConexao := True;
   fPathLib := '';
   fDiretorioTrabalho := '';
   fEnderecoIP := '';
@@ -3461,13 +3461,16 @@ begin
     mask := 1;
     for i := 1 to 32 do
     begin
-      pBuffer^ := #0;
-      hmask := '$'+IntToHex(mask, 8);
-      GravarLog('ScopeObtemCampoExt3( '+IntToStr(h)+', '+hmask+', 0, 0, 0 )');
-      ret := xScopeObtemCampoExt3(h, mask, 0, 0, 0, 0, pBuffer);
-      sBuffer := String(pBuffer);
-      GravarLog('  ret: '+IntToStr(ret)+', Buffer: '+sBuffer);
-      fDadosDaTransacao.Add(Format('%s-%s=%s', ['mask1', hmask, sBuffer]));
+      if not (mask = MASK1_Texto_BIT_62) then
+      begin
+        pBuffer^ := #0;
+        hmask := '$'+IntToHex(mask, 8);
+        GravarLog('ScopeObtemCampoExt3( '+IntToStr(h)+', '+hmask+', 0, 0, 0 )');
+        ret := xScopeObtemCampoExt3(h, mask, 0, 0, 0, 0, pBuffer);
+        sBuffer := String(pBuffer);
+        GravarLog('  ret: '+IntToStr(ret)+', Buffer: '+sBuffer);
+        fDadosDaTransacao.Add(Format('%s-%s=%s', ['mask1', hmask, sBuffer]));
+      end;
       mask := mask shl 1;
     end;
 
@@ -3514,8 +3517,8 @@ begin
         sBuffer := String(pBuffer);
         GravarLog('  ret: '+IntToStr(ret)+', Buffer: '+sBuffer);
         fDadosDaTransacao.Add(Format('%s-%s=%s', ['mask4', hmask, sBuffer]));
-        mask := mask shl 1;
       end;
+      mask := mask shl 1;
     end;
   finally
     Freemem(pBuffer);

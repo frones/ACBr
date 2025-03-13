@@ -164,7 +164,6 @@ procedure TACBrTEFRespScope.ConteudoToProperty;
     //MASK1_Data_referencia
     //MASK1_Codigo_Origem_Mensagem
     //MASK1_Cod_Servico    // Ver tabela Código serviços página 340
-    //MASK1_Texto_BIT_62   // Parece muito o espelho do comprovante????
     //MASK1_Cartao_Trilha02
     //MASK1_Numero_Promissorias
     //MASK1_Cod_Estab_Impresso //<-- CNPJ do Estabelecimento
@@ -907,13 +906,16 @@ begin
   if (Financiamento = tefmfAVista) then
     fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_DECIDE_AVISTA)] := '1'
   else if (Financiamento > tefmfAVista) then   // Parcelado
+  begin
     fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_DECIDE_AVISTA)] := '0';
+    fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_DECIDE_CREDIARIO)] := '0';
+  end;
 
   // NAO TESTADO
   if (Financiamento = tefmfParceladoEmissor) then
     fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_DECIDE_P_ADM_EST)] := '1'
   else if (Financiamento = tefmfParceladoEstabelecimento) then
-    fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_DECIDE_P_ADM_EST)] := '0';
+    fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_DECIDE_P_ADM_EST)] := '2';
 
   if (Parcelas > 0) then
     fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_QTDE_PARCELAS)] := IntToStr(Parcelas);

@@ -310,25 +310,32 @@ end;
 function TACBrLibReinf.CriarEnviarReinf(const eArqIni: PAnsiChar; const sResposta: PAnsiChar;
   var esTamanho: integer): integer;
 var
+  EhArquivo: boolean;
   AIniFile, ArqReinf : String;
   ASalvar : Boolean;
   iEvento : Integer;
   AResposta: String;
   Resp : TRespostas;
 begin
-  AIniFile:= AnsiString(eArqIni);
   try
+    AIniFile := ConverterStringEntrada(eArqIni);
+
     if Config.Log.Nivel > logNormal then
       GravarLog('Reinf_CriarEnviarReinf(' + AIniFile + ')', logCompleto, True)
     else
       GravarLog('Reinf_CriarEnviarReinf', logNormal);
 
-    if not FileExists(AIniFile) then
-      raise EACBrLibException.Create(ErrArquivoNaoExiste, ACBrStr(Format(SErroReinfAbrir, [AIniFile])));
+    EhArquivo := StringEhArquivo(AIniFile);
+    if EhArquivo then
+      VerificarArquivoExiste(AIniFile);
 
     ReinfDM.Travar;
     try
-      ReinfDM.ACBrReinf1.Eventos.LoadFromIni(AIniFile);
+      if EhArquivo then
+        ReinfDM.ACBrReinf1.Eventos.LoadFromFile(AIniFile, False)
+      else
+        ReinfDM.ACBrReinf1.Eventos.LoadFromStringINI(AIniFile);
+
       ASalvar:= ReinfDM.ACBrReinf1.Configuracoes.Geral.Salvar;
       AResposta:= '';
 

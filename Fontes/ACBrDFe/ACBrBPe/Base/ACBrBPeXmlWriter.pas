@@ -771,6 +771,7 @@ end;
 function TBPeXmlWriter.Gerar_InfViagem: TACBrXmlNodeArray;
 var
   i: Integer;
+  xmlNode: TACBrXmlNode;
 begin
   Result := nil;
 
@@ -818,12 +819,12 @@ begin
 
     if BPe.infViagem[i].infTravessia.tpVeiculo <> tvNenhum then
     begin
-      Result[i] := FDocument.CreateElement('infTravessia');
+      xmlNode := Result[i].AddChild('infTravessia');
 
-      Result[i].AppendChild(AddNode(tcStr, '#111', 'tpVeiculo', 2, 2, 1,
+      xmlNode.AppendChild(AddNode(tcStr, '#111', 'tpVeiculo', 2, 2, 1,
        tpVeiculoToStr(BPe.infViagem[i].infTravessia.tpVeiculo), DSC_TPVEICULO));
 
-      Result[i].AppendChild(AddNode(tcStr, '#112', 'sitVeiculo', 1, 1, 1,
+      xmlNode.AppendChild(AddNode(tcStr, '#112', 'sitVeiculo', 1, 1, 1,
         SitVeiculoToStr(BPe.infViagem[i].infTravessia.sitVeiculo), DSC_SITVEICULO));
     end;
   end;

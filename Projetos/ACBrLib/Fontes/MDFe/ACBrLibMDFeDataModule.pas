@@ -78,6 +78,9 @@ begin
   LibConfig := TLibMDFeConfig(TACBrLibMDFe(Lib).Config);
   ACBrMDFe1.Configuracoes.Assign(LibConfig.MDFe);
 
+  if NaoEstaVazio(ACBrMDFe1.Configuracoes.RespTec.CSRT) then
+    ACBrMDFe1.Configuracoes.RespTec.CSRT := B64CryptToString(ACBrMDFe1.Configuracoes.RespTec.CSRT, LibConfig.ChaveCrypt);
+
 {$IFDEF Demo}
   GravarLog('Modo DEMO - Forçando ambiente para Homologação', logNormal);
   ACBrMDFe1.Configuracoes.WebServices.Ambiente := taHomologacao;

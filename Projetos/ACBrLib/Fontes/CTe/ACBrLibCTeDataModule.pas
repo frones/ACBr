@@ -76,6 +76,9 @@ begin
   LibConfig := TLibCTeConfig(TACBrLibCTe(Lib).Config);
   ACBrCTe1.Configuracoes.Assign(LibConfig.CTe);
 
+  if NaoEstaVazio(ACBrCTe1.Configuracoes.RespTec.CSRT) then
+    ACBrCTe1.Configuracoes.RespTec.CSRT := B64CryptToString(ACBrCTe1.Configuracoes.RespTec.CSRT, LibConfig.ChaveCrypt);
+
 {$IFDEF Demo}
   GravarLog('Modo DEMO - Forçando ambiente para Homologação', logNormal);
   ACBrCTe1.Configuracoes.WebServices.Ambiente := taHomologacao;

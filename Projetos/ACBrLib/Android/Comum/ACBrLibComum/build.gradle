@@ -33,11 +33,11 @@ dependencies {
     androidTestImplementation libs.espresso.core
 }
 
-def jarFolder = "../libs/jars/";
-def jarName = "ACBrLibComum.jar";
+def jarFolder = "../libs/jars/"
+def jarName = "ACBrLibComum.jar"
 
 tasks.register('deleteJar', Delete) {
-    delete(jarFolder+jarName);
+    delete(jarFolder+jarName)
     //delete(jarFolder);
 }
 

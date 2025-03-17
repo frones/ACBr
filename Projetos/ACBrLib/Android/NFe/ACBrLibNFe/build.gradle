@@ -3,6 +3,15 @@ plugins {
     alias(libs.plugins.android.library)
 }
 
+def ACBrProjectName = 'NFE'
+def ACBrFolder = System.getenv('ACBR_HOME')
+def ACBrDependenciesFolder = ACBrFolder+ '/DLLs/Android'
+def ACBrLibFolder = ACBrFolder+'/Projetos/ACBrLib'
+def jniLibsFolder = './src/main/jniLibs'
+def jniLibsFolder_arm64 = jniLibsFolder+'/arm64-v8a'
+def jniLibsFolder_armeabi = jniLibsFolder+'/armeabi-v7a'
+def ACBrLibComumJar = new File(ACBrLibFolder+'/Android/Comum/libs/jars/ACBrLibComum.jar')
+
 android {
     namespace 'br.com.acbr.lib.nfe'
     compileSdk 34
@@ -24,7 +33,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
-def ACBrLibComumJar = new File(projectDir, '../../Comum/libs/jars/ACBrLibComum.jar');
 
 dependencies {
     implementation files(ACBrLibComumJar)
@@ -35,3 +43,62 @@ dependencies {
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
 }
+
+tasks.register('copyLibs_arm64', Copy) {
+    def ProjectFromFolder = ACBrLibFolder+'/Fontes/'+ACBrProjectName+'/bin/Android/jniLibs/arm64-v8a'
+
+    from(ProjectFromFolder){
+        include('**/*.so')
+    }
+    from(ACBrDependenciesFolder+'/OpenSSL/openssl-1.1.1d/aarch64-linux-android/Dynamic') {
+        include('**/*.so')
+    }
+    from(ACBrDependenciesFolder+'/LibXML2/libxml2-2.9.10/aarch64-linux-android/Dynamic') {
+        include('**/*.so')
+    }
+    into(jniLibsFolder_arm64)
+
+    doFirst {
+        if (!file(ProjectFromFolder).listFiles()) {
+            throw new GradleException('Sem ACBrLib em: '+ProjectFromFolder)
+        }
+    }
+}
+
+tasks.register('copyLibs_armeabi', Copy) {
+    def ProjectFromFolder = ACBrLibFolder+'/Fontes/'+ACBrProjectName+'/bin/Android/jniLibs/armeabi-v7a'
+
+    from(ProjectFromFolder){
+        include('**/*.so')
+    }
+    from(ACBrDependenciesFolder+'/OpenSSL/openssl-1.1.1d/arm-linux-androideabi/Dynamic') {
+        include('**/*.so')
+    }
+    from(ACBrDependenciesFolder+'/LibXML2/libxml2-2.9.10/arm-linux-androideabi/Dynamic') {
+        include('**/*.so')
+    }
+    into(jniLibsFolder_armeabi)
+
+    doFirst {
+        if (!file(ProjectFromFolder).listFiles()) {
+            throw new GradleException('Sem ACBrLib em: '+ProjectFromFolder)
+        }
+    }
+}
+
+tasks.register('copyLibs') {
+    doFirst {
+        if ((ACBrFolder == null) || (ACBrFolder.isEmpty())) {
+            throw new GradleException('Variável de ambiente: "ACBR_HOME", NAO DEFINIDA' )
+        }
+        println 'Copiando Bibliotecas para pasta: '+jniLibsFolder
+    }
+    dependsOn(copyLibs_arm64, copyLibs_armeabi)
+}
+
+tasks.register('deleteJni', Delete) {
+    delete(jniLibsFolder)
+}
+
+preBuild.dependsOn(copyLibs)
+clean.dependsOn(deleteJni)

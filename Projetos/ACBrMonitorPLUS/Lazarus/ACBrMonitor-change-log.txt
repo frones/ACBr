@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/03/2025
+-- ACBrMonitor1 --
+[*] #TK-6765 Configurado para preencher a última versão do e-Social quando houver um valor inválido no ini.
+  Por: Renato Rubinho
+
 12/03/2025
 -- ACBrMonitorConsts --
 [*] #TK-6745: Altera valor default da versão do e-Social para S01_00_00.

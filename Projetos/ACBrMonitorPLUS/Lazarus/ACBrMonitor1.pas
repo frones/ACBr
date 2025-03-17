@@ -6059,6 +6059,8 @@ begin
       cbVersaoWSBPe.ItemIndex          := cbVersaoWSBPe.Items.IndexOf(VersaoBPe);
       cbVersaoWSGNRE.ItemIndex         := cbVersaoWSGNRE.Items.IndexOf(VersaoGNRe);
       cbVersaoWSeSocial.ItemIndex      := cbVersaoWSeSocial.Items.IndexOf(VersaoeSocial);
+      if cbVersaoWSeSocial.ItemIndex < 0 then
+        cbVersaoWSeSocial.ItemIndex := cbVersaoWSeSocial.Items.Count - 1;
       cbVersaoWsReinf.ItemIndex        := cbVersaoWSReinf.Items.IndexOf(VersaoReinf);
       cbVersaoWSQRCode.ItemIndex       := cbVersaoWSQRCode.Items.IndexOf(VersaoQRCode);
       ckCamposFatObrigatorio.Checked   := CamposFatObrig;
@@ -7345,7 +7347,7 @@ begin
         VersaoMDFe               := cbVersaoWSMDFe.Text;
         VersaoBPe                := cbVersaoWSBPe.Text;
         VersaoGNRe               := cbVersaoWSGNRE.Text;
-        VersaoeSocial            := cbVersaoWSeSocial.Text;
+        VersaoeSocial          := cbVersaoWSeSocial.Text;
         VersaoReinf              := cbVersaoWSReinf.Text;
         VersaoQRCode             := cbVersaoWSQRCode.Text;
         AjustarAut               := cbxAjustarAut.Checked;
@@ -12204,7 +12206,13 @@ begin
     TConfiguracoeseSocial(Configuracoes).Arquivos.IniServicos       := edtArquivoWebServiceseSocial.Text;
     TConfiguracoeseSocial(Configuracoes).Arquivos.PatheSocial       := edtPathNFe.Text;
     TConfiguracoeseSocial(Configuracoes).Arquivos.EmissaoPatheSocial:= cbxEmissaoPathNFe.Checked;
-    TConfiguracoeseSocial(Configuracoes).Geral.VersaoDF             := StrToVersaoeSocialEX(cbVersaoWSeSocial.Text);
+
+    try
+      TConfiguracoeseSocial(Configuracoes).Geral.VersaoDF := StrToVersaoeSocialEX(cbVersaoWSeSocial.Text);
+    except
+      TConfiguracoeseSocial(Configuracoes).Geral.VersaoDF := TVersaoeSocial(High(TVersaoeSocialArrayStrings));
+    end;
+
     TConfiguracoeseSocial(Configuracoes).Geral.TipoEmpregador       := TEmpregador(cbTipoEmpregador.ItemIndex);
     TConfiguracoeseSocial(Configuracoes).Geral.IdEmpregador         := edtIDEmpregador.Text;
     TConfiguracoeseSocial(Configuracoes).Geral.IdTransmissor        := edtIDTransmissor.Text;

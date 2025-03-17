@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/03/2025
+-- Diversos --
+[+] #TK-4956-8: Implementados programas de exemplo em PHP do Reinf ST e MT.
+  Por: Renato Rubinho
+
 13/03/2025
 -- ACBrLibReinfBase --
 [*] #TK-4956-8 Implementado método CriarEnviarReinf para receber o conteúdo do arquivo ini ou o caminho do arquivo

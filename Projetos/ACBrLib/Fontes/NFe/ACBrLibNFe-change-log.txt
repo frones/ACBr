@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/03/2025
+-- ACBrLibNFeDataModule.pas --
+[*] #TK-6752 - Homologação NFe CSRT
+    https://www.projetoacbr.com.br/forum/topic/82309-homologa%C3%A7%C3%A3o-nfe-com-csrt/
+    Implementada função B64CryptToString.
+    Por: Antonio Carlos Junior.
+
 03/03/2025
 -- ACBrLibNFeBase.pas --
 [+] #TK-6678: Criado componente de envio em tempo de execução, envia email atraves dos parametros conforme manual. 

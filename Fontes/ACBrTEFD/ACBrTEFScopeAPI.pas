@@ -3931,6 +3931,8 @@ procedure TACBrTEFScopeAPI.ColetarParametrosScope(const iStatus: Word;
 var
   rColeta: TParam_Coleta;
   ret: LongInt;
+  bandeira: Int64;
+  s: String;
 begin
   // Obtendo informações da Coleta em curso
   FillChar(rColeta, SizeOf(TParam_Coleta), #0);
@@ -3961,8 +3963,13 @@ begin
   end;
 
   // Salva em DadosDaTransacao as informaçoes retornadas na Coleta //;
-  if (Trim(rColetaEx.CodBandeira) <> '') then
-    fDadosDaTransacao.Values[RET_BANDEIRA] := rColetaEx.CodBandeira;
+  bandeira := StrToInt64Def(ArrayOfCharToString(rColetaEx.CodBandeira), 0);
+  if (bandeira > 0) then
+  begin
+    s := IntToStr(bandeira);
+    GravarLog('  coletando Bandeira: '+s);
+    fDadosDaTransacao.Values[RET_BANDEIRA] := s;
+  end;
 end;
 
 procedure TACBrTEFScopeAPI.ExibirMsgColeta(const rColetaEx: TParam_Coleta_Ext;
@@ -4163,8 +4170,6 @@ end;
 
 {
 --- TODO VERIFICAR ---
-- A.V. quando chama ScopenOpen, na segunda vez
-  ocorre quando ControleConexao = True
 - Cancelar uma transação pelo Teclado está retornando o erro RCS_NAO_EXISTE_TRN_SUSPENSA
 - Como fazer Transação de Crédito parcelado pela Administradora ou Lojista
   - Como usar os Serviços Scope, da Pag 340 ?

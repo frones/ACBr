@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/03/2025
+-- ACBrTEFScopeAPI --
+[-] Possível correção, para coleta de Bandeira durante a transação
+    (por: DSA)
+
 13/03/2025
 -- ACBrTEFScopeAPI --
 [-] Correção de Bug de A.V. quando 'ControleConexao' estava ativo

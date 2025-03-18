@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/03/2025
+-- ISSSJP.Provider --
+[*] #TK-6737: Trocado a função XmlToStr para IncluirCDATA no método Recepcionar,
+    visando permitir o envio de um XML de RPS que contenha o caracter & no nome do
+    tomador.
+  Por: Marcos Villatore
+-- IPM.GravarXml --
+[*] #TK-6764: Alteração visando deixar a tag valor_issrf obrigatória tanto para a
+    situação tributária igual a 3 quanto igual a 4.
+  Por: CS Sistemas
 -- Equiplano.LerXml --
 [*] #TK-6736: Possível solução para a leitura correta do XML da NFS-e.
   Por: Italo Giurizzato Junior

@@ -87,8 +87,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:nfse_RecepcionarLoteRpsV3>';
-  Request := Request + '<arg0>' + XmlToStr(ACabecalho) + '</arg0>';
-  Request := Request + '<arg1>' + XmlToStr(AMSG) + '</arg1>';
+  Request := Request + '<arg0>' + IncluirCDATA(ACabecalho) + '</arg0>';
+  Request := Request + '<arg1>' + IncluirCDATA(AMSG) + '</arg1>';
   Request := Request + '</nfse:nfse_RecepcionarLoteRpsV3>';
 
   Result := Executar('RecepcionarLoteRpsV3', Request,

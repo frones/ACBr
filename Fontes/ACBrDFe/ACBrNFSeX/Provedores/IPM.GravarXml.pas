@@ -348,7 +348,7 @@ begin
     Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_desconto_incondicional', 1, 15, 0,
                        NFSe.Servico.ItemServico[I].DescontoIncondicionado, ''));
 
-    if NFSe.Servico.ItemServico[I].SituacaoTributaria = 3 then
+    if NFSe.Servico.ItemServico[I].SituacaoTributaria in [3, 4] then
       Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_issrf', 1, 15, 1,
                           NFSe.Servico.ItemServico[I].ValorISSRetido, DSC_VISS))
     else

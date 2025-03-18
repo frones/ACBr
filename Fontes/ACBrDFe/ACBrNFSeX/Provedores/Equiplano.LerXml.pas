@@ -366,7 +366,7 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
-  if (Pos('nfs', Arquivo) > 0) then
+  if (Pos('<nfse', Arquivo) > 0) then
     tpXML := txmlNFSe
   else
     tpXML := txmlRPS;
@@ -398,12 +398,17 @@ begin
 
   if not Assigned(ANode) then Exit;
 
-  //AuxNode := ANode.Childrens.FindAnyNs('nfse');
-  AuxNode := ANode; //ja esta no node 'nfs'
+  {
+    Quando o XML contem apenas uma nota deve-se ler o grupo <nfse>
+  }
+  AuxNode := ANode.Childrens.FindAnyNs('nfse');
+
+
+//  AuxNode := ANode; //ja esta no node 'nfs'
 
   if AuxNode <> nil then
   begin
-    NFSe.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrNfs'), tcStr);
+    NFSe.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrNfse'), tcStr);
     NFSe.CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
     NFSe.DataEmissao := ObterConteudo(AuxNode.Childrens.FindAnyNs('dtEmissaoNfs'), tcDatHor);
 

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/03/2025
+-- ACBrMonitor1 --
+[*] #TK-6778 Corrigida visualização do Logo png na aba de conta bancária.
+  Por: Renato Rubinho
+
 17/03/2025
 -- ACBrMonitor1 --
 [*] #TK-6765 Configurado para preencher a última versão do e-Social quando houver um valor inválido no ini.

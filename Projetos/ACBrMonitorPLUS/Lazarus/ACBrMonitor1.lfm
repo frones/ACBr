@@ -21932,6 +21932,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               ClientHeight = 489
               ClientWidth = 1113
               Font.Height = -13
+              OnShow = tsContaBancariaShow
               ParentFont = False
               object cbxBOLBanco: TComboBox
                 AnchorSideLeft.Control = lblBOLBanco

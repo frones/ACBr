@@ -1834,6 +1834,7 @@ type
     procedure TreeViewMenuClick(Sender: TObject);
     procedure tsACBrBoletoShow(Sender: TObject);
     procedure tsCadastroShow(Sender: TObject);
+    procedure tsContaBancariaShow(Sender: TObject);
     procedure tsDadosSATContextPopup(Sender: TObject; MousePos: TPoint;
       var Handled: Boolean);
     procedure tsDFeShow(Sender: TObject);
@@ -9440,6 +9441,11 @@ begin
   pgCadastro.ActivePageIndex := 0;
 end;
 
+procedure TFrmACBrMonitor.tsContaBancariaShow(Sender: TObject);
+begin
+  MostraLogoBanco;
+end;
+
 procedure TFrmACBrMonitor.tsDadosSATContextPopup(Sender: TObject;
   MousePos: TPoint; var Handled: Boolean);
 begin
@@ -12848,8 +12854,11 @@ begin
       Banco.TipoCobranca := TACBrTipoCobranca(cbxBOLBanco.ItemIndex);
 
       pnLogoBanco.Caption := '';
-      imgLogoBanco.Picture.LoadFromFile(deBOLDirLogo.Text + PathDelim +
-        IntToStrZero(Banco.Numero, 3)+'.bmp');
+
+      if FileExists(deBOLDirLogo.Text + PathDelim + IntToStrZero(Banco.Numero, 3)+'.bmp') then
+        imgLogoBanco.Picture.LoadFromFile(deBOLDirLogo.Text + PathDelim + IntToStrZero(Banco.Numero, 3)+'.bmp')
+      else
+        imgLogoBanco.Picture.LoadFromFile(deBOLDirLogo.Text + PathDelim + IntToStrZero(Banco.Numero, 3)+'.png');
     except
       pnLogoBanco.Caption := 'Sem logo';
       imgLogoBanco.Picture.Clear;

@@ -164,7 +164,7 @@ type
       OutputType: TACBrOpenSSLStrType = sttHexa; Sign: Boolean = False): AnsiString;
 
    function HMACFromString(const BinaryString: AnsiString; const aKey: AnsiString;
-      const aDigest: TACBrOpenSSLAlgorithm): AnsiString;
+      const aDigest: TACBrOpenSSLAlgorithm; OutputType: TACBrOpenSSLStrType = sttHexa): AnsiString;
    function HMACFromFile(const aFile: String; const aKey: AnsiString;
       const aDigest: TACBrOpenSSLAlgorithm): AnsiString;
 
@@ -961,8 +961,8 @@ begin
   end ;
 end;
 
-function TACBrOpenSSLUtils.HMACFromString(const BinaryString: AnsiString;
-  const aKey: AnsiString; const aDigest: TACBrOpenSSLAlgorithm): AnsiString;
+function TACBrOpenSSLUtils.HMACFromString(const BinaryString: AnsiString; const aKey: AnsiString;
+  const aDigest: TACBrOpenSSLAlgorithm; OutputType: TACBrOpenSSLStrType): AnsiString;
 var
   ipad, opad, s, k: AnsiString;
   n: Integer;
@@ -981,7 +981,9 @@ begin
   end;
 
   s := CalcHashFromString(ipad + BinaryString, aDigest, sttBinary);
-  Result := LowerCase(CalcHashFromString(opad + s, aDigest, sttHexa));
+  Result := CalcHashFromString(opad + s, aDigest, OutputType);
+  if (OutputType = sttHexa) then
+    Result := LowerCase(Result);
 end;
 
 function TACBrOpenSSLUtils.HMACFromFile(const aFile: String;

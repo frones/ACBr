@@ -297,7 +297,9 @@ begin
         PadRight( OnlyNumber(Sacado.CEP) , 8, ' ' )                 +  // 327 a 334
         PadRight( Sacado.Cidade, 15, ' ')                           +
         PadRight( Sacado.UF, 2 )                                    +  // 335 a 351
-        PadRight( Sacado.NomeSacado, 30, ' ')                       +  // 352 a 381
+        PadRight( IfThen(Sacado.SacadoAvalista.NomeAvalista <>'',
+                         Sacado.SacadoAvalista.NomeAvalista,
+                         Cedente.Nome), 30, ' ')                    +  // 352 a 381
         Space(4)                                                    +  // 382 a 385
         Space(6)                                                    +  // 386 a 391
         Protesto + '0'                                              +  // 392 a 394

@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/03/2025
+-- ACBrTEFDestaxaComum --
+[-] Ajuste para correção de erro por resposta muito rápida do componente.
+    por: Elias César
+
 17/03/2025
 -- ACBrTEFScopeAPI --
 [-] Possível correção, para coleta de Bandeira durante a transação

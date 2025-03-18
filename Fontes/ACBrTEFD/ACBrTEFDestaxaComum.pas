@@ -1281,6 +1281,7 @@ begin
   TX := aComando;
   fDestaxaClient.GravarLog('TACBrTEFDestaxaSocket.Transmitir - TX: ' + sLineBreak + TX);
   SendString(TX);
+  Sleep(100);
   Erro := LastError;
   fDestaxaClient.GravarLog(' - Transmitido ' + GetErrorDesc(Erro));
   if NaoEstaZerado(Erro) then

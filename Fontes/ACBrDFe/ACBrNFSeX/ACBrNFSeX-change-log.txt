@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/03/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6770: A cidade de Garanhuns/PE trocou de versão o provedor continua o mesmo.
+  Por: Caio Motta
+[*] #TK-6766: A cidade de Presidente Nereu/SC trocou de provedor, agora é IPM
+    versão 1.01
+  Por: Lucas atz
+
 17/03/2025
 -- ACBrNFSeXServicos --
 [*] #TK-6757: Adiciona parâmetro extra eletron=1 para cidade de Indaial/SC.

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/03/2025
+-- ACBrMDFeManifestos --
+[-] #TK-6767: Possível solução para a leitura do XML.
+   Por: Italo Giurizzato Junior
+
 04/02/2025
 -- ACBrMDFe.RetEnvEvento --
 [-] Não estava lendo o grupo condutor do evento de Inclusão de condutor ao ler um XML.

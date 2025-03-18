@@ -2583,6 +2583,9 @@ begin
     P := pos('</mdfeProc>', XMLStr);
 
     if P <= 0 then
+      P := pos('</MDFeProc>', XMLStr);
+
+    if P <= 0 then
       P := pos('</procMDFe>', XMLStr);  // MDFe obtido pelo Portal da Receita
 
     if P > 0 then

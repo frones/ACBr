@@ -242,6 +242,16 @@ begin
               end;
             end;
 
+            ARetornoWS.DadosRet.TituloRet.ValorAbatimento := LJSonObject.AsCurrency['valorAbatimento'];
+            ARetornoWS.DadosRet.TituloRet.ValorDesconto   := LJSonObject.AsCurrency['valorPrimeiroDesconto'];
+            ARetornoWS.DadosRet.TituloRet.DataDesconto    := DateBancoobToDateTime(LJSonObject.AsString['dataPrimeiroDesconto']);
+
+            ARetornoWS.DadosRet.TituloRet.ValorDesconto2  := LJSonObject.AsCurrency['valorSegundoDesconto'];
+            ARetornoWS.DadosRet.TituloRet.DataDesconto2   := DateBancoobToDateTime(LJSonObject.AsString['dataSegundoDesconto']);
+
+            ARetornoWS.DadosRet.TituloRet.ValorDesconto3  := LJSonObject.AsCurrency['valorTerceiroDesconto'];
+            ARetornoWS.DadosRet.TituloRet.DataDesconto3   := DateBancoobToDateTime(LJSonObject.AsString['dataTerceiroDesconto']);
+
             ARetornoWS.DadosRet.TituloRet.CodBarras       := ARetornoWS.DadosRet.IDBoleto.CodBarras;
             ARetornoWS.DadosRet.TituloRet.LinhaDig        := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
 

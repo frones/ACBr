@@ -77,6 +77,7 @@ type
     procedure GerarJuros(AJson: TACBrJSONObject);
     procedure GerarMulta(AJson: TACBrJSONObject);
     procedure GerarDesconto(AJson: TACBrJSONObject);
+    procedure GerarAbatimento(AJson: TACBrJSONObject);
     procedure AlteraDataVencimento(AJson: TACBrJSONObject);
     procedure AlteracaoAtribuiDesconto(AJson: TACBrJSONObject);
     procedure AlterarProtesto(AJson: TACBrJSONObject);
@@ -457,6 +458,7 @@ begin
     end;
 
     GerarDesconto(LJson);
+    GerarAbatimento(LJson);
     GerarJuros(LJson);
     GerarMulta(LJson);
     GerarPagador(LJson);
@@ -509,7 +511,7 @@ begin
         AlteraAtribuiJuros(LJson);
       toRemessaAlterarMulta:
         AtribuirMulta(LJson);
-      toRemessaAlterarValorAbatimento:
+      toRemessaAlterarValorAbatimento, toRemessaCancelarAbatimento:
         AtribuirAbatimento(LJson);
       ToRemessaPedidoNegativacao:
         FMetodoHTTP := HtPOST;
@@ -575,6 +577,15 @@ begin
   if NaoEstaVazio(ATitulo.Instrucao5) then
     JsonArrayInstrucao.AddElement(ATitulo.Instrucao5);
   AJson.AddPair('mensagensInstrucao', JsonArrayInstrucao);
+end;
+
+procedure TBoletoW_Sicoob_V3.GerarAbatimento(AJson: TACBrJSONObject);
+begin
+  if not Assigned(ATitulo) or not Assigned(AJson) then
+    Exit;
+
+  if ATitulo.ValorAbatimento > 0 then
+    AJson.AddPair('valorAbatimento', aTitulo.ValorAbatimento);
 end;
 
 procedure TBoletoW_Sicoob_V3.GerarBenificiarioFinal(AJson: TACBrJSONObject);
@@ -768,9 +779,6 @@ var
   LJsonAbatimento : TACBrJSONObject;
 begin
   if not Assigned(ATitulo) or not Assigned(AJson) then
-    Exit;
-
-  if (ATitulo.ValorAbatimento = 0) then
     Exit;
 
   LJsonAbatimento := TACBrJSONObject.Create;

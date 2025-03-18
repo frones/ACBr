@@ -47,6 +47,8 @@ Símbolo : Significado
 [*] #TK-6736: Possível solução para a leitura correta do XML da NFS-e.
   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
+[*] #TK-6773: A cidade de CAbo Frio/RJ trocou de provedor, agora é ISSDigital versão 2.00
+  Por: João Antônio 
 [*] #TK-6770: A cidade de Garanhuns/PE trocou de versão o provedor continua o mesmo.
   Por: Caio Motta
 [*] #TK-6766: A cidade de Presidente Nereu/SC trocou de provedor, agora é IPM

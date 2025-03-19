@@ -1255,8 +1255,8 @@ type
   TLibPIXCDMateraAlias = class(TACBrLibRespostaBase)
     private
       fAlias_name: String;
-      fAlias_type: TMateraAliasType;
-      fAlias_status: TMateraAliasStatus;
+      fAlias_type: String;
+      fAlias_status: String;
 
     public
       procedure Clear;
@@ -1264,8 +1264,8 @@ type
 
     published
       property Alias_name: String read fAlias_name write fAlias_name;
-      property Alias_type: TMateraAliasType read fAlias_type write fAlias_type;
-      property Alias_status: TMateraAliasStatus read fAlias_status write fAlias_status;
+      property Alias_type: String read fAlias_type write fAlias_type;
+      property Alias_status: String read fAlias_status write fAlias_status;
   end;
 
   { TLibPIXCDExcluirChavePIXResposta }
@@ -2024,15 +2024,15 @@ end;
 procedure TLibPIXCDMateraAlias.Clear;
 begin
   fAlias_name := EmptyStr;
-  fAlias_type := malNone;
-  fAlias_status := mastNone;
+  fAlias_type := EmptyStr;
+  fAlias_status := EmptyStr;
 end;
 
 procedure TLibPIXCDMateraAlias.Processar(const MateraAlias: TMateraAlias);
 begin
   Alias_name := MateraAlias.name;
-  Alias_type := MateraAlias.type_;
-  Alias_status := MateraAlias.status;
+  Alias_type := MateraAliasTypeToString(MateraAlias.type_);
+  Alias_status := MateraAliasStatusToString(MateraAlias.status);
 end;
 
 { TLibPIXCDConsultarTransacaoResposta }

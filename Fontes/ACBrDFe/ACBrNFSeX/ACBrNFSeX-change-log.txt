@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/03/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6771: Incluída  cidade de Itamaraju/BA, provedor é o WebISS versão 2.02
+  Por: Teresa 
+
 18/03/2025
 -- ISSSJP.Provider --
 [*] #TK-6737: Trocado a função XmlToStr para IncluirCDATA no método Recepcionar,

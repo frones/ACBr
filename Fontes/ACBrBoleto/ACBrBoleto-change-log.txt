@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/03/2025
+-- ACBrBoletoFCFortesFr.pas --
+[*] TK-6573 - Corrigida codificação na impressão do nome da Softwarehouse
+  https://www.projetoacbr.com.br/forum/topic/81669-lib-configimpressaosoftwarehouse-n%C3%A3o-esta-aceitando-caracteres-de-acentua%C3%A7%C3%A3o/
+  Por:  Renato Rubinho
+
 13/02/2025
 -- ACBrBoleto.pas --
 [*] TK-6565 - Ajustado exception para ser utilizado da classe de boleto

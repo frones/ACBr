@@ -1537,8 +1537,8 @@ procedure TACBrBoletoFCFortesFr.BoletoCarneBeforePrint(Sender: TObject;
 begin
 
    fIndice := 0;
-   txtSwHouseReciboTopo.Caption := ACBrStr(BoletoFC.SoftwareHouse) ;
-   txtSwHouseCarne.Caption := ACBrStr(BoletoFC.SoftwareHouse) ;
+   txtSwHouseReciboTopo.Caption := BoletoFC.SoftwareHouse;
+   txtSwHouseCarne.Caption := BoletoFC.SoftwareHouse;
    AjustarMargem(BoletoCarne,BoletoFC);
 
 end;
@@ -1576,7 +1576,7 @@ procedure TACBrBoletoFCFortesFr.LayoutBoletoBeforePrint(Sender: TObject;
    var PrintIt: boolean);
 begin
    fIndice := 0 ;
-   txtSwHousePadrao.Caption := ACBrStr(BoletoFC.SoftwareHouse) ;
+   txtSwHousePadrao.Caption := BoletoFC.SoftwareHouse;
    AjustarMargem(LayoutBoleto,BoletoFC);
 end;
 
@@ -1631,7 +1631,7 @@ procedure TACBrBoletoFCFortesFr.LayoutFaturaDetalBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
   fIndice := 0 ;
-  txtSwHouseFaturaDetail.Caption := ACBrStr(BoletoFC.SoftwareHouse) ;
+  txtSwHouseFaturaDetail.Caption := BoletoFC.SoftwareHouse;
   //txtSwHouseDet.Caption := BoletoFC.SoftwareHouse ;
   AjustarMargem(LayoutFaturaDetal,BoletoFC);
 end;

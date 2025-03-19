@@ -2242,6 +2242,13 @@ begin
                                        '" não é um arquivo de retorno do(a) '+ UpperCase(Nome)));
 
    rCedente       := Trim(Copy(ARetorno[0],73,30));
+   if ACBrBanco.ACBrBoleto.LeCedenteRetorno then
+   begin
+     if (StrToIntDef(copy(ARetorno[0], 18, 1), 0) = 1) then
+       ACBrBanco.ACBrBoleto.Cedente.TipoInscricao := pFisica
+     else
+       ACBrBanco.ACBrBoleto.Cedente.TipoInscricao := pJuridica;
+   end;
 
    if ACBrBanco.ACBrBoleto.Cedente.TipoInscricao = pJuridica then
     rCNPJCPF       := Copy(ARetorno[0],19,14)

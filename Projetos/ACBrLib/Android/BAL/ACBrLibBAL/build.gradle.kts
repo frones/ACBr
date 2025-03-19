@@ -1,8 +1,13 @@
+import com.android.build.gradle.internal.tasks.factory.dependsOn
+
+
 plugins {
     alias(libs.plugins.android.library)
 }
 
 android {
+
+
     namespace = "br.com.acbr.acbrlibbal"
     compileSdk = 34
 
@@ -28,10 +33,12 @@ android {
     }
 }
 
-val ACBrLibComumJar = File("../../Comum/libs/jars/ACBrLibComum.jar")
 
+
+
+val ACBrComumJar = rootProject.extra["ACBrLibComumJar"] as String
 dependencies {
-    implementation(files(ACBrLibComumJar))
+    implementation(files(ACBrComumJar) )
     implementation("net.java.dev.jna:jna:5.14.0@aar")
     implementation(libs.appcompat)
     implementation(libs.material)
@@ -39,3 +46,16 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
+
+
+
+apply {
+    from("../../Comum/comum.gradle.kts")
+}
+
+
+
+
+
+
+

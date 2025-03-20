@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/03/2025
+-- Diversos --
+[*] #TK-6777: Implementando a versão 2.04 do layout da ABRASF no provedor fintelISS.
+  Por: Marciano Bandeira
 -- SmarAPD.LerXml --
 [*] #TK-6782: Ajuste para que a leitura do XML da NFS-e seja feita com sucesso
    quando o mesmo esta contido em um lote ou não.

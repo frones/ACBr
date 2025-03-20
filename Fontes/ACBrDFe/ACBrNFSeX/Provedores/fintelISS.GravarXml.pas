@@ -65,6 +65,10 @@ type
     function GerarValoresServico: TACBrXmlNode; override;
   end;
 
+  TNFSeW_fintelISS204 = class(TNFSeW_ABRASFv2)
+    procedure Configuracao; override;
+  end;
+
 implementation
 
 uses
@@ -247,6 +251,19 @@ begin
   Result[0].AppendChild(AddNode(tcDe2, '#28', 'DescontoCondicionado  ', 1, 15, NrOcorrDescCond,
               NFSe.Servico.ItemServico[i].DescontoCondicionado, DSC_VDESCCOND));
   }
+end;
+
+{ TNFSeW_fintelISS204 }
+
+procedure TNFSeW_fintelISS204.Configuracao;
+begin
+  inherited Configuracao;
+
+  FormatoEmissao := tcDat;
+  FormatoCompetencia := tcDat;
+  TagTomador := 'TomadorServico';
+  GerarIDDeclaracao := True;
+  GerarIDRps := False;
 end;
 
 end.

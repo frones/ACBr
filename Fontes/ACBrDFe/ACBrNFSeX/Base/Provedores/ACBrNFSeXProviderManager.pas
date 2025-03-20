@@ -344,6 +344,7 @@ begin
           case Versao of
             ve200: Result := TACBrNFSeProviderfintelISS200.Create(ACBrNFSe);
             ve202: Result := TACBrNFSeProviderfintelISS202.Create(ACBrNFSe);
+            ve204: Result := TACBrNFSeProviderfintelISS204.Create(ACBrNFSe);
           else
             Result := nil;
           end;

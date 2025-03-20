@@ -1554,7 +1554,7 @@ type
     procedure TratarErroScope(AErrorCode: LongInt);
     procedure TratarErroPinPadScope(AErrorCode: LongInt);
 
-    procedure AbrirComunicacaoScope;
+    procedure AbrirComunicacaoScope(VerificaSessaoAberta: Boolean = True);
     procedure FecharComunicacaoScope;
 
     procedure VerificarCarregada;
@@ -1663,7 +1663,8 @@ type
 
     procedure AbrirSessaoTEF;
     procedure FecharSessaoTEF; overload;
-    procedure FecharSessaoTEF(Confirmar: Boolean; out TransacaoFoiDesfeita: Boolean); overload;
+    procedure FecharSessaoTEF(Confirmar: Boolean; out TransacaoFoiDesfeita: Boolean;
+      VerificaSessaoAberta: Boolean = True); overload;
 
     function IniciarTransacao(Operacao: TACBrTEFScopeOperacao;
       const Param1: String = ''; const Param2: String = '';
@@ -1782,14 +1783,12 @@ begin
 end;
 
 procedure TACBrTEFScopeAPI.DesInicializar;
-var
-  b: Boolean;
 begin
   if not fInicializada then
     Exit;
 
   GravarLog('TACBrTEFScopeAPI.DesInicializar');
-  FecharSessaoTEF(True, b);
+  FecharSessaoTEF;
   FecharComunicacaoScope;
   FecharPinPad;
 
@@ -2797,7 +2796,7 @@ begin
     DoException(MsgErro);
 end;
 
-procedure TACBrTEFScopeAPI.AbrirComunicacaoScope;
+procedure TACBrTEFScopeAPI.AbrirComunicacaoScope(VerificaSessaoAberta: Boolean);
 var
   ret: LongInt;
   sEmpresa, sFilial, sPDV, sEnderecoIP, sPorta: String;
@@ -2825,7 +2824,8 @@ begin
   // ExibirMensagem(Format(sMsgConctadoAoServidor, [sEnderecoIP+':'+sPorta]));
 
   ConfigurarColeta;
-  VerificarSessaoTEFAnterior;
+  if VerificaSessaoAberta then
+    VerificarSessaoTEFAnterior;
 end;
 
 procedure TACBrTEFScopeAPI.FecharComunicacaoScope;
@@ -2891,14 +2891,16 @@ begin
 end;
 
 procedure TACBrTEFScopeAPI.FecharSessaoTEF(Confirmar: Boolean; out
-  TransacaoFoiDesfeita: Boolean);
+  TransacaoFoiDesfeita: Boolean; VerificaSessaoAberta: Boolean);
 var
   Acao, DesfezTEF: Byte;
   ret: LongInt;
 begin
   TransacaoFoiDesfeita := False;
-  if not fSessaoAberta then
+  if VerificaSessaoAberta and (not fSessaoAberta) then
     Exit;
+
+  AbrirComunicacaoScope(VerificaSessaoAberta);
 
   if Confirmar then
     Acao := ACAO_FECHA_CONFIRMA_TEF
@@ -2913,6 +2915,9 @@ begin
     TratarErroScope(ret);
 
   TransacaoFoiDesfeita := (DesfezTEF = 1);
+  if TransacaoFoiDesfeita then
+    GravarLog('  ATENÇÃO: A Ultima Transação foi desfeita');
+
   fSessaoAberta := False;
   VerificarSeMantemConexaoScope;
 end;

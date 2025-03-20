@@ -952,7 +952,7 @@ begin
   //i := fpACBrTEFAPI.RespostasTEF.AcharTransacao(Rede, NSU, CodigoFinalizacao);
 
   Confirmar := (AStatus in [tefstsSucessoAutomatico, tefstsSucessoManual]);
-  fTEFScopeAPI.FecharSessaoTEF(Confirmar, TransacaoFoiDesfeita);
+  fTEFScopeAPI.FecharSessaoTEF(Confirmar, TransacaoFoiDesfeita, False);
   if TransacaoFoiDesfeita then
     TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem(ACBrStr(sErrUltTransDesfeita), telaOperador, 0);
 end;

@@ -50,6 +50,12 @@ Símbolo : Significado
 -- ACBrTEFScopeAPI --
 [-] Correção no método 'AssignColetaToColetaEx', para Delphi Unicode
     (por: DSA)
+-- ACBrTEFAPIScope, ACBrTEFScopeAPI --
+[-] Correção no método 'TACBrTEFAPIClassScope.FinalizarTransacao', para
+    conseguir Finalizar Transaçoes (sessões), quando estiver inicializando e
+    precisar confirmar/desfazer Transações pendentes
+    https://www.projetoacbr.com.br/forum/topic/82433-tef-scope-problema-com-desfazimento-por-queda-de-energia/
+    (por: DSA)
 
 18/03/2025
 -- ACBrTEFDestaxaComum --

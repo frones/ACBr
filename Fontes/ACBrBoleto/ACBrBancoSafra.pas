@@ -881,6 +881,7 @@ var
   wLinha, tipoInscricao, aAgencia, aConta: String;
   Ocorrencia, aEspecie, aAceite, aInstrucao2: String;
   aTipoSacado, sDataDesconto:String;
+  LDiasBaixa, LTipoDesconto1 : String;
 begin
   with ACBrTitulo do
   begin
@@ -946,6 +947,19 @@ begin
       sDataDesconto := '000000'
     else
       sDataDesconto := FormatDateTime('ddmmyy', DataDesconto);
+    if DataBaixa > Vencimento then
+      LDiasBaixa := IntToStr(trunc(DataBaixa) - trunc(Vencimento))
+    else
+      LDiasBaixa := '000';
+
+    case TipoDesconto of
+      tdValorFixoAteDataInformada             : LTipoDesconto1 := '1'; //DESCONTO EM VALOR (R$)
+      tdPercentualAteDataInformada            : LTipoDesconto1 := '2'; //DESCONTO EM PERCENTUAL (%)
+      tdValorAntecipacaoDiaCorrido            : LTipoDesconto1 := '3'; //DESCONTO EM VALOR POR ANTECIPAÇÃO DIA CORRIDO (R$)
+      tdPercentualSobreValorNominalDiaCorrido : LTipoDesconto1 := '5'; //DESCONTO EM PERCENTUAL POR ANTECIPAÇÃO DIA CORRIDO (%)
+      else
+        LTipoDesconto1 := '0'; //SEM DESCONTO
+    end;
 
     wLinha := '1'                                                                            + //   1 a   1 - Identificação do Registro de Transação
               tipoInscricao                                                                  + //   2 a   3 - Tipo de Inscrição da Empresa
@@ -998,7 +1012,9 @@ begin
               PadRight(Sacado.Cidade, 15)                                                    + // 335 a 349 - Cidade do Sacado
               PadRight(Sacado.UF, 2)                                                         + // 350 a 351 - UF do Sacado
               PadRight(Sacado.SacadoAvalista.NomeAvalista, 30)                               + // 352 a 381 - Nome do Sacador Avalista / Mensagem específica vide nota 6.1.9 conforme manual do banco
-              Space(7)                                                                       + // 382 a 388 - "Brancos"
+              PadLeft(LDiasBaixa,3, '0')                                                     + // 382 a 384 - Quantidade de Dias para Baixa
+              Space(3)                                                                       + // 385 a 387 - "Brancos"
+              PadLeft(LTipoDesconto1,1,'0')                                                  + // 388 a 388 - Tipo de Desconto 1
               '422'                                                                          + // 389 a 391 - Banco Emitente do Boleto
               IntToStrZero(FNumeroRemessa, 3)                                                + // 392 a 394 - Numero Seqüencial Geração Arquivo Remessa
               IntToStrZero(ARemessa.Count + 1, 6);                                             // 395 a 400 - Número Sequencial De Registro De Arquivo

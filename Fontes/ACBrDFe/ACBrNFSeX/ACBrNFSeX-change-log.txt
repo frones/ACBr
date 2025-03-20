@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/03/2025
+-- SmarAPD.LerXml --
+[*] #TK-6782: Ajuste para que a leitura do XML da NFS-e seja feita com sucesso
+   quando o mesmo esta contido em um lote ou não.
+  Por: João Antônio/Italo Giurizzato Junior
+
 19/03/2025
 -- ACBrNFSeXServicos --
 [*] #TK-6771: Incluída  cidade de Itamaraju/BA, provedor é o WebISS versão 2.02

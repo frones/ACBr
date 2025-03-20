@@ -273,7 +273,12 @@ begin
 
   if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('NewDataSet');
+  AuxNode := ANode.Childrens.FindAnyNs('nfdok');
+
+  if AuxNode <> nil then
+    AuxNode := AuxNode.Childrens.FindAnyNs('NewDataSet')
+  else
+    AuxNode := ANode.Childrens.FindAnyNs('NewDataSet');
 
   if AuxNode <> nil then
     AuxNode := AuxNode.Childrens.FindAnyNs('NOTA_FISCAL');

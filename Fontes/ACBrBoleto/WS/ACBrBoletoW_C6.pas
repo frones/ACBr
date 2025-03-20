@@ -335,7 +335,7 @@ begin
       end;
     toRemessaAlterarDesconto :
       begin
-        if (ATitulo.ValorDesconto > 0) or (ATitulo.ValorDesconto > 0) or (ATitulo.ValorDesconto > 0) then
+        if (ATitulo.ValorDesconto > 0) or (ATitulo.ValorDesconto2 > 0) or (ATitulo.ValorDesconto3 > 0) then
         begin
           LJson.AddPair('discount',
             TACBrJSONObject.Create

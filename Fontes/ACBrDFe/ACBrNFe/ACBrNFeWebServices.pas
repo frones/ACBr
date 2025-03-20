@@ -2642,14 +2642,18 @@ end;
 
 function TNFeInutilizacao.GerarPathPorCNPJ: String;
 var
-  CNPJ_Temp: String;
+  CNPJ_Temp, Modelo_Temp: String;
+  Ok: Boolean;
 begin
   if FPConfiguracoesNFe.Arquivos.SepararPorCNPJ then
     CNPJ_Temp := FCNPJ
   else
     CNPJ_Temp := '';
 
-  Result := FPConfiguracoesNFe.Arquivos.GetPathInu(CNPJ_Temp);
+  Modelo_Temp := IntToStr(FModelo);
+  Modelo_Temp := ModeloDFToPrefixo(StrToModeloDF(Ok, Modelo_Temp));
+
+  Result := FPConfiguracoesNFe.Arquivos.GetPathInu(CNPJ_Temp, '', Modelo_Temp);
 end;
 
 procedure TNFeInutilizacao.DefinirURL;

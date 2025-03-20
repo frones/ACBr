@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/03/2025
+-- ACBrNFeConfiguracoes, ACBrNFeWebServices --
+[*] #TK-6730: Ajuste visando que a rotina que define o caminho onde será salvo o XML de Inutilização considere o Modelo passado no comando.
+  Por: Diego Folieni 
+
 08/03/2025
 -- ACBrNFe.Classes/ACBrNFe.XmlReader/ACBrNFe.XmlWriter --
 [*] #TK-5816: Ajustes visando atender a Reforma Tributária.

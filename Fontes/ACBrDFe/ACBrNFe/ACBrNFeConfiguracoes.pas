@@ -102,7 +102,7 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPathInu(const CNPJ: string = ''; const IE: String = ''): String;
+    function GetPathInu(const CNPJ: string = ''; const IE: String = ''; const AModelo: String = ''): String;
     function GetPathNFe(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''; Modelo: Integer = 0): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
   published
@@ -358,9 +358,9 @@ begin
   Result := Dir;
 end;
 
-function TArquivosConfNFe.GetPathInu(const CNPJ, IE: String): String;
+function TArquivosConfNFe.GetPathInu(const CNPJ: string = ''; const IE: String = ''; const AModelo: String = ''): String;
 begin
-  Result := GetPath(FPathInu, 'Inu', CNPJ, IE);
+  Result := GetPath(FPathInu, 'Inu', CNPJ, IE, 0, AModelo);
 end;
 
 function TArquivosConfNFe.GetPathNFe(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''; Modelo: Integer = 0): String;

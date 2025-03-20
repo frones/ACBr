@@ -104,6 +104,8 @@ public final class ACBrPIXCD extends ACBrLibBase {
         int PIXCD_RevisarCobranca(Pointer libHandler, String AInfCobVRevisada, String ATxId, ByteBuffer buffer, IntByReference bufferSize);
         
         int PIXCD_CancelarCobranca(Pointer libHandler, String ATxId, ByteBuffer buffer, IntByReference bufferSize);
+        
+        int PIXCD_OpenSSLInfo(ByteBuffer buffer, IntByReference bufferSize);
     }
 
     public ACBrPIXCD() throws Exception {
@@ -341,5 +343,15 @@ public final class ACBrPIXCD extends ACBrLibBase {
         int ret = ACBrPIXCDLib.INSTANCE.PIXCD_CancelarCobranca(getHandle(), toUTF8(ATxId), buffer, bufferLen);
         checkResult(ret);
         return processResult(buffer, bufferLen);
+    }
+    
+        public String OpenSSLInfo() throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = ACBrPIXCDLib.INSTANCE.PIXCD_OpenSSLInfo(buffer, bufferLen);
+        checkResult(ret);
+
+        return fromUTF8(buffer, bufferLen.getValue());
     }
 }

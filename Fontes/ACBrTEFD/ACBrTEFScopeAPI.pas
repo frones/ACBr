@@ -3963,7 +3963,7 @@ begin
   end;
 
   // Salva em DadosDaTransacao as informaçoes retornadas na Coleta //;
-  bandeira := StrToInt64Def(ArrayOfCharToString(rColetaEx.CodBandeira), 0);
+  bandeira := StrToInt64Def(Trim(String(rColetaEx.CodBandeira)), 0);
   if (bandeira > 0) then
   begin
     s := IntToStr(bandeira);
@@ -3989,7 +3989,7 @@ end;
 procedure TACBrTEFScopeAPI.AssignColetaToColetaEx(const rColeta: TParam_Coleta;
   var rColetaEx: TParam_Coleta_Ext);
 var
-  s: String;
+  s: AnsiString;
 begin
   FillChar(rColetaEx, SizeOf(TParam_Coleta_Ext), #0);
   rColetaEx.FormatoDado := rColeta.FormatoDado;

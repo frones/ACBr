@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/03/2025
+-- ACBrTEFScopeAPI --
+[-] Correção no método 'AssignColetaToColetaEx', para Delphi Unicode
+    (por: DSA)
+
 18/03/2025
 -- ACBrTEFDestaxaComum --
 [-] Ajuste para correção de erro por resposta muito rápida do componente.

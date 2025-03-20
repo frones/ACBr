@@ -251,5 +251,3 @@ public abstract class ACBrLibBase {
     abstract protected int LIB_Versao(Pointer libHandle,ByteBuffer sVersao, IntByReference esTamanaho);
     abstract protected int LIB_OpenSSLInfo(Pointer libHandle,ByteBuffer sOpenSslInfo, IntByReference esTamanho);
 }
-
-

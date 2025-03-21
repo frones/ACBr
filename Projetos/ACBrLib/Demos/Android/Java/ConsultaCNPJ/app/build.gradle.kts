@@ -43,6 +43,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation(files("./libs/ACBrLibConsultaCNPJ-debug.aar"))
+    implementation(files("./libs/ACBrLibConsultaCNPJ-release.aar"))
     implementation("net.java.dev.jna:jna:5.14.0@aar")
 }

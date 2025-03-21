@@ -55,7 +55,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation(files("./libs/ACBrLibPIXCD-debug.aar"))
+    implementation(files("./libs/ACBrLibPIXCD-release.aar"))
     implementation("net.java.dev.jna:jna:5.14.0@aar")
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)

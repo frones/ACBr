@@ -42,7 +42,7 @@ android {
         }
     }
     dependencies {
-        implementation(files('./libs/ACBrLibBAL-debug.aar'))
+        implementation(files('./libs/ACBrLibBAL-release.aar'))
         implementation 'net.java.dev.jna:jna:5.14.0@aar'
 
     }

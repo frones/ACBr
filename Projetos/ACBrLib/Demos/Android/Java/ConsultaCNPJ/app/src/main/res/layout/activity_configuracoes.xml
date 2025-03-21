@@ -28,7 +28,6 @@
             android:id="@+id/btnAbrirConfigConsultaCNPJ"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onClickButton"
             android:text="Abrir Configurações ACBrLibConsultaCNPJ" />
     </LinearLayout>
 

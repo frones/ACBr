@@ -2213,7 +2213,7 @@ begin
     sCNPJ       := SeparaDados(aEvento, 'CNPJ');
     sPathEvento := PathWithDelim(FPConfiguracoesNFe.Arquivos.GetPathEvento(TipoEvento, sCNPJ));
 
-    if (aProcEvento <> '') then
+    if FPConfiguracoesNFe.Arquivos.SalvarEvento and (aProcEvento <> '') then
       FPDFeOwner.Gravar( aIDEvento + '-procEventoNFe.xml', aProcEvento, sPathEvento);
   end;
 end;
@@ -2554,7 +2554,7 @@ begin
       end
       else
       begin
-        if ExtrairEventos and FPConfiguracoesNFe.Arquivos.Salvar and
+        if ExtrairEventos and FPConfiguracoesNFe.Arquivos.SalvarEvento and
            (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoNFe'))) then
         begin
           Inicio := Pos('<procEventoNFe', FPRetWS);
@@ -3582,7 +3582,7 @@ begin
                        Texto +
                      '</procEventoNFe>';
 
-            if FPConfiguracoesNFe.Arquivos.Salvar then
+            if FPConfiguracoesNFe.Arquivos.SalvarEvento then
             begin
               NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) + '-procEventoNFe.xml';
               PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ, FEvento.Evento.Items[I].InfEvento.detEvento.IE));

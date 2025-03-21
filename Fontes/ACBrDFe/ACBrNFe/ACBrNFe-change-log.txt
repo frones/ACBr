@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/03/2025
+-- ACBrNFeWebServices --
+[*] #TK-6740: Alterado a condição que determina se o XML do evento deve ser salvo em disco
+    ou não, antes checava a propriedade de configuração Salvar, agora checa a propriedade
+    SalvarEvento
+   Por: Italo Giurizzato Junior
+
 20/03/2025
 -- ACBrNFeConfiguracoes, ACBrNFeWebServices --
 [*] #TK-6730: Ajuste visando que a rotina que define o caminho onde será salvo o XML de Inutilização considere o Modelo passado no comando.

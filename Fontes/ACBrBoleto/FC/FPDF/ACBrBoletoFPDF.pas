@@ -622,11 +622,10 @@ begin
 
   FPDF.Cell(190 - LReducaoCanhoto - (LReducaoCanhoto/2), LAlturaPadraoBaixo, AUTENTICACAO_MECANICA + ' - ' + FICHA_COMPENSACAO, '', 1, 'R');
 
-  if ACanhoto then
-    FPDF.Cell(LReducaoCanhoto + (LReducaoCanhoto / 2), LAlturaPadraoBaixo, '', '', 0, 'L');
+  FPDF.CodeI25(FCodigoBarras, FPDF.GetX + LReducaoCanhoto + (LReducaoCanhoto / 2), FPDF.GetY, 11, StrToFloat(IfThen(ACanhoto,IfThen(ABobina,'1,1','0,8'),'1')));
 
-
-  FPDF.CodeI25(FCodigoBarras, FPDF.GetX, FPDF.GetY, 13, StrToFloat(IfThen(ACanhoto,IfThen(ABobina,'1,1','0,8'),'1')));
+  //if ACanhoto then
+  //  FPDF.Cell(LReducaoCanhoto + (LReducaoCanhoto / 2), LAlturaPadraoBaixo, '', '', 0, 'L');
 
   if (Trim(SoftwareHouse) <> '') then
     ModeloEstruturaSoftwareHouse;
@@ -1065,7 +1064,7 @@ begin
   else
   begin
     FPDF.AddPage();
-    ModeloEstruturaFichaPagamento(1,0,True,True);
+    ModeloEstruturaFichaPagamento(0,0,True,True);
   end;
 end;
 

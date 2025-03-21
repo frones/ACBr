@@ -51,6 +51,11 @@ Símbolo : Significado
     SalvarEvento
    Por: Italo Giurizzato Junior
 
+-- pcnNFeW.pas --
+[*] #TK-6728: Correção para geração das tags de ST para cst90.
+    https://www.projetoacbr.com.br/forum/topic/82236-problema-com-o-preenchimento-das-tags-de-icms-st/
+   Por: Renato Rubinho
+
 20/03/2025
 -- ACBrNFeConfiguracoes, ACBrNFeWebServices --
 [*] #TK-6730: Ajuste visando que a rotina que define o caminho onde será salvo o XML de Inutilização considere o Modelo passado no comando.

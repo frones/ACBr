@@ -1936,7 +1936,7 @@ begin
                         end;
                       end;
 
-                      if (NFe.Det[i].Imposto.ICMS.vBCST > 0) or (NFe.Det[i].Imposto.ICMS.vICMSST > 0) then
+                      if (NFe.Det[i].Imposto.ICMS.vBCST > 0) or (NFe.Det[i].Imposto.ICMS.vICMSST > 0) or (NFe.Det[i].Imposto.ICMS.pICMSST > 0) then
                       begin
                         Gerador.wCampo(tcStr, 'N18', 'modBCST ', 01, 01, 1, modBCSTToStr(NFe.Det[i].Imposto.ICMS.modBCST), DSC_MODBCST);
                         Gerador.wCampo(tcDe2, 'N19', 'pMVAST  ', 01, 05, 0, NFe.Det[i].Imposto.ICMS.pMVAST, DSC_PMVAST);

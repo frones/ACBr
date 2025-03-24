@@ -150,6 +150,7 @@ begin
 
   with ConfigGeral do
   begin
+    QuebradeLinha := '|';
     ModoEnvio := meUnitario;
     NumMaxRpsEnviar := 1;
 

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/03/2025
+-- SigISS.Provider --
+[*] #TK-6800: O provedor SigISS utiliza o pipe como quebra de linha.
+   Por: Concept Automação 
+
 20/03/2025
 -- Diversos --
 [*] #TK-6777: Implementando a versão 2.04 do layout da ABRASF no provedor fintelISS.

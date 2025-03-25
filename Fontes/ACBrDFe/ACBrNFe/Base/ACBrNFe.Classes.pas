@@ -163,13 +163,11 @@ type
   private
     FtpCompraGov: TtpCompraGov;
     FpRedutor: Double;
-    FtipoNotaCredito: string;
   public
     procedure Assign(Source: TgCompraGov);
 
     property tpCompraGov: TtpCompraGov read FtpCompraGov write FtpCompraGov;
     property pRedutor: Double read FpRedutor write FpRedutor;
-    property tipoNotaCredito: string read FtipoNotaCredito write FtipoNotaCredito;
   end;
 
   { TIde }
@@ -205,6 +203,7 @@ type
     FcMunFGIBS: Integer;
     FindMultaJuros: TindMultaJuros;
     FgCompraGov: TgCompraGov;
+    FtipoNotaCredito: string;
 
     procedure SetNFref(Value: TNFrefCollection);
   public
@@ -243,6 +242,7 @@ type
     property cMunFGIBS: Integer read FcMunFGIBS write FcMunFGIBS;
     property indMultaJuros: TindMultaJuros read FindMultaJuros write FindMultaJuros default timjNenhum;
     property gCompraGov: TgCompraGov read FgCompraGov write FgCompraGov;
+    property tipoNotaCredito: string read FtipoNotaCredito write FtipoNotaCredito;
   end;
 
   { TenderEmit }
@@ -2611,11 +2611,9 @@ type
   private
     FvTotIBSMono: Double;
     FvTotCBSMono: Double;
-    FvTotNF: Double;
   public
     property vTotIBSMono: Double read FvTotIBSMono write FvTotIBSMono;
     property vTotCBSMono: Double read FvTotCBSMono write FvTotCBSMono;
-    property vTotNF: Double read FvTotNF write FvTotNF;
   end;
 
   { TIBSCBSSelTot }
@@ -2627,6 +2625,7 @@ type
     FgIBS: TgIBS;
     FgCBS: TgCBSTot;
     FgMono: TgMono;
+    FvTotNF: Double;
   public
     constructor Create;
     destructor Destroy; override;
@@ -2638,6 +2637,7 @@ type
     property gIBS: TgIBS read FgIBS write FgIBS;
     property gCBS: TgCBSTot read FgCBS write FgCBS;
     property gMono: TgMono read FgMono write FgMono;
+    property vTotNF: Double read FvTotNF write FvTotNF;
   end;
 
   { TNFe }
@@ -2927,6 +2927,7 @@ begin
   verProc  := Source.verProc;
   dhCont   := Source.dhCont;
   xJust    := Source.xJust;
+  tipoNotaCredito := Source.tipoNotaCredito;
 end;
 
 constructor TIde.Create;
@@ -4873,7 +4874,6 @@ procedure TgCompraGov.Assign(Source: TgCompraGov);
 begin
   tpCompraGov := Source.tpCompraGov;
   pRedutor := Source.pRedutor;
-  tipoNotaCredito := Source.tipoNotaCredito;
 end;
 
 { TIBSCBSSel }
@@ -5096,6 +5096,7 @@ begin
   gIBS := Source.gIBS;
   gCBS := Source.gCBS;
   gMono := Source.gMono;
+  vTotNF := Source.vTotNF;
 end;
 
 constructor TIBSCBSSelTot.Create;

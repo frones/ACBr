@@ -459,10 +459,9 @@ begin
     Result.AppendChild(GerarinfRespTec);
 
   Result.AppendChild(GerarAgropecuario);
+
   // Reforma Tributária
-  { Descomentar quando o ambiente de homologação for disponibilizado
   Result.AppendChild(Gerar_IBSCBSSelTot(NFe.IBSCBSSelTot));
-  }
 end;
 
 function TNFeXmlWriter.GerarIde: TACBrXmlNode;
@@ -529,7 +528,6 @@ begin
     wAlerta('B12', 'cMunFG', DSC_CMUNFG, ERR_MSG_INVALIDO);
 
   // Reforma Tributária
-  { Descomentar quando o ambiente de homologação for disponibilizado
   if NFe.ide.cMunFGIBS > 0 then
   begin
     Result.AppendChild(AddNode(tcInt, 'B12a', 'cMunFGIBS', 07, 07, 0,
@@ -537,6 +535,7 @@ begin
     if not ValidarMunicipio(NFe.ide.cMunFGIBS) then
       wAlerta('B12', 'cMunFGIBS', DSC_CMUNFGIBS, ERR_MSG_INVALIDO);
   end;
+
   if NFe.infNFe.Versao < 3 then
   begin
     (**)nodeArray := GerarIdeNFref;
@@ -545,7 +544,7 @@ begin
       Result.AppendChild(nodeArray[i]);
     end;
   end;
-  }
+
   //Gerador.IDNivel := 'B01';
   Result.AppendChild(AddNode(tcStr, 'B21', 'tpImp', 01, 01, 1,
     tpImpToStr(NFe.Ide.tpImp), DSC_TPIMP));
@@ -598,13 +597,14 @@ begin
   end;
 
   // Reforma Tributária
-  { Descomentar quando o ambiente de homologação for disponibilizado
   Result.AppendChild(AddNode(tcStr, 'B30', 'indMultaJuros', 01, 01, 0,
     indMultaJurosToStr(NFe.Ide.indMultaJuros), DSC_INDMULTAJUROS));
 
   // Reforma Tributária
   Result.AppendChild(Gerar_Ide_CompraGov);
-  }
+
+  Result.AppendChild(AddNode(tcStr, 'B34', 'tipoNotaCredito', 1, 1, 0,
+                      NFe.ide.tipoNotaCredito, DSC_TIPONOTACREDITO));
 end;
 
 function TNFeXmlWriter.GerarIdeNFref: TACBrXmlNodeArray;
@@ -1135,9 +1135,7 @@ begin
     Result[i].AppendChild(GerarDetObsItem(i));
 
     // Reforma Tributária
-    { Descomentar quando o ambiente de homologação for disponibilizado
     Result[i].AppendChild(Gerar_Det_DFeReferenciado(NFe.Det[i].DFeReferenciado));
-    }
   end;
 
   if NFe.Det.Count > 990 then
@@ -1863,9 +1861,7 @@ begin
     Result.AppendChild(GerarDetImpostoICMSUFDest(i));
 
   // Reforma Tributária
-  { Descomentar quando o ambiente de homologação for disponibilizado
   Result.AppendChild(Gerar_Det_Imposto_IBSCBSSel(NFe.Det[i].Imposto.IBSCBSSel));
-  }
 end;
 
 function TNFeXmlWriter.GerarDetImpostoICMS(const i: integer): TACBrXmlNode;
@@ -2490,11 +2486,12 @@ begin
               xmlNode.AppendChild(AddNode(tcDe2, 'N17', 'vICMS',
                 01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS));
             end;
-            if (NFe.infNFe.Versao >= 4) then
+
+            if (NFe.infNFe.Versao >= 4) and (NFe.Det[i].Imposto.ICMS.CST = cst90) then
             begin
               if (NFe.Det[i].Imposto.ICMS.vBCFCP > 0) or
-                (NFe.Det[i].Imposto.ICMS.pFCP > 0) or
-                (NFe.Det[i].Imposto.ICMS.vFCP > 0) then
+                 (NFe.Det[i].Imposto.ICMS.pFCP > 0) or
+                 (NFe.Det[i].Imposto.ICMS.vFCP > 0) then
               begin
                 xmlNode.AppendChild(AddNode(tcDe2, 'N17a', 'vBCFCP',
                   01, 15, 0, NFe.Det[i].Imposto.ICMS.vBCFCP, DSC_VBCFCP));
@@ -2505,8 +2502,10 @@ begin
                   01, 15, 0, NFe.Det[i].Imposto.ICMS.vFCP, DSC_VFCP));
               end;
             end;
+
             if (NFe.Det[i].Imposto.ICMS.vBCST > 0) or
-              (NFe.Det[i].Imposto.ICMS.vICMSST > 0) then
+               (NFe.Det[i].Imposto.ICMS.vICMSST > 0) or
+               (NFe.Det[i].Imposto.ICMS.pICMSST > 0) then
             begin
               xmlNode.AppendChild(AddNode(tcStr, 'N18', 'modBCST',
                 01, 01, 1, modBCSTToStr(NFe.Det[i].Imposto.ICMS.modBCST), DSC_MODBCST));
@@ -2524,11 +2523,11 @@ begin
                 01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSST, DSC_VICMSST));
             end;
 
-            if (NFe.infNFe.Versao >= 4) then
+            if (NFe.infNFe.Versao >= 4) and (NFe.Det[i].Imposto.ICMS.CST = cst90) then
             begin
               if (NFe.Det[i].Imposto.ICMS.vBCFCPST > 0) or
-                (NFe.Det[i].Imposto.ICMS.pFCPST > 0) or
-                (NFe.Det[i].Imposto.ICMS.vFCPST > 0) then
+                 (NFe.Det[i].Imposto.ICMS.pFCPST > 0) or
+                 (NFe.Det[i].Imposto.ICMS.vFCPST > 0) then
               begin
                 xmlNode.AppendChild(AddNode(tcDe2, 'N23a',
                   'vBCFCPST', 01, 15, 0, NFe.Det[i].Imposto.ICMS.vBCFCPST, DSC_VBCFCPST));
@@ -2541,8 +2540,8 @@ begin
             end;
 
             if (NFe.Det[i].Imposto.ICMS.CST = cst90) and
-              (NFe.infNFe.Versao >= 3.10) and
-              (NFe.Det[i].Imposto.ICMS.vICMSDeson > 0) then
+               (NFe.infNFe.Versao >= 3.10) and
+               (NFe.Det[i].Imposto.ICMS.vICMSDeson > 0) then
             begin
               xmlNode.AppendChild(AddNode(tcDe2, 'N27a', 'vICMSDeson',
                 01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSDeson, DSC_VICMSDESON));
@@ -2552,9 +2551,10 @@ begin
               if (NFe.infNFe.Versao >= 4) then
                 xmlNode.AppendChild(AddNode(tcStr, 'N28b', 'indDeduzDeson', 1, 1, 0, TIndicadorExToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson)));
             end;
+
             if (NFe.Det[i].Imposto.ICMS.UFST <> '') or
-              (NFe.Det[i].Imposto.ICMS.pBCOp <> 0) or
-              (NFe.Det[i].Imposto.ICMS.CST = cstPart90) then
+               (NFe.Det[i].Imposto.ICMS.pBCOp <> 0) or
+               (NFe.Det[i].Imposto.ICMS.CST = cstPart90) then
             begin
               xmlNode.AppendChild(AddNode(FormatoValor4ou2,
                 'N25', 'pBCOp', 01, IfThen(FpUsar_tcDe4, 07, 05), 1,
@@ -2563,7 +2563,7 @@ begin
                 02, 02, 1, NFe.Det[i].Imposto.ICMS.UFST, DSC_UFST));
             end;
 
-            if (NFe.infNFe.Versao >= 4) then
+            if (NFe.infNFe.Versao >= 4) and (NFe.Det[i].Imposto.ICMS.CST = cst90) then
             begin
               if (nfe.Det[i].Imposto.ICMS.vICMSSTDeson > 0)then
               begin
@@ -2574,7 +2574,6 @@ begin
                   motDesICMSToStr(nfe.Det[i].Imposto.ICMS.motDesICMSST), DSC_MOTDESICMSST));
               end;
             end;
-
           end;
           cstRep41,
           cstRep60:
@@ -4068,9 +4067,6 @@ begin
 
     Result.AppendChild(AddNode(tcDe4, 'B33', 'pRedutor', 1, 7, 1,
                                     NFe.ide.gCompraGov.pRedutor, DSC_PREDUTOR));
-
-    Result.AppendChild(AddNode(tcStr, 'B34', 'tipoNotaCredito', 1, 1, 0,
-                      NFe.ide.gCompraGov.tipoNotaCredito, DSC_TIPONOTACREDITO));
   end;
 end;
 
@@ -4479,6 +4475,9 @@ begin
 
     if IBSCBSSelTot.gMono.vTotIBSMono > 0 then
       Result.AppendChild(Gerar_IBSCBSSelTot_gMono(IBSCBSSelTot.gMono));
+
+    Result.AppendChild(AddNode(tcDe2, 'W60', 'vTotNF', 1, 15, 1,
+                                              IBSCBSSelTot.vTotNF, DSC_VTOTNF));
   end;
 end;
 
@@ -4578,9 +4577,6 @@ begin
 
   Result.AppendChild(AddNode(tcDe2, 'W59', 'vTotCBSMono', 1, 15, 1,
                                             Mono.vTotCBSMono, DSC_VTOTCBSMONO));
-
-  Result.AppendChild(AddNode(tcDe2, 'W60', 'vTotNF', 1, 15, 1,
-                                                      Mono.vTotNF, DSC_VTOTNF));
 end;
 
 end.

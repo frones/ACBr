@@ -250,9 +250,7 @@ begin
   LerAgropecuario(ANode.Childrens.Find('agropecuario'));
 
   // Reforma Tributária
-  { Descomentar quando o ambiente de homologação for disponibilizado
   Ler_IBSCBSSelTot(NFe.IBSCBSSelTot, ANode.Childrens.Find('IBSCBSSelTot'));
-  }
 end;
 
 procedure TNFeXmlReader.LerIde(const ANode: TACBrXmlNode);
@@ -290,20 +288,16 @@ begin
     NFe.ide.idDest := StrToDestinoOperacao(ok, ObterConteudo(ANode.Childrens.Find('idDest'),  tcStr));
 
   NFe.ide.cMunFG := ObterConteudo(ANode.Childrens.Find('cMunFG'), tcInt);
+
   // Reforma Tritutária
-  { Descomentar quando o ambiente de homologação for disponibilizado
   NFe.ide.cMunFGIBS := ObterConteudo(ANode.Childrens.Find('cMunFGIBS'), tcInt);
-  }
+
   NFe.Ide.tpImp  := StrToTpImp(ok, ObterConteudo(ANode.Childrens.Find('tpImp'), tcStr));
   NFe.Ide.tpEmis := StrToTpEmis(ok, ObterConteudo(ANode.Childrens.Find('tpEmis'), tcStr));
   NFe.Ide.cDV    := ObterConteudo(ANode.Childrens.Find('cDV'), tcInt);
   NFe.Ide.tpAmb  := StrToTpAmb(ok, ObterConteudo(ANode.Childrens.Find('tpAmb'), tcStr));
   NFe.Ide.finNFe := StrToFinNFe(ok, ObterConteudo(ANode.Childrens.Find('finNFe'), tcStr));
-  // Reforma Tritutária
-  { Descomentar quando o ambiente de homologação for disponibilizado
-  NFe.ide.indMultaJuros := StrToindMultaJuros(ObterConteudo(ANode.Childrens.Find('indMultaJuros'), tcStr));
-  Ler_gCompraGov(NFe.Ide.gCompraGov, ANode.Childrens.Find('gCompraGov'));
-  }
+
   if NFe.infNFe.Versao >= 3 then
   begin
     NFe.ide.indFinal := StrToConsumidorFinal(ok, ObterConteudo(ANode.Childrens.Find('indFinal'), tcStr));
@@ -321,6 +315,11 @@ begin
   ANodes := ANode.Childrens.FindAll('NFref');
   for i := 0 to Length(ANodes) - 1 do
     LerIdeNFref(ANodes[i]);
+
+  // Reforma Tritutária
+  NFe.ide.indMultaJuros := StrToindMultaJuros(ObterConteudo(ANode.Childrens.Find('indMultaJuros'), tcStr));
+  Ler_gCompraGov(NFe.Ide.gCompraGov, ANode.Childrens.Find('gCompraGov'));
+  NFe.Ide.tipoNotaCredito := ObterConteudo(ANode.Childrens.Find('tipoNotaCredito'), tcStr);
 end;
 
 procedure TNFeXmlReader.LerIdeNFref(const ANode: TACBrXmlNode);
@@ -426,8 +425,8 @@ begin
   begin
     NFe.agropecuario.defensivo.New;
 
-    NFe.agropecuario.defensivo[i].nReceituario := ObterConteudo(AuxNode.Childrens.FindAnyNs('nReceituario'), tcStr);
-    NFe.agropecuario.defensivo[i].CPFRespTec := ObterConteudo(AuxNode.Childrens.FindAnyNs('CPFRespTec'), tcStr);
+    NFe.agropecuario.defensivo[i].nReceituario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('nReceituario'), tcStr);
+    NFe.agropecuario.defensivo[i].CPFRespTec := ObterConteudo(ANodes[i].Childrens.FindAnyNs('CPFRespTec'), tcStr);
   end;
 
   AuxNode := ANode.Childrens.FindAnyNs('guiaTransito');
@@ -568,9 +567,8 @@ begin
   Item.infAdProd := ObterConteudo(ANode.Childrens.Find('infAdProd'), tcStr);
 
   // Reforma Tributária
-  { Descomentar quando o ambiente de homologação for disponibilizado
   Ler_Det_DFeReferenciado(Item, ANode.Childrens.Find('DFeReferenciado'));
-  }
+
   LerDetProd(Item, ANode.Childrens.Find('prod'));
   LerDetImposto(Item, ANode.Childrens.Find('imposto'));
 
@@ -1246,9 +1244,7 @@ begin
   end;
 
   // Reforma Tributária
-  { Descomentar quando o ambiente de homologação for disponibilizado
   Ler_Det_Imposto_IBSCBSSel(Item.Imposto.IBSCBSSel, ANode.Childrens.Find('IBSCBSSel'));
-  }
 end;
 
 procedure TNFeXmlReader.LerDetObsItem(const Item: TDetCollectionItem;
@@ -1659,7 +1655,6 @@ begin
 
   gCompraGov.tpCompraGov := StrTotpCompraGov(ObterConteudo(ANode.Childrens.Find('tpCompraGov'), tcStr));
   gCompraGov.pRedutor := ObterConteudo(ANode.Childrens.Find('pRedutor'), tcDe4);
-  gCompraGov.tipoNotaCredito := ObterConteudo(ANode.Childrens.Find('tipoNotaCredito'), tcStr);
 end;
 
 procedure TNFeXmlReader.Ler_Det_DFeReferenciado(const Item: TDetCollectionItem;
@@ -1860,6 +1855,8 @@ begin
   Ler_IBSCBSSelTot_gIBS(IBSCBSSelTot.gIBS, ANode.Childrens.Find('gIBS'));
   Ler_IBSCBSSelTot_gCBS(IBSCBSSelTot.gCBS, ANode.Childrens.Find('gCBS'));
   Ler_IBSCBSSelTot_gMono(IBSCBSSelTot.gMono, ANode.Childrens.Find('gMono'));
+
+  IBSCBSSelTot.vTotNF := ObterConteudo(ANode.Childrens.Find('vTotNF'), tcDe2);
 end;
 
 procedure TNFeXmlReader.Ler_IBSCBSSelTot_gSel(const gSel: TgSel;
@@ -1927,7 +1924,6 @@ begin
 
   gMono.vTotIBSMono := ObterConteudo(ANode.Childrens.Find('vTotIBSMono'), tcDe2);
   gMono.vTotCBSMono := ObterConteudo(ANode.Childrens.Find('vTotCBSMono'), tcDe2);
-  gMono.vTotNF := ObterConteudo(ANode.Childrens.Find('vTotNF'), tcDe2);
 end;
 
 end.

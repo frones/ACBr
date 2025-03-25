@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/03/2025
+-- ACBrNFe.IniReader/ACBrNFe.IniWriter --
+[+] #TK-5816: Implementado duas novas units especificas para a leitura e escrita do
+    arquivo INI que contem os dados da nota fiscal.
+-- ACBrNFeNotasFiscais/ACBrNFe.Classes/ACBrNFe.XmlReader/ACBrNFe.XmlWriter --
+[*] Ajustes realizados por conta das duas novas units e da Reforma Tributária.
+   Por: Italo Giurizzato Junior
+
 21/03/2025
 -- ACBrNFeWebServices --
 [*] #TK-6740: Alterado a condição que determina se o XML do evento deve ser salvo em disco

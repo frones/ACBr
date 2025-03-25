@@ -54,6 +54,7 @@ public class ComandosConsultaCNPJFragment extends Fragment {
             txtRespostaConsulta.setText(resposta);
         } catch (Exception ex) {
             Log.e("Erro", " - Consultar CNPJ: " + ex.getMessage());
+            txtRespostaConsulta.setText(ex.getMessage());
         }
     }
 

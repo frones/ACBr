@@ -6,8 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.Spinner;
 import android.widget.Button;
 import com.google.android.material.textfield.TextInputEditText;
 import br.com.acbr.lib.consultacnpj.ACBrLibConsultaCNPJ;
@@ -16,7 +15,7 @@ import br.com.acbr.lib.consultacnpj.Provedor;
 public class ConfiguracoesConsultaCNPJFragment extends Fragment {
     private ACBrLibConsultaCNPJ ACBrConsultaCNPJ;
 
-    private AutoCompleteTextView cmbProvedor;
+    private Spinner cmbProvedor;
     private TextInputEditText txtUsuarioProvedor;
     private TextInputEditText txtSenhaProvedor;
     private TextInputEditText txtProxyServidor;
@@ -46,17 +45,6 @@ public class ConfiguracoesConsultaCNPJFragment extends Fragment {
         btnSalvarConfiguracoesConsultaCNPJ = view.findViewById(R.id.btnSalvarConfiguracoesConsultaCNPJ);
         btnCarregarConfiguracoesConsultaCNPJ = view.findViewById(R.id.btnCarregarConfiguracoesConsultaCNPJ);
 
-        // Configurar o adapter para o AutoCompleteTextView
-        ArrayAdapter<Provedor> adapter = new ArrayAdapter<>(getContext(), R.layout.dropdown_menu_item, Provedor.values());
-        cmbProvedor.setAdapter(adapter);
-        cmbProvedor.setThreshold(0);
-        cmbProvedor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cmbProvedor.showDropDown();
-            }
-        });
-
         btnSalvarConfiguracoesConsultaCNPJ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,14 +66,7 @@ public class ConfiguracoesConsultaCNPJFragment extends Fragment {
 
     private void salvarConfiguracoesConsultaCNPJ() {
         try {
-            String provedorSelecionado = cmbProvedor.getText().toString();
-            int posicaoProvedor = -1;
-            for (int i = 0; i < provedor.length; i++) {
-                if (provedor[i].toString().equals(provedorSelecionado)) {
-                    posicaoProvedor = i;
-                    break;
-                }
-            }
+            int posicaoProvedor = cmbProvedor.getSelectedItemPosition();
             
             ACBrConsultaCNPJ.configGravarValor("ConsultaCNPJ", "Provedor", String.valueOf(posicaoProvedor));
             ACBrConsultaCNPJ.configGravarValor("ConsultaCNPJ", "Usuario", txtUsuarioProvedor.getText().toString());
@@ -102,9 +83,11 @@ public class ConfiguracoesConsultaCNPJFragment extends Fragment {
 
     private void carregarConfiguracoesConsultaCNPJ() {
         try {
+            SpinnerUtils.preencherSpinner(getContext(), cmbProvedor, provedor);
+            
             int posicaoProvedor = Integer.parseInt(ACBrConsultaCNPJ.configLerValor("ConsultaCNPJ", "Provedor"));
             if (posicaoProvedor >= 0 && posicaoProvedor < provedor.length) {
-                cmbProvedor.setText(provedor[posicaoProvedor].toString(), false);
+                cmbProvedor.setSelection(posicaoProvedor);
             }
             
             txtUsuarioProvedor.setText(ACBrConsultaCNPJ.configLerValor("ConsultaCNPJ", "Usuario"));

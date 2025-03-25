@@ -21,23 +21,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Provedor"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                android:text="Provedor"
+                android:textSize="12sp"
+                android:textColor="@color/design_default_color_primary" />
 
-                <AutoCompleteTextView
-                    android:id="@+id/cmbProvedor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:focusable="false"
-                    android:clickable="true"
-                    android:dropDownHeight="wrap_content"
-                    android:dropDownWidth="match_parent" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+            <Spinner
+                android:id="@+id/cmbProvedor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

@@ -53,6 +53,7 @@ public class IniFragment extends Fragment {
             txtIni.setText(ini);
         } catch (Exception ex) {
             Log.e("Erro", " - Ler INI: " + ex.getMessage());
+            txtIni.setText(ex.getMessage());
         }
     }
 } 

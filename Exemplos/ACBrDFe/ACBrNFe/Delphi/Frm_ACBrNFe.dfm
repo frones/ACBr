@@ -2005,6 +2005,28 @@ object frmACBrNFe: TfrmACBrNFe
           OnClick = btnManifDestConfirmacaoClick
         end
       end
+      object tsOutros: TTabSheet
+        Caption = 'Outros'
+        ImageIndex = 5
+        object btnLerArqINI: TButton
+          Left = 3
+          Top = 3
+          Width = 177
+          Height = 25
+          Caption = 'Ler Arquivo INI/Gerar XML'
+          TabOrder = 0
+          OnClick = btnLerArqINIClick
+        end
+        object btnGerarArqINI: TButton
+          Left = 186
+          Top = 3
+          Width = 177
+          Height = 25
+          Caption = 'Gerar Arquivo INI'
+          TabOrder = 1
+          OnClick = btnGerarArqINIClick
+        end
+      end
     end
     object pgRespostas: TPageControl
       Left = 1

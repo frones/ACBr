@@ -575,6 +575,15 @@ begin
 //     Ide.dhCont := date;
 //     Ide.xJust  := 'Justificativa Contingencia';
 
+// Reforma Tributária
+    {
+    Ide.cMunFGIBS := StrToInt(edtEmitCodCidade.Text);
+    Ide.indMultaJuros := timjNenhum;
+    Ide.gCompraGov.tpCompraGov := tcgEstados;
+    Ide.gCompraGov.pRedutor := 5;
+    Ide.tipoNotaCredito := ''; // Aguardando GT06. A definir.
+    }
+
     Emit.CNPJCPF           := edtEmitCNPJ.Text;
     Emit.IE                := edtEmitIE.Text;
     Emit.xNome             := edtEmitRazao.Text;
@@ -678,6 +687,12 @@ begin
       //  correspondente àquele da menor unidade comercializável identificado por Código de Barras
       // por exemplo: código de barras de catálogo, partnumber, etc
       Prod.cBarraTrib := 'ABC123456';
+
+      // Reforma Tributária
+      {
+      DFeReferenciado.chaveAcesso := '';
+      DFeReferenciado.nItem := 1;
+      }
 
       // Declaração de Importação. Pode ser adicionada várias através do comando Prod.DI.New
       (*
@@ -913,6 +928,107 @@ begin
           // Indica se o valor da COFINS ST compõe o valor total da NF-e
           indSomaCOFINSST :=  iscNenhum;
         end;
+        // Reforma Tributária
+        {
+        IBSCBSSel.CST := 100;
+        IBSCBSSel.cClassTrib := 100000;
+        IBSCBSSel.indPerecimento := tipNenhum;
+
+        IBSCBSSel.seletivo.CST := 100;
+        IBSCBSSel.seletivo.cClassTrib := 100000;
+
+        IBSCBSSel.seletivo.gImpSel.vBCImpSel := 100;
+        IBSCBSSel.seletivo.gImpSel.pImpSel := 5;
+        IBSCBSSel.seletivo.gImpSel.pImpSelEspec := 5;
+        IBSCBSSel.seletivo.gImpSel.uTrib := 'UNIDAD';
+        IBSCBSSel.seletivo.gImpSel.qTrib := 10;
+        IBSCBSSel.seletivo.gImpSel.vImpSel := 100;
+
+        IBSCBSSel.gIBSCBS.vBC := 100;
+
+        IBSCBSSel.gIBSCBS.gIBSUF.pIBSUF := 5;
+        IBSCBSSel.gIBSCBS.gIBSUF.vTribOP := 100;
+        IBSCBSSel.gIBSCBS.gIBSUF.vIBSUF := 100;
+
+        IBSCBSSel.gIBSCBS.gIBSUF.gDif.pDif := 5;
+        IBSCBSSel.gIBSCBS.gIBSUF.gDif.pDif := 100;
+
+        IBSCBSSel.gIBSCBS.gIBSUF.gDevTrib.vDevTrib := 100;
+
+        IBSCBSSel.gIBSCBS.gIBSUF.gRed.pRedAliq := 5;
+        IBSCBSSel.gIBSCBS.gIBSUF.gRed.pAliqEfet := 5;
+
+        IBSCBSSel.gIBSCBS.gIBSUF.gDeson.CST := 100;
+        IBSCBSSel.gIBSCBS.gIBSUF.gDeson.cClassTrib := 100000;
+        IBSCBSSel.gIBSCBS.gIBSUF.gDeson.vBC := 100;
+        IBSCBSSel.gIBSCBS.gIBSUF.gDeson.pAliq := 5;
+        IBSCBSSel.gIBSCBS.gIBSUF.gDeson.vDeson := 100;
+
+        IBSCBSSel.gIBSCBS.gIBSMun.pIBSMun := 5;
+        IBSCBSSel.gIBSCBS.gIBSMun.vTribOP := 100;
+        IBSCBSSel.gIBSCBS.gIBSMun.vIBSMun := 100;
+
+        IBSCBSSel.gIBSCBS.gIBSMun.gDif.pDif := 5;
+        IBSCBSSel.gIBSCBS.gIBSMun.gDif.pDif := 100;
+
+        IBSCBSSel.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 100;
+
+        IBSCBSSel.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
+        IBSCBSSel.gIBSCBS.gIBSMun.gRed.pAliqEfet := 5;
+
+        IBSCBSSel.gIBSCBS.gIBSMun.gDeson.CST := 100;
+        IBSCBSSel.gIBSCBS.gIBSMun.gDeson.cClassTrib := 100000;
+        IBSCBSSel.gIBSCBS.gIBSMun.gDeson.vBC := 100;
+        IBSCBSSel.gIBSCBS.gIBSMun.gDeson.pAliq := 5;
+        IBSCBSSel.gIBSCBS.gIBSMun.gDeson.vDeson := 100;
+
+        IBSCBSSel.gIBSCBS.gIBSCredPres.cCredPres := 1;
+        IBSCBSSel.gIBSCBS.gIBSCredPres.pCredPres := 5;
+        IBSCBSSel.gIBSCBS.gIBSCredPres.vCredPres := 100;
+        IBSCBSSel.gIBSCBS.gIBSCredPres.vCredPresCondSus := 100;
+
+        IBSCBSSel.gIBSCBS.gCBS.pCBS := 5;
+        IBSCBSSel.gIBSCBS.gCBS.vTribOp := 100;
+        IBSCBSSel.gIBSCBS.gCBS.vCBS := 100;
+
+        IBSCBSSel.gIBSCBS.gCBS.gCBSCredPres.cCredPres := 1;
+        IBSCBSSel.gIBSCBS.gCBS.gCBSCredPres.pCredPres := 5;
+        IBSCBSSel.gIBSCBS.gCBS.gCBSCredPres.vCredPres := 100;
+        IBSCBSSel.gIBSCBS.gCBS.gCBSCredPres.vCredPresCondSus := 100;
+
+        IBSCBSSel.gIBSCBS.gCBS.gDif.pDif := 5;
+        IBSCBSSel.gIBSCBS.gCBS.gDif.pDif := 100;
+
+        IBSCBSSel.gIBSCBS.gCBS.gDevTrib.vDevTrib := 100;
+
+        IBSCBSSel.gIBSCBS.gCBS.gRed.pRedAliq := 5;
+        IBSCBSSel.gIBSCBS.gCBS.gRed.pAliqEfet := 5;
+
+        IBSCBSSel.gIBSCBS.gCBS.gDeson.CST := 100;
+        IBSCBSSel.gIBSCBS.gCBS.gDeson.cClassTrib := 100000;
+        IBSCBSSel.gIBSCBS.gCBS.gDeson.vBC := 100;
+        IBSCBSSel.gIBSCBS.gCBS.gDeson.pAliq := 5;
+        IBSCBSSel.gIBSCBS.gCBS.gDeson.vDeson := 100;
+
+        IBSCBSSel.gIBSCBSMono.qBCMono := 1;
+        IBSCBSSel.gIBSCBSMono.adRemIBS := 5;
+        IBSCBSSel.gIBSCBSMono.adRemCBS := 5;
+        IBSCBSSel.gIBSCBSMono.vIBSMono := 100;
+        IBSCBSSel.gIBSCBSMono.vCBSMono := 100;
+        IBSCBSSel.gIBSCBSMono.qBCMonoReten := 1;
+        IBSCBSSel.gIBSCBSMono.adRemIBSREten := 5;
+        IBSCBSSel.gIBSCBSMono.vIBSMonoReten := 100;
+        IBSCBSSel.gIBSCBSMono.pCredPresIBS := 5;
+        IBSCBSSel.gIBSCBSMono.vCRedPresIBS := 100;
+        IBSCBSSel.gIBSCBSMono.pCredPresCBS := 5;
+        IBSCBSSel.gIBSCBSMono.vCredPresCBS := 100;
+        IBSCBSSel.gIBSCBSMono.pDifIBS := 5;
+        IBSCBSSel.gIBSCBSMono.vIBSMonoDif := 100;
+        IBSCBSSel.gIBSCBSMono.pDifCBS := 5;
+        IBSCBSSel.gIBSCBSMono.vCBSMonoDif := 100;
+        IBSCBSSel.gIBSCBSMono.vTotIBSMono := 100;
+        IBSCBSSel.gIBSCBSMono.vTotCBSMono := 100;
+        }
       end;
     end;
 
@@ -995,6 +1111,39 @@ begin
     // (agenciador, plataforma de delivery, marketplace e similar) de serviços e de
     // negócios.
     infIntermed.idCadIntTran := '';
+
+        // Reforma Tributária
+        {
+        IBSCBSSelTot.vBCIBSCBS := 100;
+        IBSCBSSelTot.vTotNF := 100;
+
+        IBSCBSSelTot.gSel.vBCSel := 100;
+        IBSCBSSelTot.gSel.vImpSel := 100;
+
+        IBSCBSSelTot.gIBS.vCresPres := 100;
+        IBSCBSSelTot.gIBS.vCredPresCondSus := 100;
+
+        IBSCBSSelTot.gIBS.gIBSUFTot.vDif := 100;
+        IBSCBSSelTot.gIBS.gIBSUFTot.vDevTrib := 100;
+        IBSCBSSelTot.gIBS.gIBSUFTot.vDeson := 100;
+        IBSCBSSelTot.gIBS.gIBSUFTot.vIBSUF := 100;
+
+        IBSCBSSelTot.gIBS.gIBSMunTot.vDif := 100;
+        IBSCBSSelTot.gIBS.gIBSMunTot.vDevTrib := 100;
+        IBSCBSSelTot.gIBS.gIBSMunTot.vDeson := 100;
+        IBSCBSSelTot.gIBS.gIBSMunTot.vIBSMun := 100;
+        IBSCBSSelTot.gIBS.gIBSMunTot.vIBSTot := 100;
+
+        IBSCBSSelTot.gCBS.vCresPres := 100;
+        IBSCBSSelTot.gCBS.vCredPresCondSus := 100;
+        IBSCBSSelTot.gCBS.vDif := 100;
+        IBSCBSSelTot.gCBS.vDevTrib := 100;
+        IBSCBSSelTot.gCBS.vDeson := 100;
+        IBSCBSSelTot.gCBS.vCBS := 100;
+
+        IBSCBSSelTot.gMono.vTotIBSMono := 100;
+        IBSCBSSelTot.gMono.vTotCBSMono := 100;
+        }
   end;
 
   ACBrNFe1.NotasFiscais.GerarNFe;
@@ -1060,6 +1209,14 @@ begin
   // Indicador de intermediador/marketplace
   NotaF.NFe.Ide.indIntermed := iiSemOperacao;
 
+    // Reforma Tributária
+    {
+    NotaF.NFe.Ide.cMunFGIBS := StrToInt(edtEmitCodCidade.Text);
+    NotaF.NFe.Ide.indMultaJuros := timjNenhum;
+    NotaF.NFe.Ide.gCompraGov.tpCompraGov := tcgEstados;
+    NotaF.NFe.Ide.gCompraGov.pRedutor := 5;
+    NotaF.NFe.Ide.tipoNotaCredito := ''; // Aguardando GT06. A definir.
+    }
 
   //Para NFe referenciada use os campos abaixo
   (*
@@ -1342,6 +1499,11 @@ begin
   Produto.Prod.comb.ICMSCons.vICMSSTCons   := 0;
   Produto.Prod.comb.ICMSCons.UFcons        := '';
 
+  // Reforma Tributária
+  {
+  Produto.DFeReferenciado.chaveAcesso := '';
+  Produto.DFeReferenciado.nItem := 1;
+  }
 
   with Produto.Imposto do
   begin
@@ -1533,6 +1695,107 @@ begin
       // Indica se o valor da COFINS ST compõe o valor total da NF-e
       indSomaCOFINSST :=  iscNenhum;
     end;
+    // Reforma Tributária
+    {
+    IBSCBSSel.CST := 100;
+    IBSCBSSel.cClassTrib := 100000;
+    IBSCBSSel.indPerecimento := tipNenhum;
+
+    IBSCBSSel.seletivo.CST := 100;
+    IBSCBSSel.seletivo.cClassTrib := 100000;
+
+    IBSCBSSel.seletivo.gImpSel.vBCImpSel := 100;
+    IBSCBSSel.seletivo.gImpSel.pImpSel := 5;
+    IBSCBSSel.seletivo.gImpSel.pImpSelEspec := 5;
+    IBSCBSSel.seletivo.gImpSel.uTrib := 'UNIDAD';
+    IBSCBSSel.seletivo.gImpSel.qTrib := 10;
+    IBSCBSSel.seletivo.gImpSel.vImpSel := 100;
+
+    IBSCBSSel.gIBSCBS.vBC := 100;
+
+    IBSCBSSel.gIBSCBS.gIBSUF.pIBSUF := 5;
+    IBSCBSSel.gIBSCBS.gIBSUF.vTribOP := 100;
+    IBSCBSSel.gIBSCBS.gIBSUF.vIBSUF := 100;
+
+    IBSCBSSel.gIBSCBS.gIBSUF.gDif.pDif := 5;
+    IBSCBSSel.gIBSCBS.gIBSUF.gDif.pDif := 100;
+
+    IBSCBSSel.gIBSCBS.gIBSUF.gDevTrib.vDevTrib := 100;
+
+    IBSCBSSel.gIBSCBS.gIBSUF.gRed.pRedAliq := 5;
+    IBSCBSSel.gIBSCBS.gIBSUF.gRed.pAliqEfet := 5;
+
+    IBSCBSSel.gIBSCBS.gIBSUF.gDeson.CST := 100;
+    IBSCBSSel.gIBSCBS.gIBSUF.gDeson.cClassTrib := 100000;
+    IBSCBSSel.gIBSCBS.gIBSUF.gDeson.vBC := 100;
+    IBSCBSSel.gIBSCBS.gIBSUF.gDeson.pAliq := 5;
+    IBSCBSSel.gIBSCBS.gIBSUF.gDeson.vDeson := 100;
+
+    IBSCBSSel.gIBSCBS.gIBSMun.pIBSMun := 5;
+    IBSCBSSel.gIBSCBS.gIBSMun.vTribOP := 100;
+    IBSCBSSel.gIBSCBS.gIBSMun.vIBSMun := 100;
+
+    IBSCBSSel.gIBSCBS.gIBSMun.gDif.pDif := 5;
+    IBSCBSSel.gIBSCBS.gIBSMun.gDif.pDif := 100;
+
+    IBSCBSSel.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 100;
+
+    IBSCBSSel.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
+    IBSCBSSel.gIBSCBS.gIBSMun.gRed.pAliqEfet := 5;
+
+    IBSCBSSel.gIBSCBS.gIBSMun.gDeson.CST := 100;
+    IBSCBSSel.gIBSCBS.gIBSMun.gDeson.cClassTrib := 100000;
+    IBSCBSSel.gIBSCBS.gIBSMun.gDeson.vBC := 100;
+    IBSCBSSel.gIBSCBS.gIBSMun.gDeson.pAliq := 5;
+    IBSCBSSel.gIBSCBS.gIBSMun.gDeson.vDeson := 100;
+
+    IBSCBSSel.gIBSCBS.gIBSCredPres.cCredPres := 1;
+    IBSCBSSel.gIBSCBS.gIBSCredPres.pCredPres := 5;
+    IBSCBSSel.gIBSCBS.gIBSCredPres.vCredPres := 100;
+    IBSCBSSel.gIBSCBS.gIBSCredPres.vCredPresCondSus := 100;
+
+    IBSCBSSel.gIBSCBS.gCBS.pCBS := 5;
+    IBSCBSSel.gIBSCBS.gCBS.vTribOp := 100;
+    IBSCBSSel.gIBSCBS.gCBS.vCBS := 100;
+
+    IBSCBSSel.gIBSCBS.gCBS.gCBSCredPres.cCredPres := 1;
+    IBSCBSSel.gIBSCBS.gCBS.gCBSCredPres.pCredPres := 5;
+    IBSCBSSel.gIBSCBS.gCBS.gCBSCredPres.vCredPres := 100;
+    IBSCBSSel.gIBSCBS.gCBS.gCBSCredPres.vCredPresCondSus := 100;
+
+    IBSCBSSel.gIBSCBS.gCBS.gDif.pDif := 5;
+    IBSCBSSel.gIBSCBS.gCBS.gDif.pDif := 100;
+
+    IBSCBSSel.gIBSCBS.gCBS.gDevTrib.vDevTrib := 100;
+
+    IBSCBSSel.gIBSCBS.gCBS.gRed.pRedAliq := 5;
+    IBSCBSSel.gIBSCBS.gCBS.gRed.pAliqEfet := 5;
+
+    IBSCBSSel.gIBSCBS.gCBS.gDeson.CST := 100;
+    IBSCBSSel.gIBSCBS.gCBS.gDeson.cClassTrib := 100000;
+    IBSCBSSel.gIBSCBS.gCBS.gDeson.vBC := 100;
+    IBSCBSSel.gIBSCBS.gCBS.gDeson.pAliq := 5;
+    IBSCBSSel.gIBSCBS.gCBS.gDeson.vDeson := 100;
+
+    IBSCBSSel.gIBSCBSMono.qBCMono := 1;
+    IBSCBSSel.gIBSCBSMono.adRemIBS := 5;
+    IBSCBSSel.gIBSCBSMono.adRemCBS := 5;
+    IBSCBSSel.gIBSCBSMono.vIBSMono := 100;
+    IBSCBSSel.gIBSCBSMono.vCBSMono := 100;
+    IBSCBSSel.gIBSCBSMono.qBCMonoReten := 1;
+    IBSCBSSel.gIBSCBSMono.adRemIBSREten := 5;
+    IBSCBSSel.gIBSCBSMono.vIBSMonoReten := 100;
+    IBSCBSSel.gIBSCBSMono.pCredPresIBS := 5;
+    IBSCBSSel.gIBSCBSMono.vCRedPresIBS := 100;
+    IBSCBSSel.gIBSCBSMono.pCredPresCBS := 5;
+    IBSCBSSel.gIBSCBSMono.vCredPresCBS := 100;
+    IBSCBSSel.gIBSCBSMono.pDifIBS := 5;
+    IBSCBSSel.gIBSCBSMono.vIBSMonoDif := 100;
+    IBSCBSSel.gIBSCBSMono.pDifCBS := 5;
+    IBSCBSSel.gIBSCBSMono.vCBSMonoDif := 100;
+    IBSCBSSel.gIBSCBSMono.vTotIBSMono := 100;
+    IBSCBSSel.gIBSCBSMono.vTotCBSMono := 100;
+    }
   end;
 
 
@@ -1738,6 +2001,38 @@ begin
   // negócios.
   NotaF.NFe.infIntermed.idCadIntTran := '';
 
+  // Reforma Tributária
+  {
+  NotaF.NFe.IBSCBSSelTot.vBCIBSCBS := 100;
+  NotaF.NFe.IBSCBSSelTot.vTotNF := 100;
+
+  NotaF.NFe.IBSCBSSelTot.gSel.vBCSel := 100;
+  NotaF.NFe.IBSCBSSelTot.gSel.vImpSel := 100;
+
+  NotaF.NFe.IBSCBSSelTot.gIBS.vCresPres := 100;
+  NotaF.NFe.IBSCBSSelTot.gIBS.vCredPresCondSus := 100;
+
+  NotaF.NFe.IBSCBSSelTot.gIBS.gIBSUFTot.vDif := 100;
+  NotaF.NFe.IBSCBSSelTot.gIBS.gIBSUFTot.vDevTrib := 100;
+  NotaF.NFe.IBSCBSSelTot.gIBS.gIBSUFTot.vDeson := 100;
+  NotaF.NFe.IBSCBSSelTot.gIBS.gIBSUFTot.vIBSUF := 100;
+
+  NotaF.NFe.IBSCBSSelTot.gIBS.gIBSMunTot.vDif := 100;
+  NotaF.NFe.IBSCBSSelTot.gIBS.gIBSMunTot.vDevTrib := 100;
+  NotaF.NFe.IBSCBSSelTot.gIBS.gIBSMunTot.vDeson := 100;
+  NotaF.NFe.IBSCBSSelTot.gIBS.gIBSMunTot.vIBSMun := 100;
+  NotaF.NFe.IBSCBSSelTot.gIBS.gIBSMunTot.vIBSTot := 100;
+
+  NotaF.NFe.IBSCBSSelTot.gCBS.vCresPres := 100;
+  NotaF.NFe.IBSCBSSelTot.gCBS.vCredPresCondSus := 100;
+  NotaF.NFe.IBSCBSSelTot.gCBS.vDif := 100;
+  NotaF.NFe.IBSCBSSelTot.gCBS.vDevTrib := 100;
+  NotaF.NFe.IBSCBSSelTot.gCBS.vDeson := 100;
+  NotaF.NFe.IBSCBSSelTot.gCBS.vCBS := 100;
+
+  NotaF.NFe.IBSCBSSelTot.gMono.vTotIBSMono := 100;
+  NotaF.NFe.IBSCBSSelTot.gMono.vTotCBSMono := 100;
+  }
   ACBrNFe1.NotasFiscais.GerarNFe;
 end;
 

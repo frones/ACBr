@@ -113,43 +113,42 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_resultPeso',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            MaterialButton(
+            CustomButton(
+              text: 'Ler Peso',
               onPressed: onClickButtonGetPeso,
-              child: const Text('Ler Peso'),
-              color: Theme.of(context).colorScheme.primary, // Cor do botão
-              textColor: Colors.white, // Cor do texto
-              padding: EdgeInsets.symmetric(
-                  vertical: 10.0, horizontal: 15.0), // Padding interno
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0), // Bordas arredondadas
-              ),
             ),
-            MaterialButton(
+            CustomButton(
+              text: 'Zerar Peso',
               onPressed: onClickButtonResetPeso,
-              child: const Text('Zerar Peso'),
-              color: Theme.of(context).colorScheme.primary, // Cor do botão
-              textColor: Colors.white, // Cor do texto
-              padding: EdgeInsets.symmetric(
-                  vertical: 10.0, horizontal: 15.0), // Padding interno
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0), // Bordas arredondadas
-              ),
             ),
-            MaterialButton(
-              onPressed: () {
-                toggleAtivado();
-              },
-              child: Text(_ativado ? 'Desativar' : 'Ativar'),
-              color: Theme.of(context).colorScheme.primary, // Cor do botão
-              textColor: Colors.white, // Cor do texto
-              padding: EdgeInsets.symmetric(
-                  vertical: 10.0, horizontal: 15.0), // Padding interno
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0), // Bordas arredondadas
-              ),
+            CustomButton(
+              text: _ativado ? 'Desativar' : 'Ativar',
+              onPressed: toggleAtivado,
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  final String text;
+  final  VoidCallback onPressed;
+
+  const CustomButton({super.key, required this.text, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      onPressed: onPressed,
+      child: Text(text),
+      color: Theme.of(context).colorScheme.primary, // Cor do botão
+      textColor: Colors.white,
+      padding: EdgeInsets.symmetric(
+          vertical: 10.0, horizontal: 15.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0), // Bordas arredondadas
       ),
     );
   }

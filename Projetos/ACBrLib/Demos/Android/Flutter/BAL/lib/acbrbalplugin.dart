@@ -1,8 +1,9 @@
 import 'package:flutter/services.dart';
 
 class Acbrbalplugin {
+  static const  double errorPeso = -9.00;
   static const MethodChannel _channel =
-      MethodChannel('com.example.demoacbrbal');
+      MethodChannel('acbrlib_bal_flutter');
 
   Future<int> inicializar() async {
     try {
@@ -103,7 +104,7 @@ class Acbrbalplugin {
       return result;
     } on PlatformException catch (e) {
       print("Erro: '${e.message}'.");
-      return 0.00;
+      return errorPeso;
     }
   }
 
@@ -114,7 +115,7 @@ class Acbrbalplugin {
       return result;
     } on PlatformException catch (e) {
       print("Erro: '${e.message}'.");
-      return "-1.0";
+      return errorPeso.toString() ;
     }
   }
 
@@ -124,7 +125,7 @@ class Acbrbalplugin {
       return result;
     } on PlatformException catch (e) {
       print("Erro: '${e.message}'.");
-      return 0.00;
+      return errorPeso;
     }
   }
 
@@ -134,7 +135,7 @@ class Acbrbalplugin {
       return result;
     } on PlatformException catch (e) {
       print("Erro: '${e.message}'.");
-      return "0.0";
+      return  errorPeso.toString();
     }
   }
 
@@ -145,7 +146,7 @@ class Acbrbalplugin {
       return result;
     } on PlatformException catch (e) {
       print("Erro: '${e.message}'.");
-      return 0.00;
+      return errorPeso;
     }
   }
 
@@ -156,7 +157,7 @@ class Acbrbalplugin {
       return result;
     } on PlatformException catch (e) {
       print("Erro: '${e.message}'.");
-      return "0.0";
+      return errorPeso.toString();
     }
   }
 }

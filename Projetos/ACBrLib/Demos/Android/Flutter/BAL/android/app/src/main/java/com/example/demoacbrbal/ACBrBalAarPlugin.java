@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import java.io.File;
 import android.content.Context;
 import android.util.Log;
-import br.com.acbr.acbrlibbal.ACBrLibBAL;
+import br.com.acbr.lib.bal.ACBrLibBAL;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -20,148 +20,196 @@ public class ACBrBalAarPlugin implements FlutterPlugin, MethodChannel.MethodCall
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
         Context context = binding.getApplicationContext();
         appDir = (File) context.getExternalFilesDir(null);
-        arquivoConfig =  appDir.getAbsolutePath() + "/acbrlib.ini";
+        arquivoConfig = appDir.getAbsolutePath() + "/acbrlib.ini";
 
-        channel = new MethodChannel(binding.getBinaryMessenger(), "com.example.demoacbrbal");
+        channel = new MethodChannel(binding.getBinaryMessenger(), "acbrlib_bal_flutter");
         channel.setMethodCallHandler(this);
         acbrBal = new ACBrLibBAL(arquivoConfig, "");
     }
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-        channel.setMethodCallHandler(null);
         try {
             acbrBal.desativar();
             acbrBal.finalizar();
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            channel.setMethodCallHandler(null);
         }
     }
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
-        if (call.method.equals("inicializar")) {
-            int status = -1;
-            try {
-                status = acbrBal.inicializar();
-                aplicaConfiguracoesPadrao();
-                result.success(status);
-            } catch (Exception e) {
-                result.error("Erro ao inicializar ACBrLibBAL", e.getMessage(), e);
-            }
-        }
-
-        if (call.method.equals("ativar")) {
-            try {
-                acbrBal.ativar();
-                result.success(true);
-            } catch (Exception e) {
-                result.error("Erro ao ativar ACBrLibBAL", e.getMessage(), e);
-            }
-        }
-
-        if (call.method.equals("desativar")) {
-            try {
-                acbrBal.desativar();
-                result.success(false);
-            } catch (Exception e) {
-                result.error("Erro ao desativar ACBrLibBAL", e.getMessage(), e);
-            }
-        }
-
-        if ( call.method.equals("finalizar") ) {
-            try {
-               int status =  acbrBal.finalizar();
-                result.success(status);
-            } catch (Exception e) {
-                result.error("Erro ao finalizar ACBrLibBAL", e.getMessage(), e);
-            }
-        }
-
-        if (call.method.equals("lePeso")){
-            try {
-                double peso = acbrBal.lePeso(call.argument("millisecTimeOut"));
-                result.success(peso);
-            } catch (Exception e) {
-                result.error("Erro ao ler peso", e.getMessage(), e);
-            }
-        }
-
-        if (call.method.equals("lePesoStr")){
-            try {
-                String peso = acbrBal.lePesoStr(call.argument("millisecTimeOut"));
-                Log.i("ACBrBalAarPlugin", "Peso: " + peso);
-                result.success(peso);
-            } catch (Exception e) {
-                result.error("Erro ao ler peso", e.getMessage(), e);
-            }
-        }
-
-        if (call.method.equals("ultimoPesoLido")){
-            try {
-                double peso = acbrBal.ultimoPesoLido();
-                result.success(peso);
-            } catch (Exception e) {
-                result.error("Erro ao ler peso", e.getMessage(), e);
-            }
-        }
-
-        if (call.method.equals("ultimoPesoLidoStr")){
-            try {
-                String peso = acbrBal.ultimoPesoLidoStr();
-                result.success(peso);
-            } catch (Exception e) {
-                result.error("Erro ao ler peso", e.getMessage(), e);
-            }
-        }
-
-        if ( call.method.equals("interpretarRespostaPeso")){
-            try {
-                double peso = acbrBal.interpretarRespostaPeso(call.argument("aResposta"));
-                result.success(peso);
-            } catch (Exception e) {
-                result.error("Erro ao interpretar resposta de peso", e.getMessage(), e);
-            }
-        }
-
-        if ( call.method.equals("interpretarRespotaPesoStr")){
-            try {
-                String peso = acbrBal.interpretarRespostaPesoStr(call.argument("aResposta"));
-                result.success(peso);
-            } catch (Exception e) {
-                result.error("Erro ao interpretar resposta de peso", e.getMessage(), e);
-            }
-        }
-
-        if ( call.method.equals("configLer")){
-            try {
-                int status = acbrBal.configLer(call.argument("eArqConfig"));
-                result.success(status);
-            } catch (Exception e) {
-                result.error("Erro ao ler configuração", e.getMessage(), e);
-            }
-        }
-
-        if ( call.method.equals("configGravar")){
-            try {
-                int status = acbrBal.configGravar();
-                result.success(status);
-            } catch (Exception e) {
-                result.error("Erro ao gravar configuração", e.getMessage(), e);
-            }
-        }
-
-        if ( call.method.equals("configLerValor")){
-            try {
-                String valor = acbrBal.configLerValor(call.argument("sessao"), call.argument("chave"));
-                result.success(valor);
-            } catch (Exception e) {
-                result.error("Erro ao ler valor de configuração", e.getMessage(), e);
-            }
+        switch (call.method) {
+            case "inicializar":
+                handleInicializar(result);
+                break;
+            case "ativar":
+                handleAtivar(result);
+                break;
+            case "desativar":
+                handleDesativar(result);
+                break;
+            case "finalizar":
+                handleFinalizar(result);
+                break;
+            case "lePeso":
+                handleLePeso(call, result);
+                break;
+            case "lePesoStr":
+                handleLePesoStr(call, result);
+                break;
+            case "ultimoPesoLido":
+                handleUltimoPesoLido(result);
+                break;
+            case "ultimoPesoLidoStr":
+                handleUltimoPesoLidoStr(result);
+                break;
+            case "interpretarRespostaPeso":
+                handleInterpretarRespostaPeso(call, result);
+                break;
+            case "interpretarRespotaPesoStr":
+                handleInterpretarRespostaPesoStr(call, result);
+                break;
+            case "configLer":
+                handleConfigLer(call, result);
+                break;
+            case "configGravar":
+                handleConfigGravar(result);
+                break;
+            case "configLerValor":
+                handleConfigLerValor(call, result);
+                break;
+            default:
+                result.notImplemented();
+                break;
         }
     }
+
+    private void handleInicializar(MethodChannel.Result result) {
+        int status = -1;
+        try {
+            status = acbrBal.inicializar();
+            aplicaConfiguracoesPadrao();
+            result.success(status);
+        } catch (Exception e) {
+            result.error("Erro ao inicializar ACBrLibBAL", e.getMessage(), e);
+        }
+    }
+
+    private void handleAtivar(MethodChannel.Result result) {
+        try {
+            acbrBal.ativar();
+            result.success(true);
+        } catch (Exception e) {
+            result.error("Erro ao ativar ACBrLibBAL", e.getMessage(), e);
+        }
+    }
+
+    private void handleDesativar(MethodChannel.Result result) {
+        try {
+            acbrBal.desativar();
+            result.success(false);
+        } catch (Exception e) {
+            result.error("Erro ao desativar ACBrLibBAL", e.getMessage(), e);
+        }
+    }
+
+    private void handleFinalizar(MethodChannel.Result result) {
+        try {
+            int status = acbrBal.finalizar();
+            result.success(status);
+        } catch (Exception e) {
+            result.error("Erro ao finalizar ACBrLibBAL", e.getMessage(), e);
+        }
+    }
+
+    private void handleLePeso(MethodCall call, MethodChannel.Result result) {
+        try {
+            double peso = acbrBal.lePeso(call.argument("millisecTimeOut"));
+            result.success(peso);
+        } catch (Exception e) {
+            result.error("Erro ao ler peso", e.getMessage(), e);
+        }
+    }
+
+    private void handleLePesoStr(MethodCall call, MethodChannel.Result result) {
+        try {
+            String peso = acbrBal.lePesoStr(call.argument("millisecTimeOut"));
+            Log.i("ACBrBalAarPlugin", "Peso: " + peso);
+            result.success(peso);
+        } catch (Exception e) {
+            result.error("Erro ao ler peso", e.getMessage(), e);
+        }
+    }
+
+    private void handleUltimoPesoLido(MethodChannel.Result result) {
+        try {
+            double peso = acbrBal.ultimoPesoLido();
+            result.success(peso);
+        } catch (Exception e) {
+            result.error("Erro ao ler peso", e.getMessage(), e);
+        }
+    }
+
+    private void handleUltimoPesoLidoStr(MethodChannel.Result result) {
+        try {
+            String peso = acbrBal.ultimoPesoLidoStr();
+            result.success(peso);
+        } catch (Exception e) {
+            result.error("Erro ao ler peso", e.getMessage(), e);
+        }
+    }
+
+    private void handleInterpretarRespostaPeso(MethodCall call, MethodChannel.Result result) {
+        try {
+            double peso = acbrBal.interpretarRespostaPeso(call.argument("aResposta"));
+            result.success(peso);
+        } catch (Exception e) {
+            result.error("Erro ao interpretar resposta de peso", e.getMessage(), e);
+        }
+    }
+
+    private void handleInterpretarRespostaPesoStr(MethodCall call, MethodChannel.Result result) {
+        try {
+            String peso = acbrBal.interpretarRespostaPesoStr(call.argument("aResposta"));
+            result.success(peso);
+        } catch (Exception e) {
+            result.error("Erro ao interpretar resposta de peso", e.getMessage(), e);
+        }
+    }
+
+    private void handleConfigLer(MethodCall call, MethodChannel.Result result) {
+        try {
+            int status = acbrBal.configLer(call.argument("eArqConfig"));
+            result.success(status);
+        } catch (Exception e) {
+            result.error("Erro ao ler configuração", e.getMessage(), e);
+        }
+    }
+
+    private void handleConfigGravar(MethodChannel.Result result) {
+        try {
+            int status = acbrBal.configGravar();
+            result.success(status);
+        } catch (Exception e) {
+            result.error("Erro ao gravar configuração", e.getMessage(), e);
+        }
+    }
+
+    private void handleConfigLerValor(MethodCall call, MethodChannel.Result result) {
+        try {
+            String valor = acbrBal.configLerValor(call.argument("sessao"), call.argument("chave"));
+            result.success(valor);
+        } catch (Exception e) {
+            result.error("Erro ao ler valor de configuração", e.getMessage(), e);
+        }
+    }
+
+
     private void aplicaConfiguracoesPadrao() throws Exception {
-        acbrBal.configGravarValor("Principal", "LogPath",appDir.getAbsolutePath());  
+        acbrBal.configGravarValor("Principal", "LogPath", appDir.getAbsolutePath());
         acbrBal.configGravarValor("BAL", "Modelo", "2");
         acbrBal.configGravarValor("BAL", "Porta", "/dev/ttyUSER0");
         acbrBal.configGravarValor("BAL_Device", "Baud", "9600");

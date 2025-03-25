@@ -1,0 +1,11 @@
+-hbexe
+-inc
+-trace
+-gtcgi
+-icon=ACBrMonitor.ico
+
+ACBrAbecsPinpadDemo.prg
+ACBrAbecsPinpad.prg
+Debugger.prg
+xhb.hbc
+hbxpp.hbc

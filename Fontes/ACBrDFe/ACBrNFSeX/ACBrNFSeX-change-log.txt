@@ -42,10 +42,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/03/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6808: Alterado o Params: ResponseTag da cidade de Visconde do Rio Branco/MG.
+  Por: João Antônio
+[+] #TK-6803: Incluída a cidade de Urupes/SP, o provedor é Fiorilli.
+  Por: João Vitor Bogo
+[*] #TK-6798: Alterado de http para https as URLs da cidade de Alfenas/MG.
+  Por: João Antônio
+
 24/03/2025
 -- SigISS.Provider --
 [*] #TK-6800: O provedor SigISS utiliza o pipe como quebra de linha.
    Por: Concept Automação 
+-- ACBrNFSeXServicos --
+[*] #TK-6717: Correção no nome dos campos das URLs da cidade de Confresa/MT.
+  Por: Márcio Baroni
 
 20/03/2025
 -- Diversos --

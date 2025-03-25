@@ -23,7 +23,7 @@
       <MajorVersionNr Value="1"/>
       <MinorVersionNr Value="4"/>
       <RevisionNr Value="7"/>
-      <BuildNr Value="307"/>
+      <BuildNr Value="308"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrNFe - BIblioteca para emissão e impressão de nota fiscal eletrônica" InternalName="ACBrLibNFE" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="ACBrNFe " ProductVersion="0.4.6.0"/>
     </VersionInfo>

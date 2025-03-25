@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_consulta"
+        android:icon="@drawable/ic_search"
+        android:title="Consulta" />
+    <item
+        android:id="@+id/navigation_configuracoes"
+        android:icon="@drawable/ic_settings"
+        android:title="Configurações" />
+    <item
+        android:id="@+id/navigation_ini"
+        android:icon="@drawable/ic_file"
+        android:title="ACBrLib.ini" />
+</menu> 

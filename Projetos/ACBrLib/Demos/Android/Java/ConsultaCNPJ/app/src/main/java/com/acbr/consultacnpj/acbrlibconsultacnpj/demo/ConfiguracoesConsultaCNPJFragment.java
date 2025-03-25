@@ -1,30 +1,28 @@
 package com.acbr.consultacnpj.acbrlibconsultacnpj.demo;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
-
+import com.google.android.material.textfield.TextInputEditText;
 import br.com.acbr.lib.consultacnpj.ACBrLibConsultaCNPJ;
 import br.com.acbr.lib.consultacnpj.Provedor;
 
 public class ConfiguracoesConsultaCNPJFragment extends Fragment {
     private ACBrLibConsultaCNPJ ACBrConsultaCNPJ;
 
-    private Spinner cmbProvedor;
-    private TextView txtUsuarioProvedor;
-    private TextView txtSenhaProvedor;
-    private TextView txtProxyServidor;
-    private TextView txtProxyPorta;
-    private TextView txtProxyUsuario;
-    private TextView txtProxySenha;
+    private AutoCompleteTextView cmbProvedor;
+    private TextInputEditText txtUsuarioProvedor;
+    private TextInputEditText txtSenhaProvedor;
+    private TextInputEditText txtProxyServidor;
+    private TextInputEditText txtProxyPorta;
+    private TextInputEditText txtProxyUsuario;
+    private TextInputEditText txtProxySenha;
     private Button btnSalvarConfiguracoesConsultaCNPJ;
     private Button btnCarregarConfiguracoesConsultaCNPJ;
 
@@ -48,7 +46,16 @@ public class ConfiguracoesConsultaCNPJFragment extends Fragment {
         btnSalvarConfiguracoesConsultaCNPJ = view.findViewById(R.id.btnSalvarConfiguracoesConsultaCNPJ);
         btnCarregarConfiguracoesConsultaCNPJ = view.findViewById(R.id.btnCarregarConfiguracoesConsultaCNPJ);
 
-        SpinnerUtils.preencherSpinner(getContext(), cmbProvedor, provedor);
+        // Configurar o adapter para o AutoCompleteTextView
+        ArrayAdapter<Provedor> adapter = new ArrayAdapter<>(getContext(), R.layout.dropdown_menu_item, Provedor.values());
+        cmbProvedor.setAdapter(adapter);
+        cmbProvedor.setThreshold(0);
+        cmbProvedor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cmbProvedor.showDropDown();
+            }
+        });
 
         btnSalvarConfiguracoesConsultaCNPJ.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,8 +77,17 @@ public class ConfiguracoesConsultaCNPJFragment extends Fragment {
     }
 
     private void salvarConfiguracoesConsultaCNPJ() {
-        try{
-            ACBrConsultaCNPJ.configGravarValor("ConsultaCNPJ", "Provedor", Integer.toString(cmbProvedor.getSelectedItemPosition()));
+        try {
+            String provedorSelecionado = cmbProvedor.getText().toString();
+            int posicaoProvedor = -1;
+            for (int i = 0; i < provedor.length; i++) {
+                if (provedor[i].toString().equals(provedorSelecionado)) {
+                    posicaoProvedor = i;
+                    break;
+                }
+            }
+            
+            ACBrConsultaCNPJ.configGravarValor("ConsultaCNPJ", "Provedor", String.valueOf(posicaoProvedor));
             ACBrConsultaCNPJ.configGravarValor("ConsultaCNPJ", "Usuario", txtUsuarioProvedor.getText().toString());
             ACBrConsultaCNPJ.configGravarValor("ConsultaCNPJ", "Senha", txtSenhaProvedor.getText().toString());
             ACBrConsultaCNPJ.configGravarValor("Proxy", "Servidor", txtProxyServidor.getText().toString());
@@ -79,23 +95,26 @@ public class ConfiguracoesConsultaCNPJFragment extends Fragment {
             ACBrConsultaCNPJ.configGravarValor("Proxy", "Usuario", txtProxyUsuario.getText().toString());
             ACBrConsultaCNPJ.configGravarValor("Proxy", "Senha", txtProxySenha.getText().toString());
             ACBrConsultaCNPJ.configGravar();
-        } catch (Exception ex){
-            Log.i("Erro", " - Salvar Configurações Consulta CNPJ: " + ex.getMessage());
+        } catch (Exception ex) {
+            Log.e("Erro", " - Salvar Configurações Consulta CNPJ: " + ex.getMessage());
         }
     }
 
     private void carregarConfiguracoesConsultaCNPJ() {
-        try{
-            cmbProvedor.setSelection(Integer.valueOf(ACBrConsultaCNPJ.configLerValor("ConsultaCNPJ", "Provedor")));
+        try {
+            int posicaoProvedor = Integer.parseInt(ACBrConsultaCNPJ.configLerValor("ConsultaCNPJ", "Provedor"));
+            if (posicaoProvedor >= 0 && posicaoProvedor < provedor.length) {
+                cmbProvedor.setText(provedor[posicaoProvedor].toString(), false);
+            }
+            
             txtUsuarioProvedor.setText(ACBrConsultaCNPJ.configLerValor("ConsultaCNPJ", "Usuario"));
             txtSenhaProvedor.setText(ACBrConsultaCNPJ.configLerValor("ConsultaCNPJ", "Senha"));
             txtProxyServidor.setText(ACBrConsultaCNPJ.configLerValor("Proxy", "Servidor"));
             txtProxyPorta.setText(ACBrConsultaCNPJ.configLerValor("Proxy", "Porta"));
             txtProxyUsuario.setText(ACBrConsultaCNPJ.configLerValor("Proxy", "Usuario"));
             txtProxySenha.setText(ACBrConsultaCNPJ.configLerValor("Proxy", "Senha"));
-        } catch (Exception ex){
-            Log.i("Erro", " - Carregar Configurações Consulta CNPJ: " + ex.getMessage());
+        } catch (Exception ex) {
+            Log.e("Erro", " - Carregar Configurações Consulta CNPJ: " + ex.getMessage());
         }
     }
-
 }

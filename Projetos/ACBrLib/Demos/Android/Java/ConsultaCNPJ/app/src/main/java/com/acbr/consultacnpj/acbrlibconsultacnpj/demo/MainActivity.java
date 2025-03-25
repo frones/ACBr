@@ -1,50 +1,58 @@
 package com.acbr.consultacnpj.acbrlibconsultacnpj.demo;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import br.com.acbr.lib.comum.dfe.SSLCryptLib;
-import br.com.acbr.lib.comum.dfe.SSLHttpLib;
-import br.com.acbr.lib.comum.dfe.SSLXmlSignLib;
+import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import br.com.acbr.lib.consultacnpj.ACBrLibConsultaCNPJ;
 
 public class MainActivity extends AppCompatActivity {
-
     private ACBrLibConsultaCNPJ ACBrConsultaCNPJ;
     private ConsultaCNPJApplication application;
+    private NavController navController;
+    private AppBarConfiguration appBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btnConfiguracoes = findViewById(R.id.btnConfiguracoes);
-        Button btnComandosConsultaCNPJ = findViewById(R.id.btnComandosConsultaCNPJ);
-
         application = ((ConsultaCNPJApplication) getApplicationContext());
         ACBrConsultaCNPJ = application.getAcBrLibConsultaCNPJ();
         configurarACBrConsultaCNPJ();
 
-        btnConfiguracoes.setOnClickListener(view -> irParaTelaConfiguracoes());
-        btnComandosConsultaCNPJ.setOnClickListener(view -> irParaTelaComandos());
+        // Configurar Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Configurar navegação
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment);
+        navController = navHostFragment.getNavController();
+        
+        // Configurar AppBar
+        appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_comandos,
+                R.id.navigation_configuracoes,
+                R.id.navigation_ini
+        ).build();
+        
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        
+        // Configurar BottomNavigationView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
     }
 
-    private void irParaTelaComandos() {
-        Intent intent = new Intent(MainActivity.this, ComandosConsultaCNPJActivity.class);
-        startActivity(intent);
-    }
-
-    private void irParaTelaConfiguracoes() {
-        Intent intent = new Intent(MainActivity.this, ConfiguracoesActivity.class);
-        startActivity(intent);
+    @Override
+    public boolean onSupportNavigateUp() {
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp();
     }
 
     private void configurarACBrConsultaCNPJ() {

@@ -12,17 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ACBrLibConsultaCNPJDemo"
+        android:theme="@style/Theme.ACBrLibConsultaCNPJ"
         tools:targetApi="31">
-        <activity
-            android:name=".ConfiguracoesConsultaCNPJActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ComandosConsultaCNPJActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ConfiguracoesActivity"
-            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

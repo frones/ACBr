@@ -59,7 +59,6 @@ type
   protected
     FACBrIBGE: TACBrIBGE;
     FNaturezaJuridica : String ;
-    //FViewState: String;
     FEmpresaTipo: String;
     FAbertura: TDateTime;
     FRazaoSocial: String;
@@ -99,6 +98,8 @@ type
     FProxyUser : string;
     FProxyPass : string;
     FCapitalSocial : Double;
+    FHTTPResponse : string;
+    FHTTPResultCode : Integer;
     function GetIBGE_UF : String ;
     function GetIniServicos: String;
     procedure ParserWS(const AACBrConsultaCNPJWSResposta : TACBrConsultaCNPJWSResposta);
@@ -149,6 +150,8 @@ type
     property ProxyUser: string read FProxyUser write FProxyUser;
     property ProxyPass: string read FProxyPass write FProxyPass;
     property CapitalSocial: Double read FCapitalSocial write FCapitalSocial;
+    property HTTPResponse : String read FHTTPResponse;
+    property HTTPResultCode : Integer read FHTTPResultCode;
   end;
 
 implementation
@@ -200,6 +203,9 @@ begin
   FCodigoIBGE           := AACBrConsultaCNPJWSResposta.CodigoIBGE;
   FInscricaoEstadual    := AACBrConsultaCNPJWSResposta.InscricaoEstadual;
   FCapitalSocial        := AACBrConsultaCNPJWSResposta.CapitalSocial;
+
+  FHTTPResponse         := AACBrConsultaCNPJWSResposta.ResultString;
+  FHTTPResultCode       := AACBrConsultaCNPJWSResposta.ResultCode;
 end;
 
 function TACBrConsultaCNPJ.Consulta(const ACNPJ: String; const ACaptcha: String; const ARemoverEspacosDuplos: Boolean): Boolean;

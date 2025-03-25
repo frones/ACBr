@@ -39,7 +39,8 @@ uses
   SysUtils,
   ACBrValidador,
   httpsend,
-  Classes;
+  Classes,
+  ACBrUtil.Strings;
 type
   TParams =
     record  prName,PrValue:string;
@@ -73,6 +74,8 @@ type
     CodigoIBGE           : string;
     InscricaoEstadual    : string;
     CapitalSocial        : Double;
+    ResultString         : string;
+    ResultCode           : integer;
   end;
   { TACBrConsultaCNPJWS }
   TACBrConsultaCNPJWS = class( TObject )
@@ -194,6 +197,8 @@ begin
     if (Result >= 300) then
       FResultString := FResultString +' '+ FHTTPSend.Sock.LastErrorDesc;
 
+    FResposta.ResultString := UTF8ToNativeString(LRetorno);
+    FResposta.ResultCode   := Result;
   finally
     LStream.Free;
     FHTTPSend.Free;

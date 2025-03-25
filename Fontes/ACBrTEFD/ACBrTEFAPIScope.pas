@@ -159,6 +159,9 @@ uses
 
 procedure TACBrTEFRespScope.ConteudoToProperty;
   procedure TrataCamposMask1(const IDCampo: Int64; Linha: TACBrTEFLinha);
+  var
+    s: String;
+    d: TDateTime;
   begin
     //MASK1_Numero_Conta_PAN
     //MASK1_Data_referencia
@@ -181,8 +184,10 @@ procedure TACBrTEFRespScope.ConteudoToProperty;
       DataHoraTransacaoLocal := DateOf(DataHoraTransacaoLocal) + Linha.Informacao.AsTime
     else if IDCampo = MASK1_Data_local_transacao then
     begin
-      if Trim(Linha.Informacao.AsString) <> '' then
-        DataHoraTransacaoLocal := Linha.Informacao.AsDate + TimeOf(DataHoraTransacaoLocal);
+      s  := Trim(Linha.Informacao.AsString);
+      if (s <> '') then
+        if TryEncodeDate(YearOf(Date()), StrToIntDef(copy(s, 1, 2), 0), StrToIntDef(copy(s, 3, 2), 0), d) then
+          DataHoraTransacaoLocal := d + TimeOf(DataHoraTransacaoLocal);
     end
     else if IDCampo = MASK1_Data_vencimento_cartao then
       NFCeSAT.DataExpiracao := Linha.Informacao.AsString

@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/03/2025
+-- ACBrTEFAPIScope --
+[-] Correção no tratamento do retorno do registrador MASK1_Data_local_transacao
+    (por: DSA)
+
 20/03/2025
 -- ACBrTEFScopeAPI --
 [-] Correção no método 'AssignColetaToColetaEx', para Delphi Unicode

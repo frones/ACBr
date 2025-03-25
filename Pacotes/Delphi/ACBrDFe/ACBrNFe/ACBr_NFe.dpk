@@ -92,6 +92,8 @@ contains
   ACBrNFe.Consts in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\ACBrNFe.Consts.pas',
   ACBrNFe.Classes in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\ACBrNFe.Classes.pas',
   ACBrNFe.Conversao in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\ACBrNFe.Conversao.pas',
+  ACBrNFe.IniReader in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\ACBrNFe.IniReader.pas',
+  ACBrNFe.IniWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\ACBrNFe.IniWriter.pas',
 
   {$IFDEF USE_ACBr_XMLDOCUMENT}
   ACBrNFe.XmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\ACBrNFe.XmlReader.pas',

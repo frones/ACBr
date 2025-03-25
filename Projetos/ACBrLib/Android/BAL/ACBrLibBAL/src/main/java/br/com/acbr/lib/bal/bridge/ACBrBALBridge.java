@@ -43,7 +43,7 @@ public interface ACBrBALBridge extends Library {
 
     public int BAL_UltimoPesoLido(Pointer libHandle, DoubleByReference Peso);
 
-    public int BAL_UltimoPesoLisoStr(Pointer libHandle, ByteBuffer sValor);
+    public int BAL_UltimoPesoLidoStr(Pointer libHandle, ByteBuffer sValor);
 
     public int BAL_InterpretarRespostaPeso(Pointer libHandle, String aResposta, DoubleByReference Peso);
 

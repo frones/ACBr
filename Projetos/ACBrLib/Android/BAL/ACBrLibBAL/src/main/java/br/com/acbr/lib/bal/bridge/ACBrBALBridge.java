@@ -39,13 +39,13 @@ public interface ACBrBALBridge extends Library {
 
     public int BAL_LePeso(Pointer libHandle, int MillisecTimeOut, DoubleByReference Peso);
 
-    public int BAL_LePesoStr(Pointer libHandle, int MillisecTimeOut, ByteBuffer sValor);
+    public int BAL_LePesoStr(Pointer libHandle, int MillisecTimeOut, ByteBuffer sValor, IntByReference esTamanho);
 
     public int BAL_UltimoPesoLido(Pointer libHandle, DoubleByReference Peso);
 
-    public int BAL_UltimoPesoLidoStr(Pointer libHandle, ByteBuffer sValor);
+    public int BAL_UltimoPesoLidoStr(Pointer libHandle, ByteBuffer sValor, IntByReference esTamanho);
 
     public int BAL_InterpretarRespostaPeso(Pointer libHandle, String aResposta, DoubleByReference Peso);
 
-    public int BAL_InterpretarRespostaPesoStr(Pointer libHandle, String aResposta, ByteBuffer sValor);
+    public int BAL_InterpretarRespostaPesoStr(Pointer libHandle, String aResposta, ByteBuffer sValor, IntByReference esTamanho);
 }

@@ -661,7 +661,7 @@ end;
 
 procedure TACBrBancoSicoob.LerRetorno400(ARetorno: TStringList);
 var
-  ContLinha: Integer;
+  ContLinha, LLayoutVersaoArquivo: Integer;
   Titulo   : TACBrTitulo;
   Linha, rCedente, rCNPJCPF : String;
 begin
@@ -737,8 +737,18 @@ begin
          ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
          ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
          ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
-         NossoNumero          := copy( Copy(Linha,63,11),Length( Copy(Linha,63,11) )-TamanhoMaximoNossoNum+1  ,TamanhoMaximoNossoNum);
-         Carteira             := Copy(Linha,86,3);
+         Carteira             := Copy(Linha,107,2);
+         LLayoutVersaoArquivo := ACBrBoleto.Banco.LayoutVersaoArquivo;
+         if ACBrBoleto.LerNossoNumeroCompleto or (ACBrBoleto.Banco.LayoutVersaoArquivo = 810) then
+         begin
+           fpLayoutVersaoArquivo   := 810;
+           NossoNumero             := Copy(Linha,67,8);
+         end else
+         begin
+           fpLayoutVersaoArquivo   := 81;
+           NossoNumero             := Copy(Linha,67,7);
+         end;
+         fpLayoutVersaoArquivo   := LLayoutVersaoArquivo;
          ValorDespesaCobranca := StrToFloatDef(Copy(Linha,182,7),0)/100;
          ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
 

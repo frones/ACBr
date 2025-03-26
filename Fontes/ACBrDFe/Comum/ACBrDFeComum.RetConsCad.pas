@@ -73,7 +73,7 @@ type
     FxBairro: string;
     FcMun: Integer;
     FxMun: string;
-    FCep: Integer;
+    FCep: string;
   public
     property IE: string          read FIE         write FIE;
     property CNPJ: string        read FCNPJ       write FCNPJ;
@@ -97,7 +97,7 @@ type
     property xBairro: string     read FxBairro    write FxBairro;
     property cMun: Integer       read FcMun       write FcMun;
     property xMun: string        read FxMun       write FxMun;
-    property CEP: Integer        read FCep        write FCep;
+    property CEP: string         read FCep        write FCep;
   end;
 
   TInfCadCollection = class(TACBrObjectList)
@@ -309,7 +309,7 @@ begin
     Item.xBairro := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xBairro'), tcStr);
     Item.cMun := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cMun'), tcInt);
     Item.xMun := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMun'), tcStr);
-    Item.CEP := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CEP'), tcInt);
+    Item.CEP := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
   end;
 end;
 

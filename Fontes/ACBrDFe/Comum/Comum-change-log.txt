@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/03/2025
+-- ACBrDFeComum.RetConsCad --
+[*] Alteração visando retornar o CEP como uma string em vez de Integer, pelo fato
+    de existirem CEP começados por zero.
+   Por: João Vitor Bogo
+
 23/02/2025
 -- ACBrDFeComum.RetDistDFeInt --
 [*] Ajustes para identificar o CT-e Simplificado.

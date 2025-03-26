@@ -3084,17 +3084,7 @@ var
   TipoCaptura: Word;
   Resposta, MsgCli, MsgOpe: String;
   Fluxo: TACBrTEFScopeEstadoOperacao;
-
-  function VerificarSeUsuarioCancelouTransacao(Fluxo: TACBrTEFScopeEstadoOperacao): Boolean;
-  var
-    Cancelar: Boolean;
-  begin
-    // Chama evento, permitindo ao usuário cancelar
-    Cancelar := False;
-    ChamarEventoTransacaoEmAndamento(Fluxo, Cancelar);
-    Result := Cancelar;
-  end;
-
+  Cancelar: Boolean;
 begin
   Result := -1;
   GravarLog('ExecutarTransacao');
@@ -3121,16 +3111,7 @@ begin
       // Enquanto a transacao estiver em andamento, aguarda, mas verifica se o usuário Cancelou //
       if (iStatus = RCS_TRN_EM_ANDAMENTO) then
       begin
-        if (fDadosDaTransacao.Values[RET_QRCODE] <> '') then
-          Fluxo := scoestLeituraQRCode
-        else
-          Fluxo := scoestFluxoAPI;
-
-        if VerificarSeUsuarioCancelouTransacao(Fluxo) then
-          EnviarParametroTransacao(ACAO_CANCELAR, iStatus)
-        else
-          Sleep(fIntervaloColeta);
-
+        Sleep(fIntervaloColeta);
         Continue;
       end;
 
@@ -3138,7 +3119,10 @@ begin
       if (iStatus = TC_COLETA_CARTAO_EM_ANDAMENTO) or   // Efetuando Leitura do Cartão. //
          (iStatus = TC_COLETA_EM_ANDAMENTO) then        // Outra operação no PinPad //
       begin
-        if VerificarSeUsuarioCancelouTransacao(scoestPinPadLerCartao) then
+        // Chama evento, permitindo ao usuário cancelar
+        Cancelar := False;
+        ChamarEventoTransacaoEmAndamento(Fluxo, Cancelar);
+        if Cancelar then
           Acao := ACAO_CANCELAR;
 
         EnviarParametroTransacao(Acao, iStatus);
@@ -4172,13 +4156,6 @@ begin
   GravarLog('  ret: '+IntToStr(ret));
   Result := (ret = RCS_SUCESSO);
 end;
-
-{
---- TODO VERIFICAR ---
-- Cancelar uma transação pelo Teclado está retornando o erro RCS_NAO_EXISTE_TRN_SUSPENSA
-- Como fazer Transação de Crédito parcelado pela Administradora ou Lojista
-  - Como usar os Serviços Scope, da Pag 340 ?
-}
 
 end.
 

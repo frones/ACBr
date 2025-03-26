@@ -2711,7 +2711,7 @@ begin
     MemoDados.Lines.Add('xBairro: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xBairro);
     MemoDados.Lines.Add('cMun: ' + IntToStr(ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].cMun));
     MemoDados.Lines.Add('xMun: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xMun);
-    MemoDados.Lines.Add('CEP: ' + IntToStr(ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].CEP));
+    MemoDados.Lines.Add('CEP: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].CEP);
   end;
 end;
 

@@ -274,11 +274,13 @@ end;
  ------------------------------------------------------------------------------}
 function ConverteXMLtoUTF8(const AXML: String): String;
 var
+  XMLProcessado: string;
   UTF8Str: AnsiString;
 begin
   if not XmlEhUTF8(AXML) then   // Já foi convertido antes ou montado em UTF8 ?
   begin
-    UTF8Str := NativeStringToUTF8(AXML);
+    XMLProcessado := RemoverDeclaracaoXML(AXML);
+    UTF8Str := NativeStringToUTF8(XMLProcessado);
     Result := CUTF8DeclaracaoXML + String(UTF8Str);
   end
   else

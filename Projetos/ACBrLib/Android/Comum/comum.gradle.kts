@@ -20,6 +20,8 @@ fun getProjectFromFolder(arch: String) : String {
 tasks.register<Copy>("copyLibs_arm64") {
     val ProjectFromFolder = getProjectFromFolder("arm64-v8a")
 
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
     from(ProjectFromFolder) {
         include("**/*.so")
     }
@@ -41,6 +43,8 @@ tasks.register<Copy>("copyLibs_arm64") {
 
 tasks.register<Copy>("copyLibs_armeabi") {
     val ProjectFromFolder = getProjectFromFolder("armeabi-v7a")
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
     from(ProjectFromFolder) {
         include("**/*.so")
@@ -70,6 +74,7 @@ tasks.register<Copy>("copyLibs") {
 
     println("ACBR_HOME " + ACBrFolder)
     println("Copiando Bibliotecas para pasta: " + jniLibsFolder);
+
 
 
     dependsOn(

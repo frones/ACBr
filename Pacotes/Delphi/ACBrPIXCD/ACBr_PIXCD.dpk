@@ -79,5 +79,7 @@ contains
   ACBrSchemasGate2All in '..\..\..\Fontes\ACBrPIXCD\ACBrSchemasGate2All.pas',
   ACBrPIXPSPBanrisul in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPBanrisul.pas',
   ACBrPIXPSPC6Bank in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPC6Bank.pas';
+  ACBrPIXPSPAppLess in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPAppLess.pas';
+  ACBrSchemasAppLess in '..\..\..\Fontes\ACBrPIXCD\ACBrSchemasAppLess.pas';
 
 end.

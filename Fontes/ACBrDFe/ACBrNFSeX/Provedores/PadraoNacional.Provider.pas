@@ -1022,6 +1022,7 @@ begin
           AResumo.ChaveDFe := JSon.AsString['ChaveAcesso'];
           TipoDoc := JSon.AsString['TipoDocumento'];
           AResumo.TipoDoc := TipoDoc;
+          AResumo.TipoEvento := JSon.AsString['TipoEvento'];
 
           ArquivoXml := JSon.AsString['ArquivoXml'];
           ArquivoXml := DeCompress(DecodeBase64(ArquivoXml));

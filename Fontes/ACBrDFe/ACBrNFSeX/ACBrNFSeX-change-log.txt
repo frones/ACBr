@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/03/2025
+-- ACBrNFSeXWebservicesResponse/PadraoNacional.Provider --
+[+] #TK-6815: Incluído a propriedade TipoEvento que é retornado na pela Consulta DFe do
+    Padrão Nacional.
+  Por: Pegasus Sistemas LTDA
 -- ACBrNFSeXServicos --
 [*] #TK-6810: A cidade de Ilhota/SC trocou de provedor, agora é Betha versão 2.02
   Por: Lucas atz

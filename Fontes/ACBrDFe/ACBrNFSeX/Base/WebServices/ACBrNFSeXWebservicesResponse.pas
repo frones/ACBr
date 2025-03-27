@@ -85,6 +85,7 @@ type
     FNSU: Integer;
     FChaveDFe: string;
     FTipoDoc: string;
+    FTipoEvento: string;
     FidNota: string;
     FidRps: string;
     FNomeArq: string;
@@ -102,6 +103,7 @@ type
     property NSU: Integer read FNSU write FNSU;
     property ChaveDFe: string read FChaveDFe write FChaveDFe;
     property TipoDoc: string read FTipoDoc write FTipoDoc;
+    property TipoEvento: string read FTipoEvento write FTipoEvento;
     property idNota: string read FidNota write FidNota;
     property idRps: string read FidRps write FidRps;
     property NomeArq: string read FNomeArq write FNomeArq;

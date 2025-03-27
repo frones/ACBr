@@ -78,8 +78,8 @@ contains
   ACBrPIXPSPGate2All in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPGate2All.pas',
   ACBrSchemasGate2All in '..\..\..\Fontes\ACBrPIXCD\ACBrSchemasGate2All.pas',
   ACBrPIXPSPBanrisul in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPBanrisul.pas',
-  ACBrPIXPSPC6Bank in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPC6Bank.pas';
-  ACBrPIXPSPAppLess in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPAppLess.pas';
+  ACBrPIXPSPC6Bank in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPC6Bank.pas',
+  ACBrPIXPSPAppLess in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPAppLess.pas',
   ACBrSchemasAppLess in '..\..\..\Fontes\ACBrPIXCD\ACBrSchemasAppLess.pas';
 
 end.

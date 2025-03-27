@@ -48,13 +48,19 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/03/2025
+-- ACBrSchemasAppLess --
+[+] Inclusão de arquivo com mapeamento da API AppLess.
+    por: Júlio Cavalcanti
+	
+-- ACBrPIXPSPAppLess --
+[+] Inclusão do PSP AppLess.
+
 -- ACBrPIXCD --
 [+] Inclusão do PSP AppLess;
 [+] Inclusão de log de certificados PFX.
 [*] Adicionado parâmetro 'NivelLog' no método 'RegistrarLog';
 [*] Alteração para logar arquivos de certificado apenas se forem utilizados;
-
-
+    por: Elias César
 
 10/03/2025
 -- ACBrPixPSPBradesco --

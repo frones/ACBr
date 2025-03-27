@@ -7,6 +7,7 @@
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 { - Elias César                                                                }
+{ - Júlio Cavalcanti                                                           }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -77,7 +78,7 @@ type
   private
     fbankAccount: String;
     fbankAccountDv: String;
-    fbankAccountType: Int32;
+    fbankAccountType: Integer;
     fbankBranch: String;
     fbankCode: String;
   protected
@@ -93,7 +94,7 @@ type
     property bankBranch: String read fbankBranch write fbankBranch;
     property bankAccount: String read fbankAccount write fbankAccount;
     property bankAccountDv: String read fbankAccountDv write fbankAccountDv;
-    property bankAccountType: Int32 read fbankAccountType write fbankAccountType;
+    property bankAccountType: Integer read fbankAccountType write fbankAccountType;
 
   end;
 
@@ -174,7 +175,7 @@ type
   private
     fdocument: String;
     fname: String;
-    ftype_: Int32;
+    ftype_: Integer;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJson(aJson: TACBrJSONObject); override;
@@ -184,7 +185,7 @@ type
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrAppLessBeneficiary);
 
-    property type_: Int32 read ftype_ write ftype_;
+    property type_: Integer read ftype_ write ftype_;
     property document: String read fdocument write fdocument;
     property name: String read fname write fname;
   end;
@@ -264,7 +265,7 @@ type
     fdueDate: TDateTime;
     finstructions: String;
     flimitDate: TDateTime;
-    ftype_: Int32;
+    ftype_: Integer;
     function GetBeneficiary: TACBrAppLessBeneficiary;
     function GetCustumer: TACBrAppLessCustumer;
     function GetDiscount: TACBrAppLessDiscount;
@@ -289,7 +290,7 @@ type
     property instructions: String read finstructions write finstructions;
     property dueDate: TDateTime read fdueDate write fdueDate;
     property limitDate: TDateTime read flimitDate write flimitDate;
-    property type_: Int32 read ftype_ write ftype_;
+    property type_: Integer read ftype_ write ftype_;
   end;
 
   { TACBrAppLessOrderClass }
@@ -300,9 +301,9 @@ type
     fchannel: String;
     fcustumerCPF: String;
     fcustumerSocialName: String;
-    fexpiration: Int32;
+    fexpiration: Integer;
     fexternalId: String;
-    finstallments: Int32;
+    finstallments: Integer;
     fisStaticPix: Boolean;
     fmerchantDocument: String;
     fmerchantName: String;
@@ -321,9 +322,9 @@ type
     property customerCPF: String read fcustumerCPF write fcustumerCPF;
     property typeOrder: String read ftypeOrder write ftypeOrder;
     property channel: String read Fchannel write fchannel;
-    property installments: Int32 read finstallments write finstallments;
+    property installments: Integer read finstallments write finstallments;
     property orderDescription: String read forderDescription write forderDescription;
-    property expiration: Int32 read fexpiration write fexpiration;
+    property expiration: Integer read fexpiration write fexpiration;
     property merchantDocument: String read fmerchantDocument write fmerchantDocument;
     property merchantName: String read fmerchantName write fmerchantName;
     property isStaticPix: Boolean read fisStaticPix write fisStaticPix;

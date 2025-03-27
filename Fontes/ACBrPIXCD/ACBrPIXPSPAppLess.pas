@@ -379,7 +379,17 @@ var
 begin
   inherited ConfigurarHeaders(Method, AURL);
 
-  ts := IntToStr(DateTimeToUnix(Now, False) * 1000);
+  ts :=
+    {$IfDef FPC}
+      IntToStr(DateTimeToUnix(Now, False) * 1000);
+    {$Else}
+      {$IFDEF DELPHIXE2_UP}
+        IntToStr(DateTimeToUnix(Now, False) * 1000);
+      {$ELSE}
+        IntToStr((DateTimeToUnix(IncHour(Now, 3)) * 1000));
+      {$ENDIF}
+    {$EndIf}
+
   s := ts + ClientID;
   wOpenSSL := TACBrOpenSSLUtils.Create(nil);
   try
@@ -536,7 +546,7 @@ begin
   Http.MimeType := CContentTypeApplicationJSon;
 
   Result := AcessarEndPoint(ChttpMethodPOST, cAppLessEndpointOrder, wResultCode, wResponse);
-  Result := (wResultCode = HTTP_OK);
+  Result := Result and (wResultCode = HTTP_OK);
 
   if Result then
     OrderResponse.AsJSON := String(wResponse)
@@ -549,6 +559,7 @@ var
   wResponse: AnsiString;
   wResultCode: Integer;
 begin
+  Result := False;
   RegistrarLog('GetOrder - OrderID: ' + aOrderId);
   if EstaVazio(aOrderId) then
     Exit;
@@ -556,7 +567,7 @@ begin
   Clear;
   PrepararHTTP;
   Result := AcessarEndPoint(ChttpMethodGET, cAppLessEndpointOrder, wResultCode, wResponse);
-  Result := (wResultCode = HTTP_OK);
+  Result := Result and (wResultCode = HTTP_OK);
 
   if Result then
     OrderResponse.AsJSON := String(wResponse)

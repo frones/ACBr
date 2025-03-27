@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6810: A cidade de Ilhota/SC trocou de provedor, agora é Betha versão 2.02
+  Por: Lucas atz
+-- TabServicos --
+[+] #TK-6819: Incluído o código de item de serviço 14.14 e sua descrição.
+  Por: Diego Reckziegel
+
 25/03/2025
 -- ACBrNFSeXServicos --
 [*] #TK-6808: Alterado o Params: ResponseTag da cidade de Visconde do Rio Branco/MG.

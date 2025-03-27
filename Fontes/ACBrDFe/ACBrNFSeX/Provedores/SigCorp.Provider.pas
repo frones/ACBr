@@ -76,6 +76,7 @@ type
     function GetNameSpace: string;
     function GetSoapAction: string;
     function GetURL: string;
+    function GetSubVersao: Integer;
   public
     function Recepcionar(const ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
@@ -93,6 +94,7 @@ type
     property URL: string read GetURL;
     property NameSpace: string read GetNameSpace;
     property SoapAction: string read GetSoapAction;
+    property SubVersao: Integer read GetSubVersao;
   end;
 
   TACBrNFSeProviderSigCorp204 = class (TACBrNFSeProviderABRASFv2)
@@ -104,9 +106,6 @@ type
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
   end;
-
-var
-  SubVersao: Integer;
 
 implementation
 
@@ -484,8 +483,6 @@ procedure TACBrNFSeProviderSigCorp204.Configuracao;
 begin
   inherited Configuracao;
 
-  SubVersao := StrToIntDef(ConfigGeral.Params.ValorParametro('SubVersao'), 0);
-
   with ConfigGeral do
   begin
     QuebradeLinha := '|';
@@ -572,6 +569,11 @@ begin
     Result := URL;
 
   Result := Result + '#';
+end;
+
+function TACBrNFSeXWebserviceSigCorp204.GetSubVersao: Integer;
+begin
+  Result := StrToIntDef(TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params.ValorParametro('SubVersao'), 0);
 end;
 
 function TACBrNFSeXWebserviceSigCorp204.Recepcionar(const ACabecalho,

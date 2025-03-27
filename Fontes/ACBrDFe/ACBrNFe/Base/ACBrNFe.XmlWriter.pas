@@ -2255,10 +2255,9 @@ begin
             //Esse bloco fica a critério de cada UF a obrigação das informações, conforme o manual
             NrOcorr := 0;
 
-            {
-              41 = PR  Requer as informações mesmo elas sendo zeradas
-            }
-            if NFe.Ide.cUF = 41 then
+            // UFs que requerem as informações mesmo elas sendo zeradas
+            // RJ, PR
+            if NFe.Ide.cUF in [33, 41] then
               NrOcorr := 1;
 
             if NFe.Det[i].Imposto.ICMS.modBC <> dbiNenhum then

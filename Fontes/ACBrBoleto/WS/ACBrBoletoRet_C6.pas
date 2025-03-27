@@ -147,7 +147,7 @@ begin
 
             ARetornoWS.DadosRet.IDBoleto.CodBarras      := OnlyNumber(LJsonObject.AsString['bar_code']);
             ARetornoWS.DadosRet.IDBoleto.LinhaDig       := OnlyNumber(LJsonObject.AsString['digitable_line']);
-            ARetornoWS.DadosRet.IDBoleto.NossoNum       := LJsonObject.AsString['internal_id'];
+            ARetornoWS.DadosRet.IDBoleto.NossoNum       := LJsonObject.AsString['our_number'];//LinhaDigitavelExplodeInfo(ARetornoWS.DadosRet.IDBoleto.LinhaDig,TLDNossoNumero);//LJsonObject.AsString['internal_id'];
             ARetornoWS.DadosRet.IDBoleto.IDBoleto       := LJsonObject.AsString['id'];
 
             ARetornoWS.DadosRet.TituloRet.NossoNumeroCorrespondente := ARetornoWS.DadosRet.IDBoleto.IDBoleto;
@@ -170,7 +170,7 @@ begin
 
             ARetornoWS.DadosRet.IDBoleto.CodBarras      := OnlyNumber(LJsonObject.AsString['bar_code']);
             ARetornoWS.DadosRet.IDBoleto.LinhaDig       := OnlyNumber(LJsonObject.AsString['digitable_line']);
-            ARetornoWS.DadosRet.IDBoleto.NossoNum       := LJsonObject.AsString['internal_id'];
+            ARetornoWS.DadosRet.IDBoleto.NossoNum       := LJsonObject.AsString['our_number'];//LinhaDigitavelExplodeInfo(ARetornoWS.DadosRet.IDBoleto.LinhaDig,TLDNossoNumero);//LJsonObject.AsString['internal_id'];
             ARetornoWS.DadosRet.IDBoleto.IDBoleto       := LJsonObject.AsString['id'];
 
             ARetornoWS.DadosRet.TituloRet.NossoNumeroCorrespondente := ARetornoWS.DadosRet.IDBoleto.IDBoleto;

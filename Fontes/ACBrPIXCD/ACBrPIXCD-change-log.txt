@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2025
+-- ACBrPIXCD --
+[+] Inclusão do PSP AppLess;
+[+] Inclusão de log de certificados PFX.
+[*] Adicionado parâmetro 'NivelLog' no método 'RegistrarLog';
+[*] Alteração para logar arquivos de certificado apenas se forem utilizados;
+
+
+
 10/03/2025
 -- ACBrPixPSPBradesco --
 [*] Remoção de inclusão desnecessária da "Authorization" na Autenticação.

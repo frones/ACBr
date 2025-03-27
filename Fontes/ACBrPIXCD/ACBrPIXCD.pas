@@ -347,7 +347,7 @@ type
     procedure VerificarPIXCDAtribuido;
 
     procedure DispararExcecao(E: Exception);
-    procedure RegistrarLog(const ALinha: String);
+    procedure RegistrarLog(const ALinha: String; aNivelLog: Integer = 1);
     property NivelLog: Byte read GetNivelLog;
 
     function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; virtual;
@@ -564,7 +564,7 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure RegistrarLog(const ALinha: String);
+    procedure RegistrarLog(const ALinha: String; aNivelLog: Integer = 1);
 
     function GerarQRCodeEstatico(Valor: Currency; const infoAdicional: String = '';
       const TxId: String = ''): String; overload;
@@ -1539,10 +1539,10 @@ begin
   raise E;
 end;
 
-procedure TACBrPSP.RegistrarLog(const ALinha: String);
+procedure TACBrPSP.RegistrarLog(const ALinha: String; aNivelLog: Integer);
 begin
   if Assigned(fPixCD) then
-    fPixCD.RegistrarLog(ALinha);
+    fPixCD.RegistrarLog(ALinha, aNivelLog);
 end;
 
 function TACBrPSP.GetClientID: String;
@@ -1906,7 +1906,7 @@ end;
 function TACBrPSP.TransmitirHttp(const AMethod, AURL: String; out
   ResultCode: Integer; out RespostaHttp: AnsiString): Boolean;
 var
-  vMethod, vURL, vLocation, vReqHeader: String;
+  vMethod, vURL, vLocation, vReqHeader, wCertLog: String;
   vHttpBody, vMimeType: AnsiString;
   ContRedir: Integer;
 
@@ -1917,16 +1917,20 @@ var
     ChamarEventoQuandoTransmitirHttp(vURL, vMethod);
     if (NivelLog > 2) then
     begin
-      RegistrarLog('  Req.Headers:'+ sLineBreak + vReqHeader);
+      RegistrarLog('  Req.Headers:'+ sLineBreak + fHTTPSend.Headers.Text);
       RegistrarLog('  Req.Body:'+ sLineBreak + vHttpBody);
     end;
 
-    if (NivelLog > 3) then
-      RegistrarLog(sLineBreak +
-        'Http.Sock.SSL.CertificateFile: ' + Http.Sock.SSL.CertificateFile + sLineBreak +
-        'Http.Sock.SSL.PrivateKeyFile: ' + Http.Sock.SSL.PrivateKeyFile + sLineBreak +
-        'Http.Sock.SSL.Certificate: ' + Http.Sock.SSL.Certificate + sLineBreak +
-        'Http.Sock.SSL.PrivateKey: ' + Http.Sock.SSL.PrivateKey + sLineBreak);
+    wCertLog :=
+      IfThen(NaoEstaVazio(Http.Sock.SSL.PFX), 'Http.Sock.SSL.PFX: ' + Http.Sock.SSL.PFX + sLineBreak) +
+      IfThen(NaoEstaVazio(Http.Sock.SSL.PrivateKey), 'Http.Sock.SSL.PrivateKey: ' + Http.Sock.SSL.PrivateKey + sLineBreak) +
+      IfThen(NaoEstaVazio(Http.Sock.SSL.Certificate), 'Http.Sock.SSL.Certificate: ' + Http.Sock.SSL.Certificate + sLineBreak) +
+      IfThen(NaoEstaVazio(Http.Sock.SSL.PrivateKeyFile), 'Http.Sock.SSL.PrivateKeyFile: ' + Http.Sock.SSL.PrivateKeyFile + sLineBreak) +
+      IfThen(NaoEstaVazio(Http.Sock.SSL.CertificateFile), 'Http.Sock.SSL.CertificateFile: ' + Http.Sock.SSL.CertificateFile + sLineBreak);
+
+    // Registra o log apenas se uma das propriedades estiverem configuradas
+    if NaoEstaVazio(wCertLog) then
+      RegistrarLog(sLineBreak + wCertLog, 4);
 
     fHttpRespStream.Clear;
     Result := fHttpSend.HTTPMethod(vMethod, vURL);  // HTTP call
@@ -2362,7 +2366,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TACBrPixCD.RegistrarLog(const ALinha: String);
+procedure TACBrPixCD.RegistrarLog(const ALinha: String; aNivelLog: Integer);
 var
   Tratado: Boolean;
 begin
@@ -2370,7 +2374,7 @@ begin
   if Assigned(fQuandoGravarLog) then
     fQuandoGravarLog(ALinha, Tratado);
 
-  if not Tratado then
+  if not Tratado and (NivelLog >= aNivelLog) then
     GravarLogEmArquivo(ALinha);
 end;
 

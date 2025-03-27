@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/03/2025
+-- EL.Provider --
+[*] #TK-6727: Ajuste visando a correta exibição do retorno nas propriedades Código, Descricao e Correção.
+  Por: Diego Folieni / Italo Giurizzato Junior 
 -- ACBrNFSeXWebservicesResponse/PadraoNacional.Provider --
 [+] #TK-6815: Incluído a propriedade TipoEvento que é retornado na pela Consulta DFe do
     Padrão Nacional.

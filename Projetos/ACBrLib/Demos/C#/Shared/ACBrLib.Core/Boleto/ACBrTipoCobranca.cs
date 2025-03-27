@@ -50,6 +50,19 @@
         cobPenseBankAPI = 45,
         cobBTGPactual = 46,
         cobBancoOriginal = 47,
-        cobBancoVotorantin = 48
+        cobBancoVotorantin = 48,
+        cobBancoPefisa = 49,
+        cobBancoFibra = 50,
+        cobBancoSofisaItau = 51,
+        cobBancoIndustrialBrasil = 52,
+        cobBancoAthenaBradesco = 53,
+        cobBancoQITechSCD = 54,
+        cobBancoUY3 = 55,
+        cobBancoBocomBBM = 56,
+        cobBancoSicoob = 57,
+        cobBancoSisprime = 58,
+        cobBancoAilos = 59,
+        cobBancoCora = 60,
+        cobBancoSulcredi = 61
     }
 }

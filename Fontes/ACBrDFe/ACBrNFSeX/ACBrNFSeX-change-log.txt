@@ -56,6 +56,9 @@ Símbolo : Significado
 -- TabServicos --
 [+] #TK-6819: Incluído o código de item de serviço 14.14 e sua descrição.
   Por: Diego Reckziegel
+-- ACBrNFSeXDANFSeFPDFClass --
+[*] #TK-6793: Correção no FPDF na geração da marca d'água com informação de NFSe cancelada e o ambiente de homologação
+  Por: Renato Rubinho
 
 25/03/2025
 -- ACBrNFSeXServicos --

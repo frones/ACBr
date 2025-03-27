@@ -140,8 +140,8 @@ begin
 
     Report := TACBrDANFSeFPDFA4Retrato.Create(UmaNFSe);
     try
-      //Report.Cancelada   := rgStatus.ItemIndex = 2;
-      //Report.Homologacao := ckHomologacao.Checked;
+      Report.Cancelada := Cancelada;
+      Report.Homologacao := TACBrNFSeX(ACBrNFSe).Configuracoes.WebServices.AmbienteCodigo <> 1;
       Report.LogoPrefeitura := Trim(Self.Logo) <> '';
       Report.LogoPrestador  := Trim(Self.Prestador.Logo) <> '';
       Report.QRCode := (Trim(UmaNFSe.Link) <> '');

@@ -20,4 +20,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "ACBrLibConsultaCNPJ"
-include(':ACBrLibConsultaCNPJ')
+include(":ACBrLibConsultaCNPJ")

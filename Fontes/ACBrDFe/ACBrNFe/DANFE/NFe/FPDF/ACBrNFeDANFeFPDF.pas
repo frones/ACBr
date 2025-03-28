@@ -898,14 +898,14 @@ begin
 //          CampoVariavel2Descricao := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DO CANCELAMENTO' )
 //        else
         if FNFeUtils.NotaDenegada then
-          CampoVariavel2Descricao := ACBrStr('PROTOCOLO DE DENEGAÇÃO DE USO')
+          CampoVariavel2Descricao := 'PROTOCOLO DE DENEGAÇÃO DE USO'
         else
-          CampoVariavel2Descricao := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
+          CampoVariavel2Descricao := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
 
 //        if EstaVazio(FDANFEClassOwner.Protocolo) then
 //        begin
           if NFe.procNFe.nProt = '' then
-            CampoVariavel2Valor := ACBrStr('NFe sem Autorização de Uso da SEFAZ')
+            CampoVariavel2Valor := 'NFe sem Autorização de Uso da SEFAZ'
           else
             CampoVariavel2Valor :=
               NFe.procNFe.nProt + ' ' +
@@ -933,7 +933,7 @@ begin
     teContingencia,
     teFSDA :
       begin
-        CampoVariavel2Descricao := ACBrStr('DADOS DA NF-E');
+        CampoVariavel2Descricao := 'DADOS DA NF-E';
         CampoVariavel2Valor := chaveContingencia;
       end;
 
@@ -941,13 +941,13 @@ begin
       begin
         if NFe.procNFe.nProt <> '' then // DPEC TRANSMITIDO
         begin
-          CampoVariavel2Descricao := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DO EPEC');
+          CampoVariavel2Descricao := 'PROTOCOLO DE AUTORIZAÇÃO DO EPEC';
           CampoVariavel2Valor := NFe.procNFe.nProt + ' ' +
             IfThen(NFe.procNFe.dhRecbto <> 0, FormatDateTimeBr(NFe.procNFe.dhRecbto), '');
         end
         else
         begin
-          CampoVariavel2Descricao := ACBrStr('NÚMERO DE REGISTRO DPEC');
+          CampoVariavel2Descricao := 'NÚMERO DE REGISTRO DPEC';
           CampoVariavel2Valor := '';
 //            if NaoEstaVazio(FDANFEClassOwner.Protocolo) then
 //              FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.Protocolo;

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/03/2025
+-- ACBrNFeDANFeFPDF --
+[*] #TK-6749: Corrigidos erros de encoding no DANFE em FPDF
+   Por: Renato Rubinho
+
 27/03/2025
 -- ACBrNFe.XmlWriter --
 [*] #TK-6707: Configurado cst51 para gerar tags pRedBC, vICMSOp, pDif e vICMSDif mesmo zeradas para o RJ

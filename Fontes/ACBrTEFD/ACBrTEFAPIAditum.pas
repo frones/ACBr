@@ -586,7 +586,7 @@ begin
   begin
     js := TACBrJSONObject.Parse(FHTTPResponse);
     try
-      if (LowerCase(js.AsString['sucess']) <> 'true') then
+      if (LowerCase(js.AsString['success']) <> 'true') then
         TratarRetornoComErro;
 
       jsmerchantInfo := js.AsJSONObject['merchantInfo'];

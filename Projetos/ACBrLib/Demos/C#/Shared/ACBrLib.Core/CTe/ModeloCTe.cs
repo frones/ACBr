@@ -4,6 +4,7 @@
     {
         moCTe = 0,
         moGTVe = 1,
-        moCTeOS = 2
+        moCTeOS = 2,
+        moCTeSimp = 3
     }
 }

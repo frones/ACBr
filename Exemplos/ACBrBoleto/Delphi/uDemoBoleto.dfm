@@ -406,7 +406,7 @@ object frmDemoBoleto: TfrmDemoBoleto
             Width = 313
             Height = 21
             TabOrder = 3
-            Text = 'Rua dos clientes maringa da silva'
+            Text = 'Rua do Cliente'
           end
           object edtNome: TEdit
             Left = 3
@@ -414,7 +414,7 @@ object frmDemoBoleto: TfrmDemoBoleto
             Width = 337
             Height = 21
             TabOrder = 0
-            Text = 'CLIENTE DE TESTES VICTOR HUGO'
+            Text = 'CLIENTE DE TESTES'
           end
           object edtCPFCNPJ: TEdit
             Left = 346

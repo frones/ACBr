@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/03/2025
+-- ACBrNFSeXServicos --
+[+] #TK-6827: Incluída a cidade de Tibagi/PR, o provedor é EloTech.
+[+] #TK-6827: Incluída a cidade de Imbau/PR, o provedor é EloTech.
+  Por: Exi Sistemas
+
 27/03/2025
 -- EL.Provider --
 [*] #TK-6727: Ajuste visando a correta exibição do retorno nas propriedades Código, Descricao e Correção.

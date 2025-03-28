@@ -45,7 +45,7 @@ uses
   ImgList, ACBrPIXPSPSicoob, ACBrPIXPSPPagSeguro, ACBrPIXPSPGerenciaNet,
   ACBrPIXPSPBradesco, ACBrPIXPSPPixPDV, ACBrPIXPSPInter, ACBrPIXPSPAilos,
   ACBrPIXPSPMatera, ACBrPIXPSPCielo, ACBrPIXPSPMercadoPago, ACBrPIXPSPGate2All,
-  ACBrPIXPSPBanrisul, ACBrPIXPSPC6Bank
+  ACBrPIXPSPBanrisul, ACBrPIXPSPC6Bank, ACBrPIXPSPAppLess
   {$IfDef FPC}
   , DateTimePicker
   {$EndIf};
@@ -76,6 +76,7 @@ type
     ACBrOpenSSLUtils1: TACBrOpenSSLUtils;
     ACBrPixCD1: TACBrPixCD;
     ACBrPSPAilos1: TACBrPSPAilos;
+    ACBrPSPAppLess1: TACBrPSPAppLess;
     ACBrPSPBancoDoBrasil1: TACBrPSPBancoDoBrasil;
     ACBrPSPBanrisul1: TACBrPSPBanrisul;
     ACBrPSPBradesco1: TACBrPSPBradesco;
@@ -195,6 +196,7 @@ type
     dtConsultarPixRecebidosInicio: TDateTimePicker;
     dtConsultarPixRecebidosFim: TDateTimePicker;
     dtConsultarCobrancas_Inicio: TDateTimePicker;
+    edAppLessHMAC: TEdit;
     edBanrisulChavePIX: TEdit;
     edBanrisulClientID: TEdit;
     edBanrisulClientSecret: TEdit;
@@ -210,6 +212,8 @@ type
     edC6BankChavePrivada: TEdit;
     edC6BankClientID: TEdit;
     edC6BankClientSecret: TEdit;
+    edAppLessClientId: TEdit;
+    edAppLessClientSecret: TEdit;
     edMercadoPago: TEdit;
     edCieloClientID: TEdit;
     edGate2AllAuthenticationApi: TEdit;
@@ -419,6 +423,7 @@ type
     Label16: TLabel;
     Label17: TLabel;
     Label18: TLabel;
+    lbAppLessHMAC: TLabel;
     lbBanrisulChave: TLabel;
     lbBanrisulClientID: TLabel;
     lbBanrisulClientSecret: TLabel;
@@ -434,6 +439,7 @@ type
     lbBradescoPFX: TLabel;
     lbBradescoSenhaPFX: TLabel;
     lbCieloChave: TLabel;
+    lbAppLessClientId: TLabel;
     lbGate2AllAuthenticationKey: TLabel;
     lbC6BankCertificado: TLabel;
     lbC6BankChave: TLabel;
@@ -443,6 +449,7 @@ type
     lbC6BankErroCertificado: TLabel;
     lbC6BankErroChavePrivada: TLabel;
     lbC6BankTipoChave: TLabel;
+    lbAppLessClientSecret: TLabel;
     lbMercadoPagoChavePIX: TLabel;
     lbCieloClientID: TLabel;
     lbMercadoPagoAccessToken: TLabel;
@@ -665,6 +672,7 @@ type
     pnBanrisul: TPanel;
     pnCielo: TPanel;
     pnC6Bank: TPanel;
+    pnAppLess: TPanel;
     pnMercadoPago: TPanel;
     pnMateraSimularPagamento: TPanel;
     pcBBCertificados: TPageControl;
@@ -838,6 +846,7 @@ type
     btSicoobExtrairChaveCertificadoInfo: TSpeedButton;
     Splitter1: TSplitter;
     Splitter2: TSplitter;
+    tsAppLess: TTabSheet;
     tsBradescoChaveECertificado: TTabSheet;
     tsBradescoPFX: TTabSheet;
     tsC6Bank: TTabSheet;
@@ -1210,6 +1219,8 @@ implementation
 uses
   {$IfDef FPC}
    fpjson, jsonparser, jsonscanner, Jsons,
+  {$Else}
+    {$IFDEF DELPHIXE2_UP}JSON,{$ENDIF}
   {$EndIf}
   TypInfo, Clipbrd, IniFiles, DateUtils, synacode, synautil, pcnConversao,
   ACBrDelphiZXingQRCode, ACBrImage, ACBrValidador, ACBrPIXUtil, ACBrConsts,
@@ -4293,6 +4304,10 @@ begin
     edC6BankClientSecret.Text := Ini.ReadString('C6Bank', 'ClientSecret', '');
     edC6BankChavePrivada.Text := Ini.ReadString('C6Bank', 'ArqChavePrivada', edC6BankChavePrivada.Text);
     edC6BankCertificado.Text := Ini.ReadString('C6Bank', 'ArqCertificado', edC6BankCertificado.Text);
+
+    edAppLessClientId.Text := Ini.ReadString('AppLess', 'ClientId', EmptyStr);
+    edAppLessClientSecret.Text := Ini.ReadString('AppLess', 'ClientSecret', EmptyStr);
+    edAppLessHMAC.Text := Ini.ReadString('AppLess', 'HMAC', EmptyStr);
   finally
     Ini.Free;
   end;
@@ -4305,7 +4320,7 @@ procedure TForm1.GravarConfiguracao;
 Var
   Ini : TIniFile ;
 begin
-  AdicionarLinhaLog('- LerConfiguracao: '+NomeArquivoConfiguracao);
+  AdicionarLinhaLog('- GravarConfiguracao: '+NomeArquivoConfiguracao);
   Ini := TIniFile.Create(NomeArquivoConfiguracao);
   try
     Ini.WriteString('Recebedor', 'Nome', edtRecebedorNome.Text);
@@ -4441,6 +4456,10 @@ begin
     Ini.WriteString('C6Bank', 'ClientSecret', edC6BankClientSecret.Text);
     Ini.WriteString('C6Bank', 'ArqChavePrivada', edC6BankChavePrivada.Text);
     Ini.WriteString('C6Bank', 'ArqCertificado', edC6BankCertificado.Text);
+
+    Ini.WriteString('AppLess', 'ClientId', edAppLessClientId.Text);
+    Ini.WriteString('AppLess', 'ClientSecret', edAppLessClientSecret.Text);
+    Ini.WriteString('AppLess', 'HMAC', edAppLessHMAC.Text);
   finally
      Ini.Free;
   end;
@@ -4745,6 +4764,7 @@ begin
     15: ACBrPixCD1.PSP := ACBrPSPGate2All1;
     16: ACBrPixCD1.PSP := ACBrPSPBanrisul1;
     17: ACBrPixCD1.PSP := ACBrPSPC6Bank1;
+    18: ACBrPixCD1.PSP := ACBrPSPAppLess1;
   else
     raise Exception.Create('PSP configurado é inválido');
   end;
@@ -4879,6 +4899,10 @@ begin
   ACBrPSPC6Bank1.ClientSecret := edC6BankClientSecret.Text;
   ACBrPSPC6Bank1.ArquivoChavePrivada := edC6BankChavePrivada.Text;
   ACBrPSPC6Bank1.ArquivoCertificado := edC6BankCertificado.Text;
+
+  ACBrPSPAppLess1.ClientID := edAppLessClientId.Text;
+  ACBrPSPAppLess1.ClientSecret := edAppLessClientSecret.Text;
+  ACBrPSPAppLess1.SecretKeyHMAC := edAppLessHMAC.Text;
 end;
 
 procedure TForm1.LimparQRCodeEstatico;
@@ -5032,28 +5056,47 @@ function TForm1.FormatarJSON(const AJSON: String): String;
 {$IfDef FPC}
 var
   jpar: TJSONParser;
-  j: TJsonObject;
+  jdata: TJSONData;
+  ms: TMemoryStream;
+{$Else}
+var
+  wJsonValue: TJSONValue;
 {$EndIf}
 begin
   Result := AJSON;
-  {$IfDef FPC}
   try
-    j := TJSONObject.Create();
-    try
-      Result := j.Decode(Result);
+    {$IfDef FPC}
+    ms := TMemoryStream.Create;
+    try  
+      ms.Write(Pointer(AJSON)^, Length(AJSON));
+      ms.Position := 0;
+      jpar := TJSONParser.Create(ms, [joUTF8]);
+      jdata := jpar.Parse;
+      if Assigned(jdata) then
+        Result := jdata.FormatJSON;
     finally
-      j.Free;
+      ms.Free;
+      if Assigned(jpar) then
+        jpar.Free;
+      if Assigned(jdata) then
+        jdata.Free;
     end;
-    jpar := TJSONParser.Create(Result, [joUTF8]);
-    try
-      Result := jpar.Parse.FormatJSON([], 2);
-    finally
-      jpar.Free;
-    end;
+    {$Else}
+      {$IFDEF DELPHIXE2_UP}
+      wJsonValue := TJSONObject.ParseJSONValue(AJSON);
+      try
+        if Assigned(wJsonValue) then
+        begin
+          Result := wJsonValue.Format(2);
+        end;
+      finally
+        wJsonValue.Free;
+      end;
+      {$ENDIF}
+    {$EndIf}
   except
     Result := AJSON;
   end;
-  {$EndIf}
 end;
 
 function TForm1.RemoverPathAplicacao(const AFileName: String): String;

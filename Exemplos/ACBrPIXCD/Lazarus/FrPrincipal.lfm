@@ -7875,6 +7875,71 @@ object Form1: TForm1
                 end
               end
             end
+            object tsAppLess: TTabSheet
+              Caption = 'AppLess'
+              ClientHeight = 485
+              ClientWidth = 984
+              object pnAppLess: TPanel
+                Left = 48
+                Height = 192
+                Top = 72
+                Width = 880
+                Anchors = [akLeft, akRight]
+                BevelOuter = bvNone
+                ClientHeight = 192
+                ClientWidth = 880
+                TabOrder = 0
+                object lbAppLessClientSecret: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 75
+                  Width = 66
+                  Caption = 'Client Secret'
+                  ParentColor = False
+                end
+                object lbAppLessClientId: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 24
+                  Width = 44
+                  Caption = 'Client Id'
+                  ParentColor = False
+                end
+                object edAppLessClientSecret: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 90
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 1
+                end
+                object edAppLessClientId: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 40
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 0
+                  OnChange = edCieloChavePIXChange
+                end
+                object edAppLessHMAC: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 141
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 2
+                end
+                object lbAppLessHMAC: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 126
+                  Width = 93
+                  Caption = 'Secret Key HMAC'
+                  ParentColor = False
+                end
+              end
+            end
           end
         end
       end
@@ -8230,5 +8295,10 @@ object Form1: TForm1
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 664
     Top = 416
+  end
+  object ACBrPSPAppLess1: TACBrPSPAppLess
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 120
+    Top = 312
   end
 end

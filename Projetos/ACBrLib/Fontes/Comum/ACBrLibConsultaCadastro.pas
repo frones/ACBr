@@ -177,7 +177,7 @@ begin
   FxBairro := infCad.xBairro;
   FcMun := infCad.cMun;
   FxMun := infCad.xMun;
-  FCEP := IntToStrZero(infCad.CEP,8);
+  FCEP := infCad.CEP;
 end;
 
 { TConsultaCadastroResposta }

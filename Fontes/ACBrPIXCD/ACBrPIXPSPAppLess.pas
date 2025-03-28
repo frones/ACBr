@@ -122,6 +122,7 @@ uses
   ACBrPIXUtil,
   ACBrUtil.Base,
   ACBrUtil.Strings,
+  ACBrUtil.DateTime,
   ACBrPIXSchemasCob,
   ACBrPIXSchemasCobV,
   ACBrPIXSchemasCobsConsultadas;
@@ -378,17 +379,7 @@ var
   wOpenSSL: TACBrOpenSSLUtils;
 begin
   inherited ConfigurarHeaders(Method, AURL);
-
-  ts :=
-    {$IfDef FPC}
-      IntToStr(DateTimeToUnix(Now, False) * 1000);
-    {$Else}
-      {$IFDEF DELPHIXE2_UP}
-        IntToStr(DateTimeToUnix(Now, False) * 1000);
-      {$ELSE}
-        IntToStr((DateTimeToUnix(IncHour(Now, 3)) * 1000));
-      {$ENDIF}
-    {$EndIf}
+  ts := IntToStr(DateTimeToUnix(ACBrUtil.DateTime.DateTimeUniversal(ACBrUtil.DateTime.GetUTCSistema, Now)) * 1000);
 
   s := ts + ClientID;
   wOpenSSL := TACBrOpenSSLUtils.Create(nil);

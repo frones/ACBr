@@ -6,13 +6,9 @@
     <BuildModes Active="Default"/>
     <Units>
       <Unit>
-        <Filename Value="AcbrBoletoDemo.lpr"/>
+        <Filename Value="AcbrBoletoDemo.dpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <CursorPos Y="9"/>
         <UsageCount Value="20"/>
-        <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="uDemoBoleto.pas"/>
@@ -21,30 +17,31 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="71"/>
-        <CursorPos X="24" Y="73"/>
+        <TopLine Value="40"/>
+        <CursorPos X="18" Y="88"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="AcbrBoletoDemo.lpr"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="95" Y="12"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="3">
+    <JumpHistory HistoryIndex="2">
       <Position>
         <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="347" Column="46" TopLine="343"/>
       </Position>
       <Position>
         <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="70" Column="24" TopLine="68"/>
+        <Caret Line="84" Column="18" TopLine="67"/>
       </Position>
       <Position>
         <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="74" Column="24" TopLine="72"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="73" Column="24" TopLine="71"/>
+        <Caret Line="88" Column="18" TopLine="71"/>
       </Position>
     </JumpHistory>
     <RunParams>
@@ -52,5 +49,4 @@
       <Modes ActiveMode=""/>
     </RunParams>
   </ProjectSession>
-  <SkipCheckLCLInterfaces Value="True"/>
 </CONFIG>

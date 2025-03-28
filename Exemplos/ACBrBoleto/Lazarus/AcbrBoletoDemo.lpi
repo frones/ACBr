@@ -27,6 +27,9 @@
         <PackageName Value="ACBrDFeComum"/>
       </Item>
       <Item>
+        <PackageName Value="ACBr_PIXCD"/>
+      </Item>
+      <Item>
         <PackageName Value="ACBrTCP"/>
       </Item>
       <Item>

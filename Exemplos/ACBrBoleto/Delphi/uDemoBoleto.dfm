@@ -18,7 +18,7 @@ object frmDemoBoleto: TfrmDemoBoleto
     Top = 0
     Width = 986
     Height = 523
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -26,7 +26,7 @@ object frmDemoBoleto: TfrmDemoBoleto
       object GroupBox2: TGroupBox
         Left = -2
         Top = 0
-        Width = 609
+        Width = 363
         Height = 105
         Caption = 'Acr'#233'scimos\Descontos'
         TabOrder = 0
@@ -38,21 +38,21 @@ object frmDemoBoleto: TfrmDemoBoleto
           Caption = 'ValorMora\Juros'
         end
         object Label8: TLabel
-          Left = 162
+          Left = 100
           Top = 16
           Width = 73
           Height = 13
           Caption = 'Valor Desconto'
         end
         object Label9: TLabel
-          Left = 316
+          Left = 190
           Top = 16
           Width = 80
           Height = 13
           Caption = 'Valor Abatimento'
         end
         object Label10: TLabel
-          Left = 466
+          Left = 280
           Top = 16
           Width = 37
           Height = 13
@@ -66,21 +66,21 @@ object frmDemoBoleto: TfrmDemoBoleto
           Caption = 'Data Multa_Juros'
         end
         object Label12: TLabel
-          Left = 162
+          Left = 100
           Top = 56
           Width = 72
           Height = 13
           Caption = 'Data Desconto'
         end
         object Label13: TLabel
-          Left = 316
+          Left = 190
           Top = 56
           Width = 79
           Height = 13
           Caption = 'Data Abatimento'
         end
         object Label14: TLabel
-          Left = 466
+          Left = 280
           Top = 56
           Width = 65
           Height = 13
@@ -89,31 +89,31 @@ object frmDemoBoleto: TfrmDemoBoleto
         object edtMoraJuros: TEdit
           Left = 8
           Top = 32
-          Width = 135
+          Width = 70
           Height = 21
           TabOrder = 0
           Text = '5'
         end
         object edtValorDesconto: TEdit
-          Left = 162
+          Left = 100
           Top = 32
-          Width = 135
+          Width = 70
           Height = 21
           TabOrder = 1
           Text = '0'
         end
         object edtValorAbatimento: TEdit
-          Left = 316
+          Left = 190
           Top = 32
-          Width = 135
+          Width = 70
           Height = 21
           TabOrder = 2
           Text = '0'
         end
         object edtMulta: TEdit
-          Left = 466
+          Left = 280
           Top = 32
-          Width = 135
+          Width = 70
           Height = 21
           TabOrder = 3
           Text = '5'
@@ -121,7 +121,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         object edtDataMora: TMaskEdit
           Left = 8
           Top = 72
-          Width = 135
+          Width = 70
           Height = 21
           EditMask = '!99/99/00;1;_'
           MaxLength = 8
@@ -129,9 +129,9 @@ object frmDemoBoleto: TfrmDemoBoleto
           Text = '  /  /  '
         end
         object edtDataDesconto: TMaskEdit
-          Left = 162
+          Left = 100
           Top = 72
-          Width = 135
+          Width = 70
           Height = 21
           EditMask = '!99/99/00;1;_'
           MaxLength = 8
@@ -139,9 +139,9 @@ object frmDemoBoleto: TfrmDemoBoleto
           Text = '  /  /  '
         end
         object edtDataAbatimento: TMaskEdit
-          Left = 316
+          Left = 190
           Top = 72
-          Width = 135
+          Width = 70
           Height = 21
           EditMask = '!99/99/00;1;_'
           MaxLength = 8
@@ -149,9 +149,9 @@ object frmDemoBoleto: TfrmDemoBoleto
           Text = '  /  /  '
         end
         object edtDataProtesto: TMaskEdit
-          Left = 466
+          Left = 280
           Top = 72
-          Width = 135
+          Width = 70
           Height = 21
           EditMask = '!99/99/00;1;_'
           MaxLength = 8
@@ -162,8 +162,8 @@ object frmDemoBoleto: TfrmDemoBoleto
       object GroupBox4: TGroupBox
         Left = 613
         Top = 3
-        Width = 169
-        Height = 225
+        Width = 157
+        Height = 222
         Caption = 'Informa'#231#245'es Sobre a Duplicata '
         TabOrder = 1
         object Label17: TLabel
@@ -204,7 +204,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         object edtNumeroDoc: TEdit
           Left = 8
           Top = 74
-          Width = 153
+          Width = 120
           Height = 21
           TabOrder = 1
           Text = '0000000001'
@@ -212,7 +212,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         object edtValorDoc: TEdit
           Left = 8
           Top = 113
-          Width = 153
+          Width = 120
           Height = 21
           TabOrder = 2
           Text = '100'
@@ -220,7 +220,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         object edtDataDoc: TMaskEdit
           Left = 8
           Top = 156
-          Width = 153
+          Width = 120
           Height = 21
           EditMask = '!99/99/00;1;_'
           MaxLength = 8
@@ -230,7 +230,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         object edtVencimento: TMaskEdit
           Left = 8
           Top = 194
-          Width = 153
+          Width = 120
           Height = 21
           EditMask = '!99/99/00;1;_'
           MaxLength = 8
@@ -240,7 +240,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         object edtNossoNro: TEdit
           Left = 8
           Top = 33
-          Width = 153
+          Width = 120
           Height = 21
           TabOrder = 0
           Text = '12345'
@@ -385,6 +385,13 @@ object frmDemoBoleto: TfrmDemoBoleto
             Height = 13
             Caption = 'Bairro'
           end
+          object Label93: TLabel
+            Left = 440
+            Top = 88
+            Width = 48
+            Height = 13
+            Caption = 'data inicio'
+          end
           object edtCidade: TEdit
             Left = 3
             Top = 104
@@ -399,7 +406,7 @@ object frmDemoBoleto: TfrmDemoBoleto
             Width = 313
             Height = 21
             TabOrder = 3
-            Text = 'Rua dos clientes'
+            Text = 'Rua dos clientes maringa da silva'
           end
           object edtNome: TEdit
             Left = 3
@@ -407,7 +414,7 @@ object frmDemoBoleto: TfrmDemoBoleto
             Width = 337
             Height = 21
             TabOrder = 0
-            Text = 'CLIENTE DE TESTES'
+            Text = 'CLIENTE DE TESTES VICTOR HUGO'
           end
           object edtCPFCNPJ: TEdit
             Left = 346
@@ -463,6 +470,16 @@ object frmDemoBoleto: TfrmDemoBoleto
             Height = 21
             TabOrder = 6
             Text = 'Centro'
+          end
+          object dataInicio: TMaskEdit
+            Left = 444
+            Top = 105
+            Width = 134
+            Height = 21
+            EditMask = '!99/99/00;1;_'
+            MaxLength = 8
+            TabOrder = 10
+            Text = '07/03/25'
           end
         end
         object TabSheet4: TTabSheet
@@ -531,7 +548,7 @@ object frmDemoBoleto: TfrmDemoBoleto
             Caption = 'UF'
           end
           object Label62: TLabel
-            Left = 500
+            Left = 504
             Top = 3
             Width = 40
             Height = 13
@@ -617,9 +634,9 @@ object frmDemoBoleto: TfrmDemoBoleto
             Text = 'SP'
           end
           object edtBenifFantasia: TEdit
-            Left = 500
+            Left = 505
             Top = 20
-            Width = 263
+            Width = 258
             Height = 21
             TabOrder = 2
             Text = 'A Empresa'
@@ -846,24 +863,61 @@ object frmDemoBoleto: TfrmDemoBoleto
           end
         end
       end
+      object GroupBox5: TGroupBox
+        Left = 368
+        Top = 0
+        Width = 218
+        Height = 105
+        Caption = 'Diversos'
+        TabOrder = 6
+        object Label91: TLabel
+          Left = 16
+          Top = 16
+          Width = 59
+          Height = 13
+          Caption = 'Seu N'#250'mero'
+        end
+        object Label92: TLabel
+          Left = 118
+          Top = 16
+          Width = 76
+          Height = 13
+          Caption = 'N'#250'mero Parcela'
+        end
+        object Label94: TLabel
+          Left = 16
+          Top = 56
+          Width = 148
+          Height = 13
+          Caption = 'Nosso N'#250'mero Correspondente'
+        end
+        object edtSeuNumero: TEdit
+          Left = 16
+          Top = 32
+          Width = 90
+          Height = 21
+          TabOrder = 0
+        end
+        object edtParcela: TEdit
+          Left = 118
+          Top = 32
+          Width = 75
+          Height = 21
+          TabOrder = 1
+          Text = '01'
+        end
+        object edtNossoNumeroCorrespondente: TEdit
+          Left = 16
+          Top = 72
+          Width = 153
+          Height = 21
+          TabOrder = 2
+        end
+      end
     end
     object TabSheet2: TTabSheet
       Caption = 'Conf. Carteira'
       ImageIndex = 1
-      object Label65: TLabel
-        Left = 255
-        Top = 415
-        Width = 123
-        Height = 13
-        Caption = 'Path Arquivo de Remessa'
-      end
-      object Label66: TLabel
-        Left = 255
-        Top = 453
-        Width = 126
-        Height = 13
-        Caption = 'Path de Retorno + Arquivo'
-      end
       object GroupBox1: TGroupBox
         Left = 0
         Top = 3
@@ -1215,7 +1269,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Caption = 'Opera'#231#227'o'
         end
         object Label48: TLabel
-          Left = 11
+          Left = 14
           Top = 122
           Width = 65
           Height = 13
@@ -1278,114 +1332,12 @@ object frmDemoBoleto: TfrmDemoBoleto
           TabOrder = 7
         end
         object edtCodigoCedente: TEdit
-          Left = 11
+          Left = 14
           Top = 141
           Width = 101
           Height = 21
           TabOrder = 8
         end
-      end
-      object GroupBox14: TGroupBox
-        Left = 255
-        Top = 309
-        Width = 530
-        Height = 105
-        Caption = 'WebServices '
-        TabOrder = 4
-        object Label67: TLabel
-          Left = 11
-          Top = 16
-          Width = 37
-          Height = 13
-          Caption = 'ClientID'
-        end
-        object Label68: TLabel
-          Left = 181
-          Top = 16
-          Width = 57
-          Height = 13
-          Caption = 'ClientSecret'
-        end
-        object Label69: TLabel
-          Left = 351
-          Top = 16
-          Width = 40
-          Height = 13
-          Caption = 'KeyUser'
-        end
-        object Label70: TLabel
-          Left = 351
-          Top = 57
-          Width = 37
-          Height = 13
-          Caption = 'SSL Lib'
-        end
-        object Label71: TLabel
-          Left = 11
-          Top = 57
-          Width = 31
-          Height = 13
-          Caption = 'Scope'
-        end
-        object edtClientID: TEdit
-          Left = 11
-          Top = 33
-          Width = 164
-          Height = 21
-          TabOrder = 0
-        end
-        object edtClientSecret: TEdit
-          Left = 181
-          Top = 33
-          Width = 164
-          Height = 21
-          TabOrder = 1
-        end
-        object edtKeyUser: TEdit
-          Left = 351
-          Top = 33
-          Width = 164
-          Height = 21
-          TabOrder = 2
-        end
-        object cbxSSLLib: TComboBox
-          Left = 351
-          Top = 73
-          Width = 164
-          Height = 21
-          Style = csDropDownList
-          TabOrder = 4
-        end
-        object edtScope: TEdit
-          Left = 11
-          Top = 73
-          Width = 164
-          Height = 21
-          TabOrder = 3
-        end
-      end
-      object edtPathRemessa: TEdit
-        Left = 255
-        Top = 431
-        Width = 369
-        Height = 21
-        TabOrder = 5
-      end
-      object edtPathRetorno: TEdit
-        Left = 255
-        Top = 466
-        Width = 369
-        Height = 21
-        TabOrder = 7
-      end
-      object btnRetorno: TButton
-        Left = 630
-        Top = 464
-        Width = 32
-        Height = 25
-        Caption = '...'
-        TabOrder = 6
-        OnClick = btnRetornoClick
       end
       object PageControlConfg: TPageControl
         Left = 0
@@ -1433,11 +1385,25 @@ object frmDemoBoleto: TfrmDemoBoleto
           Caption = 'Conf. B'
           ImageIndex = 1
           object Label90: TLabel
-            Left = 3
-            Top = 47
+            Left = 4
+            Top = 122
             Width = 65
             Height = 13
             Caption = 'Ambiente WS'
+          end
+          object lblTipoChavePix: TLabel
+            Left = 3
+            Top = 47
+            Width = 90
+            Height = 13
+            Caption = 'Tipo de Chave PIX'
+          end
+          object Label99: TLabel
+            Left = 3
+            Top = 85
+            Width = 51
+            Height = 13
+            Caption = 'Chave PIX'
           end
           object cxbEMV: TCheckBox
             Left = 3
@@ -1457,11 +1423,26 @@ object frmDemoBoleto: TfrmDemoBoleto
           end
           object cbbAmbiente: TComboBox
             Left = 3
-            Top = 66
+            Top = 138
             Width = 235
             Height = 21
             Style = csDropDownList
             TabOrder = 2
+          end
+          object cbxTipoChavePix: TComboBox
+            Left = 3
+            Top = 63
+            Width = 129
+            Height = 21
+            Style = csDropDownList
+            TabOrder = 3
+          end
+          object edtChavePix: TEdit
+            Left = 3
+            Top = 99
+            Width = 235
+            Height = 21
+            TabOrder = 4
           end
         end
         object TabSheet10: TTabSheet
@@ -1519,14 +1500,14 @@ object frmDemoBoleto: TfrmDemoBoleto
             Height = 21
             TabOrder = 3
           end
-          object Button1: TButton
+          object btnProcuraPathArqLog: TButton
             Left = 206
             Top = 101
             Width = 32
             Height = 25
             Caption = '...'
             TabOrder = 4
-            OnClick = Button1Click
+            OnClick = btnProcuraPathArqLogClick
           end
           object edtArquivoLog: TEdit
             Left = 3
@@ -1535,14 +1516,14 @@ object frmDemoBoleto: TfrmDemoBoleto
             Height = 21
             TabOrder = 1
           end
-          object Button2: TButton
+          object btnProcuraNomeArqLog: TButton
             Left = 206
             Top = 59
             Width = 32
             Height = 25
             Caption = '...'
             TabOrder = 2
-            OnClick = Button1Click
+            OnClick = btnProcuraPathArqLogClick
           end
           object cbbLogNivel: TComboBox
             Left = 3
@@ -1552,6 +1533,51 @@ object frmDemoBoleto: TfrmDemoBoleto
             Style = csDropDownList
             TabOrder = 0
           end
+        end
+      end
+      object GroupBox14: TGroupBox
+        Left = 255
+        Top = 309
+        Width = 530
+        Height = 124
+        Caption = 'Arquivo CNAB'
+        TabOrder = 4
+        object Label65: TLabel
+          Left = 14
+          Top = 66
+          Width = 123
+          Height = 13
+          Caption = 'Path Arquivo de Remessa'
+        end
+        object Label66: TLabel
+          Left = 11
+          Top = 20
+          Width = 126
+          Height = 13
+          Caption = 'Path de Retorno + Arquivo'
+        end
+        object edtPathRemessa: TEdit
+          Left = 11
+          Top = 81
+          Width = 369
+          Height = 21
+          TabOrder = 0
+        end
+        object edtPathRetorno: TEdit
+          Left = 11
+          Top = 39
+          Width = 369
+          Height = 21
+          TabOrder = 1
+        end
+        object btnRetorno: TButton
+          Left = 387
+          Top = 37
+          Width = 32
+          Height = 25
+          Caption = '...'
+          TabOrder = 2
+          OnClick = btnRetornoClick
         end
       end
     end
@@ -1709,6 +1735,166 @@ object frmDemoBoleto: TfrmDemoBoleto
         OnClick = btnEnviarEmailClick
       end
     end
+    object TbsWebService: TTabSheet
+      Caption = 'WebServices'
+      ImageIndex = 3
+      object Label67: TLabel
+        Left = 11
+        Top = 14
+        Width = 37
+        Height = 13
+        Caption = 'ClientID'
+      end
+      object Label68: TLabel
+        Left = 11
+        Top = 56
+        Width = 57
+        Height = 13
+        Caption = 'ClientSecret'
+      end
+      object Label69: TLabel
+        Left = 11
+        Top = 96
+        Width = 40
+        Height = 13
+        Caption = 'KeyUser'
+      end
+      object Label70: TLabel
+        Left = 11
+        Top = 180
+        Width = 37
+        Height = 13
+        Caption = 'SSL Lib'
+      end
+      object Label71: TLabel
+        Left = 11
+        Top = 137
+        Width = 31
+        Height = 13
+        Caption = 'Scope'
+      end
+      object Label95: TLabel
+        Left = 11
+        Top = 226
+        Width = 57
+        Height = 13
+        Caption = 'Arquivo Key'
+      end
+      object Label96: TLabel
+        Left = 11
+        Top = 269
+        Width = 141
+        Height = 13
+        Caption = 'Arquivo PEM ou Arquivo CRT'
+      end
+      object Label97: TLabel
+        Left = 11
+        Top = 316
+        Width = 47
+        Height = 13
+        Caption = 'VersaoDF'
+      end
+      object Label98: TLabel
+        Left = 25
+        Top = 470
+        Width = 462
+        Height = 16
+        Cursor = crHandPoint
+        Caption = 'Clique aqui para acessar as configura'#231#245'es de APIs do ACBrBoleto'
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        OnClick = Label98Click
+      end
+      object edtClientID: TEdit
+        Left = 11
+        Top = 33
+        Width = 750
+        Height = 21
+        TabOrder = 0
+      end
+      object edtClientSecret: TEdit
+        Left = 11
+        Top = 73
+        Width = 750
+        Height = 21
+        TabOrder = 1
+      end
+      object edtKeyUser: TEdit
+        Left = 11
+        Top = 113
+        Width = 558
+        Height = 21
+        TabOrder = 2
+      end
+      object cbxSSLLib: TComboBox
+        Left = 11
+        Top = 196
+        Width = 164
+        Height = 21
+        Style = csDropDownList
+        TabOrder = 3
+      end
+      object edtScope: TEdit
+        Left = 11
+        Top = 153
+        Width = 750
+        Height = 21
+        TabOrder = 4
+      end
+      object edtArquivoKey: TEdit
+        Left = 11
+        Top = 242
+        Width = 686
+        Height = 21
+        TabOrder = 5
+      end
+      object edtArquivoCRT: TEdit
+        Left = 11
+        Top = 285
+        Width = 686
+        Height = 21
+        TabOrder = 6
+      end
+      object edtPesquisaArqKEY: TButton
+        Left = 703
+        Top = 240
+        Width = 32
+        Height = 25
+        Caption = '...'
+        TabOrder = 7
+        OnClick = edtPesquisaArqKEYClick
+      end
+      object edtPesquisaArqCRT: TButton
+        Left = 703
+        Top = 283
+        Width = 32
+        Height = 25
+        Caption = '...'
+        TabOrder = 8
+        OnClick = edtPesquisaArqCRTClick
+      end
+      object edtVersaoDF: TEdit
+        Left = 11
+        Top = 333
+        Width = 94
+        Height = 21
+        TabOrder = 9
+      end
+      object ChkUseCertificateHTTP: TCheckBox
+        Left = 11
+        Top = 365
+        Width = 126
+        Height = 17
+        Caption = 'UseCertificateHTTP'
+        TabOrder = 10
+      end
+    end
   end
   object grpFichaBancaria: TGroupBox
     Left = 795
@@ -1717,32 +1903,32 @@ object frmDemoBoleto: TfrmDemoBoleto
     Height = 113
     Caption = 'Ficha Banc'#225'ria'
     TabOrder = 1
-    object Button3: TButton
+    object btnZerarListaBoletos: TButton
       Left = 11
       Top = 20
       Width = 145
       Height = 25
       Caption = 'Zerar Lista de Boletos'
       TabOrder = 0
-      OnClick = Button3Click
+      OnClick = btnZerarListaBoletosClick
     end
     object btnBoletoIndividual: TButton
       Left = 11
-      Top = 50
+      Top = 49
       Width = 145
       Height = 25
       Caption = 'Incluir Boleto'
       TabOrder = 1
       OnClick = btnBoletoIndividualClick
     end
-    object Button5: TButton
+    object BtnIncluirVariosBoletos: TButton
       Left = 11
       Top = 80
       Width = 145
       Height = 25
       Caption = 'Incluir V'#225'rios Boletos'
       TabOrder = 2
-      OnClick = Button5Click
+      OnClick = BtnIncluirVariosBoletosClick
     end
   end
   object grpCNAB: TGroupBox
@@ -1826,11 +2012,11 @@ object frmDemoBoleto: TfrmDemoBoleto
   object dlgFile: TOpenDialog
     Filter = '*.txt|*.txt|*.ret|*.ret|*.*|*.*'
     Options = []
-    Left = 711
-    Top = 371
+    Left = 679
+    Top = 467
   end
   object dlgSave: TSaveDialog
-    Left = 715
-    Top = 437
+    Left = 755
+    Top = 461
   end
 end

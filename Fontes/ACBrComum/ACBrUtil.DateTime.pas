@@ -156,7 +156,7 @@ type
   function AjustarData(const DataStr: string): string;
 
   function UnixDateTimeBase: TDateTime;
-  function DateTimeToUnixMilliseconds(const AValue: TDateTime): Int64;
+  function DateTimeToUnixMilliseconds(const AValue: TDateTime; InputIsUTC: Boolean = True): Int64;
   function UnixMillisecondsToDateTime(const AValue: Int64): TDateTime;
 
 var
@@ -1192,9 +1192,14 @@ end;
 {-----------------------------------------------------------------------------
   Converte um TDateTime Para Milisegundos, considerando a DataBase de Unix Time
  -----------------------------------------------------------------------------}
-function DateTimeToUnixMilliseconds(const AValue: TDateTime): Int64;
+function DateTimeToUnixMilliseconds(const AValue: TDateTime; InputIsUTC: Boolean): Int64;
+var
+  t: TDateTime;
 begin
-  Result := Round((AValue - UnixDateTimeBase) * 86400 * 1000);  // 86400 = segundos por dia
+  t := AValue;
+  if (not InputIsUTC) then
+    t := IncMinute(t, TimeZoneToBias(GetUTCSistema));
+  Result := Round((t - UnixDateTimeBase) * 86400 * 1000);  // 86400 = segundos por dia
 end;
 
 {-----------------------------------------------------------------------------

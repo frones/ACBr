@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/03/2025
+-- ACBrUtil.DateTime --
+[*] Ajuste referente à UTC no método DateTimeToUnixMilliseconds
+    por: Elias César
+
 27/02/2025
 -- ACBrImage --
 [-] Correção em 'PintarQRCode', para funcionar em FMX

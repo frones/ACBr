@@ -379,7 +379,8 @@ var
   wOpenSSL: TACBrOpenSSLUtils;
 begin
   inherited ConfigurarHeaders(Method, AURL);
-  ts := IntToStr(DateTimeToUnix(ACBrUtil.DateTime.DateTimeUniversal(ACBrUtil.DateTime.GetUTCSistema, Now)) * 1000);
+  //ts := IntToStr(DateTimeToUnix(ACBrUtil.DateTime.DateTimeUniversal(ACBrUtil.DateTime.GetUTCSistema, Now)) * 1000);
+  ts := IntToStr(DateTimeToUnixMilliseconds(Now, False));
 
   s := ts + ClientID;
   wOpenSSL := TACBrOpenSSLUtils.Create(nil);

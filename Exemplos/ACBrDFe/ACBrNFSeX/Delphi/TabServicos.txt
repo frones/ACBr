@@ -125,6 +125,7 @@
   1411 Tapecaria e reforma de estofamentos em geral.
   1412 Funilaria e lanternagem.
   1413 Carpintaria e serralheria.
+  1414 Guincho intramunicipal, guindaste e icamento.
   1501 Administracao de fundos quaisquer, de consorcio, de cartao de credito ou debito e congeneres, de carteira de clientes, de cheques pre-datados e congeneres.
   1502 Abertura de contas em geral, inclusive conta-corrente, conta de investimentos e aplicacao e caderneta de poupanca, no Pais e no exterior, bem como a manutencao das referidas contas ativas e inativas.
   1503 Locacao e manutencao de cofres particulares, de terminais eletronicos, de terminais de atendimento e de bens e equipamentos em geral.

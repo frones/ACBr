@@ -838,7 +838,7 @@ begin
            proCTA, proCTAConsult, proEquiplano, proFacundo, proFGMaiss, proEL,
            proGoverna, proInfisc, proIPM, proISSDSF, proPriMax, proRLZ, proSam,
            proSimple, proSmarAPD, proWebFisco, proBauhaus, proeISS, proISSCampinas,
-           proSoftPlan, proXTRTecnologia] then
+           proSmart4, proSoftPlan, proXTRTecnologia] then
       begin
         Servico.Valores.Aliquota := 4.54;
         Servico.Valores.ValorServicos := 0;
@@ -1556,8 +1556,13 @@ begin
       end;
 
 //      servico.CodigoNBS := '123456789';
-      Servico.Discriminacao := 'discriminacao I; discriminacao II;' +
-                               'discriminacao III; discriminacao IV';
+      Servico.Discriminacao := 'discriminacao I' +
+        ACBrNFSeX1.Configuracoes.WebServices.QuebradeLinha +
+        'discriminacao II' +
+        ACBrNFSeX1.Configuracoes.WebServices.QuebradeLinha +
+       'discriminacao III' +
+        ACBrNFSeX1.Configuracoes.WebServices.QuebradeLinha +
+       'discriminacao IV';
 
       // TnfseResponsavelRetencao = ( rtTomador, rtPrestador, rtIntermediario, rtNenhum )
       //                              '1',       '',          '2',             ''
@@ -1827,7 +1832,8 @@ begin
         exit;
     end;
 
-    if ACBrNFSeX1.Configuracoes.Geral.Provedor = proAssessorPublico then
+    if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAssessorPublico,
+      proSmart4] then
     begin
       NumRps := '';
       if not (InputQuery(Titulo, 'Numero do RPS', NumRps)) then
@@ -1876,7 +1882,8 @@ begin
         exit;
     end;
 
-    if ACBrNFSeX1.Configuracoes.Geral.Provedor = proAssessorPublico then
+    if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAssessorPublico,
+      proSmart4] then
     begin
       NumLote := '1';
       if not (InputQuery(Titulo, 'Numero do Lote', NumLote)) then
@@ -2121,7 +2128,7 @@ begin
   Lote := '';
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAssessorPublico, proElotech,
        proInfisc, proIPM, proISSDSF, proEquiplano, proeGoverneISS, proGeisWeb,
-       proSiat, proISSSaoPaulo, proISSCampinas, proISSSJP] then
+       proSiat, proISSSaoPaulo, proISSCampinas, proISSSJP, proSmart4] then
   begin
     if not (InputQuery('Consultar Lote', 'Número do Lote:', Lote)) then
       exit;
@@ -2543,7 +2550,8 @@ end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeRPSClick(Sender: TObject);
 var
-  Titulo, NumeroRps, SerieRps, TipoRps, CodVerificacao, xCNPJTomador: string;
+  Titulo, NumeroRps, SerieRps, TipoRps, CodVerificacao, xCNPJTomador,
+  xNumLote: string;
   iTipoRps: Integer;
 begin
   Titulo := 'Consultar NFSe por RPS';
@@ -2605,8 +2613,15 @@ begin
       exit;
   end;
 
+  xNumLote := '';
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor = proSmart4 then
+  begin
+    if not (InputQuery(Titulo, 'Numero do Lote:', xNumLote)) then
+      exit;
+  end;
+
   ACBrNFSeX1.ConsultarNFSePorRps(NumeroRps, SerieRps, TipoRps, CodVerificacao,
-    xCNPJTomador);
+    xCNPJTomador, xNumLote);
 
   ChecarResposta(tmConsultarNFSePorRps);
 end;
@@ -3898,9 +3913,13 @@ begin
     exit;
 
   // Codigo de Cancelamento
-  // 1 - Erro de emissão
-  // 2 - Serviço não concluido
-  // 3 - RPS Cancelado na Emissão
+  // 1 - Erro na emissão
+  // 2 - Serviço não prestado
+  // 3 - Erro de Assinatura (*)
+  // 4 - Duplicidade de nota
+  // 5 - Erro de processamento (*)
+
+  // (*) São de uso restrito da Administração Tributária Municipal
 
   Codigo := '1';
   if not(InputQuery(Titulo, 'Código de Cancelamento', Codigo)) then
@@ -4628,9 +4647,10 @@ var
 
           tmConsultarDFe:
             begin
-              memoLog.Lines.Add('NSU      : ' + IntToStr(aResumos[i].NSU));
-              memoLog.Lines.Add('Chave DFe: ' + aResumos[i].ChaveDFe);
-              memoLog.Lines.Add('Tipo Doc.: ' + aResumos[i].TipoDoc);
+              memoLog.Lines.Add('NSU        : ' + IntToStr(aResumos[i].NSU));
+              memoLog.Lines.Add('Chave DFe  : ' + aResumos[i].ChaveDFe);
+              memoLog.Lines.Add('Tipo Evento: ' + aResumos[i].TipoEvento);
+              memoLog.Lines.Add('Tipo Doc.  : ' + aResumos[i].TipoDoc);
             end;
         else
           begin

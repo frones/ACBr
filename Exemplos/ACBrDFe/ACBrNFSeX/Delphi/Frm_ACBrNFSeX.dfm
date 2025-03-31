@@ -2483,9 +2483,9 @@ object frmACBrNFSe: TfrmACBrNFSe
     CasasDecimais.MaskAliquota = ',0.00'
     ACBrNFSe = ACBrNFSeX1
     Cancelada = False
-    Provedor = proNenhum
     TamanhoFonte = 6
     FormatarNumeroDocumentoNFSe = True
+    Provedor = proNenhum
     Producao = snSim
     Left = 470
     Top = 265

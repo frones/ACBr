@@ -290,6 +290,8 @@ type
     tsOutros: TTabSheet;
     btnLerArqINI: TButton;
     btnGerarArqINI: TButton;
+    Label53: TLabel;
+    cbVersaoQRCode: TComboBox;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -558,7 +560,7 @@ begin
     Ide.hSaiEnt   := now;
     Ide.tpNF      := tnSaida;
     Ide.tpEmis    := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
-    Ide.tpAmb     := taHomologacao;  //Lembre-se de trocar esta variavel quando for para ambiente de producao
+    Ide.tpAmb     := ACBrNFe1.Configuracoes.WebServices.Ambiente;
     Ide.cUF       := UFtoCUF(edtEmitUF.Text);
     Ide.cMunFG    := StrToInt(edtEmitCodCidade.Text);
     Ide.finNFe    := fnNormal;
@@ -1157,7 +1159,8 @@ begin
   NotaF.NFe.Ide.hSaiEnt   := Now;
   NotaF.NFe.Ide.tpNF      := tnSaida;
   NotaF.NFe.Ide.tpEmis    := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
-  NotaF.NFe.Ide.tpAmb     := taHomologacao;  //Lembre-se de trocar esta variável quando for para ambiente de produção
+
+  NotaF.NFe.Ide.tpAmb     := ACBrNFe1.Configuracoes.WebServices.Ambiente;
   NotaF.NFe.Ide.verProc   := '1.0.0.0'; //Versão do seu sistema
   NotaF.NFe.Ide.cUF       := UFtoCUF(edtEmitUF.Text);
   NotaF.NFe.Ide.cMunFG    := StrToInt(edtEmitCodCidade.Text);
@@ -4732,6 +4735,7 @@ var
   Y: TSSLType;
   N: TACBrPosPrinterModelo;
   O: TACBrPosPaginaCodigo;
+  P: TpcnVersaoQrCode;
 begin
   cbSSLLib.Items.Clear;
   for T := Low(TSSLLib) to High(TSSLLib) do
@@ -4781,6 +4785,11 @@ begin
   for O := Low(TACBrPosPaginaCodigo) to High(TACBrPosPaginaCodigo) do
      cbxPagCodigo.Items.Add( GetEnumName(TypeInfo(TACBrPosPaginaCodigo), integer(O) ) ) ;
 
+  cbVersaoQRCode.Items.Clear;
+  for P := Low(TpcnVersaoQrCode) to High(TpcnVersaoQrCode) do
+     cbVersaoQRCode.Items.Add( GetEnumName(TypeInfo(TpcnVersaoQrCode), integer(P) ) );
+  cbVersaoQRCode.ItemIndex := 0;
+
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
   ACBrPosPrinter1.Device.AcharPortasRAW( cbxPorta.Items );
@@ -4829,6 +4838,7 @@ begin
     Ini.WriteInteger('Geral', 'FormaEmissao',     cbFormaEmissao.ItemIndex);
     Ini.WriteInteger('Geral', 'ModeloDF',         cbModeloDF.ItemIndex);
     Ini.WriteInteger('Geral', 'VersaoDF',         cbVersaoDF.ItemIndex);
+    Ini.WriteInteger('Geral', 'VersaoQRCode',     cbVersaoQRCode.ItemIndex);
     Ini.WriteString( 'Geral', 'IdToken',          edtIdToken.Text);
     Ini.WriteString( 'Geral', 'Token',            edtToken.Text);
     Ini.WriteBool(   'Geral', 'RetirarAcentos',   cbxRetirarAcentos.Checked);
@@ -4954,7 +4964,8 @@ begin
     cbFormaEmissao.ItemIndex    := Ini.ReadInteger('Geral', 'FormaEmissao',     0);
     cbModeloDF.ItemIndex        := Ini.ReadInteger('Geral', 'ModeloDF',         0);
 
-    cbVersaoDF.ItemIndex      := Ini.ReadInteger('Geral', 'VersaoDF',       0);
+    cbVersaoDF.ItemIndex      := Ini.ReadInteger('Geral', 'VersaoDF',       3);
+    cbVersaoQRCode.ItemIndex  := Ini.ReadInteger('Geral', 'VersaoQRCode',   2);
     edtIdToken.Text           := Ini.ReadString( 'Geral', 'IdToken',        '');
     edtToken.Text             := Ini.ReadString( 'Geral', 'Token',          '');
     ckSalvar.Checked          := Ini.ReadBool(   'Geral', 'Salvar',         True);
@@ -5088,7 +5099,7 @@ begin
 
     IdCSC            := edtIdToken.Text;
     CSC              := edtToken.Text;
-    VersaoQRCode     := veqr200;
+    VersaoQRCode     := TpcnVersaoQrCode(cbVersaoQRCode.ItemIndex);
   end;
 
   with ACBrNFe1.Configuracoes.WebServices do

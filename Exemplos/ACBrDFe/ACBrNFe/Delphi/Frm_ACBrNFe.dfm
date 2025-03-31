@@ -407,9 +407,9 @@ object frmACBrNFe: TfrmACBrNFe
               object Label32: TLabel
                 Left = 8
                 Top = 165
-                Width = 119
+                Width = 59
                 Height = 13
-                Caption = 'Vers'#227'o Documento Fiscal'
+                Caption = 'Vers'#227'o DF-e'
               end
               object Label33: TLabel
                 Left = 8
@@ -466,6 +466,13 @@ object frmACBrNFe: TfrmACBrNFe
                 Width = 130
                 Height = 13
                 Caption = 'CSRT (Somente SEFAZ-PR)'
+              end
+              object Label53: TLabel
+                Left = 133
+                Top = 165
+                Width = 80
+                Height = 13
+                Caption = 'Vers'#227'o QR-Code'
               end
               object edtPathLogs: TEdit
                 Left = 8
@@ -530,7 +537,7 @@ object frmACBrNFe: TfrmACBrNFe
               object cbVersaoDF: TComboBox
                 Left = 8
                 Top = 181
-                Width = 248
+                Width = 113
                 Height = 21
                 TabOrder = 8
               end
@@ -568,6 +575,13 @@ object frmACBrNFe: TfrmACBrNFe
                 Width = 248
                 Height = 21
                 TabOrder = 13
+              end
+              object cbVersaoQRCode: TComboBox
+                Left = 133
+                Top = 181
+                Width = 113
+                Height = 21
+                TabOrder = 14
               end
             end
           end

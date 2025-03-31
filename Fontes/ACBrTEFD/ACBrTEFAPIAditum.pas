@@ -184,6 +184,10 @@ begin
   js := TACBrJSONObject.Parse(s);
   try
     jsCharge := js.AsJSONObject['charge'];
+
+    if not Assigned(jsCharge) then
+        jsCharge := js; // fallback para raiz do JSON
+
     if Assigned(jsCharge) then
     begin
       Rede := jsCharge.AsString['acquirerName'];
@@ -944,7 +948,7 @@ end;
 
 procedure TACBrTEFAPIClassAditum.RecuperarTransacao(const NSU: String);
 var
-  sURL: String;
+  sURL, s: String;
   js: TACBrJSONObject;
   Ok: Boolean;
 begin
@@ -956,7 +960,11 @@ begin
   begin
     js := TACBrJSONObject.Parse(FHTTPResponse);
     try
-      Ok := (LowerCase(js.AsString['success']) = 'true');
+      s := js.AsString['success'];
+      if (s = '') then
+        s := js.AsString['isApproved'];
+
+      Ok := (LowerCase(s) = 'true');
       if Ok then
         FinalizarChamadaAPI
       else

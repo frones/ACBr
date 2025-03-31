@@ -53,6 +53,13 @@ Símbolo : Significado
     https://www.projetoacbr.com.br/forum/index.php?showtopic=82582
     (por: EasySoft Sistemas e DSA)
 
+[-] Correção em 'TACBrTEFRespAditum.ConteudoToProperty', para considerar o Raiz
+    do Json, se não achar o objeto 'charge' dentro do JSon
+[-] Correção em 'TACBrTEFAPIClassAditum.RecuperarTransacao', para considerar
+    os chaves 'success' ou 'isApproved'
+    https://www.projetoacbr.com.br/forum/index.php?showtopic=82589
+    (por: EasySoft Sistemas e DSA)
+
 26/03/2025
 -- ACBrTEFScopeAPI --
 [-] Correção para não tentar cancelar a transação, enquando o estado for

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/03/2025
+-- ACBrNFeServicos --
+[*] #TK-6825: Ajustes da URL de consulta da NFC-e para a UF RN.
+   Por: Italo Giurizzato Junior
+
 28/03/2025
 -- ACBrNFeDANFeFPDF --
 [*] #TK-6749: Corrigidos erros de encoding no DANFE em FPDF

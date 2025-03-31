@@ -47,6 +47,8 @@ Símbolo : Significado
 [+] #TK-6822: Implementação do provedor Smart4 que atende a cidade de Paulo Afonso/BA
   Por: Teresa/Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
+[+] #TK-6842: Incluída a cidade de Aguas Belas/PE, o provedor é o Agili
+  Por: Arimateia Jr
 [+] #TK-6838: Incluída a cidade de Vila Valerio/ES, o provedor é EL versão 2.04
   Por: Desenvolvimento Objetiva
 

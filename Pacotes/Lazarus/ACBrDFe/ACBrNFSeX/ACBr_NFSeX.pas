@@ -127,7 +127,8 @@ uses
   NFEletronica.LerXml, NFEletronica.Provider, XTRTecnologia.GravarJson, 
   XTRTecnologia.LerJson, XTRTecnologia.Provider, ISSMap.GravarXml, 
   ISSMap.LerXml, ISSMap.Provider, Aspec.GravarJson, Aspec.LerJson, 
-  Aspec.Provider, LazarusPackageIntf;
+  Aspec.Provider, Smart4.GravarXml, Smart4.LerXml, Smart4.Provider, 
+  LazarusPackageIntf;
 
 implementation
 

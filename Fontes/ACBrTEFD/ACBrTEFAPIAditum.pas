@@ -506,6 +506,11 @@ begin
     Result := 'Encerrando fluxo transacional'
   else if ATransactionStatus = 'FINISHED' then
     Result := 'Fluxo completo'
+  else if ATransactionStatus = 'VALIDATING_NSU' then
+    Result := 'Validando NSU'
+  else if ATransactionStatus = 'WAITING_CARD_EVENT' then
+    Result := 'Aguardando Aproximação do Cartão'
+
   else
     Result := '';
 end;
@@ -887,6 +892,8 @@ var
   sBody, sURL: String;
   jsErrors: TACBrJSONArray;
   i: Integer;
+  jserro: TACBrJSONObject;
+  sMsg : String;
 begin
   LimparRespostaHTTP;
   if (Trim(NSU) = '') then
@@ -915,8 +922,11 @@ begin
         begin
           for i := 0 to jsErrors.Count-1 do
           begin
-            if (GetErrorCode(jserrors.ItemAsJSONObject[i]) = -1950) then  // Transação já cancelada
+            jserro := jserrors.ItemAsJSONObject[i];
+            if Assigned(jserro) and (GetErrorCode(jserro) = -1950) then  // Transação já cancelada
             begin
+              sMsg := UTF8ToNativeString(jserro.AsString['message']);
+              TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem( sMsg, telaOperador, 1000 );
               Result := True;
               Break;
             end;

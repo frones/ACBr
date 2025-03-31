@@ -46,6 +46,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/03/2025
+-- ACBrTEFAPIAditum --
+[*] Exibição de msg "Transação já Cancelada" na Tela do Operador
+[*] Tradução dos Status VALIDATING_NSU e WAITING_CARD_EVENT
+    https://www.projetoacbr.com.br/forum/index.php?showtopic=82582
+    (por: EasySoft Sistemas e DSA)
+
+26/03/2025
+-- ACBrTEFScopeAPI --
+[-] Correção para não tentar cancelar a transação, enquando o estado for
+    RCS_TRN_EM_ANDAMENTO
+    (por: DSA)
+
 24/03/2025
 -- ACBrTEFAPIScope --
 [-] Correção no tratamento do retorno do registrador MASK1_Data_local_transacao
@@ -58,7 +71,7 @@ Símbolo : Significado
 -- ACBrTEFAPIScope, ACBrTEFScopeAPI --
 [-] Correção no método 'TACBrTEFAPIClassScope.FinalizarTransacao', para
     conseguir Finalizar Transaçoes (sessões), quando estiver inicializando e
-    precisar confirmar/desfazer Transações pendentes
+    precisar confirmar/desfazer Transações pendentes/
     https://www.projetoacbr.com.br/forum/topic/82433-tef-scope-problema-com-desfazimento-por-queda-de-energia/
     (por: DSA)
 

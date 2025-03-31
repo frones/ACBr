@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/03/2025
+-- ACBrNFSeXServicos --
+[+] #TK-6838: Incluída a cidade de Vila Valerio/ES, o provedor é EL versão 2.04
+  Por: Desenvolvimento Objetiva
+
 28/03/2025
 -- ACBrNFSeXServicos --
 [+] #TK-6827: Incluída a cidade de Tibagi/PR, o provedor é EloTech.

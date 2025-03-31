@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 31/03/2025
+-- Diversos --
+[*] #TK-6814: Implementado a versão 3.00 do QR-Code.
+   Por: Italo Giurizzato Junior
 -- ACBrNFeServicos --
 [*] #TK-6825: Ajustes da URL de consulta da NFC-e para a UF RN.
    Por: Italo Giurizzato Junior

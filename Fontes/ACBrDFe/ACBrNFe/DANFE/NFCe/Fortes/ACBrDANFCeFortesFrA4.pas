@@ -540,13 +540,7 @@ var
 begin
   with self.FACBrNFeDANFCeFortesA4.FpNFe do
   begin
-    qrcode := TACBrNFe(self.FACBrNFeDANFCeFortesA4.ACBrNFe).GetURLQRCode( ide.cUF, ide.tpAmb,
-                                     OnlyNumber(InfNFe.ID),  //correcao para pegar somente numeros, estava indo junto o NFE
-                                     ifthen(Dest.idEstrangeiro <> '',Dest.idEstrangeiro, OnlyNumber(Dest.CNPJCPF)),
-                                     ide.dEmi,
-                                     Total.ICMSTot.vNF, Total.ICMSTot.vICMS,
-                                     signature.DigestValue,
-                                     infNFe.Versao);
+    qrcode := TACBrNFe(self.FACBrNFeDANFCeFortesA4.ACBrNFe).GetURLQRCode(self.FACBrNFeDANFCeFortesA4.FpNFe);
     PintarQRCode(qrcode, imgQRCode.Picture.Bitmap, qrUTF8NoBOM);
 
     lProtocolo.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt+

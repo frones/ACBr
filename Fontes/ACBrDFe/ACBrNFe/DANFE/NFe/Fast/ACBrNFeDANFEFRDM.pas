@@ -2322,16 +2322,7 @@ begin
                 CpLogomarca.Visible := CpTituloReport.Visible;
 
               if EstaVazio(Trim(NFe.infNFeSupl.qrCode)) then
-                qrcode := TACBrNFe(DANFEClassOwner.ACBrNFe).GetURLQRCode(
-                       NFe.ide.cUF,
-                       NFe.ide.tpAmb,
-                       OnlyNumber(NFe.InfNFe.ID),
-                       IfThen(NFe.Dest.idEstrangeiro <> '',NFe.Dest.idEstrangeiro, NFe.Dest.CNPJCPF),
-                       NFe.ide.dEmi,
-                       NFe.Total.ICMSTot.vNF,
-                       NFe.Total.ICMSTot.vICMS,
-                       NFe.signature.DigestValue,
-                       NFe.infNFe.Versao)
+                qrcode := TACBrNFe(DANFEClassOwner.ACBrNFe).GetURLQRCode(NFe)
               else
                 qrcode := NFe.infNFeSupl.qrCode;
 

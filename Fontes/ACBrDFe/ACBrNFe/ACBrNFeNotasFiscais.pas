@@ -295,7 +295,7 @@ end;
 
 procedure NotaFiscal.Assinar;
 var
-  XMLStr: String;
+  XMLStr: string;
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
 begin
@@ -337,12 +337,7 @@ begin
     begin
       with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
       begin
-        NFe.infNFeSupl.qrCode := GetURLQRCode(NFe.Ide.cUF, NFe.Ide.tpAmb,
-                                  onlyNumber(NFe.infNFe.ID),
-                                  trim(IfThen(NFe.Dest.idEstrangeiro <> '', NFe.Dest.idEstrangeiro, OnlyNumber(NFe.Dest.CNPJCPF))),
-                                  NFe.Ide.dEmi, NFe.Total.ICMSTot.vNF,
-                                  NFe.Total.ICMSTot.vICMS, NFe.signature.DigestValue,
-                                  NFe.infNFe.Versao);
+        NFe.infNFeSupl.qrCode := GetURLQRCode(NFe);
 
         if NFe.infNFe.Versao >= 4 then
           NFe.infNFeSupl.urlChave := GetURLConsultaNFCe(NFe.Ide.cUF, NFe.Ide.tpAmb, NFe.infNFe.Versao);
@@ -2153,8 +2148,6 @@ begin
   end
   else
     XMLStr := ConverteXMLtoNativeString(AXMLString);
-
-  XMLStr := RemoverDeclaracaoXML(XMLStr);
 
   N := PosNFe;
   while N > 0 do

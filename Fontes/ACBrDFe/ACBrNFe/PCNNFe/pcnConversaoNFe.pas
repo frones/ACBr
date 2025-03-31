@@ -302,11 +302,13 @@ const
   TIndicadorNFeArrayStrings: array[TpcnIndicadorNFe] of string = ('0', '1', '2');
 
 type
-  TpcnVersaoQrCode = (veqr000, veqr100, veqr200);
+  TpcnVersaoQrCode = (veqr000, veqr100, veqr200, veqr300);
 
 const
-  TVersaoQrCodeArrayStrings: array[TpcnVersaoQrCode] of string = ('0', '1', '2');
-  TVersaoQrCodeArrayDouble: array[TpcnVersaoQrCode] of Double = (0, 1.00, 2.00);
+  TVersaoQrCodeArrayStrings: array[TpcnVersaoQrCode] of string = ('0', '1', '2',
+    '3');
+  TVersaoQrCodeArrayDouble: array[TpcnVersaoQrCode] of Double = (0, 1.00, 2.00,
+    3.00);
 
 type
   TpcnTipoOperacao = (toVendaConcessionaria, toFaturamentoDireto, toVendaDireta,
@@ -1241,14 +1243,14 @@ end;
 
 function VersaoQrCodeToStr(const t: TpcnVersaoQrCode): String;
 begin
-  Result := EnumeradoToStr(t, ['0', '1', '2'],
-    [veqr000, veqr100, veqr200]);
+  Result := EnumeradoToStr(t, ['0', '1', '2', '3'],
+    [veqr000, veqr100, veqr200, veqr300]);
 end;
 
 function StrToVersaoQrCode(out ok: Boolean; const s: String): TpcnVersaoQrCode;
 begin
-  Result := StrToEnumerado(ok, s, ['0', '1', '2'],
-    [veqr000, veqr100, veqr200]);
+  Result := StrToEnumerado(ok, s, ['0', '1', '2', '3'],
+    [veqr000, veqr100, veqr200, veqr300]);
 end;
 
 function VersaoQrCodeToDbl(const t: TpcnVersaoQrCode): Real;
@@ -1257,6 +1259,7 @@ begin
     veqr000: Result := 0;
     veqr100: Result := 1;
     veqr200: Result := 2;
+    veqr300: Result := 3;
   else
     Result := 0;
   end;

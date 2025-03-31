@@ -782,7 +782,7 @@ end;
 procedure TACBrNFeDANFCeFortesFr.rlVendaBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
-  qrcode: String;
+  qrcode: string;
   CarregouLogo: Boolean;
 begin
   fNumItem  := 0;
@@ -849,13 +849,7 @@ begin
 
     // QRCode  //
     if EstaVazio(Trim(infNFeSupl.qrCode)) then
-      qrcode := TACBrNFe(ACBrNFeDANFCeFortes.ACBrNFe).GetURLQRCode( ide.cUF, ide.tpAmb,
-                                     OnlyNumber(InfNFe.ID),  //correcao para pegar somente numeros, estava indo junto o NFE
-                                     ifthen(Dest.idEstrangeiro <> '',Dest.idEstrangeiro, OnlyNumber(Dest.CNPJCPF)),
-                                     ide.dEmi,
-                                     Total.ICMSTot.vNF, Total.ICMSTot.vICMS,
-                                     signature.DigestValue,
-                                     infNFe.Versao)
+      qrcode := TACBrNFe(ACBrNFeDANFCeFortes.ACBrNFe).GetURLQRCode(ACBrNFeDANFCeFortes.FpNFe)
     else
       qrcode := infNFeSupl.qrCode;
 
@@ -1298,13 +1292,7 @@ begin
 
     // QRCode  //
     if EstaVazio(Trim(infNFeSupl.qrCode)) then
-      qrcode := TACBrNFe(ACBrNFeDANFCeFortes.ACBrNFe).GetURLQRCode( ide.cUF, ide.tpAmb,
-                                     OnlyNumber(InfNFe.ID),  //correcao para pegar somente numeros, estava indo junto o NFE
-                                     ifthen(Dest.idEstrangeiro <> '',Dest.idEstrangeiro, OnlyNumber(Dest.CNPJCPF)),
-                                     ide.dEmi,
-                                     Total.ICMSTot.vNF, Total.ICMSTot.vICMS,
-                                     signature.DigestValue,
-                                     infNFe.Versao)
+      qrcode := TACBrNFe(ACBrNFeDANFCeFortes.ACBrNFe).GetURLQRCode(ACBrNFeDANFCeFortes.FpNFe)
     else
       qrcode := infNFeSupl.qrCode;
 

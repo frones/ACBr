@@ -85,6 +85,10 @@ type
     function Distribuicao(AcUFAutor: integer; const ACNPJCPF, AultNSU, ANSU,
       chNFe: String): Boolean;
 
+    function GetURLQRCodeV1(FNFe: TNFe): string;
+    function GetURLQRCodeV2(FNFe: TNFe): string;
+    function GetURLQRCodeV3(FNFe: TNFe): string;
+
     procedure SetConfiguracoes(AValue: TConfiguracoesNFe);
     procedure SetDANFE(const Value: TACBrDFeDANFeReport);
   protected
@@ -125,13 +129,16 @@ type
 
     function AjustarVersaoQRCode( AVersaoQRCode: TpcnVersaoQrCode;
       AVersaoXML: TpcnVersaoDF): TpcnVersaoQrCode;
+
     function GetURLConsultaNFCe(const CUF: integer;
       const TipoAmbiente: TpcnTipoAmbiente;
       const Versao: Double): String;
+
     function GetURLQRCode(const CUF: integer; const TipoAmbiente: TpcnTipoAmbiente;
       const AChaveNFe, Destinatario: String; const DataHoraEmissao: TDateTime;
       const ValorTotalNF, ValorTotalICMS: currency; const DigestValue: String;
-      const Versao: Double): String;
+      const Versao: Double): String; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Utilize a função que recebe apenas um parâmetro' {$ENDIF};
+    function GetURLQRCode(FNFe: TNFe): string; overload;
 
     function IdentificaSchema(const AXML: String): TSchemaNFe;
     function GerarNomeArqSchema(const ALayOut: TLayOut; VersaoServico: Double
@@ -182,6 +189,7 @@ implementation
 uses
   strutils, dateutils, math,
   ACBrDFeUtil,
+  ACBrDFeSSL,
   ACBrUtil.DateTime,
   synacode;
 
@@ -542,8 +550,7 @@ end;
 function TACBrNFe.GetURLQRCode(const CUF: integer;
   const TipoAmbiente: TpcnTipoAmbiente; const AChaveNFe, Destinatario: String;
   const DataHoraEmissao: TDateTime; const ValorTotalNF,
-  ValorTotalICMS: currency; const DigestValue: String; const Versao: Double
-  ): String;
+  ValorTotalICMS: currency; const DigestValue: String; const Versao: Double): String;
 var
   idNFe, sdhEmi_HEX, sdigVal_HEX, sNF, sICMS, cIdCSC, cCSC, sCSC,
   sEntrada, cHashQRCode, urlUF, cDest: String;
@@ -622,9 +629,156 @@ begin
   end;
 end;
 
+function TACBrNFe.GetURLQRCode(FNFe: TNFe): string;
+var
+  ok: Boolean;
+  VersaoDFe: TpcnVersaoDF;
+  VersaoQrCode: TpcnVersaoQrCode;
+begin
+  VersaoDFe := DblToVersaoDF(ok, FNFe.infNFe.Versao);
+  VersaoQrCode := AjustarVersaoQRCode(Configuracoes.Geral.VersaoQRCode, VersaoDFe);
+
+  case VersaoQrCode of
+    veqr300: Result := GetURLQRCodeV3(FNFe);
+
+    veqr200: Result := GetURLQRCodeV2(FNFe);
+  else
+    Result := GetURLQRCodeV1(FNFe);
+  end;
+end;
+
+function TACBrNFe.GetURLQRCodeV1(FNFe: TNFe): string;
+var
+  idNFe, sdhEmi_HEX, sdigVal_HEX, sNF, sICMS, cIdCSC, cCSC, sCSC,
+  sEntrada, cHashQRCode, urlUF, cDest: String;
+begin
+  urlUF := LerURLDeParams('NFCe', CUFtoUF(FNFe.Ide.cUF), FNFe.Ide.tpAmb, 'URL-QRCode', 1);
+  idNFe := OnlyNumber(FNFe.infNFe.ID);
+  cDest := trim(IfThen(FNFe.Dest.idEstrangeiro <> '',
+                       FNFe.Dest.idEstrangeiro, OnlyNumber(FNFe.Dest.CNPJCPF)));
+
+  // Passo 1
+  sdhEmi_HEX := AsciiToHex(DateTimeTodh(FNFe.Ide.dEmi) +
+    GetUTC(CodigoUFparaUF(FNFe.Ide.cUF), FNFe.Ide.dEmi));
+  sdigVal_HEX := AsciiToHex(FNFe.signature.DigestValue);
+
+  if (FNFe.Ide.cUF in [35, 41, 50]) then
+  begin
+    sdhEmi_HEX := LowerCase(sdhEmi_HEX);
+    sdigVal_HEX := LowerCase(sdigVal_HEX);
+  end;
+
+  // Passo 3 e 4
+  cCSC := Configuracoes.Geral.CSC;
+  cIdCSC := IntToStrZero(StrToIntDef(Configuracoes.Geral.IdCSC,0),6);
+
+  if EstaVazio(cCSC) then
+    cCSC := Copy(idNFe, 7, 8) + '20' + Copy(idNFe, 3, 2) + Copy(cIdCSC, 3, 4);
+
+  sCSC := cIdCSC + cCSC;
+  sNF := FloatToString(FNFe.Total.ICMSTot.vNF, '.', FloatMask(2, False));
+  sICMS := FloatToString(FNFe.Total.ICMSTot.vICMS, '.', FloatMask(2, False));
+
+  sEntrada := 'chNFe=' + idNFe + '&nVersao=100&tpAmb=' +
+      TpAmbToStr(FNFe.Ide.tpAmb) + IfThen(cDest = '', '', '&cDest=' +
+      cDest) + '&dhEmi=' + sdhEmi_HEX + '&vNF=' + sNF + '&vICMS=' +
+      sICMS + '&digVal=' + sdigVal_HEX + '&cIdToken=';
+
+  // Passo 5 calcular o SHA-1 da string sEntrada
+  cHashQRCode := AsciiToHex(SHA1(sEntrada + sCSC));
+
+  // Passo 6
+  if Pos('?', urlUF) > 0 then
+    Result := urlUF + '&'
+  else
+    Result := urlUF + '?';
+
+  Result := Result + sEntrada + cIdCSC + '&cHashQRCode=' + cHashQRCode;
+end;
+
+function TACBrNFe.GetURLQRCodeV2(FNFe: TNFe): string;
+var
+  idNFe, sdigVal_HEX, sNF, cIdCSC, cCSC, sCSC, sEntrada, cHashQRCode, urlUF: string;
+begin
+  urlUF := LerURLDeParams('NFCe', CUFtoUF(FNFe.Ide.cUF), FNFe.Ide.tpAmb, 'URL-QRCode', 2);
+  idNFe := OnlyNumber(FNFe.infNFe.ID);
+
+  // Passo 1
+  sdigVal_HEX := AsciiToHex(FNFe.signature.DigestValue);
+
+  if (FNFe.Ide.cUF in [35, 41, 50]) then
+  begin
+    sdigVal_HEX := LowerCase(sdigVal_HEX);
+  end;
+
+  // Passo 3 e 4
+  cCSC := Configuracoes.Geral.CSC;
+  cIdCSC := IntToStr(StrToIntDef(Configuracoes.Geral.IdCSC,0));
+
+  if EstaVazio(cCSC) then
+    cCSC := Copy(idNFe, 7, 8) + '20' + Copy(idNFe, 3, 2) + Copy(cIdCSC, 3, 4);
+
+  sCSC := cIdCSC + cCSC;
+  sNF := FloatToString(FNFe.Total.ICMSTot.vNF, '.', FloatMask(2, False));
+
+  sEntrada := idNFe + '|2|' + TpAmbToStr(FNFe.Ide.tpAmb) + '|';
+
+  if ExtrairTipoEmissaoChaveAcesso(idNFe) = 9 then
+    sEntrada := sEntrada + Format('%.2d',[DayOf(FNFe.Ide.dEmi)]) + '|' +
+                           sNF + '|' + sdigVal_HEX + '|';
+
+  // Passo 5 calcular o SHA-1 da string sEntrada
+  cHashQRCode := AsciiToHex(SHA1(sEntrada + sCSC));
+
+  // Passo 6
+  Result := urlUF;
+  if Pos('?p=', urlUF) <= 0 then
+    Result := Result + '?p=';
+
+  Result := Result + sEntrada + cIdCSC + '|' + cHashQRCode;
+end;
+
+function TACBrNFe.GetURLQRCodeV3(FNFe: TNFe): string;
+var
+  idNFe, sNF, sEntrada, urlUF, cDest, TipoDest: string;
+begin
+  idNFe := OnlyNumber(FNFe.infNFe.ID);
+
+  sEntrada := idNFe + '|3|' + TpAmbToStr(FNFe.Ide.tpAmb);
+
+  if ExtrairTipoEmissaoChaveAcesso(idNFe) = 9 then
+  begin
+    TipoDest := '';
+
+    if FNFe.Dest.idEstrangeiro <> '' then
+      TipoDest := '3';
+
+    if Length(OnlyNumber(FNFe.Dest.CNPJCPF)) = 11 then
+      TipoDest := '2';
+
+    if Length(OnlyNumber(FNFe.Dest.CNPJCPF)) = 14 then
+      TipoDest := '1';
+
+    cDest := trim(IfThen(FNFe.Dest.idEstrangeiro <> '',
+                       FNFe.Dest.idEstrangeiro, OnlyNumber(FNFe.Dest.CNPJCPF)));
+    sNF := FloatToString(FNFe.Total.ICMSTot.vNF, '.', FloatMask(2, False));
+
+    sEntrada := sEntrada + '|' + Format('%.2d',[DayOf(FNFe.Ide.dEmi)]) + '|' +
+                         sNF + '|' + TipoDest + '|' + cDest;
+    sEntrada := sEntrada + '|' + SSL.CalcHash(sEntrada, dgstSHA1, outBase64, True);
+  end;
+
+  urlUF := LerURLDeParams('NFCe', CUFtoUF(FNFe.Ide.cUF), FNFe.Ide.tpAmb, 'URL-QRCode', 3);
+  Result := urlUF;
+  if Pos('?p=', urlUF) <= 0 then
+    Result := Result + '?p=';
+
+  Result := Result + sEntrada;
+end;
+
 function TACBrNFe.GravarStream(AStream: TStream): Boolean;
 begin
-//  if EstaVazio(FEventoNFe.Gerador.ArquivoFormatoXML) then
+  if EstaVazio(FEventoNFe.XmlEnvio) then
     FEventoNFe.GerarXML;
 
   AStream.Size := 0;

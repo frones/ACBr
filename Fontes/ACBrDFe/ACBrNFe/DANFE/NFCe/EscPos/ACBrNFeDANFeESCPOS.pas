@@ -1006,16 +1006,7 @@ end;
 function TACBrNFeDANFeESCPOS.CalcularDadosQRCode: String;
 begin
   if EstaVazio(Trim(FpNFe.infNFeSupl.qrCode)) then
-    Result := TACBrNFe(ACBrNFe).GetURLQRCode(
-      FpNFe.ide.cUF,
-      FpNFe.ide.tpAmb,
-      FpNFe.infNFe.ID,
-      IfThen(FpNFe.Dest.idEstrangeiro <> '', FpNFe.Dest.idEstrangeiro, FpNFe.Dest.CNPJCPF),
-      FpNFe.ide.dEmi,
-      FpNFe.Total.ICMSTot.vNF,
-      FpNFe.Total.ICMSTot.vICMS,
-      FpNFe.signature.DigestValue,
-      FpNFe.infNfe.Versao)
+    Result := TACBrNFe(ACBrNFe).GetURLQRCode(FpNFe)
   else
     Result := FpNFe.infNFeSupl.qrCode;
 end;

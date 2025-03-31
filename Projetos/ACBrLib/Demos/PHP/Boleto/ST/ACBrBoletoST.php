@@ -183,8 +183,8 @@ function GerarRemessaStream($ffi, $AeNumArquivo, &$retornoGeral)
 function SalvarPDF($ffi, &$retornoGeral)
 {
     $esTamanho = FFI::new("long");
-    $esTamanho->cdata = 9048;
-    $sMensagem = FFI::new("char[535]");
+    $esTamanho->cdata = 144768;
+    $sMensagem = FFI::new("char[144768]");
     $retorno = $ffi->Boleto_SalvarPDF($sMensagem, FFI::addr($esTamanho));
 
     if ($retorno !== 0) {
@@ -200,8 +200,8 @@ function SalvarPDF($ffi, &$retornoGeral)
 function GerarPDF($ffi, &$retornoGeral)
 {
     $esTamanho = FFI::new("long");
-    $esTamanho->cdata = 9048;
-    $sMensagem = FFI::new("char[535]");
+    $esTamanho->cdata = 144768;
+    $sMensagem = FFI::new("char[144768]");
     $retorno = $ffi->Boleto_GerarPDF();
 
     if (UltimoRetorno($ffi, $retorno, $sMensagem, "Erro ao gerar pdf", 1) != 0)

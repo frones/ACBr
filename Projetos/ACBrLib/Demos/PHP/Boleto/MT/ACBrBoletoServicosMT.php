@@ -333,6 +333,8 @@ try {
         if (GerarPDF($handle, $ffi, $resultado) != 0) {
             exit;
         }
+
+        $resultado = "ok";
     }
 
     if ($metodo == "LerRetornoStream") {

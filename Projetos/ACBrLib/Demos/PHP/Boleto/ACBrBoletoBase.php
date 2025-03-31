@@ -710,6 +710,7 @@
             <div class="grid3Col">
                 <input type="button" id="GerarRemessaStream" value="Gerar Remessa (Stream)">
                 <input type="button" id="SalvarPDF" value="Salvar PDF (Stream)">
+                <input type="button" id="GerarPDF" value="Gerar PDF">
                 <input type="button" id="LerRetornoStream" value="Ler Retorno (Stream)">
                 <input type="button" id="EnviarEmail" value="Enviar Email">
                 <input type="button" id="LinhaDigitavel" value="Linha Digitável">
@@ -883,6 +884,15 @@
             selecionarArquivo(".ini", function(AeArquivoIni) {
                 chamaAjaxEnviar({
                     metodo: "SalvarPDF",
+                    AeArquivoIni: AeArquivoIni
+                });
+            });
+        });
+
+        $('#GerarPDF').on('click', function() {
+            selecionarArquivo(".ini", function(AeArquivoIni) {
+                chamaAjaxEnviar({
+                    metodo: "GerarPDF",
                     AeArquivoIni: AeArquivoIni
                 });
             });

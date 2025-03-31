@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/03/2025
+-- ACBrBoletoBase, ACBrBoletoMT, ACBrBoletoServicosMT, ACBrBoletoServicosST, ACBrBoletoST --
+[*] #TK-6723: Implementada opção de geração do boleto em arquivo pdf.
+    Por: Renato Rubinho
+
 05/03/2025
 -- ACBrLibBoleto.lpi, ACBrLibBoletoDemo.lpi, ACBrLibBoletoConsoleMT.lpi e ACBrLibBoletoConsoleMTDemo.lpi--
 [*] Realizado ajustes nos paths para compilação com os novos scripts do Jenkins.

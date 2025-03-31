@@ -201,6 +201,7 @@ uses
   SigISS.Provider,
   SigISSWeb.Provider,
   Simple.Provider,
+  Smart4.Provider,
   SoftPlan.Provider,
   WebFisco.Provider,
   XTRTecnologia.Provider;
@@ -609,6 +610,7 @@ begin
           end;
         end;
 
+      proSmart4:   Result := TACBrNFSeProviderSmart4.Create(ACBrNFSe);
       proSoftPlan: Result := TACBrNFSeProviderSoftPlan.Create(ACBrNFSe);
       proSpeedGov: Result := TACBrNFSeProviderSpeedGov.Create(ACBrNFSe);
 

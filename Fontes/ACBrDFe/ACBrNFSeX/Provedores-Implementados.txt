@@ -150,6 +150,7 @@ Sistemas4R           2.00  20/09/2022
 SmarAPD              1.00
 SmarAPD              2.03
 SmarAPD              2.04
+Smart4               1.00             (Ativ!)
 SoftPlan             1.00
 SpeedGov             1.00
 SSInformatica        2.03

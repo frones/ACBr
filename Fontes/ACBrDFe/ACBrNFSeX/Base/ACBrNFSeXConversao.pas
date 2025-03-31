@@ -142,7 +142,7 @@ type
                    proSiappa, proSiapSistemas, proSiat, proSigCorp, proSigep,
                    proSigISS, proSigISSWeb, proSilTecnologia, proSimple,
                    proSimplISS, proSintese, proSisPMJP, proSistemas4R,
-                   proSmarAPD, proSoftPlan, proSpeedGov, proSSInformatica,
+                   proSmarAPD, proSmart4, proSoftPlan, proSpeedGov, proSSInformatica,
                    proSudoeste, proSysISS, proSystemPro, proTcheInfo, proTecnos,
                    proThema, proTinus, proTiplan, proTributus, proVersaTecnologia,
                    proVirtual, proWebFisco, proWebISS, proXTRTecnologia);

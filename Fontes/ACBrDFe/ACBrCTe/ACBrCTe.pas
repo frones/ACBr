@@ -100,7 +100,8 @@ type
       const Versao: Double): String;
     function GetURLQRCode(const CUF: integer; const TipoAmbiente: TpcnTipoAmbiente;
       const TipoEmissao: TpcnTipoEmissao; const AChaveCTe: String;
-      const Versao: Double): String;
+      const Versao: Double): String; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Utilize a função que recebe apenas um parâmetro' {$ENDIF};
+    function GetURLQRCode(FCTe: TCTe): string; overload;
 
     function IdentificaSchema(const AXML: String): TSchemaCTe;
     function IdentificaSchemaModal(const AXML: String): TSchemaCTe;
@@ -329,6 +330,38 @@ begin
 
   // Passo 2 calcular o SHA-1 da string idCTe se o Tipo de Emissão for EPEC ou FSDA
   if TipoEmissao in [teDPEC, teFSDA] then
+  begin
+    // Tipo de Emissão em Contingência
+    SSL.CarregarCertificadoSeNecessario;
+    sign := SSL.CalcHash(idCTe, dgstSHA1, outBase64, True);
+    Passo2 := '&sign=' + sign;
+
+    sEntrada := sEntrada + Passo2;
+  end;
+
+  Result := urlUF + sEntrada;
+end;
+
+function TACBrCTe.GetURLQRCode(FCTe: TCTe): string;
+var
+  idCTe, sEntrada, urlUF, Passo2, sign: String;
+//  VersaoDFe: TVersaoCTe;
+begin
+//  VersaoDFe := DblToVersaoCTe(ok, FCTe.infCTe.Versao);  // Deixado para usu futuro
+
+
+  urlUF := LerURLDeParams('CTe', CUFtoUF(FCTe.Ide.cUF), FCTe.Ide.tpAmb, 'URL-QRCode', 0);
+
+  if Pos('?', urlUF) <= 0 then
+    urlUF := urlUF + '?';
+
+  idCTe := FCTe.infCTe.ID;
+
+  // Passo 1
+  sEntrada := 'chCTe=' + idCTe + '&tpAmb=' + TpAmbToStr(FCTe.Ide.tpAmb);
+
+  // Passo 2 calcular o SHA-1 da string idCTe se o Tipo de Emissão for EPEC ou FSDA
+  if FCTe.ide.tpEmis in [teDPEC, teFSDA] then
   begin
     // Tipo de Emissão em Contingência
     SSL.CarregarCertificadoSeNecessario;

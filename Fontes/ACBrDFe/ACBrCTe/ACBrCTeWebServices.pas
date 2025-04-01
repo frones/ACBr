@@ -2220,7 +2220,7 @@ begin
 
       XML := StringReplace(XML, 'ds:', '', [rfReplaceAll]);
 
-      if FPConfiguracoesCTe.Arquivos.Salvar then
+      if FPConfiguracoesCTe.Arquivos.SalvarEvento and (XML <> '') then
         FPDFeOwner.Gravar( aIDEvento + '-procEventoCTe.xml', XML, sPathEvento);
     end;
   end;
@@ -2529,7 +2529,7 @@ begin
       else
       begin
         // Salva o XML de eventos retornados ao consultar um CT-e
-        if ExtrairEventos and FPConfiguracoesCTe.Arquivos.Salvar and
+        if ExtrairEventos and FPConfiguracoesCTe.Arquivos.SalvarEvento and
            (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoCTe'))) then
           SalvarEventos(CTeRetorno);
       end;

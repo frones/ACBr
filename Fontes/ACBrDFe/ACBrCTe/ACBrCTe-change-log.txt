@@ -44,6 +44,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/04/2025
+-- Diversos --
+[*] #TK-5814: Implementado as units: ACBrCTe.IniReader e ACBrCTe.IniWrite que
+    vão ser responsáveis por ler e gerar o arquivo INI.
+    Refatorado a função GetURLQRCode para que a mesma receba a classe TCTe em 
+    vez de diversos parâmetros de entrada.
+    Implementado a propriedade de configuração: SalvarEvento (valor padrão False)
+    agora ao salvar o XML *-procEventoCTe o componente vai checar o valor dessa 
+    propriedade.
+    Alterado a URL do QR-Code de MG.
+  Por: Italo Giurizzato Junior
+
 08/03/2025
 -- ACBrCTe.Classes/ACBrCTe.XmlReader/ACBrCTe.XmlWriter --
 [*] #TK-5814: Alteração visando contemplar a Reforma Tributária.

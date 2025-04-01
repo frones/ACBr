@@ -3647,7 +3647,7 @@ begin
                                                     natCarga.xDime, DSC_XDIME));
 
     for i := 0 to natCarga.cinfManu.Count - 1 do
-      Result.AppendChild(AddNode(tcInt, '#13', 'cInfManu', 1, 2, 0,
+      Result.AppendChild(AddNode(tcStr, '#13', 'cInfManu', 1, 2, 0,
                 TpInfManuToStrV2(natCarga.cinfManu[i].nInfManu), DSC_CINFMANU));
 
     Result.AppendChild(AddNode(tcStr, '#14', 'cIMP', 3, 3, NOcorr,

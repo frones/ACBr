@@ -76,6 +76,7 @@ type
     FPathInu: String;
     FPathEvento: String;
     FPathArquivoMunicipios: String;
+    FSalvarEvento: Boolean;
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeArquivosConfCTe: TArquivosConfCTe); reintroduce;
@@ -88,6 +89,7 @@ type
     function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathCTe: Boolean     read FEmissaoPathCte write FEmissaoPathCTe default False;
+    property SalvarEvento: Boolean read FSalvarEvento write FSalvarEvento default False;
     property SalvarApenasCTeProcessados: Boolean read FSalvarApenasCTeProcessados write FSalvarApenasCTeProcessados default False;
     property NormatizarMunicipios: boolean read FNormatizarMunicipios write FNormatizarMunicipios default False;
     property PathCTe: String             read FPathCTe        write FPathCTe;
@@ -215,6 +217,7 @@ begin
   inherited Assign(DeArquivosConfCTe);
 
   FEmissaoPathCTe             := DeArquivosConfCTe.EmissaoPathCTe;
+  FSalvarEvento               := DeArquivosConfCTe.SalvarEvento;
   FSalvarApenasCTeProcessados := DeArquivosConfCTe.SalvarApenasCTeProcessados;
   FNormatizarMunicipios       := DeArquivosConfCTe.NormatizarMunicipios;
   FPathCTe                    := DeArquivosConfCTe.PathCTe;
@@ -228,6 +231,7 @@ begin
   inherited Create(AOwner);
 
   FEmissaoPathCTe := False;
+  FSalvarEvento := False;
   FSalvarApenasCTeProcessados := False;
   FNormatizarMunicipios := False;
   FPathCTe := '';
@@ -290,6 +294,7 @@ procedure TArquivosConfCTe.GravarIni(const AIni: TCustomIniFile);
 begin
   inherited GravarIni(AIni);
 
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarEvento', SalvarEvento);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarApenasCTeProcessados', SalvarApenasCTeProcessados);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'EmissaoPathCTe', EmissaoPathCTe);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'NormatizarMunicipios', NormatizarMunicipios);
@@ -303,6 +308,7 @@ procedure TArquivosConfCTe.LerIni(const AIni: TCustomIniFile);
 begin
   inherited LerIni(AIni);
 
+  SalvarEvento := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarEvento', SalvarEvento);
   SalvarApenasCTeProcessados := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarApenasCTeProcessados', SalvarApenasCTeProcessados);
   EmissaoPathCTe := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'EmissaoPathCTe', EmissaoPathCTe);
   NormatizarMunicipios := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'NormatizarMunicipios', NormatizarMunicipios);

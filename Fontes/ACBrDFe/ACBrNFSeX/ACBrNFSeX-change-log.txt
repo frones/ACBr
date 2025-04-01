@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/04/2025
+-- ISSCampinas.Provider --
+[*] #TK-6789 - Adiciona \s\n como quebra de linha a ser utilizada pelo provedor.
+  Por: Diego Folieni / Italo Giurizatto Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6848: Incluído o Params: Codigo_Atividade para a cidade de Arapongas/PR.
   Por: Massao Aihara

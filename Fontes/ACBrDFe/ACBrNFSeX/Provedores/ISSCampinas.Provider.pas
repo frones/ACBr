@@ -1926,6 +1926,7 @@ end;
 procedure TACBrNFSeProviderISSCampinas203.Configuracao;
 begin
   inherited Configuracao;
+  ConfigGeral.QuebradeLinha := '\s\n';
 
   with ConfigWebServices do
   begin

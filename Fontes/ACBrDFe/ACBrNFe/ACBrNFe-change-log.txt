@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/04/2025
+-- ACBrNFe.IniWriter --
+[-] Correção realizada para não gerar os campos: tpCompraGov e pRedutor no arquivo
+    INI quando pRedutor for zero. 
+   Por: Italo Giurizzato Junior
+
 31/03/2025
 -- Diversos --
 [*] #TK-6814: Implementado a versão 3.00 do QR-Code.

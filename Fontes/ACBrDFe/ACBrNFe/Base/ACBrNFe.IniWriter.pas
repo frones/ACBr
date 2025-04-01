@@ -264,8 +264,11 @@ begin
   AINIRec.WriteInteger('Identificacao', 'cMunFGIBS', Ide.cMunFGIBS);
   AINIRec.WriteString('Identificacao', 'indMultaJuros', indMultaJurosToStr(Ide.indMultaJuros));
 
-  AINIRec.WriteString('Identificacao', 'tpCompraGov', tpCompraGovToStr(Ide.gCompraGov.tpCompraGov));
-  AINIRec.WriteFloat('Identificacao', 'pRedutor', Ide.gCompraGov.pRedutor);
+  if Ide.gCompraGov.pRedutor > 0 then
+  begin
+    AINIRec.WriteString('Identificacao', 'tpCompraGov', tpCompraGovToStr(Ide.gCompraGov.tpCompraGov));
+    AINIRec.WriteFloat('Identificacao', 'pRedutor', Ide.gCompraGov.pRedutor);
+  end;
 
   AINIRec.WriteString('Identificacao', 'tipoNotaCredito', Ide.tipoNotaCredito);
 end;

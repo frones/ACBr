@@ -3298,7 +3298,7 @@ begin
   begin
 
     Append;
-    if (FCTe.ide.modelo = 67) or (FCTe.ide.tpCTe = tcCTeSimp) then  //67-CTeOS
+    if ((FCTe.ide.modelo in [57,67]) or (FCTe.ide.tpCTe = tcCTeSimp)) and (FCTe.toma.xNome <> '') then  //67-CTeOS
     begin
       FieldByName('CNPJ').AsString    := FormatarCNPJouCPF(FCTe.toma.CNPJCPF);
       FieldByName('XNome').AsString   := FCTe.toma.xNome;

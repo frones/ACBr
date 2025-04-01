@@ -93,6 +93,8 @@ contains
 
   ACBrCTe.Consts in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.Consts.pas',
   ACBrCTe.Classes in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.Classes.pas',
+  ACBrCTe.IniReader in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.IniReader.pas',
+  ACBrCTe.IniWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.IniWriter.pas',
 
   {$IFDEF USE_ACBr_XMLDOCUMENT}
   ACBrCTe.XmlHandler in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.XmlHandler.pas',

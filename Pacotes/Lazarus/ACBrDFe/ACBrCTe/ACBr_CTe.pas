@@ -13,7 +13,7 @@ uses
   pcteInutCTe, pcteProcCTe, ACBrCTeDACTEClass, ACBrCTe.Classes, 
   ACBrCTe.XmlHandler, ACBrCTe.ConsSit, ACBrCTe.RetConsSit, 
   ACBrCTe.EventoClass, ACBrCTe.EnvEvento, ACBrCTe.RetEnvEvento, 
-  ACBrCTe.Consts, LazarusPackageIntf;
+  ACBrCTe.Consts, ACBrCTe.IniReader, ACBrCTe.IniWriter, LazarusPackageIntf;
 
 implementation
 

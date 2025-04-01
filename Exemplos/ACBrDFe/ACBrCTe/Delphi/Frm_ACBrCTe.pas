@@ -245,6 +245,7 @@ type
     btnDistrDFePorChave: TButton;
     btnInsucessoEntrega: TButton;
     btnCancInsuc: TButton;
+    tsOutros: TTabSheet;
     btnGerarArqINI: TButton;
     btnLerArqINI: TButton;
     procedure FormCreate(Sender: TObject);
@@ -2299,7 +2300,7 @@ begin
     MemoDados.Lines.Add('xBairro: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xBairro);
     MemoDados.Lines.Add('cMun: ' + IntToStr(ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].cMun));
     MemoDados.Lines.Add('xMun: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xMun);
-    MemoDados.Lines.Add('CEP: ' + IntToStr(ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].CEP));
+    MemoDados.Lines.Add('CEP: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].CEP);
   end;
 end;
 
@@ -3574,7 +3575,7 @@ begin
     cbFormaEmissao.ItemIndex    := Ini.ReadInteger('Geral', 'FormaEmissao',     0);
     cbModeloDF.ItemIndex        := Ini.ReadInteger('Geral', 'ModeloDF',         0);
 
-    cbVersaoDF.ItemIndex      := Ini.ReadInteger('Geral', 'VersaoDF',       0);
+    cbVersaoDF.ItemIndex      := Ini.ReadInteger('Geral', 'VersaoDF',       2);
     ckSalvar.Checked          := Ini.ReadBool(   'Geral', 'Salvar',         True);
     cbxRetirarAcentos.Checked := Ini.ReadBool(   'Geral', 'RetirarAcentos', True);
     edtPathLogs.Text          := Ini.ReadString( 'Geral', 'PathSalvar',     PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs');

@@ -1376,8 +1376,8 @@ object frmACBrCTe: TfrmACBrCTe
         Caption = 'Envios'
         ImageIndex = 2
         object btnValidarRegrasNegocio: TButton
-          Left = 9
-          Top = 71
+          Left = 7
+          Top = 40
           Width = 177
           Height = 25
           Caption = 'Validar Regras de Neg'#243'cio'
@@ -1394,8 +1394,8 @@ object frmACBrCTe: TfrmACBrCTe
           OnClick = btnGerarXMLClick
         end
         object btnGerarPDF: TButton
-          Left = 375
-          Top = 102
+          Left = 373
+          Top = 71
           Width = 177
           Height = 25
           Caption = 'Gerar PDF'
@@ -1403,8 +1403,8 @@ object frmACBrCTe: TfrmACBrCTe
           OnClick = btnGerarPDFClick
         end
         object btnValidarXML: TButton
-          Left = 192
-          Top = 71
+          Left = 190
+          Top = 40
           Width = 177
           Height = 25
           Caption = 'Validar XML'
@@ -1412,8 +1412,8 @@ object frmACBrCTe: TfrmACBrCTe
           OnClick = btnValidarXMLClick
         end
         object btnImprimir: TButton
-          Left = 192
-          Top = 102
+          Left = 190
+          Top = 71
           Width = 177
           Height = 25
           Caption = 'Imprimir DACTE'
@@ -1421,8 +1421,8 @@ object frmACBrCTe: TfrmACBrCTe
           OnClick = btnImprimirClick
         end
         object btnEnviarEmail: TButton
-          Left = 9
-          Top = 133
+          Left = 7
+          Top = 102
           Width = 177
           Height = 25
           Caption = 'Enviar CTe Email'
@@ -1430,8 +1430,8 @@ object frmACBrCTe: TfrmACBrCTe
           OnClick = btnEnviarEmailClick
         end
         object btnAdicionarProtocolo: TButton
-          Left = 9
-          Top = 102
+          Left = 7
+          Top = 71
           Width = 177
           Height = 25
           Caption = 'Adicionar Protocolo ao XML'
@@ -1448,8 +1448,8 @@ object frmACBrCTe: TfrmACBrCTe
           OnClick = btnCarregarXMLEnviarClick
         end
         object btnValidarAssinatura: TButton
-          Left = 375
-          Top = 71
+          Left = 373
+          Top = 40
           Width = 177
           Height = 25
           Caption = 'Validar Assinatura'
@@ -1464,24 +1464,6 @@ object frmACBrCTe: TfrmACBrCTe
           Caption = 'Criar e Enviar modo S'#237'ncrono'
           TabOrder = 9
           OnClick = btnCriarEnviarSincronoClick
-        end
-        object btnGerarArqINI: TButton
-          Left = 9
-          Top = 40
-          Width = 177
-          Height = 25
-          Caption = 'Gerar Arquivo INI'
-          TabOrder = 10
-          OnClick = btnGerarArqINIClick
-        end
-        object btnLerArqINI: TButton
-          Left = 192
-          Top = 40
-          Width = 177
-          Height = 25
-          Caption = 'Ler Arquivo INI/Gerar XML'
-          TabOrder = 11
-          OnClick = btnLerArqINIClick
         end
       end
       object tsConsultas: TTabSheet
@@ -1687,6 +1669,28 @@ object frmACBrCTe: TfrmACBrCTe
           Caption = 'Distribui'#231#227'o DF-e por Chave'
           TabOrder = 2
           OnClick = btnDistrDFePorChaveClick
+        end
+      end
+      object tsOutros: TTabSheet
+        Caption = 'Outros'
+        ImageIndex = 5
+        object btnGerarArqINI: TButton
+          Left = 186
+          Top = 3
+          Width = 177
+          Height = 25
+          Caption = 'Gerar Arquivo INI'
+          TabOrder = 0
+          OnClick = btnGerarArqINIClick
+        end
+        object btnLerArqINI: TButton
+          Left = 3
+          Top = 3
+          Width = 177
+          Height = 25
+          Caption = 'Ler Arquivo INI/Gerar XML'
+          TabOrder = 1
+          OnClick = btnLerArqINIClick
         end
       end
     end

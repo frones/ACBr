@@ -252,8 +252,10 @@ begin
   Ide.cMunFGIBS := AINIRec.ReadInteger(sSecao, 'cMunFGIBS', 0);
   Ide.indMultaJuros := StrToindMultaJuros(AINIRec.ReadString(sSecao, 'indMultaJuros', ''));
 
-  Ide.gCompraGov.tpCompraGov := StrTotpCompraGov(AINIRec.ReadString(sSecao, 'tpCompraGov', ''));
   Ide.gCompraGov.pRedutor := StringToFloatDef(AINIRec.ReadString(sSecao, 'pRedutor', ''), 0);
+
+  if Ide.gCompraGov.pRedutor > 0 then
+    Ide.gCompraGov.tpCompraGov := StrTotpCompraGov(AINIRec.ReadString(sSecao, 'tpCompraGov', ''));
 
   Ide.tipoNotaCredito := AINIRec.ReadString(sSecao, 'tipoNotaCredito', '');
 end;

@@ -45,6 +45,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/04/2025
+-- ACBrNFe.IniReader --
+[-] Correção realizada para não ler os campos: tpCompraGov e pRedutor no arquivo
+    INI quando pRedutor for zero. 
+   Por: Italo Giurizzato Junior
 -- ACBrNFe.IniWriter --
 [-] Correção realizada para não gerar os campos: tpCompraGov e pRedutor no arquivo
     INI quando pRedutor for zero. 

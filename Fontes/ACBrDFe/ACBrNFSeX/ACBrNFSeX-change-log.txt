@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/04/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6848: Incluído o Params: Codigo_Atividade para a cidade de Arapongas/PR.
+  Por: Massao Aihara
+[*] #TK-6847: A cidade de Caibi/SC trocou de provedor, agora é IPM.
+  Por: Microsys Sistemas
+[*] #TK-6841: A cidade de Sao Mateus do Sul/PR trocou de provedor, agora é EloTech.
+  Por: Marcelo Dev
+
 31/03/2025
 -- Diversos --
 [+] #TK-6822: Implementação do provedor Smart4 que atende a cidade de Paulo Afonso/BA

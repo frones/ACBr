@@ -567,12 +567,10 @@ begin
   end;
 
   // Reforma Tributária
-  { Descomentar somente quando for liberador o ambiente de homologação
   Ler_IBSCBS(ANode.Childrens.Find('IBSCBS'), BPe.Imp.IBSCBS);
 
   if BPe.ide.tpBPe <> tbBPeTM then
     BPe.Imp.vTotDFe := ObterConteudo(ANode.Childrens.Find('vTotDFe'), tcDe2);
-  }
 end;
 
 procedure TBPeXmlReader.Ler_pag(const ANode: TACBrXmlNode);
@@ -714,13 +712,11 @@ begin
   end;
 
   // Reforma Tributária
-  { Descomentar somente quando for liberador o ambiente de homologação
   if BPe.ide.tpBPe = tbBPeTM then
   begin
     Ler_IBSCBSTot(ANode.Childrens.Find('IBSCBSTot'), BPe.total.IBSCBSTot);
-    BPe.Total.vTotDFe := ObterConteudo(AuxNode.Childrens.Find('vTotDFe'), tcDe2);
+    BPe.Total.vTotDFe := ObterConteudo(ANode.Childrens.Find('vTotDFe'), tcDe2);
   end;
-  }
 end;
 
 procedure TBPeXmlReader.Ler_autXML(const ANode: TACBrXmlNode);

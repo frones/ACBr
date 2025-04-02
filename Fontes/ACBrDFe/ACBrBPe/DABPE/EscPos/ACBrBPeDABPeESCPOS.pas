@@ -462,10 +462,7 @@ begin
   end;
 
   if EstaVazio(Trim(FpBPe.infBPeSupl.qrCodBPe)) then
-    qrcode := TACBrBPe(ACBrBPe).GetURLQRCode(
-      FpBPe.ide.cUF,
-      FpBPe.ide.tpAmb,
-      FpBPe.infBPe.ID)
+    qrcode := TACBrBPe(ACBrBPe).GetURLQRCode(FpBPe)
   else
     qrcode := FpBPe.infBPeSupl.qrCodBPe;
 

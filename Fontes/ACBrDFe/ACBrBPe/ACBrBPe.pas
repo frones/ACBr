@@ -107,8 +107,7 @@ type
 
     function GetURLConsultaBPe(const CUF: Integer;
       const TipoAmbiente: TACBrTipoAmbiente): String;
-    function GetURLQRCode(const CUF: Integer; const TipoAmbiente: TACBrTipoAmbiente;
-      const AChaveBPe: String): String;
+    function GetURLQRCode(FBPe: TBPe): String;
 
     function IdentificaSchema(const AXML: String): TSchemaBPe;
     function GerarNomeArqSchema(const ALayOut: TLayOutBPe; VersaoServico: Double): String;
@@ -385,20 +384,20 @@ begin
     'URL-ConsultaBPe', 0);
 end;
 
-function TACBrBPe.GetURLQRCode(const CUF: Integer;
-  const TipoAmbiente: TACBrTipoAmbiente; const AChaveBPe: String): String;
+function TACBrBPe.GetURLQRCode(FBPe: TBPe): String;
 var
   Passo1, Passo2, urlUF, idBPe, tpEmis, sign: String;
 begin
-  urlUF := LerURLDeParams('BPe', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente), 'URL-QRCode', 0);
-  idBPe := OnlyNumber(AChaveBPe);
+  urlUF := LerURLDeParams('BPe', CUFtoUF(FBPe.Ide.cUF),
+     TpcnTipoAmbiente(FBPe.Ide.tpAmb), 'URL-QRCode', 0);
+  idBPe := OnlyNumber(FBPe.infBPe.ID);
   tpEmis := Copy(idBPe, 35, 1);
 
   Passo1 := urlUF;
   if Pos('?', urlUF) = 0 then
     Passo1 := Passo1 + '?';
 
-  Passo1 := Passo1 + 'chBPe=' + idBPe + '&tpAmb=' + TipoAmbienteToStr(TipoAmbiente);
+  Passo1 := Passo1 + 'chBPe=' + idBPe + '&tpAmb=' + TipoAmbienteToStr(FBPe.Ide.tpAmb);
   Result := Passo1;
 
   if tpEmis <> '1' then

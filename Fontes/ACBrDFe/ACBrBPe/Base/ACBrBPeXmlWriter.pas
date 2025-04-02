@@ -273,7 +273,11 @@ begin
   BPe.Ide.cBP := ExtrairCodigoChaveAcesso(BPe.infBPe.ID);
 
   FDocument.Clear();
-  BPeNode := FDocument.CreateElement('BPe', 'http://www.portalfiscal.inf.br/bpe');
+
+  if BPe.ide.tpBPe = tbBPeTM then
+    BPeNode := FDocument.CreateElement('BPeTM', 'http://www.portalfiscal.inf.br/bpe')
+  else
+    BPeNode := FDocument.CreateElement('BPe', 'http://www.portalfiscal.inf.br/bpe');
 
   if BPe.procBPe.nProt <> '' then
   begin
@@ -904,24 +908,22 @@ begin
   Result.AppendChild(Gerar_ICMS);
 
 
-  if ModeloDF = moBPe then
+  if BPe.ide.tpBPe <> tbBPeTM then
     Result.AppendChild(AddNode(tcDe2, '#150', 'vTotTrib', 1, 15, 0,
                                                BPe.Imp.vTotTrib, DSC_VTOTTRIB));
 
   Result.AppendChild(AddNode(tcStr, '#151', 'infAdFisco', 1, 2000, 0,
                                            BPe.Imp.infAdFisco, DSC_INFADFISCO));
 
-  if (ModeloDF = moBPe) and (BPe.Imp.ICMSUFFim.vBCUFFim <> 0) then
+  if (BPe.ide.tpBPe <> tbBPeTM) and (BPe.Imp.ICMSUFFim.vBCUFFim <> 0) then
     Result.AppendChild(Gerar_ICMSUFFim);
 
   // Reforma Tributária
-  { Descomentar somente quando for liberador o ambiente de homologação
   Result.AppendChild(Gerar_IBSCBS(BPe.imp.IBSCBS));
 
-  if ModeloDF = moBPe then
+  if BPe.ide.tpBPe <> tbBPeTM then
     Result.AppendChild(AddNode(tcDe2, '#250', 'vTotDFe', 1, 15, 0,
                                                  BPe.Imp.vTotDFe, DSC_VTOTDEF));
-  }
 end;
 
 function TBPeXmlWriter.Gerar_ICMS: TACBrXmlNode;
@@ -1216,6 +1218,9 @@ begin
     begin
       Result[i].AppendChild(nodeArray[j]);
     end;
+
+    // Reforma Tributária
+    Result[i].AppendChild(Gerar_IBSCBS(BPe.detBPeTM[indice].det[i].imp.IBSCBS));
   end;
 
   if BPe.detBPeTM[indice].det.Count > 990 then
@@ -1374,10 +1379,10 @@ begin
                                               Componentes[i].qComp, DSC_QCOMP));
   end;
 
-  if BPe.infValorBPe.Comp.Count > 990 then
+  if Componentes.Count > 990 then
     wAlerta('#122', 'Comp', DSC_COMP, ERR_MSG_MAIOR_MAXIMO + '990');
 
-  if BPe.infValorBPe.Comp.Count < 1 then
+  if Componentes.Count < 1 then
     wAlerta('#122', 'Comp', DSC_COMP, ERR_MSG_MENOR_MINIMO + '1');
 end;
 
@@ -1394,8 +1399,7 @@ begin
   Result.AppendChild(Gerar_TotalICMSTotal);
 
   // Reforma Tributária
-  { Descomentar somente quando for liberador o ambiente de homologação
-  if ModeloDF = moBPeTM then
+  if BPe.ide.tpBPe = tbBPeTM then
   begin
     if BPe.total.IBSCBSTot.vBCCIBS > 0 then
       Result.AppendChild(Gerar_IBSCBSTot(BPe.total.IBSCBSTot));
@@ -1403,7 +1407,6 @@ begin
     Result.AppendChild(AddNode(tcDe2, '#250', 'vTotDFe', 1, 15, 0,
                                                BPe.total.vTotDFe, DSC_VTOTDEF));
   end;
-  }
 end;
 
 function TBPeXmlWriter.Gerar_TotalICMSTotal: TACBrXmlNode;

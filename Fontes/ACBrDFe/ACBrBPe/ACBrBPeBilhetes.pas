@@ -309,7 +309,7 @@ begin
 
     if Configuracoes.Geral.ModeloDF = moBPe then
     begin
-      BPe.infBPeSupl.qrCodBPe := GetURLQRCode(BPe.Ide.cUF, BPe.Ide.tpAmb, BPe.infBPe.ID);
+      BPe.infBPeSupl.qrCodBPe := GetURLQRCode(BPe);
 
       BPe.infBPeSupl.boardPassBPe := GetURLConsultaBPe(BPe.Ide.cUF, BPe.Ide.tpAmb);
 
@@ -745,6 +745,11 @@ begin
   FBPeIniR.tpEmis := FConfiguracoes.Geral.FormaEmissaoCodigo;
 
   FBPeIniR.LerIni(AIniString);
+
+  if FBPe.ide.tpBPe = tbNormal then
+    FConfiguracoes.Geral.ModeloDF := moBPe
+  else
+    FConfiguracoes.Geral.ModeloDF := moBPeTM;
 
   GerarXML;
 

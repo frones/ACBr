@@ -84,14 +84,13 @@ begin
 
   with ConfigAssinar do
   begin
-    Rps := True;
     LoteRps := True;
   end;
 
   with ConfigWebServices do
   begin
-    VersaoDados := '2.03';
-    VersaoAtrib := '2.03';
+    VersaoDados := '2.02';
+    VersaoAtrib := '2.02';
   end;
 
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');

@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/04/2025
+-- SisPMJP.Provider --
+[*] #TK-6790: Desfeita as alterações até que a prefeitura resolva os problemas em 
+    seu novo webservice, uma vez que o antigo continua funcionando.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6849: A cidade de Estancia Velha/RS mudou de provedor, agora é IPM versão 2.04.
   Por: DNA Automacao - Daniel Ostoic

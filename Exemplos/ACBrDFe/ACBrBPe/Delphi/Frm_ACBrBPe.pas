@@ -509,8 +509,8 @@ begin
     // Dados do Comprador
     //
     Comp.xNome   := 'Nome do Comprador';
-    Comp.CNPJCPF := '06760213874';
-    Comp.IE      := '';
+    Comp.CNPJCPF := '12345678901';
+    Comp.IE      := '12345678';
 
     Comp.EnderComp.xLgr    := 'Nome do Logradouro';
     Comp.EnderComp.Nro     := 'Numero';
@@ -562,7 +562,7 @@ begin
     // Informações sobre o Passageiro
     //
     infPassagem.infPassageiro.xNome := 'Nome do Passageiro';
-    infPassagem.infPassageiro.CPF   := '06760213874';
+    infPassagem.infPassageiro.CPF   := '12345678901';
     infPassagem.infPassageiro.tpDoc := tdRG;
     infPassagem.infPassageiro.nDoc  := '12345678'; // Numero do documento
 //   infPassagem.infPassageiro.dNasc := StrToDate('10/10/1970');
@@ -634,6 +634,66 @@ begin
     Imp.vTotTrib   := 0.00;
     Imp.infAdFisco := '';
 
+    // Reforma Tributária
+    {
+    Imp.vTotDFe := 100;
+    Imp.IBSCBS.CST := 100;
+    Imp.IBSCBS.cClassTrib := 100000;
+
+    Imp.IBSCBS.gIBSCBS.vBC := 100;
+
+    Imp.IBSCBS.gIBSCBS.gIBSUF.pIBS := 5;
+    Imp.IBSCBS.gIBSCBS.gIBSUF.vTribOp := 50;
+    Imp.IBSCBS.gIBSCBS.gIBSUF.gDif.pDif := 5;
+    Imp.IBSCBS.gIBSCBS.gIBSUF.gDif.vDif := 50;
+    Imp.IBSCBS.gIBSCBS.gIBSUF.gDevTrib.vDevTrib := 50;
+    Imp.IBSCBS.gIBSCBS.gIBSUF.gRed.pRedAliq := 5;
+    Imp.IBSCBS.gIBSCBS.gIBSUF.gRed.pAliqEfet := 5;
+    Imp.IBSCBS.gIBSCBS.gIBSUF.gDeson.CST := 100;
+    Imp.IBSCBS.gIBSCBS.gIBSUF.gDeson.cClassTrib := 100000;
+    Imp.IBSCBS.gIBSCBS.gIBSUF.gDeson.vBC := 100;
+    Imp.IBSCBS.gIBSCBS.gIBSUF.gDeson.pAliq := 5;
+    Imp.IBSCBS.gIBSCBS.gIBSUF.gDeson.vDeson := 50;
+    Imp.IBSCBS.gIBSCBS.gIBSUF.vIBS := 50;
+
+    Imp.IBSCBS.gIBSCBS.gIBSMun.pIBS := 5;
+    Imp.IBSCBS.gIBSCBS.gIBSMun.vTribOp := 50;
+    Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.pDif := 5;
+    Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.vDif := 50;
+    Imp.IBSCBS.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 50;
+    Imp.IBSCBS.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
+    Imp.IBSCBS.gIBSCBS.gIBSMun.gRed.pAliqEfet := 5;
+    Imp.IBSCBS.gIBSCBS.gIBSMun.gDeson.CST := 100;
+    Imp.IBSCBS.gIBSCBS.gIBSMun.gDeson.cClassTrib := 100000;
+    Imp.IBSCBS.gIBSCBS.gIBSMun.gDeson.vBC := 100;
+    Imp.IBSCBS.gIBSCBS.gIBSMun.gDeson.pAliq := 5;
+    Imp.IBSCBS.gIBSCBS.gIBSMun.gDeson.vDeson := 50;
+    Imp.IBSCBS.gIBSCBS.gIBSMun.vIBS := 50;
+
+    Imp.IBSCBS.gIBSCBS.gCBS.pCBS := 5;
+    Imp.IBSCBS.gIBSCBS.gCBS.vTribOp := 50;
+    Imp.IBSCBS.gIBSCBS.gCBS.gDif.pDif := 5;
+    Imp.IBSCBS.gIBSCBS.gCBS.gDif.vDif := 50;
+    Imp.IBSCBS.gIBSCBS.gCBS.gDevTrib.vDevTrib := 50;
+    Imp.IBSCBS.gIBSCBS.gCBS.gRed.pRedAliq := 5;
+    Imp.IBSCBS.gIBSCBS.gCBS.gRed.pAliqEfet := 5;
+    Imp.IBSCBS.gIBSCBS.gCBS.gDeson.CST := 100;
+    Imp.IBSCBS.gIBSCBS.gCBS.gDeson.cClassTrib := 100000;
+    Imp.IBSCBS.gIBSCBS.gCBS.gDeson.vBC := 100;
+    Imp.IBSCBS.gIBSCBS.gCBS.gDeson.pAliq := 5;
+    Imp.IBSCBS.gIBSCBS.gCBS.gDeson.vDeson := 50;
+    Imp.IBSCBS.gIBSCBS.gCBS.vCBS := 50;
+
+    Imp.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := 100;
+    Imp.IBSCBS.gIBSCBS.gIBSCredPres.pCredPres := 5;
+    Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPres := 50;
+    Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus := 50;
+
+    Imp.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := 100;
+    Imp.IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
+    Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
+    Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;
+    }
     //
     // Informações sobre o Pagamento
     //
@@ -769,6 +829,66 @@ begin
 
         Imp.infAdFisco := '';
 
+        // Reforma Tributária
+        {
+        Imp.vTotDFe := 0; // No BPeTM essa informação se encontra em total.
+        Imp.IBSCBS.CST := 100;
+        Imp.IBSCBS.cClassTrib := 100000;
+
+        Imp.IBSCBS.gIBSCBS.vBC := 100;
+
+        Imp.IBSCBS.gIBSCBS.gIBSUF.pIBS := 5;
+        Imp.IBSCBS.gIBSCBS.gIBSUF.vTribOp := 50;
+        Imp.IBSCBS.gIBSCBS.gIBSUF.gDif.pDif := 5;
+        Imp.IBSCBS.gIBSCBS.gIBSUF.gDif.vDif := 50;
+        Imp.IBSCBS.gIBSCBS.gIBSUF.gDevTrib.vDevTrib := 50;
+        Imp.IBSCBS.gIBSCBS.gIBSUF.gRed.pRedAliq := 5;
+        Imp.IBSCBS.gIBSCBS.gIBSUF.gRed.pAliqEfet := 5;
+        Imp.IBSCBS.gIBSCBS.gIBSUF.gDeson.CST := 100;
+        Imp.IBSCBS.gIBSCBS.gIBSUF.gDeson.cClassTrib := 100000;
+        Imp.IBSCBS.gIBSCBS.gIBSUF.gDeson.vBC := 100;
+        Imp.IBSCBS.gIBSCBS.gIBSUF.gDeson.pAliq := 5;
+        Imp.IBSCBS.gIBSCBS.gIBSUF.gDeson.vDeson := 50;
+        Imp.IBSCBS.gIBSCBS.gIBSUF.vIBS := 50;
+
+        Imp.IBSCBS.gIBSCBS.gIBSMun.pIBS := 5;
+        Imp.IBSCBS.gIBSCBS.gIBSMun.vTribOp := 50;
+        Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.pDif := 5;
+        Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.vDif := 50;
+        Imp.IBSCBS.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 50;
+        Imp.IBSCBS.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
+        Imp.IBSCBS.gIBSCBS.gIBSMun.gRed.pAliqEfet := 5;
+        Imp.IBSCBS.gIBSCBS.gIBSMun.gDeson.CST := 100;
+        Imp.IBSCBS.gIBSCBS.gIBSMun.gDeson.cClassTrib := 100000;
+        Imp.IBSCBS.gIBSCBS.gIBSMun.gDeson.vBC := 100;
+        Imp.IBSCBS.gIBSCBS.gIBSMun.gDeson.pAliq := 5;
+        Imp.IBSCBS.gIBSCBS.gIBSMun.gDeson.vDeson := 50;
+        Imp.IBSCBS.gIBSCBS.gIBSMun.vIBS := 50;
+
+        Imp.IBSCBS.gIBSCBS.gCBS.pCBS := 5;
+        Imp.IBSCBS.gIBSCBS.gCBS.vTribOp := 50;
+        Imp.IBSCBS.gIBSCBS.gCBS.gDif.pDif := 5;
+        Imp.IBSCBS.gIBSCBS.gCBS.gDif.vDif := 50;
+        Imp.IBSCBS.gIBSCBS.gCBS.gDevTrib.vDevTrib := 50;
+        Imp.IBSCBS.gIBSCBS.gCBS.gRed.pRedAliq := 5;
+        Imp.IBSCBS.gIBSCBS.gCBS.gRed.pAliqEfet := 5;
+        Imp.IBSCBS.gIBSCBS.gCBS.gDeson.CST := 100;
+        Imp.IBSCBS.gIBSCBS.gCBS.gDeson.cClassTrib := 100000;
+        Imp.IBSCBS.gIBSCBS.gCBS.gDeson.vBC := 100;
+        Imp.IBSCBS.gIBSCBS.gCBS.gDeson.pAliq := 5;
+        Imp.IBSCBS.gIBSCBS.gCBS.gDeson.vDeson := 50;
+        Imp.IBSCBS.gIBSCBS.gCBS.vCBS := 50;
+
+        Imp.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := 100;
+        Imp.IBSCBS.gIBSCBS.gIBSCredPres.pCredPres := 5;
+        Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPres := 50;
+        Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus := 50;
+
+        Imp.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := 100;
+        Imp.IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
+        Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
+        Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;
+        }
         //
         // Informações sobre os Componentes da Viagem
         //
@@ -794,6 +914,31 @@ begin
     total.vBC   := 100;
     total.vICMS := 18;
 
+    // Reforma Tributária
+    {
+    total.vTotDFe := 100;
+    total.IBSCBSTot.vBCCIBS := 100;
+
+    total.IBSCBSTot.gIBS.gIBSUFTot.vDif := 100;
+    total.IBSCBSTot.gIBS.gIBSUFTot.vDevTrib := 100;
+    total.IBSCBSTot.gIBS.gIBSUFTot.vDeson := 100;
+    total.IBSCBSTot.gIBS.gIBSUFTot.vIBSUF := 100;
+
+    total.IBSCBSTot.gIBS.gIBSMunTot.vDif := 100;
+    total.IBSCBSTot.gIBS.gIBSMunTot.vDevTrib := 100;
+    total.IBSCBSTot.gIBS.gIBSMunTot.vDeson := 100;
+    total.IBSCBSTot.gIBS.gIBSMunTot.vIBSMun := 100;
+
+    total.IBSCBSTot.gIBS.vCredPres := 100;
+    total.IBSCBSTot.gIBS.vCredPresCondSus := 100;
+    total.IBSCBSTot.gIBS.vIBSTot := 100;
+
+    total.IBSCBSTot.gCBS.vDif := 100;
+    total.IBSCBSTot.gCBS.vDevTrib := 100;
+    total.IBSCBSTot.gCBS.vDeson := 100;
+    total.IBSCBSTot.gCBS.vCBS := 100;
+    total.IBSCBSTot.gCBS.vCredPresCondSus := 100;
+    }
     //
     // Autorizados para o Download do XML do BPe
     //
@@ -1539,7 +1684,7 @@ begin
       if ACBrBPe1.Bilhetes[0].Alertas <> '' then
         MemoDados.Lines.Add('Alertas: '+ACBrBPe1.Bilhetes[0].Alertas);
 
-      ShowMessage('Conhecimento de Transporte Eletrônico Valido');
+      ShowMessage('Bilhete de Passagem Eletrônico Valido');
     except
       on E: Exception do
       begin

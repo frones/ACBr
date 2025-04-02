@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/04/2025
+-- ACBrNFCeDANFeFPDF --
+[*] #TK-6611: Adiciona impressão de evento para NFC-e com FPDF.
+   Por: Arimateia Jr / Diego Folieni
+
 01/04/2025
 -- ACBrNFe.IniReader --
 [-] Correção realizada para não ler os campos: tpCompraGov e pRedutor no arquivo

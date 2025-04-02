@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/04/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6849: A cidade de Estancia Velha/RS mudou de provedor, agora é IPM versão 2.04.
+  Por: DNA Automacao - Daniel Ostoic
+
 01/04/2025
 -- ISSCampinas.Provider --
 [*] #TK-6789 - Adiciona \s\n como quebra de linha a ser utilizada pelo provedor.

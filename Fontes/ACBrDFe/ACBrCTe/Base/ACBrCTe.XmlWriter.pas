@@ -460,7 +460,7 @@ var
 begin
   Result := FDocument.CreateElement('infCte');
 
-  Result.SetAttribute('Id', CTe.infCTe.ID);
+  Result.SetAttribute('Id', 'CTe' + CTe.infCTe.ID);
   Result.SetAttribute('versao', FloatToString(CTe.infCTe.Versao, '.', '#0.00'));
 
   Result.AppendChild(Gerar_Ide);

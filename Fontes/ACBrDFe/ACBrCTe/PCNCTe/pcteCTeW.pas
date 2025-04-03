@@ -311,7 +311,7 @@ begin
     Gerador.wGrupo('CTe ' + NAME_SPACE_CTE);
   end;
 
-  Gerador.wGrupo('infCte ' + VersaoStr + ' Id="' + CTe.infCTe.ID + '"');
+  Gerador.wGrupo('infCte ' + VersaoStr + ' Id="CTe' + CTe.infCTe.ID + '"');
 
   GerarInfCTe;
   Gerador.wGrupo('/infCte');

@@ -404,7 +404,7 @@ var
   i: integer;
 begin
   Result := FDocument.CreateElement('infNFe');
-  Result.SetAttribute('Id', NFe.infNFe.ID);
+  Result.SetAttribute('Id', 'NFe' + NFe.infNFe.ID);
   Result.SetAttribute('versao', FloatToString(NFe.infNFe.Versao, '.', '#0.00'));
 
   Result.AppendChild(GerarIde);

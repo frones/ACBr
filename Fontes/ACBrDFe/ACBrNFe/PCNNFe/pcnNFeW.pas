@@ -316,7 +316,7 @@ begin
     Gerador.wGrupo('nfeProc ' + VersaoStr + ' ' + NAME_SPACE, '');
 
   Gerador.wGrupo('NFe ' + NAME_SPACE);
-  Gerador.wGrupo('infNFe ' + VersaoStr + ' Id="' + NFe.infNFe.ID + '"');
+  Gerador.wGrupo('infNFe ' + VersaoStr + ' Id="NFe' + NFe.infNFe.ID + '"');
   (**)GerarInfNFe;
   Gerador.wGrupo('/infNFe');
 

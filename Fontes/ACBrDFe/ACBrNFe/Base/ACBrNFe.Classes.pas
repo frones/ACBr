@@ -59,9 +59,10 @@ type
   private
     FID: string;
     FVersao: Double;
+    function GetID: string;
   public
     procedure Assign(Source: TinfNFe);
-    property ID: string read FID write FID;
+    property ID: string read GetID write FID;
     property Versao: Double read FVersao write FVersao;
   end;
 
@@ -3853,6 +3854,11 @@ procedure TinfNFe.Assign(Source: TinfNFe);
 begin
   ID     := Source.ID;
   Versao := Source.Versao;
+end;
+
+function TinfNFe.GetID: string;
+begin
+  Result := Copy(FID, 4, 44);
 end;
 
 { TveicProd }

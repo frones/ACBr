@@ -42,6 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/04/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6861: A cidade de Santa Rosa de Lima/SC mudou de provedor, agora é IPM versão
+    2.04
+  Por: Arimateia Jr
+[+] #TK-6857: Incluída a cidade de Careacu/MG, o provedor é o SH3
+  Por: João Antônio
+[*] #TK-6856: A cidade de Rio do Oeste/SC mudou a versão e a URL, o provedor continua
+    o mesmo.
+  Por: Willian Delan
+
 02/04/2025
 -- SisPMJP.Provider --
 [*] #TK-6790: Desfeita as alterações até que a prefeitura resolva os problemas em 

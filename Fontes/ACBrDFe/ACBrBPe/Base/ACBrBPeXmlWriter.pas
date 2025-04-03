@@ -334,7 +334,7 @@ var
   i: integer;
 begin
   Result := FDocument.CreateElement('infBPe');
-  Result.SetAttribute('Id', BPe.infBPe.ID);
+  Result.SetAttribute('Id', 'BPe' + BPe.infBPe.ID);
   Result.SetAttribute('versao', FloatToString(BPe.infBPe.Versao, '.', '#0.00'));
 
   Result.AppendChild(Gerar_Ide);

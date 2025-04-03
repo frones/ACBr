@@ -390,7 +390,7 @@ var
 begin
   urlUF := LerURLDeParams('BPe', CUFtoUF(FBPe.Ide.cUF),
      TpcnTipoAmbiente(FBPe.Ide.tpAmb), 'URL-QRCode', 0);
-  idBPe := OnlyNumber(FBPe.infBPe.ID);
+  idBPe := FBPe.infBPe.ID;
   tpEmis := Copy(idBPe, 35, 1);
 
   Passo1 := urlUF;

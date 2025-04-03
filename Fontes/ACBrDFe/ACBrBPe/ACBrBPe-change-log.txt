@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/04/2025
+-- ACBrBPeClass --
+[-] Ao ler a propriedade ID para gerar o QR-Code não estava removendo o literal
+    BPe da chave.
+  Por: Italo Giurizzato Junior
+
 02/04/2025
 -- Diversos --
 [*] #TK-5814: Ajustes nas units: ACBrBPeIniReader e ACBrBPeIniWrite que

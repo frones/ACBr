@@ -523,12 +523,13 @@ type
   private
     FVersao: Double;
     FID: String;
+    function GetID: String;
 
   public
     procedure Assign(Source: TinfBPe);
 
     property Versao: Double read FVersao write FVersao;
-    property ID: String read FID write FID;
+    property ID: String read GetID write FID;
   end;
 
   TIde = class(TObject)
@@ -1183,6 +1184,11 @@ destructor TEmit.Destroy;
 begin
   FEnderEmit.Free;
   inherited;
+end;
+
+function TinfBPe.GetID: String;
+begin
+  Result := Copy(FID, 4, 44);
 end;
 
 { TenderEmit }

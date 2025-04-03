@@ -62,8 +62,8 @@ begin
 
   GravarCampo('A', 1, tcStr);
   GravarCampo(TipoArquivoToStr(DebitoAutomatico.Geral.TipoArquivo), 1, tcStr);
-  GravarCampo(BancoToStr(DebitoAutomatico.Geral.Banco), 3, tcStr);
-  GravarCampo(DebitoAutomatico.RegistroA.CodigoConvenio, 17, tcStrZero);
+//  GravarCampo(BancoToStr(DebitoAutomatico.Geral.Banco), 3, tcStr); //Não faz junção correta
+  GravarCampo(DebitoAutomatico.RegistroA.CodigoConvenio, 20, tcStrZero); //Alterado para 20
   GravarCampo(DebitoAutomatico.RegistroA.NomeEmpresa, 20, tcStr);
   GravarCampo(DebitoAutomatico.RegistroA.CodigoBanco, 3, tcInt);
   GravarCampo(DebitoAutomatico.RegistroA.NomeBanco, 20, tcStr);

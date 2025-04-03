@@ -178,7 +178,7 @@ begin
             ARetornoWS.DadosRet.IDBoleto.NossoNum     := Copy(LBankSlip.AsString['our_number'],LNossoNumeroInicial,ACBrTitulo.ACBrBoleto.Banco.TamanhoMaximoNossoNum);
             ARetornoWS.DadosRet.IDBoleto.URLPDF       := LBankSlip.AsString['url'];
             ARetornoWS.DadosRet.IDBoleto.IDBoleto     := LJson.AsString['id'];    //obrigatorio pra consultar
-
+            ARetornoWS.DadosRet.TituloRet.NossoNumeroCorrespondente := ARetornoWS.DadosRet.IDBoleto.IDBoleto;
             ARetornoWS.DadosRet.TituloRet.CodBarras   := ARetornoWS.DadosRet.IDBoleto.CodBarras;
             ARetornoWS.DadosRet.TituloRet.LinhaDig    := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
             ARetornoWS.DadosRet.TituloRet.NossoNumero := ARetornoWS.DadosRet.IDBoleto.NossoNum;
@@ -437,6 +437,7 @@ begin
             ListaRetorno.DadosRet.TituloRet.SeuNumero            := LJSON.AsString['code'];
             ListaRetorno.DadosRet.TituloRet.DataRegistro         := DateIntertoDateTime(LJSON.AsString['created_at']);
             ListaRetorno.DadosRet.IDBoleto.IDBoleto              := LJSON.AsString['id'];
+            ListaRetorno.DadosRet.TituloRet.NossoNumeroCorrespondente := ListaRetorno.DadosRet.IDBoleto.IDBoleto;
             ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca := LJSON.AsString['status'];
             ListaRetorno.DadosRet.TituloRet.DataMovimento        := DateIntertoDateTime(LJSON.AsString['occurrence_date']);
             ListaRetorno.DadosRet.TituloRet.DataCredito          := DateIntertoDateTime(LJSON.AsString['occurrence_date']);

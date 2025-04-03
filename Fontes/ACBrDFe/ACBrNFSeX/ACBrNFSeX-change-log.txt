@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/04/2025
+-- ACBrNFSeXGravarXml_ABRASFv2/Giss.GravarXml --
+[*] #TK-6851: Alteração visando atender o provedor Giss que exige que o código do 
+    pais esteja no padrão ISO em vez IBGE.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6861: A cidade de Santa Rosa de Lima/SC mudou de provedor, agora é IPM versão
     2.04

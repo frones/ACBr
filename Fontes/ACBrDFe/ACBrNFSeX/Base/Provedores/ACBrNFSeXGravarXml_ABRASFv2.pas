@@ -182,6 +182,7 @@ type
 
     function GerarCodigoPaisServico: TACBrXmlNode; virtual;
     function GerarCodigoPaisTomador: TACBrXmlNode; virtual;
+    function GerarCodigoPaisTomadorExterior: TACBrXmlNode; virtual;
   public
     function GerarXml: Boolean; override;
 
@@ -937,8 +938,7 @@ begin
   begin
     Result := CreateElement('EnderecoExterior');
 
-    Result.AppendChild(AddNode(tcInt, '#38', 'CodigoPais', 4, 4, 0,
-                                  NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS));
+    Result.AppendChild(GerarCodigoPaisTomadorExterior);
 
     Result.AppendChild(AddNode(tcStr, '#39', 'EnderecoCompletoExterior', 1, 255, 0,
                                      NFSe.Tomador.Endereco.Endereco, DSC_XLGR));
@@ -1079,6 +1079,12 @@ end;
 function TNFSeW_ABRASFv2.GerarCodigoPaisTomador: TACBrXmlNode;
 begin
   Result := AddNode(tcInt, '#44', 'CodigoPais', 4, 4, NrOcorrCodigoPaisTomador,
+                                  NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
+end;
+
+function TNFSeW_ABRASFv2.GerarCodigoPaisTomadorExterior: TACBrXmlNode;
+begin
+  Result := AddNode(tcInt, '#38', 'CodigoPais', 4, 4, 0,
                                   NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
 end;
 

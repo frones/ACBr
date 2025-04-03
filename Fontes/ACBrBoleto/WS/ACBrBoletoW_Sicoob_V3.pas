@@ -135,12 +135,11 @@ var
   LNossoNumero, LContrato: string;
   LCodigoSolicitacao, LIdArquivo: integer;
 begin
-
   if( aTitulo <> nil ) then
-  begin
     LNossoNumero := ACBrUtil.Strings.RemoveZerosEsquerda(OnlyNumber(aTitulo.NossoNumero)+aTitulo.ACBrBoleto.Banco.CalcularDigitoVerificador(aTitulo));
-    LContrato    := OnlyNumber(aTitulo.ACBrBoleto.Cedente.CodigoCedente);
-  end;
+
+  if Boleto.Configuracoes.WebService.Operacao in [tpConsulta,tpConsultaDetalhe] then
+ 		LContrato    := OnlyNumber(Boleto.Cedente.CodigoCedente);
 
   if Boleto.Configuracoes.WebService.Operacao in [tpConsulta] then
   begin

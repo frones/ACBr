@@ -2239,20 +2239,23 @@ end;
 
 procedure TACBrBoletoWSFiltroConsulta.Clear;
 begin
+  FIndicadorSituacaoBoleto    := isbNenhum;
+  FContaCaucao                := 0;
+  FCnpjCpfPagador             := '';
   FDataVencimento.FDataInicio := 0;
   FDataVencimento.FDataFinal  := 0;
   FDataRegistro.FDataInicio   := 0;
   FDataRegistro.FDataFinal    := 0;
   FDataMovimento.FDataInicio  := 0;
   FDataMovimento.FDataFinal   := 0;
-  FContaCaucao                := 0;
-  FCnpjCpfPagador             := '';
-  FIndicadorSituacaoBoleto    := isbNenhum;
   FCodigoEstadoTituloCobranca := 0;
   FBoletoVencido              := ibvNenhum;
   FIndiceContinuidade         := 0;
   FModalidadeCobrancao        := 0;
   FCarteira                   := 0;
+  FCarteiraVariacao           := 0;
+  FNumeroProtocolo            := 0;
+  FIdentificador              := '';
 end;
 
 { TACBrDataPeriodo }

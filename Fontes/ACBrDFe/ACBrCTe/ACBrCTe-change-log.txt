@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/04/2025
+-- ACBrCTe.Classes --
+[-] Ao ler a propriedade ID para gerar o QR-Code não estava removendo o literal
+    CTe da chave.
+  Por: Italo Giurizzato Junior
+
 01/04/2025
 -- Diversos --
 [*] #TK-5814: Implementado as units: ACBrCTe.IniReader e ACBrCTe.IniWrite que

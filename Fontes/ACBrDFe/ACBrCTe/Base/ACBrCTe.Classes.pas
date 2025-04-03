@@ -206,8 +206,9 @@ type
   private
     FId: string;
     FVersao: Double;
+    function GetId: string;
   public
-    property Id: string     read FId     write FId;
+    property Id: string     read GetId     write FId;
     property versao: Double read FVersao write FVersao;
   end;
 
@@ -4898,5 +4899,12 @@ begin
   inherited Destroy;
 end;
 {======== Fim das Classes da Reforma Tributária }
+
+{ TInfCTe }
+
+function TInfCTe.GetId: string;
+begin
+  Result := Copy(FID, 4, 44);
+end;
 
 end.

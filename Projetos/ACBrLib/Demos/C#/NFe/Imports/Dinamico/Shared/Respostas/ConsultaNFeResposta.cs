@@ -43,6 +43,18 @@ namespace ACBrLib.NFe
 
                 item.DetEvento = ConsultaNFeDetEventoResposta.LerRetorno(iniresposta, i);
 
+                var j = 0;
+                ConsultaNFeRetEventoResposta retEvento;
+                do
+                {
+                    j++;
+                    retEvento = iniresposta.ReadFromIni<ConsultaNFeRetEventoResposta>($"RetEvento{i:000}{j:000}");
+                    if (retEvento == null) continue;
+
+                    item.RetEvento.Add(retEvento);
+                        
+                } while (retEvento != null);
+
                 ret.Eventos.Add(item);
             } while (item != null);
 

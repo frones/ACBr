@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ACBrLib.Core.DFe;
 
 namespace ACBrLib.NFe
@@ -28,6 +29,8 @@ namespace ACBrLib.NFe
         public string Xml { get; set; }
 
         public ConsultaNFeDetEventoResposta DetEvento { get; set; }
+
+        public List<ConsultaNFeRetEventoResposta> RetEvento { get; } = new List<ConsultaNFeRetEventoResposta>();
 
         #endregion Properties
     }

@@ -95,7 +95,6 @@ type
     ACBrPSPSicredi1: TACBrPSPSicredi;
     btC6BankAcharCertificado: TSpeedButton;
     btC6BankAcharChavePrivada: TSpeedButton;
-    btCriarCobrancaImediata1: TBitBtn;
     btMateraAcharArqCertificado: TSpeedButton;
     btMateraAcharChavePrivada: TSpeedButton;
     btAilosAcharCertificado: TSpeedButton;
@@ -214,7 +213,7 @@ type
     edC6BankClientSecret: TEdit;
     edAppLessClientId: TEdit;
     edAppLessClientSecret: TEdit;
-    edMercadoPago: TEdit;
+    edMercadoPagoChavePIX: TEdit;
     edCieloClientID: TEdit;
     edGate2AllAuthenticationApi: TEdit;
     edMercadoPagoAccessToken: TEdit;
@@ -918,7 +917,7 @@ type
     procedure ACBrPixCD1QuandoGravarLog(const ALogLine: String; var Tratado: Boolean);
     procedure ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp(const AURL: String;
       const AMethod: String; RespHeaders: TStrings; var AResultCode: Integer;
-      var RespostaHttp: AnsiString);
+      var RespostaHttp: String);
     procedure btAilosAcharCertificadoClick(Sender: TObject);
     procedure btAilosAcharCertificadoRootClick(Sender: TObject);
     procedure btAilosAcharchavePrivadaClick(Sender: TObject);
@@ -1032,6 +1031,7 @@ type
     procedure edInterChavePrivadaExit(Sender: TObject);
     procedure edMateraArqCertificadoExit(Sender: TObject);
     procedure edMateraArqChavePrivadaExit(Sender: TObject);
+    procedure edMercadoPagoChavePIXChange(Sender: TObject);
     procedure edPagSeguroArqCertificadoExit(Sender: TObject);
     procedure edPagSeguroArqsChange(Sender: TObject);
     procedure edPagSeguroArqChavePrivadaExit(Sender: TObject);
@@ -1058,6 +1058,7 @@ type
     procedure edtItauClientSecretChange(Sender: TObject);
     procedure edtRecebedorNomeChange(Sender: TObject);
     procedure edSantanderChavePIXChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure lbMateraSimularPagamentoClick(Sender: TObject);
     procedure lbMateraSimularPagamentoMouseEnter(Sender: TObject);
     procedure lbMateraSimularPagamentoMouseLeave(Sender: TObject);
@@ -1218,7 +1219,7 @@ implementation
 
 uses
   {$IfDef FPC}
-   fpjson, jsonparser, jsonscanner, Jsons,
+   fpjson, jsonparser, jsonscanner,
   {$Else}
     {$IFDEF DELPHIXE2_UP}JSON,{$ENDIF}
   {$EndIf}
@@ -1242,7 +1243,6 @@ begin
   InicializarActivePages;
   InicializarComponentesDefault;
   Application.OnException := TratarException;
-  ACBrPSPBancoDoBrasil1.QuandoReceberRespostaHttp := ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp;
 
   LerConfiguracao;
   VerificarConfiguracao;
@@ -1640,7 +1640,7 @@ end;
 
 procedure TForm1.ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp(
   const AURL: String; const AMethod: String; RespHeaders: TStrings;
-  var AResultCode: Integer; var RespostaHttp: AnsiString);
+  var AResultCode: Integer; var RespostaHttp: String);
 var
   jsRet, js: TACBrJSONObject;
   ja, jsArr: TACBrJSONArray;
@@ -3141,6 +3141,12 @@ begin
   ValidarChavePSPMatera;
 end;
 
+procedure TForm1.edMercadoPagoChavePIXChange(Sender: TObject);
+begin
+  cbMercadoPagoTipoChave.ItemIndex := Integer(DetectarTipoChave(edMercadoPagoChavePIX.Text));
+  imMercadoPagoErroChavePix.Visible := NaoEstaVazio(edMercadoPagoChavePIX.Text) and (cbMercadoPagoTipoChave.ItemIndex = 0);
+end;
+
 procedure TForm1.edOnlyNumbersKeyPress(Sender: TObject; var Key: char);
 begin
   if not CharInSet( Key, [#8,#13,'0'..'9'] ) then
@@ -3227,6 +3233,11 @@ procedure TForm1.edSantanderChavePIXChange(Sender: TObject);
 begin
   cbSantanderTipoChave.ItemIndex := Integer(DetectarTipoChave(edSantanderChavePIX.Text));
   imSantanderErroChavePIX.Visible := (edSantanderChavePIX.Text <> '') and (cbSantanderTipoChave.ItemIndex = 0);
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+begin
+  AvaliarInterfaceFluxo;
 end;
 
 procedure TForm1.lbMateraSimularPagamentoClick(Sender: TObject);
@@ -4288,7 +4299,9 @@ begin
     edCieloClientID.Text := Ini.ReadString('Cielo', 'ClientID', '');
     edCieloClientSecret.Text := Ini.ReadString('Cielo', 'ClientSecret', '');
 
+    edMercadoPagoChavePIX.Text := Ini.ReadString('MercadoPago', 'ChavePix', '');
     edMercadoPagoAccessToken.Text := Ini.ReadString('MercadoPago', 'AccessToken', '');
+    cbMercadoPagoTipoChave.ItemIndex := Ini.ReadInteger('MercadoPago', 'TipoChave', 0);
 
     edGate2AllAuthenticationApi.Text := Ini.ReadString('Gate2All', 'AuthenticationApi', '');
     edGate2AllAuthenticationKey.Text := Ini.ReadString('Gate2All', 'AuthenticationKey', '');
@@ -4440,7 +4453,9 @@ begin
     Ini.WriteString('Cielo', 'ClientID', edCieloClientID.Text);
     Ini.WriteString('Cielo', 'ClientSecret', edCieloClientSecret.Text);
 
+    Ini.WriteString('MercadoPago', 'ChavePix', edMercadoPagoChavePIX.Text);
     Ini.WriteString('MercadoPago', 'AccessToken', edMercadoPagoAccessToken.Text);
+    Ini.WriteInteger('MercadoPago', 'TipoChave', cbMercadoPagoTipoChave.ItemIndex);
 
     Ini.WriteString('Gate2All', 'AuthenticationApi', edGate2AllAuthenticationApi.Text);
     Ini.WriteString('Gate2All', 'AuthenticationKey', edGate2AllAuthenticationKey.Text);
@@ -4665,6 +4680,7 @@ begin
   cbCieloTipoChave.Items.Assign(cbxBBTipoChave.Items);
   cbBanrisulTipoChave.Items.Assign(cbxBBTipoChave.Items);
   cbC6BankTipoChave.Items.Assign(cbxBBTipoChave.Items);
+  cbMercadoPagoTipoChave.Items.Assign(cbxBBTipoChave.Items);
 
   cbxSolicitarDevolucaoPix_Natureza.Items.Clear;
   for l := 0 to Integer(High(TACBrPIXNaturezaDevolucao)) do
@@ -4883,7 +4899,9 @@ begin
   ACBrPSPCielo1.ClientID := edCieloClientID.Text;
   ACBrPSPCielo1.ClientSecret := edCieloClientSecret.Text;
 
+  ACBrPSPMercadoPago1.ChavePIX := edMercadoPagoChavePIX.Text;
   ACBrPSPMercadoPago1.AccessToken := edMercadoPagoAccessToken.Text;
+  ACBrPSPMercadoPago1.TipoChave := TACBrPIXTipoChave(cbMercadoPagoTipoChave.ItemIndex);
 
   ACBrPSPGate2All1.AuthenticationApi := edGate2AllAuthenticationApi.Text;
   ACBrPSPGate2All1.AuthenticationKey := edGate2AllAuthenticationKey.Text;
@@ -5058,14 +5076,16 @@ var
   jpar: TJSONParser;
   jdata: TJSONData;
   ms: TMemoryStream;
-{$Else}
-var
-  wJsonValue: TJSONValue;
-{$EndIf}
+{$ELSE}
+  {$IFDEF DELPHIXE2_UP}
+  var
+    wJsonValue: TJSONValue;
+  {$ENDIF}
+{$ENDIF}
 begin
   Result := AJSON;
   try
-    {$IfDef FPC}
+    {$IFDEF FPC}
     ms := TMemoryStream.Create;
     try  
       ms.Write(Pointer(AJSON)^, Length(AJSON));
@@ -5081,7 +5101,7 @@ begin
       if Assigned(jdata) then
         jdata.Free;
     end;
-    {$Else}
+    {$ELSE}
       {$IFDEF DELPHIXE2_UP}
       wJsonValue := TJSONObject.ParseJSONValue(AJSON);
       try
@@ -5093,7 +5113,7 @@ begin
         wJsonValue.Free;
       end;
       {$ENDIF}
-    {$EndIf}
+    {$ENDIF}
   except
     Result := AJSON;
   end;

@@ -87,7 +87,8 @@ object Form1: TForm1
     0000
   }
   OnCreate = FormCreate
-  LCLVersion = '3.6.0.0'
+  OnShow = FormShow
+  LCLVersion = '3.8.0.0'
   object pgPrincipal: TPageControl
     Left = 0
     Height = 621
@@ -7432,14 +7433,14 @@ object Form1: TForm1
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 2
                 end
-                object edMercadoPago: TEdit
+                object edMercadoPagoChavePIX: TEdit
                   Left = 24
                   Height = 23
                   Top = 40
                   Width = 638
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 0
-                  OnChange = edCieloChavePIXChange
+                  OnChange = edMercadoPagoChavePIXChange
                 end
                 object cbMercadoPagoTipoChave: TComboBox
                   Left = 681

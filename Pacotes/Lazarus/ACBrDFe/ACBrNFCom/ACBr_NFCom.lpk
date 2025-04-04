@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Nota Fiscal de Serviço de Comunicação/Telecomunicações - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="16">
+    <Files Count="18">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\ACBrNFCom.pas"/>
         <UnitName Value="ACBrNFCom"/>
@@ -86,6 +86,14 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComRetEnvEvento.pas"/>
         <UnitName Value="ACBrNFComRetEnvEvento"/>
       </Item16>
+      <Item17>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComIniReader.pas"/>
+        <UnitName Value="ACBrNFComIniReader"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComIniWriter.pas"/>
+        <UnitName Value="ACBrNFComIniWriter"/>
+      </Item18>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

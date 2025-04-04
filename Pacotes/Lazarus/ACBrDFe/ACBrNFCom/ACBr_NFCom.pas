@@ -12,7 +12,8 @@ uses
   ACBrNFComWebServices, ACBrNFComDANFComClass, ACBrNFComClass, 
   ACBrNFComConsts, ACBrNFComConversao, ACBrNFComXmlReader, ACBrNFComXmlWriter, 
   ACBrNFComConsSit, ACBrNFComEnvEvento, ACBrNFComEventoClass, 
-  ACBrNFComRetConsSit, ACBrNFComRetEnvEvento, LazarusPackageIntf;
+  ACBrNFComRetConsSit, ACBrNFComRetEnvEvento, ACBrNFComIniReader, 
+  ACBrNFComIniWriter, LazarusPackageIntf;
 
 implementation
 

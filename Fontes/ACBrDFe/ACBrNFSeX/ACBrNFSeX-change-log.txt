@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/04/2025
+[*] #TK-6863: Alterado a URL de homologação da cidade de Campo Belo/MG.
+  Por: Datacamp
+[+] #TK-6862: Incluída a cidade de Darcinopolis/TO, o provedor é o MegaSoft,
+  Por: Gustavo Barbosa Ferreira
 -- Fisco.Provider --
 [*] Alteração, o provedor tem SoapAction e NameSpace diferentes para cada ambiente.
   Por: Isaque Pinheiro

@@ -143,10 +143,11 @@ begin
               LJsonBoletoObject := LJsonObject.AsJSONObject['dado_boleto'];
 
 
-            ARetornoWS.DadosRet.TituloRet.Carteira       := LJsonBoletoObject.AsString['codigo_carteira'];
-            ARetornoWS.DadosRet.TituloRet.ValorDocumento := StrToFloatDef( LJsonBoletoObject.AsString['valor_total_titulo'], 0)/100;
-            ARetornoWS.DadosRet.TituloRet.EspecieDoc     := LJsonBoletoObject.AsString['codigo_especie'];
-            ARetornoWS.DadosRet.TituloRet.DataDocumento  := StringToDateTimeDef(LJsonBoletoObject.AsString['data_emissao'], 0, 'yyyy-mm-dd');
+            ARetornoWS.DadosRet.TituloRet.Carteira                  := LJsonBoletoObject.AsString['codigo_carteira'];
+            ARetornoWS.DadosRet.TituloRet.ValorDocumento            := StrToFloatDef( LJsonBoletoObject.AsString['valor_total_titulo'], 0)/100;
+            ARetornoWS.DadosRet.TituloRet.EspecieDoc                := LJsonBoletoObject.AsString['codigo_especie'];
+            ARetornoWS.DadosRet.TituloRet.DataDocumento             := StringToDateTimeDef(LJsonBoletoObject.AsString['data_emissao'], 0, 'yyyy-mm-dd');
+            ARetornoWS.DadosRet.TituloRet.CodigoCanalTituloCobranca := LJsonBoletoObject.AsJSONObject['dado_boleto'].AsString['descricao_instrumento_cobranca'];
 
             if LJsonBoletoObject.IsJSONObject('pagador') then
             begin
@@ -239,9 +240,10 @@ begin
               ARetornoWS.DadosRet.IDBoleto.IDBoleto        := LJsonBoletoObject.AsString['id_boleto'];
 
 
-              ARetornoWS.DadosRet.TituloRet.DataRegistro         := DateToDateTimeItau(LJsonBoletoObject.AsJSONObject['dado_boleto'].AsString['data_emissao']);
-              ARetornoWS.DadosRet.TituloRet.DataDocumento        := DateToDateTimeItau(LJsonBoletoObject.AsJSONObject['dado_boleto'].AsString['data_emissao']);
-              ARetornoWS.DadosRet.TituloRet.ValorAbatimento      := LJsonBoletoObject.AsJSONObject['dado_boleto'].AsFloat['valor_abatimento'];
+              ARetornoWS.DadosRet.TituloRet.DataRegistro              := DateToDateTimeItau(LJsonBoletoObject.AsJSONObject['dado_boleto'].AsString['data_emissao']);
+              ARetornoWS.DadosRet.TituloRet.DataDocumento             := DateToDateTimeItau(LJsonBoletoObject.AsJSONObject['dado_boleto'].AsString['data_emissao']);
+              ARetornoWS.DadosRet.TituloRet.ValorAbatimento           := LJsonBoletoObject.AsJSONObject['dado_boleto'].AsFloat['valor_abatimento'];
+              ARetornoWS.DadosRet.TituloRet.CodigoCanalTituloCobranca := LJsonBoletoObject.AsJSONObject['dado_boleto'].AsString['descricao_instrumento_cobranca'];
 
               if LJsonBoletoObject.AsJSONObject['dado_boleto'].IsJSONObject('qrcode_pix') then
                 ARetornoWS.DadosRet.TituloRet.EMV := LJsonBoletoObject.AsJSONObject['dado_boleto'].AsJSONObject['qrcode_pix'].AsString['emv'];

@@ -598,9 +598,7 @@ begin
   end;
 
   // Reforma Tributária
-  { Descomentar quando for liberado o ambiente de homologação
   Ler_IBSCBS(ANode.Childrens.Find('IBSCBS'), Item.Imposto.IBSCBS);
-  }
 end;
 
 procedure TNFComXmlReader.Ler_DetgProcRef(const Item: TDetCollectionItem;
@@ -702,10 +700,8 @@ begin
   NFCom.Total.vNF := ObterConteudo(ANode.Childrens.FindAnyNs('vNF'), tcDe2);
 
   // Reforma Tributária
-  { Descomentar quando for liberado o ambiente de homologação
   Ler_IBSCBSTot(ANode.Childrens.Find('IBSCBSTot'), NFCom.total.IBSCBSTot);
   NFCom.Total.vTotDFe := ObterConteudo(ANode.Childrens.Find('vTotDFe'), tcDe2);
-  }
 end;
 
 procedure TNFComXmlReader.Ler_gFidelidade(const ANode: TACBrXmlNode);

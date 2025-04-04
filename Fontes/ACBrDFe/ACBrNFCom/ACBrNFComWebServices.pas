@@ -1428,7 +1428,7 @@ begin
     sCNPJ       := SeparaDados(aEvento, 'CNPJ');
     sPathEvento := PathWithDelim(FPConfiguracoesNFCom.Arquivos.GetPathEvento(TipoEvento, sCNPJ));
 
-    if (aProcEvento <> '') then
+    if FPConfiguracoesNFCom.Arquivos.SalvarEvento and (aProcEvento <> '') then
       FPDFeOwner.Gravar( aIDEvento + '-procEventoNFCom.xml', aProcEvento, sPathEvento);
   end;
 end;
@@ -1733,7 +1733,7 @@ begin
       end
       else
       begin
-        if ExtrairEventos and FPConfiguracoesNFCom.Arquivos.Salvar and
+        if ExtrairEventos and FPConfiguracoesNFCom.Arquivos.SalvarEvento and
            (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoNFCom'))) then
         begin
           Inicio := Pos('<procEventoNFCom', FPRetWS);

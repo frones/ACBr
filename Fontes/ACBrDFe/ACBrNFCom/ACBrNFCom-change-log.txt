@@ -43,6 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+04/04/2025
+-- Diversos --
+[*] #TK-5814: Implementado as units: ACBrNFComIniReader e ACBrNFComIniWrite que
+    vão ser responsáveis por ler e gerar o arquivo INI.
+    Refatorado a função GetURLQRCode para que a mesma receba a classe TNFCom em 
+    vez de diversos parâmetros de entrada.
+    Implementado a propriedade de configuração: SalvarEvento (valor padrão False)
+    agora ao salvar o XML *-procEventoNFCom o componente vai checar o valor dessa 
+    propriedade.
+  Por: Italo Giurizzato Junior
+
 08/03/2025
 -- ACBrNFComClass/ACBrNFComXmlReader/ACBrNFComXmlWriter --
 [*] #TK-5814: Alteração visando contemplar a Reforma Tributária.

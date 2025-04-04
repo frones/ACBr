@@ -873,9 +873,7 @@ begin
   Result.AppendChild(Gerar_det_imposto_retTrib(aDet));
 
   // Reforma Tributária
-  { Descomentar quando for liberado o ambiente de homologação
   Result.AppendChild(Gerar_IBSCBS(NFCom.Det[aDet].Imposto.IBSCBS));
-  }
 end;
 
 function TNFComXmlWriter.Gerar_det_imposto_ICMS(aDet: Integer): TACBrXmlNode;
@@ -1303,13 +1301,11 @@ begin
                                                      NFCom.Total.vNF, DSC_VNF));
 
   // Reforma Tributária
-  { Descomentar quando for liberado o ambiente de homologação
   if NFCom.Total.IBSCBSTot.vBCCIBS > 0 then
     Result.AppendChild(Gerar_IBSCBSTot(NFCom.Total.IBSCBSTot));
 
   Result.AppendChild(AddNode(tcDe2, '#250', 'vTotDFe', 1, 15, 0,
                                              NFCom.Total.vTotDFe, DSC_VTOTDEF));
-  }
 end;
 
 function TNFComXmlWriter.Gerar_Total_ICMSTotal: TACBrXmlNode;

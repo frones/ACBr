@@ -66,8 +66,6 @@ type
   private
     fDestaxaClient: TACBrTEFDestaxaClient;
 
-    function DestaxaClient: TACBrTEFDestaxaClient;
-
     function AplicarMascaraData(const aMascara: String; var aResposta: String): String;
 
     procedure QuandoExibirQRCodeAPI(const aDados: String);
@@ -110,6 +108,7 @@ type
       const CodigoFinalizacao: String = ''; const Rede: String = ''): Boolean; override;
 
     function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: Integer = 30000; MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String; override;
+    function DestaxaClient: TACBrTEFDestaxaClient;
   end;
 
 implementation
@@ -261,7 +260,7 @@ begin
     fDestaxaClient.Loja := fpACBrTEFAPI.DadosTerminal.CodEmpresa;
     fDestaxaClient.Terminal := fpACBrTEFAPI.DadosTerminal.CodTerminal;
     fDestaxaClient.Aplicacao := fpACBrTEFAPI.DadosAutomacao.NomeAplicacao;
-    //fDestaxaClient.AplicacaoTela := fpACBrTEFAPI.DadosTerminal.CodEmpresa;
+    fDestaxaClient.AplicacaoTela := fpACBrTEFAPI.DadosAutomacao.NomeAplicacao;
     fDestaxaClient.AplicacaoVersao := fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
     fDestaxaClient.Estabelecimento := fpACBrTEFAPI.DadosEstabelecimento.CNPJ;
     fDestaxaClient.OnGravarLog := QuandoGravarLogAPI;

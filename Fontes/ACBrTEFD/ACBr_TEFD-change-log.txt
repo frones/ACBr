@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/04/2025
+-- ACBrTEDAPIDestaxa --
+[*] Alteração para preencher propriedade AplicacaoTela do DestaxaClient;
+[*] Alteração para permitir acesso ao DestaxaClient através do TACBrTEFAPI.
+    por: Elias César
+
 31/03/2025
 -- ACBrTEFAPIAditum --
 [*] Exibição de msg "Transação já Cancelada" na Tela do Operador

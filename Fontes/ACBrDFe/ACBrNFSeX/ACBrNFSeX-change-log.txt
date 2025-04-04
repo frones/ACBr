@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/04/2025
+-- Fisco.Provider --
+[*] Alteração, o provedor tem SoapAction e NameSpace diferentes para cada ambiente.
+  Por: Isaque Pinheiro
+
 03/04/2025
 -- ACBrNFSeXGravarXml_ABRASFv2/Giss.GravarXml --
 [*] #TK-6851: Alteração visando atender o provedor Giss que exige que o código do 

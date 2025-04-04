@@ -150,12 +150,22 @@ end;
 
 function TACBrNFSeXWebserviceFisco203.GetSoapAction: string;
 begin
-  Result := 'https://www.fisco.net.br/wsnfseabrasf/ServicosNFSEAbrasf.asmx/';
+  // 1 - Produção
+  // 2 - Homologação
+  if FPConfiguracoes.WebServices.AmbienteCodigo = 1 then
+    Result := 'https://www.fisco.net.br/wsnfseabrasf/ServicosNFSEAbrasf.asmx/'
+  else
+    Result := 'https://www.fisco.net.br/wsnfseabrasf/ServicosNFSEAbrasfHomologacao.asmx/';
 end;
 
 function TACBrNFSeXWebserviceFisco203.GetNameSpace: string;
 begin
-  Result := 'xmlns:nfse="https://www.fisco.net.br/wsnfseabrasf/ServicosNFSEAbrasf.asmx"';
+  // 1 - Produção
+  // 2 - Homologação
+  if FPConfiguracoes.WebServices.AmbienteCodigo = 1 then
+    Result := 'xmlns:nfse="https://www.fisco.net.br/wsnfseabrasf/ServicosNFSEAbrasf.asmx"'
+  else
+    Result := 'xmlns:nfse="https://www.fisco.net.br/wsnfseabrasf/ServicosNFSEAbrasfHomologacao.asmx"'
 end;
 
 function TACBrNFSeXWebserviceFisco203.Recepcionar(const ACabecalho,

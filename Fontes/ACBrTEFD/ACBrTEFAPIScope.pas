@@ -732,6 +732,14 @@ begin
         DefCampo.TamanhoMaximo := 16;
         DefCampo.MascaraDeCaptura := '@@@@.@@@@.@@@@.@@@@';
       end;
+    TM_PARCELAS:
+      begin
+        DefCampo.TipoDeEntrada := tedNumerico;
+        DefCampo.TamanhoMinimo := 1;
+        DefCampo.TamanhoMaximo := 2;
+        DefCampo.MascaraDeCaptura := '@@';
+        DefCampo.ValidacaoDado := valdQuantidadeParcelas;
+      end;
   end;
 
   Validado := False;

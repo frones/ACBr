@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/04/2025
+-- ACBrTEFAPIScope, ACBrTEFScopeAPI --
+[*] Ajuste para permitir validação de Parcelas, no fluxo do TEF
+    (por: GPlus e DSA)
+
 04/04/2025
 -- ACBrTEDAPIDestaxa --
 [*] Alteração para preencher propriedade AplicacaoTela do DestaxaClient;

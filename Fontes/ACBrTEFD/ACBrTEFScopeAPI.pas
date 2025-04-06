@@ -823,7 +823,8 @@ const
   TM_VALOR_MONETARIO = 14; // Valor monetário, de tam=10+2 casas decimais, total=12
   TM_NUM_DECIMAL     = 15; // Número não inteiro (com casas decimais)
   TM_SELECAO         = 16; // Seleção de opção (Menu)
-  TM_PAN             = 17;// PAN do cartão
+  TM_PAN             = 17; // PAN do cartão
+  TM_PARCELAS        = 90; // Número de Parcelas (Interno ACBr)
 
   {--------------------------------------------------------------------------------------------
                 Valores possiveis para o parametro TipoTabela de ScopeMenuRecuperaItens
@@ -3239,6 +3240,12 @@ begin
           TC_COLETA_LISTA_PRECOS:       // coleta Lista para Atualizacao de Precos (TICKET CAR)
             //TODO - Não implementado no momento
             Acao := ACAO_CANCELAR;
+
+          TC_QTDE_PARCELAS:
+          begin
+            rColetaEx.FormatoDado := TM_PARCELAS;
+            Acao := ACAO_COLETAR;
+          end
 
         else                            // deve coletar algo... //
           Acao := ACAO_COLETAR;

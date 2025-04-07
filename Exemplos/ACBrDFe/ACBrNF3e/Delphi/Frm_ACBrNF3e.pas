@@ -248,6 +248,9 @@ type
     ACBrNF3e1: TACBrNF3e;
     ACBrNF3eDANF3eESCPOS1: TACBrNF3eDANF3eESCPOS;
     ACBrNF3eDANF3eRL1: TACBrNF3eDANF3eRL;
+    tsOutros: TTabSheet;
+    btnLerArqINI: TButton;
+    btnGerarArqINI: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathNF3eClick(Sender: TObject);
@@ -301,6 +304,8 @@ type
     procedure ACBrNF3e1GerarLog(const ALogLine: String;
       var Tratado: Boolean);
     procedure ACBrNF3e1StatusChange(Sender: TObject);
+    procedure btnLerArqINIClick(Sender: TObject);
+    procedure btnGerarArqINIClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -497,9 +502,68 @@ begin
               pCOFINS := 1.5;
               vCOFINS := vBC * pCOFINS / 100;
             end;
+
+            // Reforma Tributária
+            {
+            IBSCBS.CST := 100;
+            IBSCBS.cClassTrib := 100000;
+
+            IBSCBS.gIBSCBS.vBC := 100;
+
+            IBSCBS.gIBSCBS.gIBSUF.pIBS := 5;
+            IBSCBS.gIBSCBS.gIBSUF.vTribOp := 50;
+            IBSCBS.gIBSCBS.gIBSUF.gDif.pDif := 5;
+            IBSCBS.gIBSCBS.gIBSUF.gDif.vDif := 50;
+            IBSCBS.gIBSCBS.gIBSUF.gDevTrib.vDevTrib := 50;
+            IBSCBS.gIBSCBS.gIBSUF.gRed.pRedAliq := 5;
+            IBSCBS.gIBSCBS.gIBSUF.gRed.pAliqEfet := 5;
+            IBSCBS.gIBSCBS.gIBSUF.gDeson.CST := 100;
+            IBSCBS.gIBSCBS.gIBSUF.gDeson.cClassTrib := 100000;
+            IBSCBS.gIBSCBS.gIBSUF.gDeson.vBC := 100;
+            IBSCBS.gIBSCBS.gIBSUF.gDeson.pAliq := 5;
+            IBSCBS.gIBSCBS.gIBSUF.gDeson.vDeson := 50;
+            IBSCBS.gIBSCBS.gIBSUF.vIBS := 50;
+
+            IBSCBS.gIBSCBS.gIBSMun.pIBS := 5;
+            IBSCBS.gIBSCBS.gIBSMun.vTribOp := 50;
+            IBSCBS.gIBSCBS.gIBSMun.gDif.pDif := 5;
+            IBSCBS.gIBSCBS.gIBSMun.gDif.vDif := 50;
+            IBSCBS.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 50;
+            IBSCBS.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
+            IBSCBS.gIBSCBS.gIBSMun.gRed.pAliqEfet := 5;
+            IBSCBS.gIBSCBS.gIBSMun.gDeson.CST := 100;
+            IBSCBS.gIBSCBS.gIBSMun.gDeson.cClassTrib := 100000;
+            IBSCBS.gIBSCBS.gIBSMun.gDeson.vBC := 100;
+            IBSCBS.gIBSCBS.gIBSMun.gDeson.pAliq := 5;
+            IBSCBS.gIBSCBS.gIBSMun.gDeson.vDeson := 50;
+            IBSCBS.gIBSCBS.gIBSMun.vIBS := 50;
+
+            IBSCBS.gIBSCBS.gCBS.pCBS := 5;
+            IBSCBS.gIBSCBS.gCBS.vTribOp := 50;
+            IBSCBS.gIBSCBS.gCBS.gDif.pDif := 5;
+            IBSCBS.gIBSCBS.gCBS.gDif.vDif := 50;
+            IBSCBS.gIBSCBS.gCBS.gDevTrib.vDevTrib := 50;
+            IBSCBS.gIBSCBS.gCBS.gRed.pRedAliq := 5;
+            IBSCBS.gIBSCBS.gCBS.gRed.pAliqEfet := 5;
+            IBSCBS.gIBSCBS.gCBS.gDeson.CST := 100;
+            IBSCBS.gIBSCBS.gCBS.gDeson.cClassTrib := 100000;
+            IBSCBS.gIBSCBS.gCBS.gDeson.vBC := 100;
+            IBSCBS.gIBSCBS.gCBS.gDeson.pAliq := 5;
+            IBSCBS.gIBSCBS.gCBS.gDeson.vDeson := 50;
+            IBSCBS.gIBSCBS.gCBS.vCBS := 50;
+
+            IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := 100;
+            IBSCBS.gIBSCBS.gIBSCredPres.pCredPres := 5;
+            IBSCBS.gIBSCBS.gIBSCredPres.vCredPres := 50;
+            IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus := 50;
+
+            IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := 100;
+            IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
+            IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
+            IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;
+            }
           end;
         end;
-
       end;
     end;
 
@@ -518,6 +582,31 @@ begin
       vNF        := 100;
     end;
 
+    // Reforma Tributária
+    {
+    total.vTotDFe := 100;
+    total.IBSCBSTot.vBCCIBS := 100;
+
+    total.IBSCBSTot.gIBS.gIBSUFTot.vDif := 100;
+    total.IBSCBSTot.gIBS.gIBSUFTot.vDevTrib := 100;
+    total.IBSCBSTot.gIBS.gIBSUFTot.vDeson := 100;
+    total.IBSCBSTot.gIBS.gIBSUFTot.vIBSUF := 100;
+
+    total.IBSCBSTot.gIBS.gIBSMunTot.vDif := 100;
+    total.IBSCBSTot.gIBS.gIBSMunTot.vDevTrib := 100;
+    total.IBSCBSTot.gIBS.gIBSMunTot.vDeson := 100;
+    total.IBSCBSTot.gIBS.gIBSMunTot.vIBSMun := 100;
+
+    total.IBSCBSTot.gIBS.vCredPres := 100;
+    total.IBSCBSTot.gIBS.vCredPresCondSus := 100;
+    total.IBSCBSTot.gIBS.vIBSTot := 100;
+
+    total.IBSCBSTot.gCBS.vDif := 100;
+    total.IBSCBSTot.gCBS.vDevTrib := 100;
+    total.IBSCBSTot.gCBS.vDeson := 100;
+    total.IBSCBSTot.gCBS.vCBS := 100;
+    total.IBSCBSTot.gCBS.vCredPresCondSus := 100;
+    }
     with gFat do
     begin
       CompetFat    := StrToDate('01/10/2019');
@@ -1007,6 +1096,39 @@ begin
   end;
 end;
 
+procedure TfrmACBrNF3e.btnGerarArqINIClick(Sender: TObject);
+var
+  vAux: string;
+  SaveDlg: TSaveDialog;
+  ArqINI: TStringList;
+begin
+  vAux := '1';
+  if not(InputQuery('Gerar Arquivo INI', 'Numero da Nota', vAux)) then
+    exit;
+
+  ACBrNF3e1.NotasFiscais.Clear;
+  AlimentarComponente(vAux);
+  ACBrNF3e1.NotasFiscais.GerarNF3e;
+
+  ArqINI := TStringList.Create;
+  SaveDlg := TSaveDialog.Create(nil);
+  try
+    ArqINI.Text := ACBrNF3e1.NotasFiscais.GerarIni;
+
+    SaveDlg.Title := 'Escolha o local onde gerar o INI';
+    SaveDlg.DefaultExt := '*.INI';
+    SaveDlg.Filter := 'Arquivo INI(*.INI)|*.INI|Arquivo ini(*.ini)|*.ini|Todos os arquivos(*.*)|*.*';
+
+    if SaveDlg.Execute then
+      ArqINI.SaveToFile(SaveDlg.FileName);
+
+    memoLog.Lines.Add('Arquivo Salvo: ' + SaveDlg.FileName);
+  finally
+    SaveDlg.Free;
+    ArqINI.Free;
+  end;
+end;
+
 procedure TfrmACBrNF3e.btnGerarXMLClick(Sender: TObject);
 var
   vAux: String;
@@ -1155,6 +1277,41 @@ begin
     //  ShowMessage('ERRO: '+Erro)
 
     pgRespostas.ActivePageIndex := 0;
+  end;
+end;
+
+procedure TfrmACBrNF3e.btnLerArqINIClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o Arquivo INI';
+  OpenDialog1.DefaultExt := '*.ini';
+  OpenDialog1.Filter :=
+    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrNF3e1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrNF3e1.NotasFiscais.Clear;
+    ACBrNF3e1.NotasFiscais.LoadFromIni(OpenDialog1.FileName);
+    ACBrNF3e1.NotasFiscais.Assinar;
+    ACBrNF3e1.NotasFiscais.GravarXML();
+
+    memoLog.Lines.Add('Arquivo gerado em: ' + ACBrNF3e1.NotasFiscais[0].NomeArq);
+
+    try
+      ACBrNF3e1.NotasFiscais.Validar;
+
+      if ACBrNF3e1.NotasFiscais[0].Alertas <> '' then
+        memoLog.Lines.Add('Alertas: '+ACBrNF3e1.NotasFiscais[0].Alertas);
+
+      ShowMessage('Nota Fiscal de Energia Elétrica Eletrônica Valida');
+    except
+      on E: Exception do
+      begin
+        memoLog.Lines.Add('Exception: ' + E.Message);
+        memoLog.Lines.Add('Erro: ' + ACBrNF3e1.NotasFiscais[0].ErroValidacao);
+        memoLog.Lines.Add('Erro Completo: ' + ACBrNF3e1.NotasFiscais[0].ErroValidacaoCompleto);
+      end;
+    end;
   end;
 end;
 

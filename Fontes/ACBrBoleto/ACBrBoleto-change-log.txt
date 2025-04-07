@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/04/2025
+-- ACBrBancoSicredi.pas --
+[*] TK-6865 - Corrigida geração do tipo de juros literal no Sicredi, quando preenchido CodigoMora numérico
+  https://www.projetoacbr.com.br/forum/topic/82659-acbrlib-boleto-sicredi-c%C3%B3digo-mora-sendo-gerado-incorretamente
+  Por:  Renato Rubinho
+
 19/03/2025
 -- ACBrBoletoFCFortesFr.pas --
 [*] TK-6573 - Corrigida codificação na impressão do nome da Softwarehouse

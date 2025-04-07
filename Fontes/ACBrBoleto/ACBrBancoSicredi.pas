@@ -246,11 +246,18 @@ end;
 
 
 function TACBrBancoSicredi.ObtemCodigoMoraJuros(const ACBrTitulo: TACBrTitulo): String;
+var
+  codMora: String;
 begin
   with ACBrTitulo do
   begin
-    if (CodigoMora <> '') then
-      Result := CodigoMora
+    if (Pos(CodigoMora,'12') > 0) then
+      codMora := Chr(StrToIntDef(CodigoMora,1) + 64)
+    else
+      codMora := CodigoMora;
+
+    if (Pos(codMora,'AB') > 0) then
+      Result := codMora
     else
     begin
       case CodigoMoraJuros of

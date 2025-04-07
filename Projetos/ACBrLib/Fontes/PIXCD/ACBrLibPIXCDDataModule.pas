@@ -262,7 +262,7 @@ begin
       ChavePIX           := pLibPIXCDConfig.PIXCDSantander.ChavePIX;
       ConsumerKey        := pLibPIXCDConfig.PIXCDSantander.ConsumerKey;
       ConsumerSecret     := pLibPIXCDConfig.PIXCDSantander.ConsumerSecret;
-      ArquivoCertificado := pLibPIXCDConfig.PIXCDSantander.ArqCertificadoPFX;
+      ArquivoPFX         := pLibPIXCDConfig.PIXCDSantander.ArqCertificadoPFX;
       SenhaPFX           := pLibPIXCDConfig.PIXCDSantander.SenhaCertificadoPFX;
       APIVersion         := pLibPIXCDConfig.PIXCDSantander.APIVersion;
       Scopes             := pLibPIXCDConfig.PIXCDSantander.Scopes;

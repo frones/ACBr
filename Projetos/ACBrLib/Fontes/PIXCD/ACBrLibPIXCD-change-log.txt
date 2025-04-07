@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/04/2025
+-- ACBrLibPIXCDDataModule.pas --
+[*] Ajustes na propriedade ArquivoPFX para o PSP Santander
+    Por: Antonio Carlos Junior
+
 19/03/2025
 -- ACBrLibPIXCDMateraRespostas --
 [*] #TK-6665: Ajuste na classe TLibPIXCDMateraAlias para retornar o texto ao invés do índice.

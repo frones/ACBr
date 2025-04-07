@@ -106,7 +106,7 @@ begin
    if Trim(RetWS) <> '' then
    begin
       try
-        if Pos('[', RetWS) > 0 then
+        if Pos('[', RetWS) = 1 then
           begin
             LJsonArray := TACBrJSONArray.Parse(RetWS);
             try
@@ -262,19 +262,158 @@ begin
 end;
 
 function TRetornoEnvio_Cresol.LerListaRetorno: Boolean;
+var
+  ListaRetorno: TACBrBoletoRetornoWS;
+  LJsonObject, LJsonBoletoObject, LJsonOcorrencia : TACBrJSONObject;
+  LJsonArray,LJsonOcorrencias: TACBrJSONArray;
+  LListaRejeicao : TACBrBoletoRejeicao;
+  I, j: Integer;
 begin
-  result := false;
-  raise exception.Create('TRetornoEnvio_Cresol.LerListaRetorno não implementado');
-   //Cresol possuí, apenas não implementamos.
-   //Como o Cresol (ainda) não permite filtrar por data, para clientes com muitas emissões ficaria inviável, por isso usamos apenas a consulta por id, buscando o boleto individualmente.
-   //Exemplo de consulta de todos os boletos:
-   //https://cresolapi.governarti.com.br/titulos >>Traz todos os boletos(tem um limite, traz poucos por vez).
-   //Exemplo de Consultas por status:
-   //FPURL := 'https://cresolapi.governarti.com.br/titulos?status=LIQUIDADO'; >>Traz todos os boletos líquidados.
-   //FPURL := 'https://cresolapi.governarti.com.br/titulos?status=BAIXADO_MANUALMENTE'; >>Traz todos os boletos baixados.
-   //FPURL := 'https://cresolapi.governarti.com.br/titulos?status=EM_ABERTO'; >>Traz todos os boletos em aberto.
-   //Valores para consulta por status: BAIXADO_MANUALMENTE, BAIXADO_PROTESTADO, LIQUIDACAO_EM_PROCESSAMENTO, EM_ABERTO, EM_PROCESSAMENTO, LIQUIDADO, BAIXADO_DECURSO_DE_PRAZO, REJEITADO.
-   //*OBS: Caso necessário implementar fazer como base na procedure LerRetorno, mas testar em HOM pois o retorno é um pouco diferente.
+  Result := True;
+  ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
+  ListaRetorno.HTTPResultCode := HTTPResultCode;
+  if RetWS <> '' then
+  begin
+    try
+         try
+           LJsonObject := TACBrJSONObject.Parse(RetWS);
+           if HTTPResultCode in [ 207, 400, 406, 500 ] then
+           begin
+             LListaRejeicao            := ListaRetorno.CriarRejeicaoLista;
+             LListaRejeicao.Codigo     := LJsonObject.AsString['code'];
+             LListaRejeicao.mensagem   := LJsonObject.AsString['message'];
+           end;
+           //retorna quando tiver sucesso
+           if (ListaRetorno.ListaRejeicao.Count = 0) then
+           begin
+             if LJsonObject.IsJSONObject('page') then
+             begin
+               ListaRetorno.indicadorContinuidade := LJsonObject.AsBoolean['last'] = false;
+               if ListaRetorno.indicadorContinuidade then
+                 ListaRetorno.proximoIndice         := LJsonObject.AsInteger['number'] + 1;
+             end;
+
+             LJsonArray := LJsonObject.AsJSONArray['content'];
+             if LJsonArray.Count = 0 then
+             begin
+               LListaRejeicao            := ListaRetorno.CriarRejeicaoLista;
+               LListaRejeicao.Codigo     := '00';
+               LListaRejeicao.Mensagem   := 'Lista de retorno vazia!';
+             end;
+
+             for I := 0 to Pred(LJsonArray.Count) do
+             begin
+               if I > 0 then
+                 ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
+               LJsonBoletoObject  := LJsonArray.ItemAsJSONObject[I];
+
+               ListaRetorno.DadosRet.IDBoleto.IDBoleto         := LJsonBoletoObject.AsString['id'];
+               ListaRetorno.DadosRet.IDBoleto.CodBarras        := LJsonBoletoObject.AsString['codigoBarras'];
+               ListaRetorno.DadosRet.IDBoleto.LinhaDig         := LJsonBoletoObject.AsString['linhaDigitavel'];
+               ListaRetorno.DadosRet.IDBoleto.NossoNum         := LJsonBoletoObject.AsString['nossoNumero'];
+               ListaRetorno.DadosRet.TituloRet.NossoNumero     := ListaRetorno.DadosRet.IDBoleto.NossoNum;
+               ListaRetorno.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonBoletoObject.AsString['dtvencimento']);
+               ListaRetorno.DadosRet.TituloRet.ValorDocumento  := LJsonBoletoObject.AsFloat['valorNominal'];
+               if LJsonBoletoObject.AsString['cdTipoMulta'] = 'ISENTO' then//Sem multa.
+                  ListaRetorno.DadosRet.TituloRet.PercentualMulta := 0
+               else
+                  ListaRetorno.DadosRet.TituloRet.PercentualMulta  := LJsonBoletoObject.AsFloat['valorMulta'];
+               if LJsonBoletoObject.AsString['cdTipoJuros'] = 'ISENTO' then
+               begin//Sem juros.
+                  ListaRetorno.DadosRet.TituloRet.CodigoMoraJuros := cjIsento;
+                  ListaRetorno.DadosRet.TituloRet.ValorMoraJuros  := 0;
+               end
+               else
+               begin
+                  if LJsonBoletoObject.AsString['cdTipoJuros'] = 'VALOR_FIXO' then
+                  begin//VALOR_FIXO > Valor Dia.
+                     ListaRetorno.DadosRet.TituloRet.CodigoMoraJuros := cjValorDia;
+                     ListaRetorno.DadosRet.TituloRet.ValorMoraJuros  := LJsonBoletoObject.AsFloat['valorJuros'];
+                  end
+                  else
+                  begin
+                     ListaRetorno.DadosRet.TituloRet.CodigoMoraJuros := cjTaxaMensal;//VALOR_PERCENTUAL > Taxa Mensal.
+                     ListaRetorno.DadosRet.TituloRet.ValorMoraJuros  := LJsonBoletoObject.AsFloat['valorJuros'];
+                  end;
+               end;
+               ListaRetorno.DadosRet.TituloRet.CodBarras       := ListaRetorno.DadosRet.IDBoleto.CodBarras;
+               ListaRetorno.DadosRet.TituloRet.LinhaDig        := ListaRetorno.DadosRet.IDBoleto.LinhaDig;
+               ListaRetorno.DadosRet.TituloRet.SeuNumero      := StrUtils.IfThen(LJsonBoletoObject.AsString['NumeroDocumento'] <> '',
+                                                                           LJsonBoletoObject.AsString['NumeroDocumento'],
+                                                                           OnlyNumber(LJsonBoletoObject.AsString['nossoNumero'])
+                                                                        );
+               ListaRetorno.DadosRet.TituloRet.DataRegistro    := DateCresolToDateTime(LJsonBoletoObject.AsString['dtDocumento']);
+               ListaRetorno.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonBoletoObject.AsString['dtvencimento']);
+               ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca  := LJsonBoletoObject.AsString['status'];//0-EM_ABERTO|3-BAIXADO_MANUALMENTE|5-LIQUIDADO
+               if Pos('EM_ABERTO', UpperCase(ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca)) > 0 then//ABERTO
+                  ListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '1';
+               if Pos('BAIXADO_MANUALMENTE',UpperCase(ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca)) > 0 then//BAIXADO
+                  ListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '7';
+               if Pos('LIQUIDADO', UpperCase(ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca)) > 0 then//LÍQUIDADO
+                  ListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '6';
+               ListaRetorno.DadosRet.TituloRet.Sacado.NomeSacado     := LJsonBoletoObject.AsString['pagadorNome'];
+               ListaRetorno.DadosRet.TituloRet.Sacado.Cidade         := LJsonBoletoObject.AsString['pagadorCidade'];
+               ListaRetorno.DadosRet.TituloRet.Sacado.UF             := LJsonBoletoObject.AsString['pagadorUf'];
+               ListaRetorno.DadosRet.TituloRet.Sacado.Bairro         := LJsonBoletoObject.AsString['pagadorBairro'];
+               ListaRetorno.DadosRet.TituloRet.Sacado.Cep            := LJsonBoletoObject.AsString['pagadorCep'];
+               ListaRetorno.DadosRet.TituloRet.Sacado.Numero         := LJsonBoletoObject.AsString['pagadorEnderecoNumero'];
+               ListaRetorno.DadosRet.TituloRet.Sacado.Logradouro     := LJsonBoletoObject.AsString['pagadorEndereco'];
+               ListaRetorno.DadosRet.TituloRet.Sacado.CNPJCPF        := LJsonBoletoObject.AsString['docPagador'];
+
+                // WorkAround para pegar DataPagamento e Valor de Pagamento
+               if ListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca = '6' then
+               begin
+                 LJsonOcorrencias :=  LJsonBoletoObject.AsJSONArray['ocorrencias'];
+                 for j := 0 to Pred(LJsonOcorrencias.Count) do
+                 begin
+                   LJsonOcorrencia := LJsonOcorrencias.ItemAsJSONObject[j];
+                   if LJsonOcorrencia.AsString['tipo'] = 'C' then // D = Debito tarifa, C = Liquidação
+                   begin
+                     ListaRetorno.DadosRet.TituloRet.DataMovimento := DateCresolToDateTime(LJsonOcorrencia.AsString['dtOcorrencia']);
+                     ListaRetorno.DadosRet.TituloRet.DataBaixa := DateCresolToDateTime(LJsonOcorrencia.AsString['dtOcorrencia']);
+                     ListaRetorno.DadosRet.TituloRet.DataCredito := DateCresolToDateTime(LJsonOcorrencia.AsString['dtCredito']);
+                     ListaRetorno.DadosRet.TituloRet.ValorPago := LJsonOcorrencia.AsCurrency['valor'];
+                   end;
+                 end;
+               end
+               else
+               begin
+                 ListaRetorno.DadosRet.TituloRet.DataCredito     := 0;
+                 ListaRetorno.DadosRet.TituloRet.ValorPago       := 0;
+                 ListaRetorno.DadosRet.TituloRet.DataMovimento   := DateCresolToDateTime(LJsonBoletoObject.AsString['dtDocumento']){????};
+               end;
+
+             end;
+           end;
+         finally
+           LJsonObject.free;
+         end;
+       except
+         Result := False;
+       end;
+
+     end else
+     begin
+       case HTTPResultCode of
+         401 :
+            begin
+              LListaRejeicao            := ListaRetorno.CriarRejeicaoLista;
+              LListaRejeicao.Codigo     := '401';
+              LListaRejeicao.Versao     := 'Token inválido ou expirado';
+              LListaRejeicao.Mensagem   := 'Token expirado ';
+              LListaRejeicao.Ocorrencia := 'solicite um novo.';
+            end;
+         500 :
+           begin
+             LListaRejeicao            := ListaRetorno.CriarRejeicaoLista;
+             LListaRejeicao.Codigo     := '500';
+             LListaRejeicao.Versao     := 'ERRO INTERNO CRESOL';
+             LListaRejeicao.Mensagem   := 'SERVIÇO INDISPONÍVEL. O servidor está impossibilitado de lidar com a requisição no momento. Tente mais tarde.';
+             LListaRejeicao.Ocorrencia := 'ERRO INTERNO nos servidores do Banco do Cresol.';
+           end;
+       end;
+
+     end;
 end;
 
 function TRetornoEnvio_Cresol.RetornoEnvio(const AIndex: Integer): Boolean;

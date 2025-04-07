@@ -37,6 +37,7 @@ interface
 uses
    SysUtils,
    StrUtils,
+   Classes,
    ACBrBoleto,
    ACBrJSON,
    ACBrBoletoConversao,
@@ -62,6 +63,7 @@ type
       procedure RequisicaoJson;
       procedure RequisicaoAltera;
       procedure RequisicaoConsultaDetalhe;
+      function RequisicaoConsulta :string;
       procedure GerarJuros(AJson: TACBrJSONObject);
       procedure GerarMulta(AJson: TACBrJSONObject);
       procedure AlteraDataVencimento(AJson: TACBrJSONObject);
@@ -86,6 +88,7 @@ const
 implementation
 
 uses
+
    ACBrUtil.Strings,
    ACBrUtil.DateTime;
 
@@ -106,13 +109,61 @@ begin
             FPURL := FPURL + 'titulos/' + LNossoNumero;// Feito um Put com a DtVencimento para alterar o vencimento.
       end;
       tpConsultaDetalhe:  FPURL := FPURL + 'titulos/' + LNossoNumero;//Se não tiver IDBolApi, vai pela URL que traz todos os boletos
-      tpConsulta:  FPURL := FPURL + 'titulos/' ;
+      tpConsulta:  FPURL := FPURL + 'titulos?' + RequisicaoConsulta;
       tpBaixa:  FPURL := FPURL + 'titulos/' + LNossoNumero + '/operacao/baixar';
    end;
-//Exemplo de Consultas por status:
-//FPURL := 'https://cresolapi.governarti.com.br/titulos?status=LIQUIDADO';
-//FPURL := 'https://cresolapi.governarti.com.br/titulos?status=BAIXADO_MANUALMENTE';
-//FPURL := 'https://cresolapi.governarti.com.br/titulos?status=EM_ABERTO';
+end;
+
+function TBoletoW_Cresol.RequisicaoConsulta:string;
+var
+	LParameters : TStringList;
+begin
+	LParameters:= TStringList.Create;
+  try
+  	LParameters.Values['page'] := IntToStr(Trunc( Boleto.Configuracoes.WebService.Filtro.indiceContinuidade));
+    LParameters.Values['size'] := '10';
+
+    //BAIXADO_MANUALMENTE,
+    //BAIXADO_PROTESTADO,
+    //LIQUIDACAO_EM_PROCESSAMENTO,
+    //EM_ABERTO,
+    //EM_PROCESSAMENTO,
+    //LIQUIDADO,
+    //BAIXADO_DECURSO_DE_PRAZO,
+    //REJEITADO
+    case Boleto.Configuracoes.WebService.Filtro.indicadorSituacao of
+			isbAberto    : begin
+         LParameters.AddPair('status', 'EM_ABERTO');
+         //LParameters.AddPair('status','EM_PROCESSAMENTO');
+         //LParameters.AddPair('status','LIQUIDACAO_EM_PROCESSAMENTO');
+      end;
+      isbBaixado   : begin
+         LParameters.AddPair('status', 'LIQUIDADO');
+      end;
+      isbCancelado : begin
+//         LParameters.AddPair('status', 'REJEITADO');
+         LParameters.AddPair('status', 'BAIXADO_MANUALMENTE');
+         //LParameters.AddPair('status', 'BAIXADO_PROTESTADO');
+         //LParameters.AddPair('status', 'BAIXADO_DECURSO_DE_PRAZO');
+      end;
+    end;
+    if Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataInicio > 0 then
+    begin
+    	LParameters.Values['dt_vencimento_ini'] := FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataInicio, 'YYYY-MM-DD');
+      LParameters.Values['dt_vencimento_fim'] := FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataFinal, 'YYYY-MM-DD');
+    end;
+
+    if Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio > 0 then
+    begin
+    	LParameters.Values['dt_processamento_ini'] := FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio, 'YYYY-MM-DD');
+      LParameters.Values['dt_processamento_fim'] := FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataFinal, 'YYYY-MM-DD');
+    end;
+
+    LParameters.Delimiter:= '&';
+		Result := LParameters.DelimitedText;
+  finally
+  	LParameters.free;
+  end;
 end;
 
 procedure TBoletoW_Cresol.DefinirContentType;
@@ -133,7 +184,8 @@ begin
    if Assigned(Boleto) then
       DefinirURL;
    case Boleto.Configuracoes.WebService.Operacao of
-      tpInclui: begin
+      tpInclui:
+      begin
          FMetodoHTTP := htPOST;//Define Método POST para Incluir
          RequisicaoJson;
       end;
@@ -141,14 +193,20 @@ begin
          FMetodoHTTP := htPUT;//Define Método PUT para Alterar;
          RequisicaoAltera;
       end;
-      tpBaixa: begin
+      tpBaixa:
+      begin
          FMetodoHTTP := htPUT;//Define Método PUT para Baixa
          //Na baixa não precisa enviar o Body, vai enviar o ID do boleto na URL.
       end;
-      tpConsultaDetalhe: begin
+      tpConsultaDetalhe:
+      begin
          FMetodoHTTP := htGET;//Define Método GET Consulta Detalhe
          RequisicaoConsultaDetalhe;
       end;
+      tpConsulta:
+      begin
+        FMetodoHTTP := htGET;//Define Método GET Consulta
+      end
    else
       raise EACBrBoletoWSException.Create
       (ClassName + Format(S_OPERACAO_NAO_IMPLEMENTADO,

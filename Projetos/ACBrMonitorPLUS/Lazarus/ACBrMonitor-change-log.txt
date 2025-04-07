@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/04/2025
+--ACBrMonitor1--
+[*] Ajustes na unit visando o uso da propriedade Id.
+Por: Daniel de Morais, Italo Giurizzato Junior
+
 18/03/2025
 -- ACBrMonitor1 --
 [*] #TK-6778 Corrigida visualização do Logo png na aba de conta bancária.

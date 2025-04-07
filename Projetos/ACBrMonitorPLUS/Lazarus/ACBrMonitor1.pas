@@ -3573,7 +3573,7 @@ begin
     begin
       infEvento.dhEvento := now;
 
-      infEvento.chNFe    := Copy(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID, 4, 44);
+      infEvento.chNFe    := ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID;
       infEvento.CNPJ     := ACBrNFe1.NotasFiscais.Items[0].NFe.emit.CNPJCPF;
       infEvento.tpEvento := teCancSubst;
       infEvento.nSeqEvento := 1;

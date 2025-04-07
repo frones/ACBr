@@ -355,7 +355,7 @@ begin
   if Pos('?', urlUF) <= 0 then
     urlUF := urlUF + '?';
 
-  idCTe := OnlyNumber(FCTe.infCTe.ID);
+  idCTe := FCTe.infCTe.ID;
 
   // Passo 1
   sEntrada := 'chCTe=' + idCTe + '&tpAmb=' + TpAmbToStr(FCTe.Ide.tpAmb);

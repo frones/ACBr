@@ -329,7 +329,7 @@ end;
 
 function TCTeXmlWriter.ObterNomeArquivo: string;
 begin
-  Result := OnlyNumber(FCTe.infCTe.ID) + '-cte.xml';
+  Result := FChaveCTe + '-cte.xml';
 end;
 
 procedure TCTeXmlWriter.SetOpcoes(AValue: TCTeXmlWriterOptions);
@@ -460,7 +460,7 @@ var
 begin
   Result := FDocument.CreateElement('infCte');
 
-  Result.SetAttribute('Id', 'CTe' + CTe.infCTe.ID);
+  Result.SetAttribute('Id', 'CTe' + FChaveCTe);
   Result.SetAttribute('versao', FloatToString(CTe.infCTe.Versao, '.', '#0.00'));
 
   Result.AppendChild(Gerar_Ide);
@@ -4516,7 +4516,7 @@ begin
 
   if Gerar then
   begin
-    FCTe.signature.URI := '#CTe' + OnlyNumber(CTe.infCTe.ID);
+    FCTe.signature.URI := '#CTe' + FChaveCTe;
     xmlNode := GerarSignature(FCTe.signature);
     CTeNode.AppendChild(xmlNode);
   end;

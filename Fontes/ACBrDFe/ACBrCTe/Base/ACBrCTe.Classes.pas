@@ -208,7 +208,7 @@ type
     FVersao: Double;
     function GetId: string;
   public
-    property Id: string     read GetId     write FId;
+    property Id: string     read GetId   write FId;
     property versao: Double read FVersao write FVersao;
   end;
 
@@ -4904,7 +4904,7 @@ end;
 
 function TInfCTe.GetId: string;
 begin
-  Result := Copy(FID, 4, 44);
+  Result := Copy(FId, 4, 44);
 end;
 
 end.

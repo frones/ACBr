@@ -2714,7 +2714,7 @@ const
 implementation
 
 uses
-  ACBrUtil.Base, pcnNFeR;
+  ACBrUtil.Base, pcnNFeR, ACBrUtil.Strings;
 
 { TNFe }
 
@@ -3858,7 +3858,7 @@ end;
 
 function TinfNFe.GetID: string;
 begin
-  Result := Copy(FID, 4, 44);
+  Result := OnlyNumber(FID);
 end;
 
 { TveicProd }

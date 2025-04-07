@@ -316,7 +316,7 @@ begin
     Gerador.wGrupo('nfeProc ' + VersaoStr + ' ' + NAME_SPACE, '');
 
   Gerador.wGrupo('NFe ' + NAME_SPACE);
-  Gerador.wGrupo('infNFe ' + VersaoStr + ' Id="NFe' + NFe.infNFe.ID + '"');
+  Gerador.wGrupo('infNFe ' + VersaoStr + ' Id="NFe' + FChaveNFe + '"');
   (**)GerarInfNFe;
   Gerador.wGrupo('/infNFe');
 
@@ -344,7 +344,7 @@ begin
       Gerar := ((NFe.signature.DigestValue = '') and (NFe.signature.SignatureValue = '') and (NFe.signature.X509Certificate = ''));
     if Gerar then
     begin
-      FNFe.signature.URI := '#NFe' + OnlyNumber(NFe.infNFe.ID);
+      FNFe.signature.URI := '#NFe' + FChaveNFe;
       FNFe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
       FNFe.signature.GerarXML;
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FNFe.signature.Gerador.ArquivoFormatoXML;
@@ -379,7 +379,7 @@ begin
      (**)Gerador.wTexto(xProtNFe);
      Gerador.wGrupo('/nfeProc');
    end;
-  Gerador.gtAjustarRegistros(NFe.infNFe.ID);
+  Gerador.gtAjustarRegistros(FChaveNFe);
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 

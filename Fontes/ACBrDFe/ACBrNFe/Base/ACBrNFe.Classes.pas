@@ -62,6 +62,7 @@ type
     function GetID: string;
   public
     procedure Assign(Source: TinfNFe);
+
     property ID: string read GetID write FID;
     property Versao: Double read FVersao write FVersao;
   end;
@@ -2714,7 +2715,7 @@ const
 implementation
 
 uses
-  ACBrUtil.Base, pcnNFeR, ACBrUtil.Strings;
+  ACBrUtil.Base, pcnNFeR;
 
 { TNFe }
 
@@ -3858,7 +3859,7 @@ end;
 
 function TinfNFe.GetID: string;
 begin
-  Result := OnlyNumber(FID);
+  Result := Copy(FID, 4, 44);
 end;
 
 { TveicProd }

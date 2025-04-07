@@ -275,114 +275,116 @@ begin
   if RetWS <> '' then
   begin
     try
-         try
-           LJsonObject := TACBrJSONObject.Parse(RetWS);
-           if HTTPResultCode in [ 207, 400, 406, 500 ] then
+      LJsonObject := TACBrJSONObject.Parse(RetWS);
+      try
+           case HTTPResultCode of
+           207, 400, 406, 500:
            begin
              LListaRejeicao            := ListaRetorno.CriarRejeicaoLista;
              LListaRejeicao.Codigo     := LJsonObject.AsString['code'];
              LListaRejeicao.mensagem   := LJsonObject.AsString['message'];
            end;
-           //retorna quando tiver sucesso
-           if (ListaRetorno.ListaRejeicao.Count = 0) then
-           begin
-             if LJsonObject.IsJSONObject('page') then
+           200:
+             if (ListaRetorno.ListaRejeicao.Count = 0) then
              begin
-               ListaRetorno.indicadorContinuidade := LJsonObject.AsBoolean['last'] = false;
-               if ListaRetorno.indicadorContinuidade then
-                 ListaRetorno.proximoIndice         := LJsonObject.AsInteger['number'] + 1;
-             end;
-
-             LJsonArray := LJsonObject.AsJSONArray['content'];
-             if LJsonArray.Count = 0 then
-             begin
-               LListaRejeicao            := ListaRetorno.CriarRejeicaoLista;
-               LListaRejeicao.Codigo     := '00';
-               LListaRejeicao.Mensagem   := 'Lista de retorno vazia!';
-             end;
-
-             for I := 0 to Pred(LJsonArray.Count) do
-             begin
-               if I > 0 then
-                 ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
-               LJsonBoletoObject  := LJsonArray.ItemAsJSONObject[I];
-
-               ListaRetorno.DadosRet.IDBoleto.IDBoleto         := LJsonBoletoObject.AsString['id'];
-               ListaRetorno.DadosRet.IDBoleto.CodBarras        := LJsonBoletoObject.AsString['codigoBarras'];
-               ListaRetorno.DadosRet.IDBoleto.LinhaDig         := LJsonBoletoObject.AsString['linhaDigitavel'];
-               ListaRetorno.DadosRet.IDBoleto.NossoNum         := LJsonBoletoObject.AsString['nossoNumero'];
-               ListaRetorno.DadosRet.TituloRet.NossoNumero     := ListaRetorno.DadosRet.IDBoleto.NossoNum;
-               ListaRetorno.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonBoletoObject.AsString['dtvencimento']);
-               ListaRetorno.DadosRet.TituloRet.ValorDocumento  := LJsonBoletoObject.AsFloat['valorNominal'];
-               if LJsonBoletoObject.AsString['cdTipoMulta'] = 'ISENTO' then//Sem multa.
-                  ListaRetorno.DadosRet.TituloRet.PercentualMulta := 0
-               else
-                  ListaRetorno.DadosRet.TituloRet.PercentualMulta  := LJsonBoletoObject.AsFloat['valorMulta'];
-               if LJsonBoletoObject.AsString['cdTipoJuros'] = 'ISENTO' then
-               begin//Sem juros.
-                  ListaRetorno.DadosRet.TituloRet.CodigoMoraJuros := cjIsento;
-                  ListaRetorno.DadosRet.TituloRet.ValorMoraJuros  := 0;
-               end
-               else
+               if LJsonObject.IsJSONObject('page') then
                begin
-                  if LJsonBoletoObject.AsString['cdTipoJuros'] = 'VALOR_FIXO' then
-                  begin//VALOR_FIXO > Valor Dia.
-                     ListaRetorno.DadosRet.TituloRet.CodigoMoraJuros := cjValorDia;
-                     ListaRetorno.DadosRet.TituloRet.ValorMoraJuros  := LJsonBoletoObject.AsFloat['valorJuros'];
-                  end
-                  else
-                  begin
-                     ListaRetorno.DadosRet.TituloRet.CodigoMoraJuros := cjTaxaMensal;//VALOR_PERCENTUAL > Taxa Mensal.
-                     ListaRetorno.DadosRet.TituloRet.ValorMoraJuros  := LJsonBoletoObject.AsFloat['valorJuros'];
-                  end;
+                 ListaRetorno.indicadorContinuidade := LJsonObject.AsBoolean['last'] = false;
+                 if ListaRetorno.indicadorContinuidade then
+                   ListaRetorno.proximoIndice         := LJsonObject.AsInteger['number'] + 1;
                end;
-               ListaRetorno.DadosRet.TituloRet.CodBarras       := ListaRetorno.DadosRet.IDBoleto.CodBarras;
-               ListaRetorno.DadosRet.TituloRet.LinhaDig        := ListaRetorno.DadosRet.IDBoleto.LinhaDig;
-               ListaRetorno.DadosRet.TituloRet.SeuNumero      := StrUtils.IfThen(LJsonBoletoObject.AsString['NumeroDocumento'] <> '',
-                                                                           LJsonBoletoObject.AsString['NumeroDocumento'],
-                                                                           OnlyNumber(LJsonBoletoObject.AsString['nossoNumero'])
-                                                                        );
-               ListaRetorno.DadosRet.TituloRet.DataRegistro    := DateCresolToDateTime(LJsonBoletoObject.AsString['dtDocumento']);
-               ListaRetorno.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonBoletoObject.AsString['dtvencimento']);
-               ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca  := LJsonBoletoObject.AsString['status'];//0-EM_ABERTO|3-BAIXADO_MANUALMENTE|5-LIQUIDADO
-               if Pos('EM_ABERTO', UpperCase(ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca)) > 0 then//ABERTO
-                  ListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '1';
-               if Pos('BAIXADO_MANUALMENTE',UpperCase(ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca)) > 0 then//BAIXADO
-                  ListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '7';
-               if Pos('LIQUIDADO', UpperCase(ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca)) > 0 then//LÍQUIDADO
-                  ListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '6';
-               ListaRetorno.DadosRet.TituloRet.Sacado.NomeSacado     := LJsonBoletoObject.AsString['pagadorNome'];
-               ListaRetorno.DadosRet.TituloRet.Sacado.Cidade         := LJsonBoletoObject.AsString['pagadorCidade'];
-               ListaRetorno.DadosRet.TituloRet.Sacado.UF             := LJsonBoletoObject.AsString['pagadorUf'];
-               ListaRetorno.DadosRet.TituloRet.Sacado.Bairro         := LJsonBoletoObject.AsString['pagadorBairro'];
-               ListaRetorno.DadosRet.TituloRet.Sacado.Cep            := LJsonBoletoObject.AsString['pagadorCep'];
-               ListaRetorno.DadosRet.TituloRet.Sacado.Numero         := LJsonBoletoObject.AsString['pagadorEnderecoNumero'];
-               ListaRetorno.DadosRet.TituloRet.Sacado.Logradouro     := LJsonBoletoObject.AsString['pagadorEndereco'];
-               ListaRetorno.DadosRet.TituloRet.Sacado.CNPJCPF        := LJsonBoletoObject.AsString['docPagador'];
 
-                // WorkAround para pegar DataPagamento e Valor de Pagamento
-               if ListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca = '6' then
+               LJsonArray := LJsonObject.AsJSONArray['content'];
+               if LJsonArray.Count = 0 then
                begin
-                 LJsonOcorrencias :=  LJsonBoletoObject.AsJSONArray['ocorrencias'];
-                 for j := 0 to Pred(LJsonOcorrencias.Count) do
+                 LListaRejeicao            := ListaRetorno.CriarRejeicaoLista;
+                 LListaRejeicao.Codigo     := '00';
+                 LListaRejeicao.Mensagem   := 'Lista de retorno vazia!';
+               end;
+
+               for I := 0 to Pred(LJsonArray.Count) do
+               begin
+                 if I > 0 then
+                   ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
+                 LJsonBoletoObject  := LJsonArray.ItemAsJSONObject[I];
+
+                 ListaRetorno.DadosRet.IDBoleto.IDBoleto         := LJsonBoletoObject.AsString['id'];
+                 ListaRetorno.DadosRet.IDBoleto.CodBarras        := LJsonBoletoObject.AsString['codigoBarras'];
+                 ListaRetorno.DadosRet.IDBoleto.LinhaDig         := LJsonBoletoObject.AsString['linhaDigitavel'];
+                 ListaRetorno.DadosRet.IDBoleto.NossoNum         := LJsonBoletoObject.AsString['nossoNumero'];
+                 ListaRetorno.DadosRet.TituloRet.NossoNumero     := ListaRetorno.DadosRet.IDBoleto.NossoNum;
+                 ListaRetorno.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonBoletoObject.AsString['dtvencimento']);
+                 ListaRetorno.DadosRet.TituloRet.ValorDocumento  := LJsonBoletoObject.AsFloat['valorNominal'];
+                 if LJsonBoletoObject.AsString['cdTipoMulta'] = 'ISENTO' then//Sem multa.
+                    ListaRetorno.DadosRet.TituloRet.PercentualMulta := 0
+                 else
+                    ListaRetorno.DadosRet.TituloRet.PercentualMulta  := LJsonBoletoObject.AsFloat['valorMulta'];
+                 if LJsonBoletoObject.AsString['cdTipoJuros'] = 'ISENTO' then
+                 begin//Sem juros.
+                    ListaRetorno.DadosRet.TituloRet.CodigoMoraJuros := cjIsento;
+                    ListaRetorno.DadosRet.TituloRet.ValorMoraJuros  := 0;
+                 end
+                 else
                  begin
-                   LJsonOcorrencia := LJsonOcorrencias.ItemAsJSONObject[j];
-                   if LJsonOcorrencia.AsString['tipo'] = 'C' then // D = Debito tarifa, C = Liquidação
-                   begin
-                     ListaRetorno.DadosRet.TituloRet.DataMovimento := DateCresolToDateTime(LJsonOcorrencia.AsString['dtOcorrencia']);
-                     ListaRetorno.DadosRet.TituloRet.DataBaixa := DateCresolToDateTime(LJsonOcorrencia.AsString['dtOcorrencia']);
-                     ListaRetorno.DadosRet.TituloRet.DataCredito := DateCresolToDateTime(LJsonOcorrencia.AsString['dtCredito']);
-                     ListaRetorno.DadosRet.TituloRet.ValorPago := LJsonOcorrencia.AsCurrency['valor'];
-                   end;
+                    if LJsonBoletoObject.AsString['cdTipoJuros'] = 'VALOR_FIXO' then
+                    begin//VALOR_FIXO > Valor Dia.
+                       ListaRetorno.DadosRet.TituloRet.CodigoMoraJuros := cjValorDia;
+                       ListaRetorno.DadosRet.TituloRet.ValorMoraJuros  := LJsonBoletoObject.AsFloat['valorJuros'];
+                    end
+                    else
+                    begin
+                       ListaRetorno.DadosRet.TituloRet.CodigoMoraJuros := cjTaxaMensal;//VALOR_PERCENTUAL > Taxa Mensal.
+                       ListaRetorno.DadosRet.TituloRet.ValorMoraJuros  := LJsonBoletoObject.AsFloat['valorJuros'];
+                    end;
                  end;
-               end
-               else
-               begin
-                 ListaRetorno.DadosRet.TituloRet.DataCredito     := 0;
-                 ListaRetorno.DadosRet.TituloRet.ValorPago       := 0;
-                 ListaRetorno.DadosRet.TituloRet.DataMovimento   := DateCresolToDateTime(LJsonBoletoObject.AsString['dtDocumento']){????};
-               end;
+                 ListaRetorno.DadosRet.TituloRet.CodBarras       := ListaRetorno.DadosRet.IDBoleto.CodBarras;
+                 ListaRetorno.DadosRet.TituloRet.LinhaDig        := ListaRetorno.DadosRet.IDBoleto.LinhaDig;
+                 ListaRetorno.DadosRet.TituloRet.SeuNumero      := StrUtils.IfThen(LJsonBoletoObject.AsString['NumeroDocumento'] <> '',
+                                                                             LJsonBoletoObject.AsString['NumeroDocumento'],
+                                                                             OnlyNumber(LJsonBoletoObject.AsString['nossoNumero'])
+                                                                          );
+                 ListaRetorno.DadosRet.TituloRet.DataRegistro    := DateCresolToDateTime(LJsonBoletoObject.AsString['dtDocumento']);
+                 ListaRetorno.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonBoletoObject.AsString['dtvencimento']);
+                 ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca  := LJsonBoletoObject.AsString['status'];//0-EM_ABERTO|3-BAIXADO_MANUALMENTE|5-LIQUIDADO
+                 if Pos('EM_ABERTO', UpperCase(ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca)) > 0 then//ABERTO
+                    ListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '1';
+                 if Pos('BAIXADO_MANUALMENTE',UpperCase(ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca)) > 0 then//BAIXADO
+                    ListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '7';
+                 if Pos('LIQUIDADO', UpperCase(ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca)) > 0 then//LÍQUIDADO
+                    ListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '6';
+                 ListaRetorno.DadosRet.TituloRet.Sacado.NomeSacado     := LJsonBoletoObject.AsString['pagadorNome'];
+                 ListaRetorno.DadosRet.TituloRet.Sacado.Cidade         := LJsonBoletoObject.AsString['pagadorCidade'];
+                 ListaRetorno.DadosRet.TituloRet.Sacado.UF             := LJsonBoletoObject.AsString['pagadorUf'];
+                 ListaRetorno.DadosRet.TituloRet.Sacado.Bairro         := LJsonBoletoObject.AsString['pagadorBairro'];
+                 ListaRetorno.DadosRet.TituloRet.Sacado.Cep            := LJsonBoletoObject.AsString['pagadorCep'];
+                 ListaRetorno.DadosRet.TituloRet.Sacado.Numero         := LJsonBoletoObject.AsString['pagadorEnderecoNumero'];
+                 ListaRetorno.DadosRet.TituloRet.Sacado.Logradouro     := LJsonBoletoObject.AsString['pagadorEndereco'];
+                 ListaRetorno.DadosRet.TituloRet.Sacado.CNPJCPF        := LJsonBoletoObject.AsString['docPagador'];
 
+                  // WorkAround para pegar DataPagamento e Valor de Pagamento
+                 if ListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca = '6' then
+                 begin
+                   LJsonOcorrencias :=  LJsonBoletoObject.AsJSONArray['ocorrencias'];
+                   for j := 0 to Pred(LJsonOcorrencias.Count) do
+                   begin
+                     LJsonOcorrencia := LJsonOcorrencias.ItemAsJSONObject[j];
+                     if LJsonOcorrencia.AsString['tipo'] = 'C' then // D = Debito tarifa, C = Liquidação
+                     begin
+                       ListaRetorno.DadosRet.TituloRet.DataMovimento := DateCresolToDateTime(LJsonOcorrencia.AsString['dtOcorrencia']);
+                       ListaRetorno.DadosRet.TituloRet.DataBaixa := DateCresolToDateTime(LJsonOcorrencia.AsString['dtOcorrencia']);
+                       ListaRetorno.DadosRet.TituloRet.DataCredito := DateCresolToDateTime(LJsonOcorrencia.AsString['dtCredito']);
+                       ListaRetorno.DadosRet.TituloRet.ValorPago := LJsonOcorrencia.AsCurrency['valor'];
+                     end;
+                   end;
+                 end
+                 else
+                 begin
+                   ListaRetorno.DadosRet.TituloRet.DataCredito     := 0;
+                   ListaRetorno.DadosRet.TituloRet.ValorPago       := 0;
+                   ListaRetorno.DadosRet.TituloRet.DataMovimento   := DateCresolToDateTime(LJsonBoletoObject.AsString['dtDocumento']){????};
+                 end;
+
+               end;
              end;
            end;
          finally
@@ -391,28 +393,6 @@ begin
        except
          Result := False;
        end;
-
-     end else
-     begin
-       case HTTPResultCode of
-         401 :
-            begin
-              LListaRejeicao            := ListaRetorno.CriarRejeicaoLista;
-              LListaRejeicao.Codigo     := '401';
-              LListaRejeicao.Versao     := 'Token inválido ou expirado';
-              LListaRejeicao.Mensagem   := 'Token expirado ';
-              LListaRejeicao.Ocorrencia := 'solicite um novo.';
-            end;
-         500 :
-           begin
-             LListaRejeicao            := ListaRetorno.CriarRejeicaoLista;
-             LListaRejeicao.Codigo     := '500';
-             LListaRejeicao.Versao     := 'ERRO INTERNO CRESOL';
-             LListaRejeicao.Mensagem   := 'SERVIÇO INDISPONÍVEL. O servidor está impossibilitado de lidar com a requisição no momento. Tente mais tarde.';
-             LListaRejeicao.Ocorrencia := 'ERRO INTERNO nos servidores do Banco do Cresol.';
-           end;
-       end;
-
      end;
 end;
 

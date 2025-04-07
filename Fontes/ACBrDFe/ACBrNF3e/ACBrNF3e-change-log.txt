@@ -42,6 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/04/2025
+-- Diversos --
+[*] #TK-5814: Implementado as units: ACBrNF3eIniReader e ACBrNF3eIniWrite que
+    vão ser responsáveis por ler e gerar o arquivo INI.
+    Refatorado a função GetURLQRCode para que a mesma receba a classe TNF3e em 
+    vez de diversos parâmetros de entrada.
+    Implementado a propriedade de configuração: SalvarEvento (valor padrão False)
+    agora ao salvar o XML *-procEventoNF3e o componente vai checar o valor dessa 
+    propriedade.
+  Por: Italo Giurizzato Junior
+
 08/03/2025
 -- ACBrNF3eClass/ACBrNF3eXmlReader/ACBrNF3eXmlWriter --
 [*] #TK-5814: Alteração visando contemplar a Reforma Tributária.

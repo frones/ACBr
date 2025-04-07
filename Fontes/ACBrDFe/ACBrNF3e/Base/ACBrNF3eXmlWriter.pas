@@ -99,6 +99,7 @@ type
     function Gerar_gSCEE_gConsumidor: TACBrXmlNodeArray;
     function Gerar_gSCEE_gSaldoCred: TACBrXmlNodeArray;
     function Gerar_gSCEE_gTipoSaldo: TACBrXmlNodeArray;
+    function Gerar_gSCEE_gTipoSaldogSaldoCred(Idx: Integer): TACBrXmlNodeArray;
 
     function Gerar_NFdet: TACBrXmlNodeArray;
     function Gerar_NFdet_det(aNFdet: Integer): TACBrXmlNodeArray;
@@ -264,7 +265,7 @@ end;
 
 function TNF3eXmlWriter.ObterNomeArquivo: string;
 begin
-  Result := OnlyNumber(FNF3e.infNF3e.ID) + '-NF3e.xml';
+  Result := FChaveNF3e + '-NF3e.xml';
 end;
 
 function TNF3eXmlWriter.GerarXml: boolean;
@@ -292,7 +293,7 @@ begin
 
   NF3e.infNF3e.ID := 'NF3e' + FChaveNF3e;
   NF3e.ide.cDV := ExtrairDigitoChaveAcesso(NF3e.infNF3e.ID);
-  NF3e.Ide.cNF := ExtrairCodigoChaveAcesso(NF3e.infNF3e.ID);
+//  NF3e.Ide.cNF := ExtrairCodigoChaveAcesso(NF3e.infNF3e.ID);
 
   FDocument.Clear();
   NF3eNode := FDocument.CreateElement('NF3e', 'http://www.portalfiscal.inf.br/nf3e');
@@ -333,7 +334,7 @@ begin
                  (NF3e.signature.X509Certificate = ''));
     if Gerar then
     begin
-      FNF3e.signature.URI := '#NF3e' + OnlyNumber(NF3e.infNF3e.ID);
+      FNF3e.signature.URI := '#NF3e' + FChaveNF3e;
       xmlNode := GerarSignature(FNF3e.signature);
       NF3eNode.AppendChild(xmlNode);
     end;
@@ -352,7 +353,7 @@ var
   i: integer;
 begin
   Result := FDocument.CreateElement('infNF3e');
-  Result.SetAttribute('Id', 'NF3e' + NF3e.infNF3e.ID);
+  Result.SetAttribute('Id', 'NF3e' + FChaveNF3e);
   Result.SetAttribute('versao', FloatToString(NF3e.infNF3e.Versao, '.', '#0.00'));
 
   Result.AppendChild(Gerar_Ide);
@@ -935,7 +936,8 @@ end;
 
 function TNF3eXmlWriter.Gerar_gSCEE_gTipoSaldo: TACBrXmlNodeArray;
 var
-  i: integer;
+  i, j: integer;
+  nodeArray: TACBrXmlNodeArray;
 begin
   Result := nil;
   SetLength(Result, NF3e.gSCEE.gTipoSaldo.Count);
@@ -946,47 +948,70 @@ begin
 
     Result[i].SetAttribute('nTipoSaldo', FormatFloat('00', i + 1));
 
-    Result[i].AppendChild(AddNode(tcStr, '#99', 'tpPosTar', 1, 1, 1,
-     tpPosTarToStr(NF3e.gSCEE.gTipoSaldo[i].tpPosTar), DSC_TPPOSTAR));
-
-    if Frac(NF3e.gSCEE.gTipoSaldo[i].vSaldAnt) > 0 then
-      Result[i].AppendChild(AddNode(tcDe4, '#100', 'vSaldAnt', 1, 15, 1,
-       NF3e.gSCEE.gTipoSaldo[i].vSaldAnt, DSC_VSALDANT))
-    else
-      Result[i].AppendChild(AddNode(tcInt, '#100', 'vSaldAnt', 1, 15, 1,
-       NF3e.gSCEE.gTipoSaldo[i].vSaldAnt, DSC_VSALDANT));
-
-    if Frac(NF3e.gSCEE.gTipoSaldo[i].vCredExpirado) > 0 then
-      Result[i].AppendChild(AddNode(tcDe4, '#101', 'vCredExpirado', 1, 15, 1,
-       NF3e.gSCEE.gTipoSaldo[i].vCredExpirado, DSC_VCREDEXPIRADO))
-    else
-      Result[i].AppendChild(AddNode(tcInt, '#101', 'vCredExpirado', 1, 15, 1,
-       NF3e.gSCEE.gTipoSaldo[i].vCredExpirado, DSC_VCREDEXPIRADO));
-
-    if Frac(NF3e.gSCEE.gTipoSaldo[i].vSaldAtual) > 0 then
-      Result[i].AppendChild(AddNode(tcDe4, '#102', 'vSaldAtual', 1, 15, 1,
-       NF3e.gSCEE.gTipoSaldo[i].vSaldAtual, DSC_VSALDATUAL))
-    else
-      Result[i].AppendChild(AddNode(tcInt, '#102', 'vSaldAtual', 1, 15, 1,
-       NF3e.gSCEE.gTipoSaldo[i].vSaldAtual, DSC_VSALDATUAL));
-
-    if (NF3e.gSCEE.gTipoSaldo[i].vCredExpirar > 0) or
-       (NF3e.gSCEE.gTipoSaldo[i].CompetExpirar > 0) then
+    nodeArray := Gerar_gSCEE_gTipoSaldogSaldoCred(i);
+    for j := 0 to NF3e.gSCEE.gTipoSaldo[i].gSaldoCred.Count - 1 do
     begin
-      if Frac(NF3e.gSCEE.gTipoSaldo[i].vCredExpirar) > 0 then
-        Result[i].AppendChild(AddNode(tcDe4, '#103', 'vCredExpirar', 1, 15, 1,
-         NF3e.gSCEE.gTipoSaldo[i].vCredExpirar, DSC_VCREDEXPIRAR))
-      else
-        Result[i].AppendChild(AddNode(tcInt, '#103', 'vCredExpirar', 1, 15, 1,
-         NF3e.gSCEE.gTipoSaldo[i].vCredExpirar, DSC_VCREDEXPIRAR));
-
-      Result[i].AppendChild(AddNode(tcStr, '#104', 'CompetExpirar', 6, 6, 1,
-       FormatDateTime('yyyymm', NF3e.gSCEE.gTipoSaldo[i].CompetExpirar), DSC_COMPETEXPIRAR));
+      Result[i].AppendChild(nodeArray[j]);
     end;
   end;
 
   if NF3e.gSCEE.gTipoSaldo.Count > 10 then
     wAlerta('#098', 'gTipoSaldo', '', ERR_MSG_MAIOR_MAXIMO + '10');
+end;
+
+function TNF3eXmlWriter.Gerar_gSCEE_gTipoSaldogSaldoCred(
+  Idx: Integer): TACBrXmlNodeArray;
+var
+  i: integer;
+begin
+  Result := nil;
+  SetLength(Result, NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred.Count);
+
+  for i := 0 to NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred.Count - 1 do
+  begin
+    Result[i] := FDocument.CreateElement('gSaldoCred');
+
+    Result[i].AppendChild(AddNode(tcStr, '#99', 'tpPosTar', 1, 1, 1,
+     tpPosTarToStr(NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].tpPosTar), DSC_TPPOSTAR));
+
+    if Frac(NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].vSaldAnt) > 0 then
+      Result[i].AppendChild(AddNode(tcDe4, '#100', 'vSaldAnt', 1, 15, 1,
+       NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].vSaldAnt, DSC_VSALDANT))
+    else
+      Result[i].AppendChild(AddNode(tcInt, '#100', 'vSaldAnt', 1, 15, 1,
+       NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].vSaldAnt, DSC_VSALDANT));
+
+    if Frac(NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].vCredExpirado) > 0 then
+      Result[i].AppendChild(AddNode(tcDe4, '#101', 'vCredExpirado', 1, 15, 1,
+       NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].vCredExpirado, DSC_VCREDEXPIRADO))
+    else
+      Result[i].AppendChild(AddNode(tcInt, '#101', 'vCredExpirado', 1, 15, 1,
+       NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].vCredExpirado, DSC_VCREDEXPIRADO));
+
+    if Frac(NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].vSaldAtual) > 0 then
+      Result[i].AppendChild(AddNode(tcDe4, '#102', 'vSaldAtual', 1, 15, 1,
+       NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].vSaldAtual, DSC_VSALDATUAL))
+    else
+      Result[i].AppendChild(AddNode(tcInt, '#102', 'vSaldAtual', 1, 15, 1,
+       NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].vSaldAtual, DSC_VSALDATUAL));
+
+    if (NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].vCredExpirar > 0) or
+       (NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].CompetExpirar > 0) then
+    begin
+      if Frac(NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].vCredExpirar) > 0 then
+        Result[i].AppendChild(AddNode(tcDe4, '#103', 'vCredExpirar', 1, 15, 1,
+         NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].vCredExpirar, DSC_VCREDEXPIRAR))
+      else
+        Result[i].AppendChild(AddNode(tcInt, '#103', 'vCredExpirar', 1, 15, 1,
+         NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].vCredExpirar, DSC_VCREDEXPIRAR));
+
+      Result[i].AppendChild(AddNode(tcStr, '#104', 'CompetExpirar', 6, 6, 1,
+       FormatDateTime('yyyymm', NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred[i].CompetExpirar), DSC_COMPETEXPIRAR));
+    end;
+  end;
+
+  if NF3e.gSCEE.gTipoSaldo[Idx].gSaldoCred.Count > 3 then
+    wAlerta('#098', 'gSaldoCred', '', ERR_MSG_MAIOR_MAXIMO + '3');
 end;
 
 function TNF3eXmlWriter.Gerar_NFdet: TACBrXmlNodeArray;
@@ -1399,9 +1424,7 @@ begin
   Result.AppendChild(Gerar_NFdet_det_DetItem_Imposto_RetTrib(aNFdet, aDet));
 
   // Reforma Tributária
-  { Descomentar somente quando for liberado o ambiente de homologação
   Result.AppendChild(Gerar_IBSCBS(NF3e.NFDet[aNFdet].Det[aDet].detItem.Imposto.IBSCBS));
-  }
 end;
 
 function TNF3eXmlWriter.Gerar_NFdet_det_DetItem_Imposto_ICMS(aNFdet,
@@ -1543,10 +1566,10 @@ begin
                                                        vBCSTRET, DSC_VBCSTRET));
 
             Result.AppendChild(AddNode(tcDe2, '247', 'pICMSSTRet', 1, 5, 1,
-                                                   vICMSSTRET, DSC_PICMSSTRET));
+                                                   pICMSSTRET, DSC_PICMSSTRET));
 
             Result.AppendChild(AddNode(tcDe2, '248', 'vICMSSubstituto', 1, 15, 0,
-                                                         vICMSST, DSC_VICMSST));
+                                                 vICMSSubstituto, DSC_VICMSST));
 
             Result.AppendChild(AddNode(tcDe2, '249', 'vICMSSTRet', 1, 15, 1,
                                                    vICMSSTRET, DSC_VICMSSTRET));
@@ -1902,13 +1925,11 @@ begin
     NF3e.Total.vNF, DSC_VDF));
 
   // Reforma Tributária
-  { Descomentar somente quando for liberado o ambiente de homologação
   if NF3e.Total.IBSCBSTot.vBCCIBS > 0 then
     Result.AppendChild(Gerar_IBSCBSTot(NF3e.Total.IBSCBSTot));
 
   Result.AppendChild(AddNode(tcDe2, '#250', 'vTotDFe', 1, 15, 0,
                                               NF3e.Total.vTotDFe, DSC_VTOTDEF));
-  }
 end;
 
 function TNF3eXmlWriter.Gerar_TotalICMSTotal: TACBrXmlNode;

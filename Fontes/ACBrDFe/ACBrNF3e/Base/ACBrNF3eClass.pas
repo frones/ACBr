@@ -758,6 +758,8 @@ type
     FcBenef: string;
     FindSemCST: TIndicador;
     FvBCSTRET: Double;
+    FpICMSSTRet: Double;
+    FvICMSSubstituto: Double;
     FvICMSSTRET: Double;
     FvBCFCPSTRet: Double;
     FpFCPSTRet: Double;
@@ -785,6 +787,8 @@ type
     property cBenef: string     read FcBenef     write FcBenef;
     property indSemCST: TIndicador read FindSemCST write FindSemCST;
     property vBCSTRET: Double   read FvBCSTRET   write FvBCSTRET;
+    property pICMSSTRet: Double read FpICMSSTRet write FpICMSSTRet;
+    property vICMSSubstituto: Double read FvICMSSubstituto write FvICMSSubstituto;
     property vICMSSTRET: Double read FvICMSSTRET write FvICMSSTRET;
     property vBCFCPSTRet: Double read FvBCFCPSTRet write FvBCFCPSTRet;
     property pFCPSTRet: Double read FpFCPSTRet write FpFCPSTRet;
@@ -1022,6 +1026,9 @@ type
     FvCOFINSEfet: Double;
     FindDevolucao: TIndicador;
   public
+    constructor Create;
+    destructor Destroy; override;
+
     procedure Assign(Source: TdetItemAnt);
 
     property nItemAnt: Integer   read FnItemAnt    write FnItemAnt;
@@ -1156,21 +1163,16 @@ type
 
   TgTipoSaldoCollectionItem = class(TObject)
   private
-    FtpPosTar: TtpPosTar;
-    FvSaldAnt: Double;
-    FvCredExpirado: Double;
-    FvSaldAtual: Double;
-    FvCredExpirar: Double;
-    FCompetExpirar: TDateTime;
+    FgSaldoCred: TgSaldoCredCollection;
+
+    procedure SetgSaldoCred(const Value: TgSaldoCredCollection);
   public
+    constructor Create();
+    destructor Destroy; override;
+
     procedure Assign(Source: TgTipoSaldoCollectionItem);
 
-    property tpPosTar: TtpPosTar      read FtpPosTar      write FtpPosTar;
-    property vSaldAnt: Double         read FvSaldAnt      write FvSaldAnt;
-    property vCredExpirado: Double    read FvCredExpirado write FvCredExpirado;
-    property vSaldAtual: Double       read FvSaldAtual    write FvSaldAtual;
-    property vCredExpirar: Double     read FvCredExpirar  write FvCredExpirar;
-    property CompetExpirar: TDateTime read FCompetExpirar write FCompetExpirar;
+    property gSaldoCred: TgSaldoCredCollection   read FgSaldoCred  write SetgSaldoCred;
   end;
 
   { TgTipoSaldoCollection }
@@ -1464,12 +1466,11 @@ type
     FID: string;
     FVersao: Double;
 
-    function GetID: string;
   public
     procedure Assign(Source: TinfNF3e);
 
-    property ID: string        read GetID       write FID;
-    property Versao: Double    read FVersao write FVersao;
+    property ID: string     read FID     write FID;
+    property Versao: Double read FVersao write FVersao;
   end;
 
   { TNF3e }
@@ -1936,6 +1937,8 @@ begin
   vBCEfet    := Source.vBCEfet;
   pICMSEfet  := Source.pICMSEfet;
   vICMSEfet  := Source.vICMSEfet;
+  pICMSSTRet := Source.pICMSSTRet;
+  vICMSSubstituto := Source.vICMSSubstituto;
 end;
 
 { TImposto }
@@ -2173,6 +2176,20 @@ begin
   retTrib.Assign(Source.retTrib);
 
   indDevolucao := Source.indDevolucao;
+end;
+
+constructor TdetItemAnt.Create;
+begin
+  inherited Create;
+
+  FretTrib := TretTrib.Create;
+end;
+
+destructor TdetItemAnt.Destroy;
+begin
+  FretTrib.Free;
+
+  inherited Destroy;
 end;
 
 { TgAjusteNF3eAnt }
@@ -2582,11 +2599,6 @@ begin
   Versao := Source.Versao;
 end;
 
-function TinfNF3e.GetID: string;
-begin
-  Result := Copy(FID, 5, 44);
-end;
-
 { TNF3e }
 
 procedure TNF3e.Assign(Source: TNF3e);
@@ -2709,12 +2721,27 @@ end;
 
 procedure TgTipoSaldoCollectionItem.Assign(Source: TgTipoSaldoCollectionItem);
 begin
-  tpPosTar      := Source.tpPosTar;
-  vSaldAnt      := Source.vSaldAnt;
-  vCredExpirado := Source.vCredExpirado;
-  vSaldAtual    := Source.vSaldAtual;
-  vCredExpirar  := Source.vCredExpirar;
-  CompetExpirar := Source.CompetExpirar;
+  gSaldoCred.Assign(Source.gSaldoCred);
+end;
+
+constructor TgTipoSaldoCollectionItem.Create;
+begin
+  inherited Create;
+
+  FgSaldoCred := TgSaldoCredCollection.Create;
+end;
+
+destructor TgTipoSaldoCollectionItem.Destroy;
+begin
+  FgSaldoCred.Free;
+
+  inherited Destroy;
+end;
+
+procedure TgTipoSaldoCollectionItem.SetgSaldoCred(
+  const Value: TgSaldoCredCollection);
+begin
+  FgSaldoCred := Value;
 end;
 
 { TgTipoSaldoCollection }

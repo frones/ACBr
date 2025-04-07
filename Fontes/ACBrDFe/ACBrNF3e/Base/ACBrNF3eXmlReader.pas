@@ -65,6 +65,7 @@ type
     procedure Ler_gSCEE(const ANode: TACBrXmlNode);
     procedure Ler_gConsumidor(const ANode: TACBrXmlNode);
     procedure Ler_gSaldoCred(const ANode: TACBrXmlNode);
+    procedure Ler_gSaldoCred2(const ANode: TACBrXmlNode; gTipoSaldo: TgTipoSaldoCollectionItem);
     procedure Ler_gTipoSaldo(const ANode: TACBrXmlNode);
     procedure Ler_NFDet(const ANode: TACBrXmlNode);
     procedure Ler_Total(const ANode: TACBrXmlNode);
@@ -328,14 +329,15 @@ begin
     Item.CompetExpirar := 0;
 end;
 
-procedure TNF3eXmlReader.Ler_gTipoSaldo(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_gSaldoCred2(const ANode: TACBrXmlNode;
+  gTipoSaldo: TgTipoSaldoCollectionItem);
 var
-  Item: TgTipoSaldoCollectionItem;
+  Item: TgSaldoCredCollectionItem;
   xData: string;
 begin
   if not Assigned(ANode) then Exit;
 
-  Item := NF3e.gSCEE.gTipoSaldo.New;
+  Item := gTipoSaldo.gSaldoCred.New;
 
   Item.tpPosTar := StrTotpPosTar(ObterConteudo(ANode.Childrens.Find('tpPosTar'), tcStr));
   Item.vSaldAnt := ObterConteudo(ANode.Childrens.Find('vSaldAnt'), tcDe4);
@@ -351,6 +353,23 @@ begin
   end
   else
     Item.CompetExpirar := 0;
+end;
+
+procedure TNF3eXmlReader.Ler_gTipoSaldo(const ANode: TACBrXmlNode);
+var
+  i: Integer;
+  Item: TgTipoSaldoCollectionItem;
+  ANodes: TACBrXmlNodeArray;
+begin
+  if not Assigned(ANode) then Exit;
+
+  Item := NF3e.gSCEE.gTipoSaldo.New;
+
+  ANodes := ANode.Childrens.FindAll('gSaldoCred');
+  for i := 0 to Length(ANodes) - 1 do
+  begin
+    Ler_gSaldoCred2(ANodes[i], Item);
+  end;
 end;
 
 procedure TNF3eXmlReader.Ler_gSCEE(const ANode: TACBrXmlNode);
@@ -505,6 +524,8 @@ var
     ANodeImposto.ICMS.vICMSDeson := ObterConteudo(ANodeNivel5.Childrens.Find('vICMSDeson'), tcDe2);
     ANodeImposto.ICMS.cBenef     := ObterConteudo(ANodeNivel5.Childrens.Find('cBenef'), tcStr);
     ANodeImposto.ICMS.vBCSTRET := ObterConteudo(ANodeNivel5.Childrens.Find('vBCSTRET'), tcDe2);
+    ANodeImposto.ICMS.pICMSSTRet := ObterConteudo(ANodeNivel5.Childrens.Find('pICMSSTRet'), tcDe2);
+    ANodeImposto.ICMS.vICMSSubstituto := ObterConteudo(ANodeNivel5.Childrens.Find('vICMSSubstituto'), tcDe2);
     ANodeImposto.ICMS.vICMSSTRET := ObterConteudo(ANodeNivel5.Childrens.Find('vICMSSTRET'), tcDe2);
     ANodeImposto.ICMS.vBCFCPSTRet := ObterConteudo(ANodeNivel5.Childrens.Find('vBCFCPSTRet'), tcDe2);
     ANodeImposto.ICMS.pFCPSTRet := ObterConteudo(ANodeNivel5.Childrens.Find('pFCPSTRet'), tcDe2);
@@ -753,9 +774,7 @@ begin
           end;
 
           // Reforma Tributária
-          { Descomentar somente quando for liberado o ambiente de homologação
           Ler_IBSCBS(ANodeNivel4.Childrens.Find('IBSCBS'), detItem.Imposto.IBSCBS);
-          }
         end;
 
         ANodeNivel4 := ANodeNivel3.Childrens.Find('gProcRef');
@@ -851,12 +870,10 @@ begin
   NF3e.Total.vPIS := ObterConteudo(ANode.Childrens.Find('vPIS'), tcDe2);
   NF3e.Total.vPISEfet := ObterConteudo(ANode.Childrens.Find('vPISEfet'), tcDe2);
   NF3e.Total.vNF := ObterConteudo(ANode.Childrens.Find('vNF'), tcDe2);
+  NF3e.Total.vTotDFe := ObterConteudo(ANode.Childrens.Find('vTotDFe'), tcDe2);
 
   // Reforma Tributária
-  { Descomentar somente quando for liberado o ambiente de homologação
   Ler_IBSCBSTot(ANode.Childrens.Find('IBSCBSTot'), NF3e.total.IBSCBSTot);
-  NF3e.Total.vTotDFe := ObterConteudo(ANode.Childrens.Find('vTotDFe'), tcDe2);
-  }
 end;
 
 procedure TNF3eXmlReader.Ler_gFat(const ANode: TACBrXmlNode);

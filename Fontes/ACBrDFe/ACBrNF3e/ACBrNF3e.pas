@@ -109,9 +109,7 @@ type
     function GetURLConsultaNF3e(const CUF: integer;
       const TipoAmbiente: TACBrTipoAmbiente;
       const Versao: Double): String;
-    function GetURLQRCode(const CUF: integer;
-       const TipoAmbiente: TACBrTipoAmbiente; const TipoEmissao: TACBrTipoEmissao;
-       const AChaveNF3e: String; const Versao: Double): String;
+    function GetURLQRCode(FNF3e: TNF3e): String;
 
     function IdentificaSchema(const AXML: String): TSchemaNF3e;
     function GerarNomeArqSchema(const ALayOut: TLayOut; VersaoServico: Double): String;
@@ -400,30 +398,28 @@ begin
     'URL-ConsultaNF3e', VersaoQrCodeToDbl(VersaoQrCode));
 end;
 
-function TACBrNF3e.GetURLQRCode(const CUF: integer;
-  const TipoAmbiente: TACBrTipoAmbiente; const TipoEmissao: TACBrTipoEmissao;
-  const AChaveNF3e: String; const Versao: Double): String;
+function TACBrNF3e.GetURLQRCode(FNF3e: TNF3e): String;
 var
   idNF3e, sEntrada, urlUF, Passo2, sign: String;
   VersaoDFe: TVersaoNF3e;
   VersaoQrCode: TVersaoQrCode;
 begin
-  VersaoDFe := DblToVersaoNF3e(Versao);
+  VersaoDFe := DblToVersaoNF3e(FNF3e.infNF3e.Versao);
   VersaoQrCode := AjustarVersaoQRCode(Configuracoes.Geral.VersaoQRCode, VersaoDFe);
 
-  urlUF := LerURLDeParams('NF3e', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente),
+  urlUF := LerURLDeParams('NF3e', CUFtoUF(FNF3e.Ide.cUF), TpcnTipoAmbiente(FNF3e.Ide.tpAmb),
     'URL-QRCode', VersaoQrCodeToDbl(VersaoQrCode));
 
   if Pos('?', urlUF) <= 0 then
     urlUF := urlUF + '?';
 
-  idNF3e := AChaveNF3e;
+  idNF3e := Copy(FNF3e.infNF3e.ID, 5, 44);
 
   // Passo 1
-  sEntrada := 'chNF3e=' + idNF3e + '&tpAmb=' + TipoAmbienteToStr(TipoAmbiente);
+  sEntrada := 'chNF3e=' + idNF3e + '&tpAmb=' + TipoAmbienteToStr(FNF3e.Ide.tpAmb);
 
   // Passo 2 calcular o SHA-1 da string idCTe se o Tipo de Emissão for EPEC ou FSDA
-  if TpcnTipoEmissao(TipoEmissao) = teOffLine then
+  if TpcnTipoEmissao(FNF3e.Ide.tpEmis) = teOffLine then
   begin
     // Tipo de Emissão em Contingência
     SSL.CarregarCertificadoSeNecessario;

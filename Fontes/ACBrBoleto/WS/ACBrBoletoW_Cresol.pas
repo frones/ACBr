@@ -133,16 +133,16 @@ begin
     //REJEITADO
     case Boleto.Configuracoes.WebService.Filtro.indicadorSituacao of
 			isbAberto    : begin
-         LParameters.AddPair('status', 'EM_ABERTO');
+         LParameters.Add('status=EM_ABERTO');
          //LParameters.AddPair('status','EM_PROCESSAMENTO');
          //LParameters.AddPair('status','LIQUIDACAO_EM_PROCESSAMENTO');
       end;
       isbBaixado   : begin
-         LParameters.AddPair('status', 'LIQUIDADO');
+         LParameters.Add('status=LIQUIDADO');
       end;
       isbCancelado : begin
 //         LParameters.AddPair('status', 'REJEITADO');
-         LParameters.AddPair('status', 'BAIXADO_MANUALMENTE');
+         LParameters.Add('status=BAIXADO_MANUALMENTE');
          //LParameters.AddPair('status', 'BAIXADO_PROTESTADO');
          //LParameters.AddPair('status', 'BAIXADO_DECURSO_DE_PRAZO');
       end;

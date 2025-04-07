@@ -12,7 +12,8 @@ uses
   ACBrNF3eWebServices, ACBrNF3eDANF3eClass, ACBrNF3eConsSit, 
   ACBrNF3eEnvEvento, ACBrNF3eEventoClass, ACBrNF3eClass, ACBrNF3eXmlReader, 
   ACBrNF3eXmlWriter, ACBrNF3eRetConsSit, ACBrNF3eRetEnvEvento, 
-  ACBrNF3eConversao, ACBrNF3eConsts, LazarusPackageIntf;
+  ACBrNF3eConversao, ACBrNF3eConsts, ACBrNF3eIniReader, ACBrNF3eIniWriter, 
+  LazarusPackageIntf;
 
 implementation
 

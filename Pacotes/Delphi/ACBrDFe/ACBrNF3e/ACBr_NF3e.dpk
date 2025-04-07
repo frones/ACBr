@@ -77,6 +77,8 @@ contains
   ACBrNF3eClass in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eClass.pas',
   ACBrNF3eConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eConsts.pas',
   ACBrNF3eConversao in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eConversao.pas',
+  ACBrNF3eIniReader in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eIniReader.pas',
+  ACBrNF3eIniWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eIniWriter.pas',
   ACBrNF3eXmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eXmlReader.pas',
   ACBrNF3eXmlWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eXmlWriter.pas',
   ACBrNF3eConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eConsSit.pas',

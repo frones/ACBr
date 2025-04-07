@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Nota Fiscal de Energia Elétrica Eletrônica - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="16">
+    <Files Count="18">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3e.pas"/>
         <UnitName Value="ACBrNF3e"/>
@@ -86,6 +86,14 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eConsts.pas"/>
         <UnitName Value="ACBrNF3eConsts"/>
       </Item16>
+      <Item17>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eIniReader.pas"/>
+        <UnitName Value="ACBrNF3eIniReader"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eIniWriter.pas"/>
+        <UnitName Value="ACBrNF3eIniWriter"/>
+      </Item18>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

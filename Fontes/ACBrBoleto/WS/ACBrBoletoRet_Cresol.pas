@@ -165,7 +165,7 @@ begin
                         ARetornoWS.DadosRet.IDBoleto.NossoNum         := LJsonObject.AsString['nossoNumero'];
                         ARetornoWS.indicadorContinuidade              := false;
                         ARetornoWS.DadosRet.TituloRet.NossoNumero     := ARetornoWS.DadosRet.IDBoleto.NossoNum;
-                        ARetornoWS.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonObject.AsString['dtvencimento']);
+                        ARetornoWS.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonObject.AsString['dtVencimento']);
                         ARetornoWS.DadosRet.TituloRet.ValorDocumento  := LJsonObject.AsFloat['valorNominal'];
                         if LJsonObject.AsString['cdTipoMulta'] = 'ISENTO' then//Sem multa.
                            ARetornoWS.DadosRet.TituloRet.PercentualMulta := 0
@@ -196,7 +196,7 @@ begin
                                                                                     OnlyNumber(LJsonObject.AsString['nossoNumero'])
                                                                                  );
                         ARetornoWS.DadosRet.TituloRet.DataRegistro    := DateCresolToDateTime(LJsonObject.AsString['dtDocumento']);
-                        ARetornoWS.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonObject.AsString['dtvencimento']);
+                        ARetornoWS.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonObject.AsString['dtVencimento']);
                         ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca  := LJsonObject.AsString['status'];//0-EM_ABERTO|3-BAIXADO_MANUALMENTE|5-LIQUIDADO
                         if Pos('EM_ABERTO', UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0 then//ABERTO
                            ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '1';
@@ -313,7 +313,7 @@ begin
                  ListaRetorno.DadosRet.IDBoleto.LinhaDig         := LJsonBoletoObject.AsString['linhaDigitavel'];
                  ListaRetorno.DadosRet.IDBoleto.NossoNum         := LJsonBoletoObject.AsString['nossoNumero'];
                  ListaRetorno.DadosRet.TituloRet.NossoNumero     := ListaRetorno.DadosRet.IDBoleto.NossoNum;
-                 ListaRetorno.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonBoletoObject.AsString['dtvencimento']);
+                 ListaRetorno.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonBoletoObject.AsString['dtVencimento']);
                  ListaRetorno.DadosRet.TituloRet.ValorDocumento  := LJsonBoletoObject.AsFloat['valorNominal'];
                  if LJsonBoletoObject.AsString['cdTipoMulta'] = 'ISENTO' then//Sem multa.
                     ListaRetorno.DadosRet.TituloRet.PercentualMulta := 0
@@ -344,7 +344,7 @@ begin
                                                                              OnlyNumber(LJsonBoletoObject.AsString['nossoNumero'])
                                                                           );
                  ListaRetorno.DadosRet.TituloRet.DataRegistro    := DateCresolToDateTime(LJsonBoletoObject.AsString['dtDocumento']);
-                 ListaRetorno.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonBoletoObject.AsString['dtvencimento']);
+                 ListaRetorno.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonBoletoObject.AsString['dtVencimento']);
                  ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca  := LJsonBoletoObject.AsString['status'];//0-EM_ABERTO|3-BAIXADO_MANUALMENTE|5-LIQUIDADO
                  if Pos('EM_ABERTO', UpperCase(ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca)) > 0 then//ABERTO
                     ListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '1';

@@ -255,20 +255,12 @@ var
   ADataMulta,
   ATipoAceite,
   AEspecieDoc: String;
-
-  Fsequencia:Integer;
-  FdigitoNossoNumero: String;
+  FDigitoNossoNumero: String;
   FcodCarteira: String;
   ACodProtesto: String;
   ListTransacao: TStringList;
 
 begin
-  if (ACBrTitulo.TipoDesconto2<>tdNaoConcederDesconto) or
-     (ACBrTitulo.TipoDesconto3<>tdNaoConcederDesconto) or
-     (ACBrTitulo.PercentualMulta > 0) then
-    Fsequencia     := 3 * ACBrTitulo.ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)
-  else
-    Fsequencia     := 2 * ACBrTitulo.ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo);
 
   //Caracteristica Título
   FcodCarteira := DefineCaracTitulo(ACBrTitulo);
@@ -319,7 +311,7 @@ begin
       ListTransacao.Add(IntToStrZero(ACBrBanco.Numero, 3)    + //1 a 3 - Código do banco
         '0001'                                               + //4 a 7 - Lote de serviço
         '3'                                                  + //8 - Tipo do registro: Registro detalhe
-        IntToStrZero(Fsequencia+1,5)                         + //Nº Sequencial do Registro no Lote 9 13 5 - Num *G038
+        IntToStrZero(fpQtdRegsLote,5)                        + //Nº Sequencial do Registro no Lote 9 13 5 - Num *G038
         'P'                                                  + //14 - Código do segmento do registro detalhe
         ' '                                                  + //15 - Uso exclusivo FEBRABAN/CNAB: Branco
         ATipoOcorrencia                                      + //Código de Movimento Remessa 16 17 2 - Num *C004
@@ -376,7 +368,7 @@ begin
       ListTransacao.Add(IntToStrZero(ACBrBanco.Numero, 3) + //Código do Banco na Compensação 1 3 3 - Num G001
         '0001'                                              + //Lote Lote de Serviço 4 7 4 - Num *G002
         '3'                                                 + //Tipo de Registro 8 8 1 - Num ‘3’ *G003
-        IntToStrZero(Fsequencia+ 2 ,5)                      + //Nº Sequencial do Registro no Lote 9 13 5 - Num *G038
+        IntToStrZero(fpQtdRegsLote ,5)                      + //Nº Sequencial do Registro no Lote 9 13 5 - Num *G038
         'Q'                                                 + //Cód. Segmento do Registro Detalhe 14 14 1 - Alfa ‘Q’ *G039
         ' '                                                 + //Uso Exclusivo FEBRABAN/CNAB 15 15 1 - Alfa Brancos G004
         ATipoOcorrencia                                     + //Código de Movimento Remessa 16 17 2 - Num *C004
@@ -407,7 +399,7 @@ begin
         ListTransacao.Add(IntToStrZero(ACBrBanco.Numero, 3)    + //Código do Banco na Compensação 1 3 3 - Num G001
           '0001'                                               + //Lote de Serviço 4 7 4 - Num *G002
           '3'                                                  + //Tipo de Registro 8 8 1 - Num ‘3’ *G003
-          IntToStrZero(Fsequencia+ 3 ,5)                       + //Nº Sequencial do Registro no Lote 9 13 5 - Num *G038
+          IntToStrZero(fpQtdRegsLote ,5)                       + //Nº Sequencial do Registro no Lote 9 13 5 - Num *G038
           'R'                                                  + //Cód. Segmento do Registro Detalhe 14 14 1 - Alfa ‘R’ *G039
           ' '                                                  + //CNAB Uso Exclusivo FEBRABAN/CNAB 15 15 1 - Alfa Brancos G004
           ATipoOcorrencia                                      + //Código de Movimento Remessa 16 17 2 - Num *C004

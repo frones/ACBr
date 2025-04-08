@@ -294,7 +294,7 @@ end;
 
 function TNFeXmlWriter.ObterNomeArquivo: string;
 begin
-  Result := FpChaveNFe + '-nfe.xml';
+  Result := OnlyNumber(FNFe.infNFe.ID) + '-nfe.xml';
 end;
 
 function TNFeXmlWriter.GerarXml: boolean;
@@ -386,7 +386,7 @@ begin
 
   if Gerar then
   begin
-    FNFe.signature.URI := '#NFe' + FpChaveNFe;
+    FNFe.signature.URI := '#NFe' + OnlyNumber(NFe.infNFe.ID);
     xmlNode := GerarSignature(FNFe.signature);
     nfeNode.AppendChild(xmlNode);
   end;
@@ -404,7 +404,7 @@ var
   i: integer;
 begin
   Result := FDocument.CreateElement('infNFe');
-  Result.SetAttribute('Id', 'NFe' + FpChaveNFe);
+  Result.SetAttribute('Id', NFe.infNFe.ID);
   Result.SetAttribute('versao', FloatToString(NFe.infNFe.Versao, '.', '#0.00'));
 
   Result.AppendChild(GerarIde);

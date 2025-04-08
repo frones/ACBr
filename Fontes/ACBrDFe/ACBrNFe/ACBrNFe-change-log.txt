@@ -44,12 +44,6 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-03/04/2025
--- ACBrNFe.Classes --
-[-] Ao ler a propriedade ID para gerar o QR-Code não estava removendo o literal
-    NFe da chave.
-  Por: Italo Giurizzato Junior
-
 02/04/2025
 -- ACBrNFCeDANFeFPDF --
 [*] #TK-6611: Adiciona impressão de evento para NFC-e com FPDF.

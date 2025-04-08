@@ -413,7 +413,7 @@ begin
   if Pos('?', urlUF) <= 0 then
     urlUF := urlUF + '?';
 
-  idNF3e := FNF3e.infNF3e.ID;
+  idNF3e := Copy(FNF3e.infNF3e.ID, 5, 44);
 
   // Passo 1
   sEntrada := 'chNF3e=' + idNF3e + '&tpAmb=' + TipoAmbienteToStr(FNF3e.Ide.tpAmb);

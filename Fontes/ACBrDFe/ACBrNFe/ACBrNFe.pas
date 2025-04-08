@@ -653,7 +653,7 @@ var
   sEntrada, cHashQRCode, urlUF, cDest: String;
 begin
   urlUF := LerURLDeParams('NFCe', CUFtoUF(FNFe.Ide.cUF), FNFe.Ide.tpAmb, 'URL-QRCode', 1);
-  idNFe := FNFe.infNFe.ID;
+  idNFe := OnlyNumber(FNFe.infNFe.ID);
   cDest := trim(IfThen(FNFe.Dest.idEstrangeiro <> '',
                        FNFe.Dest.idEstrangeiro, OnlyNumber(FNFe.Dest.CNPJCPF)));
 
@@ -701,7 +701,7 @@ var
   idNFe, sdigVal_HEX, sNF, cIdCSC, cCSC, sCSC, sEntrada, cHashQRCode, urlUF: string;
 begin
   urlUF := LerURLDeParams('NFCe', CUFtoUF(FNFe.Ide.cUF), FNFe.Ide.tpAmb, 'URL-QRCode', 2);
-  idNFe := FNFe.infNFe.ID;
+  idNFe := OnlyNumber(FNFe.infNFe.ID);
 
   // Passo 1
   sdigVal_HEX := AsciiToHex(FNFe.signature.DigestValue);
@@ -742,7 +742,7 @@ function TACBrNFe.GetURLQRCodeV3(FNFe: TNFe): string;
 var
   idNFe, sNF, sEntrada, urlUF, cDest, TipoDest: string;
 begin
-  idNFe := FNFe.infNFe.ID;
+  idNFe := OnlyNumber(FNFe.infNFe.ID);
 
   sEntrada := idNFe + '|3|' + TpAmbToStr(FNFe.Ide.tpAmb);
 

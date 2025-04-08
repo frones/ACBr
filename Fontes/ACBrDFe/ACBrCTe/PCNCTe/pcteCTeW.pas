@@ -311,7 +311,7 @@ begin
     Gerador.wGrupo('CTe ' + NAME_SPACE_CTE);
   end;
 
-  Gerador.wGrupo('infCte ' + VersaoStr + ' Id="CTe' + FChaveCTe + '"');
+  Gerador.wGrupo('infCte ' + VersaoStr + ' Id="' + CTe.infCTe.ID + '"');
 
   GerarInfCTe;
   Gerador.wGrupo('/infCte');
@@ -342,7 +342,7 @@ begin
 
     if Gerar then
     begin
-      FCTe.signature.URI := '#CTe' + FChaveCTe;
+      FCTe.signature.URI := '#CTe' + OnlyNumber(CTe.infCTe.ID);
       FCTe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
       FCTe.signature.GerarXML;
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FCTe.signature.Gerador.ArquivoFormatoXML;
@@ -390,7 +390,7 @@ begin
     end;
   end;
 
-  Gerador.gtAjustarRegistros(FChaveCTe);
+  Gerador.gtAjustarRegistros(CTe.infCTe.ID);
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 

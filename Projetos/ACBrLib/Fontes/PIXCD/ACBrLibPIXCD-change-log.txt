@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/04/2025
+-- ACBrLibPIXCDBase --
+[*] Ajustes nos métodos PIXCD_CriarCobrancaImediata e PIXCD_CriarCobranca para retornar o PixCopiaECola utilizando a função GerarQRCodeDinamico caso o PSP retorne com a informação vazia.
+    Por: Antonio Carlos Junior
+
 07/04/2025
 -- ACBrLibPIXCDDataModule.pas --
 [*] Ajustes na propriedade ArquivoPFX para o PSP Santander

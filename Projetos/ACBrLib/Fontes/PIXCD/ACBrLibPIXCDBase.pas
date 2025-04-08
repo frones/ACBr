@@ -397,6 +397,9 @@ begin
       PIXCDDM.ACBrPixCD1.PSP.epCob.CobSolicitada.LoadFromIni(AInfCobSolicitada);
       Ok := PIXCDDM.ACBrPixCD1.PSP.epCob.CriarCobrancaImediata(TxId);
 
+      if EstaVazio(PIXCDDM.ACBrPixCD1.PSP.epCob.CobGerada.pixCopiaECola) then
+        PIXCDDM.ACBrPixCD1.PSP.epCob.CobGerada.pixCopiaECola := PIXCDDM.ACBrPixCD1.GerarQRCodeDinamico( PIXCDDM.ACBrPixCD1.PSP.epCob.CobGerada.location );
+
       if Ok then
       begin
         Resp := TLibPIXCDCobResposta.Create(CSessaoRespCobGerada, Config.TipoResposta, Config.CodResposta);
@@ -679,6 +682,9 @@ begin
     try
       PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVSolicitada.LoadFromIni(AInfCobVSolicitada);
       Ok := PIXCDDM.ACBrPixCD1.PSP.epCobV.CriarCobranca(TxId);
+
+      if EstaVazio(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada.pixCopiaECola) then
+        PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada.pixCopiaECola := PIXCDDM.ACBrPixCD1.GerarQRCodeDinamico( PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada.loc.location );
 
       if Ok then
       begin

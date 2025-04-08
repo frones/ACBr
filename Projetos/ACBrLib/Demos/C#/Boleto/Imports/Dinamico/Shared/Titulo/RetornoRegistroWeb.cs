@@ -15,6 +15,8 @@ namespace ACBrLib.Boleto
 
         public string Excecao { get; set; }
 
+        public string HTTPResultCode { get; set; }
+
         public bool IndicadorContinuidade { get; set; }
 
         public int ProximoIndice { get; set; }

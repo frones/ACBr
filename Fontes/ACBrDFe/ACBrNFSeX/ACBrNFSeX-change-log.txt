@@ -42,13 +42,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/04/2025
+-- ACBrNFSeXDANFSeRLSimplISS.dfm/ACBrNFSeXDANFSeRLSimplISS.lfm --
+-- SimplISS.Provider --
+[*] #TK-6883: Na impressão em Fortes Report do DANFSE estava saindo no titulo de
+    alguns campos o simbolo do % sendo que o valor impresso é R$.
+    Corrigido também a impressão do Regime Especial de Tributação
+  Por: Italo Giurizzato Junior
+
 08/04/2025
+-- ACBrNFSeXServicos --
 [*] #TK-6876: Alterado a URL da cidade de Estância Velha/RS.
   Por: Heronim Antonio Marçal
 [*] #TK-6884: A cidade de Ipe/RS mudou de provedor, agora é Pronim versão 2.03
   Por: DNA Automacao
 
 04/04/2025
+-- ACBrNFSeXServicos --
 [*] #TK-6863: Alterado a URL de homologação da cidade de Campo Belo/MG.
   Por: Datacamp
 [+] #TK-6862: Incluída a cidade de Darcinopolis/TO, o provedor é o MegaSoft,

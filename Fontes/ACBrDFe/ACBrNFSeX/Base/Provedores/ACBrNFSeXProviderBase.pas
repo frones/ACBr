@@ -3506,6 +3506,22 @@ var
   IdAttr, Prefixo, PrefixoTS, IdAttrSig: string;
   AErro: TNFSeEventoCollectionItem;
 begin
+  if (Response.ModoEnvio = meTeste) and
+     (not GetConfigGeral.ServicosDisponibilizados.TestarEnvio) then
+    Exit;
+
+  if (Response.ModoEnvio = meLoteSincrono) and
+     (not GetConfigGeral.ServicosDisponibilizados.EnviarLoteSincrono) then
+    Exit;
+
+  if (Response.ModoEnvio = meLoteAssincrono) and
+     (not GetConfigGeral.ServicosDisponibilizados.EnviarLoteAssincrono) then
+    Exit;
+
+  if (Response.ModoEnvio = meUnitario) and
+     (not GetConfigGeral.ServicosDisponibilizados.EnviarUnitario) then
+    Exit;
+
   case Response.ModoEnvio of
     meTeste,
     meLoteSincrono,

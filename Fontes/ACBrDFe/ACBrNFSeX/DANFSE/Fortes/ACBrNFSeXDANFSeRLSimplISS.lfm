@@ -1210,7 +1210,7 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
         Width = 124
         Alignment = taCenter
         AutoSize = False
-        Caption = 'PIS %'
+        Caption = 'PIS (R$)'
         Font.CharSet = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -1255,7 +1255,7 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
         Width = 126
         Alignment = taCenter
         AutoSize = False
-        Caption = 'COFINS %'
+        Caption = 'COFINS (R$)'
         Font.CharSet = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -1285,7 +1285,7 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
         Width = 124
         Alignment = taCenter
         AutoSize = False
-        Caption = 'INSS %'
+        Caption = 'INSS (R$)'
         Font.CharSet = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -1315,7 +1315,7 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
         Width = 120
         Alignment = taCenter
         AutoSize = False
-        Caption = 'IR %'
+        Caption = 'IR (R$)'
         Font.CharSet = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -1345,7 +1345,7 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
         Width = 90
         Alignment = taCenter
         AutoSize = False
-        Caption = 'CSLL %'
+        Caption = 'CSLL (R$)'
         Font.CharSet = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -11

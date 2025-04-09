@@ -155,6 +155,7 @@ begin
             ARetornoWS.DadosRet.TituloRet.LinhaDig      := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
             ARetornoWS.DadosRet.TituloRet.NossoNumero   := ARetornoWS.DadosRet.IDBoleto.NossoNum;
             ARetornoWS.DadosRet.TituloRet.Carteira      := LJsonObject.AsString['billing_scheme'];
+            ARetornoWS.DadosRet.TituloRet.Vencimento      := DateToDateTime(LJsonObject.AsString['due_date']);
 
             if LJsonObject.AsString['billing_scheme'] = '3' then
               ARetornoWS.DadosRet.TituloRet.ResponsavelPelaEmissao := tbBancoEmite

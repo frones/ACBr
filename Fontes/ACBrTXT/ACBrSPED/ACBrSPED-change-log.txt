@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/04/2025
+-- ACBrEFDBloco_D_Class --
+[*] #TK-6886 - Configurados campos do D100 zerados a partir de 2025 ao invés de nulos
+    https://www.projetoacbr.com.br/forum/topic/82752-registro-d100-vl_doc/
+    por: Renato Rubinho
+
 02/12/2024
 -- ACBrEPCBloco_0_Class, ACBrEPCBloco_D, ACBrEPCBloco_D_Class, ACBrEPCBloco_P_Class --
 [+] #TK-6223 - Ajustes da Nota Técnica nº009/2024 do EFD-Contribuições - https://www.projetoacbr.com.br/forum/topic/80612-publicada-nota-t%C3%A9cnica-efd-contribui%C3%A7%C3%B5es-n%C2%BA-009-com-altera%C3%A7%C3%B5es-para-2025/

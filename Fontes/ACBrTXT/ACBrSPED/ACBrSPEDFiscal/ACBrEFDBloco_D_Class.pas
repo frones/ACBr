@@ -717,6 +717,7 @@ var
   strIND_FRT: String;
   strCOD_SIT: String;
   booConsiderarComoValorNulo: Boolean;
+  booConsiderarComoValorNuloV2: Boolean;
   booConsiderarComoValorNuloParaInutilizado: Boolean;
   ChaveEletronicaCTe: string;
   strLinha: String;
@@ -771,6 +772,9 @@ begin
                                         (strCOD_SIT = '04') or {Denegado}
                                         (strCOD_SIT = '05');   {Inutilizado}
 
+          booConsiderarComoValorNuloV2 := booConsiderarComoValorNulo and
+                                          (DT_INI < EncodeDate(2025,01,01));
+
           booConsiderarComoValorNuloParaInutilizado := (strCOD_SIT = '05');
           ChaveEletronicaCTe := IfThen(booConsiderarComoValorNuloParaInutilizado, '', CHV_CTE);
 
@@ -788,10 +792,10 @@ begin
                       LFill( DT_A_P ) +
                       LFill( TP_CT_e ) +
                       LFill( CHV_CTE_REF ) +
-                      LFill( VL_DOC,0,2, booConsiderarComoValorNulo ) +
+                      LFill( VL_DOC,0,2, booConsiderarComoValorNuloV2 ) +
                       LFill( VL_DESC,0,2, booConsiderarComoValorNulo ) +
                       LFill( strIND_FRT ) +
-                      LFill( VL_SERV,0,2, booConsiderarComoValorNulo ) +
+                      LFill( VL_SERV,0,2, booConsiderarComoValorNuloV2 ) +
                       LFill( VL_BC_ICMS,0,2, booConsiderarComoValorNulo ) +
                       LFill( VL_ICMS,0,2, booConsiderarComoValorNulo ) +
                       LFill( VL_NT,0,2, booConsiderarComoValorNulo ) +

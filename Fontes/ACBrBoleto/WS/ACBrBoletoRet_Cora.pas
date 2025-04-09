@@ -360,94 +360,22 @@ begin
             if I > 0 then
               ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
 
+            ListaRetorno.DadosRet.TituloRet.NossoNumeroCorrespondente := LJSONArray.ItemAsJSONObject[I].AsString['id'];
+            ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca      := LJSONArray.ItemAsJSONObject[I].AsString['status'];
+            ListaRetorno.DadosRet.TituloRet.DataRegistro              := DateInterToDateTime(LJSONArray.ItemAsJSONObject[I].AsString['created_at']);
+            ListaRetorno.DadosRet.TituloRet.DataDocumento             := DateInterToDateTime(LJSONArray.ItemAsJSONObject[I].AsString['created_at']);
+            ListaRetorno.DadosRet.TituloRet.DataMovimento             := DateInterToDateTime(LJSONArray.ItemAsJSONObject[I].AsString['paid_at']);
+            ListaRetorno.DadosRet.TituloRet.DataCredito               := DateInterToDateTime(LJSONArray.ItemAsJSONObject[I].AsString['paid_at']);
+            ListaRetorno.DadosRet.TituloRet.ValorDocumento            := LJSONArray.ItemAsJSONObject[I].AsFloat['total_amount']/100;
+            ListaRetorno.DadosRet.TituloRet.Vencimento                := DateInterToDateTime(LJSONArray.ItemAsJSONObject[I].AsString['due_date']);
+            ListaRetorno.DadosRet.TituloRet.ValorPago                 := LJSONArray.ItemAsJSONObject[I].AsFloat['total_paid']/100;
+            ListaRetorno.DadosRet.TituloRet.ValorRecebido             := LJSONArray.ItemAsJSONObject[I].AsFloat['total_paid']/100;
+            ListaRetorno.DadosRet.TituloRet.ValorMulta                := LJSONArray.ItemAsJSONObject[I].AsFloat['fine_paid']/100;
+            ListaRetorno.DadosRet.TituloRet.ValorMoraJuros            := LJSONArray.ItemAsJSONObject[I].AsFloat['interest_paid']/100;
+            ListaRetorno.DadosRet.TituloRet.ValorDesconto             := LJSONArray.ItemAsJSONObject[I].AsFloat['discount_paid']/100;
+            ListaRetorno.DadosRet.TituloRet.Sacado.NomeSacado         := LJSONArray.ItemAsJSONObject[I].AsString['customer_name'];
+            ListaRetorno.DadosRet.TituloRet.Sacado.CNPJCPF            := LJSONArray.ItemAsJSONObject[I].AsString['customer_document'];
 
-            LPaymentOptions                           := LJSONArray.ItemAsJSONObject[I].AsJSONObject['payment_options'];
-            LBankSlip                                 := LPaymentOptions.AsJSONObject['bank_slip'];
-
-            LNossoNumeroInicial := Length(Trim(LBankSlip.AsString['our_number'])) - ACBrTitulo.ACBrBoleto.Banco.TamanhoMaximoNossoNum;
-            Inc(LNossoNumeroInicial);
-
-            ListaRetorno.DadosRet.IDBoleto.CodBarras          := LBankSlip.AsString['barcode'];
-            ListaRetorno.DadosRet.IDBoleto.LinhaDig           := LBankSlip.AsString['digitable'];
-            ListaRetorno.DadosRet.IDBoleto.NossoNum           := Copy(LBankSlip.AsString['our_number'],LNossoNumeroInicial,ACBrTitulo.ACBrBoleto.Banco.TamanhoMaximoNossoNum);
-            ListaRetorno.DadosRet.IDBoleto.URLPDF             := LBankSlip.AsString['url'];
-            ListaRetorno.indicadorContinuidade                := False;
-            ListaRetorno.DadosRet.TituloRet.CodBarras         := ListaRetorno.DadosRet.IDBoleto.CodBarras;
-            ListaRetorno.DadosRet.TituloRet.LinhaDig          := ListaRetorno.DadosRet.IDBoleto.LinhaDig;
-
-            ListaRetorno.DadosRet.TituloRet.NossoNumero       := ListaRetorno.DadosRet.IDBoleto.NossoNum;
-
-            ListaRetorno.DadosRet.TituloRet.Vencimento        := DateInterToDateTime(LJSON.AsJSONObject['payment_terms'].AsString['due_date']);
-
-            ListaRetorno.DadosRet.TituloRet.ValorDocumento    := LJSON.AsFloat['total_amount']/100;
-            ListaRetorno.DadosRet.TituloRet.ValorAtual        := LJSON.AsFloat['total_amount']/100;
-            ListaRetorno.DadosRet.TituloRet.ValorPago         := LJSON.AsFloat['total_paid']/100;
-
-            if LJSON.AsJSONObject['interest'].AsFloat['rate'] > 0 then
-            begin
-             //nao definidio se é juros diario... mas nao tem mora mensal..
-              ListaRetorno.DadosRet.TituloRet.CodigoMoraJuros := cjValorDia;
-              ListaRetorno.DadosRet.TituloRet.ValorMoraJuros := LJSON.AsJSONObject['interest'].AsFloat['rate'];
-            end
-
-            else
-            begin
-              ListaRetorno.DadosRet.TituloRet.CodigoMoraJuros := cjIsento;
-              ListaRetorno.DadosRet.TituloRet.ValorMoraJuros  := 0;
-            end;
-
-            if LJSON.AsJSONObject['fine'].AsFloat['rate'] > 0 then
-            begin
-              ListaRetorno.DadosRet.TituloRet.PercentualMulta := LJSON.AsJSONObject['fine'].AsFloat['rate'];
-              ListaRetorno.DadosRet.TituloRet.MultaValorFixo  := False;
-              ListaRetorno.DadosRet.TituloRet.DataMulta       := DateInterToDateTime(LJSON.AsJSONObject['fine'].AsString['date']);
-            end
-            else if LJSON.AsJSONObject['fine'].AsFloat['amount'] > 0 then
-            begin
-              ListaRetorno.DadosRet.TituloRet.PercentualMulta := LJSON.AsJSONObject['multa'].AsFloat['amount'];
-              ListaRetorno.DadosRet.TituloRet.MultaValorFixo  := True;
-              ListaRetorno.DadosRet.TituloRet.ValorMulta      := ListaRetorno.DadosRet.TituloRet.PercentualMulta;
-              ListaRetorno.DadosRet.TituloRet.DataMulta       := DateInterToDateTime(LJSON.AsJSONObject['fine'].AsString['date']);
-            end
-            else
-            begin
-              ListaRetorno.DadosRet.TituloRet.PercentualMulta := 0;
-              ListaRetorno.DadosRet.TituloRet.ValorMulta := 0;
-              ListaRetorno.DadosRet.TituloRet.MultaValorFixo := False;
-            end;
-
-            if LJSON.AsJSONObject['discount'].AsString['type'] = 'FIXED' then
-            begin
-              ListaRetorno.DadosRet.TituloRet.ValorDesconto := LJSON.AsJSONObject['discount'].AsFloat['value'];
-              ListaRetorno.DadosRet.TituloRet.CodigoDesconto := cdValorFixo;
-              ListaRetorno.DadosRet.TituloRet.DataDesconto := DateInterToDateTime(LJSON.AsJSONObject['discount'].AsString['data']);
-            end
-            else if LJSON.AsJSONObject['discount'].AsString['type'] = 'PERCENT' then
-            begin
-              ListaRetorno.DadosRet.TituloRet.ValorDesconto := LJSON.AsJSONObject['discount'].AsFloat['value'];
-              ListaRetorno.DadosRet.TituloRet.CodigoDesconto := cdPercentual;
-              ListaRetorno.DadosRet.TituloRet.DataDesconto := DateInterToDateTime(LJSON.AsJSONObject['discount'].AsString['data']);
-            end
-            else
-            begin
-              ListaRetorno.DadosRet.TituloRet.ValorDesconto  := 0;
-              ListaRetorno.DadosRet.TituloRet.CodigoDesconto := cdSemDesconto;
-            end;
-
-            ListaRetorno.DadosRet.TituloRet.SeuNumero            := LJSON.AsString['code'];
-            ListaRetorno.DadosRet.TituloRet.DataRegistro         := DateIntertoDateTime(LJSON.AsString['created_at']);
-            ListaRetorno.DadosRet.IDBoleto.IDBoleto              := LJSON.AsString['id'];
-            ListaRetorno.DadosRet.TituloRet.NossoNumeroCorrespondente := ListaRetorno.DadosRet.IDBoleto.IDBoleto;
-            ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca := LJSON.AsString['status'];
-            ListaRetorno.DadosRet.TituloRet.DataMovimento        := DateIntertoDateTime(LJSON.AsString['occurrence_date']);
-            ListaRetorno.DadosRet.TituloRet.DataCredito          := DateIntertoDateTime(LJSON.AsString['occurrence_date']);
-
-            if (LJSON.AsString['status'] = C_CANCELADO) or (LJSON.AsString['status'] = C_PAGO) then
-            begin
-              if LJSON.AsString['status'] <> C_PAGO then
-                ListaRetorno.DadosRet.TituloRet.ValorPago := LJSON.AsFloat['total_amount'];
-              ListaRetorno.DadosRet.TituloRet.DataBaixa := DateIntertoDateTime(LJSON.AsString['occurrence_date'])
-            end;
           end;
         end;
       finally

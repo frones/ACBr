@@ -270,17 +270,43 @@ begin
       case Boleto.Configuracoes.WebService.Filtro.indicadorSituacao of
         isbBaixado:
           begin
-            // possivel apenas um estado por vez.
+            if (Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio = 0) or
+               (Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataFinal = 0) then
+             raise EACBrBoletoWSException.Create
+             ('Para consulta isbBaixado, utilizar no filtro:'+sLineBreak+
+             'dataMovimento.DataInicio e dataMovimento.DataFinal');
 
+            // possivel apenas um estado por vez.
             Consulta.Add('start=' + DateTimeToDateCora
-              (Boleto.Configuracoes.WebService.Filtro.dataMovimento.
-              DataInicio));
+              (Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio));
             Consulta.Add('end=' + DateTimeToDateCora
               (Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataFinal));
             Consulta.Add('state=PAID');
           end;
+        isbCancelado:
+          begin
+            if (Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataInicio = 0) or
+               (Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataFinal = 0) then
+             raise EACBrBoletoWSException.Create
+             ('Para consulta isbCancelado, utilizar no filtro:'+sLineBreak+
+             'dataVencimento.DataInicio e dataVencimento.DataFinal');
+
+            // possivel apenas um estado por vez.
+            Consulta.Add('start=' + DateTimeToDateCora
+              (Boleto.Configuracoes.WebService.Filtro.dataVencimento.
+              DataInicio));
+            Consulta.Add('end=' + DateTimeToDateCora
+              (Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataFinal));
+            Consulta.Add('state=CANCELLED');
+          end;
         isbAberto:
           begin
+            if (Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataInicio = 0) or
+               (Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataFinal = 0) then
+             raise EACBrBoletoWSException.Create
+             ('Para consulta isbAberto, utilizar no filtro:'+sLineBreak+
+             'dataVencimento.DataInicio e dataVencimento.DataFinal');
+
             // possivel apenas por datavencimento
             if Boleto.Configuracoes.WebService.Filtro.dataVencimento.
               DataInicio > 0 then
@@ -298,6 +324,13 @@ begin
           end;
         isbNenhum:
           begin
+            if (Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataInicio <= 0) or
+               (Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataFinal <= 0) then
+             raise EACBrBoletoWSException.Create
+             ('Para consulta isbNenhum, utilizar no filtro:'+sLineBreak+
+             'dataVencimento.DataInicio e dataVencimento.DataFinal');
+
+
             // caso queira tudo, não indicar o estado
             Consulta.Add('start=' + DateTimeToDateCora
               (Boleto.Configuracoes.WebService.Filtro.dataVencimento.

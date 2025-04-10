@@ -4496,6 +4496,8 @@ begin
            IniRetorno.WriteFloat(wSessao,'ValorOutrosCreditos',ListadeBoletos[I].ValorOutrosCreditos);
            IniRetorno.WriteFloat(wSessao,'ValorRecebido',ListadeBoletos[I].ValorRecebido);
            IniRetorno.WriteString(wSessao,'SeuNumero',ListadeBoletos[I].SeuNumero);
+           IniRetorno.WriteString(wSessao,'EMV',ListadeBoletos[I].QrCode.emv);
+
            IniRetorno.WriteString(wSessao,'CodTipoOcorrencia',
                                   GetEnumName( TypeInfo(TACBrTipoOcorrencia),
                                                Integer(ListadeBoletos[I].OcorrenciaOriginal.Tipo)));

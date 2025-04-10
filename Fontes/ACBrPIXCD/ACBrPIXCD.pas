@@ -218,6 +218,7 @@ type
     fCobsConsultadas: TACBrPIXCobsConsultadas;
     fCobSolicitada: TACBrPIXCobSolicitada;
     fCobGerada: TACBrPIXCobGerada;
+    procedure VerificarCopiaECola;
   public
     constructor Create(AOwner: TACBrPSP);
     destructor Destroy; override;
@@ -247,6 +248,7 @@ type
     fCobsVConsultadas: TACBrPIXCobsVConsultadas;
     fCobVSolicitada: TACBrPIXCobVSolicitada;
     fCobVGerada: TACBrPIXCobVGerada;
+    procedure VerificarCopiaECola;
   public
     constructor Create(aOwner: TACBrPSP);
     destructor Destroy; override;
@@ -677,6 +679,18 @@ end;
 
 { TACBrPixEndPointCobV }
 
+procedure TACBrPixEndPointCobV.VerificarCopiaECola;
+begin
+  try
+    if EstaVazio(Trim(CobVGerada.pixCopiaECola)) and Assigned(fPSP.ACBrPixCD) and
+       NaoEstaVazio(CobVGerada.loc.location) and
+       NaoEstaVazio(fPSP.ACBrPixCD.Recebedor.Nome) and
+       NaoEstaVazio(fPSP.ACBrPixCD.Recebedor.Cidade) then
+      CobVGerada.pixCopiaECola := fPSP.ACBrPixCD.GerarQRCodeDinamico(CobVGerada.loc.location);
+  except
+  end;
+end;
+
 constructor TACBrPixEndPointCobV.Create(aOwner: TACBrPSP);
 begin
   if (aOwner = nil) then
@@ -739,7 +753,10 @@ begin
   Result := (ResultCode = HTTP_CREATED);
 
   if Result then
-    fCobVGerada.AsJSON := String(RespostaHttp)
+  begin
+    fCobVGerada.AsJSON := String(RespostaHttp);
+    VerificarCopiaECola;
+  end
   else
     fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;
@@ -1207,6 +1224,18 @@ end;
 
 { TACBrPixEndPointCob }
 
+procedure TACBrPixEndPointCob.VerificarCopiaECola;
+begin
+  try
+    if EstaVazio(Trim(CobGerada.pixCopiaECola)) and Assigned(fPSP.ACBrPixCD) and
+       NaoEstaVazio(CobGerada.location) and
+       NaoEstaVazio(fPSP.ACBrPixCD.Recebedor.Nome) and
+       NaoEstaVazio(fPSP.ACBrPixCD.Recebedor.Cidade) then
+      CobGerada.pixCopiaECola := fPSP.ACBrPixCD.GerarQRCodeDinamico(CobGerada.location);
+  except
+  end;
+end;
+
 constructor TACBrPixEndPointCob.Create(AOwner: TACBrPSP);
 begin
   if (AOwner = nil) then
@@ -1279,7 +1308,10 @@ begin
   Result := (ResultCode = HTTP_CREATED);
 
   if Result then
-    fCobGerada.AsJSON := String(RespostaHttp)
+  begin
+    fCobGerada.AsJSON := String(RespostaHttp);
+    VerificarCopiaECola;
+  end
   else
     fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;

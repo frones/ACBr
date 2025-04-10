@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/04/2025
+-- ACBrPIXCD --
+[*] Ajuste para preencher o CopiaECola automaticamente, caso o PSP não retorne 
+    no payload de resposta.
+    por: Elias César
+
 27/03/2025
 -- ACBrSchemasAppLess --
 [+] Inclusão de arquivo com mapeamento da API AppLess.

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/04/2025
+-- ACBrLibPIXCDDataModule, ACBrLibPIXCDConsts, ACBrLibPIXCDConfig --
+[+] Inclusão PSP AppLess - #TK-6880.
+[*] Implementado evento ACBrPSPSicoob1QuandoReceberRespostaHttp para retornar informações do Pagador (Nome, CPF/CNPJ) utilizado apenas no PSP Sicoob - #TK-6844.
+    Por: Antonio Carlos Junior / Júlio Cavalcanti
+
 08/04/2025
 -- ACBrLibPIXCDBase --
 [*] Ajustes nos métodos PIXCD_CriarCobrancaImediata e PIXCD_CriarCobranca para retornar o PixCopiaECola utilizando a função GerarQRCodeDinamico caso o PSP retorne com a informação vazia.

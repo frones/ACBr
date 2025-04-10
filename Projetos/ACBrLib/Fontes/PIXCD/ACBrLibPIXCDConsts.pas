@@ -337,6 +337,11 @@ const
   CChaveArqChavePrivadaC6Bank = 'ArqChavePrivada';
   CChaveArqCertificadoC6Bank = 'ArqCertificado';
 
+  CSessaoPIXCDAppLessConfig = 'AppLess';
+  CChaveClientIDAppLess = 'ClientID';
+  CChaveClientSecretAppLess = 'ClientSecret';
+  CChaveSecretKeyHMACAppLess = 'SecretKeyHMAC';
+
 implementation
 
 end.

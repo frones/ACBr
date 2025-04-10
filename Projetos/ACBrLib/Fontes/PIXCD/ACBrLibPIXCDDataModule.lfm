@@ -43,6 +43,7 @@ inherited LibPIXCDDM: TLibPIXCDDM
   end
   object ACBrPSPSicoob1: TACBrPSPSicoob[7]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    QuandoReceberRespostaHttp = ACBrPSPSicoob1QuandoReceberRespostaHttp
     Left = 352
     Top = 96
   end
@@ -101,5 +102,10 @@ inherited LibPIXCDDM: TLibPIXCDDM
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 480
     Top = 160
+  end
+  object ACBrPSPAppLess1: TACBrPSPAppLess[19]
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 472
+    Top = 224
   end
 end

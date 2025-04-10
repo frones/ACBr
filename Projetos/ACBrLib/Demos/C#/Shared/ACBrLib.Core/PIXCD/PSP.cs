@@ -57,5 +57,8 @@ namespace ACBrLib.Core.PIXCD
 
         [Description("C6Bank")]
         pspC6Bank = 17,
+
+        [Description("AppLess")]
+        pspAppLess = 18,
     }
 }

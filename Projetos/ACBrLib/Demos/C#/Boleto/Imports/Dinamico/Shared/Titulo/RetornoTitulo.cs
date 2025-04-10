@@ -50,6 +50,7 @@ namespace ACBrLib.Boleto
         public decimal ValorPago { get; set; }
 
         public string SeuNumero { get; set; }
+        public string EMV { get; set; }
 
         public string CodTipoOcorrencia { get; set; }
 

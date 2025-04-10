@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/04/2025
+-- ACBrEFDBloco_D_Class --
+[*] #TK-6886 - Alterações revertidas, pois o erro era no validador e já foi corrigido
+    https://www.projetoacbr.com.br/forum/topic/82752-registro-d100-vl_doc/
+    por: Renato Rubinho
+
 09/04/2025
 -- ACBrEFDBloco_D_Class --
 [*] #TK-6886 - Configurados campos do D100 zerados a partir de 2025 ao invés de nulos

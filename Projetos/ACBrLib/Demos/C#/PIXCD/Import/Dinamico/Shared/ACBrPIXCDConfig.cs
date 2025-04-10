@@ -27,6 +27,7 @@ namespace ACBrLib.PIXCD
             Cielo = new CieloConfig(acbrlib);
             MercadoPago = new MercadoPagoConfig(acbrlib);
             C6Bank = new C6BankConfig(acbrlib);
+            AppLess = new AppLessConfig(acbrlib);
         }
 
         #endregion Constructors
@@ -64,6 +65,8 @@ namespace ACBrLib.PIXCD
         public MercadoPagoConfig MercadoPago { get; }
 
         public C6BankConfig C6Bank { get; }
+
+        public AppLessConfig AppLess { get; }
 
         public Ambiente Ambiente
         {

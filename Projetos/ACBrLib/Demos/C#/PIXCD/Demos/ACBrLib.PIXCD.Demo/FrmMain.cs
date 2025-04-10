@@ -235,6 +235,12 @@ namespace ACBrLibPIXCD.Demo
                 ACBrPIXCD.Config.MercadoPago.AccessToken = txtAccessTokenMercadoPago.Text;
                 ACBrPIXCD.Config.MercadoPago.Scopes = txtScopesMercadoPago.Text;
 
+                //AppLess
+                ACBrPIXCD.Config.AppLess.ClientID = txtClientIDAppLess.Text;
+                ACBrPIXCD.Config.AppLess.ClientSecret = txtClientSecretAppLess.Text;
+                ACBrPIXCD.Config.AppLess.SecretKeyHMAC = txtSecretKeyHMACAppLess.Text;
+                ACBrPIXCD.Config.AppLess.Scopes = txtScopesAppLess.Text;
+
                 ACBrPIXCD.ConfigGravar();
 
                 Application.DoEvents();
@@ -394,6 +400,12 @@ namespace ACBrLibPIXCD.Demo
             txtChavePIXMercadoPago.Text = ACBrPIXCD.Config.MercadoPago.ChavePIX;
             txtAccessTokenMercadoPago.Text = ACBrPIXCD.Config.MercadoPago.AccessToken;
             txtScopesMercadoPago.Text = ACBrPIXCD.Config.MercadoPago.Scopes;
+
+            //AppLess
+            txtClientIDAppLess.Text = ACBrPIXCD.Config.AppLess.ClientID;
+            txtClientSecretAppLess.Text = ACBrPIXCD.Config.AppLess.ClientSecret;
+            txtSecretKeyHMACAppLess.Text = ACBrPIXCD.Config.AppLess.SecretKeyHMAC;
+            txtScopesAppLess.Text = ACBrPIXCD.Config.AppLess.Scopes;
         }
 
         private void btnCertificadoBradesco_Click(object sender, EventArgs e)

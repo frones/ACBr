@@ -54,6 +54,7 @@ type
     FpNrOcorrTagsTomador: Integer;
     FpNrOcorrCodigoAtividade: Integer;
     FpNaoGerarGrupoRps: Boolean;
+    FpCasasDecimais: Integer;
 
   protected
     procedure Configuracao; override;
@@ -117,6 +118,7 @@ begin
     definição da cidade o valor de NaoGerar é True
   }
   FpNaoGerarGrupoRps := FpAOwner.ConfigGeral.Params.TemParametro('NaoGerarGrupoRps');
+  FpCasasDecimais := StrToIntDef(FpAOwner.ConfigGeral.Params.ValorParametro('CasasDecimais'), 2);
 
   FDocument.Clear();
 
@@ -313,7 +315,11 @@ begin
     Result[i].AppendChild(AddNode(tcStr, '#', 'unidade_codigo', 1, 9, 0,
                    UnidadeToStr(NFSe.Servico.ItemServico[I].TipoUnidade), ''));
 
-    Result[i].AppendChild(AddNode(tcDe2, '#', 'unidade_quantidade', 1, 15, 0,
+    if FpCasasDecimais = 4 then
+      Result[i].AppendChild(AddNode(tcDe4, '#', 'unidade_quantidade', 1, 15, 0,
+                                    NFSe.Servico.ItemServico[I].Quantidade, ''))
+    else
+      Result[i].AppendChild(AddNode(tcDe2, '#', 'unidade_quantidade', 1, 15, 0,
                                    NFSe.Servico.ItemServico[I].Quantidade, ''));
 
     Result[i].AppendChild(AddNode(tcDe10, '#', 'unidade_valor_unitario', 1, 15, 0,

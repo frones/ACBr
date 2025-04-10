@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/04/2025
+-- IPM.GravarXml/IPM.LerXml --
+[*] #TK-6877: Parametrizado a quantidade de casas decimais da tag: unidade_quantidade
+  Por: Centrodata Sistemas/Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] #TK-6890: Incluída a cidade de Mormaco/RS, o provedor é o Digifred,
   Por: Doglas Stumpf

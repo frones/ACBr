@@ -48,6 +48,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+10/04/2025
+-- ACBrBoletoW_Cora, ACBrBoletoRet_Cora  --
+[*] TK-6828 - Ajsutes codigo de liquidação e ID boleto.
+  Por:  Daniel de Morais InfoCotidiano
 
 09/04/2025
 -- ACBrBoletoRet_C6.pas  --

@@ -49,6 +49,7 @@ type
   TRetornoEnvio_Cora = class(TRetornoEnvioREST)
   private
     function DateInterToDateTime(const AValue: string): TDateTime;
+    function RetornaCodigoOcorrencia(pSituacaoGeralBoleto: string): String;
   public
     constructor Create(ABoletoWS: TACBrBoleto); override;
     destructor Destroy; override;
@@ -199,6 +200,8 @@ begin
             ARetornoWS.DadosRet.IDBoleto.LinhaDig        := LBankSlip.AsString['digitable'];
             ARetornoWS.DadosRet.IDBoleto.URLPDF          := LBankSlip.AsString['url'];
             ARetornoWS.DadosRet.IDBoleto.NossoNum        := Copy(LBankSlip.AsString['our_number'],LNossoNumeroInicial,ACBrTitulo.ACBrBoleto.Banco.TamanhoMaximoNossoNum);
+            ARetornoWS.DadosRet.TituloRet.NossoNumeroCorrespondente := LJson.AsString['id'];
+
             ARetornoWS.indicadorContinuidade             := False;
 
             ARetornoWS.DadosRet.TituloRet.NossoNumero    := ARetornoWS.DadosRet.IDBoleto.NossoNum;
@@ -264,6 +267,7 @@ begin
 
 
             ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := LJSON.AsString['status'];
+            ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := RetornaCodigoOcorrencia(LJSON.AsString['status']);
             ARetornoWS.DadosRet.TituloRet.DataMovimento        := DateIntertoDateTime(LJSON.AsString['occurrence_date']);
             ARetornoWS.DadosRet.TituloRet.DataCredito          := DateIntertoDateTime(LJSON.AsString['occurrence_date']);
 
@@ -362,6 +366,8 @@ begin
 
             ListaRetorno.DadosRet.TituloRet.NossoNumeroCorrespondente := LJSONArray.ItemAsJSONObject[I].AsString['id'];
             ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca      := LJSONArray.ItemAsJSONObject[I].AsString['status'];
+            ListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca:= RetornaCodigoOcorrencia(LJSONArray.ItemAsJSONObject[I].AsString['status']);
+
             ListaRetorno.DadosRet.TituloRet.DataRegistro              := DateInterToDateTime(LJSONArray.ItemAsJSONObject[I].AsString['created_at']);
             ListaRetorno.DadosRet.TituloRet.DataDocumento             := DateInterToDateTime(LJSONArray.ItemAsJSONObject[I].AsString['created_at']);
             ListaRetorno.DadosRet.TituloRet.DataMovimento             := DateInterToDateTime(LJSONArray.ItemAsJSONObject[I].AsString['paid_at']);
@@ -390,6 +396,20 @@ end;
 function TRetornoEnvio_Cora.RetornoEnvio(const AIndex: Integer): Boolean;
 begin
   Result := inherited RetornoEnvio(AIndex);
+end;
+
+function TRetornoEnvio_Cora.RetornaCodigoOcorrencia(pSituacaoGeralBoleto: string) : String;
+var LSituacao : string;
+begin
+  LSituacao := UpperCase(pSituacaoGeralBoleto);
+  if LSituacao  = 'OPEN' then
+    Result := '01'
+  else if LSituacao  = 'PAID'  then
+    Result := '06'
+  else if LSituacao  = 'CANCELLED' then
+    Result := '09'
+  else
+    Result := '99';
 end;
 
 end.

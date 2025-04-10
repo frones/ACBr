@@ -308,9 +308,6 @@ begin
              'dataVencimento.DataInicio e dataVencimento.DataFinal');
 
             // possivel apenas por datavencimento
-            if Boleto.Configuracoes.WebService.Filtro.dataVencimento.
-              DataInicio > 0 then
-            begin
 
               Consulta.Add('start=' + DateTimeToDateCora
                 (Boleto.Configuracoes.WebService.Filtro.dataVencimento.
@@ -319,7 +316,6 @@ begin
                 (Boleto.Configuracoes.WebService.Filtro.dataVencimento.
                 DataFinal));
               Consulta.Add('state=OPEN');
-            end;
 
           end;
         isbNenhum:

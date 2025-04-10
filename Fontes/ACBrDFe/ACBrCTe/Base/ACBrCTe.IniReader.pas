@@ -86,6 +86,7 @@ type
     procedure Ler_Secao_InfNFe(AINIRec: TMemIniFile;const Secao: string;
       Nivel1, Nivel2: Integer; infNFe: TInfNFeCollection);
     procedure Ler_InfCTeNormalInfOutros(AINIRec: TMemIniFile; infOutros: TInfOutrosCollection);
+    procedure Ler_InfCTeNormalInfDCe(AINIRec: TMemIniFile; infDCe: TInfDCeCollection);
     procedure Ler_InfCTeNormalDocAnteriores(AINIRec: TMemIniFile; docAnt: TDocAnt);
 
     procedure Ler_InfCTeNormalInfModal(AINIRec: TMemIniFile; infCTeNorm: TInfCTeNorm);
@@ -126,8 +127,8 @@ type
     // Reforma Tributária
     procedure Ler_IBSCBS(AINIRec: TMemIniFile; IBSCBS: TIBSCBS);
     procedure Ler_IBSCBS_gIBSCBS(AINIRec: TMemIniFile; gIBSCBS: TgIBSCBS);
-    procedure Ler_gIBSUF(AINIRec: TMemIniFile; gIBSUF: TgIBSValores);
-    procedure Ler_gIBSMun(AINIRec: TMemIniFile; gIBSMun: TgIBSValores);
+    procedure Ler_gIBSUF(AINIRec: TMemIniFile; gIBSUF: TgIBSUFValores);
+    procedure Ler_gIBSMun(AINIRec: TMemIniFile; gIBSMun: TgIBSMunValores);
     procedure Ler_gCBS(AINIRec: TMemIniFile; gCBS: TgCBSValores);
     procedure Ler_gIBSCredPres(AINIRec: TMemIniFile; gIBSCredPres: TgIBSCBSCredPres);
     procedure Ler_gCBSCredPres(AINIRec: TMemIniFile; gCBSCredPres: TgIBSCBSCredPres);
@@ -252,6 +253,11 @@ begin
   // GTV-e
   Ide.dhSaidaOrig := StringToDateTime(AINIRec.ReadString( 'ide','dhSaidaOrig'  ,'0'));
   Ide.dhChegadaDest := StringToDateTime(AINIRec.ReadString( 'ide','dhChegadaDest'  ,'0'));
+
+  Ide.gCompraGov.pRedutor := StringToFloatDef(AINIRec.ReadString('ide', 'pRedutor', ''), 0);
+
+  if Ide.gCompraGov.pRedutor > 0 then
+    Ide.gCompraGov.tpCompraGov := StrTotpCompraGov(AINIRec.ReadString('ide', 'tpCompraGov', ''));
 end;
 
 procedure TCTeIniReader.Ler_CTe(AINIRec: TMemIniFile);
@@ -797,6 +803,8 @@ begin
   Ler_InfCTeNormalInfNF(AINIRec, infCTeNorm.infDoc.infNF);
   Ler_InfCTeNormalInfNFe(AINIRec, infCTeNorm.infDoc.infNFe);
   Ler_InfCTeNormalInfOutros(AINIRec, infCTeNorm.infDoc.infOutros);
+  Ler_InfCTeNormalInfDCe(AINIRec, infCTeNorm.infDoc.infDCe);
+
   Ler_InfCTeNormalDocAnteriores(AINIRec, infCTeNorm.docAnt);
   Ler_InfCTeNormalInfModal(AINIRec, infCTeNorm);
   Ler_InfCTeNormalVeiculosNovos(AINIRec, infCTeNorm.veicNovos);
@@ -1203,6 +1211,29 @@ begin
         inc(J);
       end;
     end;
+    Inc(I);
+  end;
+end;
+
+procedure TCTeIniReader.Ler_InfCTeNormalInfDCe(AINIRec: TMemIniFile;
+  infDCe: TInfDCeCollection);
+var
+  sSecao, sFim: string;
+  I: Integer;
+begin
+  I := 1;
+  while true do
+  begin
+    sSecao := 'infDCe'+IntToStrZero(I,3);
+    sFim   := AINIRec.ReadString(sSecao, 'chave', 'FIM');
+    if FimLoop(sFim) then
+      break;
+
+    with infDCe.New do
+    begin
+      chave := sFim;
+    end;
+
     Inc(I);
   end;
 end;
@@ -2305,7 +2336,7 @@ begin
   end;
 end;
 
-procedure TCTeIniReader.Ler_gIBSUF(AINIRec: TMemIniFile; gIBSUF: TgIBSValores);
+procedure TCTeIniReader.Ler_gIBSUF(AINIRec: TMemIniFile; gIBSUF: TgIBSUFValores);
 var
   sSecao: string;
 begin
@@ -2324,15 +2355,14 @@ begin
     gIBSUF.gRed.pRedAliq := StringToFloatDef( AINIRec.ReadString(sSecao,'pRedAliq','') ,0);
     gIBSUF.gRed.pAliqEfet := StringToFloatDef( AINIRec.ReadString(sSecao,'pAliqEfet','') ,0);
 
-    gIBSUF.gDeson.CST := AINIRec.ReadInteger(sSecao, 'CST', 0);
-    gIBSUF.gDeson.cClassTrib := AINIRec.ReadInteger(sSecao, 'cClassTrib', 0);
-    gIBSUF.gDeson.vBC := StringToFloatDef( AINIRec.ReadString(sSecao,'vBC','') ,0);
-    gIBSUF.gDeson.pAliq := StringToFloatDef( AINIRec.ReadString(sSecao,'pAliq','') ,0);
-    gIBSUF.gDeson.vDeson := StringToFloatDef( AINIRec.ReadString(sSecao,'vDeson','') ,0);
+    gIBSUF.gTribRegular.CSTReg := AINIRec.ReadInteger(sSecao, 'CSTReg', 0);
+    gIBSUF.gTribRegular.cClassTribReg := AINIRec.ReadInteger(sSecao, 'cClassTribReg', 0);
+    gIBSUF.gTribRegular.pAliqEfetReg := StringToFloatDef( AINIRec.ReadString(sSecao,'pAliqEfetReg','') ,0);
+    gIBSUF.gTribRegular.vTribReg := StringToFloatDef( AINIRec.ReadString(sSecao,'vTribReg','') ,0);
   end;
 end;
 
-procedure TCTeIniReader.Ler_gIBSMun(AINIRec: TMemIniFile; gIBSMun: TgIBSValores);
+procedure TCTeIniReader.Ler_gIBSMun(AINIRec: TMemIniFile; gIBSMun: TgIBSMunValores);
 var
   sSecao: string;
 begin
@@ -2345,17 +2375,17 @@ begin
 
     gIBSMun.gDif.pDif := StringToFloatDef( AINIRec.ReadString(sSecao,'pDif','') ,0);
     gIBSMun.gDif.vDif := StringToFloatDef( AINIRec.ReadString(sSecao,'vDif','') ,0);
+    gIBSMun.gDif.vCBSOp := StringToFloatDef( AINIRec.ReadString(sSecao,'vCBSOp','') ,0);
 
     gIBSMun.gDevTrib.vDevTrib := StringToFloatDef( AINIRec.ReadString(sSecao,'vDevTrib','') ,0);
 
     gIBSMun.gRed.pRedAliq := StringToFloatDef( AINIRec.ReadString(sSecao,'pRedAliq','') ,0);
     gIBSMun.gRed.pAliqEfet := StringToFloatDef( AINIRec.ReadString(sSecao,'pAliqEfet','') ,0);
 
-    gIBSMun.gDeson.CST := AINIRec.ReadInteger(sSecao, 'CST', 0);
-    gIBSMun.gDeson.cClassTrib := AINIRec.ReadInteger(sSecao, 'cClassTrib', 0);
-    gIBSMun.gDeson.vBC := StringToFloatDef( AINIRec.ReadString(sSecao,'vBC','') ,0);
-    gIBSMun.gDeson.pAliq := StringToFloatDef( AINIRec.ReadString(sSecao,'pAliq','') ,0);
-    gIBSMun.gDeson.vDeson := StringToFloatDef( AINIRec.ReadString(sSecao,'vDeson','') ,0);
+    gIBSMun.gTribRegular.CSTReg := AINIRec.ReadInteger(sSecao, 'CSTReg', 0);
+    gIBSMun.gTribRegular.cClassTribReg := AINIRec.ReadInteger(sSecao, 'cClassTribReg', 0);
+    gIBSMun.gTribRegular.pAliqEfetReg := StringToFloatDef( AINIRec.ReadString(sSecao,'pAliqEfetReg','') ,0);
+    gIBSMun.gTribRegular.vTribReg := StringToFloatDef( AINIRec.ReadString(sSecao,'vTribReg','') ,0);
   end;
 end;
 
@@ -2372,17 +2402,17 @@ begin
 
     gCBS.gDif.pDif := StringToFloatDef( AINIRec.ReadString(sSecao,'pDif','') ,0);
     gCBS.gDif.vDif := StringToFloatDef( AINIRec.ReadString(sSecao,'vDif','') ,0);
+    gCBS.gDif.vCBSOp := StringToFloatDef( AINIRec.ReadString(sSecao,'vCBSOp','') ,0);
 
     gCBS.gDevTrib.vDevTrib := StringToFloatDef( AINIRec.ReadString(sSecao,'vDevTrib','') ,0);
 
     gCBS.gRed.pRedAliq := StringToFloatDef( AINIRec.ReadString(sSecao,'pRedAliq','') ,0);
     gCBS.gRed.pAliqEfet := StringToFloatDef( AINIRec.ReadString(sSecao,'pAliqEfet','') ,0);
 
-    gCBS.gDeson.CST := AINIRec.ReadInteger(sSecao, 'CST', 0);
-    gCBS.gDeson.cClassTrib := AINIRec.ReadInteger(sSecao, 'cClassTrib', 0);
-    gCBS.gDeson.vBC := StringToFloatDef( AINIRec.ReadString(sSecao,'vBC','') ,0);
-    gCBS.gDeson.pAliq := StringToFloatDef( AINIRec.ReadString(sSecao,'pAliq','') ,0);
-    gCBS.gDeson.vDeson := StringToFloatDef( AINIRec.ReadString(sSecao,'vDeson','') ,0);
+    gCBS.gTribRegular.CSTReg := AINIRec.ReadInteger(sSecao, 'CSTReg', 0);
+    gCBS.gTribRegular.cClassTribReg := AINIRec.ReadInteger(sSecao, 'cClassTribReg', 0);
+    gCBS.gTribRegular.pAliqEfetReg := StringToFloatDef( AINIRec.ReadString(sSecao,'pAliqEfetReg','') ,0);
+    gCBS.gTribRegular.vTribReg := StringToFloatDef( AINIRec.ReadString(sSecao,'vTribReg','') ,0);
   end;
 end;
 

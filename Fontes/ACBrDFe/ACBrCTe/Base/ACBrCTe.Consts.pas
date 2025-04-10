@@ -276,8 +276,12 @@ resourcestring
   DSC_PCREDPRES = 'Percentual do Crédito Presumido';
   DSC_VCREDPRES = 'Valor do Crédito Presumido';
   DSC_VCREDPRESCONDSUS = 'Valor do Crédito Presumido em condição suspensiva.';
+  DSC_VTRIBREG = 'Valor do Tributo';
+  DSC_VCBSOP = 'Valor da CBS Bruto na operação';
 
   DSC_VTOTDEF = 'Valor total do documento fiscal';
+  DSC_TPCOMPRAGOV = 'Tipo de compra governamental';
+  DSC_PREDUTOR = 'Percentual de redução de aliquota em compra governamental';
 
 implementation
 

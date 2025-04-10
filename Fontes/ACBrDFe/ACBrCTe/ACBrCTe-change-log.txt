@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/04/2025
+-- Diversos --
+[*] #TK-6832: Ajustes necessários para deixar em conformidade com a NT2025/001.
+  Por: Italo Giurizzato Junior
+
 01/04/2025
 -- Diversos --
 [*] #TK-5814: Implementado as units: ACBrCTe.IniReader e ACBrCTe.IniWrite que

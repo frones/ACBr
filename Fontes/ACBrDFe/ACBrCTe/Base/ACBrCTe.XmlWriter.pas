@@ -147,7 +147,8 @@ type
     function Gerar_IdDocAnt(idDocAnt: TidDocAntCollection): TACBrXmlNodeArray;
     function Gerar_IdDocAntPap(idDocAntPap: TidDocAntPapCollection): TACBrXmlNodeArray;
     function Gerar_IdDocAntEle(idDocAntEle: TidDocAntEleCollection): TACBrXmlNodeArray;
-    
+    function Gerar_InfDCe(infDCe: TInfDCeCollection): TACBrXmlNodeArray;
+
     function Gerar_Peri(peri: TPeriCollection): TACBrXmlNodeArray;
     function Gerar_infTotAP(Idx: Integer; peri: TPeriCollection): TACBrXmlNode;
 
@@ -237,19 +238,24 @@ type
     function Gerar_Total: TACBrXmlNode;
 
     // Reforma Tributária
+    function Gerar_Ide_CompraGov(gCompraGov: TgCompraGov): TACBrXmlNode;
+
     function Gerar_IBSCBS(IBSCBS: TIBSCBS): TACBrXmlNode;
     function Gerar_IBSCBS_gIBSCBS(gIBSCBS: TgIBSCBS): TACBrXmlNode;
 
-    function Gerar_IBSCBS_gIBSCBS_gIBSUF(gIBSUF: TgIBSValores): TACBrXmlNode;
-    function Gerar_IBSCBS_gIBSCBS_gIBSMun(gIBSMun: TgIBSValores): TACBrXmlNode;
+    function Gerar_IBSCBS_gIBSCBS_gIBSUF(gIBSUF: TgIBSUFValores): TACBrXmlNode;
+    function Gerar_IBSCBS_gIBSCBS_gIBSMun(gIBSMun: TgIBSMunValores): TACBrXmlNode;
     function Gerar_IBSCBS_gIBSCBS_gCBS(gCBS: TgCBSValores): TACBrXmlNode;
 
-    function Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gDif(Dif: TgDif): TACBrXmlNode;
+    function Gerar_IBSCBS_gIBSCBS_gIBSUF_gDif(Dif: TgDif): TACBrXmlNode;
+    function Gerar_IBSCBS_gIBSCBS_gIBSMun_gDif(Dif: TgDifCBS): TACBrXmlNode;
+    function Gerar_IBSCBS_gIBSCBS_gCBS_gDif(Dif: TgDifCBS): TACBrXmlNode;
+
     function Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gDevTrib(DevTrib: TgDevTrib): TACBrXmlNode;
     function Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gRed(Red: TgRed): TACBrXmlNode;
-    function Gerar_IBSCBS_gIBSCBS_gIBSUFMun_gDeson(Deson: TgDeson): TACBrXmlNode;
+    function Gerar_IBSCBS_gIBSCBS_gIBSUFMun_gTribRegular(gTribRegular: TgTribRegular): TACBrXmlNode;
 
-    function Gerar_IBSCBSSel_gIBSCBS_gCBS_gDeson(Deson: TgDeson): TACBrXmlNode;
+    function Gerar_IBSCBSSel_gIBSCBS_gCBS_gTribRegular(gTribRegular: TgTribRegular): TACBrXmlNode;
 
     function Gerar_IBSCBS_gIBSCBS_gIBSCBSCredPres(gIBSCredPres: TgIBSCBSCredPres;
       const Grupo: string): TACBrXmlNode;
@@ -767,6 +773,26 @@ begin
 
     Result.AppendChild(AddNode(tcStr, '#058', 'xJust', 15, 256, 1,
                                                  CTe.Ide.xJust, DSC_XJUSTCONT));
+  end;
+
+  // Reforma Tributária
+  Result.AppendChild(Gerar_Ide_CompraGov(CTe.Ide.gCompraGov));
+end;
+
+function TCTeXmlWriter.Gerar_Ide_CompraGov(
+  gCompraGov: TgCompraGov): TACBrXmlNode;
+begin
+  Result := nil;
+
+  if gCompraGov.pRedutor > 0 then
+  begin
+    Result := FDocument.CreateElement('gCompraGov');
+
+    Result.AppendChild(AddNode(tcStr, 'B32', 'tpCompraGov', 1, 1, 1,
+            tpCompraGovToStr(gCompraGov.tpCompraGov), DSC_TPCOMPRAGOV));
+
+    Result.AppendChild(AddNode(tcDe4, 'B33', 'pRedutor', 1, 7, 1,
+                                    gCompraGov.pRedutor, DSC_PREDUTOR));
   end;
 end;
 
@@ -1413,14 +1439,12 @@ begin
     Result.AppendChild(Gerar_infTribFed);
 
   // Reforma Tributária
-  { Descomentar quando for liberado o ambiente de homologação
   if (VersaoDF >= ve400) then
     Result.AppendChild(Gerar_IBSCBS(CTe.imp.IBSCBS));
 
-  if (VersaoDF >= ve400) and (ModeloDF in [moCTe, moCTeOS, moCTeSimp]) then
+  if (VersaoDF >= ve400) and (ModeloDF in [moCTe, moCTeOS]) then
     Result.AppendChild(AddNode(tcDe2, '#250', 'vTotDFe', 1, 15, 0,
                                                  CTe.Imp.vTotDFe, DSC_VTOTDEF));
-  }
 end;
 
 function TCTeXmlWriter.Gerar_ICMS: TACBrXmlNode;
@@ -1908,6 +1932,13 @@ begin
   begin
     Result.AppendChild(nodeArray[i]);
   end;
+
+  nodeArray := Gerar_InfDCe(CTe.infCTeNorm.infDoc.InfDCe);
+
+  for i := 0 to CTe.infCTeNorm.infDoc.infDCe.Count - 1 do
+  begin
+    Result.AppendChild(nodeArray[i]);
+  end;
 end;
 
 function TCTeXmlWriter.Gerar_InfNF: TACBrXmlNodeArray;
@@ -2132,7 +2163,7 @@ begin
       if not ValidarISUF(InfNFe[i].PIN) then
         wAlerta('#299', 'PIN', DSC_ISUF, ERR_MSG_INVALIDO);
 
-    Result[i].AppendChild(AddNode(tcDat, '#300', 'dPrev', 10, 10, 0, 
+    Result[i].AppendChild(AddNode(tcDat, '#300', 'dPrev', 10, 10, 0,
                                                    InfNFe[i].dPrev, DSC_DPREV));
 
     nodeArray := Gerar_InfUnidCarga(infNFe[i].infUnidCarga);
@@ -2166,22 +2197,22 @@ begin
   begin
     Result[i] := FDocument.CreateElement('infOutros');
 
-    Result[i].AppendChild(AddNode(tcStr, '#320', 'tpDoc', 2, 2, 1, 
+    Result[i].AppendChild(AddNode(tcStr, '#320', 'tpDoc', 2, 2, 1,
         TpDocumentoToStr(CTe.infCTeNorm.infDoc.InfOutros[i].tpDoc), DSC_TPDOC));
- 
-    Result[i].AppendChild(AddNode(tcStr, '#321', 'descOutros', 1, 100, 0, 
+
+    Result[i].AppendChild(AddNode(tcStr, '#321', 'descOutros', 1, 100, 0,
                     CTe.infCTeNorm.infDoc.InfOutros[i].descOutros, DSC_OUTROS));
- 
-    Result[i].AppendChild(AddNode(tcStr, '#322', 'nDoc', 1, 20, 0, 
+
+    Result[i].AppendChild(AddNode(tcStr, '#322', 'nDoc', 1, 20, 0,
                              CTe.infCTeNorm.infDoc.InfOutros[i].nDoc, DSC_NRO));
- 
-    Result[i].AppendChild(AddNode(tcDat, '#323', 'dEmi', 10, 10, 0, 
+
+    Result[i].AppendChild(AddNode(tcDat, '#323', 'dEmi', 10, 10, 0,
                             CTe.infCTeNorm.infDoc.InfOutros[i].dEmi, DSC_DEMI));
- 
-    Result[i].AppendChild(AddNode(tcDe2, '#324', 'vDocFisc', 1, 15, 0, 
+
+    Result[i].AppendChild(AddNode(tcDe2, '#324', 'vDocFisc', 1, 15, 0,
                         CTe.infCTeNorm.infDoc.InfOutros[i].vDocFisc, DSC_VDOC));
- 
-    Result[i].AppendChild(AddNode(tcDat, '#325', 'dPrev', 10, 10, 0, 
+
+    Result[i].AppendChild(AddNode(tcDat, '#325', 'dPrev', 10, 10, 0,
                           CTe.infCTeNorm.infDoc.infOutros[i].dPrev, DSC_DPREV));
 
     nodeArray := Gerar_InfUnidCarga(CTe.infCTeNorm.infDoc.InfOutros[i].infUnidCarga);
@@ -2201,6 +2232,33 @@ begin
 
   if CTe.infCTeNorm.infDoc.InfOutros.Count > 990 then
     wAlerta('#319', 'infOutros', DSC_INFOUTRO, ERR_MSG_MAIOR_MAXIMO + '990');
+end;
+
+function TCTeXmlWriter.Gerar_InfDCe(
+  infDCe: TInfDCeCollection): TACBrXmlNodeArray;
+var
+  i: Integer;
+  chave: string;
+begin
+  Result := nil;
+  SetLength(Result, infDCe.Count);
+
+  for i := 0 to InfDCe.Count - 1 do
+  begin
+    Result[i] := FDocument.CreateElement('infDCe');
+
+    chave := OnlyNumber(InfDCe[i].chave);
+
+    Result[i].AppendChild(AddNode(tcStr, '#298', 'chave', 44, 44, 1,
+                                                            chave, DSC_REFNFE));
+
+    if chave <> '' then
+      if not ValidarChave(chave) then
+        wAlerta('#298', 'chave', DSC_REFNFE, ERR_MSG_INVALIDO);
+  end;
+
+  if InfDCe.Count > 990 then
+    wAlerta('#297', 'infDCe', DSC_INFNFE, ERR_MSG_MAIOR_MAXIMO + '990');
 end;
 
 function TCTeXmlWriter.Gerar_DocAnt: TACBrXmlNode;
@@ -4567,7 +4625,7 @@ begin
 end;
 
 function TCTeXmlWriter.Gerar_IBSCBS_gIBSCBS_gIBSUF(
-  gIBSUF: TgIBSValores): TACBrXmlNode;
+  gIBSUF: TgIBSUFValores): TACBrXmlNode;
 begin
   Result := FDocument.CreateElement('gIBSUF');
 
@@ -4577,11 +4635,11 @@ begin
   { Verificar qual é a condição correta para a tag e os 2 grupos para serem gerados }
   if True then
   begin
-    Result.AppendChild(AddNode(tcDe2, '#8', 'vTribOP', 1, 15, 1,
-                                                  gIBSUF.vTribOP, DSC_VTRIBOP));
+    Result.AppendChild(AddNode(tcDe2, '#8', 'vTribOp', 1, 15, 1,
+                                                  gIBSUF.vTribOp, DSC_VTRIBOP));
 
     if gIBSUF.gDif.pDif > 0 then
-      Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gDif(gIBSUF.gDif));
+      Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUF_gDif(gIBSUF.gDif));
 
     if gIBSUF.gDevTrib.vDevTrib > 0 then
       Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gDevTrib(gIBSUF.gDevTrib));
@@ -4590,14 +4648,14 @@ begin
   if gIBSUF.gRed.pRedAliq > 0 then
     Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gRed(gIBSUF.gRed));
 
-  if gIBSUF.gDeson.pAliq > 0 then
-    Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMun_gDeson(gIBSUF.gDeson));
+  if gIBSUF.gTribRegular.pAliqEfetReg > 0 then
+    Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMun_gTribRegular(gIBSUF.gTribRegular));
 
   Result.AppendChild(AddNode(tcDe2, '#23', 'vIBSUF', 1, 15, 1,
                                                       gIBSUF.vIBS, DSC_VIBSUF));
 end;
 
-function TCTeXmlWriter.Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gDif(
+function TCTeXmlWriter.Gerar_IBSCBS_gIBSCBS_gIBSUF_gDif(
   Dif: TgDif): TACBrXmlNode;
 begin
   Result := FDocument.CreateElement('gDif');
@@ -4626,32 +4684,30 @@ begin
   Result.AppendChild(AddNode(tcDe4, '#15', 'pRedAliq', 1, 7, 1,
                                                    Red.pRedAliq, DSC_PREDALIQ));
 
-  Result.AppendChild(AddNode(tcDe4, '#16', 'pAliqEfet', 1, 7, 1,
+  Result.AppendChild(AddNode(tcDe2, '#16', 'pAliqEfet', 1, 7, 1,
                                                  Red.pAliqEfet, DSC_PALIQEFET));
 end;
 
-function TCTeXmlWriter.Gerar_IBSCBS_gIBSCBS_gIBSUFMun_gDeson(
-  Deson: TgDeson): TACBrXmlNode;
+function TCTeXmlWriter.Gerar_IBSCBS_gIBSCBS_gIBSUFMun_gTribRegular(
+  gTribRegular: TgTribRegular): TACBrXmlNode;
 begin
-  Result := FDocument.CreateElement('gDeson');
+  Result := FDocument.CreateElement('gTribRegular');
 
-  Result.AppendChild(AddNode(tcInt, '#18', 'CST', 3, 3, 1, Deson.CST, DSC_CST));
+  Result.AppendChild(AddNode(tcInt, '#18', 'CSTReg', 3, 3, 1,
+                                                 gTribRegular.CSTReg, DSC_CST));
 
-  Result.AppendChild(AddNode(tcInt, '#19', 'cClassTrib', 6, 6, 1,
-                                             Deson.cClassTrib, DSC_CCLASSTRIB));
+  Result.AppendChild(AddNode(tcInt, '#19', 'cClassTribReg', 6, 6, 1,
+                                   gTribRegular.cClassTribReg, DSC_CCLASSTRIB));
 
-  Result.AppendChild(AddNode(tcDe2, '#20', 'vBC', 1, 15, 0,
-                                                           Deson.vBC, DSC_VBC));
+  Result.AppendChild(AddNode(tcDe2, '#21', 'pAliqEfetReg', 1, 7, 1,
+                                         gTribRegular.pAliqEfetReg, DSC_PALIQ));
 
-  Result.AppendChild(AddNode(tcDe4, '#21', 'pAliq', 1, 7, 1,
-                                                       Deson.pAliq, DSC_PALIQ));
-
-  Result.AppendChild(AddNode(tcDe2, '#22', 'vDeson', 1, 15, 1,
-                                                     Deson.vDeson, DSC_VDESON));
+  Result.AppendChild(AddNode(tcDe2, '#22', 'vTribReg', 1, 15, 1,
+                                          gTribRegular.vTribReg, DSC_VTRIBREG));
 end;
 
 function TCTeXmlWriter.Gerar_IBSCBS_gIBSCBS_gIBSMun(
-  gIBSMun: TgIBSValores): TACBrXmlNode;
+  gIBSMun: TgIBSMunValores): TACBrXmlNode;
 begin
   Result := FDocument.CreateElement('gIBSMun');
 
@@ -4661,11 +4717,11 @@ begin
   { Verificar qual é a condição correta para a tag e os 2 grupos para serem gerados }
   if True then
   begin
-    Result.AppendChild(AddNode(tcDe2, '#8', 'vTribOP', 1, 15, 1,
-                                                 gIBSMun.vTribOP, DSC_VTRIBOP));
+    Result.AppendChild(AddNode(tcDe2, '#8', 'vTribOp', 1, 15, 1,
+                                                 gIBSMun.vTribOp, DSC_VTRIBOP));
 
     if gIBSMun.gDif.pDif > 0 then
-      Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gDif(gIBSMun.gDif));
+      Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSMun_gDif(gIBSMun.gDif));
 
     if gIBSMun.gDevTrib.vDevTrib > 0 then
       Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gDevTrib(gIBSMun.gDevTrib));
@@ -4674,11 +4730,26 @@ begin
   if gIBSMun.gRed.pRedAliq > 0 then
     Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gRed(gIBSMun.gRed));
 
-  if gIBSMun.gDeson.pAliq > 0 then
-    Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMun_gDeson(gIBSMun.gDeson));
+  if gIBSMun.gTribRegular.pAliqEfetReg > 0 then
+    Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMun_gTribRegular(gIBSMun.gTribRegular));
 
   Result.AppendChild(AddNode(tcDe2, '#23', 'vIBSMun', 1, 15, 1,
-                                                     gIBSMun.vIBS, DSC_VIBSUF));
+                                                      gIBSMun.vIBS, DSC_VIBSUF));
+end;
+
+function TCTeXmlWriter.Gerar_IBSCBS_gIBSCBS_gIBSMun_gDif(
+  Dif: TgDifCBS): TACBrXmlNode;
+begin
+  Result := FDocument.CreateElement('gDif');
+
+  Result.AppendChild(AddNode(tcDe4, '#10', 'pDif', 1, 7, 1,
+                                                           Dif.pDif, DSC_PDIF));
+
+  Result.AppendChild(AddNode(tcDe2, '#10', 'vCBSOp', 1, 15, 1,
+                                                       Dif.vCBSOp, DSC_VCBSOP));
+
+  Result.AppendChild(AddNode(tcDe2, '#11', 'vDif', 1, 15, 1,
+                                                           Dif.vDif, DSC_VDIF));
 end;
 
 function TCTeXmlWriter.Gerar_IBSCBS_gIBSCBS_gCBS(
@@ -4692,11 +4763,11 @@ begin
   { Verificar qual é a condição correta para a tag e os 2 grupos para serem gerados }
   if True then
   begin
-    Result.AppendChild(AddNode(tcDe2, '#46', 'vTribOP', 1, 15, 1,
-                                                    gCBS.vTribOP, DSC_VTRIBOP));
+    Result.AppendChild(AddNode(tcDe2, '#46', 'vTribOp', 1, 15, 1,
+                                                    gCBS.vTribOp, DSC_VTRIBOP));
 
     if gCBS.gDif.pDif > 0 then
-      Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gDif(gCBS.gDif));
+      Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gCBS_gDif(gCBS.gDif));
 
     if gCBS.gDevTrib.vDevTrib > 0 then
       Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gDevTrib(gCBS.gDevTrib));
@@ -4705,31 +4776,44 @@ begin
   if gCBS.gRed.pRedAliq > 0 then
     Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gRed(gCBS.gRed));
 
-  if gCBS.gDeson.pAliq > 0 then
-    Result.AppendChild(Gerar_IBSCBSSel_gIBSCBS_gCBS_gDeson(gCBS.gDeson));
+  if gCBS.gTribRegular.pAliqEfetReg > 0 then
+    Result.AppendChild(Gerar_IBSCBSSel_gIBSCBS_gCBS_gTribRegular(gCBS.gTribRegular));
 
   Result.AppendChild(AddNode(tcDe2, '#61', 'vCBS', 1, 15, 1,
                                                           gCBS.vCBS, DSC_VCBS));
 end;
 
-function TCTeXmlWriter.Gerar_IBSCBSSel_gIBSCBS_gCBS_gDeson(
-  Deson: TgDeson): TACBrXmlNode;
+function TCTeXmlWriter.Gerar_IBSCBS_gIBSCBS_gCBS_gDif(
+  Dif: TgDifCBS): TACBrXmlNode;
 begin
-  Result := FDocument.CreateElement('gDeson');
+  Result := FDocument.CreateElement('gDif');
 
-  Result.AppendChild(AddNode(tcInt, '#56', 'CST', 3, 3, 1, Deson.CST, DSC_CST));
+  Result.AppendChild(AddNode(tcDe4, '#10', 'pDif', 1, 7, 1,
+                                                           Dif.pDif, DSC_PDIF));
 
-  Result.AppendChild(AddNode(tcInt, '#57', 'cClassTrib', 6, 6, 1,
-                                             Deson.cClassTrib, DSC_CCLASSTRIB));
+  Result.AppendChild(AddNode(tcDe2, '#10', 'vCBSOp', 1, 15, 1,
+                                                       Dif.vCBSOp, DSC_VCBSOP));
 
-  Result.AppendChild(AddNode(tcDe2, '#58', 'vBC', 1, 15, 0,
-                                                           Deson.vBC, DSC_VBC));
+  Result.AppendChild(AddNode(tcDe2, '#11', 'vDif', 1, 15, 1,
+                                                           Dif.vDif, DSC_VDIF));
+end;
 
-  Result.AppendChild(AddNode(tcDe4, '#59', 'pAliq', 1, 7, 1,
-                                                       Deson.pAliq, DSC_PALIQ));
+function TCTeXmlWriter.Gerar_IBSCBSSel_gIBSCBS_gCBS_gTribRegular(
+  gTribRegular: TgTribRegular): TACBrXmlNode;
+begin
+  Result := FDocument.CreateElement('gTribRegular');
 
-  Result.AppendChild(AddNode(tcDe2, '#60', 'vDeson', 1, 15, 1,
-                                                     Deson.vDeson, DSC_VDESON));
+  Result.AppendChild(AddNode(tcInt, '#56', 'CSTReg', 3, 3, 1,
+                                                 gTribRegular.CSTReg, DSC_CST));
+
+  Result.AppendChild(AddNode(tcInt, '#57', 'cClassTribReg', 6, 6, 1,
+                                   gTribRegular.cClassTribReg, DSC_CCLASSTRIB));
+
+  Result.AppendChild(AddNode(tcDe2, '#59', 'pAliqEfetReg', 1, 7, 1,
+                                         gTribRegular.pAliqEfetReg, DSC_PALIQ));
+
+  Result.AppendChild(AddNode(tcDe2, '#60', 'vTribReg', 1, 15, 1,
+                                          gTribRegular.vTribReg, DSC_VTRIBREG));
 end;
 
 function TCTeXmlWriter.Gerar_IBSCBS_gIBSCBS_gIBSCBSCredPres(

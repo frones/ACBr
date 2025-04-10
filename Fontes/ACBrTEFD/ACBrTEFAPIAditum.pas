@@ -811,7 +811,7 @@ begin
         begin
           if (GetErrorCode(jserrors.ItemAsJSONObject[i]) = 13) then  // OPERAÇÃO (anterior) CANCELADA
           begin
-            Fim := False;
+            Fim := True;
             Break;
           end;
         end;

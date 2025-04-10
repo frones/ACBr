@@ -51,6 +51,9 @@ Símbolo : Significado
 [*] Ajuste para reter mensagem na tela por 3 segundos, quando ocorrer falha
     https://www.projetoacbr.com.br/forum/index.php?showtopic=82622
     (por: EasySoft Sistemas e DSA)
+[-] Correção para abortar corretamente a transação, quando cancelada pelo Operador
+    https://www.projetoacbr.com.br/forum/index.php?showtopic=82616
+    (por: EasySoft Sistemas)
 
 -- ACBrTEFAPICliSiTef --
 [*] Ajuste em 'ObterDadoPinPad', para converter valor de milisegundos para segundos

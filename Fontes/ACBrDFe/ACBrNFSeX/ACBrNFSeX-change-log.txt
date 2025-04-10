@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/04/2025
+-- ACBrNFSeXLerXml --
+[*] O provedor Betha ao gerar o XML da NFS-e acaba modificando de forma indevida o
+    conteudo da tag Discriminacao, feita uma alteração para contornar o problema.
+  Por: Italo Giurizzato Junior
+
 -- CTA.GravarXml/CTA.Provider --
 [*] #TK-6889: Alterações visando atender a nova versão do manual do provedor.
   Por: Italo Giurizzato Junior

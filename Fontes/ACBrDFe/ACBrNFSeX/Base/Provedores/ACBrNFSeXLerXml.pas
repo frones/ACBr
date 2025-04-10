@@ -308,7 +308,7 @@ var
   xDiscriminacao, xDescricao, xItemServico: string;
   fQuantidade, fValorUnitario, fValorServico, fValorBC, fAliquota,
   fValorISS: Double;
-  i, j: Integer;
+  i, j, Idx: Integer;
 
   function ExtraiValorCampo(aCampo: string; aCampoNumerico: Boolean): string;
   begin
@@ -327,6 +327,15 @@ var
   end;
 begin
   xDiscriminacao := aDiscriminacao;
+
+  if Pos('{[[Descricao={[[Descricao=', xDiscriminacao) > 0 then
+    xDiscriminacao := StringReplace(xDiscriminacao, '{[[Descricao={[[Descricao=',
+                       '{[[Descricao=', [rfReplaceAll]);
+
+  Idx := Pos(']]}][', xDiscriminacao);
+  if Idx > 0 then
+    xDiscriminacao := Copy(xDiscriminacao, 1, Idx + 2);
+
   J := 1;
 
   while true do

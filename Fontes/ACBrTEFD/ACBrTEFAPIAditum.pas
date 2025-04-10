@@ -46,6 +46,7 @@ uses
 
 const
   CPoolSleep = 1000;
+  CEsperaMsg = 3000;
 
   CAditumAPIVersion = 'v2';
   CAditumAPIURL = 'https://localhost:4090/'+CAditumAPIVersion+'/';
@@ -57,6 +58,7 @@ const
 
   CInstallmentType_Emissor = 'Issuer';
   CInstallmentType_Estabelecimento = 'Merchant';
+
 
 resourcestring
   sACBrAditumNaoAtivo = CAditumTEF+' não está ativo';
@@ -186,7 +188,7 @@ begin
     jsCharge := js.AsJSONObject['charge'];
 
     if not Assigned(jsCharge) then
-        jsCharge := js; // fallback para raiz do JSON
+      jsCharge := js; // fallback para raiz do JSON
 
     if Assigned(jsCharge) then
     begin
@@ -402,6 +404,7 @@ var
   jsErrors: TACBrJSONArray;
   sMsg: String;
   TefAPI: TACBrTEFAPI;
+  Espera: Integer;
 begin
   TefAPI := TACBrTEFAPI(fpACBrTEFAPI);
   Fim := False;
@@ -422,9 +425,14 @@ begin
       if (not Fim) and (sMsg = '') then
         sMsg := ACBrStr(TransactionStatusDescription(js.AsString['status']));
 
+      if Fim then
+        Espera := CEsperaMsg
+      else
+        Espera := -1;
+
       if (sMsg <> '') then
         if Assigned(TefAPI.QuandoExibirMensagem) then
-          TefAPI.QuandoExibirMensagem( sMsg, telaOperador, -1 );
+          TefAPI.QuandoExibirMensagem( sMsg, telaOperador, Espera );
     finally
       js.Free;
     end;
@@ -930,7 +938,7 @@ begin
             if Assigned(jserro) and (GetErrorCode(jserro) = -1950) then  // Transação já cancelada
             begin
               sMsg := UTF8ToNativeString(jserro.AsString['message']);
-              TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem( sMsg, telaOperador, 1000 );
+              TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem( sMsg, telaOperador, CEsperaMsg );
               Result := True;
               Break;
             end;

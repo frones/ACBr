@@ -1186,10 +1186,16 @@ begin
   if (MinLen = 0) and (MaxLen = 0) then
     CalcularTamanhosCampoDadoPinPad(TipoDado, MinLen, MaxLen);
 
+  // SiTef espera o tempo em Segundos.. convertendo de milisegundos
+  if (TimeOut > 1000) then
+    TimeOut := trunc(TimeOut/1000)
+  else if (TimeOut > 100)then
+    TimeOut := trunc(TimeOut/100);
+
   fRespostasPorTipo.ValueInfo[2967] := DadoPortador;
   fRespostasPorTipo.ValueInfo[2968] := IntToStr(MinLen);
   fRespostasPorTipo.ValueInfo[2969] := IntToStr(MaxLen);
-  fRespostasPorTipo.ValueInfo[2970] := IntToStr(trunc(TimeOut/100));
+  fRespostasPorTipo.ValueInfo[2970] := IntToStr(TimeOut);
 
   Ok := ExecutarTransacaoSiTef(CSITEF_OP_DadosPinPadAberto, 0);
   if Ok then

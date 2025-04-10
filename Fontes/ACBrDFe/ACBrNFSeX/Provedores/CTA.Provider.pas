@@ -293,9 +293,9 @@ begin
                                  '<OptanteSimplesNacional>' +
                                     SimNaoToStr(TACBrNFSeX(FAOwner).NotasFiscais.Items[0].NFSe.OptanteSimplesNacional) +
                                  '</OptanteSimplesNacional>' +
-                                 '<IncentivoFiscal>' +
+                                 '<IncentivoFiscalImunidade>' +
                                     SimNaoToStr(TACBrNFSeX(FAOwner).NotasFiscais.Items[0].NFSe.IncentivadorCultural) +
-                                 '</IncentivoFiscal>' +
+                                 '</IncentivoFiscalImunidade>' +
                                '</Prestador>' +
                                '<ListaRps>' +
                                  Xml +

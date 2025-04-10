@@ -78,19 +78,33 @@ uses
 
 function TNFSeW_CTA200.GerarIdentificacaoRps: TACBrXmlNode;
 var
-  TipoTrib: string;
+  TipoTrib, xData: string;
 begin
   TipoTrib := FpAOwner.TipoTributacaoRPSToStr(NFSe.TipoTributacaoRPS);
+  xData := Copy(DateToStr(NFSe.Competencia), 4, 7);
+  xData := StringReplace(xData, '/', '-', [rfReplaceAll]);
 
   Result := CreateElement('IdentificacaoRps');
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Numero', 1, 15, 1,
                          OnlyNumber(NFSe.IdentificacaoRps.Numero), DSC_NUMRPS));
 
-  Result.AppendChild(AddNode(tcDatHor, '#2', 'Competencia', 19, 19, 1,
-                                                  NFSe.Competencia, DSC_DHEMI));
+  Result.AppendChild(AddNode(tcDatHor, '#2', 'DataDeEmissao', 19, 19, 1,
+                                               NFSe.DataEmissaoRps, DSC_DHEMI));
 
-  Result.AppendChild(AddNode(tcStr, '#3', 'TipodeTributacao', 1, 1, 1,
+  Result.AppendChild(AddNode(tcStr, '#2', 'Competencia', 19, 19, 1,
+                                                             xData, DSC_DHEMI));
+
+  Result.AppendChild(AddNode(tcStr, '#2', 'LocalDaPrestacao', 7, 7, 1,
+                                      NFSe.Servico.CodigoMunicipio, DSC_DHEMI));
+
+  Result.AppendChild(AddNode(tcInt, '#2', 'LocalDoRecolhimento', 7, 7, 1,
+                                  NFSe.Servico.MunicipioIncidencia, DSC_DHEMI));
+
+  Result.AppendChild(AddNode(tcStr, '#2', 'CodigoDaObra', 6, 6, 1,
+                                   NFSe.ConstrucaoCivil.CodigoObra, DSC_DHEMI));
+
+  Result.AppendChild(AddNode(tcStr, '#3', 'TipoDeTributacao', 1, 1, 1,
                                                                  TipoTrib, ''));
 end;
 
@@ -143,6 +157,8 @@ begin
 end;
 
 function TNFSeW_CTA200.GerarValores: TACBrXmlNode;
+var
+  CargaTrib: Double;
 begin
   Result := CreateElement('Valores');
 
@@ -166,6 +182,20 @@ begin
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'ValorIss', 1, 15, 1,
                                       NFSe.Servico.Valores.ValorIss, DSC_VISS));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorLiquidoNota', 1, 15, 1,
+                              NFSe.Servico.Valores.ValorLiquidoNfse, DSC_VISS));
+
+  if NFSe.Servico.Valores.ValorLiquidoNfse > 0 then
+    CargaTrib := (NFSe.Servico.Valores.ValorTotalTributos / NFSe.Servico.Valores.ValorLiquidoNfse) * 100
+  else
+    CargaTrib := 0;
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'CargaTributariaTotal', 1, 15, 1,
+                                                          CargaTrib, DSC_VISS));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorCargaTributariaTotal', 1, 15, 1,
+                            NFSe.Servico.Valores.ValorTotalTributos, DSC_VISS));
 end;
 
 function TNFSeW_CTA200.GerarInformacoes: TACBrXmlNode;
@@ -177,7 +207,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'IssRetido', 1, 1, 1,
     FpAOwner.SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), DSC_INDISSRET));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'ResponsavelRetencao', 1, 1, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'ResponsavelRecolhimento', 1, 1, 1,
    FpAOwner.ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), DSC_INDRESPRET));
 
   item := FormatarItemServico(NFSe.Servico.ItemListaServico, FormatoItemListaServico);
@@ -331,7 +361,7 @@ begin
   xmlNode := GerarValoresRetencoes;
   NFSeNode.AppendChild(xmlNode);
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Observacoes', 1, 1000, 1,
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Observacoes', 1, 190, 1,
                                                    NFSe.OutrasInformacoes, ''));
 
   xmlNode := GerarTomador;

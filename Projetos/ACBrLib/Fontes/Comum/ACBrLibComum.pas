@@ -1013,7 +1013,9 @@ begin
 end;
 
 finalization
+  {$IFDEF DEMO}
   if Assigned(FPDemo) then
     FreeAndNil(FPDemo);
+    {$ENDIF}
 
 end.

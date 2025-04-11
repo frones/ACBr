@@ -2713,7 +2713,7 @@ const
 implementation
 
 uses
-  ACBrUtil.Base, pcnNFeR, ACBrUtil.Strings;
+  ACBrUtil.Base;
 
 { TNFe }
 

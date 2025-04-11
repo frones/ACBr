@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/04/2025
+-- ACBrNFeWebServices --
+[*] A alteração anterior gerou um efeito colateral no evento de cancelamento.
+   Por: Italo Giurizzato Junior
+
 10/04/2025
 -- ACBrNFeWebServices --
 [*] #TK-6898: Possível solução para o envio de ECONF de uma NFC-e.

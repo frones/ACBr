@@ -346,6 +346,11 @@ begin
 //   Ide.dhCont  := Now;
 //   Ide.xJust   := 'Motivo da Contingência';
 
+    // Reforma tributária
+    {
+    Ide.gCompraGov.tpCompraGov := tcgUniao;
+    Ide.gCompraGov.pRedutor := 2;
+    }
     // Dados do
     //
     Emit.CNPJ  := edtEmitCNPJ.Text;
@@ -536,47 +541,46 @@ begin
         IBSCBS.gIBSCBS.gIBSUF.gDevTrib.vDevTrib := 50;
         IBSCBS.gIBSCBS.gIBSUF.gRed.pRedAliq := 5;
         IBSCBS.gIBSCBS.gIBSUF.gRed.pAliqEfet := 5;
-        IBSCBS.gIBSCBS.gIBSUF.gDeson.CST := 100;
-        IBSCBS.gIBSCBS.gIBSUF.gDeson.cClassTrib := 100000;
-        IBSCBS.gIBSCBS.gIBSUF.gDeson.vBC := 100;
-        IBSCBS.gIBSCBS.gIBSUF.gDeson.pAliq := 5;
-        IBSCBS.gIBSCBS.gIBSUF.gDeson.vDeson := 50;
+        IBSCBS.gIBSCBS.gIBSUF.gTribRegular.CSTReg := 100;
+        IBSCBS.gIBSCBS.gIBSUF.gTribRegular.cClassTribReg := 100000;
+        IBSCBS.gIBSCBS.gIBSUF.gTribRegular.pAliqEfetReg := 5;
+        IBSCBS.gIBSCBS.gIBSUF.gTribRegular.vTribReg := 50;
         IBSCBS.gIBSCBS.gIBSUF.vIBS := 50;
 
         IBSCBS.gIBSCBS.gIBSMun.pIBS := 5;
         IBSCBS.gIBSCBS.gIBSMun.vTribOp := 50;
         IBSCBS.gIBSCBS.gIBSMun.gDif.pDif := 5;
+        IBSCBS.gIBSCBS.gIBSMun.gDif.vCBSOp := 50;
         IBSCBS.gIBSCBS.gIBSMun.gDif.vDif := 50;
         IBSCBS.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 50;
         IBSCBS.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
         IBSCBS.gIBSCBS.gIBSMun.gRed.pAliqEfet := 5;
-        IBSCBS.gIBSCBS.gIBSMun.gDeson.CST := 100;
-        IBSCBS.gIBSCBS.gIBSMun.gDeson.cClassTrib := 100000;
-        IBSCBS.gIBSCBS.gIBSMun.gDeson.vBC := 100;
-        IBSCBS.gIBSCBS.gIBSMun.gDeson.pAliq := 5;
-        IBSCBS.gIBSCBS.gIBSMun.gDeson.vDeson := 50;
+        IBSCBS.gIBSCBS.gIBSMun.gTribRegular.CSTReg := 100;
+        IBSCBS.gIBSCBS.gIBSMun.gTribRegular.cClassTribReg := 100000;
+        IBSCBS.gIBSCBS.gIBSMun.gTribRegular.pAliqEfetReg := 5;
+        IBSCBS.gIBSCBS.gIBSMun.gTribRegular.vTribReg := 50;
         IBSCBS.gIBSCBS.gIBSMun.vIBS := 50;
 
         IBSCBS.gIBSCBS.gCBS.pCBS := 5;
         IBSCBS.gIBSCBS.gCBS.vTribOp := 50;
         IBSCBS.gIBSCBS.gCBS.gDif.pDif := 5;
+        IBSCBS.gIBSCBS.gCBS.gDif.vCBSOp := 50;
         IBSCBS.gIBSCBS.gCBS.gDif.vDif := 50;
         IBSCBS.gIBSCBS.gCBS.gDevTrib.vDevTrib := 50;
         IBSCBS.gIBSCBS.gCBS.gRed.pRedAliq := 5;
         IBSCBS.gIBSCBS.gCBS.gRed.pAliqEfet := 5;
-        IBSCBS.gIBSCBS.gCBS.gDeson.CST := 100;
-        IBSCBS.gIBSCBS.gCBS.gDeson.cClassTrib := 100000;
-        IBSCBS.gIBSCBS.gCBS.gDeson.vBC := 100;
-        IBSCBS.gIBSCBS.gCBS.gDeson.pAliq := 5;
-        IBSCBS.gIBSCBS.gCBS.gDeson.vDeson := 50;
+        IBSCBS.gIBSCBS.gCBS.gTribRegular.CSTReg := 100;
+        IBSCBS.gIBSCBS.gCBS.gTribRegular.cClassTribReg := 100000;
+        IBSCBS.gIBSCBS.gCBS.gTribRegular.pAliqEfetReg := 5;
+        IBSCBS.gIBSCBS.gCBS.gTribRegular.vTribReg := 50;
         IBSCBS.gIBSCBS.gCBS.vCBS := 50;
 
-        IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := 100;
+        IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := 99;
         IBSCBS.gIBSCBS.gIBSCredPres.pCredPres := 5;
         IBSCBS.gIBSCBS.gIBSCredPres.vCredPres := 50;
         IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus := 50;
 
-        IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := 100;
+        IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := 99;
         IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
         IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
         IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;
@@ -641,26 +645,24 @@ begin
     // Reforma Tributária
     {
     total.vTotDFe := 100;
-    total.IBSCBSTot.vBCCIBS := 100;
+    total.IBSCBSTot.vBCIBSCBS := 100;
 
     total.IBSCBSTot.gIBS.gIBSUFTot.vDif := 100;
     total.IBSCBSTot.gIBS.gIBSUFTot.vDevTrib := 100;
-    total.IBSCBSTot.gIBS.gIBSUFTot.vDeson := 100;
     total.IBSCBSTot.gIBS.gIBSUFTot.vIBSUF := 100;
 
     total.IBSCBSTot.gIBS.gIBSMunTot.vDif := 100;
     total.IBSCBSTot.gIBS.gIBSMunTot.vDevTrib := 100;
-    total.IBSCBSTot.gIBS.gIBSMunTot.vDeson := 100;
     total.IBSCBSTot.gIBS.gIBSMunTot.vIBSMun := 100;
 
     total.IBSCBSTot.gIBS.vCredPres := 100;
     total.IBSCBSTot.gIBS.vCredPresCondSus := 100;
-    total.IBSCBSTot.gIBS.vIBSTot := 100;
+    total.IBSCBSTot.gIBS.vIBS := 100;
 
     total.IBSCBSTot.gCBS.vDif := 100;
     total.IBSCBSTot.gCBS.vDevTrib := 100;
-    total.IBSCBSTot.gCBS.vDeson := 100;
     total.IBSCBSTot.gCBS.vCBS := 100;
+    total.IBSCBSTot.gCBS.vCredPres := 100;
     total.IBSCBSTot.gCBS.vCredPresCondSus := 100;
     }
     with gFidelidade do

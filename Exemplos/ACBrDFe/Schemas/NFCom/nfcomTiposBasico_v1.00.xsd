@@ -3,6 +3,7 @@
 <xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfcom" targetNamespace="http://www.portalfiscal.inf.br/nfcom" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposGeralNFCom_v1.00.xsd"/>
+	<xs:include schemaLocation="DFeTiposBasicos_v1.00.xsd"/>
 	<xs:complexType name="TNFCom">
 		<xs:annotation>
 			<xs:documentation>Tipo Nota Fiscal Fatura de Comunicação</xs:documentation>
@@ -200,6 +201,11 @@ para tpEmis diferente de 1</xs:documentation>
 											</xs:simpleType>
 										</xs:element>
 									</xs:sequence>
+									<xs:element name="gCompraGov" type="TCompraGov" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Grupo de Compras Governamentais</xs:documentation>
+										</xs:annotation>
+									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
@@ -613,7 +619,7 @@ Sequencia XML</xs:documentation>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
-							<xs:element name="det" maxOccurs="9990">
+							<xs:element name="det" maxOccurs="990">
 								<xs:annotation>
 									<xs:documentation>Detalhamento de Produtos e Serviços </xs:documentation>
 								</xs:annotation>
@@ -1338,6 +1344,11 @@ Se informado esse grupo o schema não permite informar nenhum dos grupos de ICMS
 																	</xs:sequence>
 																</xs:complexType>
 															</xs:element>
+															<xs:element name="IBSCBS" type="TTribNFCom" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>Grupo de informações do IBS e CBS</xs:documentation>
+																</xs:annotation>
+															</xs:element>
 														</xs:sequence>
 													</xs:extension>
 												</xs:complexContent>
@@ -1676,6 +1687,18 @@ TAG OPCIONAL, DEVE SER INFORMADA APENAS NOS CASOS PREVISTOS DE NOTA ANTERIOR REF
 												<xs:documentation>Valor Total da NFCom</xs:documentation>
 											</xs:annotation>
 										</xs:element>
+										<xs:element name="IBSCBSTot" type="TIBSCBSTot" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Totais de IBS e CBS</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="vTotDFe" type="TDec_1302" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Valor total do documento fiscal 
+(vNF + total do IBS + total da CBS) 
+</xs:documentation>
+											</xs:annotation>
+										</xs:element>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
@@ -1941,7 +1964,7 @@ Tabela do IBGE de código de unidades da federação.</xs:documentation>
 						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:ID">
-								<xs:pattern value="NFCom[0-9]{44}"/>
+								<xs:pattern value="NFCom[0-9]{6}[A-Z0-9]{12}[0-9]{26}"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:attribute>

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/04/2025
+-- CTA.Provider --
+[*] #TK-6889: Alterações visando obter o retorno do envio corretamente.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6902: A cidade de Estancia Velha/RS correção na URL.
   Por: Marco Moreira

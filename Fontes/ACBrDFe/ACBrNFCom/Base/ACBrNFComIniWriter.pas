@@ -81,8 +81,8 @@ type
     procedure Gerar_IBSCBS(AINIRec: TMemIniFile; IBSCBS: TIBSCBS; Idx: Integer);
     procedure Gerar_IBSCBS_gIBSCBS(AINIRec: TMemIniFile; gIBSCBS: TgIBSCBS; Idx: Integer);
 
-    procedure Gerar_IBSCBS_gIBSCBS_gIBSUF(AINIRec: TMemIniFile; gIBSUF: TgIBSValores; Idx: Integer);
-    procedure Gerar_IBSCBS_gIBSCBS_gIBSMun(AINIRec: TMemIniFile; gIBSMun: TgIBSValores; Idx: Integer);
+    procedure Gerar_IBSCBS_gIBSCBS_gIBSUF(AINIRec: TMemIniFile; gIBSUF: TgIBSUFValores; Idx: Integer);
+    procedure Gerar_IBSCBS_gIBSCBS_gIBSMun(AINIRec: TMemIniFile; gIBSMun: TgIBSMunValores; Idx: Integer);
     procedure Gerar_IBSCBS_gIBSCBS_gCBS(AINIRec: TMemIniFile; gCBS: TgCBSValores; Idx: Integer);
 
     procedure Gerar_IBSCBS_gIBSCBS_gIBSCBSCredPres(AINIRec: TMemIniFile; gIBSCredPres: TgIBSCBSCredPres;
@@ -187,6 +187,13 @@ begin
   AINIRec.WriteString(sSecao, 'indNotaEntrada', TIndicadorToStr(Ide.indNotaEntrada));
   AINIRec.WriteString(sSecao, 'dhCont', DateToStr(Ide.dhCont));
   AINIRec.WriteString(sSecao, 'xJust', Ide.xJust);
+
+  // Reforma Tritutaria
+  if Ide.gCompraGov.pRedutor > 0 then
+  begin
+    AINIRec.WriteString(sSecao, 'tpCompraGov', tpCompraGovToStr(Ide.gCompraGov.tpCompraGov));
+    AINIRec.WriteFloat(sSecao, 'pRedutor', Ide.gCompraGov.pRedutor);
+  end;
 end;
 
 procedure TNFComIniWriter.Gerar_Emitente(AINIRec: TMemIniFile; Emit: TEmit);
@@ -523,7 +530,7 @@ begin
   AINIRec.WriteFloat(sSecao, 'vTotDFe', Total.vTotDFe);
 
   // Reforma Tributária
-  if NFCom.Total.IBSCBSTot.vBCCIBS > 0 then
+  if NFCom.Total.IBSCBSTot.vBCIBSCBS > 0 then
     Gerar_IBSCBSTot(AINIRec, NFCom.Total.IBSCBSTot);
 end;
 
@@ -667,14 +674,14 @@ begin
 end;
 
 procedure TNFComIniWriter.Gerar_IBSCBS_gIBSCBS_gIBSUF(AINIRec: TMemIniFile;
-  gIBSUF: TgIBSValores; Idx: Integer);
+  gIBSUF: TgIBSUFValores; Idx: Integer);
 var
   sSecao: string;
 begin
   sSecao := 'gIBSUF' + IntToStrZero(Idx + 1, 3);;
 
   AINIRec.WriteFloat(sSecao, 'pIBSUF', gIBSUF.pIBS);
-  AINIRec.WriteFloat(sSecao, 'vTribOP', gIBSUF.vTribOP);
+  AINIRec.WriteFloat(sSecao, 'vTribOp', gIBSUF.vTribOp);
   AINIRec.WriteFloat(sSecao, 'vIBSUF', gIBSUF.vIBS);
 
   AINIRec.WriteFloat(sSecao, 'pDif', gIBSUF.gDif.pDif);
@@ -685,25 +692,25 @@ begin
   AINIRec.WriteFloat(sSecao, 'pRedAliq', gIBSUF.gRed.pRedAliq);
   AINIRec.WriteFloat(sSecao, 'pAliqEfet', gIBSUF.gRed.pAliqEfet);
 
-  AINIRec.WriteInteger(sSecao, 'CST', gIBSUF.gDeson.CST);
-  AINIRec.WriteInteger(sSecao, 'cClassTrib', gIBSUF.gDeson.cClassTrib);
-  AINIRec.WriteFloat(sSecao, 'vBC', gIBSUF.gDeson.vBC);
-  AINIRec.WriteFloat(sSecao, 'pAliq', gIBSUF.gDeson.pAliq);
-  AINIRec.WriteFloat(sSecao, 'vDeson', gIBSUF.gDeson.vDeson);
+  AINIRec.WriteInteger(sSecao, 'CSTReg', gIBSUF.gTribRegular.CSTReg);
+  AINIRec.WriteInteger(sSecao, 'cClassTribReg', gIBSUF.gTribRegular.cClassTribReg);
+  AINIRec.WriteFloat(sSecao, 'pAliqEfetReg', gIBSUF.gTribRegular.pAliqEfetReg);
+  AINIRec.WriteFloat(sSecao, 'vTribReg', gIBSUF.gTribRegular.vTribReg);
 end;
 
 procedure TNFComIniWriter.Gerar_IBSCBS_gIBSCBS_gIBSMun(AINIRec: TMemIniFile;
-  gIBSMun: TgIBSValores; Idx: Integer);
+  gIBSMun: TgIBSMunValores; Idx: Integer);
 var
   sSecao: string;
 begin
   sSecao := 'gIBSMun' + IntToStrZero(Idx + 1, 3);;
 
   AINIRec.WriteFloat(sSecao, 'pIBSMun', gIBSMun.pIBS);
-  AINIRec.WriteFloat(sSecao, 'vTribOP', gIBSMun.vTribOP);
+  AINIRec.WriteFloat(sSecao, 'vTribOp', gIBSMun.vTribOp);
   AINIRec.WriteFloat(sSecao, 'vIBSMun', gIBSMun.vIBS);
 
   AINIRec.WriteFloat(sSecao, 'pDif', gIBSMun.gDif.pDif);
+  AINIRec.WriteFloat(sSecao, 'vCBSOp', gIBSMun.gDif.vCBSOp);
   AINIRec.WriteFloat(sSecao, 'vDif', gIBSMun.gDif.vDif);
 
   AINIRec.WriteFloat(sSecao, 'vDevTrib', gIBSMun.gDevTrib.vDevTrib);
@@ -711,11 +718,10 @@ begin
   AINIRec.WriteFloat(sSecao, 'pRedAliq', gIBSMun.gRed.pRedAliq);
   AINIRec.WriteFloat(sSecao, 'pAliqEfet', gIBSMun.gRed.pAliqEfet);
 
-  AINIRec.WriteInteger(sSecao, 'CST', gIBSMun.gDeson.CST);
-  AINIRec.WriteInteger(sSecao, 'cClassTrib', gIBSMun.gDeson.cClassTrib);
-  AINIRec.WriteFloat(sSecao, 'vBC', gIBSMun.gDeson.vBC);
-  AINIRec.WriteFloat(sSecao, 'pAliq', gIBSMun.gDeson.pAliq);
-  AINIRec.WriteFloat(sSecao, 'vDeson', gIBSMun.gDeson.vDeson);
+  AINIRec.WriteInteger(sSecao, 'CSTReg', gIBSMun.gTribRegular.CSTReg);
+  AINIRec.WriteInteger(sSecao, 'cClassTribReg', gIBSMun.gTribRegular.cClassTribReg);
+  AINIRec.WriteFloat(sSecao, 'pAliqEfetReg', gIBSMun.gTribRegular.pAliqEfetReg);
+  AINIRec.WriteFloat(sSecao, 'vTribReg', gIBSMun.gTribRegular.vTribReg);
 end;
 
 procedure TNFComIniWriter.Gerar_IBSCBS_gIBSCBS_gCBS(AINIRec: TMemIniFile;
@@ -726,10 +732,11 @@ begin
   sSecao := 'gCBS' + IntToStrZero(Idx + 1, 3);;
 
   AINIRec.WriteFloat(sSecao, 'pCBS', gCBS.pCBS);
-  AINIRec.WriteFloat(sSecao, 'vTribOP', gCBS.vTribOP);
+  AINIRec.WriteFloat(sSecao, 'vTribOp', gCBS.vTribOp);
   AINIRec.WriteFloat(sSecao, 'vCBS', gCBS.vCBS);
 
   AINIRec.WriteFloat(sSecao, 'pDif', gCBS.gDif.pDif);
+  AINIRec.WriteFloat(sSecao, 'vCBSOp', gCBS.gDif.vCBSOp);
   AINIRec.WriteFloat(sSecao, 'vDif', gCBS.gDif.vDif);
 
   AINIRec.WriteFloat(sSecao, 'vDevTrib', gCBS.gDevTrib.vDevTrib);
@@ -737,11 +744,10 @@ begin
   AINIRec.WriteFloat(sSecao, 'pRedAliq', gCBS.gRed.pRedAliq);
   AINIRec.WriteFloat(sSecao, 'pAliqEfet', gCBS.gRed.pAliqEfet);
 
-  AINIRec.WriteInteger(sSecao, 'CST', gCBS.gDeson.CST);
-  AINIRec.WriteInteger(sSecao, 'cClassTrib', gCBS.gDeson.cClassTrib);
-  AINIRec.WriteFloat(sSecao, 'vBC', gCBS.gDeson.vBC);
-  AINIRec.WriteFloat(sSecao, 'pAliq', gCBS.gDeson.pAliq);
-  AINIRec.WriteFloat(sSecao, 'vDeson', gCBS.gDeson.vDeson);
+  AINIRec.WriteInteger(sSecao, 'CSTReg', gCBS.gTribRegular.CSTReg);
+  AINIRec.WriteInteger(sSecao, 'cClassTribReg', gCBS.gTribRegular.cClassTribReg);
+  AINIRec.WriteFloat(sSecao, 'pAliqEfetReg', gCBS.gTribRegular.pAliqEfetReg);
+  AINIRec.WriteFloat(sSecao, 'vTribReg', gCBS.gTribRegular.vTribReg);
 end;
 
 procedure TNFComIniWriter.Gerar_IBSCBS_gIBSCBS_gIBSCBSCredPres(AINIRec: TMemIniFile;
@@ -763,7 +769,7 @@ var
 begin
   sSecao := 'IBSCBSTot';
 
-  AINIRec.WriteFloat(sSecao, 'vBCCIBS', IBSCBSTot.vBCCIBS);
+  AINIRec.WriteFloat(sSecao, 'vBCIBSCBS', IBSCBSTot.vBCIBSCBS);
 
   Gerar_IBSCBSTot_gIBS(AINIRec, IBSCBSTot.gIBS);
   Gerar_IBSCBSTot_gCBS(AINIRec, IBSCBSTot.gCBS);
@@ -775,9 +781,9 @@ var
 begin
   sSecao := 'gIBS';
 
+  AINIRec.WriteFloat(sSecao, 'vIBS', gIBS.vIBS);
   AINIRec.WriteFloat(sSecao, 'vCredPres', gIBS.vCredPres);
   AINIRec.WriteFloat(sSecao, 'vCredPresCondSus', gIBS.vCredPresCondSus);
-  AINIRec.WriteFloat(sSecao, 'vIBSTot', gIBS.vIBSTot);
 
   Gerar_IBSCBSTot_gIBS_gIBSUFTot(AINIRec, gIBS.gIBSUFTot);
   Gerar_IBSCBSTot_gIBS_gIBSMunTot(AINIRec, gIBS.gIBSMunTot);
@@ -792,7 +798,6 @@ begin
 
   AINIRec.WriteFloat(sSecao, 'vDif', gIBSUFTot.vDif);
   AINIRec.WriteFloat(sSecao, 'vDevTrib', gIBSUFTot.vDevTrib);
-  AINIRec.WriteFloat(sSecao, 'vDeson', gIBSUFTot.vDeson);
   AINIRec.WriteFloat(sSecao, 'vIBSUF', gIBSUFTot.vIBSUF);
 end;
 
@@ -805,7 +810,6 @@ begin
 
   AINIRec.WriteFloat(sSecao, 'vDif', gIBSMunTot.vDif);
   AINIRec.WriteFloat(sSecao, 'vDevTrib', gIBSMunTot.vDevTrib);
-  AINIRec.WriteFloat(sSecao, 'vDeson', gIBSMunTot.vDeson);
   AINIRec.WriteFloat(sSecao, 'vIBSMun', gIBSMunTot.vIBSMun);
 end;
 
@@ -817,9 +821,9 @@ begin
 
   AINIRec.WriteFloat(sSecao, 'vDif', gCBS.vDif);
   AINIRec.WriteFloat(sSecao, 'vDevTrib', gCBS.vDevTrib);
-  AINIRec.WriteFloat(sSecao, 'vDeson', gCBS.vDeson);
-  AINIRec.WriteFloat(sSecao, 'vCredPresCondSus', gCBS.vCredPresCondSus);
   AINIRec.WriteFloat(sSecao, 'vCBS', gCBS.vCBS);
+  AINIRec.WriteFloat(sSecao, 'vCredPres', gCBS.vCredPres);
+  AINIRec.WriteFloat(sSecao, 'vCredPresCondSus', gCBS.vCredPresCondSus);
 end;
 
 end.

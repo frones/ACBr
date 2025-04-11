@@ -397,7 +397,7 @@ begin
   if Pos('?', urlUF) <= 0 then
     urlUF := urlUF + '?';
 
-  idNFCom := FNFCom.infNFCom.ID;
+  idNFCom := OnlyNumber(FNFCom.infNFCom.ID);
 
   // Passo 1
   sEntrada := 'chNFCom=' + idNFCom + '&tpAmb=' + TipoAmbienteToStr(FNFCom.Ide.tpAmb);

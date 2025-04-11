@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+11/04/2025
+-- Diversos --
+[*] #TK-6836: Ajustes necessários para deixar em conformidade com a NT2025/001.
+  Por: Italo Giurizzato Junior
+
 04/04/2025
 -- Diversos --
 [*] #TK-5814: Implementado as units: ACBrNFComIniReader e ACBrNFComIniWrite que

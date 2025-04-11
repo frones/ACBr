@@ -184,6 +184,13 @@ const
   // Futuramente deve ir para a unit ACBrDFeConversao
   TCRTArrayStrings: array[TCRT] of string = ('1', '2', '3');
 
+// Reforma Tributaria
+type
+  TtpCompraGov  = (tcgUniao, tcgEstados, tcgDistritoFederal, tcgMunicipios);
+
+const
+  TtpCompraGovArrayStrings: array[TtpCompraGov] of string = ('1', '2', '3', '4');
+
 {
   Declaração das funções de conversão
 }
@@ -250,6 +257,9 @@ function StrTotpRessarc(const s: string): TtpRessarc;
 
 function CRTToStr(const t: TCRT): string;
 function StrToCRT(const s: string): TCRT;
+
+function tpCompraGovToStr(const t: TtpCompraGov): string;
+function StrTotpCompraGov(const s: string): TtpCompraGov;
 
 function StrToTpEventoNFCom(out ok: boolean; const s: string): TpcnTpEvento;
 
@@ -713,6 +723,26 @@ begin
   end;
 
   raise EACBrException.CreateFmt('Valor string inválido para TCRT: %s', [s]);
+end;
+
+function tpCompraGovToStr(const t: TtpCompraGov): string;
+begin
+  Result := TtpCompraGovArrayStrings[t];
+end;
+
+function StrTotpCompraGov(const s: string): TtpCompraGov;
+var
+  idx: TtpCompraGov;
+begin
+  for idx:= Low(TtpCompraGovArrayStrings) to High(TtpCompraGovArrayStrings)do
+  begin
+    if(TtpCompraGovArrayStrings[idx] = s)then
+    begin
+      Result := idx;
+      exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para TtpCompraGov: %s', [s]);
 end;
 
 function StrToTpEventoNFCom(out ok: boolean; const s: string): TpcnTpEvento;

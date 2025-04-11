@@ -507,7 +507,7 @@ begin
             LJsonMultaObject.AddPair('data', FormatDateBr(ATitulo.DataMulta, 'YYYY-MM-DD'));
 
          case LCodigoMulta of
-            1: LJsonMultaObject.AddPair('valor', StringReplace(FormatFloat('0.0', ATitulo.PercentualMulta),
+            1: LJsonMultaObject.AddPair('valor', StringReplace(FormatFloat('0.00', ATitulo.PercentualMulta),
                                                                 ',', '.', [rfReplaceAll]) );
             2: LJsonMultaObject.AddPair('taxa', StringReplace(FormatFloat('0.0', ATitulo.PercentualMulta),
                                                                 ',', '.', [rfReplaceAll]) );

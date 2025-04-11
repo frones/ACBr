@@ -48,6 +48,8 @@ type
 
   TACBrBancoSicredi = class(TACBrBancoClass)
   private
+    // tratamento para quando agencia tem letras deve retornadar "00"
+    function DigitoAgencia(const ACedente : TACBrCedente) :string;
     function ObtemCodigoMoraJuros(const ACBrTitulo: TACBrTitulo): String;
     function ConverterJurosDiario(const ACBrTitulo: TACBrTitulo): Double;
     function ConverterMultaPercentual(const ACBrTitulo: TACBrTitulo): Double;
@@ -114,17 +116,11 @@ begin
 end;
 
 function TACBrBancoSicredi.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
-var 
-   LAgenciaDigito :string;
 begin
    Modulo.CalculoPadrao;
 
-   LAgenciaDigito := ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito;
-   if OnlyAlpha(LAgenciaDigito) <> EmptyStr then
-      LAgenciaDigito :='00';
-
    Modulo.Documento := ACBrTitulo.ACBrBoleto.Cedente.Agencia +
-                       PadLeft(OnlyNumber(LAgenciaDigito), 2, '0') +
+                       PadLeft(OnlyNumber(DigitoAgencia( ACBrTitulo.ACBrBoleto.Cedente)), 2, '0') +
                        PadLeft(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente, 5, '0');
 
   if ( (ACBrBanco.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) and (Length(ACBrTitulo.CodigoGeracao) = 3)) then
@@ -162,7 +158,7 @@ begin
                       '1'                                             + { 1-Carteira simples }
                       OnlyNumber(MontarCampoNossoNumero(ACBrTitulo))  +
                       PadLeft(OnlyNumber(Cedente.Agencia),4,'0')      + { Código agência (cooperativa) }
-                      PadLeft(OnlyNumber(Cedente.AgenciaDigito),2,'0')+ { Dígito da agência (posto da cooperativa) }
+                      PadLeft(OnlyNumber(DigitoAgencia( Cedente)),2,'0')+ { Dígito da agência (posto da cooperativa) }
                       PadLeft(OnlyNumber(Cedente.CodigoCedente),5,'0')+ { Código cedente }  //  Ver manual página 86 - CNAB240 ou 51 - CNAB400
                       '1'                                             + { Filler - zero. Obs: Será 1 quando o valor do documento for diferente se zero }
                       '0';                                              { Filler - zero }
@@ -951,6 +947,13 @@ end;
 function TACBrBancoSicredi.DefinePosicaoNossoNumeroRetorno: Integer;
 begin
   Result := 48;
+end;
+
+function TACBrBancoSicredi.DigitoAgencia(const ACedente : TACBrCedente): string;
+begin
+  Result := ACedente.AgenciaDigito;
+  if OnlyAlpha(Result) <> EmptyStr then
+    Result :='00';
 end;
 
 function TACBrBancoSicredi.CodMotivoRejeicaoToDescricao(

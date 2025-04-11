@@ -436,6 +436,8 @@ var
   XmlNode: TACBrXmlNode;
 begin
   FpQuebradeLinha := FpAOwner.ConfigGeral.QuebradeLinha;
+
+  // Define a quantidade de casas decimais da tag: unidade_quantidade
   FpCasasDecimais := StrToIntDef(FpAOwner.ConfigGeral.Params.ValorParametro('CasasDecimais'), 2);
 
   if EstaVazio(Arquivo) then

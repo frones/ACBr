@@ -118,6 +118,7 @@ begin
     definição da cidade o valor de NaoGerar é True
   }
   FpNaoGerarGrupoRps := FpAOwner.ConfigGeral.Params.TemParametro('NaoGerarGrupoRps');
+  // Define a quantidade de casas decimais da tag: unidade_quantidade
   FpCasasDecimais := StrToIntDef(FpAOwner.ConfigGeral.Params.ValorParametro('CasasDecimais'), 2);
 
   FDocument.Clear();

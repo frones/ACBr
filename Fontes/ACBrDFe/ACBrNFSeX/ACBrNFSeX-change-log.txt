@@ -42,6 +42,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/04/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6902: A cidade de Estancia Velha/RS correção na URL.
+  Por: Marco Moreira
+[*] #TK-6901: A cidade de Zortea/SC mudou de provedor, agora é IPM versão 1.01
+  Por: Lucas ATZ
+[*] #TK-6896: As cidades de Riqueza/SC e Caibi/SC mudaram a URL o provedor continua
+    o mesmo.
+  Por: Microsys Sistemas
+
 10/04/2025
 -- IPM.GravarXml/IPM.LerXml --
 [*] #TK-6877: Parametrizado a quantidade de casas decimais da tag: unidade_quantidade

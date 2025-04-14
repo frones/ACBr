@@ -2934,7 +2934,7 @@ begin
   FFormatSettings.ThousandSeparator := '.';
 
   EngineOptions.DoublePass := True;
-
+  SetUTF8(false);
   FDashWidth := 1;
   FPaperWidth := 80;
   FPaperHeight := 200;

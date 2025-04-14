@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/04/2025
+-- ACBrNFCeDANFeFPDF --
+[*] Correção acentuação impressão de evento para NFCe com FPDF
+   Por: Antonio Carlos Junior
+
 11/04/2025
 -- ACBrNFeWebServices --
 [*] A alteração anterior gerou um efeito colateral no evento de cancelamento.

@@ -319,7 +319,10 @@ begin
   end else
   begin
     OAuth.URL := C_URL_OAUTH_HOM;
-    LVersao := '1.2';
+    if Boleto.Cedente.CedenteWS.IndicadorPix then
+      LVersao := '1.2'
+    else
+      LVersao := '1.1';
   end;
 
   if  Boleto.Configuracoes.WebService.Ambiente = tawsProducao then

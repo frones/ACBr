@@ -407,47 +407,37 @@ begin
         begin
           if Checb_ZeraBase.Checked then
           begin
-            if VersaoDFx <= ve02_05_00 then
-              nmRazao := 'RemoverEmpregadorDaBaseDeDadosDaProducaoRestrita';
             classTrib := ct00;
           end
           else
           begin
-            if VersaoDFx <= ve02_05_00 then
-              nmRazao := 'Empresa Teste';
             classTrib := ct01;
           end;
 
-          if VersaoDFx <= ve02_05_00 then
-            natJurid := '0001';
           indCoop := tpIndCoop(1);
           indConstr := tpIndConstr(1);
           indDesFolha := tpIndDesFolha(2);
           indPorte := tpNao;
           indOptRegEletron := tpIndOptRegEletron(1);
+          cnpjEFR := '01234567890123';
+          dtTrans11096 := Date;
 
-          if VersaoDFx <= ve02_05_00 then
+          if (VersaoDFx > veS01_00_00) and (VersaoDFx < veS01_03_00) then
+            indTribFolhaPisCofins := snfSim;
+
+          if VersaoDFx > veS01_02_00 then
+          begin
+            indTribFolhaPisPasep := snfSim;
+            indPertIRRF := snfSim;
+          end;
+
+          if VersaoDFx < veS01_00_00 then
           begin
             indEtt := snfSim;
             nrRegEtt := '';
           end;
 
-          if VersaoDFx <= ve02_05_00 then
-          begin
-            with infoOp do
-            begin
-              nrSiafi := '12345';
-
-              with infoEnte do
-              begin
-                nmEnte := 'Ente federativo teste';
-                uf := 'SP';
-                vrSubteto := 100.00;
-              end;
-            end;
-          end;
-
-          with dadosIsencao do
+           with dadosIsencao do
           begin
             ideMinLei := 'Sigla Min';
             nrCertif := '1111';
@@ -459,37 +449,11 @@ begin
             pagDou := '111';
           end;
 
-          if VersaoDFx <= ve02_05_00 then
-            with Contato do
-            begin
-              nmCtt := 'Contato 1';
-              cpfCtt := '00000222220';
-              foneFixo := '34335856';
-              foneCel := '991524587';
-              email := 'testecontato@testecontato.com';
-            end;
-
-          with infoOrgInternacional do
+           with infoOrgInternacional do
           begin
             indAcordoIsenMulta := tpIndAcordoIsencaoMulta(1);
           end;
-
-          if VersaoDFx <= ve02_05_00 then
-          begin
-            softwareHouse.Clear;
-
-            with softwareHouse.New do
-            begin
-              cnpjSoftHouse := '00000000000000';
-              nmRazao := 'SoftwareHouse Teste';
-              nmCont := 'Soft Contato';
-              telefone := '34335856';
-              email := 'teste@teste.com';
-            end;
-
-
-          end;
-        end;
+         end;
 
         with novaValidade do
         begin
@@ -541,8 +505,6 @@ begin
             aliqRat := arat1;
             fap := 1.5;
 
-            if VersaoDFx <= ve02_05_00 then
-              aliqRatAjust := 2.5;
  {
             with ProcAdmJudRat do
             begin
@@ -576,12 +538,7 @@ begin
 
             with infoApr do
             begin
-
-{
-              nrProcJud := '20150612';
-}
-              if VersaoDFx <= ve02_05_00 then
-                contEntEd := snfSim;
+//              nrProcJud := '20150612';
 
               infoEntEduc.Clear;
 
@@ -768,12 +725,11 @@ begin
             nrInscProp := '654234523416';
           end;
 
-          if VersaoDFx > ve02_05_00 then
-            with dadosOpPort do
-            begin
-              aliqRat := arat3;
-              fap := 1.0;
-            end;
+          with dadosOpPort do
+          begin
+            aliqRat := arat3;
+            fap := 1.0;
+          end;
         end;
 
         with novaValidade do
@@ -788,8 +744,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial1030;
 begin
-  if VersaoDFx > ve02_05_00 then
-    exit;
+  exit;
 
   with ACBreSocial1.Eventos.Tabelas.S1030.New do
   begin
@@ -836,8 +791,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial1035;
 begin
-  if VersaoDFx > ve02_05_00 then
-    exit;
+  exit;
 
   with ACBreSocial1.Eventos.Tabelas.S1035.New do
   begin
@@ -872,8 +826,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial1040;
 begin
-  if VersaoDFx > ve02_05_00 then
-    exit;
+  exit;
 
   with ACBreSocial1.Eventos.Tabelas.S1040.New do
   begin
@@ -906,8 +859,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial1050;
 begin
-  if VersaoDFx > ve02_05_00 then
-    exit;
+  exit;
 
   with ACBreSocial1.Eventos.Tabelas.S1050.New do
   begin
@@ -961,8 +913,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial1060;
 begin
-  if VersaoDFx > ve02_05_00 then
-    exit;
+  exit;
 
   with ACBreSocial1.Eventos.Tabelas.S1060.New do
   begin
@@ -1054,8 +1005,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial1080;
 begin
-  if VersaoDFx > ve02_05_00 then
-    exit;
+  exit;
 
   with ACBreSocial1.Eventos.Tabelas.S1080.New do
   begin
@@ -1666,7 +1616,7 @@ begin
 
         if VersaoDFx >= veS01_02_00 then
         begin
-          with InfoIRComplem do
+          with InfoIRComplem.New do
           begin
             dtLaudo := StrToDate('10/06/2015');
 
@@ -3350,8 +3300,6 @@ begin
       IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       IdeVinculo.CpfTrab := '12345678901';
-      if VersaoDFx <= ve02_05_00 then
-        IdeVinculo.NisTrab := '12345678901';
       IdeVinculo.Matricula := '5000';
 
       with toxicologico do
@@ -3616,8 +3564,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2245;
 begin
-  if VersaoDFx > ve02_05_00 then
-    exit;
+  exit;
 
   with ACBreSocial1.Eventos.NaoPeriodicos.S2245.New do
   begin
@@ -3671,8 +3618,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2250;
 begin
-  if VersaoDFx > ve02_05_00 then
-    exit;
+  exit;
 
   with ACBreSocial1.Eventos.NaoPeriodicos.S2250.New do
   begin
@@ -3716,8 +3662,7 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2260;
 begin
-  if VersaoDFx > ve02_05_00 then
-    exit;
+  exit;
 
  with ACBreSocial1.Eventos.NaoPeriodicos.S2260.New do
   begin
@@ -4876,6 +4821,7 @@ begin
         cpfTrab := '01234567890';
         nmTrab := 'Trabalhador Um';
         dtNascto := Now - 9501;
+        ideSeqTrab := 0;
 
         with dependente.New do
         begin

@@ -443,7 +443,10 @@ begin
             indTribFolhaPisCofins := snfSim;
 
           if VersaoDFx > veS01_02_00 then
+          begin
             indTribFolhaPisPasep := snfSim;
+            indPertIRRF := snfSim;
+          end;
 
           if VersaoDFx < veS01_00_00 then
           begin
@@ -6203,6 +6206,7 @@ begin
         cpfTrab := '01234567890';
         nmTrab := 'Trabalhador Um';
         dtNascto := Now - 9501;
+        ideSeqTrab := 0;
 
         with dependente.New do
         begin

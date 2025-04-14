@@ -178,6 +178,7 @@ type
     FdtTrans11096: TDatetime;
     FIndTribFolhaPisCofins: TpSimNaoFacultativo;
     FIndTribFolhaPisPasep: TpSimNaoFacultativo;
+    FindPertIRRF: TpSimNaoFacultativo;
 
     function getDadosIsencao(): TDadosIsencao;
     function getInfoOrgInternacional(): TInfoOrgInternacional;
@@ -210,6 +211,7 @@ type
     property dtTrans11096 : TDatetime read FdtTrans11096 write FdtTrans11096;
     property indTribFolhaPisCofins: tpSimNaoFacultativo read FIndTribFolhaPisCofins write FIndTribFolhaPisCofins default snfNao;
     property indTribFolhaPisPasep: tpSimNaoFacultativo read FindTribFolhaPisPasep write FindTribFolhaPisPasep default snfNada;
+    property indPertIRRF: tpSimNaoFacultativo read FindPertIRRF write FindPertIRRF default snfNada;
   end;
 
   TInfoEmpregador = class(TObject)
@@ -405,6 +407,9 @@ begin
   if (VersaoDF > veS01_02_00) and (infoEmpregador.infoCadastro.indTribFolhaPisPasep = snfSim) then
     Gerador.wCampo(tcStr, '', 'indTribFolhaPisPasep',  0, 1, 0, eSSimNaoFacultativoToStr(Self.infoEmpregador.infoCadastro.indTribFolhaPisPasep));
 
+  if (VersaoDF > veS01_02_00) then
+    Gerador.wCampo(tcStr, '', 'indPertIRRF',  0, 1, 0, eSSimNaoFacultativoToStr(Self.infoEmpregador.infoCadastro.indPertIRRF));
+
   GerarDadosIsencao;
   GerarInfoOrgInternacional;
 
@@ -513,6 +518,7 @@ begin
         infoEmpregador.infoCadastro.cnpjEFR               := INIRec.ReadString(sSecao, 'cnpjEFR', EmptyStr);
         infoEmpregador.infoCadastro.indTribFolhaPisCofins := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indTribFolhaPisCofins', ''));
         infoEmpregador.infoCadastro.indTribFolhaPisPasep  := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indTribFolhaPisPasep', ''));
+        infoEmpregador.infoCadastro.indPertIRRF  := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indPertIRRF', ''));
 
         sSecao := 'dadosIsencao';
         if INIRec.ReadString(sSecao, 'ideMinLei', '') <> '' then

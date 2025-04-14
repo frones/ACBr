@@ -1985,7 +1985,7 @@ begin
 
     Gerador.wCampo(tcStr, '', 'tpDesc', 1, 1, 1, eSTtpDescToStr(obj.tpDesc));
     Gerador.wCampo(tcStr, '', 'instFinanc', 3, 3, 1, obj.instFinanc);
-    Gerador.wCampo(tcStr, '', 'nrDoc', 8, 12, 1, obj.nrDoc);
+    Gerador.wCampo(tcStr, '', 'nrDoc', 1, 15, 1, obj.nrDoc);
     Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 0, obj.observacao);
 
     Gerador.wGrupo('/descFolha');

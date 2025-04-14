@@ -472,6 +472,7 @@ type
     FcpfTrab: string;
     FnmTrab: string;
     FdtNascto: TDateTime;
+    FideSeqTrab: Integer;
     Fdependente: TDependenteCollectionS2500;
     FinfoContr: TInfoContrCollection;
 
@@ -487,6 +488,7 @@ type
     property cpfTrab: string read FCpfTrab write FCpfTrab;
     property nmTrab: string read FNmTrab write FNmTrab;
     property dtNascto: TDateTime read FDtNascto write FDtNascto;
+    property ideSeqTrab: Integer read FideSeqTrab write FideSeqTrab;
     property dependente: TDependenteCollectionS2500 read getDependenteS2500 write FDependente;
     property infoContr: TInfoContrCollection read getInfoContr write FInfoContr;
   end;
@@ -1787,6 +1789,7 @@ begin
   Gerador.wCampo(tcStr, '', 'cpfTrab',  11, 11, 1, obj.cpfTrab);
   Gerador.wCampo(tcStr, '', 'nmTrab' ,   0, 70, 1, obj.nmTrab);
   Gerador.wCampo(tcDat, '', 'dtNascto', 10, 10, 0, obj.dtNascto);
+  Gerador.wCampo(tcInt, '', 'ideSeqTrab', 0, 3, 0, obj.ideSeqTrab);
 
   if obj.instDependenteS2500() and (VersaoDF <= veS01_01_00) then
     GerarDependente(obj.dependente);
@@ -1887,6 +1890,7 @@ begin
       ideTrab.cpfTrab  := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
       ideTrab.nmTrab   := INIRec.ReadString(sSecao, 'nmTrab', EmptyStr);
       ideTrab.dtNascto := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
+      ideTrab.ideSeqTrab := INIRec.ReadInteger(sSecao, 'ideSeqTrab', 0);
 
       I := 1;
       while true do

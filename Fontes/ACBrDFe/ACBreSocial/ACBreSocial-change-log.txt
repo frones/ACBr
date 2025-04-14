@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/04/2025
+-- Diversos -
+[*] #TK-6893: Implementada NT 2025/003
+  Por: Renato Rubinho
+
 13/03/2025
 -- pcesRetDownloadRetEvt -
 [*] #TK-6669: Atualizar o schema do S1260 para não validar cnpj

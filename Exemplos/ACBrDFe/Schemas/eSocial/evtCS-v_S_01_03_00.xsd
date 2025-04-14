@@ -624,7 +624,7 @@
                                                                             <xs:element name="basesCp13" minOccurs="0">
                                                                                 <xs:annotation>
                                                                                     <xs:documentation>Valores correspondentes às remunerações a título de 13º salário incluídas em folha mensal - Empresas desoneradas.</xs:documentation>
-                                                                                    <xs:documentation>CONDICAO_GRUPO: OC (se {indDesFolha}(1000_infoEmpregador_inclusao_infoCadastro_indDesFolha) em S-1000 = [1]); N (nos demais casos)</xs:documentation>
+                                                                                    <xs:documentation>CONDICAO_GRUPO: OC (se {indDesFolha}(1000_infoEmpregador_inclusao_infoCadastro_indDesFolha) em S-1000 = [1], exceto para CNO com {indSubstPatrObra}(5011_infoCS_ideEstab_infoEstab_infoComplObra_indSubstPatrObra) = [2]); N (nos demais casos)</xs:documentation>
                                                                                 </xs:annotation>
                                                                                 <xs:complexType>
                                                                                     <xs:sequence>
@@ -948,7 +948,7 @@
                                                             <xs:documentation>Bases da contribuição do PIS/PASEP</xs:documentation>
                                                             <xs:documentation>DESCRICAO_COMPLETA:Valores correspondentes às bases da contribuição do PIS/PASEP.</xs:documentation>
                                                             <xs:documentation>CONDICAO_GRUPO: O (se {}(5011_infoCS_infoContrib_infoPJ_indTribFolhaPisPasep) = [S], {}(5011_ideEvento_perApur) >= [2025-01] e {ideEmpregador/tpInsc}(5011_ideEmpregador_tpInsc)= [1]; N (nos demais casos)</xs:documentation>
-                                                            <xs:documentation>O cálculo do CR 8301-02 depende da versão e do período de apuração do fechamento. Se a versão for S-1.3 e {}(1299_ideEvento_perApur) >= [2025-01], então o CR será calculado sobre {}(5011_infoCS_ideEstab_basesPisPasep); em caso contrário, o CR será calculado com as bases da previdência.</xs:documentation>
+                                                            <xs:documentation>O cálculo do CR 8301-02 e do CR 8301-22 dependem da versão e do período de apuração do fechamento. Se a versão for S-1.3 e {}(1299_ideEvento_perApur) >= [2025-01], então o CR será calculado sobre {}(5011_infoCS_ideEstab_basesPisPasep); em caso contrário, o CR será calculado com as bases da previdência.</xs:documentation>
                                                         </xs:annotation>
                                                         <xs:complexType>
                                                             <xs:sequence>

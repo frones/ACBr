@@ -45,7 +45,6 @@ type
   { TBoletoW_Inter_API }
   TBoletoW_Inter_API = class(TBoletoWSREST)
   private
-//    function CodigoTipoTitulo(AEspecieDoc: String): String;
     function DateIntertoDateTime(const AValue: String): TDateTime;
     function DateTimeToDateInter( const AValue:TDateTime ):String;
   protected
@@ -614,10 +613,6 @@ begin
               LJsonMulta.AddPair('codigo','PERCENTUAL');
               LJsonMulta.AddPair('taxa',ATitulo.PercentualMulta);
             end;
-          3:
-            begin
-//                  //LJsonMulta.AddPair('codigoMulta').Value.asString := 'NAOTEMMULTA'; //2024-01-08 - TK5016 - 00215-23 - retirado
-            end;
         end;
       end
       else  // qdo nao é hibrido
@@ -752,15 +747,11 @@ begin
   // sem Payload
 end;
 
-//function TBoletoW_Inter_API.CodigoTipoTitulo(AEspecieDoc: String): String;
-//begin
-//end;
-
 constructor TBoletoW_Inter_API.Create(ABoletoWS: TBoletoWS);
 begin
   inherited Create(ABoletoWS);
 
-  FPAccept := C_ACCEPT;
+  FPAccept := '';
 
   if Assigned(OAuth) then
   begin

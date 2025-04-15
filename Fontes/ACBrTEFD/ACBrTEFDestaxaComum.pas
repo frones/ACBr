@@ -2051,7 +2051,7 @@ begin
   if not Assigned(aStrList) or (aConteudo <= 0) then
     Exit;
 
-  aStrList.Values[aCampo] := '"' + FormatDateTime('dd/MM/yyyy', aConteudo) + '"';
+  aStrList.Values[aCampo] := '"' + FormatDateTime('dd/mm/yyyy hh:nn:ss', aConteudo) + '"';
 end;
 
 procedure TACBrTEFDestaxaTransacaoClass.PreencherCampo(const aStrList: TStringList; const aCampo, aConteudo: AnsiString;PreencherVazio: Boolean);

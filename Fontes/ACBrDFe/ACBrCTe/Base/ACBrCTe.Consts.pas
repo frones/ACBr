@@ -258,6 +258,12 @@ resourcestring
   DSC_CBENEF = 'Código do Benefício Fiscal';
   DSC_TPPREST = 'Tipo de Prestação';
 
+  DSC_CLASSDUTO = 'Classificação do Dutoviário';
+  DSC_TPCONTRATACAO = 'Tipo de contratação do serviço de transporte (apenas para gasoduto)';
+  DSC_CODPONTOENTRADA = 'Código do Ponto de Entrada';
+  DSC_CODPONTOSAIDA = 'Código do Ponto de Saída';
+  DSC_NCONTRATO = 'Número do Contrato de Capacidade';
+
   // Reforma Tributária
   DSC_CCLASSTRIB = 'Código de Classificação Tributária do IBS e CBS';
   DSC_PIBSUF = 'Alíquota do IBS de competência das UF';

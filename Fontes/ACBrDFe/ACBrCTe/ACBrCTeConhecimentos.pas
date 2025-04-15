@@ -42,8 +42,8 @@ uses
   ACBrCTeConfiguracoes,
   ACBrCTe.Classes,
   {$IfDef USE_ACBr_XMLDOCUMENT}
-//  ACBrCTe.XmlReader,
-  ACBrCTe.XmlHandler,
+  ACBrCTe.XmlReader,
+//  ACBrCTe.XmlHandler,
   ACBrCTe.XmlWriter,
   {$Else}
   pcteCTeR,

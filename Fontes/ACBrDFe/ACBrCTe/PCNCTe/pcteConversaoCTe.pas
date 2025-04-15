@@ -318,12 +318,24 @@ type
 const
   TtpPrestArrayStrings: array[TtpPrest] of string = ('1', '2');
 
-// Reforma Tributaria
 type
-  TtpCompraGov  = (tcgUniao, tcgEstados, tcgDistritoFederal, tcgMunicipios);
+  TclassDuto = (tcdNenhum, tcdGasoduto, tcdMineroduto, tcdOleoduto);
 
 const
-  TtpCompraGovArrayStrings: array[TtpCompraGov] of string = ('1', '2', '3', '4');
+  TclassDutoArrayStrings: array[TclassDuto] of string = ('', '1', '2', '3');
+
+type
+  TtpContratacao = (tcNenhum, tcPontaPonto, tcCapacidadeEntrada, tcCapacidadeSaida);
+
+const
+  TtpContratacaoArrayStrings: array[TtpContratacao] of string = ('', '1', '2', '3');
+
+// Reforma Tributaria
+type
+  TtpEnteGov  = (tcgUniao, tcgEstados, tcgDistritoFederal, tcgMunicipios);
+
+const
+  TtpEnteGovArrayStrings: array[TtpEnteGov] of string = ('1', '2', '3', '4');
 
 {
   Declaração das funções de conversão
@@ -445,14 +457,20 @@ function tpMotivoToDesc(const t: TtpMotivo): string;
 function tpPrestToStr(const t: TtpPrest): string;
 function StrTotpPrest(out ok: boolean; const s: string): TtpPrest;
 
-function tpCompraGovToStr(const t: TtpCompraGov): string;
-function StrTotpCompraGov(const s: string): TtpCompraGov;
+function classDutoToStr(const t: TclassDuto): string;
+function StrToclassDuto(out ok: boolean; const s: string): TclassDuto;
+
+function tpContratacaoToStr(const t: TtpContratacao): string;
+function StrTotpContratacao(out ok: boolean; const s: string): TtpContratacao;
+
+// Reforma Tributária
+function tpEnteGovToStr(const t: TtpEnteGov): string;
+function StrTotpEnteGov(const s: string): TtpEnteGov;
 
 implementation
 
 uses
   typinfo;
-
 
 function ModeloNFToStr(const t: TpcteModeloNF): string;
 begin
@@ -1107,24 +1125,64 @@ begin
     [tpTotal, tpParcial]);
 end;
 
-function tpCompraGovToStr(const t: TtpCompraGov): string;
+function classDutoToStr(const t: TclassDuto): string;
 begin
-  Result := TtpCompraGovArrayStrings[t];
+  Result := TclassDutoArrayStrings[t];
 end;
 
-function StrTotpCompraGov(const s: string): TtpCompraGov;
+function StrToclassDuto(out ok: boolean; const s: string): TclassDuto;
 var
-  idx: TtpCompraGov;
+  idx: TclassDuto;
 begin
-  for idx:= Low(TtpCompraGovArrayStrings) to High(TtpCompraGovArrayStrings)do
+  for idx:= Low(TclassDutoArrayStrings) to High(TclassDutoArrayStrings) do
   begin
-    if(TtpCompraGovArrayStrings[idx] = s)then
+    if(TclassDutoArrayStrings[idx] = s)then
     begin
       Result := idx;
       exit;
     end;
   end;
-  raise EACBrException.CreateFmt('Valor string inválido para TtpCompraGov: %s', [s]);
+  raise EACBrException.CreateFmt('Valor string inválido para TclassDuto: %s', [s]);
+end;
+
+function tpContratacaoToStr(const t: TtpContratacao): string;
+begin
+  Result := TtpContratacaoArrayStrings[t];
+end;
+
+function StrTotpContratacao(out ok: boolean; const s: string): TtpContratacao;
+var
+  idx: TtpContratacao;
+begin
+  for idx:= Low(TtpContratacaoArrayStrings) to High(TtpContratacaoArrayStrings) do
+  begin
+    if(TtpContratacaoArrayStrings[idx] = s)then
+    begin
+      Result := idx;
+      exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para TtpContratacao: %s', [s]);
+end;
+
+function tpEnteGovToStr(const t: TtpEnteGov): string;
+begin
+  Result := TtpEnteGovArrayStrings[t];
+end;
+
+function StrTotpEnteGov(const s: string): TtpEnteGov;
+var
+  idx: TtpEnteGov;
+begin
+  for idx:= Low(TtpEnteGovArrayStrings) to High(TtpEnteGovArrayStrings)do
+  begin
+    if(TtpEnteGovArrayStrings[idx] = s)then
+    begin
+      Result := idx;
+      exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para TtpEnteGov: %s', [s]);
 end;
 
 initialization

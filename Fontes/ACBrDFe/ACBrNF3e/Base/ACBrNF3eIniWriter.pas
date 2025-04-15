@@ -98,6 +98,9 @@ type
     procedure Gerar_gIBSUF(AINIRec: TMemIniFile; gIBSUF: TgIBSUFValores; Idx1, Idx2: Integer);
     procedure Gerar_gIBSMun(AINIRec: TMemIniFile; gIBSMun: TgIBSMunValores; Idx1, Idx2: Integer);
     procedure Gerar_gCBS(AINIRec: TMemIniFile; gCBS: TgCBSValores; Idx1, Idx2: Integer);
+
+    procedure Gerar_IBSCBS_gIBSCBS_gTribReg(AINIRec: TMemIniFile; gTribRegular: TgTribRegular;
+      Idx1, Idx2: Integer);
     procedure Gerar_gIBSCredPres(AINIRec: TMemIniFile; gIBSCredPres: TgIBSCBSCredPres; Idx1, Idx2: Integer);
     procedure Gerar_gCBSCredPres(AINIRec: TMemIniFile; gCBSCredPres: TgIBSCBSCredPres; Idx1, Idx2: Integer);
 
@@ -207,7 +210,7 @@ begin
   // Reforma Tritutaria
   if Ide.gCompraGov.pRedutor > 0 then
   begin
-    AINIRec.WriteString(sSecao, 'tpCompraGov', tpCompraGovToStr(Ide.gCompraGov.tpCompraGov));
+    AINIRec.WriteString(sSecao, 'tpEnteGov', tpEnteGovToStr(Ide.gCompraGov.tpEnteGov));
     AINIRec.WriteFloat(sSecao, 'pRedutor', Ide.gCompraGov.pRedutor);
   end;
 end;
@@ -1017,7 +1020,6 @@ begin
   sSecao := 'gIBSUF' + IntToStrZero(Idx1, 2) + IntToStrZero(Idx2, 3);
 
   AINIRec.WriteFloat(sSecao, 'pIBSUF', gIBSUF.pIBS);
-  AINIRec.WriteFloat(sSecao, 'vTribOP', gIBSUF.vTribOP);
   AINIRec.WriteFloat(sSecao, 'vIBSUF', gIBSUF.vIBS);
 
   AINIRec.WriteFloat(sSecao, 'pDif', gIBSUF.gDif.pDif);
@@ -1027,11 +1029,6 @@ begin
 
   AINIRec.WriteFloat(sSecao, 'pRedAliq', gIBSUF.gRed.pRedAliq);
   AINIRec.WriteFloat(sSecao, 'pAliqEfet', gIBSUF.gRed.pAliqEfet);
-
-  AINIRec.WriteInteger(sSecao, 'CSTReg', gIBSUF.gTribRegular.CSTReg);
-  AINIRec.WriteInteger(sSecao, 'cClassTribReg', gIBSUF.gTribRegular.cClassTribReg);
-  AINIRec.WriteFloat(sSecao, 'pAliqEfetReg', gIBSUF.gTribRegular.pAliqEfetReg);
-  AINIRec.WriteFloat(sSecao, 'vTribReg', gIBSUF.gTribRegular.vTribReg);
 end;
 
 procedure TNF3eIniWriter.Gerar_gIBSMun(AINIRec: TMemIniFile;
@@ -1042,7 +1039,6 @@ begin
   sSecao := 'gIBSMun' + IntToStrZero(Idx1, 2) + IntToStrZero(Idx2, 3);
 
   AINIRec.WriteFloat(sSecao, 'pIBSMun', gIBSMun.pIBS);
-  AINIRec.WriteFloat(sSecao, 'vTribOP', gIBSMun.vTribOP);
   AINIRec.WriteFloat(sSecao, 'vIBSMun', gIBSMun.vIBS);
 
   AINIRec.WriteFloat(sSecao, 'pDif', gIBSMun.gDif.pDif);
@@ -1053,11 +1049,6 @@ begin
 
   AINIRec.WriteFloat(sSecao, 'pRedAliq', gIBSMun.gRed.pRedAliq);
   AINIRec.WriteFloat(sSecao, 'pAliqEfet', gIBSMun.gRed.pAliqEfet);
-
-  AINIRec.WriteInteger(sSecao, 'CSTReg', gIBSMun.gTribRegular.CSTReg);
-  AINIRec.WriteInteger(sSecao, 'cClassTribReg', gIBSMun.gTribRegular.cClassTribReg);
-  AINIRec.WriteFloat(sSecao, 'pAliqEfetReg', gIBSMun.gTribRegular.pAliqEfetReg);
-  AINIRec.WriteFloat(sSecao, 'vTribReg', gIBSMun.gTribRegular.vTribReg);
 end;
 
 procedure TNF3eIniWriter.Gerar_gCBS(AINIRec: TMemIniFile; gCBS: TgCBSValores; Idx1, Idx2: Integer);
@@ -1067,7 +1058,6 @@ begin
   sSecao := 'gCBS' + IntToStrZero(Idx1, 2) + IntToStrZero(Idx2, 3);
 
   AINIRec.WriteFloat(sSecao, 'pCBS', gCBS.pCBS);
-  AINIRec.WriteFloat(sSecao, 'vTribOP', gCBS.vTribOP);
   AINIRec.WriteFloat(sSecao, 'vCBS', gCBS.vCBS);
 
   AINIRec.WriteFloat(sSecao, 'pDif', gCBS.gDif.pDif);
@@ -1078,11 +1068,23 @@ begin
 
   AINIRec.WriteFloat(sSecao, 'pRedAliq', gCBS.gRed.pRedAliq);
   AINIRec.WriteFloat(sSecao, 'pAliqEfet', gCBS.gRed.pAliqEfet);
+end;
 
-  AINIRec.WriteInteger(sSecao, 'CSTReg', gCBS.gTribRegular.CSTReg);
-  AINIRec.WriteInteger(sSecao, 'cClassTribReg', gCBS.gTribRegular.cClassTribReg);
-  AINIRec.WriteFloat(sSecao, 'pAliqEfetReg', gCBS.gTribRegular.pAliqEfetReg);
-  AINIRec.WriteFloat(sSecao, 'vTribReg', gCBS.gTribRegular.vTribReg);
+procedure TNF3eIniWriter.Gerar_IBSCBS_gIBSCBS_gTribReg(AINIRec: TMemIniFile;
+  gTribRegular: TgTribRegular; Idx1, Idx2: Integer);
+var
+  sSecao: string;
+begin
+  sSecao := 'gTribRegular' + IntToStrZero(Idx1, 2) + IntToStrZero(Idx2, 3);
+
+  AINIRec.WriteInteger(sSecao, 'CSTReg', gTribRegular.CSTReg);
+  AINIRec.WriteInteger(sSecao, 'cClassTribReg', gTribRegular.cClassTribReg);
+  AINIRec.WriteFloat(sSecao, 'pAliqEfetRegIBSUF', gTribRegular.pAliqEfetRegIBSUF);
+  AINIRec.WriteFloat(sSecao, 'vTribRegIBSUF', gTribRegular.vTribRegIBSUF);
+  AINIRec.WriteFloat(sSecao, 'pAliqEfetRegIBSMun', gTribRegular.pAliqEfetRegIBSMun);
+  AINIRec.WriteFloat(sSecao, 'vTribRegIBSMun', gTribRegular.vTribRegIBSMun);
+  AINIRec.WriteFloat(sSecao, 'pAliqEfetRegCBS', gTribRegular.pAliqEfetRegCBS);
+  AINIRec.WriteFloat(sSecao, 'vTribRegCBS', gTribRegular.vTribRegCBS);
 end;
 
 procedure TNF3eIniWriter.Gerar_gIBSCredPres(AINIRec: TMemIniFile; gIBSCredPres: TgIBSCBSCredPres; Idx1, Idx2: Integer);

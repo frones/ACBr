@@ -372,10 +372,10 @@ const
 
 // Reforma Tributaria
 type
-  TtpCompraGov  = (tcgUniao, tcgEstados, tcgDistritoFederal, tcgMunicipios);
+  TtpEnteGov  = (tcgUniao, tcgEstados, tcgDistritoFederal, tcgMunicipios);
 
 const
-  TtpCompraGovArrayStrings: array[TtpCompraGov] of string = ('1', '2', '3', '4');
+  TtpEnteGovArrayStrings: array[TtpEnteGov] of string = ('1', '2', '3', '4');
 
 {
   Declaração das funções de conversão
@@ -510,8 +510,8 @@ function CSTICMSToStrTagPosText(const t: TCSTIcms): string;
 function indIEDestToStr(const t: TindIEDest ): string;
 function StrToindIEDest(const s: string): TindIEDest;
 
-function tpCompraGovToStr(const t: TtpCompraGov): string;
-function StrTotpCompraGov(const s: string): TtpCompraGov;
+function tpEnteGovToStr(const t: TtpEnteGov): string;
+function StrTotpEnteGov(const s: string): TtpEnteGov;
 
 implementation
 
@@ -1410,24 +1410,24 @@ begin
   raise EACBrException.CreateFmt('Valor string inválido para TindIEDest: %s', [s]);
 end;
 
-function tpCompraGovToStr(const t: TtpCompraGov): string;
+function tpEnteGovToStr(const t: TtpEnteGov): string;
 begin
-  Result := TtpCompraGovArrayStrings[t];
+  Result := TtpEnteGovArrayStrings[t];
 end;
 
-function StrTotpCompraGov(const s: string): TtpCompraGov;
+function StrTotpEnteGov(const s: string): TtpEnteGov;
 var
-  idx: TtpCompraGov;
+  idx: TtpEnteGov;
 begin
-  for idx:= Low(TtpCompraGovArrayStrings) to High(TtpCompraGovArrayStrings)do
+  for idx:= Low(TtpEnteGovArrayStrings) to High(TtpEnteGovArrayStrings)do
   begin
-    if(TtpCompraGovArrayStrings[idx] = s)then
+    if(TtpEnteGovArrayStrings[idx] = s)then
     begin
       Result := idx;
       exit;
     end;
   end;
-  raise EACBrException.CreateFmt('Valor string inválido para TtpCompraGov: %s', [s]);
+  raise EACBrException.CreateFmt('Valor string inválido para TtpEnteGov: %s', [s]);
 end;
 
 initialization

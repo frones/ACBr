@@ -103,13 +103,21 @@ type
   private
     FCSTReg: Integer;
     FcClassTribReg: Integer;
-    FpAliqEfetReg: Double;
-    FvTribReg: Double;
+    FpAliqEfetRegIBSUF: Double;
+    FvTribRegIBSUF: Double;
+    FpAliqEfetRegIBSMun: Double;
+    FvTribRegIBSMun: Double;
+    FpAliqEfetRegCBS: Double;
+    FvTribRegCBS: Double;
   public
     property CSTReg: Integer read FCSTReg write FCSTReg;
     property cClassTribReg: Integer read FcClassTribReg write FcClassTribReg;
-    property pAliqEfetReg: Double read FpAliqEfetReg write FpAliqEfetReg;
-    property vTribReg: Double read FvTribReg write FvTribReg;
+    property pAliqEfetRegIBSUF: Double read FpAliqEfetRegIBSUF write FpAliqEfetRegIBSUF;
+    property vTribRegIBSUF: Double read FvTribRegIBSUF write FvTribRegIBSUF;
+    property pAliqEfetRegIBSMun: Double read FpAliqEfetRegIBSMun write FpAliqEfetRegIBSMun;
+    property vTribRegIBSMun: Double read FvTribRegIBSMun write FvTribRegIBSMun;
+    property pAliqEfetRegCBS: Double read FpAliqEfetRegCBS write FpAliqEfetRegCBS;
+    property vTribRegCBS: Double read FvTribRegCBS write FvTribRegCBS;
   end;
 
   { TgIBSUFValores }
@@ -117,22 +125,18 @@ type
   TgIBSUFValores = class(TObject)
   private
     FpIBS: Double;
-    FvTribOp: Double;
     FgDif: TgDif;
     FgDevTrib: TgDevTrib;
     FgRed: TgRed;
-    FgTribRegular: TgTribRegular;
     FvIBS: Double;
   public
     constructor Create;
     destructor Destroy; override;
 
     property pIBS: Double read FpIBS write FpIBS;
-    property vTribOp: Double read FvTribOp write FvTribOp;
     property gDif: TgDif read FgDif write FgDif;
     property gDevTrib: TgDevTrib read FgDevTrib write FgDevTrib;
     property gRed: TgRed read FgRed write FgRed;
-    property gTribRegular: TgTribRegular read FgTribRegular write FgTribRegular;
     property vIBS: Double read FvIBS write FvIBS;
   end;
 
@@ -141,22 +145,18 @@ type
   TgIBSMunValores = class(TObject)
   private
     FpIBS: Double;
-    FvTribOp: Double;
     FgDif: TgDifCBS;
     FgDevTrib: TgDevTrib;
     FgRed: TgRed;
-    FgTribRegular: TgTribRegular;
     FvIBS: Double;
   public
     constructor Create;
     destructor Destroy; override;
 
     property pIBS: Double read FpIBS write FpIBS;
-    property vTribOp: Double read FvTribOp write FvTribOp;
     property gDif: TgDifCBS read FgDif write FgDif;
     property gDevTrib: TgDevTrib read FgDevTrib write FgDevTrib;
     property gRed: TgRed read FgRed write FgRed;
-    property gTribRegular: TgTribRegular read FgTribRegular write FgTribRegular;
     property vIBS: Double read FvIBS write FvIBS;
   end;
 
@@ -165,22 +165,18 @@ type
   TgCBSValores = class(TObject)
   private
     FpCBS: Double;
-    FvTribOp: Double;
     FgDif: TgDifCBS;
     FgDevTrib: TgDevTrib;
     FgRed: TgRed;
-    FgTribRegular: TgTribRegular;
     FvCBS: Double;
   public
     constructor Create;
     destructor Destroy; override;
 
     property pCBS: Double read FpCBS write FpCBS;
-    property vTribOp: Double read FvTribOp write FvTribOp;
     property gDif: TgDifCBS read FgDif write FgDif;
     property gDevTrib: TgDevTrib read FgDevTrib write FgDevTrib;
     property gRed: TgRed read FgRed write FgRed;
-    property gTribRegular: TgTribRegular read FgTribRegular write FgTribRegular;
     property vCBS: Double read FvCBS write FvCBS;
   end;
 
@@ -207,6 +203,7 @@ type
     FgIBSUF: TgIBSUFValores;
     FgIBSMun: TgIBSMunValores;
     FgCBS: TgCBSValores;
+    FgTribRegular: TgTribRegular;
     FgIBSCredPres: TgIBSCBSCredPres;
     FgCBSCredPres: TgIBSCBSCredPres;
   public
@@ -217,6 +214,7 @@ type
     property gIBSUF: TgIBSUFValores read FgIBSUF write FgIBSUF;
     property gIBSMun: TgIBSMunValores read FgIBSMun write FgIBSMun;
     property gCBS: TgCBSValores read FgCBS write FgCBS;
+    property gTribRegular: TgTribRegular read FgTribRegular write FgTribRegular;
     property gIBSCredPres: TgIBSCBSCredPres read FgIBSCredPres write FgIBSCredPres;
     property gCBSCredPres: TgIBSCBSCredPres read FgCBSCredPres write FgCBSCredPres;
   end;
@@ -320,12 +318,12 @@ type
 
   TgCompraGov = class(TObject)
   private
-    FtpCompraGov: TtpCompraGov;
+    FtpEnteGov: TtpEnteGov;
     FpRedutor: Double;
   public
     procedure Assign(Source: TgCompraGov);
 
-    property tpCompraGov: TtpCompraGov read FtpCompraGov write FtpCompraGov;
+    property tpEnteGov: TtpEnteGov read FtpEnteGov write FtpEnteGov;
     property pRedutor: Double read FpRedutor write FpRedutor;
   end;
 
@@ -1957,6 +1955,7 @@ begin
   FgIBSUF := TgIBSUFValores.Create;
   FgIBSMun := TgIBSMunValores.Create;
   FgCBS := TgCBSValores.Create;
+  FgTribRegular := TgTribRegular.Create;
   FgIBSCredPres := TgIBSCBSCredPres.Create;
   FgCBSCredPres := TgIBSCBSCredPres.Create;
 end;
@@ -1966,6 +1965,7 @@ begin
   FgIBSUF.Free;
   FgIBSMun.Free;
   FgCBS.Free;
+  FgTribRegular.Free;
   FgIBSCredPres.Free;
   FgCBSCredPres.Free;
 
@@ -1997,7 +1997,6 @@ begin
   FgDif := TgDif.Create;
   FgDevTrib := TgDevTrib.Create;
   FgRed := TgRed.Create;
-  FgTribRegular := TgTribRegular.Create;
 end;
 
 destructor TgIBSUFValores.Destroy;
@@ -2005,7 +2004,6 @@ begin
   FgDif.Free;
   FgDevTrib.Free;
   FgRed.Free;
-  FgTribRegular.Free;
 
   inherited Destroy;
 end;
@@ -2019,7 +2017,6 @@ begin
   FgDif := TgDifCBS.Create;
   FgDevTrib := TgDevTrib.Create;
   FgRed := TgRed.Create;
-  FgTribRegular := TgTribRegular.Create;
 end;
 
 destructor TgCBSValores.Destroy;
@@ -2027,7 +2024,6 @@ begin
   FgDif.Free;
   FgDevTrib.Free;
   FgRed.Free;
-  FgTribRegular.Free;
 
   inherited Destroy;
 end;
@@ -2072,7 +2068,7 @@ end;
 
 procedure TgCompraGov.Assign(Source: TgCompraGov);
 begin
-  tpCompraGov := Source.tpCompraGov;
+  tpEnteGov := Source.tpEnteGov;
   pRedutor := Source.pRedutor;
 end;
 
@@ -2085,7 +2081,6 @@ begin
   FgDif := TgDifCBS.Create;
   FgDevTrib := TgDevTrib.Create;
   FgRed := TgRed.Create;
-  FgTribRegular := TgTribRegular.Create;
 end;
 
 destructor TgIBSMunValores.Destroy;
@@ -2093,7 +2088,6 @@ begin
   FgDif.Free;
   FgDevTrib.Free;
   FgRed.Free;
-  FgTribRegular.Free;
 
   inherited Destroy;
 end;

@@ -180,6 +180,8 @@ const
   DSC_VICMSEFET = 'Valor do ICMS efetivo';
 
   // Reforma Tributária
+  DSC_TPCOMPRAGOV = 'Tipo de compra governamental';
+  DSC_PREDUTOR = 'Percentual de redução de aliquota em compra governamental';
   DSC_CCLASSTRIB = 'Código de Classificação Tributária do IBS e CBS';
   DSC_PIBSUF = 'Alíquota do IBS de competência das UF';
   DSC_VTRIBOP = 'Valor bruto do tributo na operação';
@@ -191,12 +193,15 @@ const
   DSC_PALIQ = 'Valor da alíquota';
   DSC_VDESON = 'Valor desonerado';
   DSC_VIBSUF = 'Valor do IBS de competência da UF';
+  DSC_VIBS = 'Valor da IBS';
   DSC_PCBS = 'Alíquota da CBS';
   DSC_VCBS = 'Valor da CBS';
   DSC_CCREDPRES = 'Código de Classificação do Crédito Presumido';
   DSC_PCREDPRES = 'Percentual do Crédito Presumido';
   DSC_VCREDPRES = 'Valor do Crédito Presumido';
   DSC_VCREDPRESCONDSUS = 'Valor do Crédito Presumido em condição suspensiva.';
+  DSC_VTRIBREG = 'Valor do Tributo';
+  DSC_VCBSOP = 'Valor da CBS Bruto na operação';
 
   DSC_VBCCIBS = 'Total da Base de cálculo do IBS/CBS';
   DSC_VIBSMUN = 'Total do IBS Municipal';

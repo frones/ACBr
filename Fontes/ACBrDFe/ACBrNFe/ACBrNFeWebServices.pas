@@ -3116,25 +3116,23 @@ begin
     begin
       FPLayout := LayNFeEventoAN;
       UF       := 'AN';
-    end
-    else
-    begin
-      case FEvento.Evento.Items[0].InfEvento.tpEvento of
-        teInsucessoEntregaNFe, teCancInsucessoEntregaNFe:
+    end;
+
+    case FEvento.Evento.Items[0].InfEvento.tpEvento of
+      teInsucessoEntregaNFe, teCancInsucessoEntregaNFe:
+        begin
+          FPLayout := LayNFeEvento;
+          UF       := 'SVRS';
+        end;
+
+      teConcFinanceira, teCancConcFinanceira:
+        begin
+          if (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) then
           begin
             FPLayout := LayNFeEvento;
             UF       := 'SVRS';
           end;
-
-        teConcFinanceira, teCancConcFinanceira:
-          begin
-            if (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) then
-            begin
-              FPLayout := LayNFeEvento;
-              UF       := 'SVRS';
-            end;
-          end;
-      end;
+        end;
     end;
   end;
 

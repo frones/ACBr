@@ -91,13 +91,11 @@ type
     procedure Ler_gIBSMun_gDif(const ANode: TACBrXmlNode; gDif: TgDifCBS);
     procedure Ler_gIBSMun_gDevTrib(const ANode: TACBrXmlNode; gDevTrib: TgDevTrib);
     procedure Ler_gIBSMun_gRed(const ANode: TACBrXmlNode; gRed: TgRed);
-//    procedure Ler_gIBSMun_gTribRegular(const ANode: TACBrXmlNode; gTribRegular: TgTribRegular);
 
     procedure Ler_gCBS(const ANode: TACBrXmlNode; gCBS: TgCBSValores);
     procedure Ler_gCBS_gDif(const ANode: TACBrXmlNode; gDif: TgDifCBS);
     procedure Ler_gCBS_gDevTrib(const ANode: TACBrXmlNode; gDevTrib: TgDevTrib);
     procedure Ler_gCBS_gRed(const ANode: TACBrXmlNode; gRed: TgRed);
-//    procedure Ler_gCBS_gTribRegular(const ANode: TACBrXmlNode; gTribRegular: TgTribRegular);
 
     procedure Ler_gIBSCBS_gTribRegular(const ANode: TACBrXmlNode; gTribRegular: TgTribRegular);
     procedure Ler_gIBSCredPres(const ANode: TACBrXmlNode; gIBSCredPres: TgIBSCBSCredPres);

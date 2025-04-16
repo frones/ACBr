@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/04/2025
+-- ACBrNFComServicos --
+[*] Alteração na URL do QR-Code da NFCom da SEFAZ-MG.
+   Por: Eduardo Zambiazzi
+
 15/04/2025
 -- Diversos --
 [*] Ajustes necessários para deixar em conformidade com a NT2025/001 versão 1.01.

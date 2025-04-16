@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/04/2025
+-- ACBrNFSeXServicos --
+[+] #TK-6909: Incluída a cidade de Tambau/SP, o provedor é o AssessorPublico.
+  Por: Gabriel Bobello
+[*] #TK-6927: A cidade de Morumgaba/SP mudou a URL o provedor continua o mesmo.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRLClass/ACBrNFSeXDANFSeRLISSNet --
 -- ACBrNFSeXDANFSeRLRetrato/ACBrNFSeXDANFSeRLSimplISS --
 [+] #TK-6922: Implementado a Explansão da Logo Marca

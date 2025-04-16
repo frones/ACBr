@@ -45,6 +45,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/04/2025
+-- Diversos --
+[*] Ajustes necessários para deixar em conformidade com a NT2025/001 versão 1.01.
+-- Diversos --
+[*] #TK-6831: Ajustes necessários para deixar em conformidade com a NT2025/001.
+  Por: Italo Giurizzato Junior
+
 02/04/2025
 -- Diversos --
 [*] #TK-5814: Ajustes nas units: ACBrBPeIniReader e ACBrBPeIniWrite que

@@ -47,7 +47,8 @@ uses
   ACBrXmlBase,
   pcnConversao,
   ACBrUtil.Strings,
-  ACBrBPeConversao;
+  ACBrBPeConversao,
+  ACBrBPeClass;
 
 type
   EventoException = class(Exception);
@@ -63,6 +64,7 @@ type
     FvTotBag: Currency;
 
     FidPedidoCancelado: string;
+    FIBSCBS: TIBSCBS;
   public
     property versao: string     read FVersao     write FVersao;
     property descEvento: string read FDescEvento write FDescEvento;
@@ -73,6 +75,8 @@ type
     property vTotBag: Currency  read FvTotBag    write FvTotBag;
 
     property idPedidoCancelado: string read FidPedidoCancelado write FidPedidoCancelado;
+    // Reforma Tributária
+    property IBSCBS: TIBSCBS read FIBSCBS write FIBSCBS;
   end;
 
   TInfEvento = class

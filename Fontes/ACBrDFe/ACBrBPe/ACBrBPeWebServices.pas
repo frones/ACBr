@@ -762,7 +762,11 @@ begin
           BPe.procBPe.digVal   := FBPeRetorno.protBPe.digVal;
           BPe.procBPe.xMotivo  := FBPeRetorno.protBPe.xMotivo;
 
-          AProcBPe := TProcDFe.Create(FPVersaoServico, NAME_SPACE_BPE, 'bpeProc', 'BPe');
+          if FPConfiguracoesBPe.Geral.ModeloDF = moBPeTM then
+            AProcBPe := TProcDFe.Create(FPVersaoServico, NAME_SPACE_BPE, 'bpeTMProc', 'BPeTM')
+          else
+            AProcBPe := TProcDFe.Create(FPVersaoServico, NAME_SPACE_BPE, 'bpeProc', 'BPe');
+
           try
             // Processando em UTF8, para poder gravar arquivo corretamente //
             AProcBPe.XML_DFe := RemoverDeclaracaoXML(XMLAssinado);

@@ -388,6 +388,25 @@ begin
 
   TDFeReportFortes.CarregarLogo(rliLogo, fpDANFSe.Logo);
 
+  if (fpDANFSe.TamanhoLogoHeight = 0) and (fpDANFSe.TamanhoLogoWidth = 0) then
+  begin
+    // Expande a logomarca
+    if fpDANFSe.ExpandeLogoMarca then
+    begin
+      rlmPrefeitura.Visible := False;
+
+      with rliLogo do
+      begin
+        Height := 60;
+        Width := 580;
+        Top := 15;
+        Left := 9;
+
+        TDFeReportFortes.AjustarLogo(rliLogo, fpDANFSe.ExpandeLogoMarcaConfig);
+      end;
+    end;
+  end;
+
   rlmPrefeitura.Lines.Clear;
   rlmPrefeitura.Lines.Add(StringReplace(fpDANFSe.Prefeitura,
                                        FQuebradeLinha, #13#10, [rfReplaceAll]));

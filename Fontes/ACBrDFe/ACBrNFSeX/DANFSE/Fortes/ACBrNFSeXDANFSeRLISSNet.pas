@@ -388,6 +388,27 @@ begin
   begin
     TDFeReportFortes.CarregarLogo(rliLogo, fpDANFSe.Logo);
 
+    if (fpDANFSe.TamanhoLogoHeight = 0) and (fpDANFSe.TamanhoLogoWidth = 0) then
+    begin
+      // Expande a logomarca
+      if fpDANFSe.ExpandeLogoMarca then
+      begin
+        rlmPrefeitura1.Visible := False;
+        rlmPrefeitura2.Visible := False;
+        rlmPrefeitura3.Visible := False;
+
+        with rliLogo do
+        begin
+          Height := 62;
+          Width := 580;
+          Top := 4;
+          Left := 7;
+
+          TDFeReportFortes.AjustarLogo(rliLogo, fpDANFSe.ExpandeLogoMarcaConfig);
+        end;
+      end;
+    end;
+
     rllNumNF0.Caption := Numero;
 
     // Somente as 3 primeiras linhas serão utilizadas

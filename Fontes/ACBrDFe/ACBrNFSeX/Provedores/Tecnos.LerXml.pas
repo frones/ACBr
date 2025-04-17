@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  ACBrXmlDocument,
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
@@ -47,14 +48,30 @@ type
   protected
 
   public
+    function LerXmlNfse(const ANode: TACBrXmlNode): Boolean; override;
 
   end;
 
 implementation
 
+uses
+  ACBrNFSeXConversao;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     Tecnos
 //==============================================================================
+
+{ TNFSeR_Tecnos201 }
+
+function TNFSeR_Tecnos201.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
+begin
+  Result := inherited LerXmlNfse(ANode);
+
+  if NFSe.OptanteSimplesNacional = snSim then
+    NFSe.OptanteSimplesNacional := snNao
+  else
+    NFSe.OptanteSimplesNacional := snSim;
+end;
 
 end.

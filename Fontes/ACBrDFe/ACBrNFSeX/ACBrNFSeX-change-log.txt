@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/04/2025
+-- Tecnos.LerXml --
+[*] #TK-6928: Possível solução para a leitura correta da tag OptanteSimplesNacional
+  Por: Italo Giurizzato Junior
 -- IPM.Provider --
 [*] #TK-6936: Acrescentado a Quebra de Linha na configuração para versão 2.04 do provedor.
   Por: Italo Giurizzato Junior

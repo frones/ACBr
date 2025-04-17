@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/04/2025
+-- PagFor.Itau.GravarTxtRemessa --
+[*] TK-6926: Comentado as linhas que incrementam o numero sequencial do registro
+    no lote dos segmentos B, J52 e W.
+  Por: Marcelo Grando
+
 22/02/2025
 -- Diversos --
 [*] TK-6636: Implementado o Segmento 5 utilizado pelo Banco Bradesco.

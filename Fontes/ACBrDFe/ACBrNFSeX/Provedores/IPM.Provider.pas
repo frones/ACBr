@@ -1919,6 +1919,7 @@ begin
   ConfigGeral.QuebradeLinha := sLineBreak;
   ConfigGeral.Identificador := '';
   ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
+  ConfigGeral.QuebradeLinha := '\n';
 
   ConfigGeral.Autenticacao.RequerLogin := True;
 

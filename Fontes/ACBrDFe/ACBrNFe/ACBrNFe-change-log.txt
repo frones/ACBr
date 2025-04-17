@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/04/2025
+-- ACBrNFeWebServices --
+[*] Ajuste para definir corretamente a UF quando for NF-e e NFC-e no que se refere
+    ao evento ECONF.
+   Por: Halisson Kosvoski/Italo Giurizzato Junior
+
 14/04/2025
 -- ACBrNFCeDANFeFPDF --
 [*] Correção acentuação impressão de evento para NFCe com FPDF

@@ -3127,11 +3127,12 @@ begin
 
       teConcFinanceira, teCancConcFinanceira:
         begin
+          FPLayout := LayNFeEvento;
+
           if (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) then
-          begin
-            FPLayout := LayNFeEvento;
-            UF       := 'SVRS';
-          end;
+            UF := 'SVRS'
+          else
+            UF := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chNFe));
         end;
     end;
   end;

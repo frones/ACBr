@@ -473,7 +473,7 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#1', 'BeneficioProcesso', 1, 30, 0,
                                               NFSe.Servico.NumeroProcesso, ''));
-  if NFSe.OptanteMEISimei = snNao then
+  if (NFSe.OptanteMEISimei = snNao) and (NFSe.Servico.ExigibilidadeISS <> exiIsencao) then
   begin
     xmlNode := GerarMunicipioIncidencia;
     Result.AppendChild(xmlNode);

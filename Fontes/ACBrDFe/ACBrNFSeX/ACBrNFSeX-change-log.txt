@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/04/2025
+-- Agili.GravarXml --
+[*] #TK-6935: Acrescentado a condição de ExigibilidadeISS diferente de Isenção para 
+    gerar o Municipio de Incidencia no XML.
+  Por: Diego Reckziegel
 -- ACBrNFSeXServicos --
 [*] #TK-6937: A cidade de Catanduva/SP mudou de provedor, agora é RLZ versão 2.03
   Por: Bruno tbp

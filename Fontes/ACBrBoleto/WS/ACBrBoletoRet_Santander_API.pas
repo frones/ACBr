@@ -50,11 +50,13 @@ type
 
   TRetornoEnvio_Santander_API = class(TRetornoEnvioREST)
   private
+    function RetornaCodigoOcorrencia(pSituacaoGeralBoleto: string): String;
 
   public
     constructor Create(ABoletoWS: TACBrBoleto); override;
     destructor  Destroy; Override;
     function LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean; override;
+    function LerListaRetorno: Boolean; override;
     function RetornoEnvio(const AIndex: Integer): Boolean; override;
   end;
 
@@ -162,6 +164,8 @@ begin
                       ARetornoWS.DadosRet.TituloRet.DataDocumento        := StringToDateTimeDef(LJSONObject.AsString['issueDate'], 0, 'yyyy-mm-dd');
                       ARetornoWS.DadosRet.TituloRet.ValorDocumento       := LJSONObject.AsFloat['nominalValue'];
                       ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := LJSONObject.AsString['status'];
+                      ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := RetornaCodigoOcorrencia(LJSONObject.AsString['status']);
+
                       if LJSONObject.ValueExists('bankSlipData') then
                       begin
                         LExisteBankSlip := true;
@@ -212,11 +216,11 @@ begin
                         if ARetornoWS.DadosRet.TituloRet.ValorDocumento = 0 then
                          ARetornoWS.DadosRet.TituloRet.ValorDocumento              := LJSONObject.AsFloat['nominalValue'];
                         if NaoEstaVazio(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) then
-                         ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := LJSONObject.AsString['status'];
+                         ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := RetornaCodigoOcorrencia(LJSONObject.AsString['status']);
                       end;
 
                       if EstaVazio(ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca) then
-                        ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca:= LJSONObject.AsString['statusComplement'];
+                       ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := RetornaCodigoOcorrencia(LJSONObject.AsString['status']);
 
                       ARetornoWS.DadosRet.TituloRet.ValorDesconto               := LJSONObject.AsFloat['discountValue'];
                       ARetornoWS.DadosRet.TituloRet.ValorPago                   := LJSONObject.AsFloat['paidValue'];
@@ -241,7 +245,7 @@ begin
                            ARetornoWS.DadosRet.TituloRet.DataBaixa := StringToDateTimeDef(LJSONObject.AsString['settlementDate'], 0, 'yyyy-mm-dd');
                            ARetornoWS.DadosRet.TituloRet.ValorPago := LJSONObject.AsCurrency['settlementCreditedValue'];
                           if EstaVazio(ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca) then
-                           ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := LJSONObject.AsString['settlementDescription'];
+                            ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := RetornaCodigoOcorrencia(LJSONObject.AsString['status']);
                           if EstaVazio(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) then
                            ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := LJSONObject.AsString['status'];
                           ARetornoWS.DadosRet.TituloRet.ValorTarifa :=  LJSONObject.AsFloat['settlementDutyValue'];
@@ -257,7 +261,7 @@ begin
                           if ARetornoWS.DadosRet.TituloRet.ValorPago = 0 then
                            ARetornoWS.DadosRet.TituloRet.ValorPago := LJSONObject.AsFloat['writeOffValue'];
                           if EstaVazio(ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca) then
-                           ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := LJSONObject.AsString['writeOffDescription'];
+                           ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := RetornaCodigoOcorrencia(LJSONObject.AsString['status']);
                         end;
                       end;
                     end;
@@ -337,10 +341,180 @@ begin
     end;
   end;
 end;
+
+function TRetornoEnvio_Santander_API.LerListaRetorno: Boolean;
+var
+  LJsonObject, LItemObject, LPagObject, LPaginacaoObject, LErrosObject, LPayerObject: TACBrJSONObject;
+  LJsonArray, LJsonArrayErros: TACBrJSONArray;
+  LListaRetorno: TACBrBoletoRetornoWS;
+  LMensagemRejeicao: TACBrBoletoRejeicao;
+  I: Integer;
+begin
+  Result := True;
+
+  LListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
+  LListaRetorno.HTTPResultCode := HTTPResultCode;
+  LListaRetorno.JSONEnvio      := EnvWs;
+
+  if RetWS <> '' then
+  begin
+    try
+      LJsonObject := TACBrJSONObject.Parse(RetWS);
+      try
+        LListaRetorno.JSON           := LJsonObject.ToJSON;
+        //retorna quando houver erro
+
+        case HTTPResultCode of
+          400, 410 :
+          begin
+            if LJsonObject.IsJSONArray('_errors') then
+            begin
+              LJsonArrayErros := LJsonObject.AsJSONArray['_errors'];
+              for I := 0 to Pred(LJsonArrayErros.Count) do
+              begin
+                LErrosObject                 := LJsonArray.ItemAsJSONObject[I];
+                LMensagemRejeicao            := LListaRetorno.CriarRejeicaoLista;
+                LMensagemRejeicao.Codigo     := LErrosObject.AsString['_code'];
+                LMensagemRejeicao.Versao     := LErrosObject.AsString['_field'];
+                LMensagemRejeicao.Mensagem   := LErrosObject.AsString['_message'];
+                LMensagemRejeicao.Ocorrencia := LErrosObject.AsString['_field'];
+              end;
+            end;
+          end;
+
+          401,403,406,500 :
+          begin
+            LMensagemRejeicao            := LListaRetorno.CriarRejeicaoLista;
+            case HTTPResultCode of
+            401: LMensagemRejeicao.Mensagem   := LErrosObject.AsString['Unauthorized'];
+            403: LMensagemRejeicao.Mensagem   := LErrosObject.AsString['Forbidden'];
+            406: LMensagemRejeicao.Mensagem   := LErrosObject.AsString['Not Acceptable'];
+            500: LMensagemRejeicao.Mensagem   := LErrosObject.AsString['Internal Server Error'];
+            end;
+            LMensagemRejeicao.Codigo     := inttostr(HTTPResultCode);
+          end;
+        end;
+
+        //retorna quando tiver sucesso
+        if (LListaRetorno.ListaRejeicao.Count = 0) then
+        begin
+          LPaginacaoObject := LJsonObject.AsJSONObject['_pageable'];
+          //utilizando campos _offset, _pageElements e _totalElements pois os campos _pageNumber e _totalPages estão voltando sempre null
+          if (LPaginacaoObject.AsInteger['_offset'] + LPaginacaoObject.AsInteger['_pageElements']) < LPaginacaoObject.AsInteger['_totalElements'] then
+          begin
+            LListaRetorno.indicadorContinuidade := True;
+            LListaRetorno.proximoIndice := (Trunc(ACBrBoleto.Configuracoes.WebService.Filtro.indiceContinuidade)+1)
+          end
+          else
+          begin
+            LListaRetorno.indicadorContinuidade := False;
+            LListaRetorno.proximoIndice := 0;
+          end;
+
+          LJsonArray := LJsonObject.AsJSONArray['_content'];
+          //LListaRetorno.indicadorContinuidade := LJsonObject.AsBoolean['hasNext'];
+          for I := 0 to Pred(LJsonArray.Count) do
+          begin
+            if I > 0 then
+              LListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
+
+            LItemObject  := LJsonArray.ItemAsJSONObject[I];
+
+            LListaRetorno.DadosRet.IDBoleto.CodBarras      := '';
+            LListaRetorno.DadosRet.IDBoleto.LinhaDig       := '';
+            LListaRetorno.DadosRet.IDBoleto.NossoNum       := LItemObject.AsString['bankNumber'];
+            LListaRetorno.DadosRet.TituloRet.Contrato      := LItemObject.AsString['covenantCode'];
+            LListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca  :=  RetornaCodigoOcorrencia(LItemObject.AsString['status']);
+            LListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca        :=  LItemObject.AsString['status'] +' - '+ LItemObject.AsString['statusComplement'];
+
+            LListaRetorno.DadosRet.IDBoleto.CodBarras := LItemObject.AsString['barcode'];
+            LListaRetorno.DadosRet.IDBoleto.LinhaDig  := LItemObject.AsString['digitableLine'];
+
+            LListaRetorno.DadosRet.TituloRet.CodBarras      := LListaRetorno.DadosRet.IDBoleto.CodBarras;
+            LListaRetorno.DadosRet.TituloRet.LinhaDig       := LListaRetorno.DadosRet.IDBoleto.LinhaDig;
+            LListaRetorno.DadosRet.TituloRet.SeuNumero      := LItemObject.AsString['clientNumber'];
+            LListaRetorno.DadosRet.TituloRet.NossoNumero    := LListaRetorno.DadosRet.IDBoleto.NossoNum;
+
+            LListaRetorno.DadosRet.TituloRet.Vencimento     := StringToDateTimeDef(LItemObject.AsString['dueDate'], 0, 'yyyy-mm-dd');
+            LListaRetorno.DadosRet.TituloRet.DataDocumento  := StringToDateTimeDef(LItemObject.AsString['issueDate'], 0, 'yyyy-mm-dd');
+            LListaRetorno.DadosRet.TituloRet.DataRegistro   := StringToDateTimeDef(LItemObject.AsString['issueDate'], 0, 'yyyy-mm-dd');
+
+            LListaRetorno.DadosRet.TituloRet.valorAtual     := LItemObject.AsFloat['nominalValue'];
+            LListaRetorno.DadosRet.TituloRet.ValorDocumento := LItemObject.AsFloat['nominalValue'];
+
+            LPagObject := LJsonArray.ItemAsJSONObject[I].AsJSONObject['payment'];
+            LListaRetorno.DadosRet.TituloRet.DataBaixa      := StringToDateTimeDef(LPagObject.AsString['date'], 0, 'yyyy-mm-dd');
+            LListaRetorno.DadosRet.TituloRet.DataMovimento  := StringToDateTimeDef(LPagObject.AsString['date'], 0, 'yyyy-mm-dd');
+            LListaRetorno.DadosRet.TituloRet.DataProcessamento := StringToDateTimeDef(LPagObject.AsString['date'], 0, 'yyyy-mm-dd');
+            LListaRetorno.DadosRet.TituloRet.DataCredito       := StringToDateTimeDef(LPagObject.AsString['date'], 0, 'yyyy-mm-dd');
+
+            LListaRetorno.DadosRet.TituloRet.ValorRecebido              := LPagObject.AsFloat['paidValue'];
+            LListaRetorno.DadosRet.TituloRet.ValorPago                  := LPagObject.AsFloat['paidValue'];
+            //LListaRetorno.DadosRet.TituloRet.ValorRecebido              := LPagObject.AsFloat['valorLiquidado'];
+            LListaRetorno.DadosRet.TituloRet.ValorMulta                 := LPagObject.AsFloat['fineValue'];
+            LListaRetorno.DadosRet.TituloRet.ValorMoraJuros             := LPagObject.AsFloat['interestValue'];
+
+            LListaRetorno.DadosRet.TituloRet.ValorAbatimento            := LPagObject.AsFloat['deductionValue'];
+            LListaRetorno.DadosRet.TituloRet.ValorDesconto              := LPagObject.AsFloat['rebateValue'];
+            LListaRetorno.DadosRet.TituloRet.ValorIOF                   := LPagObject.AsFloat['iofValue'];
+            LListaRetorno.DadosRet.TituloRet.LiquidadoBanco             := strtoint(LPagObject.AsString['bankCode']);
+
+            LPayerObject := LJsonArray.ItemAsJSONObject[I].AsJSONObject['payer'];
+            LListaRetorno.DadosRet.TituloRet.Sacado.NomeSacado := LPayerObject.AsString['name'];
+            LListaRetorno.DadosRet.TituloRet.Sacado.CNPJCPF    := LPayerObject.AsString['documentNumber'];
+          end;
+        end;
+      finally
+        LJsonObject.free;
+      end;
+    except
+      Result := False;
+    end;
+  end else
+  begin
+    case HTTPResultCode of
+      400 :
+        begin
+          LMensagemRejeicao            := LListaRetorno.CriarRejeicaoLista;
+          LMensagemRejeicao.Codigo     := '400';
+          LMensagemRejeicao.Mensagem   := Msg;
+        end;
+      404 :
+        begin
+          LMensagemRejeicao            := LListaRetorno.CriarRejeicaoLista;
+          LMensagemRejeicao.Codigo     := '404';
+          LMensagemRejeicao.Mensagem   := 'NÃO ENCONTRADO. O servidor não conseguiu encontrar o recurso solicitado.';
+        end;
+      503 :
+        begin
+          LMensagemRejeicao            := LListaRetorno.CriarRejeicaoLista;
+          LMensagemRejeicao.Codigo     := '503';
+          LMensagemRejeicao.Versao     := 'ERRO INTERNO SICREDI';
+          LMensagemRejeicao.Mensagem   := 'SERVIÇO INDISPONÍVEL. O servidor está impossibilitado de lidar com a requisição no momento. Tente mais tarde.';
+          LMensagemRejeicao.Ocorrencia := 'ERRO INTERNO nos servidores do Sicredi.';
+        end;
+    end;
+  end;
+end;
+
+
 function TRetornoEnvio_Santander_API.RetornoEnvio(const AIndex: Integer): Boolean;
 begin
   Result:=inherited RetornoEnvio(AIndex);
 end;
+
+function TRetornoEnvio_Santander_API.RetornaCodigoOcorrencia(pSituacaoGeralBoleto: string) : String;
+begin
+  if (pSituacaoGeralBoleto  = 'ATIVO') then
+    Result := '02'
+  else if (pSituacaoGeralBoleto  = 'LIQUIDADO') then
+    Result := '06'
+  else if (pSituacaoGeralBoleto  = 'BAIXADO') then
+    Result := '09'
+  else
+    Result := '99';
+end;
+
 
 end.
 

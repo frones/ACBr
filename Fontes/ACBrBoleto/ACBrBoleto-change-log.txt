@@ -48,6 +48,19 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+22/04/2025
+-- ACBrBoletoRet_Santander_API, ACBrBoletoW_Santander_API --
+[*] TK-6322 - Add novo endpont para liquidados, para retornar informações liquidacoes.
+    https://developer.santander.com.br/api/documentacao/emissao-de-boletos-visao-geral#/api/documentacao/emissao-de-boletos-visao-geral/paths/workspaces-workspace_id--bank_slips/get
+	https://www.projetoacbr.com.br/forum/topic/80919-santander-api-liberada-rota-para-consulta-de-liquida%C3%A7%C3%B5es/
+	https://www.projetoacbr.com.br/forum/topic/82090-como-pegar-o-movimento-de-boletos-pagos-via-api-santander/#comment-531991
+  Por: Daniel de Morais InfoCotidano
+
+10/04/2025
+-- ACBrBoleto --
+[*] TK-6517 - Add a propriedade EMV na funcao GravarArqIni.
+  Por: Julio Cavalcanti
+
 10/04/2025
 -- ACBrBoletoW_Cora, ACBrBoletoRet_Cora  --
 [*] TK-6828 - Ajsutes codigo de liquidação e ID boleto.

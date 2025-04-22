@@ -753,7 +753,7 @@ begin
   begin
     nodeArray := Gerar_InfPercurso;
 
-    for i := 0 to CTe.Compl.obsCont.Count - 1 do
+    for i := 0 to CTe.Ide.infPercurso.Count - 1 do
     begin
       Result.AppendChild(nodeArray[i]);
     end;

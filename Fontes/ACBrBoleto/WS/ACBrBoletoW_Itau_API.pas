@@ -116,6 +116,10 @@ type
 
   C_URL_CONSULTA = 'https://secure.api.cloud.itau.com.br/boletoscash/v2';
 
+  C_URL_FRANCESAS_PROD = 'https://boletos.cloud.itau.com.br/boletos/v3/francesas';
+  C_URL_FRANCESAS_HOM  = 'https://sandbox.devportal.itau.com.br/itau-ep9-gtw-boletos-boletos-v3-ext-aws/v1';
+
+
   C_URL_OAUTH_PROD = 'https://sts.itau.com.br/api/oauth/token';
 
   C_URL_OAUTH_HOM = 'https://devportal.itau.com.br/api/jwt';
@@ -149,7 +153,17 @@ begin
       end;
 
     tpConsulta:
-      FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente  in [tawsProducao, tawsHomologacao], C_URL_CONSULTA, C_URL_HOM) + '/boletos?' + DefinirParametros;
+      begin
+         if Assigned(Boleto.Configuracoes.WebService.Filtro) then
+         begin
+           case Boleto.Configuracoes.WebService.Filtro.indicadorSituacao of
+            isbNenhum:
+              FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente  in [tawsProducao, tawsHomologacao], C_URL_CONSULTA, C_URL_HOM) + '/boletos?' + DefinirParametros;
+            else
+              FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente  in [tawsProducao, tawsHomologacao], C_URL_FRANCESAS_PROD, C_URL_FRANCESAS_HOM) + DefinirParametros;
+           end;
+         end;
+      end;
 
     tpConsultaDetalhe:
       FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente  in [tawsProducao, tawsHomologacao],
@@ -275,6 +289,7 @@ function TBoletoW_Itau_API.DefinirParametros: String;
 var
   LNossoNumero, LId_Beneficiario, LCarteira, Documento, LDAC: String;
   LConsulta: TStringList;
+  LDataInicio, LTipoMovto : string;
 begin
   if Assigned(ATitulo) then
     LNossoNumero := ATitulo.NossoNumero;
@@ -312,16 +327,51 @@ begin
       case Boleto.Configuracoes.WebService.Operacao of
         tpConsulta :
           begin
-            LConsulta.Add('id_beneficiario=' + LId_Beneficiario);
+            case Boleto.Configuracoes.WebService.Filtro.indicadorSituacao of
+              isbBaixado:
+              begin
+                if Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio = 0 then
+                   raise Exception.Create(ACBrStr('Para consultas isbBaixado, utilizar filtro: '+LineBreak+
+                                 'dataMovimento DataInicio'));
+                LDataInicio := FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio, 'YYYY-MM-DD');
+                LConsulta.Add('/'+LId_Beneficiario+'/movimentacoes?'+'data=' + LDataInicio);
+                LConsulta.Add('tipo_movimentacao='+'liquidacoes');
+              end;
+              isbCancelado:
+              begin
+                if Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio = 0 then
+                   raise Exception.Create(ACBrStr('Para consultas isbCancelado, utilizar filtro: '+LineBreak+
+                                 'dataMovimento DataInicio'));
+                LDataInicio := FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio, 'YYYY-MM-DD');
+                LConsulta.Add('/'+LId_Beneficiario+'/movimentacoes?'+'data=' + LDataInicio);
+                LConsulta.Add('tipo_movimentacao='+'baixas');
+              end;
+              isbAberto:
+              begin
+                  LDataInicio := FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio, 'YYYY-MM-DD');
+                  LTipoMovto  := 'entradas';
+                  raise Exception.Create(ACBrStr('Desabilitado consulta titulos Abertos ' + sLineBreak +
+                                 'API banco não estava devolvendo corretamente a consulta.' + sLineBreak+
+                                 'Você pode optar para utilizar a consulta antiga, use o filtro isbNenhum'));
+              end;
+              isbNenhum:
+              begin
+                {ATENÇÃO consulta qq situação antes da francesinha}
+                if Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio = 0 then
+                   raise Exception.Create(ACBrStr('Para consultas isbAberto, utilizar filtro: '+LineBreak+
+                                 'dataRegistro DataInicio'));
 
-            if Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio > 0 then
-              LConsulta.Add('data_inclusao=' + FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio, 'YYYY-MM-DD'));
+                LConsulta.Add('id_beneficiario=' + LId_Beneficiario);
 
+                if Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio > 0 then
+                  LConsulta.Add('data_inclusao=' + FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio, 'YYYY-MM-DD'));
+
+                {filtro full devolve lista, mas nao devolve informacoes pagamento}
+                LConsulta.Add('view=full');
+              end;
+            end;
             if Boleto.Configuracoes.WebService.Filtro.indiceContinuidade > 0 then
               LConsulta.Add('page=' + IntToStr(Trunc(Boleto.Configuracoes.WebService.Filtro.indiceContinuidade)));
-
-            {filtro full nao esta devolvendo informacoes pgto, suporte sugeriu utilizar specific}
-            LConsulta.Add('view=full');
           end;
         tpConsultaDetalhe :
           begin

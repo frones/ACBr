@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/04/2025
+-- ACBrEPCBloco_C_Class, ACBrEPCBloco_D_Class --
+[*] #TK-6923 - EFDContribuições - Consideradas datas de tratamento de alterações utilizando EncodeDate ao invés de StrToDate
+    https://www.projetoacbr.com.br/forum/topic/82867-erro-na-unit-acbrepcbloco_c_classpas
+    por: Anadilson / Renato Rubinho
+
 10/04/2025
 -- ACBrEFDBloco_D_Class --
 [*] #TK-6886 - Alterações revertidas, pois o erro era no validador e já foi corrigido

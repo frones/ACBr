@@ -873,7 +873,7 @@ begin
         WriteRegistroC490( RegC001.RegistroC010.Items[intFor] );
         WriteRegistroC500( RegC001.RegistroC010.Items[intFor] );
         WriteRegistroC600( RegC001.RegistroC010.Items[intFor] );
-        if DT_INI >= StrToDate('01/05/2015') then
+        if DT_INI >= EncodeDate(2015,05,01) then
           WriteRegistroC860( RegC001.RegistroC010.Items[intFor] );
         //
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
@@ -893,7 +893,7 @@ begin
       WriteRegistroC490( RegC001.RegistroC010.Items[FRegistroC010Count-1] );
       WriteRegistroC500( RegC001.RegistroC010.Items[FRegistroC010Count-1] );
       WriteRegistroC600( RegC001.RegistroC010.Items[FRegistroC010Count-1] );
-      if DT_INI >= StrToDate('01/05/2015') then
+      if DT_INI >= EncodeDate(2015,05,01) then
         WriteRegistroC860( RegC001.RegistroC010.Items[FRegistroC010Count-1] );
 
     end;

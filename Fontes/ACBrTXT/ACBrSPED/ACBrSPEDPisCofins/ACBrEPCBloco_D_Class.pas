@@ -515,7 +515,7 @@ begin
 
           strCOD_SIT := CodSitToStr(COD_SIT);
 
-          if Bloco_0.DT_INI < StrToDate('01/07/2012') then
+          if Bloco_0.DT_INI < EncodeDate(2012,07,01) then
           begin
             case IND_FRT of
 	          tfPorContaTerceiros    : strIND_FRT := '0';

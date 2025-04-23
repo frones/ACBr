@@ -77,7 +77,10 @@ end;
 function TNFSeW_Tinus.GerarXml: Boolean;
 begin
   if NFSe.OptanteSimplesNacional = snSim then
+  begin
     NrOcorrAliquota := 1;
+    NrOcorrValorIss := -1;
+  end;
 
   Result := inherited GerarXml;
 end;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/04/2025
+--- ACBrLibConfig.pas, ACBrLibConsts.pas ---
+[*] Controle para zerar configurações SSL desativadas para não levantar exceção.
+    Por: Renato Rubinho
+
 11/04/2025
 --- ACBrLibComum.pas ---
 [-] Corrige erro de compilação na lib pro

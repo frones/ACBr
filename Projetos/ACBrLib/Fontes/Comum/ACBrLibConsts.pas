@@ -196,6 +196,8 @@ const
 
   CSessaoDFe = 'DFe';
   CChaveSSLCryptLib = 'SSLCryptLib';
+  CChaveSSLHttpLib = 'SSLHttpLib';
+  CChaveSSLXmlSignLib = 'SSLXmlSignLib';
   CChaveArquivoPFX = 'ArquivoPFX';
   CChaveDadosPFX = 'DadosPFX';
   CChaveNumeroSerie = 'NumeroSerie';

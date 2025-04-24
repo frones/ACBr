@@ -469,6 +469,10 @@
                             <input type="checkbox" id="EmissaoPathCTe">
                         </div>
                         <div class="grid2Col">
+                            <label for="SalvarEvento">Salvar Arquivos de Eventos</label>
+                            <input type="checkbox" id="SalvarEvento">
+                        </div>
+                        <div class="grid2Col">
                             <label for="SepararPorCNPJ">Separar Arqs pelo CNPJ do Certificado</label>
                             <input type="checkbox" id="SepararPorCNPJ">
                         </div>
@@ -733,6 +737,7 @@
                 SepararPorMes: $('#SepararPorMes').prop('checked') ? 1 : 0,
                 AdicionarLiteral: $('#AdicionarLiteral').prop('checked') ? 1 : 0,
                 EmissaoPathCTe: $('#EmissaoPathCTe').prop('checked') ? 1 : 0,
+                SalvarEvento: $('#SalvarEvento').prop('checked') ? 1 : 0,
                 SepararPorCNPJ: $('#SepararPorCNPJ').prop('checked') ? 1 : 0,
                 SepararPorModelo: $('#SepararPorModelo').prop('checked') ? 1 : 0,
                 PathCTe: $('#PathCTe').val(),
@@ -1236,6 +1241,7 @@
                 $('#SepararPorMes').prop('checked', response.dados.SepararPorMes == 1);
                 $('#AdicionarLiteral').prop('checked', response.dados.AdicionarLiteral == 1);
                 $('#EmissaoPathCTe').prop('checked', response.dados.EmissaoPathCTe == 1);
+                $('#SalvarEvento').prop('checked', response.dados.SalvarEvento == 1);
                 $('#SepararPorCNPJ').prop('checked', response.dados.SepararPorCNPJ == 1);
                 $('#SepararPorModelo').prop('checked', response.dados.SepararPorModelo == 1);
                 $('#PathCTe').val(response.dados.PathCTe);

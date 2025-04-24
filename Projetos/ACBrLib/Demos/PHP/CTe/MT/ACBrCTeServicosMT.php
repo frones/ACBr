@@ -94,6 +94,7 @@ try {
         if (ConfigGravarValor($handle, $ffi, "CTe", "SepararPorMes", $_POST['SepararPorMes']) != 0) exit;
         if (ConfigGravarValor($handle, $ffi, "CTe", "AdicionarLiteral", $_POST['AdicionarLiteral']) != 0) exit;
         if (ConfigGravarValor($handle, $ffi, "CTe", "EmissaoPathCTe", $_POST['EmissaoPathCTe']) != 0) exit;
+        if (ConfigGravarValor($handle, $ffi, "CTe", "SalvarEvento", $_POST['SalvarEvento']) != 0) exit;
         if (ConfigGravarValor($handle, $ffi, "CTe", "SepararPorCNPJ", $_POST['SepararPorCNPJ']) != 0) exit;
         if (ConfigGravarValor($handle, $ffi, "CTe", "SepararPorModelo", $_POST['SepararPorModelo']) != 0) exit;
         if (ConfigGravarValor($handle, $ffi, "CTe", "PathCTe", $_POST['PathCTe']) != 0) exit;
@@ -158,6 +159,7 @@ try {
         if (ConfigLerValor($handle, $ffi, "CTe", "SepararPorMes", $SepararPorMes) != 0) exit;
         if (ConfigLerValor($handle, $ffi, "CTe", "AdicionarLiteral", $AdicionarLiteral) != 0) exit;
         if (ConfigLerValor($handle, $ffi, "CTe", "EmissaoPathCTe", $EmissaoPathCTe) != 0) exit;
+        if (ConfigLerValor($handle, $ffi, "CTe", "SalvarEvento", $SalvarEvento) != 0) exit;
         if (ConfigLerValor($handle, $ffi, "CTe", "SepararPorCNPJ", $SepararPorCNPJ) != 0) exit;
         if (ConfigLerValor($handle, $ffi, "CTe", "SepararPorModelo", $SepararPorModelo) != 0) exit;
         if (ConfigLerValor($handle, $ffi, "CTe", "PathCTe", $PathCTe) != 0) exit;
@@ -219,6 +221,7 @@ try {
                 'SepararPorMes' => $SepararPorMes ?? '',
                 'AdicionarLiteral' => $AdicionarLiteral ?? '',
                 'EmissaoPathCTe' => $EmissaoPathCTe ?? '',
+                'SalvarEvento' => $SalvarEvento ?? '',
                 'SepararPorCNPJ' => $SepararPorCNPJ ?? '',
                 'SepararPorModelo' => $SepararPorModelo ?? '',
                 'PathCTe' => $PathCTe ?? '',

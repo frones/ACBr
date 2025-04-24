@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/04/2025
+-- ACBrNFe.EnvEvento --
+[*] #TK-6966: Ajuste para que a leitura do INI considere valores decimais no vPag de um EConf.
+  Por: Diego Folieni
+
 17/04/2025
 -- ACBrNFeWebServices --
 [*] Ajuste para definir corretamente a UF quando for NF-e e NFC-e no que se refere

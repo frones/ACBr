@@ -107,10 +107,7 @@ type
     function GetURLConsulta(const CUF: integer; const TipoAmbiente: TACBrTipoAmbiente;
       const Versao: Double): String;
 
-    function GetURLQRCode(const CUF: integer; const TipoAmbiente: TACBrTipoAmbiente;
-      const TipoEmissao: TACBrTipoEmissao; const AChaveDCe: String;
-      const DocEmitente: string; const TipoEmitente: string;
-      const Versao: Double): String;
+    function GetURLQRCode(FDCe: TDCe): String;
 
     function IdentificaSchema(const AXML: String): TSchemaDCe;
     function IdentificaSchemaEvento(const AXML: String): TSchemaDCe;
@@ -268,10 +265,7 @@ begin
   Result := LerURLDeParams('DCe', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente), 'URL-Consulta', 0);
 end;
 
-function TACBrDCe.GetURLQRCode(const CUF: integer;
-  const TipoAmbiente: TACBrTipoAmbiente; const TipoEmissao: TACBrTipoEmissao;
-  const AChaveDCe: String; const DocEmitente: string; const TipoEmitente: string;
-  const Versao: Double): String;
+function TACBrDCe.GetURLQRCode(FDCe: TDCe): String;
 var
   idDCe,
   sEntrada, urlUF, Passo3, Passo4, Sign: String;
@@ -280,26 +274,29 @@ var
 begin
 //  VersaoDFe := DblToVersaoDCe(ok, Versao);
 
-  urlUF := LerURLDeParams('DCe', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente), 'URL-QRCode', 0);
+  urlUF := LerURLDeParams('DCe', CUFtoUF(FDCe.Ide.cUF),
+                             TpcnTipoAmbiente(FDCe.Ide.tpAmb), 'URL-QRCode', 0);
 
   if Pos('?', urlUF) <= 0 then
     urlUF := urlUF + '?';
 
-  idDCe := OnlyNumber(AChaveDCe);
+  idDCe := OnlyNumber(FDCe.infDCe.ID);
 
   // Passo 1
-  sEntrada := 'chDCe=' + idDCe + '&tpAmb=' + TipoAmbienteToStr(TipoAmbiente);
+  sEntrada := 'chDCe=' + idDCe + '&tpAmb=' + TipoAmbienteToStr(FDCe.Ide.tpAmb);
 
   // Passo 2 calcular o SHA-1 da string idDCe se emissão em contingência
-  if TpcnTipoEmissao(TipoEmissao) = teContingencia then
+  if TpcnTipoEmissao(FDCe.ide.tpEmis) = teContingencia then
   begin
-    if TipoEmitente = 'J' then
-      Passo3 := '&CNPJ=' + DocEmitente
+    if trim(FDCe.emit.idOutros) <> '' then
+      Passo3 := '&idOutros=' + FDCe.emit.idOutros
     else
-      if TipoEmitente = 'F' then
-        Passo3 := '&CPF=' + DocEmitente
+    begin
+      if Length(FDCe.emit.CNPJCPF) = 14 then
+        Passo3 := '&CNPJ=' + FDCe.emit.CNPJCPF
       else
-        Passo3 := '&idOutros=' + DocEmitente;
+        Passo3 := '&CPF=' + FDCe.emit.CNPJCPF;
+    end;
 
     // Tipo de Emissão em Contingência
     SSL.CarregarCertificadoSeNecessario;

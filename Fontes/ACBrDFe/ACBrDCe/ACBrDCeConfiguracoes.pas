@@ -69,6 +69,7 @@ type
     FPathDCe: String;
     FPathEvento: String;
     FPathArquivoMunicipios: String                                           ;
+    FSalvarEvento: Boolean;
   public
     constructor Create(AOwner: TConfiguracoes); override;
     destructor Destroy; override;
@@ -81,6 +82,8 @@ type
   published
     property EmissaoPathDCe: boolean read FEmissaoPathDCe
       write FEmissaoPathDCe default False;
+    property SalvarEvento: Boolean read FSalvarEvento
+      write FSalvarEvento default False;
     property SalvarApenasDCeProcessados: boolean
       read FSalvarApenasDCeProcessados write FSalvarApenasDCeProcessados default False;
     property NormatizarMunicipios: boolean read FNormatizarMunicipios write FNormatizarMunicipios default False;
@@ -198,6 +201,7 @@ begin
   inherited Assign(DeArquivosConfDCe);
 
   FEmissaoPathDCe := DeArquivosConfDCe.EmissaoPathDCe;
+  FSalvarEvento := DeArquivosConfDCe.SalvarEvento;
   FSalvarApenasDCeProcessados := DeArquivosConfDCe.SalvarApenasDCeProcessados;
   FNormatizarMunicipios := DeArquivosConfDCe.NormatizarMunicipios;
   FPathDCe := DeArquivosConfDCe.PathDCe;
@@ -210,6 +214,7 @@ begin
   inherited Create(AOwner);
 
   FEmissaoPathDCe := False;
+  FSalvarEvento := False;
   FSalvarApenasDCeProcessados := False;
   FNormatizarMunicipios := False;
   FPathDCe := '';
@@ -248,6 +253,7 @@ procedure TArquivosConfDCe.GravarIni(const AIni: TCustomIniFile);
 begin
   inherited GravarIni(AIni);
 
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarEvento', SalvarEvento);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarApenasDCeProcessados', SalvarApenasDCeProcessados);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'EmissaoPathDCe', EmissaoPathDCe);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'NormatizarMunicipios', NormatizarMunicipios);
@@ -260,6 +266,7 @@ procedure TArquivosConfDCe.LerIni(const AIni: TCustomIniFile);
 begin
   inherited LerIni(AIni);
 
+  SalvarEvento := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarEvento', SalvarEvento);
   SalvarApenasDCeProcessados := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarApenasDCeProcessados', SalvarApenasDCeProcessados);
   EmissaoPathDCe := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'EmissaoPathDCe', EmissaoPathDCe);
   NormatizarMunicipios := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'NormatizarMunicipios', NormatizarMunicipios);

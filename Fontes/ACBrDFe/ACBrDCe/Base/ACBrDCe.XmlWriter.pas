@@ -69,6 +69,7 @@ type
   private
     FDCe: TDCe;
 
+    FPChave: string;
     FVersaoDF: TVersaoDCe;
     FModeloDF: Integer;
     FtpAmb: TACBrTipoAmbiente;
@@ -174,7 +175,7 @@ end;
 
 function TDCeXmlWriter.ObterNomeArquivo: string;
 begin
-  Result := OnlyNumber(FDCe.infDCe.ID) + '-dce.xml';
+  Result := FPChave + '-dce.xml';
 end;
 
 procedure TDCeXmlWriter.SetOpcoes(AValue: TDCeXmlWriterOptions);
@@ -242,7 +243,7 @@ var
 begin
   Result := FDocument.CreateElement('infDCe');
 
-  Result.SetAttribute('Id', DCe.infDCe.ID);
+  Result.SetAttribute('Id', 'DCe' + FPChave);
   Result.SetAttribute('versao', FloatToString(DCe.infDCe.Versao, '.', '#0.00'));
 
   Result.AppendChild(Gerar_Ide);
@@ -840,7 +841,7 @@ end;
 function TDCeXmlWriter.GerarXml: boolean;
 var
   Gerar: boolean;
-  ChaveDCe, xCNPJCPF: string;
+  xCNPJCPF: string;
   DCeNode, xmlNode: TACBrXmlNode;
 begin
   Result := False;
@@ -874,13 +875,13 @@ begin
 
   DCe.Ide.modelo := 99;
 
-  ChaveDCe := GerarChaveAcesso(DCe.ide.cUF, DCe.ide.dhEmi, xCNPJCPF,
+  FpChave := GerarChaveAcesso(DCe.ide.cUF, DCe.ide.dhEmi, xCNPJCPF,
       DCe.ide.serie, DCe.ide.nDC, StrToInt(TipoEmissaoToStr(DCe.ide.tpEmis)),
       StrToInt(EmitenteDCeToStr(DCe.Ide.tpEmit)),
       StrToInt(SiteAutorizadorToStr(DCe.Ide.nSiteAutoriz)),
       DCe.ide.cDC, DCe.Ide.modelo);
 
-  DCe.infDCe.ID := 'DCe' + ChaveDCe;
+  DCe.infDCe.ID := 'DCe' + FpChave;
   DCe.ide.cDV := ExtrairDigitoChaveAcesso(DCe.infDCe.ID);
 
   FDocument.Clear();
@@ -925,7 +926,7 @@ begin
 
   if Gerar then
   begin
-    FDCe.signature.URI := '#DCe' + OnlyNumber(DCe.infDCe.ID);
+    FDCe.signature.URI := '#DCe' + FPChave;
     xmlNode := GerarSignature(FDCe.signature);
     DCeNode.AppendChild(xmlNode);
   end;

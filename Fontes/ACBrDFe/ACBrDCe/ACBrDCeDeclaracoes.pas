@@ -44,6 +44,8 @@ uses
   ACBrDCe.Classes,
 	ACBrDCe.XmlReader,
 	ACBrDCe.XmlWriter,
+  ACBrDCe.IniReader,
+  ACBrDCe.IniWriter,
 	pcnConversao;
 
 type
@@ -53,8 +55,12 @@ type
   TDeclaracao = class(TCollectionItem)
   private
     FDCe: TDCe;
+    // Xml
     FDCeW: TDCeXmlWriter;
     FDCeR: TDCeXmlReader;
+    // Ini
+    FDCeIniR: TDCeIniReader;
+    FDCeIniW: TDCeIniWriter;
 
     FConfiguracoes: TConfiguracoesDCe;
     FXMLAssinado: String;
@@ -195,8 +201,13 @@ begin
   inherited Create(Collection2);
 
   FDCe := TDCe.Create;
+  // Xml
   FDCeW := TDCeXmlWriter.Create(FDCe);
   FDCeR := TDCeXmlReader.Create(FDCe);
+  // Ini
+  FDCeIniR := TDCeIniReader.Create(FDCe);
+  FDCeIniW := TDCeIniWriter.Create(FDCe);
+
   FConfiguracoes := TACBrDCe(TDeclaracoes(Collection).ACBrDCe).Configuracoes;
 
   FDCe.Ide.verProc := 'ACBrDCe';
@@ -212,8 +223,13 @@ end;
 
 destructor TDeclaracao.Destroy;
 begin
+  // Xml
   FDCeW.Free;
   FDCeR.Free;
+  // Ini
+  FDCeIniR.Free;
+  FDCeIniW.Free;
+
   FDCe.Free;
 
   inherited Destroy;
@@ -276,35 +292,11 @@ begin
       FreeAndNil(Document);
     end;
 
-    // Gera o QR-Code para adicionar no XML após ter a
-    // assinatura, e antes de ser salvo.
+    DCe.infDCeSupl.qrCode := GetURLQRCode(DCe);
+    DCe.infDCeSupl.urlChave := GetURLConsulta(DCe.Ide.cUF,
+                 DCe.Ide.tpAmb, DCe.infDCe.Versao);
 
-    with TACBrDCe(TDeclaracoes(Collection).ACBrDCe) do
-    begin
-      if DCe.emit.idOutros <> '' then
-        DCe.infDCeSupl.qrCode := GetURLQRCode(DCe.Ide.cUF,
-          DCe.Ide.tpAmb,
-          DCe.ide.tpEmis, DCe.infDCe.ID, DCe.emit.idOutros,
-          'O', DCe.infDCe.Versao)
-      else
-      begin
-        if Length(DCe.emit.CNPJCPF) = 14 then
-          DCe.infDCeSupl.qrCode := GetURLQRCode(DCe.Ide.cUF,
-            DCe.Ide.tpAmb,
-            DCe.ide.tpEmis, DCe.infDCe.ID, DCe.emit.CNPJCPF,
-            'J', DCe.infDCe.Versao)
-        else
-          DCe.infDCeSupl.qrCode := GetURLQRCode(DCe.Ide.cUF,
-            DCe.Ide.tpAmb,
-            DCe.ide.tpEmis, DCe.infDCe.ID, DCe.emit.CNPJCPF,
-            'F', DCe.infDCe.Versao);
-      end;
-
-      DCe.infDCeSupl.urlChave := GetURLConsulta(DCe.Ide.cUF,
-                   DCe.Ide.tpAmb, DCe.infDCe.Versao);
-
-      GerarXML;
-    end;
+    GerarXML;
 
     if Configuracoes.Arquivos.Salvar and
       (not Configuracoes.Arquivos.SalvarApenasDCeProcessados) then
@@ -528,187 +520,8 @@ begin
 end;
 
 function TDeclaracao.GerarDCeIni: String;
-var
-  INIRec: TMemIniFile;
-  sSecao: string;
-  i: Integer;
-  IniDFe: TStringList;
 begin
-  Result := '';
-
-  if not ValidarChave(DCe.infDCe.ID) then
-    raise EACBrDCeException.Create('DCe Inconsistente para gerar INI. Chave Inválida.');
-
-  INIRec := TMemIniFile.Create('');
-  try
-    with FDCe do
-    begin
-      INIRec.WriteString('infDCe', 'ID', infDCe.ID);
-      INIRec.WriteString('infDCe', 'Versao', FloatToStr(infDCe.Versao));
-
-      sSecao := 'ide';
-      INIRec.WriteInteger(sSecao, 'cUF', Ide.cUF);
-      INIRec.WriteInteger(sSecao, 'cDC', Ide.cDC);
-      INIRec.WriteInteger(sSecao, 'Modelo', Ide.modelo);
-      INIRec.WriteInteger(sSecao, 'Serie', Ide.serie);
-      INIRec.WriteInteger(sSecao, 'nDC', Ide.nDC);
-      INIRec.WriteString(sSecao, 'dhEmi', DateTimeToStr(Ide.dhEmi));
-      INIRec.WriteString(sSecao, 'tpEmis', TipoEmissaoToStr(Ide.tpEmis));
-      INIRec.WriteString(sSecao, 'tpEmit', EmitenteDCeToStr(Ide.tpEmit));
-      INIRec.WriteString(sSecao, 'nSiteAutoriz', SiteAutorizadorToStr(Ide.nSiteAutoriz));
-      INIRec.WriteString(sSecao, 'tpAmb', TipoAmbienteToStr(Ide.tpAmb));
-      INIRec.WriteString(sSecao, 'verProc', Ide.verProc);
-
-      sSecao := 'emit';
-      INIRec.WriteString(sSecao, 'CNPJCPF', Emit.CNPJCPF);
-      INIRec.WriteString(sSecao, 'idOutros', Emit.idOutros);
-      INIRec.WriteString(sSecao, 'xNome', Emit.xNome);
-      // Endereço do Emitente
-      INIRec.WriteString(sSecao, 'xLgr', Emit.EnderEmit.xLgr);
-      INIRec.WriteString(sSecao, 'nro', Emit.EnderEmit.nro);
-      INIRec.WriteString(sSecao, 'xCpl', Emit.EnderEmit.xCpl);
-      INIRec.WriteString(sSecao, 'xBairro', Emit.EnderEmit.xBairro);
-      INIRec.WriteInteger(sSecao, 'cMun', Emit.EnderEmit.cMun);
-      INIRec.WriteString(sSecao, 'xMun', Emit.EnderEmit.xMun);
-      INIRec.WriteInteger(sSecao, 'CEP', Emit.EnderEmit.CEP);
-      INIRec.WriteString(sSecao, 'UF', Emit.EnderEmit.UF);
-      INIRec.WriteString(sSecao, 'fone', Emit.EnderEmit.fone);
-      INIRec.WriteString(sSecao, 'email', Emit.EnderEmit.email);
-
-      if Fisco.CNPJ <> '' then
-      begin
-        sSecao := 'Fisco';
-        INIRec.WriteString(sSecao, 'CNPJ', Fisco.CNPJ);
-        INIRec.WriteString(sSecao, 'xOrgao', Fisco.xOrgao);
-        INIRec.WriteString(sSecao, 'UF', Fisco.UF);
-      end;
-
-      if Marketplace.CNPJ <> '' then
-      begin
-        sSecao := 'Marketplace';
-        INIRec.WriteString(sSecao, 'CNPJ', Marketplace.CNPJ);
-        INIRec.WriteString(sSecao, 'xNome', Marketplace.xNome);
-        INIRec.WriteString(sSecao, 'Site', Marketplace.Site);
-      end;
-
-      if Transportadora.CNPJ <> '' then
-      begin
-        sSecao := 'Transportadora';
-        INIRec.WriteString(sSecao, 'CNPJ', Transportadora.CNPJ);
-        INIRec.WriteString(sSecao, 'xNome', Transportadora.xNome);
-      end;
-
-      if ECT.CNPJ <> '' then
-      begin
-        sSecao := 'ECT';
-        INIRec.WriteString(sSecao, 'CNPJ', ECT.CNPJ);
-        INIRec.WriteString(sSecao, 'xNome', ECT.xNome);
-      end;
-
-      sSecao := 'dest';
-      INIRec.WriteString(sSecao, 'CNPJCPF', Dest.CNPJCPF);
-      INIRec.WriteString(sSecao, 'idOutros', Dest.idOutros);
-      INIRec.WriteString(sSecao, 'xNome', Dest.xNome);
-      // Endereço do Destinatario
-      INIRec.WriteString(sSecao, 'xLgr', Dest.EnderDest.xLgr);
-      INIRec.WriteString(sSecao, 'nro', Dest.EnderDest.nro);
-      INIRec.WriteString(sSecao, 'xCpl', Dest.EnderDest.xCpl);
-      INIRec.WriteString(sSecao, 'xBairro', Dest.EnderDest.xBairro);
-      INIRec.WriteInteger(sSecao, 'cMun', Dest.EnderDest.cMun);
-      INIRec.WriteString(sSecao, 'xMun', Dest.EnderDest.xMun);
-      INIRec.WriteInteger(sSecao, 'CEP', Dest.EnderDest.CEP);
-      INIRec.WriteString(sSecao, 'UF', Dest.EnderDest.UF);
-      INIRec.WriteString(sSecao, 'fone', Dest.EnderDest.fone);
-      INIRec.WriteString(sSecao, 'email', Dest.EnderDest.email);
-
-      for i := 0 to autXML.Count - 1 do
-      begin
-        sSecao := 'autXML' + IntToStrZero(I + 1, 2);
-        with autXML[i] do
-        begin
-          INIRec.WriteString(sSecao, 'CNPJCPF', CNPJCPF);
-        end;
-      end;
-
-      for i := 0 to det.Count - 1 do
-      begin
-        sSecao := 'Prod' + IntToStrZero(I + 1, 3);
-        with det[i] do
-        begin
-          INIRec.WriteString(sSecao, 'xProd', Prod.xProd);
-          INIRec.WriteString(sSecao, 'NCM', Prod.NCM);
-          INIRec.WriteFloat(sSecao, 'qCom', Prod.qCom);
-          INIRec.WriteFloat(sSecao, 'vUnCom', Prod.vUnCom);
-          INIRec.WriteFloat(sSecao, 'vProd', Prod.vProd);
-          INIRec.WriteString(sSecao, 'infAdProd', infAdProd);
-        end;
-      end;
-
-      sSecao := 'total';
-      INIRec.WriteFloat(sSecao, 'vDC', total.vDC);
-
-      sSecao := 'transp';
-      INIRec.WriteString(sSecao, 'modTrans', ModTransToStr(transp.modTrans));
-      INIRec.WriteString(sSecao, 'CNPJTransp', transp.CNPJTransp);
-
-      sSecao := 'infAdic';
-      INIRec.WriteString(sSecao, 'infAdFisco', infAdic.infAdFisco);
-      INIRec.WriteString(sSecao, 'infCpl', infAdic.infCpl);
-      INIRec.WriteString(sSecao, 'infAdMarketplace', infAdic.infAdMarketplace);
-      INIRec.WriteString(sSecao, 'infAdTransp', infAdic.infAdTransp);
-      INIRec.WriteString(sSecao, 'infAdECT', infAdic.infAdECT);
-
-      for i := 0 to obsFisco.Count - 1 do
-      begin
-        sSecao := 'obsFisco' + IntToStrZero(I + 1, 2);
-        with obsFisco[i] do
-        begin
-          INIRec.WriteString(sSecao, 'xCampo', xCampo);
-          INIRec.WriteString(sSecao, 'xTexto', xTexto);
-        end;
-      end;
-
-      for i := 0 to obsMarketplace.Count - 1 do
-      begin
-        sSecao := 'obsMarketplace' + IntToStrZero(I + 1, 2);
-        with obsMarketplace[i] do
-        begin
-          INIRec.WriteString(sSecao, 'xCampo', xCampo);
-          INIRec.WriteString(sSecao, 'xTexto', xTexto);
-        end;
-      end;
-
-      for i := 0 to obsEmit.Count - 1 do
-      begin
-        sSecao := 'obsEmit' + IntToStrZero(I + 1, 2);
-        with obsEmit[i] do
-        begin
-          INIRec.WriteString(sSecao, 'xCampo', xCampo);
-          INIRec.WriteString(sSecao, 'xTexto', xTexto);
-        end;
-      end;
-
-      for i := 0 to obsECT.Count - 1 do
-      begin
-        sSecao := 'obsECT' + IntToStrZero(I + 1, 2);
-        with obsECT[i] do
-        begin
-          INIRec.WriteString(sSecao, 'xCampo', xCampo);
-          INIRec.WriteString(sSecao, 'xTexto', xTexto);
-        end;
-      end;
-    end;
-
-    IniDFe := TStringList.Create;
-    try
-      INIRec.GetStrings(IniDFe);
-      Result := StringReplace(IniDFe.Text, sLineBreak + sLineBreak, sLineBreak, [rfReplaceAll]);
-    finally
-      IniDFe.Free;
-    end;
-  finally
-    INIRec.Free;
-  end;
+  Result := FDCeIniW.GravarIni;
 end;
 
 function TDeclaracao.GerarXML: String;
@@ -877,215 +690,16 @@ begin
 end;
 
 function TDeclaracao.LerArqIni(const AIniString: String): Boolean;
-var
-  INIRec : TMemIniFile;
-  OK: boolean;
-  sSecao, sFim: string;
-  I: Integer;
 begin
-  INIRec := TMemIniFile.Create('');
-  try
-    LerIniArquivoOuString(AIniString, INIRec);
+  FDCeIniR.VersaoDF := FConfiguracoes.Geral.VersaoDF;
+  FDCeIniR.Ambiente := Integer(FConfiguracoes.WebServices.Ambiente);
+  FDCeIniR.tpEmis := FConfiguracoes.Geral.FormaEmissaoCodigo;
 
-    with FDCe do
-    begin
-      OK := True;
+  FDCeIniR.LerIni(AIniString);
 
-      infDCe.versao := StringToFloatDef(INIRec.ReadString('infDCe', 'versao', VersaoDCeToStr(FConfiguracoes.Geral.VersaoDF)), 0);
+  GerarXML;
 
-      sSecao := 'ide';
-      Ide.tpAmb := StrToTipoAmbiente(OK, INIRec.ReadString(sSecao, 'tpAmb', IntToStr(Integer(FConfiguracoes.WebServices.Ambiente))));
-      Ide.modelo := INIRec.ReadInteger(sSecao, 'Modelo', 99);
-      Ide.serie := INIRec.ReadInteger(sSecao, 'Serie', 1);
-      Ide.nDC := INIRec.ReadInteger(sSecao, 'nDC', 0);
-      Ide.cDC := INIRec.ReadInteger(sSecao, 'cDC', 0);
-      Ide.dhEmi := StringToDateTime(INIRec.ReadString(sSecao, 'dhEmi', '0'));
-      Ide.tpEmis := StrToTipoEmissao(OK, INIRec.ReadString(sSecao, 'tpEmis', IntToStr(FConfiguracoes.Geral.FormaEmissaoCodigo)));
-      Ide.tpEmit  := StrToEmitenteDCe(INIRec.ReadString(sSecao, 'tpEmit', '1'));
-      Ide.nSiteAutoriz := StrToSiteAutorizator(INIRec.ReadString(sSecao, 'nSiteAutoriz', '0'));
-      Ide.verProc := INIRec.ReadString(sSecao, 'verProc', 'ACBrNFCom');
-
-      sSecao := 'emit';
-      Emit.CNPJCPF := INIRec.ReadString(sSecao, 'CNPJCPF', '');
-      Emit.idOutros := INIRec.ReadString(sSecao, 'idOutros', '');
-      Emit.xNome := INIRec.ReadString(sSecao, 'xNome', '');
-      // Endereço do Emitente
-      Emit.EnderEmit.xLgr := INIRec.ReadString(sSecao, 'xLgr', '');
-      Emit.EnderEmit.nro := INIRec.ReadString(sSecao, 'nro', '');
-      Emit.EnderEmit.xCpl := INIRec.ReadString(sSecao, 'xCpl', '');
-      Emit.EnderEmit.xBairro := INIRec.ReadString(sSecao, 'xBairro', '');
-      Emit.EnderEmit.cMun := INIRec.ReadInteger(sSecao, 'cMun', 0);
-      Emit.EnderEmit.xMun := INIRec.ReadString(sSecao, 'xMun', '');
-      Emit.EnderEmit.CEP := INIRec.ReadInteger(sSecao, 'CEP', 0);
-      Emit.EnderEmit.UF := INIRec.ReadString(sSecao, 'UF', '');
-      Emit.EnderEmit.fone := INIRec.ReadString(sSecao, 'fone', '');
-      Emit.EnderEmit.email := INIRec.ReadString(sSecao, 'email', '');
-
-      Ide.cUF := INIRec.ReadInteger(sSecao, 'cUF', UFparaCodigoUF(Emit.EnderEmit.UF));
-
-      sSecao := 'Fisco';
-      Fisco.CNPJ := INIRec.ReadString(sSecao, 'CNPJ', '');
-      Fisco.xOrgao := INIRec.ReadString(sSecao, 'xOrgao', '');
-      Fisco.UF := INIRec.ReadString(sSecao, 'UF', '');
-
-      sSecao := 'Marketplace';
-      Marketplace.CNPJ := INIRec.ReadString(sSecao, 'CNPJ', '');
-      Marketplace.xNome := INIRec.ReadString(sSecao, 'xNome', '');
-      Marketplace.Site := INIRec.ReadString(sSecao, 'Site', '');
-
-      sSecao := 'Transportadora';
-      Transportadora.CNPJ := INIRec.ReadString(sSecao, 'CNPJ', '');
-      Transportadora.xNome := INIRec.ReadString(sSecao, 'xNome', '');
-
-      sSecao := 'ECT';
-      ECT.CNPJ := INIRec.ReadString(sSecao, 'CNPJ', '');
-      ECT.xNome := INIRec.ReadString(sSecao, 'xNome', '');
-
-      sSecao := 'dest';
-      Dest.xNome := INIRec.ReadString(sSecao, 'xNome', '');
-      Dest.CNPJCPF := INIRec.ReadString(sSecao, 'CNPJCPF', '');
-      Dest.idOutros := INIRec.ReadString(sSecao, 'idOutros','');
-      // Endereço do Destinatario
-      Dest.EnderDest.xLgr := INIRec.ReadString(sSecao, 'xLgr', '');
-      Dest.EnderDest.nro := INIRec.ReadString(sSecao, 'nro', '');
-      Dest.EnderDest.xCpl := INIRec.ReadString(sSecao, 'xCpl', '');
-      Dest.EnderDest.xBairro := INIRec.ReadString(sSecao, 'xBairro', '');
-      Dest.EnderDest.cMun := INIRec.ReadInteger(sSecao, 'cMun', 0);
-      Dest.EnderDest.xMun := INIRec.ReadString(sSecao, 'xMun', '');
-      Dest.EnderDest.CEP := INIRec.ReadInteger(sSecao, 'CEP', 0);
-      Dest.EnderDest.UF := INIRec.ReadString(sSecao, 'UF', '');
-      Dest.EnderDest.fone := INIRec.ReadString(sSecao, 'fone', '');
-      Dest.EnderDest.email := INIRec.ReadString(sSecao, 'email', '');
-
-      I := 1;
-      while true do
-      begin
-        sSecao := 'autXML' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM');
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        with autXML.New do
-        begin
-          CNPJCPF := sFim;
-        end;
-
-        Inc(I);
-      end;
-
-      I := 1;
-      while true do
-      begin
-        sSecao := 'prod' + IntToStrZero(I, 3);
-        sFim   := INIRec.ReadString(sSecao, 'xProd', 'FIM');
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        with det.New do
-        begin
-          Prod.nItem :=  I;
-          Prod.xProd := sFim;
-
-          Prod.NCM := INIRec.ReadString(sSecao, 'NCM', '');
-          Prod.qCom := StringToFloatDef(INIRec.ReadString(sSecao, 'qCom', ''), 0);
-          Prod.vUnCom := StringToFloatDef(INIRec.ReadString(sSecao, 'vUnCom', ''), 0);
-          Prod.vProd := StringToFloatDef(INIRec.ReadString(sSecao, 'vProd', ''), 0);
-
-          infAdProd := INIRec.ReadString(sSecao, 'infAdProd', '');
-        end;
-
-        Inc(I);
-      end;
-
-      sSecao := 'total';
-      total.vDC := StringToFloatDef(INIRec.ReadString(sSecao, 'vDC', ''), 0);
-
-      sSecao := 'transp';
-      transp.modTrans := StrToModTrans(INIRec.ReadString(sSecao, 'modTrans', '0'));
-      transp.CNPJTransp := INIRec.ReadString(sSecao, 'CNPJTransp', '');
-
-      sSecao := 'infAdic';
-      infAdic.infAdFisco := INIRec.ReadString(sSecao, 'infAdFisco', '');
-      infAdic.infCpl := INIRec.ReadString(sSecao, 'infCpl', '');
-      infAdic.infAdMarketplace := INIRec.ReadString(sSecao, 'infAdMarketplace', '');
-      infAdic.infAdTransp := INIRec.ReadString(sSecao, 'infAdTransp', '');
-      infAdic.infAdECT := INIRec.ReadString(sSecao, 'infAdECT', '');
-
-      I := 1;
-      while true do
-      begin
-        sSecao := 'obsFisco' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'xCampo', 'FIM');
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        with obsFisco.New do
-        begin
-          xCampo := sFim;
-          xTexto := INIRec.ReadString(sSecao, 'xTexto', '');
-        end;
-
-        Inc(I);
-      end;
-
-      I := 1;
-      while true do
-      begin
-        sSecao := 'obsMarketplace' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'xCampo', 'FIM');
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        with obsMarketplace.New do
-        begin
-          xCampo := sFim;
-          xTexto := INIRec.ReadString(sSecao, 'xTexto', '');
-        end;
-
-        Inc(I);
-      end;
-
-      I := 1;
-      while true do
-      begin
-        sSecao := 'obsEmit' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'xCampo', 'FIM');
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        with obsEmit.New do
-        begin
-          xCampo := sFim;
-          xTexto := INIRec.ReadString(sSecao, 'xTexto', '');
-        end;
-
-        Inc(I);
-      end;
-
-      I := 1;
-      while true do
-      begin
-        sSecao := 'obsECT' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'xCampo', 'FIM');
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        with obsECT.New do
-        begin
-          xCampo := sFim;
-          xTexto := INIRec.ReadString(sSecao, 'xTexto', '');
-        end;
-
-        Inc(I);
-      end;
-    end;
-
-    GerarXML;
-
-    Result := True;
-  finally
-    INIRec.Free;
-  end;
+  Result := True;
 end;
 
 { TDeclaracoes }

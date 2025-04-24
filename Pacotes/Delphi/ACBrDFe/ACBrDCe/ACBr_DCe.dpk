@@ -78,6 +78,8 @@ contains
   ACBrDCe.Classes in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.Classes.pas',
   ACBrDCe.Consts in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.Consts.pas',
   ACBrDCe.Conversao in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.Conversao.pas',
+  ACBrDCe.IniWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.IniWriter.pas',
+  ACBrDCe.IniReader in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.IniReader.pas',
   ACBrDCe.XmlWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.XmlWriter.pas',
   ACBrDCe.XmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.XmlReader.pas',
   ACBrDCe.ConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\Servicos\ACBrDCe.ConsSit.pas',

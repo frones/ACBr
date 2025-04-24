@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Declaração de Conteúdo Eletrônica - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="16">
+    <Files Count="18">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\ACBrDCe.pas"/>
         <UnitName Value="ACBrDCe"/>
@@ -86,6 +86,14 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\Servicos\ACBrDCe.RetEnvEvento.pas"/>
         <UnitName Value="ACBrDCe.RetEnvEvento"/>
       </Item16>
+      <Item17>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.IniReader.pas"/>
+        <UnitName Value="ACBrDCe.IniReader"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.IniWriter.pas"/>
+        <UnitName Value="ACBrDCe.IniWriter"/>
+      </Item18>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

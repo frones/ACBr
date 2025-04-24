@@ -12,7 +12,8 @@ uses
   ACBrDCeWebServices, ACBrDCe.DACEClass, ACBrDCe.Classes, ACBrDCe.Consts, 
   ACBrDCe.Conversao, ACBrDCe.XmlReader, ACBrDCe.XmlWriter, ACBrDCe.ConsSit, 
   ACBrDCe.EnvEvento, ACBrDCe.EventoClass, ACBrDCe.RetConsSit, 
-  ACBrDCe.RetEnvEvento, LazarusPackageIntf;
+  ACBrDCe.RetEnvEvento, ACBrDCe.IniReader, ACBrDCe.IniWriter, 
+  LazarusPackageIntf;
 
 implementation
 

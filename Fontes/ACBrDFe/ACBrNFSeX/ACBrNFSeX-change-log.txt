@@ -42,7 +42,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/04/2025
+-- ACBrNFSeXServicos --
+[+] #TK-6955: Incluída a cidade de Perdigao/MG, o provedor é o NFSeBrasil.
+  Por: Bruno Italo
+[+] #TK-6954: Incluída a cidade de Araujos/MG, o provedor é o NFSeBrasil.
+  Por: Bruno Italo
+[*] #TK-6958: Alteração das URLs de homologação do provedor NFSeBrasil.
+  Por: Bruno Italo
+
 23/04/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6942: A cidade de Imbituba/SC mudou de provedor, agora é IPM versão 2.04
+  Por: Gabriel Bobello
 -- Tinus.GravarXml --
 [*] #TK-6943: Quando o prestador for Optante Simples Nacional não gerar a tag
     ValorIss.

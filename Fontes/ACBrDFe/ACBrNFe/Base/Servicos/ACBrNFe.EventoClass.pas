@@ -44,7 +44,7 @@ uses
    System.Contnrs,
   {$IfEnd}
   pcnConversao, pcnConversaoNFe,
-  ACBrBase;
+  ACBrBase, ACBrUtil.Strings;
 
 type
   EventoException = class(EACBrException);
@@ -402,7 +402,7 @@ begin
     teInsucessoEntregaNFe      : Result := 'Insucesso na Entrega da NF-e';
     teCancInsucessoEntregaNFe  : Result := 'Cancelamento Insucesso na Entrega da NF-e';
     teConcFinanceira           : Result := 'ECONF';
-    teCancConcFinanceira       : Result := 'Cancelamento Conciliação Financeira';
+    teCancConcFinanceira       : Result := ACBrStr('Cancelamento Conciliação Financeira');
   else
     Result := '';
   end;

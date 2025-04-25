@@ -198,6 +198,8 @@ begin
                  ARetornoWS.DadosRet.TituloRet.ValorDesconto          := LJsonObject.AsJSONObject['dadosLiquidacao'].AsFloat['desconto'];
                  ARetornoWS.DadosRet.TituloRet.ValorMulta             := LJsonObject.AsJSONObject['dadosLiquidacao'].AsFloat['multa'];
               end;
+              if LJsonObject.AsString['dataPrevisaoPagamento'] <> '' then
+                ARetornoWS.DadosRet.TituloRet.DataCredito := DateSicreditoDateTime(LJsonObject.AsString['dataPrevisaoPagamento']);
 
               if LJsonObject.IsJSONArray('descontos') then
               begin

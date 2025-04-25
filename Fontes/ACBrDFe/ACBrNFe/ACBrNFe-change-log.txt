@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/04/2025
+-- ACBrNFeNotasFiscais --
+[*] #TK-6864: Ajuste visando que XML gerado pelo ACBrMonitor ou pela Lib assuma mesma configuração de ambiente definida caso a informação não tenha sido adicionada no arquivo INI
+  Por: Júlio Cavalcanti / Rev: Diego Folieni
 -- ACBrNFe.EnvEvento --
 [*] #TK-6968: Ajuste visando corrigir erro ao assinar evento de cancelamento de conciliação financeira.
   Por: Diego Folieni 

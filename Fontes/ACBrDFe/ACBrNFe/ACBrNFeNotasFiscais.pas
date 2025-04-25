@@ -1604,7 +1604,7 @@ end;
 function NotaFiscal.LerArqIni(const AIniString: String): Boolean;
 begin
   FNFeIniR.VersaoDF := FConfiguracoes.Geral.VersaoDF;
-  FNFeIniR.Ambiente := Integer(FConfiguracoes.WebServices.Ambiente);
+  FNFeIniR.Ambiente := StrToInt(TpAmbToStr(FConfiguracoes.WebServices.Ambiente));
   FNFeIniR.tpEmis := FConfiguracoes.Geral.FormaEmissaoCodigo;
 
   FNFeIniR.LerIni(AIniString);

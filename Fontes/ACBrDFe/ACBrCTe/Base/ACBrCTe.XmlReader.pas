@@ -123,12 +123,12 @@ type
     procedure Ler_gIBSUF_gRed(const ANode: TACBrXmlNode; gRed: TgRed);
 
     procedure Ler_gIBSMun(const ANode: TACBrXmlNode; gIBSMun: TgIBSMunValores);
-    procedure Ler_gIBSMun_gDif(const ANode: TACBrXmlNode; gDif: TgDifCBS);
+    procedure Ler_gIBSMun_gDif(const ANode: TACBrXmlNode; gDif: TgDif);
     procedure Ler_gIBSMun_gDevTrib(const ANode: TACBrXmlNode; gDevTrib: TgDevTrib);
     procedure Ler_gIBSMun_gRed(const ANode: TACBrXmlNode; gRed: TgRed);
 
     procedure Ler_gCBS(const ANode: TACBrXmlNode; gCBS: TgCBSValores);
-    procedure Ler_gCBS_gDif(const ANode: TACBrXmlNode; gDif: TgDifCBS);
+    procedure Ler_gCBS_gDif(const ANode: TACBrXmlNode; gDif: TgDif);
     procedure Ler_gCBS_gDevTrib(const ANode: TACBrXmlNode; gDevTrib: TgDevTrib);
     procedure Ler_gCBS_gRed(const ANode: TACBrXmlNode; gRed: TgRed);
 
@@ -2181,12 +2181,11 @@ begin
   gIBSMun.vIBS := ObterConteudo(ANode.Childrens.Find('vIBSMun'), tcDe2);
 end;
 
-procedure TCTeXmlReader.Ler_gIBSMun_gDif(const ANode: TACBrXmlNode; gDif: TgDifCBS);
+procedure TCTeXmlReader.Ler_gIBSMun_gDif(const ANode: TACBrXmlNode; gDif: TgDif);
 begin
   if not Assigned(ANode) then Exit;
 
   gDif.pDif := ObterConteudo(ANode.Childrens.Find('pDif'), tcDe4);
-  gDif.vCBSOp := ObterConteudo(ANode.Childrens.Find('vCBSOp'), tcDe2);
   gDif.vDif := ObterConteudo(ANode.Childrens.Find('vDif'), tcDe2);
 end;
 
@@ -2218,12 +2217,11 @@ begin
   gCBS.vCBS := ObterConteudo(ANode.Childrens.Find('vCBS'), tcDe2);
 end;
 
-procedure TCTeXmlReader.Ler_gCBS_gDif(const ANode: TACBrXmlNode; gDif: TgDifCBS);
+procedure TCTeXmlReader.Ler_gCBS_gDif(const ANode: TACBrXmlNode; gDif: TgDif);
 begin
   if not Assigned(ANode) then Exit;
 
   gDif.pDif := ObterConteudo(ANode.Childrens.Find('pDif'), tcDe4);
-  gDif.vCBSOp := ObterConteudo(ANode.Childrens.Find('vCBSOp'), tcDe2);
   gDif.vDif := ObterConteudo(ANode.Childrens.Find('vDif'), tcDe2);
 end;
 

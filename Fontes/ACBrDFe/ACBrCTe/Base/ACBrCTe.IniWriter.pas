@@ -1567,66 +1567,63 @@ var
   Nivel, sSecao: string;
   J, K, L: Integer;
 begin
-  with infNFe.New do
+  AINIRec.WriteString(Secao, 'chave', infNFe[Idx2-1].chave);
+  AINIRec.WriteString(Secao, 'PIN', infNFe[Idx2-1].PIN);
+  AINIRec.WriteString(Secao, 'dPrev', DateToStr(infNFe[Idx2-1].dPrev));
+
+  if Idx2 = -1 then
+    Nivel := IntToStrZero(Idx2, 3)
+  else
+    Nivel := IntToStrZero(Idx1, 3) + IntToStrZero(Idx2, 3);
+
+  for j := 0 to infNFe[Idx2-1].infUnidTransp.Count - 1 do
   begin
-    AINIRec.WriteString(Secao, 'chave', chave);
-    AINIRec.WriteString(Secao, 'PIN', PIN);
-    AINIRec.WriteString(Secao, 'dPrev', DateToStr(dPrev));
+    sSecao := 'infUnidTransp' + Nivel + IntToStrZero(J+1,3);
 
-    if Idx2 = -1 then
-      Nivel := IntToStrZero(Idx2, 3)
-    else
-      Nivel := IntToStrZero(Idx1, 3) + IntToStrZero(Idx2, 3);
-
-    for j := 0 to infUnidTransp.Count - 1 do
+    with infNFe[Idx2-1].infUnidTransp[j] do
     begin
-      sSecao := 'infUnidTransp' + Nivel + IntToStrZero(J+1,3);
+      AINIRec.WriteString(sSecao, 'tpUnidTransp', UnidTranspToStr(tpUnidTransp));
+      AINIRec.WriteString(sSecao, 'idUnidTransp', idUnidTransp);
+      AINIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
 
-      with infUnidTransp[j] do
+      for k := 0 to lacUnidTransp.Count - 1 do
+        AINIRec.WriteString('lacUnidTransp'+ Nivel + IntToStrZero(J+1,3) + IntToStrZero(K+1, 3)
+                           , 'nLacre'
+                           , lacUnidTransp[k].nLacre);
+
+      for k := 0 to infUnidCarga.Count - 1 do
       begin
-        AINIRec.WriteString(sSecao, 'tpUnidTransp', UnidTranspToStr(tpUnidTransp));
-        AINIRec.WriteString(sSecao, 'idUnidTransp', idUnidTransp);
-        AINIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
+        sSecao := 'infUnidCarga'+ Nivel + IntToStrZero(J+1,3) + IntToStrZero(K+1, 3);
 
-        for k := 0 to lacUnidTransp.Count - 1 do
-          AINIRec.WriteString('lacUnidTransp'+ Nivel + IntToStrZero(J+1,3) + IntToStrZero(K+1, 3)
-                             , 'nLacre'
-                             , lacUnidTransp[k].nLacre);
-
-        for k := 0 to infUnidCarga.Count - 1 do
+        with infUnidCarga.Items[k] do
         begin
-          sSecao := 'infUnidCarga'+ Nivel + IntToStrZero(J+1,3) + IntToStrZero(K+1, 3);
+          AINIRec.WriteString(sSecao, 'tpUnidCarga', UnidCargaToStr(tpUnidCarga));
+          AINIRec.WriteString(sSecao, 'idUnidCarga', idUnidCarga);
+          AINIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
 
-          with infUnidCarga.Items[k] do
-          begin
-            AINIRec.WriteString(sSecao, 'tpUnidCarga', UnidCargaToStr(tpUnidCarga));
-            AINIRec.WriteString(sSecao, 'idUnidCarga', idUnidCarga);
-            AINIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
-
-            for l := 0 to lacUnidCarga.Count - 1 do
-              AINIRec.WriteString('lacUnidCarga' + Nivel + IntToStrZero(J+1,3) + IntToStrZero(K+1, 3) + IntToStrZero(L+1, 3)
-                                 , 'nLacre'
-                                 , lacUnidCarga[l].nLacre);
-          end;
+          for l := 0 to lacUnidCarga.Count - 1 do
+            AINIRec.WriteString('lacUnidCarga' + Nivel + IntToStrZero(J+1,3) + IntToStrZero(K+1, 3) + IntToStrZero(L+1, 3)
+                               , 'nLacre'
+                               , lacUnidCarga[l].nLacre);
         end;
       end;
     end;
+  end;
 
-    for j := 0 to infUnidCarga.Count - 1 do
+  for j := 0 to infNFe[Idx2-1].infUnidCarga.Count - 1 do
+  begin
+    sSecao := 'infUnidCarga'+ Nivel + IntToStrZero(J+1,3);
+
+    with infNFe[Idx2-1].infUnidCarga.Items[j] do
     begin
-      sSecao := 'infUnidCarga'+ Nivel + IntToStrZero(J+1,3);
+      AINIRec.WriteString(sSecao, 'tpUnidCarga', UnidCargaToStr(tpUnidCarga));
+      AINIRec.WriteString(sSecao, 'idUnidCarga', idUnidCarga);
+      AINIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
 
-      with infUnidCarga.Items[j] do
-      begin
-        AINIRec.WriteString(sSecao, 'tpUnidCarga', UnidCargaToStr(tpUnidCarga));
-        AINIRec.WriteString(sSecao, 'idUnidCarga', idUnidCarga);
-        AINIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
-
-        for k := 0 to lacUnidCarga.Count - 1 do
-          AINIRec.WriteString('lacUnidCarga' + Nivel + IntToStrZero(J+1,3) + IntToStrZero(k+1, 3)
-                             , 'nLacre'
-                             , lacUnidCarga[k].nLacre);
-      end;
+      for k := 0 to lacUnidCarga.Count - 1 do
+        AINIRec.WriteString('lacUnidCarga' + Nivel + IntToStrZero(J+1,3) + IntToStrZero(k+1, 3)
+                           , 'nLacre'
+                           , lacUnidCarga[k].nLacre);
     end;
   end;
 end;
@@ -1921,7 +1918,6 @@ begin
 
   AINIRec.WriteFloat(sSecao, 'pDif', gIBSMun.gDif.pDif);
   AINIRec.WriteFloat(sSecao, 'vDif', gIBSMun.gDif.vDif);
-  AINIRec.WriteFloat(sSecao, 'vCBSOp', gIBSMun.gDif.vCBSOp);
 
   AINIRec.WriteFloat(sSecao, 'vDevTrib', gIBSMun.gDevTrib.vDevTrib);
 
@@ -1941,7 +1937,6 @@ begin
 
   AINIRec.WriteFloat(sSecao, 'pDif', gCBS.gDif.pDif);
   AINIRec.WriteFloat(sSecao, 'vDif', gCBS.gDif.vDif);
-  AINIRec.WriteFloat(sSecao, 'vCBSOp', gCBS.gDif.vCBSOp);
 
   AINIRec.WriteFloat(sSecao, 'vDevTrib', gCBS.gDevTrib.vDevTrib);
 

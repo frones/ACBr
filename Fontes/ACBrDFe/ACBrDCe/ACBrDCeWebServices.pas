@@ -1364,6 +1364,7 @@ begin
     end;
 
     EventoDCe.Versao := FPVersaoServico;
+    AjustarOpcoes(EventoDCe.Opcoes);
 
     EventoDCe.GerarXML;
 

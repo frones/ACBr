@@ -226,7 +226,12 @@ begin
     Gerador.wCampo(tcStr, '', 'nrProcTrab' ,  20, 20, 1, self.InfoExclusao.ideProcTrab.nrProcTrab);
 
     if self.InfoExclusao.tpEvento = teS2500 then
-      Gerador.wCampo(tcStr, '', 'cpfTrab'    ,  11, 11, 1, self.InfoExclusao.ideProcTrab.cpfTrab)
+    begin
+      Gerador.wCampo(tcStr, '', 'cpfTrab'    ,  11, 11, 1, self.InfoExclusao.ideProcTrab.cpfTrab);
+
+      if VersaoDF > veS01_02_00 then
+        Gerador.wCampo(tcInt, '', 'ideSeqProc', 1, 3, 0, self.InfoExclusao.ideProcTrab.ideSeqProc);
+    end
     else
     begin
       if self.InfoExclusao.tpEvento = teS2501 then

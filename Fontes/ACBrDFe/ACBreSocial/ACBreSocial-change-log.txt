@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/04/2025
+-- pcesS3500 --
+[*] #TK-6982: Correção no preenchimento do ideSeqProc no evento S3500 - https://www.projetoacbr.com.br/forum/topic/83008-valor-incorreto-no-evento-s-3500/
+  Por: Thiago Augusto da Costa Ataides / Renato Rubinho
+
 14/04/2025
 -- Diversos -
 [*] #TK-6893: Implementada NT 2025/003

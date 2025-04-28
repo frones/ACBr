@@ -1094,7 +1094,7 @@ object frmACBrMDFe: TfrmACBrMDFe
               Caption = 'Salvar Documento pelo campo Data de Emiss'#227'o'
               TabOrder = 3
             end
-            object cbxSalvaPathEvento: TCheckBox
+            object cbxSalvarEvento: TCheckBox
               Left = 6
               Top = 64
               Width = 233

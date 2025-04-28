@@ -2479,7 +2479,7 @@ begin
                      Texto +
                    '</procEventoMDFe>';
 
-          if FPConfiguracoesMDFe.Arquivos.Salvar then
+          if FPConfiguracoesMDFe.Arquivos.SalvarEvento then
           begin
             NomeArq := OnlyNumber(FEvento.Evento.Items[I].InfEvento.Id) + '-procEventoMDFe.xml';
             PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJCPF));
@@ -2772,8 +2772,9 @@ begin
 
       if (FPConfiguracoesMDFe.Arquivos.Salvar) and NaoEstaVazio(FNomeArq) then
       begin
-        if (FretDistDFeInt.docZip.Items[I].schema in [schprocEventoMDFe]) then
-          FPDFeOwner.Gravar(FNomeArq, AXML, aPath);
+        if FPConfiguracoesMDFe.Arquivos.SalvarEvento then
+          if (FretDistDFeInt.docZip.Items[I].schema in [schprocEventoMDFe]) then
+            FPDFeOwner.Gravar(FNomeArq, AXML, aPath);
 
         if (FretDistDFeInt.docZip.Items[I].schema in [schprocMDFe]) then
           FPDFeOwner.Gravar(FNomeArq, AXML, aPath);

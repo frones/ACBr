@@ -93,6 +93,7 @@ try {
         if (ConfigGravarValor($handle, $ffi, "MDFe", "AdicionarLiteral", $_POST['AdicionarLiteral']) != 0) exit;
         if (ConfigGravarValor($handle, $ffi, "MDFe", "EmissaoPathMDFe", $_POST['EmissaoPathMDFe']) != 0) exit;
         if (ConfigGravarValor($handle, $ffi, "MDFe", "SalvarArq", $_POST['SalvarArq']) != 0) exit;
+        if (ConfigGravarValor($handle, $ffi, "MDFe", "SalvarEvento", $_POST['SalvarEvento']) != 0) exit;
         if (ConfigGravarValor($handle, $ffi, "MDFe", "SepararPorCNPJ", $_POST['SepararPorCNPJ']) != 0) exit;
         if (ConfigGravarValor($handle, $ffi, "MDFe", "SepararPorModelo", $_POST['SepararPorModelo']) != 0) exit;
         if (ConfigGravarValor($handle, $ffi, "MDFe", "PathMDFe", $_POST['PathMDFe']) != 0) exit;
@@ -155,6 +156,7 @@ try {
         if (ConfigLerValor($handle, $ffi, "MDFe", "AdicionarLiteral", $AdicionarLiteral) != 0) exit;
         if (ConfigLerValor($handle, $ffi, "MDFe", "EmissaoPathMDFe", $EmissaoPathMDFe) != 0) exit;
         if (ConfigLerValor($handle, $ffi, "MDFe", "SalvarArq", $SalvarArq) != 0) exit;
+        if (ConfigLerValor($handle, $ffi, "MDFe", "SalvarEvento", $SalvarEvento) != 0) exit;
         if (ConfigLerValor($handle, $ffi, "MDFe", "SepararPorCNPJ", $SepararPorCNPJ) != 0) exit;
         if (ConfigLerValor($handle, $ffi, "MDFe", "SepararPorModelo", $SepararPorModelo) != 0) exit;
         if (ConfigLerValor($handle, $ffi, "MDFe", "PathMDFe", $PathMDFe) != 0) exit;
@@ -213,6 +215,7 @@ try {
                 'AdicionarLiteral' => $AdicionarLiteral ?? '',
                 'EmissaoPathMDFe' => $EmissaoPathMDFe ?? '',
                 'SalvarArq' => $SalvarArq ?? '',
+                'SalvarEvento' => $SalvarEvento ?? '',
                 'SepararPorCNPJ' => $SepararPorCNPJ ?? '',
                 'SepararPorModelo' => $SepararPorModelo ?? '',
                 'PathMDFe' => $PathMDFe ?? '',

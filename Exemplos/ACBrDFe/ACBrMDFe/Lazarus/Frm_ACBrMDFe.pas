@@ -164,7 +164,7 @@ type
     cbxPastaMensal: TCheckBox;
     cbxAdicionaLiteral: TCheckBox;
     cbxEmissaoPathMDFe: TCheckBox;
-    cbxSalvaPathEvento: TCheckBox;
+    cbxSalvarEvento: TCheckBox;
     cbxSepararPorCNPJ: TCheckBox;
     edtPathMDFe: TEdit;
     edtPathEvento: TEdit;
@@ -1746,7 +1746,7 @@ begin
     Ini.WriteBool(  'Arquivos', 'PastaMensal',      cbxPastaMensal.Checked);
     Ini.WriteBool(  'Arquivos', 'AddLiteral',       cbxAdicionaLiteral.Checked);
     Ini.WriteBool(  'Arquivos', 'EmissaoPathMDFe',  cbxEmissaoPathMDFe.Checked);
-    Ini.WriteBool(  'Arquivos', 'SalvarPathEvento', cbxSalvaPathEvento.Checked);
+    Ini.WriteBool(  'Arquivos', 'SalvarEvento',     cbxSalvarEvento.Checked);
     Ini.WriteBool(  'Arquivos', 'SepararPorCNPJ',   cbxSepararPorCNPJ.Checked);
     Ini.WriteBool(  'Arquivos', 'SepararPorModelo', cbxSepararPorModelo.Checked);
     Ini.WriteString('Arquivos', 'PathMDFe',         edtPathMDFe.Text);
@@ -1872,7 +1872,7 @@ begin
     cbxPastaMensal.Checked      := Ini.ReadBool(  'Arquivos', 'PastaMensal',      false);
     cbxAdicionaLiteral.Checked  := Ini.ReadBool(  'Arquivos', 'AddLiteral',       false);
     cbxEmissaoPathMDFe.Checked  := Ini.ReadBool(  'Arquivos', 'EmissaoPathMDFe',   false);
-    cbxSalvaPathEvento.Checked  := Ini.ReadBool(  'Arquivos', 'SalvarPathEvento', false);
+    cbxSalvarEvento.Checked     := Ini.ReadBool(  'Arquivos', 'SalvarEvento',     false);
     cbxSepararPorCNPJ.Checked   := Ini.ReadBool(  'Arquivos', 'SepararPorCNPJ',   false);
     cbxSepararPorModelo.Checked := Ini.ReadBool(  'Arquivos', 'SepararPorModelo', false);
     edtPathMDFe.Text            := Ini.ReadString('Arquivos', 'PathMDFe',          '');
@@ -1980,6 +1980,7 @@ begin
     SepararPorMes    := cbxPastaMensal.Checked;
     AdicionarLiteral := cbxAdicionaLiteral.Checked;
     EmissaoPathMDFe  := cbxEmissaoPathMDFe.Checked;
+    SalvarEvento     := cbxSalvarEvento.Checked;
     SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
     SepararPorModelo := cbxSepararPorModelo.Checked;
     PathSalvar       := edtPathLogs.Text;

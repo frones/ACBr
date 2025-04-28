@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/04/2025
+-- ACBrMDFeBase.php, ACBrMDFeServicosMT.php, ACBrMDFeServicosST.php --
+[+] #TK-6871: Adicionado checkbox no programa de exemplo de MDFe em PHP para alimentar a propriedade SalvarEvento
+  Por: Renato Rubinho
+
 17/03/2025
 -- ACBrLibMDFeDataModule.pas --
 [*] Implementada função B64CryptToString.

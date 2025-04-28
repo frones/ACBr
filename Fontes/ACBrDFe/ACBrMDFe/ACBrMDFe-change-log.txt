@@ -54,6 +54,10 @@ Símbolo : Significado
 [*] Ajustes para contemplar a versão 1.00 da NT 2025/001 que alterou o layout do MDF-e.
   Por: Italo Giurizzato Junior
 
+-- Frm_ACBrMDFe.dfm,Frm_ACBrMDFe.pas,Frm_ACBrMDFe.lfm,Frm_ACBrMDFe.pas,ACBrMDFeConfiguracoes.pas,ACBrMDFeWebServices.pas --
+[+] #TK-6871: Implementado nos programas de exemplo em Delphi e Lazarus a propriedade SalvarEventos para considerar se os XMLs de processamento de eventos devem ser salvos
+   Por: Renato Rubinho  
+
 18/03/2025
 -- ACBrMDFeManifestos --
 [-] #TK-6767: Possível solução para a leitura do XML.

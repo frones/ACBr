@@ -1176,11 +1176,11 @@ object frmACBrMDFe: TfrmACBrMDFe
               Caption = 'Salvar Documento pelo campo Data de Emissão'
               TabOrder = 3
             end
-            object cbxSalvaPathEvento: TCheckBox
+            object cbxSalvarEvento: TCheckBox
               Left = 6
               Height = 17
               Top = 64
-              Width = 233
+              Width = 150
               Caption = 'Salvar Arquivos de Eventos'
               TabOrder = 4
             end

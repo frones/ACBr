@@ -488,7 +488,7 @@ var
 begin
   for i := 0 to gProc.Count - 1 do
   begin
-    sSecao := 'gProc' + IntToStrZero(Idx + 1, 3) + IntToStrZero(i + 1, 3);
+    sSecao := 'gProc' + IntToStrZero(Idx + 1, 3) + IntToStrZero(i + 1, 2);
 
     AINIRec.WriteString(sSecao, 'tpProc', tpProcToStr(gProc[i].tpProc));
     AINIRec.WriteString(sSecao, 'nProcesso', gProc[i].nProcesso);
@@ -709,7 +709,6 @@ begin
   AINIRec.WriteFloat(sSecao, 'vIBSMun', gIBSMun.vIBS);
 
   AINIRec.WriteFloat(sSecao, 'pDif', gIBSMun.gDif.pDif);
-  AINIRec.WriteFloat(sSecao, 'vCBSOp', gIBSMun.gDif.vCBSOp);
   AINIRec.WriteFloat(sSecao, 'vDif', gIBSMun.gDif.vDif);
 
   AINIRec.WriteFloat(sSecao, 'vDevTrib', gIBSMun.gDevTrib.vDevTrib);
@@ -729,7 +728,6 @@ begin
   AINIRec.WriteFloat(sSecao, 'vCBS', gCBS.vCBS);
 
   AINIRec.WriteFloat(sSecao, 'pDif', gCBS.gDif.pDif);
-  AINIRec.WriteFloat(sSecao, 'vCBSOp', gCBS.gDif.vCBSOp);
   AINIRec.WriteFloat(sSecao, 'vDif', gCBS.gDif.vDif);
 
   AINIRec.WriteFloat(sSecao, 'vDevTrib', gCBS.gDevTrib.vDevTrib);

@@ -141,8 +141,8 @@ type
     function Gerar_IBSCBS_gIBSCBS_gCBS(gCBS: TgCBSValores): TACBrXmlNode;
 
     function Gerar_IBSCBS_gIBSCBS_gIBSUF_gDif(Dif: TgDif): TACBrXmlNode;
-    function Gerar_IBSCBS_gIBSCBS_gIBSMun_gDif(Dif: TgDifCBS): TACBrXmlNode;
-    function Gerar_IBSCBS_gIBSCBS_gCBS_gDif(Dif: TgDifCBS): TACBrXmlNode;
+    function Gerar_IBSCBS_gIBSCBS_gIBSMun_gDif(Dif: TgDif): TACBrXmlNode;
+    function Gerar_IBSCBS_gIBSCBS_gCBS_gDif(Dif: TgDif): TACBrXmlNode;
 
     function Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gDevTrib(DevTrib: TgDevTrib): TACBrXmlNode;
     function Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gRed(Red: TgRed): TACBrXmlNode;
@@ -1712,15 +1712,12 @@ begin
 end;
 
 function TNFComXmlWriter.Gerar_IBSCBS_gIBSCBS_gIBSMun_gDif(
-  Dif: TgDifCBS): TACBrXmlNode;
+  Dif: TgDif): TACBrXmlNode;
 begin
   Result := FDocument.CreateElement('gDif');
 
   Result.AppendChild(AddNode(tcDe4, '#10', 'pDif', 1, 7, 1,
                                                            Dif.pDif, DSC_PDIF));
-
-  Result.AppendChild(AddNode(tcDe2, '#10', 'vCBSOp', 1, 15, 1,
-                                                       Dif.vCBSOp, DSC_VCBSOP));
 
   Result.AppendChild(AddNode(tcDe2, '#11', 'vDif', 1, 15, 1,
                                                            Dif.vDif, DSC_VDIF));
@@ -1748,15 +1745,12 @@ begin
 end;
 
 function TNFComXmlWriter.Gerar_IBSCBS_gIBSCBS_gCBS_gDif(
-  Dif: TgDifCBS): TACBrXmlNode;
+  Dif: TgDif): TACBrXmlNode;
 begin
   Result := FDocument.CreateElement('gDif');
 
   Result.AppendChild(AddNode(tcDe4, '#10', 'pDif', 1, 7, 1,
                                                            Dif.pDif, DSC_PDIF));
-
-  Result.AppendChild(AddNode(tcDe2, '#10', 'vCBSOp', 1, 15, 1,
-                                                       Dif.vCBSOp, DSC_VCBSOP));
 
   Result.AppendChild(AddNode(tcDe2, '#11', 'vDif', 1, 15, 1,
                                                            Dif.vDif, DSC_VDIF));

@@ -64,19 +64,6 @@ type
     property vDif: Double read FvDif write FvDif;
   end;
 
-  { TgDifCBS }
-
-  TgDifCBS = class(TObject)
-  private
-    FpDif: Double;
-    FvCBSOp: Double;
-    FvDif: Double;
-  public
-    property pDif: Double read FpDif write FpDif;
-    property vCBSOp: Double read FvCBSOp write FvCBSOp;
-    property vDif: Double read FvDif write FvDif;
-  end;
-
   { TgDevTrib }
 
   TgDevTrib = class(TObject)
@@ -145,7 +132,7 @@ type
   TgIBSMunValores = class(TObject)
   private
     FpIBS: Double;
-    FgDif: TgDifCBS;
+    FgDif: TgDif;
     FgDevTrib: TgDevTrib;
     FgRed: TgRed;
     FvIBS: Double;
@@ -154,7 +141,7 @@ type
     destructor Destroy; override;
 
     property pIBS: Double read FpIBS write FpIBS;
-    property gDif: TgDifCBS read FgDif write FgDif;
+    property gDif: TgDif read FgDif write FgDif;
     property gDevTrib: TgDevTrib read FgDevTrib write FgDevTrib;
     property gRed: TgRed read FgRed write FgRed;
     property vIBS: Double read FvIBS write FvIBS;
@@ -165,7 +152,7 @@ type
   TgCBSValores = class(TObject)
   private
     FpCBS: Double;
-    FgDif: TgDifCBS;
+    FgDif: TgDif;
     FgDevTrib: TgDevTrib;
     FgRed: TgRed;
     FvCBS: Double;
@@ -174,7 +161,7 @@ type
     destructor Destroy; override;
 
     property pCBS: Double read FpCBS write FpCBS;
-    property gDif: TgDifCBS read FgDif write FgDif;
+    property gDif: TgDif read FgDif write FgDif;
     property gDevTrib: TgDevTrib read FgDevTrib write FgDevTrib;
     property gRed: TgRed read FgRed write FgRed;
     property vCBS: Double read FvCBS write FvCBS;
@@ -2972,7 +2959,7 @@ constructor TgIBSMunValores.Create;
 begin
   inherited Create;
 
-  FgDif := TgDifCBS.Create;
+  FgDif := TgDif.Create;
   FgDevTrib := TgDevTrib.Create;
   FgRed := TgRed.Create;
 end;
@@ -2992,7 +2979,7 @@ constructor TgCBSValores.Create;
 begin
   inherited Create;
 
-  FgDif := TgDifCBS.Create;
+  FgDif := TgDif.Create;
   FgDevTrib := TgDevTrib.Create;
   FgRed := TgRed.Create;
 end;

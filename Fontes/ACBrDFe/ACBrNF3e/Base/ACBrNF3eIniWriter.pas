@@ -614,6 +614,7 @@ begin
   AINIRec.WriteString(sSecao, 'indDevolucao', TIndicadorToStr(Prod.indDevolucao));
   AINIRec.WriteString(sSecao, 'indPrecoACL', TIndicadorToStr(Prod.indPrecoACL));
 
+  AINIRec.WriteInteger(sSecao, 'nMed', Prod.gMedicao.nMed);
   AINIRec.WriteInteger(sSecao, 'nContrat', Prod.gMedicao.nContrat);
   AINIRec.WriteString(sSecao, 'tpGrMed', tpGrMedToStr(Prod.gMedicao.tpGrMed));
   AINIRec.WriteString(sSecao, 'cPosTarif', cPosTarifToStr(Prod.gMedicao.cPosTarif));
@@ -1042,7 +1043,6 @@ begin
   AINIRec.WriteFloat(sSecao, 'vIBSMun', gIBSMun.vIBS);
 
   AINIRec.WriteFloat(sSecao, 'pDif', gIBSMun.gDif.pDif);
-  AINIRec.WriteFloat(sSecao, 'vCBSOp', gIBSMun.gDif.vCBSOp);
   AINIRec.WriteFloat(sSecao, 'vDif', gIBSMun.gDif.vDif);
 
   AINIRec.WriteFloat(sSecao, 'vDevTrib', gIBSMun.gDevTrib.vDevTrib);
@@ -1061,7 +1061,6 @@ begin
   AINIRec.WriteFloat(sSecao, 'vCBS', gCBS.vCBS);
 
   AINIRec.WriteFloat(sSecao, 'pDif', gCBS.gDif.pDif);
-  AINIRec.WriteFloat(sSecao, 'vCBSOp', gCBS.gDif.vCBSOp);
   AINIRec.WriteFloat(sSecao, 'vDif', gCBS.gDif.vDif);
 
   AINIRec.WriteFloat(sSecao, 'vDevTrib', gCBS.gDevTrib.vDevTrib);

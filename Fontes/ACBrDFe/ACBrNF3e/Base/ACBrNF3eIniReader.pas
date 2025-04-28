@@ -689,6 +689,7 @@ begin
     Prod.indDevolucao := StrToTIndicador(AINIRec.ReadString(sSecao, 'indDevolucao', ''));
     Prod.indPrecoACL := StrToTIndicador(AINIRec.ReadString(sSecao, 'indPrecoACL', ''));
 
+    Prod.gMedicao.nMed := AINIRec.ReadInteger(sSecao, 'nMed', 0);
     Prod.gMedicao.nContrat := AINIRec.ReadInteger(sSecao, 'nContrat', 0);
     Prod.gMedicao.tpGrMed := StrTotpGrMed(AINIRec.ReadString(sSecao, 'tpGrMed', ''));
     Prod.gMedicao.cPosTarif := StrTocPosTarif(AINIRec.ReadString(sSecao, 'cPosTarif', ''));
@@ -1181,7 +1182,6 @@ begin
     gIBSMun.vIBS := StringToFloatDef( AINIRec.ReadString(sSecao,'vIBSMun','') ,0);
 
     gIBSMun.gDif.pDif := StringToFloatDef( AINIRec.ReadString(sSecao,'pDif','') ,0);
-    gIBSMun.gDif.vCBSOp := StringToFloatDef( AINIRec.ReadString(sSecao,'vCBSOp','') ,0);
     gIBSMun.gDif.vDif := StringToFloatDef( AINIRec.ReadString(sSecao,'vDif','') ,0);
 
     gIBSMun.gDevTrib.vDevTrib := StringToFloatDef( AINIRec.ReadString(sSecao,'vDevTrib','') ,0);
@@ -1202,7 +1202,6 @@ begin
     gCBS.vCBS := StringToFloatDef( AINIRec.ReadString(sSecao,'vCBS','') ,0);
 
     gCBS.gDif.pDif := StringToFloatDef( AINIRec.ReadString(sSecao,'pDif','') ,0);
-    gCBS.gDif.vCBSOp := StringToFloatDef( AINIRec.ReadString(sSecao,'vCBSOp','') ,0);
     gCBS.gDif.vDif := StringToFloatDef( AINIRec.ReadString(sSecao,'vDif','') ,0);
 
     gCBS.gDevTrib.vDevTrib := StringToFloatDef( AINIRec.ReadString(sSecao,'vDevTrib','') ,0);

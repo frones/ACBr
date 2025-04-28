@@ -544,7 +544,6 @@ begin
 
         IBSCBS.gIBSCBS.gIBSMun.pIBS := 5;
         IBSCBS.gIBSCBS.gIBSMun.gDif.pDif := 5;
-        IBSCBS.gIBSCBS.gIBSMun.gDif.vCBSOp := 50;
         IBSCBS.gIBSCBS.gIBSMun.gDif.vDif := 50;
         IBSCBS.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 50;
         IBSCBS.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
@@ -553,7 +552,6 @@ begin
 
         IBSCBS.gIBSCBS.gCBS.pCBS := 5;
         IBSCBS.gIBSCBS.gCBS.gDif.pDif := 5;
-        IBSCBS.gIBSCBS.gCBS.gDif.vCBSOp := 50;
         IBSCBS.gIBSCBS.gCBS.gDif.vDif := 50;
         IBSCBS.gIBSCBS.gCBS.gDevTrib.vDevTrib := 50;
         IBSCBS.gIBSCBS.gCBS.gRed.pRedAliq := 5;
@@ -1270,7 +1268,7 @@ begin
     memoLog.Lines.Add('Arquivo gerado em: ' + ACBrNFCom1.NotasFiscais[0].NomeArq);
 
     try
-      ACBrNFCom1.NotasFiscais.Validar;
+//      ACBrNFCom1.NotasFiscais.Validar;
 
       if ACBrNFCom1.NotasFiscais[0].Alertas <> '' then
         memoLog.Lines.Add('Alertas: '+ACBrNFCom1.NotasFiscais[0].Alertas);

@@ -657,7 +657,6 @@ begin
 
     Imp.IBSCBS.gIBSCBS.gIBSMun.pIBS := 5;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.pDif := 5;
-    Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.vCBSOp := 50;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.vDif := 50;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 50;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
@@ -666,7 +665,6 @@ begin
 
     Imp.IBSCBS.gIBSCBS.gCBS.pCBS := 5;
     Imp.IBSCBS.gIBSCBS.gCBS.gDif.pDif := 5;
-    Imp.IBSCBS.gIBSCBS.gCBS.gDif.vCBSOp := 50;
     Imp.IBSCBS.gIBSCBS.gCBS.gDif.vDif := 50;
     Imp.IBSCBS.gIBSCBS.gCBS.gDevTrib.vDevTrib := 50;
     Imp.IBSCBS.gIBSCBS.gCBS.gRed.pRedAliq := 5;

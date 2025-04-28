@@ -656,7 +656,6 @@ begin
 
     Imp.IBSCBS.gIBSCBS.gIBSMun.pIBS := 5;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.pDif := 5;
-    Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.vCBSOp := 50;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.vDif := 50;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 50;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
@@ -665,7 +664,6 @@ begin
 
     Imp.IBSCBS.gIBSCBS.gCBS.pCBS := 5;
     Imp.IBSCBS.gIBSCBS.gCBS.gDif.pDif := 5;
-    Imp.IBSCBS.gIBSCBS.gCBS.gDif.vCBSOp := 50;
     Imp.IBSCBS.gIBSCBS.gCBS.gDif.vDif := 50;
     Imp.IBSCBS.gIBSCBS.gCBS.gDevTrib.vDevTrib := 50;
     Imp.IBSCBS.gIBSCBS.gCBS.gRed.pRedAliq := 5;
@@ -1160,7 +1158,6 @@ begin
 
     Imp.IBSCBS.gIBSCBS.gIBSMun.pIBS := 5;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.pDif := 5;
-    Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.vCBSOp := 50;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.vDif := 50;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 50;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
@@ -1169,7 +1166,6 @@ begin
 
     Imp.IBSCBS.gIBSCBS.gCBS.pCBS := 5;
     Imp.IBSCBS.gIBSCBS.gCBS.gDif.pDif := 5;
-    Imp.IBSCBS.gIBSCBS.gCBS.gDif.vCBSOp := 50;
     Imp.IBSCBS.gIBSCBS.gCBS.gDif.vDif := 50;
     Imp.IBSCBS.gIBSCBS.gCBS.gDevTrib.vDevTrib := 50;
     Imp.IBSCBS.gIBSCBS.gCBS.gRed.pRedAliq := 5;
@@ -1524,7 +1520,6 @@ begin
 
     Imp.IBSCBS.gIBSCBS.gIBSMun.pIBS := 5;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.pDif := 5;
-    Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.vCBSOp := 50;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.vDif := 50;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 50;
     Imp.IBSCBS.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
@@ -1533,7 +1528,6 @@ begin
 
     Imp.IBSCBS.gIBSCBS.gCBS.pCBS := 5;
     Imp.IBSCBS.gIBSCBS.gCBS.gDif.pDif := 5;
-    Imp.IBSCBS.gIBSCBS.gCBS.gDif.vCBSOp := 50;
     Imp.IBSCBS.gIBSCBS.gCBS.gDif.vDif := 50;
     Imp.IBSCBS.gIBSCBS.gCBS.gDevTrib.vDevTrib := 50;
     Imp.IBSCBS.gIBSCBS.gCBS.gRed.pRedAliq := 5;
@@ -1558,10 +1552,10 @@ begin
     Imp.IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
     Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
     Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;
-
+    }
     Imp.infAdFisco := 'Lei da Transparencia: O valor aproximado de tributos incidentes sobre o preço deste servico é de R$ 17,00 (17,00%) Fonte: IBPT';
     Imp.vTotTrib   := 17.00;
-    }
+
     {Carrega as informacoes CTe Normal}
     with infCTeNorm do
     begin

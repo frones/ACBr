@@ -111,11 +111,12 @@ type
   TCarga = (tcGranelSolido, tcGranelLiquido, tcFrigorificada, tcConteinerizada,
             tcCargaGeral, tcNeogranel, tcPerigosaGranelSolido,
             tcPerigosaGranelLiquido, tcPerigosaCargaFrigorificada,
-            tcPerigosaConteinerizada, tcPerigosaCargaGeral);
+            tcPerigosaConteinerizada, tcPerigosaCargaGeral,
+            tcGranelPressurizada);
 
 const
   TCargaArrayStrings: array[TCarga] of string = ('01', '02', '03', '04', '05',
-    '06', '07', '08', '09', '10', '11');
+    '06', '07', '08', '09', '10', '11', '12');
 
 type
   TIndPag = (ipVista, ipPrazo);
@@ -124,18 +125,19 @@ const
   TIndPagArrayStrings: array[TIndPag] of string = ('0', '1');
 
 type
-  TComp = (tcValePedagio, tcImpostos, tcDespesas, tcOutros);
+  TComp = (tcValePedagio, tcImpostos, tcDespesas, tcFrete, tcOutros);
 
 const
-  TCompArrayStrings: array[TComp] of string = ('01', '02', '03', '99');
+  TCompArrayStrings: array[TComp] of string = ('01', '02', '03', '04', '99');
 
 type
-  TtpValePed = (tvpNenhum, tvpTAG, tvpCupom, tvpCartao);
+  TtpValePed = (tvpNenhum, tvpTAG, tvpCupom, tvpCartao, tvpLeituraPlaca);
 
 const
-  TtpValePedArrayStrings: array[TtpValePed] of string = ('', '01', '02', '03');
+  TtpValePedArrayStrings: array[TtpValePed] of string = ('', '01', '02', '03',
+    '04');
   TtpValePedDescArrayStrings: array[TtpValePed] of string = ('Nenhum', 'TAG',
-    'Cupom', 'Cartão');
+    'Cupom', 'Cartão', 'Leitura de Placa');
 
 type
   TcategCombVeic = (tcNenhum, tcVeicCom2Eixos, tcVeicCom3Eixos, tcVeicCom4Eixos,
@@ -426,21 +428,23 @@ end;
 function TCargaToStr(const t: TCarga): String;
 begin
   Result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '07', '08',
-                               '09', '10', '11'],
+                               '09', '10', '11', '12'],
             [tcGranelSolido, tcGranelLiquido, tcFrigorificada, tcConteinerizada,
              tcCargaGeral, tcNeogranel, tcPerigosaGranelSolido,
              tcPerigosaGranelLiquido, tcPerigosaCargaFrigorificada,
-             tcPerigosaConteinerizada, tcPerigosaCargaGeral]);
+             tcPerigosaConteinerizada, tcPerigosaCargaGeral,
+             tcGranelPressurizada]);
 end;
 
 function StrToTCarga(out ok: Boolean; const s: String): TCarga;
 begin
   Result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07',
-                                   '08', '09', '10', '11'],
+                                   '08', '09', '10', '11', '12'],
             [tcGranelSolido, tcGranelLiquido, tcFrigorificada, tcConteinerizada,
              tcCargaGeral, tcNeogranel, tcPerigosaGranelSolido,
              tcPerigosaGranelLiquido, tcPerigosaCargaFrigorificada,
-             tcPerigosaConteinerizada, tcPerigosaCargaGeral]);
+             tcPerigosaConteinerizada, tcPerigosaCargaGeral,
+             tcGranelPressurizada]);
 end;
 
 function TIndPagToStr(const t: TIndPag): String;
@@ -457,14 +461,16 @@ end;
 
 function TCompToStr(const t: TComp): String;
 begin
-  Result := EnumeradoToStr(t, ['01', '02', '03', '99'],
-                             [tcValePedagio, tcImpostos, tcDespesas, tcOutros]);
+  Result := EnumeradoToStr(t, ['01', '02', '03', '04', '99'],
+                             [tcValePedagio, tcImpostos, tcDespesas, tcFrete,
+                              tcOutros]);
 end;
 
 function StrToTComp(out ok: Boolean; const s: String): TComp;
 begin
-  Result := StrToEnumerado(ok, s, ['01', '02', '03', '99'],
-                             [tcValePedagio, tcImpostos, tcDespesas, tcOutros]);
+  Result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '99'],
+                             [tcValePedagio, tcImpostos, tcDespesas, tcFrete,
+                              tcOutros]);
 end;
 
 function indAltoDesempToStr(const t: TIndicador): String;
@@ -479,20 +485,24 @@ end;
 
 function tpValePedToStr(const t: TtpValePed): String;
 begin
-  Result := EnumeradoToStr(t, ['', '01', '02', '03'],
-                              [tvpNenhum, tvpTAG, tvpCupom, tvpCartao]);
+  Result := EnumeradoToStr(t, ['', '01', '02', '03', '04'],
+                              [tvpNenhum, tvpTAG, tvpCupom, tvpCartao,
+                               tvpLeituraPlaca]);
 end;
 
 function tpValePedToStrText(const t: TtpValePed): String;
 begin
-  Result := EnumeradoToStr(t, ['Nenhum', 'TAG', 'Cupom', 'Cartão'],
-                              [tvpNenhum, tvpTAG, tvpCupom, tvpCartao]);
+  Result := EnumeradoToStr(t, ['Nenhum', 'TAG', 'Cupom', 'Cartão',
+                               'Leitura de Placa'],
+                              [tvpNenhum, tvpTAG, tvpCupom, tvpCartao,
+                               tvpLeituraPlaca]);
 end;
 
 function StrTotpValePed(out ok: Boolean; const s: String): TtpValePed;
 begin
-  Result := StrToEnumerado(ok, s, ['', '01', '02', '03'],
-                                  [tvpNenhum, tvpTAG, tvpCupom, tvpCartao]);
+  Result := StrToEnumerado(ok, s, ['', '01', '02', '03', '04'],
+                                  [tvpNenhum, tvpTAG, tvpCupom, tvpCartao,
+                                   tvpLeituraPlaca]);
 end;
 
 function categCombVeicToStrText(const t: TcategCombVeic): String;

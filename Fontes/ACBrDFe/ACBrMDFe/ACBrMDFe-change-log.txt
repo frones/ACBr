@@ -42,6 +42,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/04/2025
+-- Diversos --
+[*] Implementado as units: ACBrMDFe.IniReader e ACBrMDFe.IniWrite que
+    vão ser responsáveis por ler e gerar o arquivo INI.
+    Refatorado a função GetURLQRCode para que a mesma receba a classe TMDFe em 
+    vez de diversos parâmetros de entrada.
+    Implementado a propriedade de configuração: SalvarEvento (valor padrão False)
+    agora ao salvar o XML *-procEventoMDFe o componente vai checar o valor dessa 
+    propriedade.
+[*] Ajustes para contemplar a versão 1.00 da NT 2025/001 que alterou o layout do MDF-e.
+  Por: Italo Giurizzato Junior
+
 18/03/2025
 -- ACBrMDFeManifestos --
 [-] #TK-6767: Possível solução para a leitura do XML.

@@ -769,6 +769,7 @@ begin
   MDFe.aquav.cPrtDest := ObterConteudo(ANode.Childrens.Find('cPrtDest'), tcStr);
   MDFe.aquav.prtTrans := ObterConteudo(ANode.Childrens.Find('prtTrans'), tcStr);
   MDFe.aquav.tpNav := StrToTpNavegacao(ok, ObterConteudo(ANode.Childrens.Find('tpNav'), tcStr));
+  MDFe.aquav.MMSI := ObterConteudo(ANode.Childrens.Find('MMSI'), tcStr);
 
   ANodes := ANode.Childrens.FindAll('infTermCarreg');
   MDFe.aquav.infTermCarreg.Clear;

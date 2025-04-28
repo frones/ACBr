@@ -48,7 +48,6 @@ uses
   {$IFEND}
   ACBrBase,
   pcnConversao, pmdfeConversaoMDFe, pcnSignature,
-//  pmdfeProcMDFe,
   ACBrDFeComum.Proc,
   pcnGerador;
 
@@ -141,11 +140,9 @@ type
   private
     FId: string;
     FVersao: Double;
-//    function GetVersaoStr: string;
   public
     property Id: string read FId write FId;
     property versao: Double read FVersao write FVersao;
-//    property VersaoStr: string read GetVersaoStr;
   end;
 
   TinfMunCarregaCollection = class(TACBrObjectList)
@@ -682,9 +679,11 @@ type
     FinfEmbComb: TinfEmbCombCollection;
     FinfUnidCargaVazia: TinfUnidCargaVaziaCollection;
     FinfUnidTranspVazia: TinfUnidTranspVaziaCollection;
+    FMMSI: string;
   public
     constructor Create;
     destructor Destroy; override;
+
     property CNPJAgeNav: string                              read FCNPJAgeNav        write FCNPJAgeNav;
     property irin: string                                    read Firin              write Firin;
     property tpEmb: string                                   read FtpEmb             write FtpEmb;
@@ -700,6 +699,7 @@ type
     property infEmbComb: TinfEmbCombCollection               read FinfEmbComb        write FinfEmbComb;
     property infUnidCargaVazia: TinfUnidCargaVaziaCollection read FinfUnidCargaVazia write FinfUnidCargaVazia;
     property infUnidTranspVazia: TinfUnidTranspVaziaCollection read FinfUnidTranspVazia write FinfUnidTranspVazia;
+    property MMSI: string                                    read FMMSI              write FMMSI;
   end;
 
   TinfTermCarregCollection = class(TACBrObjectList)

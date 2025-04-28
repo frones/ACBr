@@ -114,9 +114,7 @@ type
     function GetURLConsulta(const CUF: integer;
       const TipoAmbiente: TpcnTipoAmbiente;
       const Versao: Double): String;
-    function GetURLQRCode(const CUF: integer; const TipoAmbiente: TpcnTipoAmbiente;
-      const TipoEmissao: TpcnTipoEmissao; const AChaveMDFe: String;
-      const Versao: Double): String;
+    function GetURLQRCode(FMDFe: TMDFe): String;
 
     function IdentificaSchema(const AXML: String): TSchemaMDFe;
     function IdentificaSchemaModal(const AXML: String): TSchemaMDFe;
@@ -276,29 +274,23 @@ begin
   Result := LerURLDeParams('MDFe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaMDFe', 0);
 end;
 
-function TACBrMDFe.GetURLQRCode(const CUF: integer;
-  const TipoAmbiente: TpcnTipoAmbiente; const TipoEmissao: TpcnTipoEmissao;
-  const AChaveMDFe: String; const Versao: Double): String;
+function TACBrMDFe.GetURLQRCode(FMDFe: TMDFe): String;
 var
   idMDFe,
   sEntrada, urlUF, Passo2, sign: String;
-//  VersaoDFe: TVersaoMDFe;
-//  ok: Boolean;
 begin
-//  VersaoDFe := DblToVersaoMDFe(ok, Versao);
-
-  urlUF := LerURLDeParams('MDFe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
+  urlUF := LerURLDeParams('MDFe', CUFtoUF(FMDFe.Ide.cUF), FMDFe.Ide.tpAmb, 'URL-QRCode', 0);
 
   if Pos('?', urlUF) <= 0 then
     urlUF := urlUF + '?';
 
-  idMDFe := OnlyNumber(AChaveMDFe);
+  idMDFe := OnlyNumber(FMDFe.infMDFe.ID);
 
   // Passo 1
-  sEntrada := 'chMDFe=' + idMDFe + '&tpAmb=' + TpAmbToStr(TipoAmbiente);
+  sEntrada := 'chMDFe=' + idMDFe + '&tpAmb=' + TpAmbToStr(FMDFe.Ide.tpAmb);
 
   // Passo 2 calcular o SHA-1 da string idMDFe se emissão em contingência
-  if TipoEmissao = teContingencia then
+  if FMDFe.ide.tpEmis = teContingencia then
   begin
     // Tipo de Emissão em Contingência
     SSL.CarregarCertificadoSeNecessario;

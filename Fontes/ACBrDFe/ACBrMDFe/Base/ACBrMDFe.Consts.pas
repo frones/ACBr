@@ -112,6 +112,7 @@ resourcestring
   DSC_XBALSA      = 'Identificador da Balsa';
   DSC_IRIN      = 'Irin do navio sempre deverá ser informado';
   DSC_TPNAV     = 'Tipo de Navegação';
+  DSC_MMSI = 'Maritime Mobile Service Identify';
 
   // Ferroviário
   DSC_XPREF       = 'Prefixo do Trem';

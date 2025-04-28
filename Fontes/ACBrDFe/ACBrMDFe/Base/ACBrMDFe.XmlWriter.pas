@@ -348,7 +348,7 @@ begin
                  (MDFe.signature.X509Certificate = ''));
     if Gerar then
     begin
-      FMDFe.signature.URI := '#MDFe' + OnlyNumber(MDFe.infMDFe.ID);
+      FMDFe.signature.URI := '#MDFe' + FChaveMDFe;
       xmlNode := GerarSignature(FMDFe.signature);
       MDFeNode.AppendChild(xmlNode);
     end;
@@ -368,7 +368,7 @@ var
 begin
   Result := FDocument.CreateElement('infMDFe');
 
-  Result.SetAttribute('Id', MDFe.infMDFe.ID);
+  Result.SetAttribute('Id', 'MDFe' + FChaveMDFe);
   Result.SetAttribute('versao', FloatToString(MDFe.infMDFe.Versao, '.', '#0.00'));
 
   Result.AppendChild(Gerar_Ide);
@@ -1340,6 +1340,9 @@ begin
       Result.AppendChild(nodeArray[i]);
     end;
   end;
+
+  Result.AppendChild(AddNode(tcStr, '#11', 'MMSI', 1, 9, 0,
+                                                    MDFe.aquav.MMSI, DSC_MMSI));
 end;
 
 function TMDFeXmlWriter.Gerar_infTermCarreg: TACBrXmlNodeArray;

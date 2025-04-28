@@ -692,7 +692,6 @@ begin
 
   AINIRec.WriteFloat(sSecao, 'pDif', gIBSMun.gDif.pDif);
   AINIRec.WriteFloat(sSecao, 'vDif', gIBSMun.gDif.vDif);
-  AINIRec.WriteFloat(sSecao, 'vCBSOp', gIBSMun.gDif.vCBSOp);
 
   AINIRec.WriteFloat(sSecao, 'vDevTrib', gIBSMun.gDevTrib.vDevTrib);
 
@@ -715,7 +714,6 @@ begin
 
   AINIRec.WriteFloat(sSecao, 'pDif', gCBS.gDif.pDif);
   AINIRec.WriteFloat(sSecao, 'vDif', gCBS.gDif.vDif);
-  AINIRec.WriteFloat(sSecao, 'vCBSOp', gCBS.gDif.vCBSOp);
 
   AINIRec.WriteFloat(sSecao, 'vDevTrib', gCBS.gDevTrib.vDevTrib);
 

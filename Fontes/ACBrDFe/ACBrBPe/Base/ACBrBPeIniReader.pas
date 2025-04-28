@@ -780,7 +780,6 @@ begin
 
     gIBSMun.gDif.pDif := StringToFloatDef( AINIRec.ReadString(sSecao,'pDif','') ,0);
     gIBSMun.gDif.vDif := StringToFloatDef( AINIRec.ReadString(sSecao,'vDif','') ,0);
-    gIBSMun.gDif.vCBSOp := StringToFloatDef( AINIRec.ReadString(sSecao,'vCBSOp','') ,0);
 
     gIBSMun.gDevTrib.vDevTrib := StringToFloatDef( AINIRec.ReadString(sSecao,'vDevTrib','') ,0);
 
@@ -805,7 +804,6 @@ begin
 
     gCBS.gDif.pDif := StringToFloatDef( AINIRec.ReadString(sSecao,'pDif','') ,0);
     gCBS.gDif.vDif := StringToFloatDef( AINIRec.ReadString(sSecao,'vDif','') ,0);
-    gCBS.gDif.vCBSOp := StringToFloatDef( AINIRec.ReadString(sSecao,'vCBSOp','') ,0);
 
     gCBS.gDevTrib.vDevTrib := StringToFloatDef( AINIRec.ReadString(sSecao,'vDevTrib','') ,0);
 

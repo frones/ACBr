@@ -8,7 +8,12 @@
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
-    <color name="background">#FAFAFA</color>
+    <color name="background">#FFFFFF</color>
     <color name="surface">#FFFFFF</color>
     <color name="error">#B00020</color>
+    
+    <!-- Cores de fundo para modo claro -->
+    <color name="background_dark">#FFFFFF</color>
+    <color name="surface_dark">#FFFFFF</color>
+    <color name="primary_text_dark">#212121</color>
 </resources>

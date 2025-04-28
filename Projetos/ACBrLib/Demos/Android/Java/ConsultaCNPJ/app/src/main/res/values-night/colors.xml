@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#FF1976D2</color>
+    <color name="primary_dark">#FF1565C0</color>
+    <color name="accent">#FF03A9F4</color>
+    <color name="icons">#FFFFFFFF</color>
+    <color name="error">#FFB00020</color>
+    
+    <!-- Cores de fundo para modo escuro -->
+    <color name="background_dark">#FF121212</color>
+    <color name="surface_dark">#FF1E1E1E</color>
+    <color name="primary_text_dark">#FFFFFFFF</color>
+</resources> 

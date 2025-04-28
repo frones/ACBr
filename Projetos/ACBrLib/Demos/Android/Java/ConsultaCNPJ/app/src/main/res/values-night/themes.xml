@@ -1,32 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.ACBrLibConsultaCNPJ" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Base.Theme.ACBrLibConsultaCNPJDemo" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Cores primárias -->
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorPrimaryContainer">@color/primary_dark</item>
         <item name="colorOnPrimary">@color/icons</item>
         
         <!-- Cores secundárias -->
         <item name="colorSecondary">@color/accent</item>
-        <item name="colorSecondaryVariant">@color/accent</item>
+        <item name="colorSecondaryContainer">@color/accent</item>
         <item name="colorOnSecondary">@color/icons</item>
         
         <!-- Status bar -->
         <item name="android:statusBarColor">@color/primary_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
         
         <!-- Cores de fundo -->
-        <item name="android:colorBackground">@color/background</item>
-        <item name="colorSurface">@color/surface</item>
+        <item name="android:colorBackground">@color/background_dark</item>
+        <item name="colorSurface">@color/surface_dark</item>
         <item name="colorError">@color/error</item>
         
         <!-- Texto e ícones -->
-        <item name="colorOnBackground">@color/primary_text</item>
-        <item name="colorOnSurface">@color/primary_text</item>
+        <item name="colorOnBackground">@color/primary_text_dark</item>
+        <item name="colorOnSurface">@color/primary_text_dark</item>
         <item name="colorOnError">@color/icons</item>
         
         <!-- Estilo dos componentes -->
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
+    </style>
+
+    <!-- Estilo personalizado para botões -->
+    <style name="Widget.App.Button" parent="Widget.Material3.Button">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="elevation">0dp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- Estilo personalizado para campos de texto -->
+    <style name="Widget.App.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+    </style>
+
+    <!-- Estilo personalizado para spinner -->
+    <style name="Widget.App.Spinner" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="android:background">@android:drawable/btn_dropdown</item>
+        <item name="android:popupBackground">@color/surface_dark</item>
+        <item name="android:dropDownSelector">@android:color/darker_gray</item>
     </style>
 </resources>

@@ -613,6 +613,19 @@ type
 const
   TLocalPrestacaoArrayStrings: array[TLocalPrestacao] of string = ('1', '2');
 
+// Reforma Tributária
+type
+  TindCompGov  = (icgNenhum, icgSim, icgNao);
+
+const
+  TindCompGovArrayStrings: array[TindCompGov] of string = ('', '1', '0');
+
+type
+  TtpCompraGov  = (tcgUniao, tcgEstados, tcgDistritoFederal, tcgMunicipios);
+
+const
+  TtpCompraGovArrayStrings: array[TtpCompraGov] of string = ('1', '2', '3', '4');
+
 {
   Declaração das funções de conversão
 }
@@ -790,6 +803,13 @@ function CodISOPaisToCodIBGE(t: Integer): Integer;
 
 function LocalPrestacaoToStr(t: TLocalPrestacao): string;
 function StrToLocalPrestacao(out ok: boolean; const s: string): TLocalPrestacao;
+
+// Reforma Tributária
+function indCompGovToStr(const t: TindCompGov): string;
+function StrToindCompGov(const s: string): TindCompGov;
+
+function tpCompraGovToStr(const t: TtpCompraGov): string;
+function StrTotpCompraGov(const s: string): TtpCompraGov;
 
 const
   SiglaISO2Pais: array[0..247] of string = ('AF', 'AL', 'CW', 'DE', 'BF', 'AD',
@@ -3503,7 +3523,7 @@ var
       3125200: CodTOM := '4503'; // Fama/MG';
       3125309: CodTOM := '4505'; // Faria Lemos/MG';
       3125408: CodTOM := '4507'; // Felicio Dos Santos/MG';
-      3125507: CodTOM := '5238'; // Sao Goncalo Do Rio Preto/MG';
+      3125507: CodTOM := '4509'; // Sao Goncalo Do Rio Preto/MG';
       3125606: CodTOM := '4511'; // Felisburgo/MG';
       3125705: CodTOM := '4513'; // Felixlandia/MG';
       3125804: CodTOM := '4515'; // Fernandes Tourinho/MG';
@@ -9184,7 +9204,7 @@ begin
     4503: CodIBGE := 3125200; // Fama/MG
     4505: CodIBGE := 3125309; // Faria Lemos/MG
     4507: CodIBGE := 3125408; // Felicio Dos Santos/MG
-    5238: CodIBGE := 3125507; // Sao Goncalo Do Rio Preto/MG
+    4509: CodIBGE := 3125507; // Sao Goncalo Do Rio Preto/MG
     4511: CodIBGE := 3125606; // Felisburgo/MG
     4513: CodIBGE := 3125705; // Felixlandia/MG
     4515: CodIBGE := 3125804; // Fernandes Tourinho/MG
@@ -13311,4 +13331,46 @@ begin
                            ['1', '2'],
                            [lpMunicipio, lpForaMunicipio]);
 end;
+
+// Reforma Tributária
+function indCompGovToStr(const t: TindCompGov): string;
+begin
+  Result := TindCompGovArrayStrings[t];
+end;
+
+function StrToindCompGov(const s: string): TindCompGov;
+var
+  idx: TindCompGov;
+begin
+  for idx:= Low(TindCompGovArrayStrings) to High(TindCompGovArrayStrings) do
+  begin
+    if(TindCompGovArrayStrings[idx] = s)then
+    begin
+      Result := idx;
+      exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para TindCompGov: %s', [s]);
+end;
+
+function tpCompraGovToStr(const t: TtpCompraGov): string;
+begin
+  Result := TtpCompraGovArrayStrings[t];
+end;
+
+function StrTotpCompraGov(const s: string): TtpCompraGov;
+var
+  idx: TtpCompraGov;
+begin
+  for idx:= Low(TtpCompraGovArrayStrings) to High(TtpCompraGovArrayStrings) do
+  begin
+    if(TtpCompraGovArrayStrings[idx] = s)then
+    begin
+      Result := idx;
+      exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para TtpCompraGov: %s', [s]);
+end;
+
 end.

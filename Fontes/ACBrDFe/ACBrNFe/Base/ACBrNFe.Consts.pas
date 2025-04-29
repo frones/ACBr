@@ -380,7 +380,8 @@ resourcestring
 
   // Reforma Tributária
   DSC_CMUNFGIBS = 'Código do Município de consumo, fato gerador do IBS / CBS';
-  DSC_INDMULTAJUROS = 'Indicador de Multa e Juros';
+  DSC_TPNFDEBITO = 'Tipo de Nota de Débito';
+  DSC_TPNFCREDITO = 'Tipo de Nota de Crédito';
   DSC_TPCOMPRAGOV = 'Tipo de compra governamental';
   DSC_PREDUTOR = 'Percentual de redução de aliquota em compra governamental';
   DSC_TIPONOTACREDITO = 'Indicador do tipo de nota de crédito que está sendo utilizada';
@@ -412,10 +413,12 @@ resourcestring
   DSC_VCBSMONO = 'Valor da CBS monofásica';
   DSC_ADREMIBSRETEN = 'Alíquota ad rem do imposto sujeito a retenção';
   DSC_VIBSMONORETEN = 'Valor do IBS monofásico sujeito a retenção';
+  {
   DSC_PCREDPRESIBS = 'Percentual de crédito presumido do IBS monofásico';
   DSC_VCREDPRESIBS = 'Valor do crédito presumido do IBS monofásico.';
   DSC_PCREDPRESCBS = 'Percentual de crédito presumido da CBS monofásica';
   DSC_VCREDPRESCBS = 'Valor do crédito presumido da CBS monofásica.';
+  }
   DSC_PDIFIBS = 'Percentual do diferimento do imposto monofásico';
   DSC_VIBSMONODIF = 'Valor do IBS mono diferido.';
   DSC_PDIFCBS = 'Percentual do diferimento do imposto monofásico';
@@ -423,6 +426,15 @@ resourcestring
   DSC_VTOTIBSMONO = 'Total de IBS Monofásico.';
   DSC_VTOTCBSMONO = 'Total da CBS Monofásica';
   DSC_CHAVEACESSO = 'Chave de acesso do DF-e referenciado';
+  DSC_VCBSOp = 'Valor da CBS Bruto na operação';
+  DSC_VTRIBREG = 'Valor do Tributo Regular';
+  DSC_VITEM = 'Valor total do Item';
+  DSC_VIS = 'Valor Total do Imposto Seletivo';
+  DSC_VNFTOT = 'Valor Total da NF considerando os impostos por fora IBS, CBS e IS';
+  DSC_VIBS = 'Valor total do IBS';
+  DSC_VCBSMONORETEN = 'Valor total da CBS monofásica sujeita a retenção';
+  DSC_VIBSMONORET = 'Valor do IBS monofásico retido anteriormente';
+  DSC_VCBSMONORET = 'Valor da CBS monofásica retida anteriormente';
 
   DSC_VBCIBSCBS = 'Valor total da BC do IBS e da CBS';
   DSC_VBCSEL = 'Total da base de cálculo do imposto seletivo';

@@ -389,22 +389,25 @@ const
 
 // Reforma Tributária
 type
-  TindMultaJuros  = (timjNenhum, timjMulta, timjJuros);
+  TtpNFDebito = (tdNenhum, tdTransferenciaCreditoCooperativa, tdAnulacao,
+                 tdDebitosNaoProcessadas, tdMultaJuros,
+                 tdTransferenciaCreditoSucessao);
 
 const
-  TindMultaJurosArrayStrings: array[TindMultaJuros] of string = ('', '0', '1');
+  TtpNFDebitoArrayStrings: array[TtpNFDebito] of string = ('', '01', '02', '03',
+    '04', '05');
 
 type
-  TtpCompraGov  = (tcgUniao, tcgEstados, tcgDistritoFederal, tcgMunicipios);
+  TtpNFCredito = (tcNenhum, tc01);
 
 const
-  TtpCompraGovArrayStrings: array[TtpCompraGov] of string = ('1', '2', '3', '4');
+  TtpNFCreditoArrayStrings: array[TtpNFCredito] of string = ('', '01');
 
 type
-  TindPerecimento  = (tipNenhum, tipPercimento);
+  TtpEnteGov  = (tcgUniao, tcgEstados, tcgDistritoFederal, tcgMunicipios);
 
 const
-  TindPerecimentoArrayStrings: array[TindPerecimento] of string = ('', '1');
+  TtpEnteGovArrayStrings: array[TtpEnteGov] of string = ('1', '2', '3', '4');
 
 {
   Declaração das funções de conversão
@@ -488,14 +491,14 @@ function TtpGuiaToStr(const t: TtpGuia): string;
 function StrToTtpGuia(const s: string): TtpGuia;
 
 // Reforma Tributária
-function indMultaJurosToStr(const t: TindMultaJuros): string;
-function StrToindMultaJuros(const s: string): TindMultaJuros;
+function tpNFDebitoToStr(const t: TtpNFDebito): string;
+function StrTotpNFDebito(const s: string): TtpNFDebito;
 
-function tpCompraGovToStr(const t: TtpCompraGov): string;
-function StrTotpCompraGov(const s: string): TtpCompraGov;
+function tpNFCreditoToStr(const t: TtpNFCredito): string;
+function StrTotpNFCredito(const s: string): TtpNFCredito;
 
-function indPerecimentoToStr(const t: TindPerecimento): string;
-function StrToindPerecimento(const s: string): TindPerecimento;
+function tpEnteGovToStr(const t: TtpEnteGov): string;
+function StrTotpEnteGov(const s: string): TtpEnteGov;
 
 implementation
 
@@ -1663,64 +1666,64 @@ begin
 end;
 
 // Reforma Tributária
-function indMultaJurosToStr(const t: TindMultaJuros): string;
+function tpNFDebitoToStr(const t: TtpNFDebito): string;
 begin
-  Result := TindMultaJurosArrayStrings[t];
+  Result := TtpNFDebitoArrayStrings[t];
 end;
 
-function StrToindMultaJuros(const s: string): TindMultaJuros;
+function StrTotpNFDebito(const s: string): TtpNFDebito;
 var
-  idx: TindMultaJuros;
+  idx: TtpNFDebito;
 begin
-  for idx:= Low(TindMultaJurosArrayStrings) to High(TindMultaJurosArrayStrings)do
+  for idx:= Low(TtpNFDebitoArrayStrings) to High(TtpNFDebitoArrayStrings)do
   begin
-    if(TindMultaJurosArrayStrings[idx] = s)then
+    if(TtpNFDebitoArrayStrings[idx] = s)then
     begin
       Result := idx;
       exit;
     end;
   end;
-  raise EACBrException.CreateFmt('Valor string inválido para TindMultaJuros: %s', [s]);
+  raise EACBrException.CreateFmt('Valor string inválido para TtpNFDebito: %s', [s]);
 end;
 
-function tpCompraGovToStr(const t: TtpCompraGov): string;
+function tpNFCreditoToStr(const t: TtpNFCredito): string;
 begin
-  Result := TtpCompraGovArrayStrings[t];
+  Result := TtpNFCreditoArrayStrings[t];
 end;
 
-function StrTotpCompraGov(const s: string): TtpCompraGov;
+function StrTotpNFCredito(const s: string): TtpNFCredito;
 var
-  idx: TtpCompraGov;
+  idx: TtpNFCredito;
 begin
-  for idx:= Low(TtpCompraGovArrayStrings) to High(TtpCompraGovArrayStrings)do
+  for idx:= Low(TtpNFCreditoArrayStrings) to High(TtpNFCreditoArrayStrings)do
   begin
-    if(TtpCompraGovArrayStrings[idx] = s)then
+    if(TtpNFCreditoArrayStrings[idx] = s)then
     begin
       Result := idx;
       exit;
     end;
   end;
-  raise EACBrException.CreateFmt('Valor string inválido para TtpCompraGov: %s', [s]);
+  raise EACBrException.CreateFmt('Valor string inválido para TtpNFCredito: %s', [s]);
 end;
 
-function indPerecimentoToStr(const t: TindPerecimento): string;
+function tpEnteGovToStr(const t: TtpEnteGov): string;
 begin
-  Result := TindPerecimentoArrayStrings[t];
+  Result := TtpEnteGovArrayStrings[t];
 end;
 
-function StrToindPerecimento(const s: string): TindPerecimento;
+function StrTotpEnteGov(const s: string): TtpEnteGov;
 var
-  idx: TindPerecimento;
+  idx: TtpEnteGov;
 begin
-  for idx:= Low(TindPerecimentoArrayStrings) to High(TindPerecimentoArrayStrings)do
+  for idx:= Low(TtpEnteGovArrayStrings) to High(TtpEnteGovArrayStrings)do
   begin
-    if(TindPerecimentoArrayStrings[idx] = s)then
+    if(TtpEnteGovArrayStrings[idx] = s)then
     begin
       Result := idx;
       exit;
     end;
   end;
-  raise EACBrException.CreateFmt('Valor string inválido para TindPerecimento: %s', [s]);
+  raise EACBrException.CreateFmt('Valor string inválido para TtpEnteGov: %s', [s]);
 end;
 
 initialization

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/04/2025
+-- Diversos --
+[*] #TK-6835: Ajustes para atender a NT 2025/002 versão 1.01 da Reforma Tributária.
+   Por: Italo Giurizzato Junior
+
 25/04/2025
 -- ACBrNFeNotasFiscais --
 [*] #TK-6864: Ajuste visando que XML gerado pelo ACBrMonitor ou pela Lib assuma mesma configuração de ambiente definida caso a informação não tenha sido adicionada no arquivo INI

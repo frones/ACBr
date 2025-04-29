@@ -53,6 +53,8 @@ type
     function GerarChaveDPS(const AcMun, ACNPJCPF, ASerie, ANumero: string): string;
 
   protected
+    LSecao: string;
+
     function GerarInfDps: TACBrXmlNode;
 
     function GerarSubstituicao: TACBrXmlNode;
@@ -113,7 +115,7 @@ type
     function GerarPercentualTotalTributos: TACBrXmlNode;
 
     // Reforma Tributária
-    function GerarIBSCBSSEL(IBSCBSSEL: TIBSCBSSEL): TACBrXmlNode;
+    function GerarIBSCBS(IBSCBS: TIBSCBSDPS): TACBrXmlNode;
     function GerarDestinatario(Dest: TDadosdaPessoa): TACBrXmlNode;
     function GerarEnderecoDestinatario(ender: Tender): TACBrXmlNode;
     function GerarEnderecoNacionalDestinatario(endNac: TendNac): TACBrXmlNode;
@@ -124,35 +126,31 @@ type
     function GerarEnderecoNacionalAdquirente(endNac: TendNac): TACBrXmlNode;
     function GerarEnderecoExteriorAdquirente(endExt: TendExt): TACBrXmlNode;
 
-    function GerarServicoIBSCBSSEL(serv: Tserv): TACBrXmlNode;
+    function GerarIBSCBSServico(serv: Tserv): TACBrXmlNode;
+    function GerargCompraGov(gCompraGov: TgCompraGov): TACBrXmlNode;
 
-    function GerarValoresIBSCBSSEL(valores: Tvalorestrib): TACBrXmlNode;
-    function GerarValoresTributosIBSCBSSEL(trib: Ttrib): TACBrXmlNode;
-    function GerarValoresTributosSeletivo(seletivo: Tseletivo): TACBrXmlNode;
-    function GerarValoresTributosImpostoSeletivo(gImpSel: TgImpSel): TACBrXmlNode;
+    function GerarIBSCBSValores(valores: Tvalorestrib): TACBrXmlNode;
+    function GerarTributos(trib: Ttrib): TACBrXmlNode;
 
-    function GerarValoresTributosIBSCBS(gIBSCBS: TgIBSCBS): TACBrXmlNode;
+    function GerargIBSCBS(gIBSCBS: TgIBSCBS): TACBrXmlNode;
+    function GerargIBSCredPres(gIBSCredPres: TgIBSCredPres): TACBrXmlNode;
 
-    function GerarValoresTributosIBSUF(gIBSUF: TgIBSUFValores): TACBrXmlNode;
-    function GerarValoresTributosUFCredPres(gIBSUF: TgIBSUFValores): TACBrXmlNode;
-    function GerarValoresTributosUFDif(gIBSUF: TgIBSUFValores): TACBrXmlNode;
-    function GerarValoresTributosUFDevTrib(gIBSUF: TgIBSUFValores): TACBrXmlNode;
-    function GerarValoresTributosUFRed(gIBSUF: TgIBSUFValores): TACBrXmlNode;
-    function GerarValoresTributosUFDeson(gIBSUF: TgIBSUFValores): TACBrXmlNode;
+    function GerargIBSUF(gIBSUF: TgIBSUFValores): TACBrXmlNode;
+    function GerargDifUF(gIBSUF: TgIBSUFValores): TACBrXmlNode;
+    function GerargDevTribUF(gIBSUF: TgIBSUFValores): TACBrXmlNode;
+    function GerargDesonUF(gIBSUF: TgIBSUFValores): TACBrXmlNode;
 
-    function GerarValoresTributosIBSMun(gIBSMun: TgIBSMunValores): TACBrXmlNode;
-    function GerarValoresTributosMunCredPres(gIBSMun: TgIBSMunValores): TACBrXmlNode;
-    function GerarValoresTributosMunDif(gIBSMun: TgIBSMunValores): TACBrXmlNode;
-    function GerarValoresTributosMunDevTrib(gIBSMun: TgIBSMunValores): TACBrXmlNode;
-    function GerarValoresTributosMunRed(gIBSMun: TgIBSMunValores): TACBrXmlNode;
-    function GerarValoresTributosMunDeson(gIBSMun: TgIBSMunValores): TACBrXmlNode;
+    function GerargIBSMun(gIBSMun: TgIBSMunValores): TACBrXmlNode;
+    function GerargDifMun(gIBSMun: TgIBSMunValores): TACBrXmlNode;
+    function GerargDevTribMun(gIBSMun: TgIBSMunValores): TACBrXmlNode;
+    function GerargDesonMun(gIBSMun: TgIBSMunValores): TACBrXmlNode;
 
-    function GerarValoresTributosCBS(gCBS: TgCBSValores): TACBrXmlNode;
-    function GerarValoresTributosCBSCredPres(gCBS: TgCBSValores): TACBrXmlNode;
-    function GerarValoresTributosCBSDif(gCBS: TgCBSValores): TACBrXmlNode;
-    function GerarValoresTributosCBSDevTrib(gCBS: TgCBSValores): TACBrXmlNode;
-    function GerarValoresTributosCBSRed(gCBS: TgCBSValores): TACBrXmlNode;
-    function GerarValoresTributosCBSDeson(gCBS: TgCBSValores): TACBrXmlNode;
+    function GerargCBS(gCBS: TgCBSValores): TACBrXmlNode;
+    function GerargCBSCredPres(gCBS: TgCBSValores): TACBrXmlNode;
+    function GerargDifCBS(gCBS: TgCBSValores): TACBrXmlNode;
+    function GerargDevTribCBS(gCBS: TgCBSValores): TACBrXmlNode;
+    function GerargDesonCBS(gCBS: TgCBSValores): TACBrXmlNode;
+
   public
     function GerarXml: Boolean; override;
   end;
@@ -245,12 +243,9 @@ begin
   Result.AppendChild(GerarIntermediario);
   Result.AppendChild(GerarServico);
   Result.AppendChild(GerarValores);
-  // Reforma Tributária
-  {
-    Manter comentado até que o ambiente de homologação/produção sejam liberados
 
-  Result.AppendChild(GerarIBSCBSSEL(NFSe.IBSCBSSEL));
-  }
+  // Reforma Tributária
+//  Result.AppendChild(GerarIBSCBS(NFSe.IBSCBS));
 end;
 
 function TNFSeW_PadraoNacional.GerarSubstituicao: TACBrXmlNode;
@@ -1354,19 +1349,19 @@ begin
 end;
 
 // Reforma Tributária
-function TNFSeW_PadraoNacional.GerarIBSCBSSEL(IBSCBSSEL: TIBSCBSSEL): TACBrXmlNode;
+function TNFSeW_PadraoNacional.GerarIBSCBS(IBSCBS: TIBSCBSDPS): TACBrXmlNode;
 begin
-  Result := CreateElement('IBSCBSSEL');
+  Result := CreateElement('IBSCBS');
 
-  if IBSCBSSEL.dest.xNome <> '' then
-    Result.AppendChild(GerarDestinatario(IBSCBSSEL.dest));
+  if IBSCBS.dest.xNome <> '' then
+    Result.AppendChild(GerarDestinatario(IBSCBS.dest));
 
-  if IBSCBSSEL.adq.xNome <> '' then
-    Result.AppendChild(GerarAdquirente(IBSCBSSEL.adq));
+  if IBSCBS.adq.xNome <> '' then
+    Result.AppendChild(GerarAdquirente(IBSCBS.adq));
 
-  Result.AppendChild(GerarServicoIBSCBSSEL(IBSCBSSEL.serv));
+  Result.AppendChild(GerarIBSCBSServico(IBSCBS.serv));
 
-  Result.AppendChild(GerarValoresIBSCBSSEL(IBSCBSSEL.valores));
+  Result.AppendChild(GerarIBSCBSValores(IBSCBS.valores));
 end;
 
 function TNFSeW_PadraoNacional.GerarDestinatario(Dest: TDadosdaPessoa): TACBrXmlNode;
@@ -1427,7 +1422,7 @@ begin
   begin
     Result := CreateElement('endNac');
 
-    Result.AppendChild(AddNode(tcStr, '#1', 'cMun', 7, 7, 1, endNac.cMun, ''));
+    Result.AppendChild(AddNode(tcInt, '#1', 'cMun', 7, 7, 1, endNac.cMun, ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'CEP', 8, 8, 1, endNac.CEP, ''));
   end;
@@ -1511,7 +1506,7 @@ begin
   begin
     Result := CreateElement('endNac');
 
-    Result.AppendChild(AddNode(tcStr, '#1', 'cMun', 7, 7, 1, endNac.cMun, ''));
+    Result.AppendChild(AddNode(tcInt, '#1', 'cMun', 7, 7, 1, endNac.cMun, ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'CEP', 8, 8, 1, endNac.CEP, ''));
   end;
@@ -1535,7 +1530,7 @@ begin
                                                        endExt.xEstProvReg, ''));
 end;
 
-function TNFSeW_PadraoNacional.GerarServicoIBSCBSSEL(serv: Tserv): TACBrXmlNode;
+function TNFSeW_PadraoNacional.GerarIBSCBSServico(serv: Tserv): TACBrXmlNode;
 begin
   Result := CreateElement('serv');
 
@@ -1550,53 +1545,37 @@ begin
                               CodIBGEPaisToSiglaISO2(serv.cPaisPrestServ), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'cCIB', 8, 8, 0, serv.cCIB, ''));
+
+  if serv.gCompraGov.indCompGov <> icgNenhum then
+    Result.AppendChild(GerargCompraGov(serv.gCompraGov));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresIBSCBSSEL(
+function TNFSeW_PadraoNacional.GerargCompraGov(
+  gCompraGov: TgCompraGov): TACBrXmlNode;
+begin
+  Result := CreateElement('gCompraGov');
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'indCompGov', 2, 2, 1,
+                                   indCompGovToStr(gCompraGov.indCompGov), ''));
+end;
+
+function TNFSeW_PadraoNacional.GerarIBSCBSValores(
   valores: Tvalorestrib): TACBrXmlNode;
 begin
   Result := CreateElement('valores');
 
-  Result.AppendChild(GerarValoresTributosIBSCBSSEL(valores.trib));
+  Result.AppendChild(GerarTributos(valores.trib));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresTributosIBSCBSSEL(
+function TNFSeW_PadraoNacional.GerarTributos(
   trib: Ttrib): TACBrXmlNode;
 begin
   Result := CreateElement('trib');
 
-  if trib.seletivo.cstImpSel > 0 then
-    Result.AppendChild(GerarValoresTributosSeletivo(trib.seletivo));
-
-  Result.AppendChild(GerarValoresTributosIBSCBS(trib.gIBSCBS));
+  Result.AppendChild(GerargIBSCBS(trib.gIBSCBS));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresTributosSeletivo(
-  seletivo: Tseletivo): TACBrXmlNode;
-begin
-  Result := CreateElement('seletivo');
-
-  Result.AppendChild(AddNode(tcInt, '#1', 'cstImpSel', 3, 3, 1,
-                                                       seletivo.cstImpSel, ''));
-
-  Result.AppendChild(AddNode(tcInt, '#1', 'cClassTribImpSel', 6, 6, 1,
-                                                seletivo.cClassTribImpSel, ''));
-
-  if seletivo.gImpSel.uTrib > 0 then
-    Result.AppendChild(GerarValoresTributosImpostoSeletivo(seletivo.gImpSel));
-end;
-
-function TNFSeW_PadraoNacional.GerarValoresTributosImpostoSeletivo(
-  gImpSel: TgImpSel): TACBrXmlNode;
-begin
-  Result := CreateElement('gImpSel');
-
-  Result.AppendChild(AddNode(tcDe4, '#1', 'uTrib', 1, 7, 0, gImpSel.uTrib, ''));
-
-  Result.AppendChild(AddNode(tcDe4, '#1', 'qTrib', 1, 15, 0, gImpSel.qTrib, ''));
-end;
-
-function TNFSeW_PadraoNacional.GerarValoresTributosIBSCBS(
+function TNFSeW_PadraoNacional.GerargIBSCBS(
   gIBSCBS: TgIBSCBS): TACBrXmlNode;
 begin
   Result := CreateElement('gIBSCBS');
@@ -1607,225 +1586,181 @@ begin
   Result.AppendChild(AddNode(tcInt, '#1', 'cClassTribIBSCBS', 6, 6, 1,
                                                  gIBSCBS.cClassTribIBSCBS, ''));
 
-  Result.AppendChild(GerarValoresTributosIBSUF(gIBSCBS.gIBSUF));
-  Result.AppendChild(GerarValoresTributosIBSMun(gIBSCBS.gIBSMun));
-  Result.AppendChild(GerarValoresTributosCBS(gIBSCBS.gCBS));
+  Result.AppendChild(GerargIBSCredPres(gIBSCBS.gIBSCredPres));
+  Result.AppendChild(GerargIBSUF(gIBSCBS.gIBSUF));
+  Result.AppendChild(GerargIBSMun(gIBSCBS.gIBSMun));
+  Result.AppendChild(GerargCBS(gIBSCBS.gCBS));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresTributosIBSUF(
+function TNFSeW_PadraoNacional.GerargIBSCredPres(
+  gIBSCredPres: TgIBSCredPres): TACBrXmlNode;
+begin
+  Result := CreateElement('gIBSCredPres');
+
+  Result.AppendChild(AddNode(tcInt, '#1', 'cCredPresIBS', 3, 3, 1,
+                                                gIBSCredPres.cCredPresIBS, ''));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'pCredPresIBS', 1, 5, 1,
+                                                gIBSCredPres.pCredPresIBS, ''));
+end;
+
+function TNFSeW_PadraoNacional.GerargIBSUF(
   gIBSUF: TgIBSUFValores): TACBrXmlNode;
 begin
   Result := CreateElement('gIBSUF');
 
-  if gIBSUF.pCredPres > 0 then
-    Result.AppendChild(GerarValoresTributosUFCredPres(gIBSUF));
+  if gIBSUF.pDifUF > 0 then
+    Result.AppendChild(GerargDifUF(gIBSUF));
 
-  if gIBSUF.pDif > 0 then
-    Result.AppendChild(GerarValoresTributosUFDif(gIBSUF));
+  if gIBSUF.vDevTribUF > 0 then
+    Result.AppendChild(GerargDevTribUF(gIBSUF));
 
-  if gIBSUF.vDevTrib > 0 then
-    Result.AppendChild(GerarValoresTributosUFDevTrib(gIBSUF));
-
-  if gIBSUF.pRedAliq > 0 then
-    Result.AppendChild(GerarValoresTributosUFRed(gIBSUF));
-
-  if gIBSUF.pAliqDeson > 0 then
-    Result.AppendChild(GerarValoresTributosUFDeson(gIBSUF));
+  if gIBSUF.pAliqUFDeson > 0 then
+    Result.AppendChild(GerargDesonUF(gIBSUF));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresTributosUFCredPres(
-  gIBSUF: TgIBSUFValores): TACBrXmlNode;
-begin
-  Result := CreateElement('gCredPres');
-
-  Result.AppendChild(AddNode(tcDe2, '#1', 'pCredPresUF', 1, 5, 1,
-                                                         gIBSUF.pCredPres, ''));
-end;
-
-function TNFSeW_PadraoNacional.GerarValoresTributosUFDif(
+function TNFSeW_PadraoNacional.GerargDifUF(
   gIBSUF: TgIBSUFValores): TACBrXmlNode;
 begin
   Result := CreateElement('gDif');
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pDifUF', 1, 5, 1,
-                                                              gIBSUF.pDif, ''));
+                                                            gIBSUF.pDifUF, ''));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresTributosUFDevTrib(
+function TNFSeW_PadraoNacional.GerargDevTribUF(
   gIBSUF: TgIBSUFValores): TACBrXmlNode;
 begin
   Result := CreateElement('gDevTrib');
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'vDevTribUF', 1, 15, 1,
-                                                          gIBSUF.vDevTrib, ''));
+                                                        gIBSUF.vDevTribUF, ''));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresTributosUFRed(
-  gIBSUF: TgIBSUFValores): TACBrXmlNode;
-begin
-  Result := CreateElement('gRed');
-
-  Result.AppendChild(AddNode(tcDe2, '#1', 'pRedAliqUF', 1, 5, 1,
-                                                          gIBSUF.pRedAliq, ''));
-end;
-
-function TNFSeW_PadraoNacional.GerarValoresTributosUFDeson(
+function TNFSeW_PadraoNacional.GerargDesonUF(
   gIBSUF: TgIBSUFValores): TACBrXmlNode;
 begin
   Result := CreateElement('gDeson');
 
   Result.AppendChild(AddNode(tcInt, '#1', 'cstUFDeson', 3, 3, 1,
-                                                          gIBSUF.cstDeson, ''));
+                                                        gIBSUF.cstUFDeson, ''));
 
   Result.AppendChild(AddNode(tcInt, '#1', 'cClassTribUFDeson', 6, 6, 1,
-                                                   gIBSUF.cClassTribDeson, ''));
+                                                 gIBSUF.cClassTribUFDeson, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pAliqUFDeson', 1, 5, 1,
-                                                        gIBSUF.pAliqDeson, ''));
+                                                      gIBSUF.pAliqUFDeson, ''));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresTributosIBSMun(
+function TNFSeW_PadraoNacional.GerargIBSMun(
   gIBSMun: TgIBSMunValores): TACBrXmlNode;
 begin
   Result := CreateElement('gIBSMun');
 
-  if gIBSMun.pCredPres > 0 then
-    Result.AppendChild(GerarValoresTributosMunCredPres(gIBSMun));
+  if gIBSMun.pDifMun > 0 then
+    Result.AppendChild(GerargDifMun(gIBSMun));
 
-  if gIBSMun.pDif > 0 then
-    Result.AppendChild(GerarValoresTributosMunDif(gIBSMun));
+  if gIBSMun.vDevTribMun > 0 then
+    Result.AppendChild(GerargDevTribMun(gIBSMun));
 
-  if gIBSMun.vDevTrib > 0 then
-    Result.AppendChild(GerarValoresTributosMunDevTrib(gIBSMun));
-
-  if gIBSMun.pRedAliq > 0 then
-    Result.AppendChild(GerarValoresTributosMunRed(gIBSMun));
-
-  if gIBSMun.pAliqDeson > 0 then
-    Result.AppendChild(GerarValoresTributosMunDeson(gIBSMun));
+  if gIBSMun.pAliqMunDeson > 0 then
+    Result.AppendChild(GerargDesonMun(gIBSMun));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresTributosMunCredPres(
-  gIBSMun: TgIBSMunValores): TACBrXmlNode;
-begin
-  Result := CreateElement('gCredPres');
-
-  Result.AppendChild(AddNode(tcDe2, '#1', 'pCredPresMun', 1, 5, 1,
-                                                        gIBSMun.pCredPres, ''));
-end;
-
-function TNFSeW_PadraoNacional.GerarValoresTributosMunDif(
+function TNFSeW_PadraoNacional.GerargDifMun(
   gIBSMun: TgIBSMunValores): TACBrXmlNode;
 begin
   Result := CreateElement('gDif');
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pDifMun', 1, 5, 1,
-                                                             gIBSMun.pDif, ''));
+                                                          gIBSMun.pDifMun, ''));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresTributosMunDevTrib(
+function TNFSeW_PadraoNacional.GerargDevTribMun(
   gIBSMun: TgIBSMunValores): TACBrXmlNode;
 begin
   Result := CreateElement('gDevTrib');
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'vDevTribMun', 1, 15, 1,
-                                                         gIBSMun.vDevTrib, ''));
+                                                      gIBSMun.vDevTribMun, ''));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresTributosMunRed(
-  gIBSMun: TgIBSMunValores): TACBrXmlNode;
-begin
-  Result := CreateElement('gRed');
-
-  Result.AppendChild(AddNode(tcDe2, '#1', 'pRedAliqMun', 1, 5, 1,
-                                                         gIBSMun.pRedAliq, ''));
-end;
-
-function TNFSeW_PadraoNacional.GerarValoresTributosMunDeson(
+function TNFSeW_PadraoNacional.GerargDesonMun(
   gIBSMun: TgIBSMunValores): TACBrXmlNode;
 begin
   Result := CreateElement('gDeson');
 
   Result.AppendChild(AddNode(tcInt, '#1', 'cstMunDeson', 3, 3, 1,
-                                                         gIBSMun.cstDeson, ''));
+                                                      gIBSMun.cstMunDeson, ''));
 
   Result.AppendChild(AddNode(tcInt, '#1', 'cClassTribMunDeson', 6, 6, 1,
-                                                  gIBSMun.cClassTribDeson, ''));
+                                               gIBSMun.cClassTribMunDeson, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pAliqMunDeson', 1, 5, 1,
-                                                       gIBSMun.pAliqDeson, ''));
+                                                    gIBSMun.pAliqMunDeson, ''));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresTributosCBS(
+function TNFSeW_PadraoNacional.GerargCBS(
   gCBS: TgCBSValores): TACBrXmlNode;
 begin
   Result := CreateElement('gCBS');
 
-  if gCBS.pCredPres > 0 then
-    Result.AppendChild(GerarValoresTributosCBSCredPres(gCBS));
+  if gCBS.pCredPresCBS > 0 then
+    Result.AppendChild(GerargCBSCredPres(gCBS));
 
-  if gCBS.pDif > 0 then
-    Result.AppendChild(GerarValoresTributosCBSDif(gCBS));
+  if gCBS.pDifCBS > 0 then
+    Result.AppendChild(GerargDifCBS(gCBS));
 
-  if gCBS.vDevTrib > 0 then
-    Result.AppendChild(GerarValoresTributosCBSDevTrib(gCBS));
+  if gCBS.vDevTribCBS > 0 then
+    Result.AppendChild(GerargDevTribCBS(gCBS));
 
-  if gCBS.pRedAliq > 0 then
-    Result.AppendChild(GerarValoresTributosCBSRed(gCBS));
-
-  if gCBS.pAliqDeson > 0 then
-    Result.AppendChild(GerarValoresTributosCBSDeson(gCBS));
+  if gCBS.pAliqCBSDeson > 0 then
+    Result.AppendChild(GerargDesonCBS(gCBS));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresTributosCBSCredPres(
+function TNFSeW_PadraoNacional.GerargCBSCredPres(
   gCBS: TgCBSValores): TACBrXmlNode;
 begin
   Result := CreateElement('gCredPres');
 
+  Result.AppendChild(AddNode(tcInt, '#1', 'cCredPresCBS', 2, 2, 1,
+                                                        gCBS.cCredPresCBS, ''));
+
   Result.AppendChild(AddNode(tcDe2, '#1', 'pCredPresCBS', 1, 5, 1,
-                                                           gCBS.pCredPres, ''));
+                                                        gCBS.pCredPresCBS, ''));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresTributosCBSDif(
+function TNFSeW_PadraoNacional.GerargDifCBS(
   gCBS: TgCBSValores): TACBrXmlNode;
 begin
   Result := CreateElement('gDif');
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pDifCBS', 1, 5, 1,
-                                                                gCBS.pDif, ''));
+                                                             gCBS.pDifCBS, ''));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresTributosCBSDevTrib(
+function TNFSeW_PadraoNacional.GerargDevTribCBS(
   gCBS: TgCBSValores): TACBrXmlNode;
 begin
   Result := CreateElement('gDevTrib');
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'vDevTribCBS', 1, 15, 1,
-                                                            gCBS.vDevTrib, ''));
+                                                         gCBS.vDevTribCBS, ''));
 end;
 
-function TNFSeW_PadraoNacional.GerarValoresTributosCBSRed(
-  gCBS: TgCBSValores): TACBrXmlNode;
-begin
-  Result := CreateElement('gRed');
-
-  Result.AppendChild(AddNode(tcDe2, '#1', 'pRedAliqCBS', 1, 5, 1,
-                                                            gCBS.pRedAliq, ''));
-end;
-
-function TNFSeW_PadraoNacional.GerarValoresTributosCBSDeson(
+function TNFSeW_PadraoNacional.GerargDesonCBS(
   gCBS: TgCBSValores): TACBrXmlNode;
 begin
   Result := CreateElement('gDeson');
 
   Result.AppendChild(AddNode(tcInt, '#1', 'cstCBSDeson', 3, 3, 1,
-                                                            gCBS.cstDeson, ''));
+                                                         gCBS.cstCBSDeson, ''));
 
   Result.AppendChild(AddNode(tcInt, '#1', 'cClassTribCBSDeson', 6, 6, 1,
-                                                     gCBS.cClassTribDeson, ''));
+                                                  gCBS.cClassTribCBSDeson, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pAliqCBSDeson', 1, 5, 1,
-                                                          gCBS.pAliqDeson, ''));
+                                                       gCBS.pAliqCBSDeson, ''));
 end;
 
 end.

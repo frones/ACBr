@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/04/2025
+-- PadraoNacional.GravarXml/PadraoNacional.LerXml --
+[*] #TK-6835: Alteração nas units para atender a Reforma Tributária.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXClass/ACBrNFSeXConversao --
 [*] #TK-6835: Alteração nas classes e novos tipos e funções de conversão para 
     atender a Reforma Tributária.

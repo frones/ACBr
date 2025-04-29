@@ -2312,6 +2312,7 @@ begin
 
     EventoMDFe.Versao := FPVersaoServico;
 
+    AjustarOpcoes(EventoMDFe.Opcoes);
     EventoMDFe.GerarXML;
 
     Eventos := NativeStringToUTF8( EventoMDFe.XmlEnvio );

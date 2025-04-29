@@ -55,6 +55,7 @@ type
     FpNrOcorrCodigoAtividade: Integer;
     FpNaoGerarGrupoRps: Boolean;
     FpCasasDecimais: Integer;
+    FpCasas: TACBrTipoCampo;
 
   protected
     procedure Configuracao; override;
@@ -120,6 +121,19 @@ begin
   FpNaoGerarGrupoRps := FpAOwner.ConfigGeral.Params.TemParametro('NaoGerarGrupoRps');
   // Define a quantidade de casas decimais da tag: unidade_quantidade
   FpCasasDecimais := StrToIntDef(FpAOwner.ConfigGeral.Params.ValorParametro('CasasDecimais'), 2);
+
+  case FpCasasDecimais of
+     2: FpCasas := tcDe2;
+     3: FpCasas := tcDe3;
+     4: FpCasas := tcDe4;
+     5: FpCasas := tcDe5;
+     6: FpCasas := tcDe6;
+     7: FpCasas := tcDe7;
+     8: FpCasas := tcDe8;
+    10: FpCasas := tcDe10;
+  else
+    FpCasas := tcDe2;
+  end;
 
   FDocument.Clear();
 
@@ -316,11 +330,7 @@ begin
     Result[i].AppendChild(AddNode(tcStr, '#', 'unidade_codigo', 1, 9, 0,
                    UnidadeToStr(NFSe.Servico.ItemServico[I].TipoUnidade), ''));
 
-    if FpCasasDecimais = 4 then
-      Result[i].AppendChild(AddNode(tcDe4, '#', 'unidade_quantidade', 1, 15, 0,
-                                    NFSe.Servico.ItemServico[I].Quantidade, ''))
-    else
-      Result[i].AppendChild(AddNode(tcDe2, '#', 'unidade_quantidade', 1, 15, 0,
+    Result[i].AppendChild(AddNode(FpCasas, '#', 'unidade_quantidade', 1, 15, 0,
                                    NFSe.Servico.ItemServico[I].Quantidade, ''));
 
     Result[i].AppendChild(AddNode(tcDe10, '#', 'unidade_valor_unitario', 1, 15, 0,

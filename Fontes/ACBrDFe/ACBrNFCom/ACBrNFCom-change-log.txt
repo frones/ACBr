@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/04/2025
+-- ACBrNFComWebServices --
+[*] #TK-6785 - Adiciona chamada a rotina AjustarOpcoes no envio de eventos da NFCom.
+  Por: Diego Folieni
 
 28/04/2025
 [*] Ajustes necessários para deixar em conformidade com a versão 1.01a dos Schemas.

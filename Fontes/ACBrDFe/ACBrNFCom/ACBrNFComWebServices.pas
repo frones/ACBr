@@ -1910,6 +1910,7 @@ begin
     {*)}
 
     EventoNFCom.Versao := FPVersaoServico;
+    AjustarOpcoes(EventoNFCom.Opcoes);
     EventoNFCom.GerarXML;
 
     AssinarXML(EventoNFCom.XmlEnvio, 'eventoNFCom', 'infEvento',

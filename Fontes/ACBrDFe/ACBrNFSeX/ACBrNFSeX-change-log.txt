@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/04/2025
+-- VersaTecnologia.GravarXml --
+[*] #TK-6882: Ajustes para gerar o XML do RPS quando tem ISS retido.
+  Por: Antonio Gomes
 -- ACBrNFSeXServicos --
 [*] #TK-6913: Documentado o Params CasasDecimais
 -- IPM.GravarXml/IPM.LerXml --

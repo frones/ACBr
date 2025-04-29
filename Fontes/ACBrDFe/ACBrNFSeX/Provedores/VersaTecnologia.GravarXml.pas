@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  ACBrXmlDocument,
   ACBrNFSeXGravarXml_ABRASFv2;
 
 type
@@ -53,6 +54,8 @@ type
 
   TNFSeW_VersaTecnologia201 = class(TNFSeW_VersaTecnologia200)
   protected
+    function GerarValores: TACBrXmlNode; override;
+
     procedure Configuracao; override;
   end;
 
@@ -103,6 +106,18 @@ begin
   inherited Configuracao;
 
   TagTomador := 'TomadorServico';
+
+  NrOcorrRespRetencao := 0;
+  NrOcorrValorDeducoes := 1;
+end;
+
+function TNFSeW_VersaTecnologia201.GerarValores: TACBrXmlNode;
+begin
+  // Issqn retido, responsabilidade da retencao.
+  if (NFSe.Servico.Valores.ValorIss = 0) and (NFSe.Servico.Valores.ValorIssRetido > 0) then
+   NFSe.Servico.Valores.ValorIss := NFSe.Servico.Valores.ValorIssRetido;
+
+  Result := inherited GerarValores;
 end;
 
 { TNFSeW_VersaTecnologia202 }

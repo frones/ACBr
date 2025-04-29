@@ -2327,6 +2327,7 @@ begin
     {*)}
 
     EventoNF3e.Versao := FPVersaoServico;
+    AjustarOpcoes(EventoNF3e.Opcoes);
     EventoNF3e.GerarXML;
 
     AssinarXML(EventoNF3e.XmlEnvio, 'eventoNF3e', 'infEvento',

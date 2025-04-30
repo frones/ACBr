@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/04/2025
+-- ACBrTEFAPIDestaxa --
+[*] Ajuste para possibilitar a geração do extrato de transações.
+    por: Innovae Brasil Engenharia
+
 15/04/2025
 -- ACBrTEFDestaxaComum --
 [-] Correção para armazenar corretamento o campo transacao_data como DateTime.

@@ -543,6 +543,7 @@ begin
   case OperacaoAdm of
     tefopCancelamento: transacao := CDESTAXA_ADM_CANCELAR;
     tefopReimpressao: transacao := CDESTAXA_ADM_REIMPRIMIR;
+    tefopRelatResumido, tefopRelatSintetico, tefopRelatDetalhado: transacao := CDESTAXA_ADM_EXTRATO_TRANSACAO;
     tefopTesteComunicacao:
     begin
       Result := TesteComunicacao;

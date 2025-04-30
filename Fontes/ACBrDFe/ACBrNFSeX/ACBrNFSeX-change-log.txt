@@ -43,6 +43,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/04/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6993: A cidade de Santa Cruz das Palmeiras/SP mudou de provedor, agora é o 
+    AssessorPublico.
+  Por: TDP Sistemas
+[+] #TK-6992: Incluída a cidade de Tupancireta/RS, o provedor é o Pronim versão 2.03
+  Por: Gabriel Bobello
+[*] #TK-6986: A cidade de Itapolis/SP mudou a URL de homologação.
+  Por: Italo Giurizzato Junior
+[*] #TK-6983: A cidade de Ituporanga/SC mudou de versão, o provedor continua o mesmo.
+  Por: Vinicius Telles dos Santos
 --AssessorPublico.LerXml --
 [*] #TK-6991: Alterações visando a correta leitura do XML do RPS.
   Por: Diego Folieni

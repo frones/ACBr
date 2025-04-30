@@ -112,7 +112,7 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
-  if (Pos('NOTA', Arquivo) > 0) then
+  if (Pos('RPS', Arquivo) > 0) or (Pos('PRESTCPFCNPJ', Arquivo) > 0) then
     tpXML := txmlNFSe
   else
     tpXML := txmlRPS;
@@ -329,78 +329,86 @@ begin
 
   if not Assigned(ANode) then Exit;
 
+  AuxNode := ANode.Childrens.FindAnyNs('NOTAS');
+
+  if Assigned(AuxNode) then
+    AuxNode := AuxNode.Childrens.FindAnyNs('NOTA');
+
+  if AuxNode = nil then
+    AuxNode := ANode;
+
   with NFSe do
   begin
-    NumeroLote := ObterConteudo(ANode.Childrens.FindAnyNs('LOTE'), tcStr);
+    NumeroLote := ObterConteudo(AuxNode.Childrens.FindAnyNs('LOTE'), tcStr);
 
-    IdentificacaoRps.Numero := ObterConteudo(ANode.Childrens.FindAnyNs('SEQUENCIA'), tcStr);
+    IdentificacaoRps.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('SEQUENCIA'), tcStr);
 
-    aValor := ObterConteudo(ANode.Childrens.FindAnyNs('DATAEMISSAO'), tcStr);
+    aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('DATAEMISSAO'), tcStr);
     aValor := aValor + ' ' +
-              ObterConteudo(ANode.Childrens.FindAnyNs('HORAEMISSAO'), tcStr);
+              ObterConteudo(AuxNode.Childrens.FindAnyNs('HORAEMISSAO'), tcStr);
 
     DataEmissao := StrToDateTimeDef(aValor, 0);
 
-    Situacao := ObterConteudo(ANode.Childrens.FindAnyNs('SITUACAO'), tcInt);
+    Situacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('SITUACAO'), tcInt);
 
-    Servico.ItemListaServico := ObterConteudo(ANode.Childrens.FindAnyNs('ATIVIDADE'), tcStr);
+    Servico.ItemListaServico := ObterConteudo(AuxNode.Childrens.FindAnyNs('ATIVIDADE'), tcStr);
 
-    Servico.Discriminacao := ObterConteudo(ANode.Childrens.FindAnyNs('OBSERVACAO'), tcStr);
+    Servico.Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('OBSERVACAO'), tcStr);
     Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
                                                     sLineBreak, [rfReplaceAll]);
 
-    aValor := ObterConteudo(ANode.Childrens.FindAnyNs('RETIDO'), tcStr);
+    aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('RETIDO'), tcStr);
 
     if aValor = 'S' then
       Servico.Valores.IssRetido := stRetencao
     else
       Servico.Valores.IssRetido := stNormal;
 
-    Servico.Valores.Aliquota := ObterConteudo(ANode.Childrens.FindAnyNs('ALIQUOTAAPLICADA'), tcDe2);
+    Servico.Valores.Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('ALIQUOTAAPLICADA'), tcDe2);
 
-    Servico.Valores.ValorDeducoes := ObterConteudo(ANode.Childrens.FindAnyNs('DEDUCAO'), tcDe2);
+    Servico.Valores.ValorDeducoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('DEDUCAO'), tcDe2);
 
-    Servico.Valores.valorOutrasRetencoes := ObterConteudo(ANode.Childrens.FindAnyNs('IMPOSTO'), tcDe2);
+    Servico.Valores.valorOutrasRetencoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('IMPOSTO'), tcDe2);
 
-    Servico.Valores.ValorIssRetido := ObterConteudo(ANode.Childrens.FindAnyNs('RETENCAO'), tcDe2);
+    Servico.Valores.ValorIssRetido := ObterConteudo(AuxNode.Childrens.FindAnyNs('RETENCAO'), tcDe2);
 
-    Servico.Valores.ValorPis := ObterConteudo(ANode.Childrens.FindAnyNs('PIS'), tcDe2);
+    Servico.Valores.ValorPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('PIS'), tcDe2);
 
-    Servico.Valores.ValorCofins := ObterConteudo(ANode.Childrens.FindAnyNs('COFINS'), tcDe2);
+    Servico.Valores.ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('COFINS'), tcDe2);
 
-    Servico.Valores.ValorInss := ObterConteudo(ANode.Childrens.FindAnyNs('INSS'), tcDe2);
+    Servico.Valores.ValorInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('INSS'), tcDe2);
 
-    Servico.Valores.ValorIr := ObterConteudo(ANode.Childrens.FindAnyNs('IR'), tcDe2);
+    Servico.Valores.ValorIr := ObterConteudo(AuxNode.Childrens.FindAnyNs('IR'), tcDe2);
 
-    Servico.Valores.ValorCsll := ObterConteudo(ANode.Childrens.FindAnyNs('CSLL'), tcDe2);
+    Servico.Valores.ValorCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('CSLL'), tcDe2);
 
-    Tomador.IdentificacaoTomador.CpfCnpj := ObterConteudo(ANode.Childrens.FindAnyNs('CPFCNPJ'), tcStr);
+    Tomador.IdentificacaoTomador.CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('CPFCNPJ'), tcStr);
 
-    Tomador.IdentificacaoTomador.InscricaoEstadual := ObterConteudo(ANode.Childrens.FindAnyNs('RGIE'), tcStr);
+    Tomador.IdentificacaoTomador.InscricaoEstadual := ObterConteudo(AuxNode.Childrens.FindAnyNs('RGIE'), tcStr);
 
-    Tomador.RazaoSocial := ObterConteudo(ANode.Childrens.FindAnyNs('NOMERAZAO'), tcStr);
+    Tomador.RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('NOMERAZAO'), tcStr);
 
-    Tomador.NomeFantasia := ObterConteudo(ANode.Childrens.FindAnyNs('NOMEFANTASIA'), tcStr);
+    Tomador.NomeFantasia := ObterConteudo(AuxNode.Childrens.FindAnyNs('NOMEFANTASIA'), tcStr);
 
-    Tomador.Endereco.CodigoMunicipio := ObterConteudo(ANode.Childrens.FindAnyNs('MUNICIPIO'), tcStr);
+    Tomador.Endereco.CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('MUNICIPIO'), tcStr);
 
-    Tomador.Endereco.Bairro := ObterConteudo(ANode.Childrens.FindAnyNs('BAIRRO'), tcStr);
+    Tomador.Endereco.Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('BAIRRO'), tcStr);
 
-    Tomador.Endereco.CEP := ObterConteudo(ANode.Childrens.FindAnyNs('CEP'), tcStr);
+    Tomador.Endereco.CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
 
-    Tomador.Endereco.TipoLogradouro := ObterConteudo(ANode.Childrens.FindAnyNs('PREFIXO'), tcStr);
+    Tomador.Endereco.TipoLogradouro := ObterConteudo(AuxNode.Childrens.FindAnyNs('PREFIXO'), tcStr);
 
-    Tomador.Endereco.Endereco := ObterConteudo(ANode.Childrens.FindAnyNs('LOGRADOURO'), tcStr);
+    Tomador.Endereco.Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('LOGRADOURO'), tcStr);
 
-    Tomador.Endereco.Complemento := ObterConteudo(ANode.Childrens.FindAnyNs('COMPLEMENTO'), tcStr);
+    Tomador.Endereco.Complemento := ObterConteudo(AuxNode.Childrens.FindAnyNs('COMPLEMENTO'), tcStr);
 
-    Tomador.Endereco.Numero := ObterConteudo(ANode.Childrens.FindAnyNs('NUMERO'), tcStr);
+    Tomador.Endereco.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('NUMERO'), tcStr);
 
-    Tomador.Contato.Email := ObterConteudo(ANode.Childrens.FindAnyNs('EMAIL'), tcStr);
+    Tomador.Contato.Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('EMAIL'), tcStr);
 
-    NFSe.Vencimento := ObterConteudo(ANode.Childrens.FindAnyNs('DATAVENCIMENTO'), tcDatVcto);
+    NFSe.Vencimento := ObterConteudo(AuxNode.Childrens.FindAnyNs('DATAVENCIMENTO'), tcDatVcto);
 
-    AuxNode := ANode.Childrens.FindAnyNs('SERVICOS');
+    AuxNode := AuxNode.Childrens.FindAnyNs('SERVICOS');
 
     if AuxNode <> nil then
     begin

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/04/2025
+--AssessorPublico.LerXml --
+[*] #TK-6991: Alterações visando a correta leitura do XML do RPS.
+  Por: Diego Folieni
+
 29/04/2025
 -- PadraoNacional.GravarXml/PadraoNacional.LerXml --
 [*] #TK-6835: Alteração nas units para atender a Reforma Tributária.

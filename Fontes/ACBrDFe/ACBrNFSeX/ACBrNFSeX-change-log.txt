@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/05/2025
+-- ACBrNFSeXServicos --
+[+] #TK-7000: Adiciona Param Dividir100 para Marechal Deodoro/AL.
+  Por: C4Dev
+
 30/04/2025
 -- ACBrNFSeXServicos --
 [*] #TK-6993: A cidade de Santa Cruz das Palmeiras/SP mudou de provedor, agora é o 

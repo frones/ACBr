@@ -1047,7 +1047,7 @@ const
   MASK2_Cod_Local_Telefone                 = $00008000;  { DDD }
   MASK2_Num_Telefone                       = $00010000;  { Telefone }
   MASK2_Dados_ValeGas                      = $00020000;  { ULTRAGAZ: Dados do ValeGás }
-  MASK2_Codigo_IF                          = $00040000;  { Código IF (Instituição Financeira) }
+  MASK2_BIN                                = $00040000;  { Código do BIN do cartão }
   MASK2_Num_Item_Finivest_ou_Contrato      = $00080000;  { Fininvest ou Cetelem
                                                            IBI: Numero do contrato (CPCHEQUE/INSS) }
   MASK2_Valor_Taxa_Embarque                = $00100000;  { Taxa de embarque }
@@ -1855,7 +1855,7 @@ begin
   if fInicializada then
     DoException(sErrLibJaInicializada);
 
-  fDiretorioTrabalho := AValue;
+  fDiretorioTrabalho := PathWithDelim(ExtractFilePath(AValue));
 end;
 
 procedure TACBrTEFScopeAPI.SetInicializada(AValue: Boolean);
@@ -2003,7 +2003,7 @@ function TACBrTEFScopeAPI.GetLibFullPath: String;
 begin
   if (PathLib <> '') then
   begin
-    GravarLog(ACBrStr('TACBrTEFScopeAPI.LibFullName: Usando "PathLib" informado pela aplicação: ')+PathLib);
+    GravarLog(ACBrStr('TACBrTEFScopeAPI.GetLibFullPath: Usando "PathLib" informado pela aplicação: ')+PathLib);
     Result := PathLib + CScopeLib
   end
   else
@@ -2044,7 +2044,7 @@ begin
     Exit;
 
   sLibName := GetLibFullPath;
-  GravarLog('TACBrTEFScopeAPI.LoadDLLFunctions - '+sLibName);
+  GravarLog('TACBrTEFScopeAPI.LoadLibFunctions - '+sLibName);
 
   ScopeFunctionDetect(sLibName, 'ScopeOpen', @xScopeOpen);
   ScopeFunctionDetect(sLibName, 'ScopeClose', @xScopeClose);
@@ -2111,7 +2111,7 @@ begin
   if not fCarregada then
     Exit;
 
-  GravarLog('TACBrTEFScopeAPI.UnLoadDLLFunctions');
+  GravarLog('TACBrTEFScopeAPI.UnLoadLibFunctions');
 
   sLibName := GetLibFullPath;
   UnLoadLibrary( sLibName );
@@ -2181,7 +2181,7 @@ begin
   if (Trim(AErrorMsg) = '') then
     Exit;
 
-  GravarLog('TACBrTEFScopeAPI: '+AErrorMsg);
+  GravarLog('EACBrTEFScopeAPI: '+AErrorMsg);
   raise EACBrTEFScopeAPI.Create(ACBrStr(AErrorMsg));
 end;
 
@@ -2194,7 +2194,7 @@ end;
 procedure TACBrTEFScopeAPI.VerificarDiretorioDeTrabalho;
 begin
   if (fDiretorioTrabalho = '') then
-    fDiretorioTrabalho := ApplicationPath + 'TEF' + PathDelim + 'ScopeAPI';
+    fDiretorioTrabalho := ApplicationPath + 'TEF' + PathDelim + 'ScopeAPI' + PathDelim;
 
   if not DirectoryExists(fDiretorioTrabalho) then
     ForceDirectories(fDiretorioTrabalho);
@@ -2222,7 +2222,7 @@ var
     AjustarParamSeNaoExistir(ASessao, 'TraceLevel', '8');
     AjustarParamSeNaoExistir(ASessao, 'LogFiles', '4');
     AjustarParamSeNaoExistir(ASessao, 'LogSize', '3072000');
-    ini.WriteString(ASessao, 'LogPath', fDiretorioTrabalho + PathDelim + 'logs');
+    ini.WriteString(ASessao, 'LogPath', fDiretorioTrabalho + 'logs');
   end;
 
 begin
@@ -2327,8 +2327,8 @@ begin
     AjustarParamSeNaoExistir('PPCOMP', 'NaoAbrirDigitado', IfThen(fPermitirCartaoDigitado, 'n', 's'));
 
     SecName := 'SCOPEAPI';
-    ini.WriteString(SecName, 'ArqControlPath', fDiretorioTrabalho + PathDelim + 'control');
-    ini.WriteString(SecName, 'ArqTracePath', fDiretorioTrabalho + PathDelim + 'logs');
+    ini.WriteString(SecName, 'ArqControlPath', fDiretorioTrabalho + 'control');
+    ini.WriteString(SecName, 'ArqTracePath', fDiretorioTrabalho + 'logs');
     AjustarParamSeNaoExistir(SecName, 'TraceApi', 's');
     AjustarParamSeNaoExistir(SecName, 'TraceSrl', 's');
     AjustarParamSeNaoExistir(SecName, 'TracePin', 's');

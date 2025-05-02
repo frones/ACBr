@@ -46,6 +46,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/05/2025
+-- ACBrTEFScopeAPI, ACBrTEFAPIScope --
+[*] Registrador MASK2_Codigo_IF, modificado para MASK2_BIN
+[*] Ajuste no método ConteudoToProperty, para salvar corretamente o BIN
+[*] correção nas nomeclaturas dos métodos nos Logs
+[*] Melhoria para diretório de Trabalho ser considerado com ou sem o Path
+    Delimitador no final
+    (por: Ricardo Bosco de Souza e DSA)
 30/04/2025
 -- ACBrTEFAPIDestaxa --
 [*] Ajuste para possibilitar a geração do extrato de transações.

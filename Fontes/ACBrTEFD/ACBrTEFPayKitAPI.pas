@@ -1,3 +1,8 @@
+// TODO
+//- Nao precisa de diretorio de trabalho, usa o GetLibFullPath ?
+//- Nao conseguiu carregar o certificado.. Sábado ?
+//- Precisa do dposlocal.ini ?
+
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
@@ -53,6 +58,9 @@ const
 
   CPayKitConf = 'dposlocal.ini';
   CPayKitCont = 'dposacbr.ini';
+
+  CPayKitURLCertificado = 'https://tef.linxsaas.com.br/certificados/Gerenciador_Certificado.cgi';
+
   RET_OK = 0;
 
 type
@@ -65,13 +73,19 @@ type
   TACBrTEFPayKitAPI = Class
   private
     fCarregada: Boolean;
+    fCNPJEstabelecimento: String;
+    fConfiguracaoIpPortaSsl: String;
     fDiretorioTrabalho: String;
     fEmTransacao: Boolean;
     fInicializada: Boolean;
     fModoDesfazimento: Byte;
     fNomeAutomacao: String;
+    fNumeroEmpresa: Integer;
+    fNumeroLoja: Integer;
+    fNumeroPDV: Integer;
     fOnGravarLog: TACBrTEFPayKitGravarLog;
     fPathLib: String;
+    fURLCertificado: String;
     fVersaoAutomacao: String;
 
     xTransacaoCheque: function(pValorTransacao, pNumeroCupomVenda, pNumeroControle,
@@ -109,14 +123,27 @@ type
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xObtemLogUltimaTransacao: procedure(oLogUltimaTransacao: PAnsiChar);
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+
     xVersaoDPOS: procedure(pVersao: PAnsiChar);
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xInicializaDPOS: function: LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xFinalizaDPOS: function: LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+
     xIdentificacaoAutomacaoComercial: function(pNomeAutomacao, pVersaoAutomacao,
       pReservado: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xConfiguraModoDesfazimento: function(iModoDesfazimento: LongInt): LongInt
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+
+    xConfiguraCNPJEstabelecimento: function(pCNPJEstabelecimento: PAnsiChar): LongInt
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xConfiguraEmpresaLojaPDV: function(pNumeroEmpresa, pNumeroLoja, pNumeroPDV: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xConfiguraComunicacaoDTEF: function(pConfiguracaoIpPortaSsl: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xBuscaCertificado: function(pURL, pPathCertificado: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     // Definicao das funcoes de transacao completa
@@ -139,8 +166,15 @@ type
         pNumeroParcelas, pDataPreDatado, pNumeroControle: PAnsiChar): LongInt;
         {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
+    procedure SetCNPJEstabelecimento(AValue: String);
+    procedure SetConfiguracaoIpPortaSsl(AValue: String);
+    procedure SetURLCertificado(AValue: String);
     procedure SetInicializada(AValue: Boolean);
+    procedure SetModoDesfazimento(AValue: Byte);
     procedure SetNomeAutomacao(AValue: String);
+    procedure SetNumeroEmpresa(AValue: Integer);
+    procedure SetNumeroLoja(AValue: Integer);
+    procedure SetNumeroPDV(AValue: Integer);
     procedure SetVersaoAutomacao(AValue: String);
     procedure SetPathLib(const AValue: String);
     procedure SetDiretorioTrabalho(AValue: String);
@@ -159,6 +193,13 @@ type
 
     procedure VerificarDiretorioDeTrabalho;
     procedure VerificarEAjustarConf;
+
+    procedure IdentificacaoAutomacaoComercial;
+    procedure ConfiguraModoDesfazimento;
+    procedure ConfiguraCNPJEstabelecimento;
+    procedure ConfiguraEmpresaLojaPDV;
+    procedure ConfiguraComunicacaoDTEF;
+    procedure BuscaCertificado;
   public
     constructor Create;
     destructor Destroy; override;
@@ -180,18 +221,25 @@ type
     function VersaoDPOS: String;
     procedure InicializaDPOS(Forcar: Boolean = False);
     procedure FinalizaDPOS(Forcar: Boolean = False);
-    procedure IdentificacaoAutomacaoComercial;
 
     property NomeAutomacao: String read fNomeAutomacao write SetNomeAutomacao;
     property VersaoAutomacao: String read fVersaoAutomacao write SetVersaoAutomacao;
-    property ModoDesfazimento: Byte read fModoDesfazimento write fModoDesfazimento;
+    property ModoDesfazimento: Byte read fModoDesfazimento write SetModoDesfazimento default 1;  // 0 - Automático, 1 - Explícito
+
+    property CNPJEstabelecimento: String read fCNPJEstabelecimento write SetCNPJEstabelecimento;
+    property NumeroEmpresa: Integer read fNumeroEmpresa write SetNumeroEmpresa;
+    property NumeroLoja: Integer read fNumeroLoja write SetNumeroLoja;
+    property NumeroPDV: Integer read fNumeroPDV write SetNumeroPDV;
+
+    property ConfiguracaoIpPortaSsl: String read fConfiguracaoIpPortaSsl write SetConfiguracaoIpPortaSsl;
+    property URLCertificado: String read fURLCertificado write SetURLCertificado;
   end;
 
 
 implementation
 
 uses
-  IniFiles,
+  IniFiles, Math,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO;
 
@@ -208,7 +256,7 @@ begin
 
   fNomeAutomacao := '';
   fVersaoAutomacao := '';
-  fModoDesfazimento := 0;
+  fModoDesfazimento := 1;
   fOnGravarLog := Nil;
 end;
 
@@ -229,6 +277,11 @@ begin
   LoadLibFunctions;
 
   IdentificacaoAutomacaoComercial;
+  ConfiguraModoDesfazimento;
+  ConfiguraCNPJEstabelecimento;
+  ConfiguraEmpresaLojaPDV;
+  ConfiguraComunicacaoDTEF;
+  BuscaCertificado;
   InicializaDPOS;
 
   fInicializada := True;
@@ -367,6 +420,71 @@ begin
   TratarErroPayKit(iRet);
 end;
 
+procedure TACBrTEFPayKitAPI.ConfiguraModoDesfazimento;
+var
+  iRet: LongInt;
+begin
+  GravarLog('ConfiguraModoDesfazimento( '+IntToStr(fModoDesfazimento)+' )');
+  iRet := xConfiguraModoDesfazimento(fModoDesfazimento);
+  GravarLog('  ret: '+IntToStr(iRet));
+  TratarErroPayKit(iRet);
+end;
+
+procedure TACBrTEFPayKitAPI.ConfiguraCNPJEstabelecimento;
+var
+  iRet: LongInt;
+  pCNPJEstabelecimento: AnsiString;
+begin
+  pCNPJEstabelecimento := PadRight(fCNPJEstabelecimento, 14);
+  GravarLog('ConfiguraCNPJEstabelecimento( '+pCNPJEstabelecimento+' )');
+  iRet := xConfiguraCNPJEstabelecimento(PAnsiChar(pCNPJEstabelecimento));
+  GravarLog('  ret: '+IntToStr(iRet));
+  TratarErroPayKit(iRet);
+end;
+
+procedure TACBrTEFPayKitAPI.ConfiguraEmpresaLojaPDV;
+var
+  iRet: LongInt;
+  pNumeroEmpresa, pNumeroLoja, pNumeroPDV: AnsiString;
+begin
+  pNumeroEmpresa := Format('%.4d',[fNumeroEmpresa]);
+  pNumeroLoja := Format('%.4d',[fNumeroLoja]);
+  pNumeroPDV := Format('%.4d',[fNumeroPDV]);
+  GravarLog('ConfiguraEmpresaLojaPDV( '+pNumeroEmpresa+', '+pNumeroLoja+', '+pNumeroPDV+' )');
+  iRet := xConfiguraEmpresaLojaPDV(PAnsiChar(pNumeroEmpresa), PAnsiChar(pNumeroLoja), PAnsiChar(pNumeroPDV));
+  GravarLog('  ret: '+IntToStr(iRet));
+  TratarErroPayKit(iRet);
+end;
+
+procedure TACBrTEFPayKitAPI.ConfiguraComunicacaoDTEF;
+var
+  iRet: LongInt;
+  pConfiguracaoIpPortaSsl: AnsiString;
+begin
+  pConfiguracaoIpPortaSsl := Trim(fConfiguracaoIpPortaSsl);
+  GravarLog('ConfiguraComunicacaoDTEF( '+pConfiguracaoIpPortaSsl+' )');
+  iRet := xConfiguraComunicacaoDTEF(PAnsiChar(pConfiguracaoIpPortaSsl));
+  GravarLog('  ret: '+IntToStr(iRet));
+  TratarErroPayKit(iRet);
+end;
+
+procedure TACBrTEFPayKitAPI.BuscaCertificado;
+var
+  iRet: LongInt;
+  pURL, pPathCertificado: AnsiString;
+begin
+  pURL := Trim(fURLCertificado);
+  if (pURL = '') then
+    pURL := CPayKitURLCertificado;
+
+  pPathCertificado := ExtractFilePath(GetLibFullPath);
+
+  GravarLog('BuscaCertificado( '+pURL+', '+pPathCertificado+' )');
+  iRet := xBuscaCertificado(PAnsiChar(pURL), PAnsiChar(pPathCertificado));
+  GravarLog('  ret: '+IntToStr(iRet));
+  TratarErroPayKit(iRet);
+end;
+
 procedure TACBrTEFPayKitAPI.SetInicializada(AValue: Boolean);
 begin
   if (fInicializada = AValue) then
@@ -380,10 +498,76 @@ begin
     DesInicializar;
 end;
 
+procedure TACBrTEFPayKitAPI.SetCNPJEstabelecimento(AValue: String);
+begin
+  if fCNPJEstabelecimento = AValue then
+    Exit;
+  if fInicializada then
+    DoException(sErrLibJaInicializada);
+  fCNPJEstabelecimento := LeftStr(OnlyNumber(AValue), 14);
+end;
+
+procedure TACBrTEFPayKitAPI.SetConfiguracaoIpPortaSsl(AValue: String);
+begin
+  if fConfiguracaoIpPortaSsl = AValue then
+    Exit;
+  if fInicializada then
+    DoException(sErrLibJaInicializada);
+  fConfiguracaoIpPortaSsl := AValue;
+end;
+
+procedure TACBrTEFPayKitAPI.SetURLCertificado(AValue: String);
+begin
+  if fURLCertificado = AValue then
+    Exit;
+  if fInicializada then
+    DoException(sErrLibJaInicializada);
+  fURLCertificado := AValue;
+end;
+
+procedure TACBrTEFPayKitAPI.SetModoDesfazimento(AValue: Byte);
+begin
+  if fModoDesfazimento = AValue then
+    Exit;
+  if fInicializada then
+    DoException(sErrLibJaInicializada);
+  fModoDesfazimento := max(0, min(1, AValue));
+end;
+
 procedure TACBrTEFPayKitAPI.SetNomeAutomacao(AValue: String);
 begin
-  if fNomeAutomacao = AValue then Exit;
+  if fNomeAutomacao = AValue then
+    Exit;
+  if fInicializada then
+    DoException(sErrLibJaInicializada);
   fNomeAutomacao := LeftStr(AValue, 20);
+end;
+
+procedure TACBrTEFPayKitAPI.SetNumeroEmpresa(AValue: Integer);
+begin
+  if fNumeroEmpresa = AValue then
+    Exit;
+  if fInicializada then
+    DoException(sErrLibJaInicializada);
+  fNumeroEmpresa := max(AValue, 0);
+end;
+
+procedure TACBrTEFPayKitAPI.SetNumeroLoja(AValue: Integer);
+begin
+  if fNumeroLoja = AValue then
+    Exit;
+  if fInicializada then
+    DoException(sErrLibJaInicializada);
+  fNumeroLoja := max(AValue, 0);
+end;
+
+procedure TACBrTEFPayKitAPI.SetNumeroPDV(AValue: Integer);
+begin
+  if fNumeroPDV = AValue then
+    Exit;
+  if fInicializada then
+    DoException(sErrLibJaInicializada);
+  fNumeroPDV := max(AValue, 0);
 end;
 
 procedure TACBrTEFPayKitAPI.SetVersaoAutomacao(AValue: String);
@@ -486,6 +670,11 @@ begin
   PayKitFunctionDetect(sLibName, 'InicializaDPOS', @xInicializaDPOS);
   PayKitFunctionDetect(sLibName, 'FinalizaDPOS', @xFinalizaDPOS);
   PayKitFunctionDetect(sLibName, 'IdentificacaoAutomacaoComercial', @xIdentificacaoAutomacaoComercial);
+  PayKitFunctionDetect(sLibName, 'ConfiguraModoDesfazimento', @xConfiguraModoDesfazimento);
+  PayKitFunctionDetect(sLibName, 'ConfiguraCNPJEstabelecimento', @xConfiguraCNPJEstabelecimento);
+  PayKitFunctionDetect(sLibName, 'ConfiguraEmpresaLojaPDV', @xConfiguraEmpresaLojaPDV);
+  PayKitFunctionDetect(sLibName, 'ConfiguraComunicacaoDTEF', @xConfiguraComunicacaoDTEF);
+  PayKitFunctionDetect(sLibName, 'BuscaCertificado', @xBuscaCertificado);
   PayKitFunctionDetect(sLibName, 'TransacaoCartaoCreditoCompleta', @xTransacaoCartaoCreditoCompleta);
   PayKitFunctionDetect(sLibName, 'TransacaoCartaoDebitoCompleta', @xTransacaoCartaoDebitoCompleta);
   PayKitFunctionDetect(sLibName, 'TransacaoCartaoVoucherCompleta', @xTransacaoCartaoVoucherCompleta);
@@ -528,6 +717,12 @@ begin
   xVersaoDPOS := Nil;
   xInicializaDPOS := Nil;
   xFinalizaDPOS := Nil;
+  xIdentificacaoAutomacaoComercial := Nil;
+  xConfiguraModoDesfazimento := Nil;
+  xConfiguraCNPJEstabelecimento := Nil;
+  xConfiguraEmpresaLojaPDV := Nil;
+  xConfiguraComunicacaoDTEF := Nil;
+  xBuscaCertificado := Nil;
   xTransacaoCartaoCreditoCompleta := Nil;
   xTransacaoCartaoDebitoCompleta := Nil;
   xTransacaoCartaoVoucherCompleta := Nil;

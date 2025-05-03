@@ -143,7 +143,7 @@ end;
 procedure TACBrTEFAPIClassPayKit.Inicializar;
 var
   P: Integer;
-  ADir, IpStr, PortaStr: String;
+  ADir, s: String;
 begin
   if Inicializado then
     Exit;
@@ -153,23 +153,21 @@ begin
   else
     ADir := fDiretorioTrabalho;
 
-  IpStr := fpACBrTEFAPI.DadosTerminal.EnderecoServidor;
-  PortaStr := '';
-  p := pos(':', IpStr);
-  if (p > 0) then
-  begin
-    PortaStr := copy(IpStr, p+1, Length(IpStr));
-    IpStr := copy(IpStr, 1, p-1);
-  end;
-
   fTEFPayKitAPI.PathLib := PathDLL;
   fTEFPayKitAPI.DiretorioTrabalho := ADir;
-  //fTEFPayKitAPI.EnderecoIP := IpStr;
-  //fTEFPayKitAPI.PortaTCP := PortaStr;
-  //fTEFPayKitAPI.VersaoAutomacao := fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
-  //fTEFPayKitAPI.Empresa := fpACBrTEFAPI.DadosTerminal.CodEmpresa;
-  //fTEFPayKitAPI.Filial := fpACBrTEFAPI.DadosTerminal.CodFilial;
-  //fTEFPayKitAPI.PDV := fpACBrTEFAPI.DadosTerminal.CodTerminal;
+  fTEFPayKitAPI.NomeAutomacao := fpACBrTEFAPI.DadosAutomacao.NomeAplicacao;
+  fTEFPayKitAPI.VersaoAutomacao := fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
+  fTEFPayKitAPI.CNPJEstabelecimento := fpACBrTEFAPI.DadosEstabelecimento.CNPJ;
+
+  fTEFPayKitAPI.NumeroEmpresa := StrToIntDef(fpACBrTEFAPI.DadosTerminal.CodEmpresa, 0);
+  fTEFPayKitAPI.NumeroLoja := StrToIntDef(fpACBrTEFAPI.DadosTerminal.CodFilial, 0);
+  fTEFPayKitAPI.NumeroPDV := StrToIntDef(fpACBrTEFAPI.DadosTerminal.CodTerminal, 0);
+
+  s := fpACBrTEFAPI.DadosTerminal.EnderecoServidor;
+  if (copy(s, Length(s)-1, 1) <> ':') then  // Informou parâmetro TLS ?
+    s := s + ':1';                    // Se não informou, assume como ligado
+
+  fTEFPayKitAPI.ConfiguracaoIpPortaSsl := s;
   //fTEFPayKitAPI.MsgPinPad := fpACBrTEFAPI.DadosAutomacao.NomeSoftwareHouse + '|' +
   //                          fpACBrTEFAPI.DadosAutomacao.NomeAplicacao + ' ' +
   //                          fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;

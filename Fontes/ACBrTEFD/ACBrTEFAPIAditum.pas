@@ -71,6 +71,7 @@ resourcestring
   sACBrAditumErroDadoNaoEJSon = 'Dado informado em %s não é um JSON válido';
   sACBrAditumErroEstabelecimentoNaoAtivo = 'Estabelecimento %s não está Ativo';
   sACBrAditumSemNSU = 'NSU não informado';
+  sACBrAditumNaoAprovada = 'Transação %s não aprovada';
   sACBrAditumSemComunicacaoURL = 'Falha na comunicação. Erro: %d, URL: %s';
 
 
@@ -958,7 +959,7 @@ procedure TACBrTEFAPIClassAditum.RecuperarTransacao(const NSU: String);
 var
   sURL, s: String;
   js: TACBrJSONObject;
-  Ok: Boolean;
+  OK, sucesso, aprovado: Boolean;
 begin
   LimparRespostaHTTP;
   sURL := 'charge/by-nsu/' + Trim(NSU);
@@ -969,12 +970,14 @@ begin
     js := TACBrJSONObject.Parse(FHTTPResponse);
     try
       s := js.AsString['success'];
-      if (s = '') then
-        s := js.AsString['isApproved'];
+      sucesso := (LowerCase(s) = 'true');
+      s := js.AsString['isApproved'];
+      aprovado := (LowerCase(s) = 'true');
 
-      Ok := (LowerCase(s) = 'true');
-      if Ok then
+      if sucesso and aprovado then
         FinalizarChamadaAPI
+      else if not aprovado then
+        DoException(Format(ACBrStr(sACBrAditumNaoAprovada), [NSU]))
       else
         TratarRetornoComErro;
     finally

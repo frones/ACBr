@@ -29,7 +29,6 @@ Agradecimentos:
 
 * Administradores:
 - Daniel Simões de Almeida
-- André Ferreira de Moraes
 
 * Desenvolvedores:
 - Daniel Simões de Almeida - Doação do componente ao projeto ACBr
@@ -45,6 +44,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+03/05/2025
+-- ACBrTEFAPIAditum --
+[*] Ajuste para tratamento de solicitaçào de reimpressão de transação não existente
+    https://www.projetoacbr.com.br/forum/index.php?showtopic=82885
+    (por: DSA e  EasySoft Sistemas)
 
 02/05/2025
 -- ACBrTEFScopeAPI, ACBrTEFAPIScope --

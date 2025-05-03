@@ -1389,6 +1389,7 @@ type
     fEmTransacao: Boolean;
     fEnderecoIP: String;
     fFilial: String;
+    fGravarLogScope: Boolean;
     fInicializada: Boolean;
     fIntervaloColeta: Integer;
     fMsgPinPad: String;
@@ -1526,6 +1527,7 @@ type
 
     function PAnsiCharToString(APAnsiChar: PAnsiChar): String;
     function ArrayOfCharToString(Arr: array of AnsiChar): String;
+    procedure SetGravarLogScope(AValue: Boolean);
 
     procedure SetIntervaloColeta(AValue: Integer);
     procedure SetPathLib(const AValue: String);
@@ -1616,6 +1618,7 @@ type
     property PathLib: String read fPathLib write SetPathLib;
     property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
     property ControleConexao: Boolean read fControleConexao write SetControleConexao default True;
+    property GravarLogScope: Boolean read fGravarLogScope write SetGravarLogScope default False;
 
     property Empresa: String read fEmpresa write SetEmpresa;
     property Filial: String read fFilial write SetFilial;
@@ -1712,6 +1715,7 @@ begin
   fConectado := False;
   fSessaoAberta := False;
   fControleConexao := True;
+  fGravarLogScope := False;
   fPathLib := '';
   fDiretorioTrabalho := '';
   fEnderecoIP := '';
@@ -1835,6 +1839,19 @@ end;
 function TACBrTEFScopeAPI.ArrayOfCharToString(Arr: array of AnsiChar): String;
 begin
   Result := TrimRight(String(Arr));
+end;
+
+procedure TACBrTEFScopeAPI.SetGravarLogScope(AValue: Boolean);
+begin
+  if fGravarLogScope = AValue then
+    Exit;
+
+  GravarLog('TACBrTEFScopeAPI.SetGravarLogScope( '+BoolToStr(AValue, True)+' )');
+
+  if fInicializada then
+    DoException(sErrLibJaInicializada);
+
+  fGravarLogScope := AValue;
 end;
 
 procedure TACBrTEFScopeAPI.SetIntervaloColeta(AValue: Integer);
@@ -2329,9 +2346,9 @@ begin
     SecName := 'SCOPEAPI';
     ini.WriteString(SecName, 'ArqControlPath', fDiretorioTrabalho + 'control');
     ini.WriteString(SecName, 'ArqTracePath', fDiretorioTrabalho + 'logs');
-    AjustarParamSeNaoExistir(SecName, 'TraceApi', 's');
-    AjustarParamSeNaoExistir(SecName, 'TraceSrl', 's');
-    AjustarParamSeNaoExistir(SecName, 'TracePin', 's');
+    AjustarParamSeNaoExistir(SecName, 'TraceApi', IfThen(fGravarLogScope, 's', 'n'));
+    AjustarParamSeNaoExistir(SecName, 'TraceSrl', IfThen(fGravarLogScope, 's', 'n'));
+    AjustarParamSeNaoExistir(SecName, 'TracePin', IfThen(fGravarLogScope, 's', 'n'));
     AjustarParamSeNaoExistir(SecName, 'RedecardBit47Tag6', '1');
 
     //AjusarSessaoLogAPI('SCOPELOGAPI');

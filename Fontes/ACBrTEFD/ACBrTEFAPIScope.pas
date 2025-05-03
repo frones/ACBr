@@ -425,6 +425,7 @@ begin
   fTEFScopeAPI := TACBrTEFScopeAPI.Create;
   fTEFScopeAPI.OnTransacaoEmAndamento := QuandoTransacaoEmAndamentoAPI;
   fTEFScopeAPI.OnGravarLog := QuandoGravarLogAPI;
+  fTEFScopeAPI.GravarLogScope := Assigned(AACBrTEFAPI.QuandoGravarLog);
   fTEFScopeAPI.OnExibeMensagem := QuandoExibirMensagemAPI;
   fTEFScopeAPI.OnExibeMenu := QuandoPerguntarMenuAPI;
   fTEFScopeAPI.OnPerguntaCampo := QuandoPerguntarCampoAPI;

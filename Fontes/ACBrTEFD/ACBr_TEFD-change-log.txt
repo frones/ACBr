@@ -46,6 +46,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/05/2025
+-- ACBrTEFAPIScope, ACBrTEFScopeAPI --
+[+] Adicionada a propriedade para controlar a gravação de Log da DLL no 'scope.ini'
+    "TACBrTEFScopeAPI.GravarLogScope: Boolean default False"
+    - Só irá modificar o arquivo 'scope.ini', se as chaves de Log ainda não
+      existirem nele
+    - Será ativada (True) por 'TACBrTEFAPIClassScope' se a mesma detectar que o
+      evento 'TACBrTEFAPI.QuandoGravarLog' está atribuido
+
 -- ACBrTEFAPIAditum --
 [*] Ajuste para tratamento de solicitaçào de reimpressão de transação não existente
     https://www.projetoacbr.com.br/forum/index.php?showtopic=82885

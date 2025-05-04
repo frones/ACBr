@@ -425,7 +425,6 @@ begin
   fTEFScopeAPI := TACBrTEFScopeAPI.Create;
   fTEFScopeAPI.OnTransacaoEmAndamento := QuandoTransacaoEmAndamentoAPI;
   fTEFScopeAPI.OnGravarLog := QuandoGravarLogAPI;
-  fTEFScopeAPI.GravarLogScope := Assigned(AACBrTEFAPI.QuandoGravarLog);
   fTEFScopeAPI.OnExibeMensagem := QuandoExibirMensagemAPI;
   fTEFScopeAPI.OnExibeMenu := QuandoPerguntarMenuAPI;
   fTEFScopeAPI.OnPerguntaCampo := QuandoPerguntarCampoAPI;
@@ -472,6 +471,7 @@ begin
                             fpACBrTEFAPI.DadosAutomacao.NomeAplicacao + ' ' +
                             fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
   fTEFScopeAPI.PortaPinPad := fpACBrTEFAPI.DadosTerminal.PortaPinPad;
+  fTEFScopeAPI.GravarLogScope := (fpACBrTEFAPI.ArqLOG <> '');
 
   fTEFScopeAPI.Inicializar;
 

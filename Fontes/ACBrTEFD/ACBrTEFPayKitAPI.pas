@@ -1,8 +1,3 @@
-// TODO
-//- Nao precisa de diretorio de trabalho, usa o GetLibFullPath ?
-//- Nao conseguiu carregar o certificado.. Sábado ?
-//- Precisa do dposlocal.ini ?
-
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
@@ -44,11 +39,6 @@ interface
 uses
   Classes, SysUtils;
 
-resourcestring
-  sErrLibJaInicializada = 'Biblioteca DPOSDRV já foi inicializada';
-  sErrLibNaoInicializada = 'Biblioteca DPOSDRV ainda NÃO foi carregada';
-  sErrDirTrabalhoInvalido = 'Diretório de Trabalho não encontrado: %s';
-
 const
   {$IFDEF MSWINDOWS}
    CPayKitLib = 'DPOSDRV.dll';
@@ -56,17 +46,79 @@ const
    CPayKitLib = 'libDPOSDRV.so';
   {$ENDIF}
 
+  CPayKitDirBin = 'Bin';
   CPayKitConf = 'dposlocal.ini';
-  CPayKitCont = 'dposacbr.ini';
+  CSecMovimentoACBr = 'Movimento_ACBr';
 
   CPayKitURLCertificado = 'https://tef.linxsaas.com.br/certificados/Gerenciador_Certificado.cgi';
 
   RET_OK = 0;
 
+resourcestring
+  sErrArqPayKitNaoEncontrado = 'Arquivo do PayKit: "%s", não encontrado em: %s';
+  sErrLibJaInicializada = 'Biblioteca DPOSDRV já foi inicializada';
+  sErrLibNaoInicializada = 'Biblioteca DPOSDRV ainda NÃO foi carregada';
+  sErrDirPayKitInvalido = 'Subdiretório "%s" do PayKit, não encontrado na Pasta: %s';
+
 type
   EACBrTEFPayKitAPI = class(Exception);
 
   TACBrTEFPayKitGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
+
+  TACBrTEFPayKitCallBackDisplayTerminal = procedure(pMensagem: PAnsiChar);
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackDisplayErro = procedure(pMensagem: PAnsiChar);
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackMensagem = procedure(pMensagem: PAnsiChar);
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackBeep = procedure;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackSolicitaConfirmacao = function(pMensagem: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackEntraCartao = function(pLabel, pCartao: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackEntraDataValidade = function(pLabel, pDataValidade: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackEntraData = function(pLabel, pDataValidade: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackEntraCodigoSeguranca = function(pLabel, pEntraCodigoSeguranca: PAnsiChar; iTamanhoMax: LongInt): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackSelecionaOpcao = function(pLabel, pOpcoes: PAnsiChar; iOpcaoSelecionada: LongInt): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackEntraValor = function(pLabel, pValor, pValorMinimo, pValorMaximo: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackEntraNumero = function(pLabel, pNumero, pNumeroMinimo, pNumeroMaximo: PAnsiChar; iMinimoDigitos, iMaximoDigitos, iDigitosExatos: LongInt): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackOperacaoCancelada = function: LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackSetaOperacaoCancelada = function(bCancelada: Boolean): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackProcessaMensagens = procedure;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackEntraString = function(pLabel, pString, pTamanhoMaximo: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackConsultaAVS = function(cEndereco, cNumero, cApto, cBloco, cCEP, cBairro, cCPF: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackMensagemAdicional = function(pMensagemAdicional: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackImagemAdicional = function(iIndiceImagem: LongInt): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackEntraCodigoBarras = function(pLabel, pCampo: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackEntraCodigoBarrasLido = function(pLabel, pCampo: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackMensagemAlerta = procedure(pMensagemAlerta: PAnsiChar);
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackPreviewComprovante = procedure(cComprovante: PAnsiChar);
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackSelecionaPlanos = function(iCodigoRede, iCodigoTransacao, iTipoFinanciamento, iMaximoParcelas: Longint; pValorMinimoParcela: PAnsiChar; iMaxDiasPreDatado: LongInt; pNumeroParcelas, pValorTransacao, pValorParcela, pValorEntrada, pData: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackSelecionaPlanosEx = function(pSolicitacao, pRetorno: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackEntraValorEspecial = function(pLabel, pValor, pParametros: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  TACBrTEFPayKitCallBackComandos = function(pParametrosEntrada, pDadosRetorno: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
   { TACBrTEFPayKitAPI }
 
@@ -75,7 +127,7 @@ type
     fCarregada: Boolean;
     fCNPJEstabelecimento: String;
     fConfiguracaoIpPortaSsl: String;
-    fDiretorioTrabalho: String;
+    fPathPayKit: String;
     fEmTransacao: Boolean;
     fInicializada: Boolean;
     fModoDesfazimento: Byte;
@@ -84,7 +136,6 @@ type
     fNumeroLoja: Integer;
     fNumeroPDV: Integer;
     fOnGravarLog: TACBrTEFPayKitGravarLog;
-    fPathLib: String;
     fURLCertificado: String;
     fVersaoAutomacao: String;
 
@@ -146,25 +197,85 @@ type
     xBuscaCertificado: function(pURL, pPathCertificado: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
+    xTransacaoEspecial: function(iCodigoTransacao: LongInt; pDados: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xLeIdentificacaoPinPad: function(pDados: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+
     // Definicao das funcoes de transacao completa
     xTransacaoCartaoCreditoCompleta: function( pValorTransacao, pNumeroCupomVenda,
       pNumeroControle, pTipoOperacao, pNumeroParcelas, pValorParcela,
       pValorTaxaServico, pPermiteAlteracao, pReservado: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
-     xTransacaoCartaoDebitoCompleta: function ( pValorTransacao, pNumeroCupomVenda,
-       pNumeroControle, pTipoOperacao, pNumeroParcelas, pSequenciaParcela, pDataDebito,
-       pValorParcela, pValorTaxaServico, pPermiteAlteracao, pReservado: PAnsiChar): LongInt;
+    xTransacaoCartaoDebitoCompleta: function ( pValorTransacao, pNumeroCupomVenda,
+      pNumeroControle, pTipoOperacao, pNumeroParcelas, pSequenciaParcela, pDataDebito,
+      pValorParcela, pValorTaxaServico, pPermiteAlteracao, pReservado: PAnsiChar): LongInt;
+     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+
+    xTransacaoCartaoVoucherCompleta: function (pValorTransacao, pNumeroCupomVenda,
+      pNumeroControle, pReservado: PAnsiChar): LongInt;
+     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+
+    xTransacaoManualPOSCompleta: function(pValorTransacao, pCodigoEstabelecimento,
+      pData, pHora, pNumeroAutorizadora, pNumeroCartao, pTipoOperacao,
+      pNumeroParcelas, pDataPreDatado, pNumeroControle: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
-     xTransacaoCartaoVoucherCompleta: function (pValorTransacao, pNumeroCupomVenda,
-       pNumeroControle, pReservado: PAnsiChar): LongInt;
+    xRegPDVDisplayTerminal: procedure(pCallBackDisplayTerminal: TACBrTEFPayKitCallBackDisplayTerminal);
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-
-      xTransacaoManualPOSCompleta: function(pValorTransacao, pCodigoEstabelecimento,
-        pData, pHora, pNumeroAutorizadora, pNumeroCartao, pTipoOperacao,
-        pNumeroParcelas, pDataPreDatado, pNumeroControle: PAnsiChar): LongInt;
-        {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVDisplayErro: procedure(pCallBackDisplayErro: TACBrTEFPayKitCallBackDisplayErro);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVMensagem: procedure(pCallBackMensagem: TACBrTEFPayKitCallBackMensagem);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVBeep: procedure(pCallBackBeep: TACBrTEFPayKitCallBackBeep);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVSolicitaConfirmacao: procedure(pCallBackSolicitaConfirmacao: TACBrTEFPayKitCallBackSolicitaConfirmacao);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVEntraCartao: procedure(pCallBackEntraCartao: TACBrTEFPayKitCallBackEntraCartao);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVEntraDataValidade: procedure(pCallBackEntraDataValidade: TACBrTEFPayKitCallBackEntraDataValidade);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVEntraData: procedure(pCallBackEntraData: TACBrTEFPayKitCallBackEntraData);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVEntraCodigoSeguranca: procedure(pCallBackEntraCodigoSeguranca: TACBrTEFPayKitCallBackEntraCodigoSeguranca);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVSelecionaOpcao: procedure(pCallBackSelecionaOpcao: TACBrTEFPayKitCallBackSelecionaOpcao);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVEntraValor: procedure(pCallBackEntraValor: TACBrTEFPayKitCallBackEntraValor);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVEntraNumero: procedure(pCallBackEntraNumero: TACBrTEFPayKitCallBackEntraNumero);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVOperacaoCancelada: procedure(pCallBackOperacaoCancelada: TACBrTEFPayKitCallBackOperacaoCancelada);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVSetaOperacaoCancelada: procedure(pCallBackSetaOperacaoCancelada: TACBrTEFPayKitCallBackSetaOperacaoCancelada);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVProcessaMensagens: procedure(pCallBackProcessaMensagens: TACBrTEFPayKitCallBackProcessaMensagens);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVEntraString: procedure(pCallBackEntraString: TACBrTEFPayKitCallBackEntraString);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVConsultaAVS: procedure(pCallBackConsultaAVS: TACBrTEFPayKitCallBackConsultaAVS);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVMensagemAdicional: procedure(pCallBackMensagemAdicional: TACBrTEFPayKitCallBackMensagemAdicional);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVImagemAdicional: procedure(pCallBackImagemAdicional: TACBrTEFPayKitCallBackImagemAdicional);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVEntraCodigoBarras: procedure(pCallBackEntraCodigoBarras: TACBrTEFPayKitCallBackEntraCodigoBarras);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVEntraCodigoBarrasLido: procedure(pCallBackEntraCodigoBarrasLido: TACBrTEFPayKitCallBackEntraCodigoBarrasLido);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVMensagemAlerta: procedure(pCallBackMensagemAlerta: TACBrTEFPayKitCallBackMensagemAlerta);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVPreviewComprovante: procedure(pCallBackPreviewComprovante: TACBrTEFPayKitCallBackPreviewComprovante);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVSelecionaPlanos: procedure(pCallBackSelecionaPlanos: TACBrTEFPayKitCallBackSelecionaPlanos);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVSelecionaPlanosEx: procedure(pCallBackSelecionaPlanosEx: TACBrTEFPayKitCallBackSelecionaPlanosEx);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVEntraValorEspecial: procedure(pCallBackEntraValorEspecial: TACBrTEFPayKitCallBackEntraValorEspecial);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xRegPDVComandos: procedure(pCallBackComandos: TACBrTEFPayKitCallBackComandos);
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     procedure SetCNPJEstabelecimento(AValue: String);
     procedure SetConfiguracaoIpPortaSsl(AValue: String);
@@ -176,22 +287,21 @@ type
     procedure SetNumeroLoja(AValue: Integer);
     procedure SetNumeroPDV(AValue: Integer);
     procedure SetVersaoAutomacao(AValue: String);
-    procedure SetPathLib(const AValue: String);
-    procedure SetDiretorioTrabalho(AValue: String);
+    procedure SetPathPayKit(AValue: String);
 
   protected
-    function GetLibFullPath: String;
+    function CalcPayKitPath(ASubFolder: String): String;
 
     procedure LoadLibFunctions;
     procedure UnLoadLibFunctions;
     procedure ClearMethodPointers;
+    procedure RegisterCallBackFunctions;
+
     procedure TratarErroPayKit(AErrorCode: LongInt);
 
     procedure DoException(const AErrorMsg: String );
 
     procedure VerificarCarregada;
-
-    procedure VerificarDiretorioDeTrabalho;
     procedure VerificarEAjustarConf;
 
     procedure IdentificacaoAutomacaoComercial;
@@ -204,8 +314,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property PathLib: String read fPathLib write SetPathLib;
-    property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
+    property PathPayKit: String read fPathPayKit write SetPathPayKit;
 
     property Carregada: Boolean read fCarregada;
     property Inicializada: Boolean read fInicializada write SetInicializada;
@@ -222,6 +331,11 @@ type
     procedure InicializaDPOS(Forcar: Boolean = False);
     procedure FinalizaDPOS(Forcar: Boolean = False);
 
+    function TransacaoEspecial(iCodigoTransacao: LongInt; var Dados: String): LongInt;
+    procedure ExibirMensagemPinPad(const MsgPinPad: String; Tempo: Integer);
+    function ListaArquivosMultimidia: String;
+    function LeIdentificacaoPinPad: String;
+
     property NomeAutomacao: String read fNomeAutomacao write SetNomeAutomacao;
     property VersaoAutomacao: String read fVersaoAutomacao write SetVersaoAutomacao;
     property ModoDesfazimento: Byte read fModoDesfazimento write SetModoDesfazimento default 1;  // 0 - Automático, 1 - Explícito
@@ -235,6 +349,66 @@ type
     property URLCertificado: String read fURLCertificado write SetURLCertificado;
   end;
 
+  function GetTEFPayKitAPI: TACBrTEFPayKitAPI;
+
+  procedure CallBackDisplayTerminal(pMensagem: PAnsiChar);
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  procedure CallBackDisplayErro(pMensagem: PAnsiChar);
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  procedure CallBackMensagem(pMensagem: PAnsiChar);
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  procedure CallBackBeep;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackSolicitaConfirmacao(pMensagem: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackEntraCartao(pLabel, pCartao: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackEntraDataValidade(pLabel, pDataValidade: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackEntraData(pLabel, pDataValidade: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackEntraCodigoSeguranca(pLabel, pEntraCodigoSeguranca: PAnsiChar; iTamanhoMax: LongInt): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackSelecionaOpcao(pLabel, pOpcoes: PAnsiChar; iOpcaoSelecionada: LongInt): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackEntraValor(pLabel, pValor, pValorMinimo, pValorMaximo: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackEntraNumero(pLabel, pNumero, pNumeroMinimo, pNumeroMaximo: PAnsiChar; iMinimoDigitos, iMaximoDigitos, iDigitosExatos: LongInt): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackOperacaoCancelada: LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackSetaOperacaoCancelada(bCancelada: Boolean): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  procedure CallBackProcessaMensagens;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackEntraString(pLabel, pString, pTamanhoMaximo: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackConsultaAVS(cEndereco, cNumero, cApto, cBloco, cCEP, cBairro, cCPF: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackMensagemAdicional(pMensagemAdicional: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackImagemAdicional(iIndiceImagem: LongInt): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackEntraCodigoBarras(pLabel, pCampo: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackEntraCodigoBarrasLido(pLabel, pCampo: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  procedure CallBackMensagemAlerta(pMensagemAlerta: PAnsiChar);
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  procedure CallBackPreviewComprovante(cComprovante: PAnsiChar);
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackSelecionaPlanos(iCodigoRede, iCodigoTransacao, iTipoFinanciamento, iMaximoParcelas: Longint; pValorMinimoParcela: PAnsiChar; iMaxDiasPreDatado: LongInt; pNumeroParcelas, pValorTransacao, pValorParcela, pValorEntrada, pData: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackSelecionaPlanosEx(pSolicitacao, pRetorno: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackEntraValorEspecial(pLabel, pValor, pParametros: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+  function CallBackComandos(pParametrosEntrada, pDadosRetorno: PAnsiChar): LongInt;
+    {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+
+
+var
+  vTEFPayKit: TACBrTEFPayKitAPI;
 
 implementation
 
@@ -243,14 +417,172 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.FilesIO;
 
+function GetTEFPayKitAPI: TACBrTEFPayKitAPI;
+begin
+  if not Assigned(vTEFPayKit) then
+    vTEFPayKit := TACBrTEFPayKitAPI.Create;
+
+  Result := vTEFPayKit;
+end;
+
+procedure CallBackDisplayTerminal(pMensagem: PAnsiChar); stdcall;
+begin
+
+end;
+
+procedure CallBackDisplayErro(pMensagem: PAnsiChar); stdcall;
+begin
+
+end;
+
+procedure CallBackMensagem(pMensagem: PAnsiChar); stdcall;
+begin
+
+end;
+
+procedure CallBackBeep; stdcall;
+begin
+
+end;
+
+function CallBackSolicitaConfirmacao(pMensagem: PAnsiChar): LongInt; stdcall;
+begin
+
+end;
+
+function CallBackEntraCartao(pLabel, pCartao: PAnsiChar): LongInt; stdcall;
+begin
+
+end;
+
+function CallBackEntraDataValidade(pLabel, pDataValidade: PAnsiChar): LongInt;
+  stdcall;
+begin
+
+end;
+
+function CallBackEntraData(pLabel, pDataValidade: PAnsiChar): LongInt; stdcall;
+begin
+
+end;
+
+function CallBackEntraCodigoSeguranca(pLabel, pEntraCodigoSeguranca: PAnsiChar;
+  iTamanhoMax: LongInt): LongInt; stdcall;
+begin
+
+end;
+
+function CallBackSelecionaOpcao(pLabel, pOpcoes: PAnsiChar;
+  iOpcaoSelecionada: LongInt): LongInt; stdcall;
+begin
+
+end;
+
+function CallBackEntraValor(pLabel, pValor, pValorMinimo,
+  pValorMaximo: PAnsiChar): LongInt; stdcall;
+begin
+
+end;
+
+function CallBackEntraNumero(pLabel, pNumero, pNumeroMinimo,
+  pNumeroMaximo: PAnsiChar; iMinimoDigitos, iMaximoDigitos,
+  iDigitosExatos: LongInt): LongInt; stdcall;
+begin
+
+end;
+
+function CallBackOperacaoCancelada: LongInt; stdcall;
+begin
+
+end;
+
+function CallBackSetaOperacaoCancelada(bCancelada: Boolean): LongInt; stdcall;
+begin
+
+end;
+
+procedure CallBackProcessaMensagens; stdcall;
+begin
+
+end;
+
+function CallBackEntraString(pLabel, pString, pTamanhoMaximo: PAnsiChar
+  ): LongInt; stdcall;
+begin
+
+end;
+
+function CallBackConsultaAVS(cEndereco, cNumero, cApto, cBloco, cCEP, cBairro,
+  cCPF: PAnsiChar): LongInt; stdcall;
+begin
+
+end;
+
+function CallBackMensagemAdicional(pMensagemAdicional: PAnsiChar): LongInt;
+  stdcall;
+begin
+
+end;
+
+function CallBackImagemAdicional(iIndiceImagem: LongInt): LongInt; stdcall;
+begin
+
+end;
+
+function CallBackEntraCodigoBarras(pLabel, pCampo: PAnsiChar): LongInt; stdcall;
+begin
+
+end;
+
+function CallBackEntraCodigoBarrasLido(pLabel, pCampo: PAnsiChar): LongInt;
+  stdcall;
+begin
+
+end;
+
+procedure CallBackMensagemAlerta(pMensagemAlerta: PAnsiChar); stdcall;
+begin
+
+end;
+
+procedure CallBackPreviewComprovante(cComprovante: PAnsiChar); stdcall;
+begin
+
+end;
+
+function CallBackSelecionaPlanos(iCodigoRede, iCodigoTransacao,
+  iTipoFinanciamento, iMaximoParcelas: Longint; pValorMinimoParcela: PAnsiChar;
+  iMaxDiasPreDatado: LongInt; pNumeroParcelas, pValorTransacao, pValorParcela,
+  pValorEntrada, pData: PAnsiChar): LongInt; stdcall;
+begin
+
+end;
+
+function CallBackSelecionaPlanosEx(pSolicitacao, pRetorno: PAnsiChar): LongInt;
+  stdcall;
+begin
+
+end;
+
+function CallBackEntraValorEspecial(pLabel, pValor, pParametros: PAnsiChar
+  ): LongInt; stdcall;
+begin
+
+end;
+
+function CallBackComandos(pParametrosEntrada, pDadosRetorno: PAnsiChar
+  ): LongInt; stdcall;
+begin
+
+end;
+
 { TACBrTEFPayKitAPI }
 
 constructor TACBrTEFPayKitAPI.Create;
 begin
   inherited;
   fCarregada := False;
-  fDiretorioTrabalho := '';
-  fPathLib := '';
+  fPathPayKit := '';
   fEmTransacao := False;
   fInicializada := False;
 
@@ -272,9 +604,9 @@ begin
 
   GravarLog('TACBrTEFPayKitAPI.Inicializar');
 
-  VerificarDiretorioDeTrabalho;
   VerificarEAjustarConf;
   LoadLibFunctions;
+  RegisterCallBackFunctions;
 
   IdentificacaoAutomacaoComercial;
   ConfiguraModoDesfazimento;
@@ -336,24 +668,30 @@ var
   ini: TMemIniFile;
   datamov: TDateTime;
   fechado: Boolean;
+  p, f: String;
 begin
   GravarLog('TACBrTEFPayKitAPI.InicializaDPOS');
+  p := CalcPayKitPath(CPayKitDirBin);
+  f := p + CPayKitConf;
+  if not FileExists(f) then
+    DoException(Format(sErrArqPayKitNaoEncontrado, [CPayKitConf, p]));
+
   datamov := 0;
   fechado := False;
-  ini := TMemIniFile.Create(DiretorioTrabalho + CPayKitCont);
+  ini := TMemIniFile.Create(f);
   try
     if not Forcar then
     begin
-      datamov := ini.ReadDateTime('Movimento','Data', 0);
-      fechado := ini.ReadBool('Movimento','Fechado', False);
+      datamov := ini.ReadDateTime(CSecMovimentoACBr, 'Data', 0);
+      fechado := ini.ReadBool(CSecMovimentoACBr, 'Fechado', False);
     end;
 
     if (datamov = Date) then
     begin
       if fechado then
-        GravarLog('  Movimento já fechado')
+        GravarLog('  Movimento estava fechado')
       else
-        GravarLog('  Movimento já aberto');
+        GravarLog('  Movimento estava aberto');
 
       Exit;
     end;
@@ -363,8 +701,8 @@ begin
     GravarLog('  ret: '+IntToStr(iRet));
     TratarErroPayKit(iRet);
 
-    ini.WriteDateTime('Movimento','Data', Date);
-    ini.WriteBool('Movimento','Fechado', False);
+    ini.WriteDateTime(CSecMovimentoACBr, 'Data', Date);
+    ini.WriteBool(CSecMovimentoACBr, 'Fechado', False);
   finally
     ini.Free;
   end;
@@ -376,21 +714,27 @@ var
   ini: TMemIniFile;
   fechado: Boolean;
   datamov: TDateTime;
+  p, f: String;
 begin
   GravarLog('TACBrTEFPayKitAPI.InicializaDPOS');
+  p := CalcPayKitPath(CPayKitDirBin);
+  f := p + CPayKitConf;
+  if not FileExists(f) then
+    DoException(Format(sErrArqPayKitNaoEncontrado, [CPayKitConf, p]));
+
   fechado := False;
   datamov := 0;
-  ini := TMemIniFile.Create(DiretorioTrabalho + CPayKitCont);
+  ini := TMemIniFile.Create(f);
   try
     if not Forcar then
     begin
-      datamov := ini.ReadDateTime('Movimento','Data', 0);
-      fechado := ini.ReadBool('Movimento','Fechado', False);
+      datamov := ini.ReadDateTime(CSecMovimentoACBr, 'Data', 0);
+      fechado := ini.ReadBool(CSecMovimentoACBr, 'Fechado', False);
     end;
 
     if fechado and (datamov = Date) then
     begin
-      GravarLog('  Movimento já fechado');
+      GravarLog('  Movimento estava fechado');
       Exit;
     end;
 
@@ -399,11 +743,62 @@ begin
     GravarLog('  ret: '+IntToStr(iRet));
     TratarErroPayKit(iRet);
 
-    ini.WriteDateTime('Movimento','Data', Date);
-    ini.WriteBool('Movimento','Fechado', True);
+    ini.WriteDateTime(CSecMovimentoACBr, 'Data', Date);
+    ini.WriteBool(CSecMovimentoACBr, 'Fechado', True);
   finally
     ini.Free;
   end;
+end;
+
+function TACBrTEFPayKitAPI.TransacaoEspecial(iCodigoTransacao: LongInt;
+  var Dados: String): LongInt;
+var
+  pDados: AnsiString;
+  p: PAnsiChar;
+begin
+  GravarLog('TransacaoEspecial( '+IntToStr(iCodigoTransacao)+', '+Dados+' )');
+  pDados := PadRight(Dados, 2048);
+  p := PAnsiChar(pDados);
+  Result := xTransacaoEspecial(iCodigoTransacao, p);
+  Dados := String(pDados);
+  GravarLog('  ret: '+IntToStr(Result)+', Dados: '+Dados);
+end;
+
+procedure TACBrTEFPayKitAPI.ExibirMensagemPinPad(const MsgPinPad: String;
+  Tempo: Integer);
+var
+  iRet: LongInt;
+  Dados: String;
+begin
+  Dados := PadRight(MsgPinPad, 32) + Format('%.6d',[Tempo]);
+  iRet := TransacaoEspecial(106, Dados);
+  TratarErroPayKit(iRet);
+end;
+
+function TACBrTEFPayKitAPI.ListaArquivosMultimidia: String;
+var
+  iRet: LongInt;
+begin
+  Result := '';
+  iRet := TransacaoEspecial(126, Result);
+  TratarErroPayKit(iRet);
+end;
+
+function TACBrTEFPayKitAPI.LeIdentificacaoPinPad: String;
+var
+  iRet: LongInt;
+  pDados: PAnsiChar;
+begin
+  pDados := AllocMem(110);
+  try
+    GravarLog('LeIdentificacaoPinPad');
+    iRet := xLeIdentificacaoPinPad(pDados);
+    Result := String(pDados);
+    GravarLog('  ret: '+IntToStr(iRet)+', Dados: '+Result);
+  finally
+    Freemem(pDados);
+  end;
+  TratarErroPayKit(iRet);
 end;
 
 procedure TACBrTEFPayKitAPI.IdentificacaoAutomacaoComercial;
@@ -412,7 +807,7 @@ var
   pNomeAutomacao, pVersaoAutomacao, pReservado: AnsiString;
 begin
   pNomeAutomacao := PadRight(fNomeAutomacao, 20);
-  pVersaoAutomacao := PadRight(fNomeAutomacao, 20);
+  pVersaoAutomacao := PadRight(fVersaoAutomacao, 20);
   pReservado := PadRight('010', 256);   // O segundo byte informa se a automação está integrada com QR Code ('1' se sim, '0' se não)
   GravarLog('IdentificacaoAutomacaoComercial( '+pNomeAutomacao+', '+pVersaoAutomacao+', '+pReservado+ ')');
   iRet := xIdentificacaoAutomacaoComercial(PAnsiChar(pNomeAutomacao), PAnsiChar(pVersaoAutomacao), PAnsiChar(pReservado));
@@ -477,7 +872,7 @@ begin
   if (pURL = '') then
     pURL := CPayKitURLCertificado;
 
-  pPathCertificado := ExtractFilePath(GetLibFullPath);
+  pPathCertificado := PathWithoutDelim(CalcPayKitPath(CPayKitDirBin));
 
   GravarLog('BuscaCertificado( '+pURL+', '+pPathCertificado+' )');
   iRet := xBuscaCertificado(PAnsiChar(pURL), PAnsiChar(pPathCertificado));
@@ -576,50 +971,67 @@ begin
   fVersaoAutomacao := LeftStr(AValue, 20);
 end;
 
-procedure TACBrTEFPayKitAPI.SetPathLib(const AValue: String);
-begin
-  if (fPathLib = AValue) then
-    Exit;
-
-  GravarLog('TACBrTEFPayKitAPI.SetPathLib( '+AValue+' )');
-
-  if fInicializada then
-    DoException(sErrLibJaInicializada);
-
-  fPathLib := PathWithDelim(ExtractFilePath(AValue));
-end;
-
-procedure TACBrTEFPayKitAPI.SetDiretorioTrabalho(AValue: String);
-begin
-  if (fDiretorioTrabalho = AValue) then
-    Exit;
-
-  GravarLog('TACBrTEFPayKitAPI.SetDiretorioTrabalho( '+AValue+' )');
-
-  if fInicializada then
-    DoException(sErrLibJaInicializada);
-
-  fDiretorioTrabalho := PathWithDelim(ExtractFilePath(AValue));
-end;
-
-function TACBrTEFPayKitAPI.GetLibFullPath: String;
+procedure TACBrTEFPayKitAPI.SetPathPayKit(AValue: String);
 var
-  p, f: String;
+  p: String;
 begin
-  if (PathLib <> '') then
+  if (fPathPayKit = AValue) then
+    Exit;
+
+  GravarLog('TACBrTEFPayKitAPI.SetPathPayKit( '+AValue+' )');
+
+  if fInicializada then
+    DoException(sErrLibJaInicializada);
+
+  if (AValue = '') then
   begin
-    GravarLog('PathLib = '+PathLib);
-    p := PathLib;
-  end
-  else
+    fPathPayKit := '';
+    Exit;
+  end;
+
+  p := PathWithDelim(ExtractFilePath(AValue));
+  if FileExists(p + CPayKitLib) then  // Informou o diretório Bin... voltando um Path
+    p := copy(p, 1, Length(p)-Length(CPayKitDirBin)-1);
+
+  if not DirectoryExists(p + CPayKitDirBin) then
+    DoException(Format(sErrDirPayKitInvalido, [CPayKitDirBin, p]));
+
+  fPathPayKit := p;
+end;
+
+function TACBrTEFPayKitAPI.CalcPayKitPath(ASubFolder: String): String;
+var
+  p: String;
+begin
+  p := PathPayKit;
+  if (p = '') then
     p := ApplicationPath;
 
-  Result := p + CPayKitLib;
-  if not FileExists(Result) then
-  begin
-    f := p + 'Bin' + PathDelim + CPayKitLib;
-    if FileExists(f) then
-      Result := f;
+  if not DirectoryExists(p + ASubFolder) then
+    DoException(Format(sErrDirPayKitInvalido, [ASubFolder, p]));
+
+  Result := p + ASubFolder + PathDelim;
+end;
+
+procedure TACBrTEFPayKitAPI.VerificarEAjustarConf;
+var
+  p, f: String;
+  Ini: TMemIniFile;
+begin
+  p := CalcPayKitPath(CPayKitDirBin);
+  f := p + CPayKitConf;
+  if not FileExists(f) then
+    DoException(Format(sErrArqPayKitNaoEncontrado, [CPayKitConf, p]));
+
+  Ini := TMemIniFile.Create(f);
+  try
+    Ini.WriteString('CONFIG', 'DIRETORIOBASE', PathWithoutDelim(p) );
+    Ini.WriteString('CONFIG', 'QTDIRETORIOBASE', p + 'QtApplication' );
+    Ini.WriteString('DIRETORIOS', 'CUPONS', PathWithoutDelim(CalcPayKitPath('Cupons')) );
+    Ini.WriteString('DIRETORIOS', 'INTERNO', PathWithoutDelim(CalcPayKitPath('Interno')) );
+    Ini.UpdateFile;
+  finally
+    Ini.Free;
   end;
 end;
 
@@ -643,12 +1055,16 @@ procedure TACBrTEFPayKitAPI.LoadLibFunctions;
   end;
 
 var
-  sLibName: string;
+  sLibName, p: string;
 begin
   if fCarregada then
     Exit;
 
-  sLibName := GetLibFullPath;
+  p := CalcPayKitPath(CPayKitDirBin);
+  if not FileExists(p + CPayKitLib) then
+    DoException(Format(sErrArqPayKitNaoEncontrado, [CPayKitLib, p]));
+
+  sLibName := p + CPayKitLib;
   GravarLog('TACBrTEFPayKitAPI.LoadLibFunctions - '+sLibName);
 
   PayKitFunctionDetect(sLibName, 'TransacaoCheque', @xTransacaoCheque);
@@ -675,10 +1091,41 @@ begin
   PayKitFunctionDetect(sLibName, 'ConfiguraEmpresaLojaPDV', @xConfiguraEmpresaLojaPDV);
   PayKitFunctionDetect(sLibName, 'ConfiguraComunicacaoDTEF', @xConfiguraComunicacaoDTEF);
   PayKitFunctionDetect(sLibName, 'BuscaCertificado', @xBuscaCertificado);
+  PayKitFunctionDetect(sLibName, 'TransacaoEspecial', @xTransacaoEspecial);
+  PayKitFunctionDetect(sLibName, 'LeIdentificacaoPinPad', @xLeIdentificacaoPinPad);
   PayKitFunctionDetect(sLibName, 'TransacaoCartaoCreditoCompleta', @xTransacaoCartaoCreditoCompleta);
   PayKitFunctionDetect(sLibName, 'TransacaoCartaoDebitoCompleta', @xTransacaoCartaoDebitoCompleta);
   PayKitFunctionDetect(sLibName, 'TransacaoCartaoVoucherCompleta', @xTransacaoCartaoVoucherCompleta);
   PayKitFunctionDetect(sLibName, 'TransacaoManualPOSCompleta', @xTransacaoManualPOSCompleta);
+
+  PayKitFunctionDetect(sLibName, 'RegPDVDisplayTerminal', @xRegPDVDisplayTerminal);
+  PayKitFunctionDetect(sLibName, 'RegPDVDisplayErro', @xRegPDVDisplayErro);
+  PayKitFunctionDetect(sLibName, 'RegPDVMensagem', @xRegPDVMensagem);
+  PayKitFunctionDetect(sLibName, 'RegPDVBeep', @xRegPDVBeep);
+  PayKitFunctionDetect(sLibName, 'RegPDVSolicitaConfirmacao', @xRegPDVSolicitaConfirmacao);
+  PayKitFunctionDetect(sLibName, 'RegPDVEntraCartao', @xRegPDVEntraCartao);
+  PayKitFunctionDetect(sLibName, 'RegPDVEntraDataValidade', @xRegPDVEntraDataValidade);
+  PayKitFunctionDetect(sLibName, 'RegPDVEntraData', @xRegPDVEntraData);
+  PayKitFunctionDetect(sLibName, 'RegPDVEntraCodigoSeguranca', @xRegPDVEntraCodigoSeguranca);
+  PayKitFunctionDetect(sLibName, 'RegPDVSelecionaOpcao', @xRegPDVSelecionaOpcao);
+  PayKitFunctionDetect(sLibName, 'RegPDVEntraValor', @xRegPDVEntraValor);
+  PayKitFunctionDetect(sLibName, 'RegPDVEntraNumero', @xRegPDVEntraNumero);
+  PayKitFunctionDetect(sLibName, 'RegPDVOperacaoCancelada', @xRegPDVOperacaoCancelada);
+  PayKitFunctionDetect(sLibName, 'RegPDVSetaOperacaoCancelada', @xRegPDVSetaOperacaoCancelada);
+  PayKitFunctionDetect(sLibName, 'RegPDVProcessaMensagens', @xRegPDVProcessaMensagens);
+  PayKitFunctionDetect(sLibName, 'RegPDVEntraString', @xRegPDVEntraString);
+  PayKitFunctionDetect(sLibName, 'RegPDVConsultaAVS', @xRegPDVConsultaAVS);
+  PayKitFunctionDetect(sLibName, 'RegPDVMensagemAdicional', @xRegPDVMensagemAdicional);
+  PayKitFunctionDetect(sLibName, 'RegPDVImagemAdicional', @xRegPDVImagemAdicional);
+  PayKitFunctionDetect(sLibName, 'RegPDVEntraCodigoBarras', @xRegPDVEntraCodigoBarras);
+  PayKitFunctionDetect(sLibName, 'RegPDVEntraCodigoBarrasLido', @xRegPDVEntraCodigoBarrasLido);
+  PayKitFunctionDetect(sLibName, 'RegPDVMensagemAlerta', @xRegPDVMensagemAlerta);
+  PayKitFunctionDetect(sLibName, 'RegPDVPreviewComprovante', @xRegPDVPreviewComprovante);
+  PayKitFunctionDetect(sLibName, 'RegPDVSelecionaPlanos', @xRegPDVSelecionaPlanos);
+  PayKitFunctionDetect(sLibName, 'RegPDVSelecionaPlanosEx', @xRegPDVSelecionaPlanosEx);
+  PayKitFunctionDetect(sLibName, 'RegPDVEntraValorEspecial', @xRegPDVEntraValorEspecial);
+  PayKitFunctionDetect(sLibName, 'RegPDVComandos', @xRegPDVComandos);
+
   fCarregada := True;
 end;
 
@@ -691,7 +1138,7 @@ begin
 
   GravarLog('TACBrTEFPayKitAPI.UnLoadLibFunctions');
 
-  sLibName := GetLibFullPath;
+  sLibName := CalcPayKitPath(CPayKitDirBin) + CPayKitLib;
   UnLoadLibrary( sLibName );
   fCarregada := False;
   ClearMethodPointers;
@@ -723,10 +1170,71 @@ begin
   xConfiguraEmpresaLojaPDV := Nil;
   xConfiguraComunicacaoDTEF := Nil;
   xBuscaCertificado := Nil;
+  xTransacaoEspecial := Nil;
+  xLeIdentificacaoPinPad := Nil;
   xTransacaoCartaoCreditoCompleta := Nil;
   xTransacaoCartaoDebitoCompleta := Nil;
   xTransacaoCartaoVoucherCompleta := Nil;
   xTransacaoManualPOSCompleta := Nil;
+
+  xRegPDVDisplayTerminal := Nil;
+  xRegPDVDisplayErro := Nil;
+  xRegPDVMensagem := Nil;
+  xRegPDVBeep := Nil;
+  xRegPDVSolicitaConfirmacao := Nil;
+  xRegPDVEntraCartao := Nil;
+  xRegPDVEntraDataValidade := Nil;
+  xRegPDVEntraData := Nil;
+  xRegPDVEntraCodigoSeguranca := Nil;
+  xRegPDVSelecionaOpcao := Nil;
+  xRegPDVEntraValor := Nil;
+  xRegPDVEntraNumero := Nil;
+  xRegPDVOperacaoCancelada := Nil;
+  xRegPDVSetaOperacaoCancelada := Nil;
+  xRegPDVProcessaMensagens := Nil;
+  xRegPDVEntraString := Nil;
+  xRegPDVConsultaAVS := Nil;
+  xRegPDVMensagemAdicional := Nil;
+  xRegPDVImagemAdicional := Nil;
+  xRegPDVEntraCodigoBarras := Nil;
+  xRegPDVEntraCodigoBarrasLido := Nil;
+  xRegPDVMensagemAlerta := Nil;
+  xRegPDVPreviewComprovante := Nil;
+  xRegPDVSelecionaPlanos := Nil;
+  xRegPDVSelecionaPlanosEx := Nil;
+  xRegPDVEntraValorEspecial := Nil;
+  xRegPDVComandos := Nil;
+end;
+
+procedure TACBrTEFPayKitAPI.RegisterCallBackFunctions;
+begin
+  xRegPDVDisplayTerminal(CallBackDisplayTerminal);
+  xRegPDVDisplayErro(CallBackDisplayErro);
+  xRegPDVMensagem(CallBackMensagem);
+  xRegPDVBeep(CallBackBeep);
+  xRegPDVSolicitaConfirmacao(CallBackSolicitaConfirmacao);
+  xRegPDVEntraCartao(CallBackEntraCartao);
+  xRegPDVEntraDataValidade(CallBackEntraDataValidade);
+  xRegPDVEntraData(CallBackEntraData);
+  xRegPDVEntraCodigoSeguranca(CallBackEntraCodigoSeguranca);
+  xRegPDVSelecionaOpcao(CallBackSelecionaOpcao);
+  xRegPDVEntraValor(CallBackEntraValor);
+  xRegPDVEntraNumero(CallBackEntraNumero);
+  xRegPDVOperacaoCancelada(CallBackOperacaoCancelada);
+  xRegPDVSetaOperacaoCancelada(CallBackSetaOperacaoCancelada);
+  xRegPDVProcessaMensagens(CallBackProcessaMensagens);
+  xRegPDVEntraString(CallBackEntraString);
+  xRegPDVConsultaAVS(CallBackConsultaAVS);
+  xRegPDVMensagemAdicional(CallBackMensagemAdicional);
+  xRegPDVImagemAdicional(CallBackImagemAdicional);
+  xRegPDVEntraCodigoBarras(CallBackEntraCodigoBarras);
+  xRegPDVEntraCodigoBarrasLido(CallBackEntraCodigoBarrasLido);
+  xRegPDVMensagemAlerta(CallBackMensagemAlerta);
+  xRegPDVPreviewComprovante(CallBackPreviewComprovante);
+  xRegPDVSelecionaPlanos(CallBackSelecionaPlanos);
+  xRegPDVSelecionaPlanosEx(CallBackSelecionaPlanosEx);
+  xRegPDVEntraValorEspecial(CallBackEntraValorEspecial);
+  xRegPDVComandos(CallBackComandos);
 end;
 
 procedure TACBrTEFPayKitAPI.TratarErroPayKit(AErrorCode: LongInt);
@@ -758,22 +1266,9 @@ begin
     DoException(sErrLibNaoInicializada);
 end;
 
-procedure TACBrTEFPayKitAPI.VerificarDiretorioDeTrabalho;
-begin
-  if (fDiretorioTrabalho = '') then
-    fDiretorioTrabalho := ApplicationPath + 'TEF' + PathDelim + 'PayKit';
-
-  if not DirectoryExists(fDiretorioTrabalho) then
-    ForceDirectories(fDiretorioTrabalho);
-
-  if not DirectoryExists(fDiretorioTrabalho) then
-    DoException(Format(sErrDirTrabalhoInvalido, [fDiretorioTrabalho]));
-end;
-
-procedure TACBrTEFPayKitAPI.VerificarEAjustarConf;
-begin
-
-end;
+finalization
+  if Assigned(vTEFPayKit) then
+    FreeAndNil(vTEFPayKit);
 
 end.
 

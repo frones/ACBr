@@ -41,9 +41,6 @@ uses
   ACBrBase,
   ACBrTEFComum, ACBrTEFAPI, ACBrTEFAPIComum, ACBrTEFPayKitAPI;
 
-const
-  CSUBDIRETORIO_PAYKIT = 'paykit';
-
 type
 
   { TACBrTEFRespPayKit }
@@ -58,11 +55,9 @@ type
 
   TACBrTEFAPIClassPayKit = class(TACBrTEFAPIClass)
   private
-    fDiretorioTrabalho: String;
-    fTEFPayKitAPI: TACBrTEFPayKitAPI;
+    function GetTEFPayKitAPI: TACBrTEFPayKitAPI;
 
     procedure QuandoGravarLogAPI(const ALogLine: String; var Tratado: Boolean);
-    procedure SetDiretorioTrabalho(const AValue: String);
 
   protected
     procedure InterpretarRespostaAPI; override;
@@ -103,8 +98,10 @@ type
     procedure ResolverTransacaoPendente(AStatus: TACBrTEFStatusTransacao = tefstsSucessoManual); override;
     procedure AbortarTransacaoEmAndamento; override;
 
-    property TEFPayKitAPI: TACBrTEFPayKitAPI read fTEFPayKitAPI;
-    property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
+    procedure ExibirMensagemPinPad(const MsgPinPad: String); override;
+    procedure ObterListaImagensPinPad(ALista: TStrings); override;
+
+    property TEFPayKitAPI: TACBrTEFPayKitAPI read GetTEFPayKitAPI;
   end;
 
 implementation
@@ -130,58 +127,50 @@ begin
 
   fpTEFRespClass := TACBrTEFRespPayKit;
 
-  fTEFPayKitAPI := TACBrTEFPayKitAPI.Create;
-  fTEFPayKitAPI.OnGravarLog := QuandoGravarLogAPI;
+  with GetTEFPayKitAPI do
+  begin
+    OnGravarLog := QuandoGravarLogAPI;
+  end;
 end;
 
 destructor TACBrTEFAPIClassPayKit.Destroy;
 begin
-  fTEFPayKitAPI.Free;
+  //fTEFPayKitAPI.Free;  // Libera em ACBrTEFPayKitAPI.finalization;
   inherited;
 end;
 
 procedure TACBrTEFAPIClassPayKit.Inicializar;
 var
-  P: Integer;
-  ADir, s: String;
+  s: String;
 begin
   if Inicializado then
     Exit;
 
-  if (fDiretorioTrabalho = '') then
-    ADir := PathWithDelim(fpACBrTEFAPI.DiretorioTrabalho) + CSUBDIRETORIO_PAYKIT + PathDelim
-  else
-    ADir := fDiretorioTrabalho;
+  with GetTEFPayKitAPI do
+  begin
+    PathPayKit := PathDLL;
+    NomeAutomacao := fpACBrTEFAPI.DadosAutomacao.NomeAplicacao;
+    VersaoAutomacao := fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
+    CNPJEstabelecimento := fpACBrTEFAPI.DadosEstabelecimento.CNPJ;
 
-  fTEFPayKitAPI.PathLib := PathDLL;
-  fTEFPayKitAPI.DiretorioTrabalho := ADir;
-  fTEFPayKitAPI.NomeAutomacao := fpACBrTEFAPI.DadosAutomacao.NomeAplicacao;
-  fTEFPayKitAPI.VersaoAutomacao := fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
-  fTEFPayKitAPI.CNPJEstabelecimento := fpACBrTEFAPI.DadosEstabelecimento.CNPJ;
+    NumeroEmpresa := StrToIntDef(fpACBrTEFAPI.DadosTerminal.CodEmpresa, 0);
+    NumeroLoja := StrToIntDef(fpACBrTEFAPI.DadosTerminal.CodFilial, 0);
+    NumeroPDV := StrToIntDef(fpACBrTEFAPI.DadosTerminal.CodTerminal, 0);
 
-  fTEFPayKitAPI.NumeroEmpresa := StrToIntDef(fpACBrTEFAPI.DadosTerminal.CodEmpresa, 0);
-  fTEFPayKitAPI.NumeroLoja := StrToIntDef(fpACBrTEFAPI.DadosTerminal.CodFilial, 0);
-  fTEFPayKitAPI.NumeroPDV := StrToIntDef(fpACBrTEFAPI.DadosTerminal.CodTerminal, 0);
+    s := fpACBrTEFAPI.DadosTerminal.EnderecoServidor;
+    if (copy(s, Length(s)-1, 1) <> ':') then  // Informou parâmetro TLS ?
+      s := s + ':1';                    // Se não informou, assume como ligado
+    ConfiguracaoIpPortaSsl := s;
 
-  s := fpACBrTEFAPI.DadosTerminal.EnderecoServidor;
-  if (copy(s, Length(s)-1, 1) <> ':') then  // Informou parâmetro TLS ?
-    s := s + ':1';                    // Se não informou, assume como ligado
-
-  fTEFPayKitAPI.ConfiguracaoIpPortaSsl := s;
-  //fTEFPayKitAPI.MsgPinPad := fpACBrTEFAPI.DadosAutomacao.NomeSoftwareHouse + '|' +
-  //                          fpACBrTEFAPI.DadosAutomacao.NomeAplicacao + ' ' +
-  //                          fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
-  //fTEFPayKitAPI.PortaPinPad := fpACBrTEFAPI.DadosTerminal.PortaPinPad;
-
-  fTEFPayKitAPI.Inicializar;
-  ExibirVersaoPayKit;
+    Inicializar;
+  end;
 
   inherited;
 end;
 
 procedure TACBrTEFAPIClassPayKit.DesInicializar;
 begin
-  fTEFPayKitAPI.DesInicializar;
+  GetTEFPayKitAPI.DesInicializar;
   inherited;
 end;
 
@@ -208,10 +197,15 @@ function TACBrTEFAPIClassPayKit.ExibirVersaoPayKit: Boolean;
 var
   s: String;
 begin
-  s := Trim(fTEFPayKitAPI.VersaoDPOS);
+  s := Trim(GetTEFPayKitAPI.VersaoDPOS);
   Result := (s <> '');
   if Result then
     TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem(s, telaOperador, 0);
+end;
+
+function TACBrTEFAPIClassPayKit.GetTEFPayKitAPI: TACBrTEFPayKitAPI;
+begin
+  Result := ACBrTEFPayKitAPI.GetTEFPayKitAPI;
 end;
 
 procedure TACBrTEFAPIClassPayKit.QuandoGravarLogAPI(const ALogLine: String;
@@ -272,18 +266,29 @@ end;
 
 procedure TACBrTEFAPIClassPayKit.AbortarTransacaoEmAndamento;
 begin
-  //fTEFPayKitAPI.AbortarTransacao;
+  //GetTEFPayKitAPI.AbortarTransacao;
 end;
 
-procedure TACBrTEFAPIClassPayKit.SetDiretorioTrabalho(const AValue: String);
+procedure TACBrTEFAPIClassPayKit.ExibirMensagemPinPad(const MsgPinPad: String);
 begin
-  if fDiretorioTrabalho = AValue then Exit;
+  GetTEFPayKitAPI.ExibirMensagemPinPad(MsgPinPad, 5000);
+end;
 
-  if Inicializado then
-    fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPIComponenteInicializadoException),
-                                     ['TACBrTEFAPIClassPayKit.DiretorioTrabalho']));
-
-  fDiretorioTrabalho := AValue;
+procedure TACBrTEFAPIClassPayKit.ObterListaImagensPinPad(ALista: TStrings);
+var
+  p, l: Integer;
+  s, n: String;
+begin
+  ALista.Clear;
+  s := Trim(GetTEFPayKitAPI.ListaArquivosMultimidia);
+  p := 1;
+  l := Length(s);
+  while p < l do
+  begin
+    n := copy(s, p, 8);
+    ALista.Add(n);
+    Inc(p, 8);
+  end;
 end;
 
 end.

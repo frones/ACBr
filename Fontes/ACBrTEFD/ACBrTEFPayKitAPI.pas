@@ -425,153 +425,257 @@ begin
   Result := vTEFPayKit;
 end;
 
-procedure CallBackDisplayTerminal(pMensagem: PAnsiChar); stdcall;
+procedure CallBackDisplayTerminal(pMensagem: PAnsiChar); {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackDisplayTerminal( '+String(pMensagem)+' )');
+  end;
 end;
 
-procedure CallBackDisplayErro(pMensagem: PAnsiChar); stdcall;
+procedure CallBackDisplayErro(pMensagem: PAnsiChar); {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackDisplayErro( '+String(pMensagem)+' )');
+  end;
 end;
 
-procedure CallBackMensagem(pMensagem: PAnsiChar); stdcall;
+procedure CallBackMensagem(pMensagem: PAnsiChar); {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackMensagem( '+String(pMensagem)+' )');
+  end;
 end;
 
-procedure CallBackBeep; stdcall;
+procedure CallBackBeep; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackBeep');
+  end;
 end;
 
-function CallBackSolicitaConfirmacao(pMensagem: PAnsiChar): LongInt; stdcall;
+function CallBackSolicitaConfirmacao(pMensagem: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackSolicitaConfirmacao( '+String(pMensagem)+' )');
+    { code here }
+    GravarLog('  ret:'+IntToStr(Result))
+  end;
 end;
 
-function CallBackEntraCartao(pLabel, pCartao: PAnsiChar): LongInt; stdcall;
+function CallBackEntraCartao(pLabel, pCartao: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackEntraCartao( '+String(pLabel)+' )');
+    { code here }
+    GravarLog('  ret:'+IntToStr(Result)+', Cartao:'+String(pCartao))
+  end;
 end;
 
-function CallBackEntraDataValidade(pLabel, pDataValidade: PAnsiChar): LongInt;
-  stdcall;
+function CallBackEntraDataValidade(pLabel, pDataValidade: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackEntraDataValidade( '+String(pLabel)+' )');
+    { code here }
+    GravarLog('  ret:'+IntToStr(Result)+', DataValidade:'+String(pDataValidade))
+  end;
 end;
 
-function CallBackEntraData(pLabel, pDataValidade: PAnsiChar): LongInt; stdcall;
+function CallBackEntraData(pLabel, pDataValidade: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackEntraData( '+String(pLabel)+' )');
+    { code here }
+    GravarLog('  ret:'+IntToStr(Result)+', DataValidade:'+String(pDataValidade))
+  end;
 end;
 
-function CallBackEntraCodigoSeguranca(pLabel, pEntraCodigoSeguranca: PAnsiChar;
-  iTamanhoMax: LongInt): LongInt; stdcall;
+function CallBackEntraCodigoSeguranca(pLabel, pEntraCodigoSeguranca: PAnsiChar; iTamanhoMax: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackEntraCodigoSeguranca( '+String(pLabel)+', '+IntToStr(iTamanhoMax)+' )');
+    { code here }
+    GravarLog('  ret:'+IntToStr(Result)+', EntraCodigoSeguranca:'+String(pEntraCodigoSeguranca))
+  end;
 end;
 
-function CallBackSelecionaOpcao(pLabel, pOpcoes: PAnsiChar;
-  iOpcaoSelecionada: LongInt): LongInt; stdcall;
+function CallBackSelecionaOpcao(pLabel, pOpcoes: PAnsiChar; iOpcaoSelecionada: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackSelecionaOpcao( '+String(pLabel)+', '+String(pOpcoes)+' )');
+    { code here }
+    GravarLog('  ret:'+IntToStr(Result)+', OpcaoSelecionada:'+IntToStr(iOpcaoSelecionada))
+  end;
 end;
 
-function CallBackEntraValor(pLabel, pValor, pValorMinimo,
-  pValorMaximo: PAnsiChar): LongInt; stdcall;
+function CallBackEntraValor(pLabel, pValor, pValorMinimo, pValorMaximo: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackEntraValor( '+String(pLabel)+', '+String(pValorMinimo)+', '+String(pValorMaximo)+' )');
+    { code here }
+    GravarLog('  ret:'+IntToStr(Result)+', Valor:'+String(pValor))
+  end;
 end;
 
 function CallBackEntraNumero(pLabel, pNumero, pNumeroMinimo,
   pNumeroMaximo: PAnsiChar; iMinimoDigitos, iMaximoDigitos,
-  iDigitosExatos: LongInt): LongInt; stdcall;
+  iDigitosExatos: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackEntraNumero( '+String(pLabel)+', '+String(pNumeroMinimo)+', '+String(pNumeroMaximo)+
+              ', '+IntToStr(iMinimoDigitos)+', '+IntToStr(iMaximoDigitos)+', '+IntToStr(iDigitosExatos)+' )');
+    { code here }
+    GravarLog('  ret:'+IntToStr(Result)+', Numero:'+String(pNumero))
+  end;
 end;
 
-function CallBackOperacaoCancelada: LongInt; stdcall;
+function CallBackOperacaoCancelada: LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackOperacaoCancelada');
+    { code here }
+    GravarLog('  ret:'+IntToStr(Result))
+  end;
 end;
 
-function CallBackSetaOperacaoCancelada(bCancelada: Boolean): LongInt; stdcall;
+function CallBackSetaOperacaoCancelada(bCancelada: Boolean): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackSetaOperacaoCancelada( '+BoolToStr(bCancelada, True)+' )');
+    { code here }
+    GravarLog('  ret:'+IntToStr(Result))
+  end;
 end;
 
-procedure CallBackProcessaMensagens; stdcall;
+procedure CallBackProcessaMensagens; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackProcessaMensagens');
+  end;
 end;
 
-function CallBackEntraString(pLabel, pString, pTamanhoMaximo: PAnsiChar
-  ): LongInt; stdcall;
+function CallBackEntraString(pLabel, pString, pTamanhoMaximo: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackEntraString( '+String(pLabel)+', '+String(pTamanhoMaximo)+' )');
+    { code here }
+    GravarLog('  ret:'+IntToStr(Result)+', String:'+String(pString))
+  end;
 end;
 
 function CallBackConsultaAVS(cEndereco, cNumero, cApto, cBloco, cCEP, cBairro,
-  cCPF: PAnsiChar): LongInt; stdcall;
+  cCPF: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
 
 end;
 
-function CallBackMensagemAdicional(pMensagemAdicional: PAnsiChar): LongInt;
-  stdcall;
+function CallBackMensagemAdicional(pMensagemAdicional: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackMensagemAdicional( '+String(pMensagemAdicional)+' )');
+    { code here }
+    GravarLog('  ret:'+IntToStr(Result))
+  end;
 end;
 
-function CallBackImagemAdicional(iIndiceImagem: LongInt): LongInt; stdcall;
+function CallBackImagemAdicional(iIndiceImagem: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackImagemAdicional( '+IntToStr(iIndiceImagem)+' )');
+    { code here }
+    GravarLog('  ret:'+IntToStr(Result))
+  end;
 end;
 
-function CallBackEntraCodigoBarras(pLabel, pCampo: PAnsiChar): LongInt; stdcall;
+function CallBackEntraCodigoBarras(pLabel, pCampo: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackEntraCodigoBarras( '+String(pLabel)+' )');
+    { code here }
+    GravarLog('  ret:'+IntToStr(Result)+', Campo:'+String(pCampo))
+  end;
 end;
 
-function CallBackEntraCodigoBarrasLido(pLabel, pCampo: PAnsiChar): LongInt;
-  stdcall;
+function CallBackEntraCodigoBarrasLido(pLabel, pCampo: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackEntraCodigoBarrasLido( '+String(pLabel)+' )');
+    { code here }
+    GravarLog('  ret:'+IntToStr(Result)+', Campo:'+String(pCampo))
+  end;
 end;
 
-procedure CallBackMensagemAlerta(pMensagemAlerta: PAnsiChar); stdcall;
+procedure CallBackMensagemAlerta(pMensagemAlerta: PAnsiChar); {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackMensagemAlerta( '+String(pMensagemAlerta)+' )');
+    { code here }
+  end;
 end;
 
-procedure CallBackPreviewComprovante(cComprovante: PAnsiChar); stdcall;
+procedure CallBackPreviewComprovante(cComprovante: PAnsiChar); {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackPreviewComprovante( '+String(cComprovante)+' )');
+    { code here }
+  end;
 end;
 
 function CallBackSelecionaPlanos(iCodigoRede, iCodigoTransacao,
   iTipoFinanciamento, iMaximoParcelas: Longint; pValorMinimoParcela: PAnsiChar;
   iMaxDiasPreDatado: LongInt; pNumeroParcelas, pValorTransacao, pValorParcela,
-  pValorEntrada, pData: PAnsiChar): LongInt; stdcall;
+  pValorEntrada, pData: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
 
 end;
 
-function CallBackSelecionaPlanosEx(pSolicitacao, pRetorno: PAnsiChar): LongInt;
-  stdcall;
+function CallBackSelecionaPlanosEx(pSolicitacao, pRetorno: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
 
 end;
 
-function CallBackEntraValorEspecial(pLabel, pValor, pParametros: PAnsiChar
-  ): LongInt; stdcall;
+function CallBackEntraValorEspecial(pLabel, pValor, pParametros: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
 
 end;
 
-function CallBackComandos(pParametrosEntrada, pDadosRetorno: PAnsiChar
-  ): LongInt; stdcall;
+function CallBackComandos(pParametrosEntrada, pDadosRetorno: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
 
 end;

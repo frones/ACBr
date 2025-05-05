@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/05/2025
+-- PadraoNacional.LerXml --
+[*] #TK-7007: Ajuste no calculo das Retenções Federais que é diferente se o tipo
+    de retenção do PIS/COFINS não for retido.
+  Por: mkonat
 -- ACBrNFSeXServicos --
 [+] #TK-6996: Incluída a cidade de Angulo/PR, o provedor é EloTech.
   Por: Paulo Aquino

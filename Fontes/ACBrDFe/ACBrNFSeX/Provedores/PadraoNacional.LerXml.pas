@@ -933,7 +933,10 @@ begin
     begin
       BaseCalculo := ValorServicos - ValorDeducoes - DescontoIncondicionado;
 
-      RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+      if tribFed.tpRetPisCofins = trpcNaoRetido then
+         RetencoesFederais := ValorInss + ValorIr + ValorCsll
+      else
+         RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
 
       ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
                  ValorIssRetido - DescontoIncondicionado - DescontoCondicionado;

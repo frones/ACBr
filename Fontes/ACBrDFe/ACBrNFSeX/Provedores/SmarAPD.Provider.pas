@@ -737,6 +737,13 @@ begin
   Result := inherited TratarXmlRetornado(aXML);
 
   Result := RemoverCaracteresDesnecessarios(Result);
+
+  if Pos('tag &lt;', Result) > 0 then
+  begin
+    Result := StringReplace(Result, 'tag &lt;', 'tag [', [rfReplaceAll]);
+    Result := StringReplace(Result, '&gt;', ']', [rfReplaceAll]);
+  end;
+
   Result := ParseText(Result);
   Result := RemoverDeclaracaoXML(Result);
   Result := RemoverIdentacao(Result);

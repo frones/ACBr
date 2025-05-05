@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/05/2025
+-- ACBrNFSeXConfiguracoes --
+[*] #TK-6979: Ajuste visando corrigir erro de inicialização da Lib quando definida cidade adicionada manualmente em ACBrNFSeXServicos apontado na configuração IniServicos.
+  Por: Diego Folieni
 -- PadraoNacional.LerXml --
 [*] #TK-7007: Ajuste no calculo das Retenções Federais que é diferente se o tipo
     de retenção do PIS/COFINS não for retido.

@@ -378,10 +378,10 @@ end;
 
 procedure TConfiguracoesNFSe.Assign(DeConfiguracoesNFSe: TConfiguracoesNFSe);
 begin
+  Arquivos.Assign(DeConfiguracoesNFSe.Arquivos);
   Geral.Assign(DeConfiguracoesNFSe.Geral);
   WebServices.Assign(DeConfiguracoesNFSe.WebServices);
   Certificados.Assign(DeConfiguracoesNFSe.Certificados);
-  Arquivos.Assign(DeConfiguracoesNFSe.Arquivos);
 end;
 
 function TConfiguracoesNFSe.GetArquivos: TArquivosConfNFSe;

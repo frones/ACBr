@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/05/2025
+-- ACBrNFe.XmlWriter --
+[*] #TK-7008: Ajustes para gerar corretamente a tag cEAN quando o produto não contem o 
+    código de barras.
+   Por: Luiz Alberto da Silva Lope
+
 29/04/2025
 -- Diversos --
 [*] #TK-6835: Ajustes para atender a NT 2025/002 versão 1.01 da Reforma Tributária.

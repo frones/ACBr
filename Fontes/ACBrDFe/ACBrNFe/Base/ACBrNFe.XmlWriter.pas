@@ -1159,9 +1159,9 @@ begin
     NFe.Det[i].Prod.cProd, DSC_CPROD));
 
   // Implementação futura - regra de validação somente em 01/12/2018
-  if (NFe.infNFe.Versao >= 4) and (trim(NFe.Det[i].Prod.cEANTrib) = '') and
+  if (NFe.infNFe.Versao >= 4) and (trim(NFe.Det[i].Prod.cEAN) = '') and
     (CompareDate(NFe.Ide.dEmi, StringToDateTime('01/12/2018')) > 0) then
-    NFe.Det[i].Prod.cEANTrib := SEMGTIN;
+    NFe.Det[i].Prod.cEAN := SEMGTIN;
 
   Result.AppendChild(AddNode(tcStr, 'I03', 'cEAN', 00, 14, 1,
     NFe.Det[i].Prod.cEAN, DSC_CEAN));

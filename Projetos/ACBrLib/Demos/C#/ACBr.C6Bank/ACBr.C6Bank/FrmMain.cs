@@ -357,6 +357,12 @@ namespace ACBr.C6Bank
                 pixcd.Config.NomeRecebedor = txtNomeRecebedor.Text;
                 pixcd.Config.UFRecebedor = txtUFRecebedor.Text;
 
+                //PSP C6Bank
+                pixcd.Config.C6Bank.ChavePIX = txtChavePIXC6Bank.Text;
+                pixcd.Config.C6Bank.ClientID = txtClientIDC6Bank.Text;
+                pixcd.Config.C6Bank.ClientSecret = txtClientSecretC6Bank.Text;
+                pixcd.Config.C6Bank.ArqChavePrivada = txtArquivoChavePrivadaC6Bank.Text;
+                pixcd.Config.C6Bank.ArqCertificado = txtArquivoCertificadoC6Bank.Text;
 
                 Application.DoEvents();
             }
@@ -393,6 +399,13 @@ namespace ACBr.C6Bank
             txtCidadeRecebedor.Text = pixcd.Config.CidadeRecebedor;
             txtNomeRecebedor.Text = pixcd.Config.NomeRecebedor;
             txtUFRecebedor.Text = pixcd.Config.UFRecebedor;
+
+            //PSP C6Bank
+            txtChavePIXC6Bank.Text = pixcd.Config.C6Bank.ChavePIX;
+            txtClientIDC6Bank.Text = pixcd.Config.C6Bank.ClientID;
+            txtClientSecretC6Bank.Text = pixcd.Config.C6Bank.ClientSecret;
+            txtArquivoChavePrivadaC6Bank.Text = pixcd.Config.C6Bank.ArqChavePrivada;
+            txtArquivoCertificadoC6Bank.Text = pixcd.Config.C6Bank.ArqCertificado;
         }
 
         private void btnDirLogo_Click(object sender, EventArgs e)

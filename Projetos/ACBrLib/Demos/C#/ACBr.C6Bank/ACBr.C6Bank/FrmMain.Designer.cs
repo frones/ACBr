@@ -571,8 +571,8 @@
             // 
             // tabBoleto
             // 
-            this.tabBoleto.Controls.Add(this.tabPage1);
             this.tabBoleto.Controls.Add(this.tabPage2);
+            this.tabBoleto.Controls.Add(this.tabPage1);
             this.tabBoleto.Location = new System.Drawing.Point(0, 0);
             this.tabBoleto.Name = "tabBoleto";
             this.tabBoleto.SelectedIndex = 0;
@@ -3172,9 +3172,9 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
-            this.panel1.Controls.Add(this.tabBoleto);
-            this.panel1.Controls.Add(this.tabPIXCD);
             this.panel1.Controls.Add(this.lblmsginicio);
+            this.panel1.Controls.Add(this.tabPIXCD);
+            this.panel1.Controls.Add(this.tabBoleto);
             this.panel1.Location = new System.Drawing.Point(189, 12);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1057, 534);

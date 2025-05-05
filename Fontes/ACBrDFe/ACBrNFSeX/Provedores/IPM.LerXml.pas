@@ -46,9 +46,6 @@ type
   { TNFSeR_IPM }
 
   TNFSeR_IPM = class(TNFSeRClass)
-  private
-    FpCasasDecimais: Integer;
-    FpCasas: TACBrTipoCampo;
   protected
     function RemoverGrupo_conteudohtml(const aXML: string): string;
 
@@ -160,8 +157,7 @@ begin
         aValor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('codigo_atividade'), tcStr);
         ItemServico[i].CodigoCnae := PadLeft(aValor, 9, '0');
 
-        ItemServico[i].Quantidade := ObterConteudo(ANodes[i].Childrens.FindAnyNs('unidade_quantidade'), FpCasas);
-
+        ItemServico[i].Quantidade := ObterConteudo(ANodes[i].Childrens.FindAnyNs('unidade_quantidade'), tcDe10);
         ItemServico[i].ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('unidade_valor_unitario'), tcDe10);
         ItemServico[i].Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('descritivo'), tcStr);
         ItemServico[i].Descricao := StringReplace(ItemServico[i].Descricao, FpQuebradeLinha,
@@ -434,22 +430,6 @@ var
   XmlNode: TACBrXmlNode;
 begin
   FpQuebradeLinha := FpAOwner.ConfigGeral.QuebradeLinha;
-
-  // Define a quantidade de casas decimais da tag: unidade_quantidade
-  FpCasasDecimais := StrToIntDef(FpAOwner.ConfigGeral.Params.ValorParametro('CasasDecimais'), 2);
-
-  case FpCasasDecimais of
-     2: FpCasas := tcDe2;
-     3: FpCasas := tcDe3;
-     4: FpCasas := tcDe4;
-     5: FpCasas := tcDe5;
-     6: FpCasas := tcDe6;
-     7: FpCasas := tcDe7;
-     8: FpCasas := tcDe8;
-    10: FpCasas := tcDe10;
-  else
-    FpCasas := tcDe2;
-  end;
 
   if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');

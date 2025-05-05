@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/05/2025
+-- IPM.GravarXml/IPM.LerXml --
+[*] #TK-6913: Ajustado para 10 casas decimais tanto na leitura quanto da escrita da
+    tag: unidade_quantidade, o provedor aceita a referida tag com essa quantidade de
+    casas decimais.
+  Por: Italo Giurizzato Junior
+
 02/05/2025
 -- ACBrNFSeXServicos --
 [+] #TK-7000: Adiciona Param Dividir100 para Marechal Deodoro/AL.

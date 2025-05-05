@@ -12093,6 +12093,7 @@ begin
 
     TConfiguracoesCTe(Configuracoes).Arquivos.IniServicos    := edtArquivoWebServicesCTe.Text;
     TConfiguracoesCTe(Configuracoes).Arquivos.EmissaoPathCTe := cbxEmissaoPathNFe.Checked;
+    TConfiguracoesCTe(Configuracoes).Arquivos.SalvarEvento   := cbxSalvaPathEvento.Checked;
     TConfiguracoesCTe(Configuracoes).Arquivos.PathCTe        := edtPathNFe.Text;
     TConfiguracoesCTe(Configuracoes).Arquivos.PathInu        := edtPathInu.Text;
     TConfiguracoesCTe(Configuracoes).Arquivos.PathEvento     := edtPathEvento.Text;
@@ -12114,6 +12115,7 @@ begin
 
     TConfiguracoesMDFe(Configuracoes).Arquivos.IniServicos     := edtArquivoWebServicesMDFe.Text;
     TConfiguracoesMDFe(Configuracoes).Arquivos.EmissaoPathMDFe := cbxEmissaoPathNFe.Checked;
+    TConfiguracoesMDFe(Configuracoes).Arquivos.SalvarEvento    := cbxSalvaPathEvento.Checked;
     TConfiguracoesMDFe(Configuracoes).Arquivos.PathMDFe        := edtPathNFe.Text;
     TConfiguracoesMDFe(Configuracoes).Arquivos.PathEvento      := edtPathEvento.Text;
     TConfiguracoesMDFe(Configuracoes).Arquivos.DownloadDFe.PathDownload:= edtPathDownload.Text;
@@ -12134,6 +12136,7 @@ begin
 
     TConfiguracoesBPe(Configuracoes).Arquivos.IniServicos    := edtArquivoWebServicesBPe.Text;
     TConfiguracoesBPe(Configuracoes).Arquivos.EmissaoPathBPe := cbxEmissaoPathNFe.Checked;
+    TConfiguracoesBPe(Configuracoes).Arquivos.SalvarEvento   := cbxSalvaPathEvento.Checked;
     TConfiguracoesBPe(Configuracoes).Arquivos.PathBPe        := edtPathNFe.Text;
     TConfiguracoesBPe(Configuracoes).Arquivos.PathEvento     := edtPathEvento.Text;
     TConfiguracoesBPe(Configuracoes).Arquivos.DownloadDFe.PathDownload:= edtPathDownload.Text;

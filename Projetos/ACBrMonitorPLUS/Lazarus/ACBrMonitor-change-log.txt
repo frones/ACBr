@@ -1,5 +1,5 @@
 {*******************************************************************************}
-{ Projeto: ACBrMonitor                                                         }
+{ Projeto: ACBrMonitor                                                          }
 {  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para  }
 { criar uma interface de comunicação com equipamentos de automacao comercial.   }
 {                                                                               }
@@ -43,6 +43,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+05/05/2025
+-- ACBrMonitor1 --
+[*] #TK-6868 Acrescentado as linhas para configurar a propriedade SalvarEvento para os
+    Documentos BP-e, CT-e e MDF-e.
+  Por: Italo Giurizzato Junior
 
 18/03/2025
 -- ACBrMonitor1 --

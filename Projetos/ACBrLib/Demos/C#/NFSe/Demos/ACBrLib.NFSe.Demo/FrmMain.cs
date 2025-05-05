@@ -52,7 +52,7 @@ namespace ACBrLibNFSe.Demo
                 cmbCrypt.EnumDataSource(SSLCryptLib.cryWinCrypt);
                 cmbHttp.EnumDataSource(SSLHttpLib.httpWinHttp);
                 cmbXmlSign.EnumDataSource(SSLXmlSignLib.xsLibXml2);
-                ACBrNFSe.Config.IniServicos = "";
+                //ACBrNFSe.Config.IniServicos = "";
 
                 // Altera as config de log
                 ACBrNFSe.Config.Principal.LogNivel = NivelLog.logParanoico;

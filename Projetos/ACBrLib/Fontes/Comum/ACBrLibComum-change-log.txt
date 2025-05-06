@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/05/2025
+-- ACBrLibConfig, ACBrLibConsts --
+[*] #TK-6998: Formata mensagem para exibir chave/seção inexistente de forma explícita.
+    Por: Julio Cavalcanti \ Rev: Diego Folieni
+
 23/04/2025
 --- ACBrLibConfig.pas, ACBrLibConsts.pas ---
 [*] Controle para zerar configurações SSL desativadas para não levantar exceção.

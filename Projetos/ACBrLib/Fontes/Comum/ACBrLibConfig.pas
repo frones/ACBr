@@ -905,11 +905,11 @@ var
   NaoExiste: String;
 begin
   if not FIni.SectionExists(ASessao) then
-    raise EACBrLibException.Create(ErrConfigLer, SErrConfSessaoNaoExiste);
+    raise EACBrLibException.Create(ErrConfigLer, Format(SErrConfSessaoNaoExiste, [ASessao]));
 
   NaoExiste := '*NaoExiste*';
   if (FIni.ReadString(ASessao, AChave, NaoExiste) = NaoExiste) then
-    raise EACBrLibException.Create(ErrConfigLer, SErrConfChaveNaoExiste);
+    raise EACBrLibException.Create(ErrConfigLer, Format(SErrConfChaveNaoExiste, [AChave, ASessao]));
 end;
 
 function TLibConfig.AtualizarArquivoConfiguracao: Boolean;

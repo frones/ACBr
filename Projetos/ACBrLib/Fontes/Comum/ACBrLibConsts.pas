@@ -228,7 +228,7 @@ resourcestring
 
   SErrDiretorioInvalido = 'Diretório Invalido: %s';
   SErrDiretorioNaoInformado = 'Diretório não Informado: %s';
-  SErrConfSessaoNaoExiste = 'Sessão não [%s] existe no arquivo de configuração';
+  SErrConfSessaoNaoExiste = 'Sessão [%s] não existe no arquivo de configuração';
   SErrConfChaveNaoExiste = 'Chave [%s] não existe na Sessão [%s] no arquivo de configuração';
   SErrArquivoConfigSemPathNoInicializar = 'Essa versão da ACBrLib requer que o Diretório seja informado em LIB_Inicializar';
 

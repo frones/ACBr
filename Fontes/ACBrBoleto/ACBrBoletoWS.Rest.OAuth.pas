@@ -42,11 +42,14 @@ uses
   ACBrBoletoConversao,
   ACBrBoleto,
   ACBrUtil.FilesIO,
-  ACBr.Auth.JWT;
+  ACBr.Auth.JWT,
+  SysUtils,
+  ACBrBoletoWS.URL;
 
 type
+  EACBrBoletoWSOAuthException = class(Exception);
   TpAuthorizationType = (atNoAuth, atBearer, atJWT);
-  
+
   TParams = record
     prName, PrValue: String;
   end;
@@ -54,7 +57,7 @@ type
 { TOAuth }
   TOAuth = class
   private
-    FURL              : String;
+    FURL              : TACBrBoletoWebServiceURL;
     FContentType      : String;
     FGrantType        : String;
     FScope            : String;
@@ -72,12 +75,10 @@ type
     FACBrBoleto       : TACBrBoleto;
     FArqLOG           : String;
     FExigirClientSecret : Boolean;
-    procedure setURL(const AValue: String);
     procedure setContentType(const AValue: String);
     procedure setGrantType(const AValue: String);
     procedure setPayload(const AValue: Boolean);
 
-    function getURL: String;
     function getContentType: String;
     function getGrantType: String;
     function getClientID: String;
@@ -92,7 +93,7 @@ type
   public
     constructor Create(ASSL: THTTPSend; AACBrBoleto: TACBrBoleto = nil);
     destructor Destroy; Override;
-    property URL: String read getURL write setURL;
+    property URL: TACBrBoletoWebServiceURL read FURL write FURL;
     function GerarToken: Boolean;
     property ParamsOAuth: String read FParamsOAuth write FParamsOAuth;
     function AddHeaderParam(AParamName, AParamValue: String): TOAuth;
@@ -115,7 +116,6 @@ type
   end;
 implementation
 uses
-  SysUtils,
   ACBrUtil.DateTime,
   ACBrUtil.Strings,
   ACBrUtil.Base,
@@ -123,15 +123,10 @@ uses
   ACBrJSON,
   DateUtils,
   Classes,
-  synacode, synautil;
+  synacode,
+  synautil;
   
 { TOAuth }
-
-procedure TOAuth.setURL(const AValue: String);
-begin
-  if FURL <> AValue then
-    FURL := AValue;
-end;
 
 procedure TOAuth.setContentType(const AValue: String);
 begin
@@ -150,14 +145,6 @@ procedure TOAuth.setPayload(const AValue: Boolean);
 begin
   if FPayload <> AValue then
     FPayload := AValue;
-end;
-
-function TOAuth.getURL: String;
-begin
-  if FURL = '' then
-    Raise Exception.Create(ACBrStr('Método de Autenticação inválido. URL não definida!'))
-  else
-    Result := FURL;
 end;
 
 procedure TOAuth.GravaLog(const AString: AnsiString);
@@ -191,7 +178,7 @@ end;
 function TOAuth.getClientID: String;
 begin
   if FClientID = '' then
-    Raise Exception.Create(ACBrStr('Client_ID não Informado'));
+    Raise EACBrBoletoWSOAuthException.Create(ACBrStr('Client_ID não Informado'));
 
   Result := FClientID;
 end;
@@ -204,7 +191,7 @@ begin
     Exit;
 
   if FClientSecret = '' then
-    Raise Exception.Create(ACBrStr('Client_Secret não Informado'));
+    Raise EACBrBoletoWSOAuthException.Create(ACBrStr('Client_Secret não Informado'));
 
   Result := FClientSecret;
 end;
@@ -212,7 +199,7 @@ end;
 function TOAuth.getScope: String;
 begin
   if FScope = '' then
-    Raise Exception.Create(ACBrStr('Scope não Informado'));
+    Raise EACBrBoletoWSOAuthException.Create(ACBrStr('Scope não Informado'));
 
   Result := FScope;
 end;
@@ -275,7 +262,7 @@ begin
   FErroComunicacao := '';
 
   if not Assigned(FHTTPSend) then
-    raise EACBrBoletoWSException.Create(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_DFESSL ]));
+    Raise EACBrBoletoWSOAuthException.Create(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_DFESSL ]));
 
   CarregaCertificados;
 
@@ -325,17 +312,17 @@ begin
 
       if FPayload then
       begin
-        DoLog('URL: [' + MetodoHTTPToStr(htPOST) +'] '+ URL, logSimples);
+        DoLog('URL: [' + MetodoHTTPToStr(htPOST) +'] '+ URL.GetURL, logSimples);
         DoLog('Body Envio (Payload):' + FParamsOAuth, logParanoico);
 
         FHTTPSend.Document.Position := 0;
         WriteStrToStream(FHTTPSend.Document, AnsiString(FParamsOAuth));
-        FHTTPSend.HTTPMethod(MetodoHTTPToStr(htPOST), URL);
+        FHTTPSend.HTTPMethod(MetodoHTTPToStr(htPOST), URL.GetURL);
       end
       else
       begin
-        DoLog('URL: [' + MetodoHTTPToStr(htPOST) + '] ' + URL + '?' + FParamsOAuth, logSimples);
-        FHTTPSend.HTTPMethod(MetodoHTTPToStr(htPOST), URL + '?' + FParamsOAuth);
+        DoLog('URL: [' + MetodoHTTPToStr(htPOST) + '] ' + URL.GetURL + '?' + FParamsOAuth, logSimples);
+        FHTTPSend.HTTPMethod(MetodoHTTPToStr(htPOST), URL.GetURL + '?' + FParamsOAuth);
       end;
 
       //FErroComunicacao := FHTTPSend.ResultString;
@@ -362,7 +349,8 @@ begin
 
     DoLog('Body Resposta (payload):' + ReadStrFromStream(FHTTPSend.Document, FHTTPSend.Document.Size), logParanoico);
     if FErroComunicacao <> '' then
-      raise EACBrBoletoWSException.Create(ACBrStr('Falha na Autenticação: ' + FErroComunicacao));
+      Raise EACBrBoletoWSOAuthException.Create('Falha na Autenticação: ' + FErroComunicacao);
+   URL.Clear;
   end;
 end;
 
@@ -433,12 +421,13 @@ begin
   if Assigned(ASSL) then
     FHTTPSend := ASSL;
 
+  FURL := TACBrBoletoWebServiceURL.Create(AACBrBoleto.Configuracoes.WebService);
+
   FACBrBoleto := AACBrBoleto;
   FAmbiente          := AACBrBoleto.Configuracoes.WebService.Ambiente;
   FClientID          := AACBrBoleto.Cedente.CedenteWS.ClientID;
   FClientSecret      := AACBrBoleto.Cedente.CedenteWS.ClientSecret;
   FScope             := AACBrBoleto.Cedente.CedenteWS.Scope;
-  FURL               := '';
   FContentType       := '';
   FGrantType         := '';
   FToken             := '';
@@ -460,6 +449,7 @@ end;
 
 destructor TOAuth.Destroy;
 begin
+  URL.Free;
   inherited Destroy;
 end;
 

@@ -137,11 +137,19 @@ begin
         end;
     end;
 
-
-  if Boleto.Configuracoes.WebService.Ambiente = tawsProducao then
-   FPURL := IfThen(Boleto.Cedente.CedenteWS.IndicadorPix, C_URLPIX, C_URL)
-  else
-   FPURL := IfThen(Boleto.Cedente.CedenteWS.IndicadorPix, C_URL_HOMPIX, C_URL_HOM);
+  if Boleto.Cedente.CedenteWS.IndicadorPix then
+  begin
+    case Boleto.Configuracoes.WebService.Ambiente of
+      tawsProducao   : FPURL.URLProducao    := C_URLPIX;
+      tawsHomologacao: FPURL.URLHomologacao := C_URL_HOMPIX;
+    end;
+  end else
+  begin
+    case Boleto.Configuracoes.WebService.Ambiente of
+      tawsProducao   : FPURL.URLProducao    := C_URL;
+      tawsHomologacao: FPURL.URLHomologacao := C_URL_HOM;
+    end;
+  end;
 
   if Boleto.Cedente.CedenteWS.IndicadorPix then
     begin
@@ -150,21 +158,21 @@ begin
          raise Exception.Create('Boleto PIX necessario informar codigoSolicitacao, Exemplo:'+sLineBreak+
                                 'NossoNumeroCorrespondente := "183e982a-34e5-4bc0-9643-def5432a"');
       case Boleto.Configuracoes.WebService.Operacao of
-        tpInclui:         FPURL := FPURL + '/cobrancas';
-        tpConsulta:       FPURL := FPURL + '/cobrancas?' + DefinirParametros;
-        tpAltera:         FPURL := FPURL + '/comandoInstrucao';
-        tpConsultaDetalhe:FPURL := FPURL + '/cobrancas/' + LNossoNumeroCorrespondente;
-        tpBaixa:          FPURL := FPURL + '/cobrancas/' + LNossoNumeroCorrespondente + '/cancelar';
+        tpInclui:         FPURL.SetPathURI( '/cobrancas' );
+        tpConsulta:       FPURL.SetPathURI( '/cobrancas?' + DefinirParametros);
+        tpAltera:         FPURL.SetPathURI( '/comandoInstrucao');
+        tpConsultaDetalhe:FPURL.SetPathURI( '/cobrancas/' + LNossoNumeroCorrespondente);
+        tpBaixa:          FPURL.SetPathURI( '/cobrancas/' + LNossoNumeroCorrespondente + '/cancelar');
       end;
     end
   else
     begin
       case Boleto.Configuracoes.WebService.Operacao of
-        tpInclui:         FPURL := FPURL + '/boletos';
-        tpConsulta:       FPURL := FPURL + '/boletos?' + DefinirParametros;
-        tpAltera:         FPURL := FPURL + '/comandoInstrucao';
-        tpConsultaDetalhe:FPURL := FPURL + '/boletos/' + LNossoNumero;
-        tpBaixa:          FPURL := FPURL + '/boletos/' + LNossoNumero + '/cancelar';
+        tpInclui:         FPURL.SetPathURI( '/boletos' );
+        tpConsulta:       FPURL.SetPathURI( '/boletos?' + DefinirParametros );
+        tpAltera:         FPURL.SetPathURI( '/comandoInstrucao' );
+        tpConsultaDetalhe:FPURL.SetPathURI( '/boletos/' + LNossoNumero );
+        tpBaixa:          FPURL.SetPathURI( '/boletos/' + LNossoNumero + '/cancelar' );
       end
     end;
 
@@ -755,10 +763,10 @@ begin
 
   if Assigned(OAuth) then
   begin
-    if OAuth.Ambiente = tawsProducao then
-      OAuth.URL := C_URL_OAUTH_PROD
-    else
-      OAuth.URL := C_URL_OAUTH_HOM;
+    case OAuth.Ambiente of
+      tawsProducao: OAuth.URL.URLProducao := C_URL_OAUTH_PROD;
+      tawsHomologacao: OAuth.URL.URLHomologacao := C_URL_OAUTH_HOM;
+    end;
 
     OAuth.Payload := not (OAuth.Ambiente = tawsProducao);
   end;

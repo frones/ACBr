@@ -41,13 +41,15 @@ uses
   pcnLeitor,
   pcnGerador,
   ACBrDFeSSL,
-  ACBrBoleto;
+  ACBrBoleto,
+  SysUtils;
 
 type
     { TBoletoWSSOAP }    //Bancos que utilizam XML
 {$IFDEF RTL230_UP}
   [ ComponentPlatformsAttribute(pidWin32 or pidWin64) ]
 {$ENDIF RTL230_UP}
+  EACBrBoletoWSSOAPException = class(Exception);
 
   TBoletoWSSOAP = class(TBoletoWSClass)
   private
@@ -57,7 +59,6 @@ type
     FPSoapVersion           : String;
     FPSoapEnvelopeAtributtes: String;
     FPEnvelopeSoap          : String;
-    FPURL                   : String;
     FPVersaoServico         : String;
     FPServico               : String;
     FPSoapAction            : String;
@@ -110,7 +111,6 @@ type
 implementation
 
 uses
-  SysUtils,
   ACBrUtil.Strings,
   pcnConversao,
   synacode,
@@ -143,22 +143,22 @@ end;
 
 procedure TBoletoWSSOAP.DefinirEnvelopeSoap;
 begin
-  raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_DEFINIR_ENVELOPE_SOAP ])));
+  raise EACBrBoletoWSSOAPException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_DEFINIR_ENVELOPE_SOAP ])));
 end;
 
 procedure TBoletoWSSOAP.DefinirURL;
 begin
-  raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_DEFINIR_URL ])));
+  raise EACBrBoletoWSSOAPException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_DEFINIR_URL ])));
 end;
 
 procedure TBoletoWSSOAP.DefinirServicoEAction;
 begin
-  raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_DEFINIR_SERVICO_EACTION ])));
+  raise EACBrBoletoWSSOAPException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_DEFINIR_SERVICO_EACTION ])));
 end;
 
 function TBoletoWSSOAP.DefinirSOAPAtributtes: string;
 begin
-  raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_DEFINIR_SERVICO_EACTION ])));
+  raise EACBrBoletoWSSOAPException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_DEFINIR_SERVICO_EACTION ])));
 end;
 
 procedure TBoletoWSSOAP.DefinirContentType;
@@ -175,22 +175,22 @@ end;
 
 procedure TBoletoWSSOAP.DefinirRootElement;
 begin
-  raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_DEFINIR_ROOT_ELEMENT ])));
+  raise EACBrBoletoWSSOAPException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_DEFINIR_ROOT_ELEMENT ])));
 end;
 
 procedure TBoletoWSSOAP.DefinirAuthorization;
 begin
-  raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_AUTHORIZATION ])));
+  raise EACBrBoletoWSSOAPException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_AUTHORIZATION ])));
 end;
 
 procedure TBoletoWSSOAP.GerarHeader;
 begin
-  raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_GERAR_HEADER ])));
+  raise EACBrBoletoWSSOAPException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_GERAR_HEADER ])));
 end;
 
 procedure TBoletoWSSOAP.GerarDados;
 begin
-  raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_GERAR_DADOS ])));
+  raise EACBrBoletoWSSOAPException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_GERAR_DADOS ])));
 end;
 
 procedure TBoletoWSSOAP.Executar;
@@ -199,7 +199,7 @@ var
 begin
   try
     if FPAuthorization = '' then //Se Existir Autenticação deve utilizar HTTPMetod, anexando Token de Autorização no Header
-      FRetornoWS := DFeSSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction, FPMimeType)
+      FRetornoWS := DFeSSL.Enviar(FPEnvelopeSoap, FPURL.GetURL, FPSoapAction, FPMimeType)
     else
     begin
       try
@@ -217,7 +217,7 @@ begin
         try
           WriteStrToStream(Stream, FPEnvelopeSoap);
           DFeSSL.SSLHttpClass.DataReq.LoadFromStream(Stream);
-          DFeSSL.HTTPMethod(MetodoHTTPToStr(htPOST), FPURL);
+          DFeSSL.HTTPMethod(MetodoHTTPToStr(htPOST), FPURL.GetURL);
         finally
           Stream.Free;
         end;
@@ -249,7 +249,6 @@ begin
   FPRootElement            := '';
   FPCloseRootElement       := '';
   FPEnvelopeSoap           := '';
-  FPURL                    := '';
   FPVersaoServico          := '';
   FPServico                := '';
   FPAuthorization          := '';
@@ -291,18 +290,18 @@ end;
 
 function TBoletoWSSOAP.Enviar: Boolean;
 begin
-  BoletoWS.RetornoBanco.CodRetorno := 0;
-  BoletoWS.RetornoBanco.Msg        := '';
-  FPAuthorization                  := '';
-
-  DefinirURL;
-  DefinirEnvelopeSoap;
-  FPEnvelopeSoap := UTF8ToNativeString(FPEnvelopeSoap);
-    //Grava xml gerado
-  BoletoWS.DoLog('Comando Enviar: ' + Self.ClassName, logSimples);
-  BoletoWS.DoLog('Envelope Enviar: ' + FPEnvelopeSoap, logParanoico);
-
   try
+    BoletoWS.RetornoBanco.CodRetorno := 0;
+    BoletoWS.RetornoBanco.Msg        := '';
+    FPAuthorization                  := '';
+
+    DefinirURL;
+    DefinirEnvelopeSoap;
+    FPEnvelopeSoap := UTF8ToNativeString(FPEnvelopeSoap);
+      //Grava xml gerado
+    BoletoWS.DoLog('Comando Enviar: ' + Self.ClassName, logSimples);
+    BoletoWS.DoLog('Envelope Enviar: ' + FPEnvelopeSoap, logParanoico);
+
     Executar;
   finally
     Result := (DFeSSL.HTTPResultCode in [ 200, 201, 202 ]);
@@ -316,6 +315,9 @@ begin
     else
       BoletoWS.DoLog('Retorno Envio: ' + IfThen(BoletoWS.RetornoBanco.CodRetorno > 0,
           sLineBreak + 'ErrorCode=' + IntToStr(BoletoWS.RetornoBanco.CodRetorno), '') + sLineBreak + 'Result=' + NativeStringToAnsi(FRetornoWS), logParanoico);
+    FPURL.Clear;
   end;
 end;
+
+
 end.

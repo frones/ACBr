@@ -145,7 +145,6 @@ end;
 
 procedure TBoletoW_Caixa.DefinirURL;
 begin
-  FPURL := '';
   DefinirServicoEAction;
 end;
 
@@ -168,7 +167,7 @@ begin
   end;
 
   FPServico := C_URL + Servico;
-  FPURL := FPServico;
+  FPURL.URLProducao := FPServico;
   FPSoapAction := Acao;
 end;
 

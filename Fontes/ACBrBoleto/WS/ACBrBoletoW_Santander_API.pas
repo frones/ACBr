@@ -110,17 +110,17 @@ uses
 procedure TBoletoW_Santander_API.DefinirURL;
 begin
   case Boleto.Configuracoes.WebService.Ambiente of
-    tawsProducao    : FPURL := C_URL;
-    tawsHomologacao : FPURL := C_URL; //mesma url de produção, pagina 22
-    tawsSandBox     : FPURL := C_URL_SANDBOX;
+    tawsProducao    : FPURL.URLProducao    := C_URL;
+    tawsHomologacao : FPURL.URLHomologacao := C_URL; //mesma url de produção, pagina 22
+    tawsSandBox     : FPURL.URLSandBox     := C_URL_SANDBOX;
   end;
 
   case Boleto.Configuracoes.WebService.Operacao of
-     tpInclui         : FPURL := FPURL + '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips';
-     tpAltera         : FPURL := FPURL + '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips';
-     tpConsulta       : FPURL := FPURL + '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips' +  DefinirParametros;
-     tpConsultaDetalhe: FPURL := FPURL + '/bills' +  DefinirParametros;
-     tpBaixa          : FPURL := FPURL + '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips';
+     tpInclui         : FPURL.SetPathURI( '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips' );
+     tpAltera         : FPURL.SetPathURI( '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips' );
+     tpConsulta       : FPURL.SetPathURI( '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips' +  DefinirParametros );
+     tpConsultaDetalhe: FPURL.SetPathURI( '/bills' +  DefinirParametros );
+     tpBaixa          : FPURL.SetPathURI( '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips' );
   end;
 end;
 
@@ -194,9 +194,9 @@ end;
 function TBoletoW_Santander_API.GetNsu: string;
 begin
   Result := ATitulo.NossoNumero;
-  {so utilizar se for sandbox}
-//  if Boleto.Configuracoes.WebService.Ambiente = taHomologacao then
-//     Result := 'TST' + Result;
+
+  if Boleto.Configuracoes.WebService.Ambiente = tawsHomologacao then
+    Result := 'TST' + Result;
 end;
 
 function TBoletoW_Santander_API.DefinirParametros: String;
@@ -811,9 +811,9 @@ begin
   if Assigned(OAuth) then
   begin
     case OAuth.Ambiente of
-      tawsProducao    : OAuth.URL := C_URL_OAUTH_PROD;
-      tawsHomologacao : OAuth.URL := C_URL_OAUTH_PROD;  //mesma url de produção, página 22
-      tawsSandBox     : OAuth.URL := C_URL_OAUTH_SANDBOX;
+      tawsProducao    : OAuth.URL.URLProducao    := C_URL_OAUTH_PROD;
+      tawsHomologacao : OAuth.URL.URLHomologacao := C_URL_OAUTH_PROD;  //mesma url de produção, página 22
+      tawsSandBox     : OAuth.URL.URLSandBox     := C_URL_OAUTH_SANDBOX;
     end;
 
     OAuth.Payload := True;

@@ -133,25 +133,28 @@ begin
   if (ATitulo <> nil) then
     LNossoNumeroCorrespondente := ATitulo.NossoNumeroCorrespondente;
 
-  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL,C_URL_HOM);
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao    : FPURL.URLProducao    := C_URL;
+    tawsHomologacao : FPURL.URLHomologacao := C_URL_HOM;
+  end;
 
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui:
-      FPURL := FPURL + '/invoices';
+      FPURL.SetPathURI( '/invoices' );
     tpConsulta:
-      FPURL := FPURL + '/invoices?' + DefinirParametros;
+      FPURL.SetPathURI( '/invoices?' + DefinirParametros );
     tpBaixa,tpCancelar:
       begin
         if (LNossoNumeroCorrespondente <> '') then
         begin
-          FPURL := FPURL + '/invoices/' + LNossoNumeroCorrespondente;
+          FPURL.SetPathURI( '/invoices/' + LNossoNumeroCorrespondente );
         end;
       end;
     tpConsultaDetalhe:
       begin
         if (LNossoNumeroCorrespondente <> '') then
         begin
-          FPURL := FPURL + '/invoices/' + LNossoNumeroCorrespondente;
+          FPURL.SetPathURI( '/invoices/' + LNossoNumeroCorrespondente );
         end;
       end;
   end;
@@ -702,10 +705,10 @@ begin
 
   if Assigned(OAuth) then
   begin
-    if OAuth.Ambiente = tawsProducao then
-      OAuth.URL := C_URL_OAUTH_PROD
-    else
-      OAuth.URL := C_URL_OAUTH_HOM;
+    case OAuth.Ambiente of
+      tawsProducao: OAuth.URL.URLProducao := C_URL_OAUTH_PROD;
+      tawsHomologacao: OAuth.URL.URLHomologacao := C_URL_OAUTH_HOM;
+    end;
 
     OAuth.Payload := True;
   end;

@@ -137,39 +137,42 @@ begin
     LNossoNumero := ACBrUtil.Strings.RemoveZerosEsquerda(OnlyNumber(aTitulo.NossoNumero)+aTitulo.ACBrBoleto.Banco.CalcularDigitoVerificador(aTitulo));
     LContrato    := OnlyNumber(aTitulo.ACBrBoleto.Cedente.CodigoCedente);
   end;
-  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL,C_URL_HOM);
 
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao   : FPURL.URLProducao    := C_URL;
+    tawsHomologacao: FPURL.URLHomologacao := C_URL_HOM;
+  end;
   case Boleto.Configuracoes.WebService.Operacao of
-    tpInclui:  FPURL := FPURL + '/boletos';
+    tpInclui:  FPURL.SetPathURI( '/boletos' );
     tpAltera:
     begin
        if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaBaixar then
-         FPURL := FPURL + '/boletos/baixa'
+         FPURL.SetPathURI( '/boletos/baixa' )
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaConcederDesconto then
-         FPURL := FPURL + '/boletos/descontos'
+         FPURL.SetPathURI( '/boletos/descontos' )
        else if aTitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarVencimento then
-         FPURL := FPURL + '/boletos/prorrogacoes/data-vencimento'
+         FPURL.SetPathURI( '/boletos/prorrogacoes/data-vencimento' )
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaProtestar then
-         FPURL := FPURL + '/boletos/protestos'
+         FPURL.SetPathURI( '/boletos/protestos' )
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaSustarProtesto then
-         FPURL := FPURL + '/boletos/protestos'
+         FPURL.SetPathURI( '/boletos/protestos' )
        else if ATitulo.OcorrenciaOriginal.Tipo in [ACBrBoleto.toRemessaCobrarJurosMora, ACBrBoleto.toRemessaAlterarJurosMora] then
-         FPURL := FPURL + '/boletos/encargos/juros-mora'
+         FPURL.SetPathURI( '/boletos/encargos/juros-mora' )
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarMulta then
-         FPURL := FPURL + '/boletos/encargos/multas'
+         FPURL.SetPathURI( '/boletos/encargos/multas' )
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarDesconto then
-         FPURL := FPURL +  '/boletos/descontos'
+         FPURL.SetPathURI(  '/boletos/descontos' )
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarValorAbatimento then
-         FPURL := FPURL + '/boletos/abatimentos'
+         FPURL.SetPathURI( '/boletos/abatimentos' )
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarSeuNumero then
-         FPURL := FPURL + '/boletos/seu-numero'
+         FPURL.SetPathURI( '/boletos/seu-numero' )
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarEspecieTitulo then
-         FPURL := FPURL + '/boletos/especie-documento'
+         FPURL.SetPathURI( '/boletos/especie-documento')
        else if ATitulo.OcorrenciaOriginal.Tipo in [ACBrBoleto.ToRemessaPedidoNegativacao, ACBrBoleto.ToRemessaExcluirNegativacaoBaixar, ACBrBoleto.ToRemessaExcluirNegativacaoSerasaBaixar] then
-          FPURL := FPURL + '/boletos/negativacoes';
+          FPURL.SetPathURI( '/boletos/negativacoes' );
     end;
-    tpConsultaDetalhe:  FPURL := FPURL + '/boletos?numeroContrato='+LContrato+'&modalidade=1&nossoNumero='+LNossoNumero;
-    tpBaixa:  FPURL := FPURL + '/boletos/baixa';
+    tpConsultaDetalhe:  FPURL.SetPathURI( '/boletos?numeroContrato='+LContrato+'&modalidade=1&nossoNumero='+LNossoNumero );
+    tpBaixa:  FPURL.SetPathURI( '/boletos/baixa');
   end;
 
 end;
@@ -751,7 +754,10 @@ begin
 
   if Assigned(OAuth) then
   begin
-    OAuth.URL := C_URL_OAUTH_PROD;
+    case OAuth.Ambiente of
+      tawsProducao: OAuth.URL.URLProducao := C_URL_OAUTH_PROD;
+      tawsHomologacao: OAuth.URL.URLHomologacao := C_URL_OAUTH_HOM;
+    end;
     OAuth.Payload := True;
   end;
 end;

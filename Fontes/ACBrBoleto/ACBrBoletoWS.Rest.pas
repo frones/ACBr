@@ -45,6 +45,7 @@ uses
   ACBrBoletoConversao,
   pcnConversao,
   ACBrBoletoWS,
+  ACBrBoletoWS.URL,
   ACBrBoleto,
   ACBrBase;
 
@@ -62,7 +63,6 @@ type
     FPHeaders      : TStringList;
 	
   protected
-    FPURL          : String;
     FPContentType  : String;
     FPKeyUser      : String;
     FPIdentificador: String;
@@ -302,11 +302,11 @@ begin
     if FPDadosMsg <> '' then
       WriteStrToStream(httpsend.Document, NativeStringToUTF8(FPDadosMsg));
 
-    BoletoWS.DoLog('URL: [' + MetodoHTTPToStr(FMetodoHTTP) + '] ' + FPURL, logSimples);
+    BoletoWS.DoLog('URL: [' + MetodoHTTPToStr(FMetodoHTTP) + '] ' + FPURL.GetURL, logSimples);
     BoletoWS.DoLog('Header:' + LineBreak
                              + httpsend.Headers.Text, logParanoico);
 
-    httpsend.HTTPMethod(MetodoHTTPToStr(FMetodoHTTP), FPURL);
+    httpsend.HTTPMethod(MetodoHTTPToStr(FMetodoHTTP), FPURL.GetURL);
   finally
     httpsend.Document.Position := 0;
     FRetornoWS       := '';
@@ -361,7 +361,6 @@ begin
   FPContentType   := '';
   FPAccept        := '';
   FPDadosMsg      := '';
-  FPURL           := '';
   FPAuthorization := '';
   FPKeyUser       := '';
   FPIdentificador := '';
@@ -382,22 +381,23 @@ end;
 
 function TBoletoWSREST.Enviar: Boolean;
 begin
-  BoletoWS.RetornoBanco.CodRetorno := 0;
-  BoletoWS.RetornoBanco.Msg        := '';
-
-  DefinirAuthorization;
-  DefinirURL;
-  DefinirContentType;
-  DefinirCertificado;
-  DefinirProxy;
-
-  //Grava json gerado
-  BoletoWS.DoLog('Comando Enviar: ' + ClassName, logSimples);
-  BoletoWS.DoLog('Comando Enviar: ' + FPDadosMsg, logSimples);
-
   try
+    BoletoWS.RetornoBanco.CodRetorno := 0;
+    BoletoWS.RetornoBanco.Msg        := '';
+    DefinirAuthorization;
+    DefinirURL;
+    DefinirContentType;
+    DefinirCertificado;
+    DefinirProxy;
+
+    //Grava json gerado
+    BoletoWS.DoLog('Comando Enviar: ' + ClassName, logSimples);
+    BoletoWS.DoLog('Comando Enviar: ' + FPDadosMsg, logSimples);
+
     Executar;
+
   finally
+
     Result := (BoletoWS.RetornoBanco.HTTPResultCode in [ 200 .. 207 ]);
 
     BoletoWS.DoLog('Retorno Envio: ' + Self.ClassName, logSimples);
@@ -415,6 +415,7 @@ begin
     BoletoWS.DoLog(httpsend.Sock.SSL.PrivateKeyFile, logParanoico);
     BoletoWS.DoLog('Header:', logParanoico);
     BoletoWS.DoLog(httpsend.Headers.Text, logParanoico);
+    FPURL.Clear;
   end;
 end;
 

@@ -169,18 +169,22 @@ uses
 
 procedure TBoletoW_Bradesco.DefinirURL;
 begin
-  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL,C_URL_HOM);
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao    : FPURL.URLProducao    := C_URL;
+    tawsHomologacao : FPURL.URLHomologacao := C_URL_HOM;
+  end;
+
   case Boleto.Configuracoes.WebService.Operacao of
-    tpInclui: FPURL := FPURL + '/v1/boleto-hibrido/registrar-boleto';
+    tpInclui: FPURL.SetPathURI( '/v1/boleto-hibrido/registrar-boleto' );
     tpAltera:
     begin
        if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaBaixar then
-         FPURL := FPURL + '/v1/boleto/titulo-baixar'
+         FPURL.SetPathURI( '/v1/boleto/titulo-baixar' )
        else if aTitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarVencimento then
-         FPURL := FPURL + '/v1/boleto/alterar-titulo';
+         FPURL.SetPathURI( '/v1/boleto/alterar-titulo' );
     end;
-    tpConsultaDetalhe:  FPURL := FPURL + '/v1/boleto/titulo-consultar';
-    tpBaixa:  FPURL := FPURL + '/v1/boleto/titulo-baixar';
+    tpConsultaDetalhe:  FPURL.SetPathURI( '/v1/boleto/titulo-consultar' );
+    tpBaixa:  FPURL.SetPathURI( '/v1/boleto/titulo-baixar' );
   end;
 end;
 
@@ -224,7 +228,7 @@ begin
   if FPDadosMsg <> '' then
   begin
 
-     LMetodoURI := FPURL;
+     LMetodoURI := FPURL.GetURL;
      if Boleto.Configuracoes.WebService.Ambiente = tawsProducao then
        LMetodoURI := StringReplace(LMetodoURI, C_URL, '', [rfReplaceAll, rfIgnoreCase])
      else
@@ -314,21 +318,22 @@ begin
 
   if OAuth.Ambiente = tawsProducao then
   begin
-    OAuth.URL := C_URL_OAUTH_PROD;
+    OAuth.URL.URLProducao := C_URL_OAUTH_PROD;
     LVersao := '1.1';
   end else
+  if OAuth.Ambiente = tawsHomologacao then
   begin
-    OAuth.URL := C_URL_OAUTH_HOM;
+    OAuth.URL.URLHomologacao := C_URL_OAUTH_HOM;
     if Boleto.Cedente.CedenteWS.IndicadorPix then
       LVersao := '1.2'
     else
       LVersao := '1.1';
   end;
 
-  if  Boleto.Configuracoes.WebService.Ambiente = tawsProducao then
-    OAuth.URL := Format(OAuth.URL,['1.1']) //página 7
-  else
-    OAuth.URL := Format(OAuth.URL,[LVersao]);
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao: OAuth.URL.URLProducao := Format(OAuth.URL.URLProducao,['1.1']); //página 7;
+    tawsHomologacao: OAuth.URL.URLHomologacao := Format(OAuth.URL.URLHomologacao,[LVersao]);
+  end;
 
   if Assigned(OAuth) then
   begin
@@ -336,7 +341,7 @@ begin
     OAuth.GrantType   := 'urn:ietf:params:oauth:grant-type:jwt-bearer';
     try
       LJSonObject := TACBrJSONObject.Create
-                     .AddPair('aud',OAuth.URL)
+                     .AddPair('aud',OAuth.URL.GetURL)
                      .AddPair('sub',Trim(Boleto.Cedente.CedenteWS.ClientID))
                      .AddPair('iat',FUnixTime - 3600 )
                      .AddPair('exp',FUnixTime + 3600)

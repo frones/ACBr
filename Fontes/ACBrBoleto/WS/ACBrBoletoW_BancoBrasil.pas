@@ -125,7 +125,6 @@ end;
 
 procedure TBoletoW_BancoBrasil.DefinirURL;
 begin
-  FPURL := '';
   DefinirServicoEAction;
   DefinirAuthorization;
   FPVersaoServico := Boleto.Configuracoes.WebService.VersaoDF;
@@ -142,9 +141,13 @@ begin
                                                   TipoOperacaoToStr( Boleto.Configuracoes.WebService.Operacao ) ] ));
   end;
 
-  FPServico := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL, C_URL_HOM) + Servico;
-  FPURL := FPServico;
 
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao : FPURL.URLProducao := C_URL + Servico;
+    tawsHomologacao : FPURL.URLHomologacao := C_URL_HOM + Servico;
+  end;
+
+  FPServico := FPURL.GetURL;
   FPSoapAction := Servico;
 end;
 
@@ -408,9 +411,9 @@ begin
   if Assigned(OAuth) then
   begin
     if OAuth.Ambiente = tawsProducao then
-      OAuth.URL := C_URL_OAUTH_PROD
+      OAuth.URL.URLProducao    := C_URL_OAUTH_PROD
     else
-      OAuth.URL := C_URL_OAUTH_HOM;
+      OAuth.URL.URLHomologacao := C_URL_OAUTH_HOM;
   end;
 
 end;

@@ -147,33 +147,36 @@ begin
     LIdArquivo         := StrToInt64Def(Boleto.Configuracoes.WebService.Filtro.Identificador,0);
   end;
 
-  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL,C_URL_HOM);
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao    : FPURL.URLProducao    := C_URL;
+    tawsHomologacao : FPURL.URLHomologacao := C_URL_HOM;
+  end;
 
   case Boleto.Configuracoes.WebService.Operacao of
-    tpInclui:  FPURL := FPURL + '/boletos';
+    tpInclui:  FPURL.SetPathURI( '/boletos' );
     tpAltera:
     begin
        if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaBaixar then
-         FPURL := FPURL + '/boletos/'+LNossoNumero+'/baixar'
+         FPURL.SetPathURI( '/boletos/'+LNossoNumero+'/baixar' )
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaProtestar then
-         FPURL := FPURL + '/boletos/'+LNossoNumero+'/protestos'
+         FPURL.SetPathURI( '/boletos/'+LNossoNumero+'/protestos' )
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaSustarProtesto then
-         FPURL := FPURL + '/boletos/'+LNossoNumero+'/protestos'
+         FPURL.SetPathURI( '/boletos/'+LNossoNumero+'/protestos' )
        else if ATitulo.OcorrenciaOriginal.Tipo in [ACBrBoleto.ToRemessaPedidoNegativacao, ACBrBoleto.ToRemessaExcluirNegativacaoBaixar, ACBrBoleto.ToRemessaExcluirNegativacaoSerasaBaixar] then
-          FPURL := FPURL + '/boletos/'+LNossoNumero+'/negativacoes'
+          FPURL.SetPathURI( '/boletos/'+LNossoNumero+'/negativacoes' )
        else
-         FPURL := FPURL + '/boletos/'+LNossoNumero;
+         FPURL.SetPathURI( '/boletos/'+LNossoNumero );
     end;
-    tpConsultaDetalhe:  FPURL := FPURL + '/boletos?numeroCliente='+LContrato+'&codigoModalidade=1&nossoNumero='+LNossoNumero;
-    tpBaixa:  FPURL := FPURL + '/boletos/'+LNossoNumero+'/baixar';
+    tpConsultaDetalhe:  FPURL.SetPathURI( '/boletos?numeroCliente='+LContrato+'&codigoModalidade=1&nossoNumero='+LNossoNumero );
+    tpBaixa:  FPURL.SetPathURI( '/boletos/'+LNossoNumero+'/baixar' );
     tpConsulta:
     begin
       if ((LIdArquivo > 0) and (LCodigoSolicitacao > 0)) then    {Download do(s) arquivo(s) de movimentação.}
-         FPURL := FPURL + '/boletos/movimentacoes/download?numeroCliente='+LContrato+'&codigoSolicitacao='+inttostr(LCodigoSolicitacao)+'&idArquivo='+inttostr(LIdArquivo)
+         FPURL.SetPathURI( '/boletos/movimentacoes/download?numeroCliente='+LContrato+'&codigoSolicitacao='+inttostr(LCodigoSolicitacao)+'&idArquivo='+inttostr(LIdArquivo) )
       else if ((LIdArquivo=0) and (LCodigoSolicitacao > 0)) then  {Consultar a situação da solicitação da movimentação}
-         FPURL := FPURL + '/boletos/movimentacoes?numeroCliente='+LContrato+'&codigoSolicitacao='+inttostr(LCodigoSolicitacao)
+         FPURL.SetPathURI( '/boletos/movimentacoes?numeroCliente='+LContrato+'&codigoSolicitacao='+inttostr(LCodigoSolicitacao) )
       else if ((LIdArquivo=0) and (LCodigoSolicitacao=0)) then     {Solicitar a movimentação da carteira de cobrança registrada para beneficiário informado}
-         FPURL := FPURL + '/boletos/movimentacoes'
+         FPURL.SetPathURI( '/boletos/movimentacoes' )
       else
         raise EACBrBoletoWSException.Create
           ('Para sicoob seguir a ordem para o processo de consulta em lista')
@@ -972,7 +975,10 @@ begin
 
   if Assigned(OAuth) then
   begin
-    OAuth.URL := C_URL_OAUTH_PROD;
+    case OAuth.Ambiente of
+      tawsProducao: OAuth.URL.URLProducao := C_URL_OAUTH_PROD;
+      tawsHomologacao: OAuth.URL.URLHomologacao := C_URL_OAUTH_HOM;
+    end;
     OAuth.Payload := True;
   end;
 end;

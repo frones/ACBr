@@ -48,14 +48,12 @@ uses
 type
   TBoletoW_Kobana = class(TBoletoWSREST)
   private
-    FProducao: Boolean;
     procedure RequiscaoJson;
     procedure RequisicaoAltera;
     procedure RequisicaoConsulta;
     procedure RequisicaoConsultaDetalhe;
     procedure BuscarDadosCarteira;
 
-    function GetBaseURL(pCommand: string = ''): string;
     function ACBrTituloToBankBillet(pACBrTitulo: TACBrTitulo): TBankBillet;
     function GetBoletoID: Integer;
     function TratarRetornoBoletoID: Integer;
@@ -385,31 +383,34 @@ end;
 
 procedure TBoletoW_Kobana.DefinirURL;
 begin
-  FProducao := Boleto.Configuracoes.WebService.Ambiente = tawsProducao;
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao    : FPURL.URLProducao    := BASE_URL_PRD;
+    tawsHomologacao : FPURL.URLHomologacao := BASE_URL_HOM;
+  end;
 
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui:
-      FPURL := GetBaseURL(BANK_BILLETS);
+      FPURL.SetPathURI(BANK_BILLETS);
     tpAltera:
       begin
         if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaOutrasAlteracoes then
-          FPURL := FPURL + GetBaseURL(BANK_BILLETS) + '/' + IntToStr(GetBoletoID);
+          FPURL.SetPathURI(BANK_BILLETS + '/' + IntToStr(GetBoletoID));
 
         if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaBaixaporPagtoDiretoCedente then
-          FPURL := FPURL + GetBaseURL(BANK_BILLETS) + '/' + IntToStr(GetBoletoID) + '/pay';
+          FPURL.SetPathURI(BANK_BILLETS + '/' + IntToStr(GetBoletoID) + '/pay');
       end;
     tpConsulta:
       begin
-        FPURL := GetBaseURL(BANK_BILLETS) + '?' + DefinirParametros;
+        FPURL.SetPathURI(BANK_BILLETS + '?' + DefinirParametros);
         FMetodoHTTP := htGET;
       end;
     tpConsultaDetalhe:
       begin
-        FPURL := GetBaseURL(BANK_BILLETS) + '/' + IntToStr(GetBoletoID);
+        FPURL.SetPathURI(BANK_BILLETS + '/' + IntToStr(GetBoletoID));
         FMetodoHTTP := htGET;
       end;
     tpBaixa:
-      FPURL := FPURL + GetBaseURL(BANK_BILLETS) + '/' + IntToStr(GetBoletoID) + '/cancel';
+      FPURL.SetPathURI(BANK_BILLETS + '/' + IntToStr(GetBoletoID) + '/cancel');
   end;
 end;
 
@@ -422,7 +423,7 @@ function TBoletoW_Kobana.EncontrarBoleto: Boolean;
 var
   lConsultaBoletoKobana: TConsultaBoleto;
 begin
-  lConsultaBoletoKobana := TConsultaBoleto.Create(Boleto, ATitulo, GetBaseURL);
+  lConsultaBoletoKobana := TConsultaBoleto.Create(Boleto, ATitulo, FPURL.GetURL);
   try
     case Boleto.Configuracoes.WebService.Operacao of
       tpInclui, tpAltera:
@@ -498,16 +499,6 @@ end;
 function TBoletoW_Kobana.GetTokenAutenticacao: string;
 begin
   Result := Boleto.Cedente.CedenteWS.ClientSecret;
-end;
-
-function TBoletoW_Kobana.GetBaseURL(pCommand: string): string;
-begin
-  if FProducao then
-    Result := BASE_URL_PRD
-  else
-    Result := BASE_URL_HOM;
-
-  Result := Result + pCommand;
 end;
 
 function TBoletoW_Kobana.GetBoletoID: Integer;
@@ -620,8 +611,11 @@ procedure TBoletoW_Kobana.BuscarDadosCarteira;
 var
   lRetornoDadosCarteiraKobana: TRetornoCarteira;
 begin
-  FProducao := Boleto.Configuracoes.WebService.Ambiente = tawsProducao;
-  lRetornoDadosCarteiraKobana := TRetornoCarteira.Create(Boleto, GetBaseURL);
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao    : FPURL.URLProducao    := BASE_URL_PRD;
+    tawsHomologacao : FPURL.URLHomologacao := BASE_URL_HOM;
+  end;
+  lRetornoDadosCarteiraKobana := TRetornoCarteira.Create(Boleto, FPURL.GetURL);
   try
     Boleto.Banco.TipoCobranca := Boleto.GetTipoCobranca(Boleto.Banco.Numero);
 

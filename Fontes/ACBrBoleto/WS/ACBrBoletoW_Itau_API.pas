@@ -108,21 +108,27 @@ type
 
   const
 
-  C_URL_PIX     = 'https://secure.api.itau/pix_recebimentos_conciliacoes/v2';
-  C_URL_PIX_HOM = 'https://sandbox.devportal.itau.com.br/itau-ep9-gtw-pix-recebimentos-conciliacoes-v2-ext/v2';
+  C_URL_PIX         = 'https://secure.api.itau/pix_recebimentos_conciliacoes/v2';
+  C_URL_PIX_HOM     = C_URL_PIX;
+  C_URL_PIX_SANDBOX = 'https://sandbox.devportal.itau.com.br/itau-ep9-gtw-pix-recebimentos-conciliacoes-v2-ext/v2';
 
-  C_URL =     'https://api.itau.com.br/cash_management/v2';
-  C_URL_HOM = 'https://sandbox.devportal.itau.com.br/itau-ep9-gtw-cash-management-ext-v2/v2';
+  C_URL         = 'https://api.itau.com.br/cash_management/v2';
+  C_URL_HOM     = C_URL;
+  C_URL_SANDBOX = 'https://sandbox.devportal.itau.com.br/itau-ep9-gtw-cash-management-ext-v2/v2';
 
-  C_URL_CONSULTA = 'https://secure.api.cloud.itau.com.br/boletoscash/v2';
+  C_URL_CONSULTA         = 'https://secure.api.cloud.itau.com.br/boletoscash/v2';
+  C_URL_CONSULTA_HOM     = '';
+  C_URL_CONSULTA_SANDBOX = 'https://sandbox.devportal.itau.com.br/itau-ep9-gtw-cash-management-ext-v2/v2';
 
-  C_URL_FRANCESAS_PROD = 'https://boletos.cloud.itau.com.br/boletos/v3/francesas';
-  C_URL_FRANCESAS_HOM  = 'https://sandbox.devportal.itau.com.br/itau-ep9-gtw-boletos-boletos-v3-ext-aws/v1';
+
+  C_URL_FRANCESAS_PROD     = 'https://boletos.cloud.itau.com.br/boletos/v3/francesas';
+  C_URL_FRANCESAS_HOM      = C_URL_FRANCESAS_PROD;
+  C_URL_FRANCESAS_SANDBOX  = 'https://sandbox.devportal.itau.com.br/itau-ep9-gtw-boletos-boletos-v3-ext-aws/v1/francesas';
 
 
-  C_URL_OAUTH_PROD = 'https://sts.itau.com.br/api/oauth/token';
-
-  C_URL_OAUTH_HOM = 'https://devportal.itau.com.br/api/jwt';
+  C_URL_OAUTH_PROD    = 'https://sts.itau.com.br/api/oauth/token';
+  C_URL_OAUTH_HOM     = C_URL_OAUTH_PROD;
+  C_URL_OAUTH_SANDBOX = 'https://devportal.itau.com.br/api/jwt';
 
   C_ACCEPT_PIX = 'application/json';
   C_ACCEPT     = '';
@@ -141,39 +147,55 @@ uses
 
 procedure TBoletoW_Itau_API.DefinirURL;
 begin
-
-  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente in [tawsProducao, tawsHomologacao], C_URL, C_URL_HOM);
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao    : FPURL.URLProducao    := C_URL;
+    tawsHomologacao : FPURL.URLHomologacao := C_URL_HOM;
+    tawsSandBox     : FPURL.URLSandBox     := C_URL_SANDBOX;
+  end;
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui:
       begin
         if Boleto.Cedente.CedenteWS.IndicadorPix then
-         FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente in [tawsProducao, tawsHomologacao], C_URL_PIX, C_URL_PIX_HOM) + '/boletos_pix'
+        begin
+          case Boleto.Configuracoes.WebService.Ambiente of
+            tawsProducao    : FPURL.URLProducao    := C_URL_PIX;
+            tawsHomologacao : FPURL.URLHomologacao := C_URL_PIX_HOM;
+            tawsSandBox     : FPURL.URLSandBox     := C_URL_PIX_SANDBOX;
+          end;
+          FPURL.SetPathURI(  '/boletos_pix' );
+        end         
         else
-         FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente  in [tawsProducao, tawsHomologacao], C_URL, C_URL_HOM) + '/boletos';
+         FPURL.SetPathURI( '/boletos' );
       end;
-
-    tpConsulta:
-      begin
-         if Assigned(Boleto.Configuracoes.WebService.Filtro) then
-         begin
-           case Boleto.Configuracoes.WebService.Filtro.indicadorSituacao of
-            isbNenhum:
-              FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente  in [tawsProducao, tawsHomologacao], C_URL_CONSULTA, C_URL_HOM) + '/boletos?' + DefinirParametros;
-            else
-              FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente  in [tawsProducao, tawsHomologacao], C_URL_FRANCESAS_PROD, C_URL_FRANCESAS_HOM) + DefinirParametros;
-           end;
-         end;
-      end;
-
+    tpConsulta,
     tpConsultaDetalhe:
-      FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente  in [tawsProducao, tawsHomologacao],
-        C_URL_CONSULTA, C_URL_HOM) + '/boletos?' + DefinirParametros;
+      begin
+        case Boleto.Configuracoes.WebService.Ambiente of
+          tawsProducao    : FPURL.URLProducao    := C_URL_CONSULTA;
+          tawsHomologacao : FPURL.URLHomologacao := C_URL_CONSULTA_HOM;
+          tawsSandBox     : FPURL.URLSandBox     := C_URL_CONSULTA_SANDBOX;
+        end;
+
+        FPURL.SetPathURI( '/boletos?' + DefinirParametros );
+
+        if (Boleto.Configuracoes.WebService.Operacao = tpConsulta) and
+           Assigned(Boleto.Configuracoes.WebService.Filtro) and
+          (Boleto.Configuracoes.WebService.Filtro.indicadorSituacao <> isbNenhum) then
+          begin
+            case Boleto.Configuracoes.WebService.Ambiente of
+              tawsProducao    : FPURL.URLProducao    := C_URL_FRANCESAS_PROD;
+              tawsHomologacao : FPURL.URLHomologacao := C_URL_FRANCESAS_HOM;
+              tawsSandBox     : FPURL.URLSandBox     := C_URL_FRANCESAS_SANDBOX;
+            end;
+            FPURL.SetPathURI( DefinirParametros );
+          end;
+      end;
 
     tpAltera:
-      FPURL := FPURL + '/boletos/' + DefinirParametros;
+      FPURL.SetPathURI( '/boletos/' + DefinirParametros );
 
     tpBaixa:
-      FPURL := FPURL + '/boletos/' + DefinirParametros;
+      FPURL.SetPathURI( '/boletos/' + DefinirParametros );
   end;
 end;
 
@@ -1292,10 +1314,11 @@ begin
 
   if Assigned(OAuth) then
   begin
-    if OAuth.Ambiente in [tawsProducao, tawsHomologacao] then
-      OAuth.URL := C_URL_OAUTH_PROD
-    else
-      OAuth.URL := C_URL_OAUTH_HOM;
+    case OAuth.Ambiente of
+      tawsProducao    : OAuth.URL.URLProducao    := C_URL_OAUTH_PROD;
+      tawsHomologacao : OAuth.URL.URLHomologacao := C_URL_OAUTH_HOM;
+      tawsSandBox     : OAuth.URL.URLSandBox     := C_URL_OAUTH_SANDBOX;
+    end;
 
     OAuth.Payload := True;
   end;

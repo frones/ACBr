@@ -103,14 +103,17 @@ begin
   if Assigned(Atitulo) then
     LNossoNumeroCorrespondente := ATitulo.NossoNumeroCorrespondente;
 
-  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL, C_URL_HOM);
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao    : FPURL.URLProducao    := C_URL;
+    tawsHomologacao : FPURL.URLHomologacao := C_URL_HOM;
+  end;
 
   case Boleto.Configuracoes.WebService.Operacao of
-    tpInclui           :    FPURL := FPURL + '/';
-    tpAltera           :    FPURL := FPURL + '/' + LNossoNumeroCorrespondente;
-    tpConsultaDetalhe  :    FPURL := FPURL + '/' + LNossoNumeroCorrespondente;
+    tpInclui           :    FPURL.SetPathURI( '/' );
+    tpAltera           :    FPURL.SetPathURI( '/' + LNossoNumeroCorrespondente );
+    tpConsultaDetalhe  :    FPURL.SetPathURI( '/' + LNossoNumeroCorrespondente );
     tpCancelar,
-    tpBaixa            :    FPURL := FPURL + '/' + LNossoNumeroCorrespondente+'/cancel';
+    tpBaixa            :    FPURL.SetPathURI( '/' + LNossoNumeroCorrespondente+'/cancel' );
   end;
 end;
 
@@ -409,10 +412,10 @@ begin
 
   if Assigned(OAuth) then
   begin
-    if OAuth.Ambiente = tawsProducao then
-      OAuth.URL := C_URL_OAUTH_PROD
-    else
-      OAuth.URL := C_URL_OAUTH_HOM;
+    case OAuth.Ambiente of
+      tawsProducao: OAuth.URL.URLProducao := C_URL_OAUTH_PROD;
+      tawsHomologacao: OAuth.URL.URLHomologacao := C_URL_OAUTH_HOM;
+    end;
 
     OAuth.Payload := not (OAuth.Ambiente = tawsProducao);
   end;

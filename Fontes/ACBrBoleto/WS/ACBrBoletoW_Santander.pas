@@ -122,7 +122,6 @@ end;
 
 procedure TBoletoW_Santander.DefinirURL;
 begin
-  FPURL := '';
   DefinirServicoEAction;
   FPVersaoServico := Boleto.Configuracoes.WebService.VersaoDF;
 end;
@@ -131,7 +130,7 @@ procedure TBoletoW_Santander.DefinirServicoEAction;
 var
   Acao: String;
 begin
-  FPURL := C_COBRANCAV3_URL;
+  FPURL.URLProducao := C_COBRANCAV3_URL;
   FPSoapEnvelopeAtributtes := C_COBRANCAV3_SOAP_ATTRIBUTTES;
   FPSoapAction  := 'INCLUSAO';
 
@@ -140,13 +139,13 @@ begin
     tpTicket:
       begin
         Acao  := TipoOperacaoToStr( tpTicket );
-        FPURL := C_TICKET_URL;
+        FPURL.URLProducao := C_TICKET_URL;
         FPSoapEnvelopeAtributtes := C_TICKET_SOAP_ATTRIBUTTES;
         FPSoapAction  := 'TICKET';
       end;
   end;
 
-  FPServico := FPURL;
+  FPServico := FPURL.GetURL;
   FPSoapAction := Acao;
 end;
 

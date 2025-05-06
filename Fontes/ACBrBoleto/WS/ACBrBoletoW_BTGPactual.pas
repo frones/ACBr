@@ -108,18 +108,18 @@ begin
     LBankSlipID := ATitulo.NossoNumeroCorrespondente;
 
   case Boleto.Configuracoes.WebService.Ambiente of
-    tawsProducao    : FPURL := C_URL;
-    tawsHomologacao : FPURL := C_URL_HOMOLOGACAO;
-    tawsSandBox     : FPURL := C_URL_HOMOLOGACAO;
+    tawsProducao    : FPURL.URLProducao    := C_URL;
+    tawsHomologacao : FPURL.URLHomologacao := C_URL_HOMOLOGACAO;
+    tawsSandBox     : FPURL.URLSandBox     := C_URL_HOMOLOGACAO;
   end;
 
   case Boleto.Configuracoes.WebService.Operacao of
-     tpInclui         : FPURL := FPURL + LConvenio;
-     tpAltera         : FPURL := FPURL + LBankSlipID + LConvenio;
+     tpInclui         : FPURL.SetPathURI( LConvenio );
+     tpAltera         : FPURL.SetPathURI( LBankSlipID + LConvenio );
      tpConsulta,
-     tpConsultaDetalhe: FPURL := FPURL + LConvenio + DefinirParametros;
+     tpConsultaDetalhe: FPURL.SetPathURI( LConvenio + DefinirParametros );
      tpBaixa,
-     tpCancelar       : FPURL := FPURL + LBankSlipID + LConvenio;
+     tpCancelar       : FPURL.SetPathURI( LBankSlipID + LConvenio );
   end;
 end;
 
@@ -462,9 +462,9 @@ begin
   if Assigned(OAuth) then
   begin
     case OAuth.Ambiente of
-      tawsProducao    : OAuth.URL := C_URL_OAUTH_PROD;
-      tawsHomologacao : OAuth.URL := C_URL_OAUTH_HOMOLOGACAO;
-      tawsSandBox     : OAuth.URL := C_URL_OAUTH_HOMOLOGACAO;
+      tawsProducao    : OAuth.URL.URLProducao := C_URL_OAUTH_PROD;
+      tawsHomologacao : OAuth.URL.URLHomologacao := C_URL_OAUTH_HOMOLOGACAO;
+      tawsSandBox     : OAuth.URL.URLSandBox := C_URL_OAUTH_HOMOLOGACAO;
     end;
 
     OAuth.Payload := True;

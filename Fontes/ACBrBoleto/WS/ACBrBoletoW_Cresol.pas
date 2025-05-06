@@ -98,20 +98,25 @@ procedure TBoletoW_Cresol.DefinirURL;
 var
    LNossoNumero: string;
 begin
-   if( aTitulo <> nil ) then
-      LNossoNumero := OnlyNumber(aTitulo.NossoNumeroCorrespondente);
-   FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL,C_URL_HOM);
-   case Boleto.Configuracoes.WebService.Operacao of
-      tpInclui:  FPURL := FPURL + 'titulos/';
-      tpAltera:
-      begin
-         if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarVencimento then
-            FPURL := FPURL + 'titulos/' + LNossoNumero;// Feito um Put com a DtVencimento para alterar o vencimento.
-      end;
-      tpConsultaDetalhe:  FPURL := FPURL + 'titulos/' + LNossoNumero;//Se não tiver IDBolApi, vai pela URL que traz todos os boletos
-      tpConsulta:  FPURL := FPURL + 'titulos?' + RequisicaoConsulta;
-      tpBaixa:  FPURL := FPURL + 'titulos/' + LNossoNumero + '/operacao/baixar';
-   end;
+  if( aTitulo <> nil ) then
+    LNossoNumero := OnlyNumber(aTitulo.NossoNumeroCorrespondente);
+
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao    : FPURL.URLProducao    := C_URL;
+    tawsHomologacao : FPURL.URLHomologacao := C_URL_HOM;
+  end;
+
+  case Boleto.Configuracoes.WebService.Operacao of
+    tpInclui:  FPURL.SetPathURI(  'titulos/' );
+    tpAltera:
+    begin
+       if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarVencimento then
+          FPURL.SetPathURI(  'titulos/' + LNossoNumero );// Feito um Put com a DtVencimento para alterar o vencimento.
+    end;
+    tpConsultaDetalhe:  FPURL.SetPathURI(  'titulos/' + LNossoNumero );//Se não tiver IDBolApi, vai pela URL que traz todos os boletos
+    tpConsulta:  FPURL.SetPathURI(  'titulos?' + RequisicaoConsulta );
+    tpBaixa:  FPURL.SetPathURI(  'titulos/' + LNossoNumero + '/operacao/baixar' );
+  end;
 end;
 
 function TBoletoW_Cresol.RequisicaoConsulta:string;
@@ -388,17 +393,17 @@ end;
 
 constructor TBoletoW_Cresol.Create(ABoletoWS: TBoletoWS);
 begin
-   inherited Create(ABoletoWS);
-   FPAccept := C_ACCEPT;
-   if Assigned(OAuth) then
-   begin
-      if OAuth.Ambiente = tawsProducao then
-         OAuth.URL := C_URL_TOKEN
-      else
-         OAuth.URL := C_URL_TOKEN_HOM;
+  inherited Create(ABoletoWS);
+  FPAccept := C_ACCEPT;
+  if Assigned(OAuth) then
+  begin
+    case OAuth.Ambiente of
+      tawsProducao: OAuth.URL.URLProducao := C_URL_TOKEN;
+      tawsHomologacao: OAuth.URL.URLHomologacao := C_URL_TOKEN_HOM;
+    end;
 
-      OAuth.Payload := True;
-   end;
+    OAuth.Payload := True;
+  end;
 end;
 
 function TBoletoW_Cresol.GerarRemessa: string;

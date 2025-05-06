@@ -123,27 +123,29 @@ procedure TBoletoW_Sicredi_APIV2.DefinirURL;
 var
   LId: String;
 begin
-  FPURL     := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao,C_URL, C_URL_HOM);
-
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao   : FPURL.URLProducao    := C_URL;
+    tawsHomologacao: FPURL.URLHomologacao := C_URL_HOM;
+  end;
   if ATitulo <> nil then
 		LId      := DefinirNossoNumero;
 
   case Boleto.Configuracoes.WebService.Operacao of
-    tpInclui                : FPURL := FPURL + '/boletos' ;
-    tpConsulta              : FPURL := FPURL + '/boletos/liquidados/dia' + '?' + DefinirParametros;
-    tpConsultaDetalhe       : FPURL := FPURL + '/boletos?' + DefinirParametrosDetalhe;
-    tpBaixa                 : FPURL := FPURL + '/boletos/'+ LId + '/baixa';
+    tpInclui                : FPURL.SetPathURI( '/boletos' );
+    tpConsulta              : FPURL.SetPathURI( '/boletos/liquidados/dia' + '?' + DefinirParametros );
+    tpConsultaDetalhe       : FPURL.SetPathURI( '/boletos?' + DefinirParametrosDetalhe );
+    tpBaixa                 : FPURL.SetPathURI( '/boletos/'+ LId + '/baixa' );
     tpAltera                :
     begin
       case ATitulo.OcorrenciaOriginal.Tipo of
-        toRemessaAlterarVencimento  : FPURL := FPURL + '/boletos/'+ LId + '/data-vencimento';
-        toRemessaConcederAbatimento : FPURL := FPURL + '/boletos/'+ LId + '/conceder-abatimento';
+        toRemessaAlterarVencimento  : FPURL.SetPathURI( '/boletos/'+ LId + '/data-vencimento' );
+        toRemessaConcederAbatimento : FPURL.SetPathURI( '/boletos/'+ LId + '/conceder-abatimento' );
         toRemessaAlterarOutrosDados :
         begin
           case ATitulo.OcorrenciaOriginal.ComplementoOutrosDados of
-            TCompDesconto : FPURL := FPURL + '/boletos/'+ LId + '/desconto';
-            TCompJurosDia : FPURL := FPURL + '/boletos/'+ LId + '/juros';
-            TCompDataLimiteDesconto : FPURL := FPURL + '/boletos/'+ LId + '/data-desconto';
+            TCompDesconto : FPURL.SetPathURI( '/boletos/'+ LId + '/desconto' );
+            TCompJurosDia : FPURL.SetPathURI( '/boletos/'+ LId + '/juros' );
+            TCompDataLimiteDesconto : FPURL.SetPathURI( '/boletos/'+ LId + '/data-desconto' );
             else
               raise EACBrBoletoWSException.Create(ClassName +
                 ' Não Implementado DefinirURL/Operação/tpAltera para ocorrência 31 - Complemento - '+
@@ -711,10 +713,10 @@ begin
 
   if Assigned(OAuth) then
   begin
-    if OAuth.Ambiente = tawsProducao then
-      OAuth.URL := C_URL_OAUTH_PROD
-    else
-      OAuth.URL := C_URL_OAUTH_HOM;
+    case OAuth.Ambiente of
+      tawsProducao: OAuth.URL.URLProducao := C_URL_OAUTH_PROD;
+      tawsHomologacao: OAuth.URL.URLHomologacao := C_URL_OAUTH_HOM;
+    end;
 
     OAuth.Payload := True;
   end;

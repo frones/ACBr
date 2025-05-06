@@ -154,7 +154,7 @@ end;
 procedure TBoletoW_Credisis.DefinirServicoEAction;
 Var Servico: String;
 begin
-  FPURL := C_URL;
+  FPURL.URLProducao := C_URL;
 
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui : Servico := 'INCLUSAO';
@@ -180,7 +180,6 @@ end;
 
 procedure TBoletoW_Credisis.DefinirURL;
 begin
-  FPURL := '';
   DefinirServicoEAction;
 end;
 

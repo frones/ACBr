@@ -56,7 +56,8 @@ uses
   ACBrUtil.XMLHTML,
   httpsend,
   ACBrBoletoWS.Rest.OAuth,
-  ACBrUtil.DateTime;
+  ACBrUtil.DateTime,
+  ACBrBoletoWS.URL;
 
 type
 
@@ -65,7 +66,9 @@ type
   TBoletoWS          = class;
   TRetornoEnvioClass = class;
 
-    { TBoletoWSClass }
+
+
+  { TBoletoWSClass }
   TBoletoWSClass = class
   private
     FGerador     : TGerador;
@@ -77,7 +80,7 @@ type
     FRetornoBanco: TRetornoEnvioClass;
     FOAuth       : TOAuth;
   protected
-
+    FPURL          : TACBrBoletoWebServiceURL;
     FRetornoWS   : String;
     FPDadosMsg   : String;
     FTipoRegistro: String;
@@ -320,6 +323,8 @@ begin
 
   FIntervaloEnvio := 0;
   FQuantidadeMaximoEnvioIntervalo := 0;
+
+  FPURL           := TACBrBoletoWebServiceURL.Create(FBoletoWS.FBoleto.Configuracoes.WebService);
 end;
 
 destructor TBoletoWSClass.Destroy;
@@ -327,6 +332,7 @@ begin
   FGerador.Free;
   FOAuth.Free;
   FHTTPSend.Destroy;
+  FPURL.Free;
   inherited Destroy;
 end;
 

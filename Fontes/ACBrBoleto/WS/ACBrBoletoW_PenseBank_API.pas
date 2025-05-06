@@ -110,25 +110,28 @@ uses
 
 procedure TBoletoW_PenseBank_API.DefinirURL;
 begin
-  FPURL     := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao,C_URL, C_URL_HOM);
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao   : FPURL.URLProducao    := C_URL;
+    tawsHomologacao: FPURL.URLHomologacao := C_URL_HOM;
+  end;
 
   case Boleto.Configuracoes.WebService.Operacao of
-    tpInclui           : FPURL := FPURL + '/Boleto';
-    tpConsulta         : FPURL := FPURL + '/BoletoConsulta';
-    tpConsultaDetalhe  : FPURL := FPURL + '/BoletoConsultaLista';
+    tpInclui           : FPURL.SetPathURI( '/Boleto' );
+    tpConsulta         : FPURL.SetPathURI( '/BoletoConsulta' );
+    tpConsultaDetalhe  : FPURL.SetPathURI( '/BoletoConsultaLista' );
     tpAltera           :
       begin
         case ATitulo.OcorrenciaOriginal.Tipo of
          ToRemessaAlterarVencimento:
-           FPURL := FPURL + '/BoletoProrrogacao';
+           FPURL.SetPathURI( '/BoletoProrrogacao' );
           ToRemessaProtestar:
-            FPURL := FPURL + '/BoletoProtesto';
+            FPURL.SetPathURI( '/BoletoProtesto' );
           ToRemessaPedidoNegativacao, ToRemessaNegativacaoSerasa, ToRemessaExcluirNegativacaoBaixar, ToRemessaExcluirNegativacaoSerasaBaixar:
-            FPURL := FPURL + '/BoletoNegativacao';
+            FPURL.SetPathURI( '/BoletoNegativacao' );
         end;
       end;
-    tpBaixa            : FPURL := FPURL + '/BoletoBaixa';
-    tpCancelar         : FPURL := FPURL + '/BoletoCancelamento';
+    tpBaixa            : FPURL.SetPathURI( '/BoletoBaixa' );
+    tpCancelar         : FPURL.SetPathURI( '/BoletoCancelamento' );
   end;
 
 end;

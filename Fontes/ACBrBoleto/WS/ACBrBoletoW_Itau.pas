@@ -100,9 +100,10 @@ uses
 
 procedure TBoletoW_Itau.DefinirURL;
 begin
-  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao,
-    C_URL, C_URL_HOM);
-
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao: FPURL.URLProducao := C_URL;
+    tawsHomologacao: FPURL.URLHomologacao := C_URL_HOM;
+  end;
 end;
 
 procedure TBoletoW_Itau.DefinirContentType;
@@ -740,10 +741,10 @@ begin
 
   if Assigned(OAuth) then
   begin
-    if OAuth.Ambiente = tawsProducao then
-      OAuth.URL := C_URL_OAUTH_PROD
-    else
-      OAuth.URL := C_URL_OAUTH_HOM;
+    case OAuth.Ambiente of
+      tawsProducao: OAuth.URL.URLProducao := C_URL_OAUTH_PROD;
+      tawsHomologacao: OAuth.URL.URLHomologacao := C_URL_OAUTH_HOM;
+    end;
 
     OAuth.Payload := True;
   end;

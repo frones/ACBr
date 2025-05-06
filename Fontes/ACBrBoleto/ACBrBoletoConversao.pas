@@ -93,6 +93,9 @@ type
   {Definir Metodo HTTP}
   TMetodoHTTP = (htPOST, htGET, htPATCH, htPUT, htDELETE);
 
+  {Tipo Ambiente WS Boleto}
+  TTipoAmbienteWS = (tawsProducao, tawsHomologacao, tawsSandBox);
+
   {Type Generico para passar parametros para Body e Header das requisicoes}
   TParams = record
     prName,PrValue:String;
@@ -114,7 +117,7 @@ type
 
   function StrToMetodoHTTP(out ok: Boolean; const s: String): TMetodoHTTP;
   function MetodoHTTPToStr(const t: TMetodoHTTP): String;
-
+  function AmbienteBoletoWSToStr(const AAmbiente : TTipoAmbienteWS) : String;
 const
   CFormatoDataPadrao = 'ddmmyyyy';
   S_MIME_TYPE = 'text/xml';
@@ -213,6 +216,14 @@ begin
                               [htPOST, htGET, htPATCH, htPUT, htDELETE]);
 end;
 
+function AmbienteBoletoWSToStr(const AAmbiente : TTipoAmbienteWS) : String;
+begin
+  case AAmbiente of
+    tawsProducao    : Result := 'Produção';
+    tawsHomologacao : Result := 'Homologação';
+    tawsSandbox     : Result := 'SandBox';
+  end;
+end;
 
 end.
 

@@ -106,9 +106,12 @@ type
 const
   C_URL            = 'https://api.bb.com.br/cobrancas/v2';
   C_URL_HOM        = 'https://api.hm.bb.com.br/cobrancas/v2';
+  C_URL_SANDBOX    = 'https://api.sandbox.bb.com.br/cobrancas/v2';
 
-  C_URL_OAUTH_PROD = 'https://oauth.bb.com.br/oauth/token';
-  C_URL_OAUTH_HOM  = 'https://oauth.sandbox.bb.com.br/oauth/token';
+  C_URL_OAUTH_PROD    = 'https://oauth.bb.com.br/oauth/token';
+  C_URL_OAUTH_SANDBOX = 'https://oauth.sandbox.bb.com.br/oauth/token';
+  C_URL_OAUTH_HOM     = C_URL_OAUTH_SANDBOX;
+
 
   C_ACCEPT         = 'application/json';
   C_AUTHORIZATION  = 'Authorization';
@@ -133,7 +136,12 @@ uses
 procedure TBoletoW_BancoBrasil_API.DefinirURL;
 var DevAPP, ID, NConvenio : String;
 begin
-  FPURL     := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao,C_URL, C_URL_HOM);
+  case Boleto.Configuracoes.WebService.Ambiente of
+    tawsProducao    : FPURL.URLProducao    := C_URL;
+    tawsHomologacao : FPURL.URLHomologacao := C_URL_HOM;
+    tawsSandBox     : FPURL.URLSandBox     := C_URL_SANDBOX;
+  end;
+
   DevAPP    := '?gw-dev-app-key='+Boleto.Cedente.CedenteWS.KeyUser;
 
   if ATitulo <> nil then
@@ -142,14 +150,14 @@ begin
   NConvenio := OnlyNumber(Boleto.Cedente.Convenio);
 
   case Boleto.Configuracoes.WebService.Operacao of
-    tpInclui           : FPURL := FPURL + '/boletos' + DevAPP;
-    tpConsulta         : FPURL := FPURL + '/boletos' + DevAPP + '&' + DefinirParametros;
-    tpAltera           : FPURL := FPURL + '/boletos/'+ ID + DevAPP;
-    tpConsultaDetalhe  : FPURL := FPURL + '/boletos/'+ ID + DevAPP + '&numeroConvenio='+ NConvenio;
-    tpBaixa            : FPURL := FPURL + '/boletos/'+ ID + '/baixar'+DevAPP;
-    tpPIXCriar         : FPURL := FPURL + '/boletos/'+ ID + '/gerar-pix' + DevAPP;
-    tpPIXCancelar      : FPURL := FPURL + '/boletos/'+ ID + '/cancelar-pix' + DevAPP;
-    tpPIXConsultar     : FPURL := FPURL + '/boletos/'+ ID + '/pix' + DevAPP + '&numeroConvenio='+ NConvenio;
+    tpInclui           : FPURL.SetPathURI( '/boletos' + DevAPP );
+    tpConsulta         : FPURL.SetPathURI( '/boletos' + DevAPP + '&' + DefinirParametros );
+    tpAltera           : FPURL.SetPathURI( '/boletos/'+ ID + DevAPP );
+    tpConsultaDetalhe  : FPURL.SetPathURI( '/boletos/'+ ID + DevAPP + '&numeroConvenio='+ NConvenio );
+    tpBaixa            : FPURL.SetPathURI( '/boletos/'+ ID + '/baixar'+DevAPP );
+    tpPIXCriar         : FPURL.SetPathURI( '/boletos/'+ ID + '/gerar-pix' + DevAPP );
+    tpPIXCancelar      : FPURL.SetPathURI( '/boletos/'+ ID + '/cancelar-pix' + DevAPP );
+    tpPIXConsultar     : FPURL.SetPathURI( '/boletos/'+ ID + '/pix' + DevAPP + '&numeroConvenio='+ NConvenio );
   end;
 
 end;
@@ -1112,8 +1120,12 @@ begin
 
   if Assigned(OAuth) then
   begin
-    OAuth.URL := IfThen(OAuth.Ambiente = tawsHomologacao, C_URL_OAUTH_HOM , C_URL_OAUTH_PROD ) ;
-    
+    case OAuth.Ambiente of
+      tawsProducao   : OAuth.URL.URLProducao    := C_URL_OAUTH_PROD;
+      tawsHomologacao: OAuth.URL.URLHomologacao := C_URL_OAUTH_HOM;
+      tawsSandBox    : OAuth.URL.URLSandBox     := C_URL_OAUTH_SANDBOX;
+    end;
+
     OAuth.Payload := not (OAuth.Ambiente = tawsProducao);
   end;
 end;

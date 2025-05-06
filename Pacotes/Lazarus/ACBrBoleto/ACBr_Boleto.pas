@@ -39,7 +39,7 @@ uses
   ACBrBoletoRet_Cresol, ACBrBoletoW_Cresol, ACBrBancoCora, ACBrBoletoW_Cora, 
   ACBrBoletoRet_Cora, ACBrBoletoW_Kobana, ACBrBoletoRet_Kobana, 
   ACBrBoletoKobana.Classes, ACBrBancoSulcredi, ACBrBoletoW_BTGPactual, 
-  ACBrBoletoRet_BTGPactual, ACBrBancoCredisan, LazarusPackageIntf;
+  ACBrBoletoRet_BTGPactual, ACBrBancoCredisan, ACBrBoletoWS.URL, LazarusPackageIntf;
 
 implementation
 

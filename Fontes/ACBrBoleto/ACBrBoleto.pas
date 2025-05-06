@@ -141,7 +141,8 @@ type
     cobBancoSisprime,
     cobBancoAilos,
     cobBancoCora,
-    cobBancoSulcredi
+    cobBancoSulcredi,
+    cobBancoCredisan
     );
 
   TACBrTitulo = class;
@@ -1004,8 +1005,6 @@ type
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
-
-  TTipoAmbienteWS = (tawsProducao, tawsHomologacao, tawsSandBox);
 
   TACBrWebService = class(TDFeSSL)
   private
@@ -2137,7 +2136,8 @@ Uses {$IFNDEF NOGUI}Forms,{$ENDIF}
      ACBrBancoUY3,
      ACBrBancoBocomBBM,
      ACBrBancoCora,
-	 ACBrBancoSulcredi;
+	   ACBrBancoSulcredi,
+     ACBrBancoCredisan;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -3874,6 +3874,7 @@ begin
     077: Result := cobBancoInter;
     084: Result := cobUniprimeNortePR;
     085: Result := cobBancoCECRED;
+    089: Result := cobBancoCredisan;
     091: Result := cobUnicredRS;
     097: Result := cobCrediSIS;
     099: Result := cobUniprime;
@@ -4240,6 +4241,7 @@ begin
             if (ValorMoraJuros > 0) and (CodigoMora = '0') then
               CodigoMora := '1';
 
+            CodigoMulta         := TACBrCodigoMulta(IniBoletos.ReadInteger(Sessao,'CodigoMulta', 0));
             CodigoMoraJuros     := TACBrCodigoJuros(IniBoletos.ReadInteger(Sessao,'CodigoMoraJuros', 2 ));
             CodigoGeracao       := IniBoletos.ReadString(Sessao,'CodigoGeracao','2');
             Competencia         := IniBoletos.ReadString(Sessao,'Competencia', Competencia);
@@ -4829,6 +4831,7 @@ begin
      cobBancoUY3             : fBancoClass := TACBrBancoUY3.create(Self);               {457}
      cobBancoCora            : fBancoClass := TACBrBancoCora.create(Self);              {403}
      cobBancoSulcredi        : fBancoClass := TACBrBancoSulcredi.create(Self);          {322}
+     cobBancoCredisan        : fBancoClass := TACBrBancoCredisan.create(Self);          {089}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

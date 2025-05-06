@@ -143,6 +143,7 @@ contains
   ACBrBoletoKobana.Classes in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoKobana.Classes.pas',
   ACBrBoletoRet_Kobana in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Kobana.pas',
   ACBrBoletoW_BTGPactual in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_BTGPactual.pas',
-  ACBrBoletoRet_BTGPactual in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_BTGPactual.pas';
+  ACBrBoletoRet_BTGPactual in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_BTGPactual.pas',
+  ACBrBancoCredisan in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCredisan.pas';
 
 end.

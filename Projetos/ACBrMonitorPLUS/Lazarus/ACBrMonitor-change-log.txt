@@ -43,6 +43,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+07/05/2025
+-- ACBrMonitor1, DoBoletoUnit, ACBrMonitorConfig --
+[*] #TK-7024 Add no monitor LayoutVersaoLote que não estava sendo alimentada.
+  https://www.projetoacbr.com.br/forum/topic/80746-remessa-cobran%C3%A7a-caixa-layout-cnab400/page/2/
+  Por: Daniel de Morais InfoCotidiano
+
 
 05/05/2025
 -- ACBrMonitor1 --

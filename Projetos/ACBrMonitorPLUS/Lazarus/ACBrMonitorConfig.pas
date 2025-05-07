@@ -3158,6 +3158,7 @@ begin
     PrefixArqRemessa       := '';
     KeySoftwareHouse       := '';
     VersaoArquivo          := '';
+    VersaoLote             := '';
   end;
 
   with BOLETO.Relatorio do

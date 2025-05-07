@@ -238,6 +238,15 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'rps', 1, 10, 1,
                                              NFSe.IdentificacaoRps.Numero, ''));
 
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'codigo_nbs', 1, 12, 1,
+                                                   NFSe.Servico.CodigoNBS, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cidade_local_prest', 1, 60, 1,
+                                   NFSe.Servico.MunicipioPrestacaoServico, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'uf_local_prest', 2, 2, 1,
+                                                 NFSe.Servico.UFPrestacao, ''));
+
   Result := True;
 end;
 

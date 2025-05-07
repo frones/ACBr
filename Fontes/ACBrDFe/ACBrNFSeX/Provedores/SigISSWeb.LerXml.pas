@@ -245,6 +245,10 @@ begin
     IdentificacaoRps.Numero := ObterConteudo(ANode.Childrens.FindAnyNs('rps'), tcStr);
 
     CodigoVerificacao := ObterConteudo(ANode.Childrens.FindAnyNs('codigo'), tcStr);
+
+    Servico.CodigoNBS := ObterConteudo(ANode.Childrens.FindAnyNs('codigo_nbs'), tcStr);
+    Servico.MunicipioPrestacaoServico := ObterConteudo(ANode.Childrens.FindAnyNs('cidade_local_prest'), tcStr);
+    Servico.UFPrestacao := ObterConteudo(ANode.Childrens.FindAnyNs('uf_local_prest'), tcStr);
   end;
 
   LerCampoLink;
@@ -345,6 +349,10 @@ begin
 
     IdentificacaoRps.Serie := ObterConteudo(ANode.Childrens.FindAnyNs('serie_rps'), tcStr);
     IdentificacaoRps.Numero := ObterConteudo(ANode.Childrens.FindAnyNs('rps'), tcStr);
+
+    Servico.CodigoNBS := ObterConteudo(ANode.Childrens.FindAnyNs('codigo_nbs'), tcStr);
+    Servico.MunicipioPrestacaoServico := ObterConteudo(ANode.Childrens.FindAnyNs('cidade_local_prest'), tcStr);
+    Servico.UFPrestacao := ObterConteudo(ANode.Childrens.FindAnyNs('uf_local_prest'), tcStr);
   end;
 end;
 

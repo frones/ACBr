@@ -664,7 +664,7 @@ begin
 
   Result := ParseText(Result);
   Result := RemoverIdentacao(Result);
-  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverDeclaracaoXML(Result, True);
   Result := RemoverPrefixosDesnecessarios(Result);
   Result := RemoverCaracteresDesnecessarios(Result);
   Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);

@@ -59,6 +59,9 @@ namespace ACBrLib.NFSe
         public delegate int NFSE_ObterXml(int AIndex, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int NFSE_ObterXmlRps(int AIndex, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFSE_GravarXml(int AIndex, string eNomeArquivo, string ePathArquivo);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -196,6 +199,7 @@ namespace ACBrLib.NFSe
             AddMethod<NFSE_CarregarLoteXML>("NFSE_CarregarLoteXML");
             AddMethod<NFSE_CarregarINI>("NFSE_CarregarINI");
             AddMethod<NFSE_ObterXml>("NFSE_ObterXml");
+            AddMethod<NFSE_ObterXmlRps>("NFSE_ObterXmlRps");
             AddMethod<NFSE_GravarXml>("NFSE_GravarXml");
             AddMethod<NFSE_ObterIni>("NFSE_ObterIni");
             AddMethod<NFSE_GravarIni>("NFSE_GravarIni");

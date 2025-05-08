@@ -173,6 +173,19 @@ namespace ACBrLib.NFSe
 
             return ProcessResult(buffer, bufferLen);
         }
+		
+        public string ObterXmlRps(int aIndex)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<NFSE_ObterXmlRps>();
+            var ret = ExecuteMethod(() => method(libHandle, aIndex, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }		
 
         public void GravarXml(int aIndex, string eNomeArquivo = "", string ePathArquivo = "")
         {

@@ -328,11 +328,11 @@ namespace ACBrLib.NFe.Demo
                 ACBrNFe.Config.DFe.DadosPFX = txtDadosPFX.Text;
 
                 //Config Arquivos
-                ACBrNFe.Config.SalvarGer = ckbSalvarArqs.Checked;
+                ACBrNFe.Config.SalvarArq = ckbSalvarArqs.Checked;
                 ACBrNFe.Config.SepararPorMes = ckbPastaMensal.Checked;
                 ACBrNFe.Config.AdicionarLiteral = ckbAdicionaLiteral.Checked;
                 ACBrNFe.Config.EmissaoPathNFe = ckbEmissaoPathNFe.Checked;
-                ACBrNFe.Config.SalvarArq = ckbSalvaPathEvento.Checked;
+                ACBrNFe.Config.SalvarEvento = ckbSalvaPathEvento.Checked;
                 ACBrNFe.Config.SepararPorCNPJ = ckbSepararPorCNPJ.Checked;
                 ACBrNFe.Config.SepararPorModelo = ckbSepararPorModelo.Checked;
                 ACBrNFe.Config.PathNFe = txtArqNFe.Text;
@@ -427,11 +427,11 @@ namespace ACBrLib.NFe.Demo
             txtDadosPFX.Text = ACBrNFe.Config.DFe.DadosPFX;
 
             //Config Arquivos
-            ckbSalvarArqs.Checked = ACBrNFe.Config.SalvarGer;
+            ckbSalvarArqs.Checked = ACBrNFe.Config.SalvarArq;
             ckbPastaMensal.Checked = ACBrNFe.Config.SepararPorMes;
             ckbAdicionaLiteral.Checked = ACBrNFe.Config.AdicionarLiteral;
             ckbEmissaoPathNFe.Checked = ACBrNFe.Config.EmissaoPathNFe;
-            ckbSalvaPathEvento.Checked = ACBrNFe.Config.SalvarArq;
+            ckbSalvaPathEvento.Checked = ACBrNFe.Config.SalvarEvento;
             ckbSepararPorCNPJ.Checked = ACBrNFe.Config.SepararPorCNPJ;
             ckbSepararPorModelo.Checked = ACBrNFe.Config.SepararPorModelo;
             txtArqNFe.Text = ACBrNFe.Config.PathNFe;

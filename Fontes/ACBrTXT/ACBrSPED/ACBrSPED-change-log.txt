@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/05/2025
+-- Frm_SPEDFiscal.pas --
+[*] #SEM-TK - EFDICMSIPI - Melhorados controles para versão de acordo com o ano no programa de exemplo
+    por: Renato Rubinho
+
 23/04/2025
 -- ACBrEPCBloco_C_Class, ACBrEPCBloco_D_Class --
 [*] #TK-6923 - EFDContribuições - Consideradas datas de tratamento de alterações utilizando EncodeDate ao invés de StrToDate

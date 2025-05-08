@@ -103,9 +103,10 @@ type
     procedure btnB_CompletoClick(Sender: TObject);
     procedure btnB_GClick(Sender: TObject);
     procedure btnCancelaGeracaoClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     procedure LoadToMemo;
-    function AnoToVersao: TACBrVersaoLeiauteSPEDFiscal;
+    function AnoToVersao(ADtRef: TDateTime): TACBrVersaoLeiauteSPEDFiscal;
     { Private declarations }
   public
     { Public declarations }
@@ -133,46 +134,33 @@ begin
   memoError.Lines.Add(MsnError);
 end;
 
-function TFrmSPEDFiscal.AnoToVersao: TACBrVersaoLeiauteSPEDFiscal;
+function TFrmSPEDFiscal.AnoToVersao(ADtRef: TDateTime): TACBrVersaoLeiauteSPEDFiscal;
 var
   xVer: string;
+  iVer: integer;
+  Ano: integer;
 begin
-  if (DtRef.DateTime >= StrToDate('01/01/2009')) and (DtRef.DateTime <= StrToDate('31/12/2009')) then
-    xVer := '002'
-  else if (DtRef.DateTime >= StrToDate('01/01/2010')) and (DtRef.DateTime <= StrToDate('31/12/2010')) then
-    xVer := '003'
-  else if (DtRef.DateTime >= StrToDate('01/01/2011')) and (DtRef.DateTime <= StrToDate('31/12/2011')) then
-    xVer := '004'
-  else if (DtRef.DateTime >= StrToDate('01/01/2012')) and (DtRef.DateTime <= StrToDate('30/06/2012')) then
-    xVer := '005'
-  else if (DtRef.DateTime >= StrToDate('01/07/2012')) and (DtRef.DateTime <= StrToDate('31/12/2012')) then
-    xVer := '006'
-  else if (DtRef.DateTime >= StrToDate('01/01/2013')) and (DtRef.DateTime <= StrToDate('31/12/2013')) then
-    xVer := '007'
-  else if (DtRef.DateTime >= StrToDate('01/01/2014')) and (DtRef.DateTime <= StrToDate('31/12/2014')) then
-    xVer := '008'
-  else if (DtRef.DateTime >= StrToDate('01/01/2015')) and (DtRef.DateTime <= StrToDate('31/12/2015')) then
-    xVer := '009'
-  else if (DtRef.DateTime >= StrToDate('01/01/2016')) and (DtRef.DateTime <= StrToDate('31/12/2016')) then
-    xVer := '010'
-  else if (DtRef.DateTime >= StrToDate('01/01/2017')) and (DtRef.DateTime <= StrToDate('31/12/2017')) then
-    xVer := '011'
-  else if (DtRef.DateTime >= StrToDate('01/01/2018')) and (DtRef.DateTime <= StrToDate('31/12/2018')) then
-    xVer := '012'
-  else if (DtRef.DateTime >= StrToDate('01/01/2019')) and (DtRef.DateTime <= StrToDate('31/12/2019')) then
-    xVer := '013'
-  else if (DtRef.DateTime >= StrToDate('01/01/2020')) and (DtRef.DateTime <= StrToDate('31/12/2020')) then
-    xVer := '014'
-  else if (DtRef.DateTime >= StrToDate('01/01/2021')) and (DtRef.DateTime <= StrToDate('31/12/2021')) then
-    xVer := '015'
-  else if (DtRef.DateTime >= StrToDate('01/01/2022')) and (DtRef.DateTime <= StrToDate('31/12/2022')) then
-    xVer := '016'
-  else if (DtRef.DateTime >= StrToDate('01/01/2023')) and (DtRef.DateTime <= StrToDate('31/12/2023')) then
-    xVer := '017'
-  else if (DtRef.DateTime >= StrToDate('01/01/2024')) and (DtRef.DateTime <= StrToDate('31/12/2024')) then
-    xVer := '018'
+  Ano := YearOf(ADtRef);
+
+  if Ano < 2009 then
+    iVer := YearOf(now) - 2006
+  else if Ano < 2012 then
+    iVer := Ano - 2007
+  else if Ano = 2012 then
+  begin
+    if MonthOf(ADtRef) < 7 then
+      iVer := 5
+    else
+      iVer := 6
+  end
   else
-    xVer := '019';
+    iVer := Ano - 2006;
+
+  if iVer > StrToIntDef(TACBrVersaoLeiauteSPEDFiscalArrayofstrings[High(TACBrVersaoLeiauteSPEDFiscalArrayofstrings)],-1) then
+    xVer := TACBrVersaoLeiauteSPEDFiscalArrayofstrings[High(TACBrVersaoLeiauteSPEDFiscalArrayofstrings)]
+  else
+    xVer := Format('%.3d', [iVer]);
+
   Result := StrToCodVer(xVer);
 end;
 
@@ -208,7 +196,7 @@ begin
     // Dados da Empresa
     with Registro0000New do
     begin
-      COD_VER := AnoToVersao;
+      COD_VER := AnoToVersao(DtRef.DateTime);
       COD_FIN := raOriginal;
       NOME := 'RAZÃO SOCIAL DA EMPRESA EMITENTE';
       CNPJ := '11111111000191';
@@ -1451,6 +1439,12 @@ end;
 procedure TFrmSPEDFiscal.edtFileChange(Sender: TObject);
 begin
   ACBrSPEDFiscal1.Arquivo := edtFile.Text;
+end;
+
+procedure TFrmSPEDFiscal.FormCreate(Sender: TObject);
+begin
+  DtRef.Date := IncMonth(now, -1);
+  DtRef.Date := EncodeDate(YearOf(DtRef.Date),MonthOf(DtRef.Date),1);
 end;
 
 procedure TFrmSPEDFiscal.LoadToMemo;

@@ -58,6 +58,14 @@ type
     function GetTEFPayKitAPI: TACBrTEFPayKitAPI;
 
     procedure QuandoGravarLogAPI(const ALogLine: String; var Tratado: Boolean);
+    procedure QuandoExibirMensagemAPI(const Mensagem: String;
+      TipoMensagem: TACBrTEFPayKitTipoMensagem; MilissegundosExibicao: Integer);
+    procedure QuandoPerguntarMenuAPI(const Titulo: String; Opcoes: TStringList;
+      var ItemSelecionado: Integer);
+    procedure QuandoPerguntarCampoAPI(DefinicaoCampo: TACBrTEFPayKitDefinicaoCampo;
+      var Resposta: String; var Acao: Integer);
+
+    procedure QuandoExibirQRCodeAPI(const DadosQRCode: String);
 
   protected
     procedure InterpretarRespostaAPI; override;
@@ -130,6 +138,10 @@ begin
   with GetTEFPayKitAPI do
   begin
     OnGravarLog := QuandoGravarLogAPI;
+    OnExibeMensagem := QuandoExibirMensagemAPI;
+    QuandoPerguntarMenu := QuandoPerguntarMenuAPI;
+    QuandoPerguntarCampo := QuandoPerguntarCampoAPI;
+    QuandoExibirQRCode := QuandoExibirQRCodeAPI;
   end;
 end;
 
@@ -156,10 +168,12 @@ begin
     NumeroEmpresa := StrToIntDef(fpACBrTEFAPI.DadosTerminal.CodEmpresa, 0);
     NumeroLoja := StrToIntDef(fpACBrTEFAPI.DadosTerminal.CodFilial, 0);
     NumeroPDV := StrToIntDef(fpACBrTEFAPI.DadosTerminal.CodTerminal, 0);
+    PortaPinPad := fpACBrTEFAPI.DadosTerminal.PortaPinPad;
 
     s := fpACBrTEFAPI.DadosTerminal.EnderecoServidor;
-    if (copy(s, Length(s)-1, 1) <> ':') then  // Informou parâmetro TLS ?
-      s := s + ':1';                    // Se não informou, assume como ligado
+    if (s <> '') then
+      if (copy(s, Length(s)-1, 1) <> ':') then  // Informou parâmetro TLS ?
+        s := s + ':1';                    // Se não informou, assume como ligado
     ConfiguracaoIpPortaSsl := s;
 
     Inicializar;
@@ -175,9 +189,9 @@ begin
 end;
 
 procedure TACBrTEFAPIClassPayKit.InterpretarRespostaAPI;
-var
-  i: Integer;
-  AChave, AValue: String;
+//var
+//  i: Integer;
+//  AChave, AValue: String;
 begin
   fpACBrTEFAPI.UltimaRespostaTEF.Clear;
   fpACBrTEFAPI.UltimaRespostaTEF.ViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
@@ -215,9 +229,106 @@ begin
   Tratado := True;
 end;
 
-function TACBrTEFAPIClassPayKit.EfetuarAdministrativa(CodOperacaoAdm: TACBrTEFOperacao): Boolean;
+procedure TACBrTEFAPIClassPayKit.QuandoExibirMensagemAPI(
+  const Mensagem: String; TipoMensagem: TACBrTEFPayKitTipoMensagem;
+  MilissegundosExibicao: Integer);
 var
-  Param1: String;
+  tela: TACBrTEFAPITela;
+begin
+  case TipoMensagem of
+    msgInfo: tela := telaCliente;
+    msgAlerta: tela := telaOperador;
+    msgErro: tela := telaOperador;
+    msgAdicional: tela := telaCliente;
+    msgTerminal: tela := telaTodas;
+  else
+    tela := telaTodas;
+  end;
+
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem( Mensagem, tela, MilissegundosExibicao);
+end;
+
+procedure TACBrTEFAPIClassPayKit.QuandoPerguntarMenuAPI(const Titulo: String;
+  Opcoes: TStringList; var ItemSelecionado: Integer);
+begin
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( Titulo, Opcoes, ItemSelecionado);
+end;
+
+procedure TACBrTEFAPIClassPayKit.QuandoPerguntarCampoAPI(
+  DefinicaoCampo: TACBrTEFPayKitDefinicaoCampo; var Resposta: String;
+  var Acao: Integer);
+var
+  def: TACBrTEFAPIDefinicaoCampo;
+  Validado, Cancelado: Boolean;
+begin
+  def.TituloPergunta := DefinicaoCampo.TituloPergunta;
+  def.ValorInicial := DefinicaoCampo.ValorInicial;
+  def.MascaraDeCaptura := DefinicaoCampo.MascaraDeCaptura;
+  def.TamanhoMaximo := DefinicaoCampo.TamanhoMaximo;
+  def.ValorMaximo := Trunc(DefinicaoCampo.ValorMaximo);
+  def.TamanhoMinimo := DefinicaoCampo.TamanhoMinimo;
+  def.ValorMinimo := Trunc(DefinicaoCampo.ValorMinimo);
+  def.TipoDeEntrada := tedTodos;
+
+  case DefinicaoCampo.TipoDeEntrada of
+    teBarrasDigitado:
+      begin
+        def.TipoDeEntrada := tedNumerico;
+        def.TipoEntradaCodigoBarras := tbDigitado;
+      end;
+
+    teBarrasLido:
+      def.TipoEntradaCodigoBarras := tbLeitor;
+
+    teValidade:
+      begin
+        def.TipoDeEntrada := tedNumerico;
+        def.MascaraDeCaptura := '@@/@@';
+        def.ValidacaoDado := valdMesAno;
+      end;
+
+    teData:
+      begin
+        def.TipoDeEntrada := tedNumerico;
+        def.MascaraDeCaptura := '@@/@@/@@';
+        def.ValidacaoDado := valdDiaMesAno;
+      end;
+
+    teCodSeguranca:
+      begin
+        def.TipoDeEntrada := tedNumerico;
+        def.TamanhoMinimo := 3;
+        def.OcultarDadosDigitados := True;
+      end;
+
+    teCartao, teValor, teNumero, teValorEspecial:
+      begin
+        def.TipoDeEntrada := tedNumerico;
+      end;
+  end;
+
+  Validado := True;
+  Cancelado := False;
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarCampo(def, Resposta, Validado, Cancelado);
+
+  if Cancelado then
+    Acao := -1
+  else
+    Acao := 0;
+end;
+
+procedure TACBrTEFAPIClassPayKit.QuandoExibirQRCodeAPI(const DadosQRCode: String);
+begin
+  with TACBrTEFAPI(fpACBrTEFAPI) do
+  begin
+    if Assigned( QuandoExibirQRCode ) then
+      QuandoExibirQRCode( DadosQRCode );
+  end;
+end;
+
+function TACBrTEFAPIClassPayKit.EfetuarAdministrativa(CodOperacaoAdm: TACBrTEFOperacao): Boolean;
+//var
+//  Param1: String;
 begin
   //fTEFPayKitAPI.DadosDaTransacao.Clear;
   Result := False;
@@ -225,7 +336,7 @@ begin
   //  CodOperacaoAdm := PerguntarMenuAdmScope;
 
   Result := True;
-  Param1 := '';
+  //Param1 := '';
 
   case CodOperacaoAdm of
     tefopVersao:

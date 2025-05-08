@@ -59,11 +59,61 @@ resourcestring
   sErrLibJaInicializada = 'Biblioteca DPOSDRV já foi inicializada';
   sErrLibNaoInicializada = 'Biblioteca DPOSDRV ainda NÃO foi carregada';
   sErrDirPayKitInvalido = 'Subdiretório "%s" do PayKit, não encontrado na Pasta: %s';
+  sErrEventoNaoAtribuido = 'Evento %s não atribuido';
 
 type
   EACBrTEFPayKitAPI = class(Exception);
 
+  TACBrTEFPayKitTipoOperacao = ( opAV,   // À Vista
+                                 opFL,   // Financiamento Lojista
+                                 opFA ); // Financiamento Administradora
+
   TACBrTEFPayKitGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
+
+  TACBrTEFPayKitTipoMensagem = (msgInfo, msgAlerta, msgErro, msgAdicional, msgTerminal);
+
+  TACBrTEFPayKitQuandoExibirMensagem = procedure(
+    const Mensagem: String;
+    TipoMensagem: TACBrTEFPayKitTipoMensagem;
+    MilissegundosExibicao: Integer  // 0 - Para com OK;
+    ) of object;                    // Positivo - Aguarda N milissegundos, e apaga a msg;
+                                    // Negativo - Apenas exibe a Msg (não aguarda e não apaga msg)
+
+  TACBrTEFPayKitQuandoPerguntarMenu = procedure(
+    const Titulo: String;
+    Opcoes: TStringList;
+    var ItemSelecionado: Integer) of object;  // Retorna o Item Selecionado, iniciando com 0
+                                              // -2 - Volta no Fluxo
+                                              // -1 - Cancela o Fluxo
+
+  TACBrTEFPayKitTiposEntrada = ( teCartao,
+                                 teBarrasDigitado,
+                                 teBarrasLido,
+                                 teValidade,
+                                 teData,
+                                 teCodSeguranca,
+                                 teValor,
+                                 teNumero,
+                                 teString,
+                                 teValorEspecial);
+
+  TACBrTEFPayKitDefinicaoCampo = record
+    TituloPergunta: String;
+    MascaraDeCaptura: String;
+    TipoDeEntrada: TACBrTEFPayKitTiposEntrada;
+    TamanhoMinimo: Integer;
+    TamanhoMaximo: Integer;
+    ValorMinimo : Double;
+    ValorMaximo : Double;
+    ValorInicial: String;
+  end;
+
+  TACBrTEFAPIQuandoPerguntarCampo = procedure(
+    DefinicaoCampo: TACBrTEFPayKitDefinicaoCampo;
+    var Resposta: String;
+    var Acao: Integer) of object ;     // 0 - O operador digitou o valor, -1 - A operação foi cancelada
+
+  TACBrTEFPayKitQuandoExibirQRCode = procedure(const DadosQRCode: String) of object ;
 
   TACBrTEFPayKitCallBackDisplayTerminal = procedure(pMensagem: PAnsiChar);
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -127,6 +177,10 @@ type
     fCarregada: Boolean;
     fCNPJEstabelecimento: String;
     fConfiguracaoIpPortaSsl: String;
+    fOnExibeMensagem: TACBrTEFPayKitQuandoExibirMensagem;
+    fQuandoExibirQRCode: TACBrTEFPayKitQuandoExibirQRCode;
+    fQuandoPerguntarCampo: TACBrTEFAPIQuandoPerguntarCampo;
+    fQuandoPerguntarMenu: TACBrTEFPayKitQuandoPerguntarMenu;
     fPathPayKit: String;
     fEmTransacao: Boolean;
     fInicializada: Boolean;
@@ -136,6 +190,7 @@ type
     fNumeroLoja: Integer;
     fNumeroPDV: Integer;
     fOnGravarLog: TACBrTEFPayKitGravarLog;
+    fPortaPinPad: String;
     fURLCertificado: String;
     fVersaoAutomacao: String;
 
@@ -303,6 +358,7 @@ type
 
     procedure VerificarCarregada;
     procedure VerificarEAjustarConf;
+    procedure CriarArquivoConfSeNaoExistir;
 
     procedure IdentificacaoAutomacaoComercial;
     procedure ConfiguraModoDesfazimento;
@@ -321,6 +377,14 @@ type
     property EmTransacao: Boolean read fEmTransacao;
 
     property OnGravarLog: TACBrTEFPayKitGravarLog read fOnGravarLog write fOnGravarLog;
+    property OnExibeMensagem: TACBrTEFPayKitQuandoExibirMensagem read fOnExibeMensagem
+      write fOnExibeMensagem;
+    property QuandoPerguntarMenu: TACBrTEFPayKitQuandoPerguntarMenu read fQuandoPerguntarMenu
+      write fQuandoPerguntarMenu;
+    property QuandoPerguntarCampo: TACBrTEFAPIQuandoPerguntarCampo read fQuandoPerguntarCampo
+      write fQuandoPerguntarCampo;
+    property QuandoExibirQRCode: TACBrTEFPayKitQuandoExibirQRCode read fQuandoExibirQRCode
+      write fQuandoExibirQRCode;
 
     procedure Inicializar;
     procedure DesInicializar;
@@ -336,6 +400,20 @@ type
     function ListaArquivosMultimidia: String;
     function LeIdentificacaoPinPad: String;
 
+    procedure TransacaoCartaoCreditoCompleta(ValorTransacao: Double;
+      const NumeroCupomVenda: Integer; var NumeroControle: String;
+      TipoOperacao: TACBrTEFPayKitTipoOperacao; NumeroParcelas: Integer;
+      ValorParcela, ValorTaxaServico: Double; PermiteAlteracao: Boolean;
+      const Reservado: String);
+
+    procedure ExibirMensagem(const AMsg: String; TipoMensagem: TACBrTEFPayKitTipoMensagem = msgInfo;
+      MilissegundosExibicao: Integer = -1);
+    procedure PerguntarMenu(const Titulo: String; Opcoes: TStringList; var ItemSelecionado: Integer);
+    procedure PerguntarCampo(DefinicaoCampo: TACBrTEFPayKitDefinicaoCampo;
+      var Resposta: String; var Acao: Integer);
+
+    procedure ExibirQRCode(const DadosQRCode: String);
+
     property NomeAutomacao: String read fNomeAutomacao write SetNomeAutomacao;
     property VersaoAutomacao: String read fVersaoAutomacao write SetVersaoAutomacao;
     property ModoDesfazimento: Byte read fModoDesfazimento write SetModoDesfazimento default 1;  // 0 - Automático, 1 - Explícito
@@ -347,6 +425,8 @@ type
 
     property ConfiguracaoIpPortaSsl: String read fConfiguracaoIpPortaSsl write SetConfiguracaoIpPortaSsl;
     property URLCertificado: String read fURLCertificado write SetURLCertificado;
+
+    property PortaPinPad: String read fPortaPinPad write fPortaPinPad;
   end;
 
   function GetTEFPayKitAPI: TACBrTEFPayKitAPI;
@@ -365,7 +445,7 @@ type
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
   function CallBackEntraDataValidade(pLabel, pDataValidade: PAnsiChar): LongInt;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-  function CallBackEntraData(pLabel, pDataValidade: PAnsiChar): LongInt;
+  function CallBackEntraData(pLabel, pData: PAnsiChar): LongInt;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
   function CallBackEntraCodigoSeguranca(pLabel, pEntraCodigoSeguranca: PAnsiChar; iTamanhoMax: LongInt): LongInt;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -406,14 +486,13 @@ type
   function CallBackComandos(pParametrosEntrada, pDadosRetorno: PAnsiChar): LongInt;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
-
 var
   vTEFPayKit: TACBrTEFPayKitAPI;
 
 implementation
 
 uses
-  IniFiles, Math,
+  IniFiles, Math, StrUtils,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO;
 
@@ -426,26 +505,38 @@ begin
 end;
 
 procedure CallBackDisplayTerminal(pMensagem: PAnsiChar); {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s: String;
 begin
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackDisplayTerminal( '+String(pMensagem)+' )');
+    s := String(pMensagem);
+    GravarLog('CallBackDisplayTerminal( '+s+' )');
+    ExibirMensagem(s, msgTerminal);
   end;
 end;
 
 procedure CallBackDisplayErro(pMensagem: PAnsiChar); {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s: String;
 begin
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackDisplayErro( '+String(pMensagem)+' )');
+    s := String(pMensagem);
+    GravarLog('CallBackDisplayErro( '+s+' )');
+    ExibirMensagem(s, msgErro);
   end;
 end;
 
 procedure CallBackMensagem(pMensagem: PAnsiChar); {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s: String;
 begin
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackMensagem( '+String(pMensagem)+' )');
+    s := String(pMensagem);
+    GravarLog('CallBackMensagem( '+s+' )');
+    ExibirMensagem(s, msgInfo);
   end;
 end;
 
@@ -454,6 +545,7 @@ begin
   with GetTEFPayKitAPI do
   begin
     GravarLog('CallBackBeep');
+    Beep;
   end;
 end;
 
@@ -463,88 +555,218 @@ begin
   with GetTEFPayKitAPI do
   begin
     GravarLog('CallBackSolicitaConfirmacao( '+String(pMensagem)+' )');
-    { code here }
+    //TODO
     GravarLog('  ret:'+IntToStr(Result))
   end;
 end;
 
 function CallBackEntraCartao(pLabel, pCartao: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s, resp: String;
+  def: TACBrTEFPayKitDefinicaoCampo;
+  acao: Integer;
 begin
   Result := 0;
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackEntraCartao( '+String(pLabel)+' )');
-    { code here }
+    s := String(pLabel);
+    GravarLog('CallBackEntraCartao( '+s+' )');
+    def.TituloPergunta := s;
+    def.TipoDeEntrada := teCartao;
+    def.TamanhoMaximo := 19;
+
+    resp := String(pCartao);
+    acao := 0;
+    PerguntarCampo(def, resp, acao);
+    Result := acao;
+    if (acao >= 0) then
+      move(resp[1], pCartao, Length(resp));
+
     GravarLog('  ret:'+IntToStr(Result)+', Cartao:'+String(pCartao))
   end;
 end;
 
 function CallBackEntraDataValidade(pLabel, pDataValidade: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s, resp: String;
+  def: TACBrTEFPayKitDefinicaoCampo;
+  acao: Integer;
 begin
   Result := 0;
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackEntraDataValidade( '+String(pLabel)+' )');
-    { code here }
-    GravarLog('  ret:'+IntToStr(Result)+', DataValidade:'+String(pDataValidade))
+    s := String(pLabel);
+    GravarLog('CallBackEntraDataValidade( '+s+' )');
+    def.TituloPergunta := s;
+    def.TipoDeEntrada := teValidade;
+
+    resp := String(pDataValidade);
+    acao := 0;
+    PerguntarCampo(def, resp, acao);
+    resp := OnlyNumber(resp);
+    Result := acao;
+    if (acao >= 0) then
+      move(resp[1], pDataValidade, Length(resp));
+
+    GravarLog('  ret:'+IntToStr(Result)+', DataValidade:'+String(pDataValidade));
   end;
 end;
 
-function CallBackEntraData(pLabel, pDataValidade: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+function CallBackEntraData(pLabel, pData: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s, resp: String;
+  def: TACBrTEFPayKitDefinicaoCampo;
+  acao: Integer;
 begin
   Result := 0;
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackEntraData( '+String(pLabel)+' )');
-    { code here }
-    GravarLog('  ret:'+IntToStr(Result)+', DataValidade:'+String(pDataValidade))
+    s := String(pLabel);
+    GravarLog('CallBackEntraData( '+s+' )');
+    def.TituloPergunta := s;
+    def.TipoDeEntrada := teData;
+
+    resp := String(pData);
+    acao := 0;
+    PerguntarCampo(def, resp, acao);
+    resp := OnlyNumber(resp);
+    Result := acao;
+    if (acao >= 0) then
+      move(resp[1], pData, Length(resp));
+
+    GravarLog('  ret:'+IntToStr(Result)+', Data:'+String(pData))
   end;
 end;
 
 function CallBackEntraCodigoSeguranca(pLabel, pEntraCodigoSeguranca: PAnsiChar; iTamanhoMax: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s, resp: String;
+  def: TACBrTEFPayKitDefinicaoCampo;
+  acao: Integer;
 begin
   Result := 0;
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackEntraCodigoSeguranca( '+String(pLabel)+', '+IntToStr(iTamanhoMax)+' )');
-    { code here }
-    GravarLog('  ret:'+IntToStr(Result)+', EntraCodigoSeguranca:'+String(pEntraCodigoSeguranca))
+    s := String(pLabel);
+    GravarLog('CallBackEntraCodigoSeguranca( '+s+', '+IntToStr(iTamanhoMax)+' )');
+    def.TituloPergunta := s;
+    def.TipoDeEntrada := teCodSeguranca;
+    def.TamanhoMaximo := iTamanhoMax;
+
+    resp := String(pEntraCodigoSeguranca);
+    acao := 0;
+    PerguntarCampo(def, resp, acao);
+    Result := acao;
+    if (acao >= 0) then
+      move(resp[1], pEntraCodigoSeguranca, Length(resp));
+
+    GravarLog('  ret:'+IntToStr(Result)+', Cod:'+String(pEntraCodigoSeguranca));
   end;
 end;
 
 function CallBackSelecionaOpcao(pLabel, pOpcoes: PAnsiChar; iOpcaoSelecionada: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  titulo, opcoes, s: String;
+  sl: TStringList;
+  i, p1, p2: Integer;
 begin
   Result := 0;
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackSelecionaOpcao( '+String(pLabel)+', '+String(pOpcoes)+' )');
-    { code here }
-    GravarLog('  ret:'+IntToStr(Result)+', OpcaoSelecionada:'+IntToStr(iOpcaoSelecionada))
+    titulo := String(pLabel);
+    opcoes := String(pOpcoes);
+    GravarLog('CallBackSelecionaOpcao( '+titulo+', '+opcoes+' )');
+    sl := TStringList.Create;
+    try
+      sl.Text := StringReplace(opcoes, '#', sLineBreak, [rfReplaceAll]);
+      for i := 0 to sl.Count-1 do
+      begin
+        s := sl[i];
+        p1 := max(Pos('"' ,s),1);
+        p2 := min(PosEx('"' ,s, p1+1), Length(s));
+        sl[i] := copy(s, p1+1, p2-p1-1);
+      end;
+
+      PerguntarMenu(titulo, sl, iOpcaoSelecionada);
+      if (iOpcaoSelecionada < 0) then     // -2 - Volta no Fluxo, -1 - Cancela o Fluxo
+        Result := -1;
+    finally
+      sl.Free;
+    end;
+    GravarLog('  ret:'+IntToStr(Result)+', OpcaoSelecionada:'+IntToStr(iOpcaoSelecionada));
   end;
 end;
 
 function CallBackEntraValor(pLabel, pValor, pValorMinimo, pValorMaximo: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s, resp, vmin, vmax: String;
+  def: TACBrTEFPayKitDefinicaoCampo;
+  acao: Integer;
 begin
   Result := 0;
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackEntraValor( '+String(pLabel)+', '+String(pValorMinimo)+', '+String(pValorMaximo)+' )');
-    { code here }
-    GravarLog('  ret:'+IntToStr(Result)+', Valor:'+String(pValor))
+    s := String(pLabel);
+    vmin := String(pValorMinimo);
+    vmax := String(pValorMaximo);
+    GravarLog('CallBackEntraValor( '+s+', '+vmin+', '+vmax+' )');
+    def.TituloPergunta := s;
+    def.ValorMinimo := StrToIntDef(vmin, 0)/100;
+    def.ValorMaximo := StrToIntDef(vmax, 0)/100;
+    def.TamanhoMinimo := 1;
+    def.TamanhoMaximo := 12;
+    def.MascaraDeCaptura := '@@@.@@@.@@@.@@@,@@';
+    def.TipoDeEntrada := teValor;
+
+    resp := String(pValor);
+    acao := 0;
+    PerguntarCampo(def, resp, acao);
+    resp := Format('%.12d',[StrToIntDef(OnlyNumber(resp), 0)]) ;
+    Result := acao;
+    if (acao >= 0) then
+      move(resp[1], pValor, Length(resp));
+
+    GravarLog('  ret:'+IntToStr(Result)+', Valor:'+String(pValor));
   end;
 end;
 
 function CallBackEntraNumero(pLabel, pNumero, pNumeroMinimo,
   pNumeroMaximo: PAnsiChar; iMinimoDigitos, iMaximoDigitos,
   iDigitosExatos: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s, resp, vmin, vmax: String;
+  def: TACBrTEFPayKitDefinicaoCampo;
+  acao: Integer;
 begin
   Result := 0;
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackEntraNumero( '+String(pLabel)+', '+String(pNumeroMinimo)+', '+String(pNumeroMaximo)+
-              ', '+IntToStr(iMinimoDigitos)+', '+IntToStr(iMaximoDigitos)+', '+IntToStr(iDigitosExatos)+' )');
-    { code here }
-    GravarLog('  ret:'+IntToStr(Result)+', Numero:'+String(pNumero))
+    s := String(pLabel);
+    vmin := String(pNumeroMinimo);
+    vmax := String(pNumeroMaximo);
+    GravarLog( 'CallBackEntraNumero( '+s+', '+vmin+', '+vmax+', '+
+               IntToStr(iMinimoDigitos)+', '+IntToStr(iMaximoDigitos)+', '+IntToStr(iDigitosExatos)+' )');
+    def.TituloPergunta := s;
+    def.ValorMinimo := StrToIntDef(vmin, 0);
+    def.ValorMaximo := StrToIntDef(vmax, 0);
+    def.TamanhoMinimo := iMinimoDigitos;
+    def.TamanhoMaximo := iMaximoDigitos;
+    if (iDigitosExatos <> 0) then
+    begin
+      def.TamanhoMinimo := iDigitosExatos;
+      def.TamanhoMaximo := iDigitosExatos;
+    end;
+
+    def.TipoDeEntrada := teNumero;
+
+    resp := String(pNumero);
+    acao := 0;
+    PerguntarCampo(def, resp, acao);
+    Result := acao;
+    if (acao >= 0) then
+      move(resp[1], pNumero, Length(resp));
+
+    GravarLog('  ret:'+IntToStr(Result)+', Valor:'+String(pNumero));
   end;
 end;
 
@@ -555,7 +777,7 @@ begin
   begin
     GravarLog('CallBackOperacaoCancelada');
     { code here }
-    GravarLog('  ret:'+IntToStr(Result))
+    GravarLog('  ret:'+IntToStr(Result));
   end;
 end;
 
@@ -566,7 +788,7 @@ begin
   begin
     GravarLog('CallBackSetaOperacaoCancelada( '+BoolToStr(bCancelada, True)+' )');
     { code here }
-    GravarLog('  ret:'+IntToStr(Result))
+    GravarLog('  ret:'+IntToStr(Result));
   end;
 end;
 
@@ -579,29 +801,47 @@ begin
 end;
 
 function CallBackEntraString(pLabel, pString, pTamanhoMaximo: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s, resp: String;
+  def: TACBrTEFPayKitDefinicaoCampo;
+  acao: Integer;
 begin
   Result := 0;
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackEntraString( '+String(pLabel)+', '+String(pTamanhoMaximo)+' )');
-    { code here }
-    GravarLog('  ret:'+IntToStr(Result)+', String:'+String(pString))
+    s := String(pLabel);
+    GravarLog('CallBackEntraString( '+s+', '+String(pTamanhoMaximo)+' )');
+    def.TituloPergunta := s;
+    def.TamanhoMaximo := StrToIntDef(String(pTamanhoMaximo), 0);
+    def.TipoDeEntrada := teString;
+
+    resp := String(pString);
+    acao := 0;
+    PerguntarCampo(def, resp, acao);
+    Result := acao;
+    if (acao >= 0) then
+      move(resp[1], pString, Length(resp));
+
+    GravarLog('  ret:'+IntToStr(Result)+', String:'+String(pString));
   end;
 end;
 
 function CallBackConsultaAVS(cEndereco, cNumero, cApto, cBloco, cCEP, cBairro,
   cCPF: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := 0;
 end;
 
 function CallBackMensagemAdicional(pMensagemAdicional: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s: String;
 begin
   Result := 0;
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackMensagemAdicional( '+String(pMensagemAdicional)+' )');
-    { code here }
+    s := String(pMensagemAdicional);
+    GravarLog('CallBackMensagemAdicional( '+s+' )');
+    ExibirMensagem(s, msgAdicional);
     GravarLog('  ret:'+IntToStr(Result))
   end;
 end;
@@ -618,33 +858,68 @@ begin
 end;
 
 function CallBackEntraCodigoBarras(pLabel, pCampo: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s, resp: String;
+  def: TACBrTEFPayKitDefinicaoCampo;
+  acao: Integer;
 begin
   Result := 0;
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackEntraCodigoBarras( '+String(pLabel)+' )');
-    { code here }
-    GravarLog('  ret:'+IntToStr(Result)+', Campo:'+String(pCampo))
+    s := String(pLabel);
+    with GetTEFPayKitAPI do
+    begin
+      GravarLog('CallBackEntraCodigoBarras( '+s+' )');
+      def.TituloPergunta := s;
+      def.TipoDeEntrada := teBarrasDigitado;
+      resp := '';
+      acao := 0;
+      PerguntarCampo(def, resp, acao);
+      Result := acao;
+      if (acao >= 0) then
+        move(resp[1], pCampo, Length(resp));
+
+      GravarLog('  ret:'+IntToStr(Result)+', Campo:'+String(pCampo));
+    end;
   end;
 end;
 
 function CallBackEntraCodigoBarrasLido(pLabel, pCampo: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s, resp: String;
+  def: TACBrTEFPayKitDefinicaoCampo;
+  acao: Integer;
 begin
   Result := 0;
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackEntraCodigoBarrasLido( '+String(pLabel)+' )');
-    { code here }
-    GravarLog('  ret:'+IntToStr(Result)+', Campo:'+String(pCampo))
+    s := String(pLabel);
+    with GetTEFPayKitAPI do
+    begin
+      GravarLog('CallBackEntraCodigoBarrasLido( '+s+' )');
+      def.TituloPergunta := s;
+      def.TipoDeEntrada := teBarrasLido;
+      resp := '';
+      acao := 0;
+      PerguntarCampo(def, resp, acao);
+      Result := acao;
+      if (acao >= 0) then
+        move(resp[1], pCampo, Length(resp));
+
+      GravarLog('  ret:'+IntToStr(Result)+', Campo:'+String(pCampo));
+    end;
   end;
 end;
 
 procedure CallBackMensagemAlerta(pMensagemAlerta: PAnsiChar); {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s: String;
 begin
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackMensagemAlerta( '+String(pMensagemAlerta)+' )');
-    { code here }
+    s := String(pMensagemAlerta);
+    GravarLog('CallBackMensagemAlerta( '+s+' )');
+    ExibirMensagem(s, msgAlerta, 0);
   end;
 end;
 
@@ -662,22 +937,90 @@ function CallBackSelecionaPlanos(iCodigoRede, iCodigoTransacao,
   iMaxDiasPreDatado: LongInt; pNumeroParcelas, pValorTransacao, pValorParcela,
   pValorEntrada, pData: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := -1;  // Os planos não serão tratados
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackSelecionaPlanos');
+    GravarLog('  ret:'+IntToStr(Result))
+  end;
 end;
 
 function CallBackSelecionaPlanosEx(pSolicitacao, pRetorno: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-
+  Result := -1;  // Os planos não serão tratados
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackSelecionaPlanosEx');
+    GravarLog('  ret:'+IntToStr(Result))
+  end;
 end;
 
 function CallBackEntraValorEspecial(pLabel, pValor, pParametros: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s, resp, p: String;
+  def: TACBrTEFPayKitDefinicaoCampo;
+  acao, decimais: Integer;
 begin
+  Result := 0;
+  with GetTEFPayKitAPI do
+  begin
+    s := String(pLabel);
+    p := String(pParametros);
+    GravarLog('CallBackEntraValorEspecial( '+s+', '+p+' )');
+    def.TituloPergunta := s;
+    def.ValorMinimo := StrToIntDef(copy(p,  1, 12), 0);
+    def.ValorMaximo := StrToIntDef(copy(p, 13, 12), 0);
+    decimais := StrToIntDef(copy(p, 25, 1), 0);
+    def.TipoDeEntrada := teValorEspecial;
+    def.MascaraDeCaptura := '@@@.@@@.@@@.@@@,'+StringOfChar('@', decimais);
 
+    resp := String(pValor);
+    acao := 0;
+    PerguntarCampo(def, resp, acao);
+    resp := Format('%.12d',[StrToIntDef(OnlyNumber(resp), 0)]) ;
+    Result := acao;
+    if (acao >= 0) then
+      move(resp[1], pValor, Length(resp));
+
+    GravarLog('  ret:'+IntToStr(Result)+', Valor:'+String(pValor));
+  end;
 end;
 
 function CallBackComandos(pParametrosEntrada, pDadosRetorno: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s, comando: String;
+  tamanho: integer;
 begin
+  Result := 0;
+  //0 	O comando foi executado corretamente.
+  //-1 	O comando não foi implementado
+  //-2 	Ocorreu um erro ao executar o comando
 
+  // QRCODE
+  // Os comandos são enviados no formato TLV, com código de comando com 3 bytes e tamanho com 6 bytes.
+  // O tamanho se refere ao tamanho dos dados e não ao tamanho total.
+  // Por exemplo, o comando para apresentação de um código QR Code fica assim:
+  // 001000030LINXeFuiMzDmu85TcYCimGcOeMvUwM
+  // Código de comando: 001
+  // Tamanho: 000030
+  // QRCode: LINXeFuiMzDmu85TcYCimGcOeMvUwM
+
+  with GetTEFPayKitAPI do
+  begin
+    s := String(pParametrosEntrada);
+    GravarLog('CallBackComandos( '+s+' )');
+
+    comando := copy(s,1,3);
+    tamanho := StrToIntDef(copy(s, 4, 6), 0);
+    s := copy(s, 11, tamanho);
+
+    if (comando = '001') then
+      ExibirQRCode(s)
+    else
+      Result := -1;
+
+    GravarLog('  ret:'+IntToStr(Result))
+  end;
 end;
 
 { TACBrTEFPayKitAPI }
@@ -691,13 +1034,25 @@ begin
   fInicializada := False;
 
   fNomeAutomacao := '';
+  fPortaPinPad := '';
   fVersaoAutomacao := '';
   fModoDesfazimento := 1;
+
   fOnGravarLog := Nil;
+  fOnExibeMensagem := Nil;
+  fQuandoPerguntarMenu := Nil;
+  fQuandoExibirQRCode := Nil;
+  fQuandoPerguntarCampo := Nil;
 end;
 
 destructor TACBrTEFPayKitAPI.Destroy;
 begin
+  fOnGravarLog := Nil;
+  fOnExibeMensagem := Nil;
+  fQuandoPerguntarMenu := Nil;
+  fQuandoExibirQRCode := Nil;
+  fQuandoPerguntarCampo := Nil;
+
   inherited Destroy;
 end;
 
@@ -707,6 +1062,13 @@ begin
     Exit;
 
   GravarLog('TACBrTEFPayKitAPI.Inicializar');
+
+  if not Assigned(fOnExibeMensagem) then
+    DoException(Format(sErrEventoNaoAtribuido, ['OnExibeMensagem']));
+  if not Assigned(fQuandoPerguntarMenu) then
+    DoException(Format(sErrEventoNaoAtribuido, ['QuandoPerguntarMenu']));
+  if not Assigned(fQuandoPerguntarCampo) then
+    DoException(Format(sErrEventoNaoAtribuido, ['QuandoPerguntarCampo']));
 
   VerificarEAjustarConf;
   LoadLibFunctions;
@@ -905,6 +1267,77 @@ begin
   TratarErroPayKit(iRet);
 end;
 
+procedure TACBrTEFPayKitAPI.TransacaoCartaoCreditoCompleta(
+  ValorTransacao: Double; const NumeroCupomVenda: Integer;
+  var NumeroControle: String; TipoOperacao: TACBrTEFPayKitTipoOperacao;
+  NumeroParcelas: Integer; ValorParcela, ValorTaxaServico: Double;
+  PermiteAlteracao: Boolean; const Reservado: String);
+var
+  iRet: LongInt;
+  pValorTransacao, pNumeroCupomVenda, pTipoOperacao, pNumeroParcelas,
+    pValorParcela, pValorTaxaServico, pPermiteAlteracao, pReservado: AnsiString;
+  pNumeroControle: PAnsiChar;
+begin
+  pValorTransacao := Format('%.12d',[RoundTo(ValorTransacao*100, 0)]);
+  pNumeroCupomVenda := Format('%.6d',[NumeroCupomVenda]);
+  pTipoOperacao := IfThen(TipoOperacao=opAV, 'AV', IfThen(TipoOperacao=opFA, 'FA', 'FL'));
+  pNumeroParcelas := Format('%.2d',[NumeroParcelas]);
+  pValorParcela := Format('%.12d',[RoundTo(ValorParcela*100, 0)]);
+  pValorTaxaServico := Format('%.12d',[RoundTo(ValorTaxaServico*100, 0)]);
+  pPermiteAlteracao := IfThen(PermiteAlteracao, 'S', 'N');
+  pReservado := PadRight('0000', 161);
+
+  pNumeroControle := AllocMem(6);
+  try
+    GravarLog('TransacaoCartaoCreditoCompleta( '+pValorTransacao+', '+pNumeroCupomVenda+', ,'+
+      pTipoOperacao+', '+pNumeroParcelas+', '+pValorParcela+', '+pValorTaxaServico+', '+
+      pPermiteAlteracao+', '+ pReservado+' )');
+    iRet := xTransacaoCartaoCreditoCompleta( PAnsiChar(pValorTransacao),
+                                             PAnsiChar(pNumeroCupomVenda),
+                                             pNumeroControle,
+                                             PAnsiChar(pTipoOperacao),
+                                             PAnsiChar(pNumeroParcelas),
+                                             PAnsiChar(pValorParcela),
+                                             PAnsiChar(pValorTaxaServico),
+                                             PAnsiChar(pPermiteAlteracao),
+                                             PAnsiChar(pReservado));
+    NumeroControle := String(pNumeroControle);
+    GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+NumeroControle);
+    TratarErroPayKit(iRet);
+  finally
+    Freemem(pNumeroControle);
+  end;
+end;
+
+procedure TACBrTEFPayKitAPI.ExibirMensagem(const AMsg: String;
+  TipoMensagem: TACBrTEFPayKitTipoMensagem; MilissegundosExibicao: Integer);
+begin
+  if Assigned(fOnExibeMensagem) then
+    fOnExibeMensagem(AMsg, TipoMensagem, MilissegundosExibicao);
+end;
+
+procedure TACBrTEFPayKitAPI.PerguntarMenu(const Titulo: String;
+  Opcoes: TStringList; var ItemSelecionado: Integer);
+begin
+  if Assigned(fQuandoPerguntarMenu) then
+    fQuandoPerguntarMenu(Titulo, Opcoes, ItemSelecionado);
+end;
+
+procedure TACBrTEFPayKitAPI.PerguntarCampo(
+  DefinicaoCampo: TACBrTEFPayKitDefinicaoCampo; var Resposta: String;
+  var Acao: Integer);
+begin
+  Acao := 0; // 0 - O operador digitou o valor, -1 - A operação foi cancelada
+  if Assigned(fQuandoPerguntarCampo) then
+    fQuandoPerguntarCampo(DefinicaoCampo, Resposta, Acao);
+end;
+
+procedure TACBrTEFPayKitAPI.ExibirQRCode(const DadosQRCode: String);
+begin
+  if Assigned(fQuandoExibirQRCode) then
+    fQuandoExibirQRCode(DadosQRCode);
+end;
+
 procedure TACBrTEFPayKitAPI.IdentificacaoAutomacaoComercial;
 var
   iRet: LongInt;
@@ -961,6 +1394,9 @@ var
   pConfiguracaoIpPortaSsl: AnsiString;
 begin
   pConfiguracaoIpPortaSsl := Trim(fConfiguracaoIpPortaSsl);
+  if (pConfiguracaoIpPortaSsl = '') then
+    Exit;
+
   GravarLog('ConfiguraComunicacaoDTEF( '+pConfiguracaoIpPortaSsl+' )');
   iRet := xConfiguraComunicacaoDTEF(PAnsiChar(pConfiguracaoIpPortaSsl));
   GravarLog('  ret: '+IntToStr(iRet));
@@ -1122,6 +1558,8 @@ var
   p, f: String;
   Ini: TMemIniFile;
 begin
+  CriarArquivoConfSeNaoExistir;
+
   p := CalcPayKitPath(CPayKitDirBin);
   f := p + CPayKitConf;
   if not FileExists(f) then
@@ -1133,6 +1571,40 @@ begin
     Ini.WriteString('CONFIG', 'QTDIRETORIOBASE', p + 'QtApplication' );
     Ini.WriteString('DIRETORIOS', 'CUPONS', PathWithoutDelim(CalcPayKitPath('Cupons')) );
     Ini.WriteString('DIRETORIOS', 'INTERNO', PathWithoutDelim(CalcPayKitPath('Interno')) );
+    if (fPortaPinPad <> '') then
+      Ini.WriteString('PIN', 'PORTA', fPortaPinPad );
+    Ini.UpdateFile;
+  finally
+    Ini.Free;
+  end;
+end;
+
+procedure TACBrTEFPayKitAPI.CriarArquivoConfSeNaoExistir;
+var
+  p, f: String;
+  Ini: TMemIniFile;
+begin
+  p := CalcPayKitPath(CPayKitDirBin);
+  f := p + CPayKitConf;
+  if FileExists(f) then
+    Exit;
+
+  Ini := TMemIniFile.Create(f);
+  try
+    Ini.WriteString('CONFIG', 'DIRETORIOBASE', PathWithoutDelim(p) );
+    Ini.WriteString('CONFIG', 'VERSAODPOS8', '0');
+    Ini.WriteInteger('CONFIG', 'NIVELDEBUG', 10);
+    Ini.WriteString('CONFIG', 'QTDIRETORIOBASE', p + 'QtApplication' );
+    Ini.WriteInteger('CONFIG', 'QTPORTASOCKET', 30000);
+
+    Ini.WriteString('DIRETORIOS', 'CUPONS', PathWithoutDelim(CalcPayKitPath('Cupons')) );
+    Ini.WriteString('DIRETORIOS', 'INTERNO', PathWithoutDelim(CalcPayKitPath('Interno')) );
+
+    Ini.WriteInteger('PIN', 'ProcurarPinpad', 1);
+    Ini.WriteInteger('PIN', 'Ativo', 1);
+    Ini.WriteInteger('PIN', 'TipoBiblioteca', 0);
+    Ini.WriteString('PIN', 'PORTA', fPortaPinPad);
+
     Ini.UpdateFile;
   finally
     Ini.Free;

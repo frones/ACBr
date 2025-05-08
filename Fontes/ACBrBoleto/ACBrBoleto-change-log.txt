@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+08/04/2025
+--ACBrBoletoW_Itau_API, ACBrBoletoRet_Itau_API--
+[*] TK-6698 - Adicionar no envio dados do Avalista/Pagador. Add filtro opcional Carteira na consulta. mapear no retorno datacredito da ocorrencia.
+    https://www.projetoacbr.com.br/forum/topic/82163-contribui%C3%A7%C3%A3o-acbrboletoret_itau_apipas-data-do-cr%C3%A9ditodata-da-compensa%C3%A7%C3%A3o/
+	Por Jaidomini / Daniel Morais InfoCotidano
 
 22/04/2025
 --ACBrBoletoW_Itau_API, ACBrBoletoRet_Itau_API--

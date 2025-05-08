@@ -69,6 +69,10 @@ type
     procedure GerarPessoaPg(AJson: TACBrJSONObject);
     procedure GerarTipoPessoaPg(AJson: TACBrJSONObject);
     procedure GerarEnderecoPg(AJson: TACBrJSONObject);
+    procedure GerarSacadoAvalista(AJson: TACBrJSONObject);
+    procedure GerarPessoaSacAv(AJson: TACBrJSONObject);
+    procedure GerarTipoPessoaSacAv(AJson: TACBrJSONObject);
+    procedure GerarEnderecoSacAv(AJson: TACBrJSONObject);
     procedure GerarDadosIndividuaisBoleto(AJson: TACBrJSONObject);
     procedure GerarMulta(AJson: TACBrJSONObject);
     procedure GerarJuros(AJson: TACBrJSONObject);
@@ -357,6 +361,8 @@ begin
                                  'dataMovimento DataInicio'));
                 LDataInicio := FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio, 'YYYY-MM-DD');
                 LConsulta.Add('/'+LId_Beneficiario+'/movimentacoes?'+'data=' + LDataInicio);
+                if NaoEstaVazio(LCarteira) then
+                  LConsulta.Add('numero_carteira='+LCarteira);
                 LConsulta.Add('tipo_movimentacao='+'liquidacoes');
               end;
               isbCancelado:
@@ -366,6 +372,8 @@ begin
                                  'dataMovimento DataInicio'));
                 LDataInicio := FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio, 'YYYY-MM-DD');
                 LConsulta.Add('/'+LId_Beneficiario+'/movimentacoes?'+'data=' + LDataInicio);
+                if NaoEstaVazio(LCarteira) then
+                  LConsulta.Add('numero_carteira='+LCarteira);
                 LConsulta.Add('tipo_movimentacao='+'baixas');
               end;
               isbAberto:
@@ -683,6 +691,8 @@ begin
     LJsonDados.AddPair('desconto_expresso', 'False');
 
     GerarPagador(LJsonDados);
+    if (ATitulo.Sacado.SacadoAvalista.NomeAvalista<>'') and (Length(ATitulo.Sacado.SacadoAvalista.CNPJCPF)>= 11) then
+       GerarSacadoAvalista(LJsonDados);
     GerarDadosIndividuaisBoleto(LJsonDados);
     GerarMulta(LJsonDados);
     GerarJuros(LJsonDados);
@@ -907,6 +917,74 @@ begin
     GerarPessoaPg(LJsonDadosPagador);
     GerarEnderecoPg(LJsonDadosPagador);
     AJson.AddPair('pagador',LJsonDadosPagador);
+  end;
+end;
+
+procedure TBoletoW_Itau_API.GerarSacadoAvalista(AJson: TACBrJSONObject);
+var
+  LJsonDadosSacadorAvalista: TACBrJSONObject;
+begin
+  if Assigned(ATitulo) and Assigned(AJson) then
+  begin
+    LJsonDadosSacadorAvalista := TacbrJsonObject.Create;
+
+    GerarPessoaSacAv(LJsonDadosSacadorAvalista);
+    GerarEnderecoSacAv(LJsonDadosSacadorAvalista);
+    AJson.AddPair('sacador_avalista',LJsonDadosSacadorAvalista);
+  end;
+end;
+
+procedure TBoletoW_Itau_API.GerarPessoaSacAv(AJson: TACBrJSONObject);
+var
+  LJsonDados: TACBrJSONObject;
+begin
+  if Assigned(ATitulo) and Assigned(AJson) then
+  begin
+    LJsonDados := TACBrJSONObject.Create;
+    LJsonDados.AddPair('nome_pessoa', ATitulo.Sacado.SacadoAvalista.NomeAvalista);
+    GerarTipoPessoaSacAv(LJsonDados);
+
+    AJson.AddPair('pessoa',LJsonDados);
+  end;
+end;
+
+procedure TBoletoW_Itau_API.GerarTipoPessoaSacAv(AJson: TACBrJSONObject);
+var
+  LJsonDados: TACBrJSONObject;
+begin
+  if Assigned(ATitulo) and Assigned(AJson) then
+  begin
+    LJsonDados := TACBrJSONObject.Create;
+
+    if Length(OnlyNumber(ATitulo.Sacado.SacadoAvalista.CNPJCPF)) < 12 then
+    begin
+      LJsonDados.AddPair('codigo_tipo_pessoa', 'F');
+      LJsonDados.AddPair('numero_cadastro_pessoa_fisica', OnlyNumber(ATitulo.Sacado.SacadoAvalista.CNPJCPF));
+    end
+    else
+    begin
+      LJsonDados.AddPair('codigo_tipo_pessoa','J');
+      LJsonDados.AddPair('numero_cadastro_nacional_pessoa_juridica', OnlyNumber(ATitulo.Sacado.SacadoAvalista.CNPJCPF));
+    end;
+
+    AJson.AddPair('tipo_pessoa', LJsonDados);
+  end;
+end;
+
+procedure TBoletoW_Itau_API.GerarEnderecoSacAv(AJson: TACBrJSONObject);
+var
+  LJsonDados: TACBrJSONObject;
+begin
+  if Assigned(ATitulo) and Assigned(AJson) then
+  begin
+    LJsonDados := TacbrJsonObject.Create;
+
+    LJsonDados.AddPair('nome_logradouro', ATitulo.Sacado.SacadoAvalista.Logradouro + ' ' + ATitulo.Sacado.SacadoAvalista.Numero);
+    LJsonDados.AddPair('nome_bairro', ATitulo.Sacado.SacadoAvalista.Bairro);
+    LJsonDados.AddPair('nome_cidade', ATitulo.Sacado.SacadoAvalista.Cidade);
+    LJsonDados.AddPair('sigla_UF', ATitulo.Sacado.SacadoAvalista.UF);
+    LJsonDados.AddPair('numero_CEP', ATitulo.Sacado.SacadoAvalista.CEP);
+    AJson.AddPair('endereco',LJsonDados);
   end;
 end;
 

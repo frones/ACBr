@@ -42,6 +42,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/05/2025
+-- ACBrNFSeXServicos --
+[+] #TK-7020: Incluída a cidade de Nova Ubirata/MT, o provedor é Agili.
+  Por: Diego Reckziegel
+[*] #TK-7029: A cidade de Paulinia/SP trocou de provedor, agora é Giss.
+  Por: jaidomini
+[*] #TK-7031: A cidade de Governador Lindemberg/ES trocou para a versão 2.04,
+    o provedor continua o mesmo: EL.
+  Por: Neski Soluções
+
 07/05/2025
 -- EloTech.Provider --
 [*] #TK-7002: Ajuste no TratarXmlRetornado visando remover todas as ocorrências de

@@ -94,6 +94,9 @@ function NFSE_CarregarINI(const eArquivoOuINI: PAnsiChar): Integer;
 function NFSE_ObterXml(AIndex: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+function NFSE_ObterXmlRps(AIndex: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 function NFSE_GravarXml(AIndex: Integer; const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
@@ -354,6 +357,21 @@ begin
   try
     VerificarLibInicializada(pLib);
     Result := TACBrLibNFSe(pLib^.Lib).ObterXml(AIndex, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_ObterXmlRps(AIndex: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).ObterXmlRps(AIndex, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;

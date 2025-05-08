@@ -73,6 +73,7 @@ exports
   NFSE_CarregarLoteXML,
   NFSE_CarregarINI,
   NFSE_ObterXml,
+  NFSE_ObterXmlRps,
   NFSE_GravarXml,
   NFSE_ObterIni,
   NFSE_GravarIni,

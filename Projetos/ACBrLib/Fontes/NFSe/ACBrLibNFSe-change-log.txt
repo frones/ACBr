@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/05/2025
+-- ACBrLibNFSe.lpr, ACBrLibNFSeBase, ACBrLibNFSeMT, ACBrLibNFSeST, ACBrLibNFSeStaticImport, ACBrLibNFSeStaticImportMT --
+[+] #TK-7027: Adiciona novo método NFSE_ObterXMLRps
+   Por: Diego Folieni
+
 05/03/2025
 -- ACBrLibNFSe.lpi, ACBrLibNFSeDemo.lpi, ACBrLibNFSeConsoleMT.lpi e ACBrLibNFSeConsoleMTDemo.lpi--
 [*] Realizado ajustes nos paths para compilação com os novos scripts do Jenkins.

@@ -44,6 +44,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2025
+-- ACBrECFBloco_0, ACBrECFBloco_X, ACBrECFBloco_X_Class, ACBrECFBlocos --
+[+] #TK-6472 - ECF - Implementado Leiaute 0011
+    https://www.projetoacbr.com.br/forum/topic/81303-publicado-leiaute-11-da-escritura%C3%A7%C3%A3o-cont%C3%A1bil-fiscal/
+    por: Renato Rubinho
+
+-- Diversos --
+[+] #TK-6472 - ECF - Implementados programas de exemplo do ECF em Delphi e Lazarus
+    por: Renato Rubinho
+
 08/05/2025
 -- Frm_SPEDFiscal.pas --
 [*] #SEM-TK - EFDICMSIPI - Melhorados controles para versão de acordo com o ano no programa de exemplo

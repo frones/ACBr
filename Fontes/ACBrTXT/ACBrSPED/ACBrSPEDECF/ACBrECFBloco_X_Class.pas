@@ -66,6 +66,7 @@ type
     FRegistroX354Count: Integer;
     FRegistroX355Count: Integer;
     FRegistroX356Count: Integer;
+    FRegistroX451Count: Integer;
 
     procedure CriaRegistros;overload;
     procedure LiberaRegistros;overload;
@@ -93,6 +94,7 @@ type
     procedure WriteRegistroX420;
     procedure WriteRegistroX430;
     procedure WriteRegistroX450;
+    procedure WriteRegistroX451(RegX450: TRegistroX450);
     procedure WriteRegistroX460;
     procedure WriteRegistroX470;
     procedure WriteRegistroX480;
@@ -128,6 +130,7 @@ type
     function RegistroX420New :TRegistroX420;
     function RegistroX430New :TRegistroX430;
     function RegistroX450New :TRegistroX450;
+    function RegistroX451New :TRegistroX451;
     function RegistroX460New :TRegistroX460;
     function RegistroX470New :TRegistroX470;
     function RegistroX480New :TRegistroX480;
@@ -152,6 +155,7 @@ type
     property RegistroX354Count: Integer read FRegistroX354Count write FRegistroX354Count;
     property RegistroX355Count: Integer read FRegistroX355Count write FRegistroX355Count;
     property RegistroX356Count: Integer read FRegistroX356Count write FRegistroX356Count;
+    property RegistroX451Count: Integer read FRegistroX451Count write FRegistroX451Count;
   end;
 
 implementation
@@ -183,6 +187,7 @@ begin
   FRegistroX354Count    := 0;
   FRegistroX355Count    := 0;
   FRegistroX356Count    := 0;
+  FRegistroX451Count    := 0;
   FRegistroX990.QTD_LIN := 0;
 end;
 
@@ -416,6 +421,15 @@ begin
   Result := FRegistroX001.RegistroX450.New;
 end;
 
+function TBloco_X.RegistroX451New: TRegistroX451;
+var
+  RegistroX450Count: integer;
+begin
+  RegistroX450Count := FRegistroX001.RegistroX450.Count -1;
+
+  Result := FRegistroX001.RegistroX450.Items[RegistroX450Count].RegistroX451.New;
+end;
+
 function TBloco_X.RegistroX460New: TRegistroX460;
 begin
   Result := FRegistroX001.RegistroX460.New;
@@ -459,10 +473,18 @@ begin
     end;
 
     WriteRegistroX280;
-    WriteRegistroX291;
+
+    if Bloco_0.Registro0000.COD_VER < ECFVersao1100 then
+      WriteRegistroX291;
+
     WriteRegistroX292;
-    WriteRegistroX300;
-    WriteRegistroX320;
+
+    if Bloco_0.Registro0000.COD_VER < ECFVersao1100 then
+    begin
+      WriteRegistroX300;
+      WriteRegistroX320;
+    end;
+
     WriteRegistroX340;
     WriteRegistroX390;
     WriteRegistroX400;
@@ -1084,6 +1106,7 @@ end;
 procedure TBloco_X.WriteRegistroX450;
 var
   intFor: integer;
+  strLinha: String;
 begin
   if Assigned(FRegistroX001.RegistroX450) then
   begin
@@ -1091,8 +1114,11 @@ begin
     begin
       with FRegistroX001.RegistroX450.Items[intFor] do
       begin
-        Add(LFill('X450')                     +
-            LFill(PAIS,3)                     +
+        strLinha := LFill('X450') +
+                    LFill(PAIS,3);
+
+        if Bloco_0.Registro0000.COD_VER < ECFVersao1100 then
+          strLinha := strLinha +
             VLFill(VL_SERV_ASSIST,19)         +
             VLFill(VL_SERV_SEM_ASSIST,19)     +
             VLFill(VL_SERV_SEM_ASSIST_EXT,19) +
@@ -1100,11 +1126,38 @@ begin
             VLFill(VL_JURO_PJ,19)             +
             VLFill(VL_DEMAIS_JUROS,19)        +
             VLFill(VL_DIVID_PF,19)            +
-            VLFill(VL_DIVID_PJ,19));
+            VLFill(VL_DIVID_PJ,19);
+
+        Add(strLinha);
       end;
+
+      if Bloco_0.Registro0000.COD_VER > ECFVersao1000 then
+        WriteRegistroX451(FRegistroX001.RegistroX450.Items[intFor]);
 
       FRegistroX990.QTD_LIN := FRegistroX990.QTD_LIN + 1;
     end;
+  end;
+end;
+
+procedure TBloco_X.WriteRegistroX451(RegX450: TRegistroX450);
+var
+  intFor: integer;
+begin
+  if Assigned(RegX450.RegistroX451) then
+  begin
+    for intFor := 0 to RegX450.RegistroX451.Count - 1 do
+    begin
+      with RegX450.RegistroX451.Items[intFor] do
+      begin
+        Add(LFill('X451')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR,19));
+      end;
+      FRegistroX990.QTD_LIN := FRegistroX990.QTD_LIN + 1;
+    end;
+
+    FRegistroX451Count := FRegistroX451Count + RegX450.RegistroX451.Count;
   end;
 end;
 

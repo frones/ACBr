@@ -196,7 +196,7 @@ type
   TACBrIndicadorDados = TACBrIndDad;
 
   /// Versão do Leiaute do arquivo - TRegistro0000
-  TACBrECFCodVer = (ECFVersao100, ECFVersao200, ECFVersao300, ECFVersao400, ECFVersao500, ECFVersao600, ECFVersao700, ECFVersao800, ECFVersao900, ECFVersao1000);
+  TACBrECFCodVer = (ECFVersao100, ECFVersao200, ECFVersao300, ECFVersao400, ECFVersao500, ECFVersao600, ECFVersao700, ECFVersao800, ECFVersao900, ECFVersao1000, ECFVersao1100);
 //  TACBrECFVersaoLeiaute = TACBrECFCodVer;
 
   /// Código da finalidade do arquivo - TRegistro0000
@@ -984,6 +984,9 @@ begin
   if AValue = '0010' then
     Result := ECFVersao1000
   else
+  if AValue = '0011' then
+    Result := ECFVersao1100
+  else
     raise Exception.CreateFmt('Valor informado [%s] deve estar entre (0001 e 0010)', [AValue]);
 end;
 
@@ -1018,6 +1021,9 @@ begin
   else
   if AValue = ECFVersao1000 then
     Result := '0010'
+  else
+  if AValue = ECFVersao1100 then
+    Result := '0011'
   else
     raise Exception.Create('Valor informado inválido para ser convertido em TACBrECFCodVer');
 end;

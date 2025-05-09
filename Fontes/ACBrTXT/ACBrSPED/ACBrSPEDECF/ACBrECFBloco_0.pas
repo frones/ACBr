@@ -58,9 +58,11 @@ type
     fIND_SIT_INI_PER: string;   // Indicador do início do período Indicador do início do período:
                                 // 0 – Regular (início no primeiro dia do ano)
                                 // 1 – Abertura (início de atividades no ano calendário)
-                                // 2 – Resultante de cisão/fusão ou remanescente de cisão, ou realizou    incorporação
-                                // 3 – Resultante de Transformação
-                                // 4 – Início de obrigatoriedade da entrega no curso do ano calendário.
+                                // 2 – Resultante de fusão ou cisão total
+                                // 3 – Resultante de Mudança de Qualificação da Pessoa Jurídica
+                                // 4 – Início de obrigatoriedade da entrega no curso do ano calendário - Exclusão do Simples
+                                // 5 – Resultante de desenquadramento como imune ou isenta do IRPJ)
+                                // 6 - Realizou incorporação ou remanescente de cisão parcial
                                 // (Ex. Exclusão do Simples Nacional ou desenquadramento como imune ou isenta do IRPJ)
     fSIT_ESPECIAL: string;      // Indicador de situação especial e  outros eventos
                                 // 0 – Normal (Sem ocorrência de situação especial ou evento)

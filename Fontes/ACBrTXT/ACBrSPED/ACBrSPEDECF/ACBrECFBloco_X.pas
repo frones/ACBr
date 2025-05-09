@@ -69,6 +69,7 @@ type
   TRegistroX420List = class;
   TRegistroX430List = class;
   TRegistroX450List = class;
+  TRegistroX451List = class;
   TRegistroX460List = class;
   TRegistroX470List = class;
   TRegistroX480List = class;
@@ -945,7 +946,11 @@ type
     fVL_SERV_ASSIST: variant;
     fVL_SERV_SEM_ASSIST: variant;
     fVL_SERV_SEM_ASSIST_EXT: variant;
+    FRegistroX451 : TRegistroX451List;
   public
+    constructor Create; virtual;  /// Create
+    destructor Destroy; override; /// Destroy
+
     property PAIS: integer read fPAIS write fPAIS;
     property VL_SERV_ASSIST: variant read fVL_SERV_ASSIST write fVL_SERV_ASSIST;
     property VL_SERV_SEM_ASSIST: variant read fVL_SERV_SEM_ASSIST write fVL_SERV_SEM_ASSIST;
@@ -956,6 +961,7 @@ type
     property VL_DEMAIS_JUROS: variant read fVL_DEMAIS_JUROS write fVL_DEMAIS_JUROS;
     property VL_DIVID_PF: variant read fVL_DIVID_PF write fVL_DIVID_PF;
     property VL_DIVID_PJ: variant read fVL_DIVID_PJ write fVL_DIVID_PJ;
+    property RegistroX451: TRegistroX451List read FRegistroX451 write FRegistroX451;
   end;
 
   TRegistroX450List = class(TObjectList)
@@ -965,6 +971,31 @@ type
   public
     function New: TRegistroX450;
     property Items[Index: Integer]: TRegistroX450 read GetItem write SetItem;
+  end;
+
+  /// Registro X451 -  PAGAMENTOS OU REMESSAS A TÍTULO DE SERVIÇOS, JUROS E DIVIDENDOS
+  ///                  A BENEFICIÁRIOS DO BRASIL E DO EXTERIOR – DEMAIS INFORMAÇÕES
+
+  { TRegistroX451 }
+
+  TRegistroX451 = class
+  private
+    FCODIGO: string;
+    FDESCRICAO: string;
+    FVALOR: variant;
+  public
+    property CODIGO: string read FCODIGO write FCODIGO;
+    property DESCRICAO: string read FDESCRICAO write FDESCRICAO;
+    property VALOR: variant read FVALOR write FVALOR;
+  end;
+
+  TRegistroX451List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroX451;
+    procedure SetItem(Index: Integer; const Value: TRegistroX451);
+  public
+    function New: TRegistroX451;
+    property Items[Index: Integer]: TRegistroX451 read GetItem write SetItem;
   end;
 
   /// Registro X460 - Inovação Tecnológica e Desenvolvimento Tecnológico
@@ -1766,6 +1797,37 @@ begin
   FRegistroX500.Free;
   FRegistroX510.Free;
   inherited;
+end;
+
+{ TRegistroX450 }
+
+constructor TRegistroX450.Create;
+begin
+  FRegistroX451 := TRegistroX451List.Create;
+end;
+
+destructor TRegistroX450.Destroy;
+begin
+  FRegistroX451.Free;
+  inherited;
+end;
+
+{ TRegistroX451List }
+
+function TRegistroX451List.GetItem(Index: Integer): TRegistroX451;
+begin
+  Result := TRegistroX451(Inherited Items[Index]);
+end;
+
+function TRegistroX451List.New: TRegistroX451;
+begin
+  Result := TRegistroX451.Create;
+  Add(Result);
+end;
+
+procedure TRegistroX451List.SetItem(Index: Integer; const Value: TRegistroX451);
+begin
+  Put(Index, Value);
 end;
 
 end.

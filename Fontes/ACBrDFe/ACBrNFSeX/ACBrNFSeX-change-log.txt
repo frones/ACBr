@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2025
+-- SigISS.Provider --
+[*] Alterado a procedure Configuracao para que não exija o certificado digital.
+  Por: Italo Giurizzato Junior
+
 08/05/2025
 -- ACBrNFSeXServicos --
 [+] #TK-7020: Incluída a cidade de Nova Ubirata/MT, o provedor é Agili.

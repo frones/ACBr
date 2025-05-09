@@ -153,6 +153,7 @@ begin
     QuebradeLinha := '|';
     ModoEnvio := meUnitario;
     NumMaxRpsEnviar := 1;
+    UseCertificateHTTP := False;
 
     Autenticacao.RequerLogin := True;
 

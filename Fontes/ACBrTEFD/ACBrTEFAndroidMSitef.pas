@@ -65,6 +65,7 @@ type
     fModalidadeNaoGenerica: integer;
     fAcessibilidadeVisual: integer;
     fTipoPinpad: TTipoPinpad;
+    fTokenRegistroTls:String ;
 
     procedure QuandoIniciarTransacaoAPI(AIntent: JIntent);
     procedure QuandoFinalizarTransacaoAPI(AIntent: JIntent);
@@ -117,6 +118,7 @@ type
     property CodigoOTP: string read fCodigoOTP write fCodigoOTP;
     property AcessibilidadeVisual: integer read fAcessibilidadeVisual write fAcessibilidadeVisual;
     property TipoPinpad: TTipoPinpad read fTipoPinpad write fTipoPinpad;
+    property TokenRegistroTls: String read fComExterna write fTokenRegistroTls;
   end;
 
 implementation
@@ -139,6 +141,7 @@ begin
   fTransacoesHabilitadas  := '';
   fComExterna             := '0'; // 0 – Sem (apenas para SiTef dedicado); 1 – TLS Software Express; 2 – TLS WNB Comnect; 3 – TLS Gsurf
   fValidacaoDupla         := '0'; // 0 – Para validação simples; 1 – Para validação dupla
+  fTokenRegistroTls       :='' ;
 
   fTEFMSitefAPI := TACBrTEFSIWebAndroid.Create;
   fTEFMSitefAPI.OnGravarLog := QuandoGravarLogAPI;
@@ -323,6 +326,7 @@ begin
     PA.ValueInfo[PWOPER_TRANSHABILITADA] := fTransacoesHabilitadas;
     PA.ValueInfo[PWOPER_OTP]         := fCodigoOTP;
     PA.ValueInfo[PWOPER_ACESSIBILIDADEVISUAL] := '0';
+    PA.ValueInfo[PWOPER_TOKEN_TLS]  := fTokenRegistroTls;
 
     if fAcessibilidadeVisual <> 0 then
       PA.ValueInfo[PWOPER_ACESSIBILIDADEVISUAL] := IntToStr(fAcessibilidadeVisual);

@@ -81,6 +81,10 @@ Public Const SESSAO_Ailos                     As String = "Ailos"
 Public Const SESSAO_Matera                    As String = "Matera"
 Public Const SESSAO_Cielo                     As String = "Cielo"
 Public Const SESSAO_MercadoPago               As String = "MercadoPago"
+Public Const SESSAO_Gate2All                  As String = "Gate2All"
+Public Const SESSAO_Banrisul                  As String = "Banrisul"
+Public Const SESSAO_C6Bank                    As String = "C6Bank"
+Public Const SESSAO_AppLess                   As String = "AppLess"
 Public Const SESSAO_AbecsPinpad               As String = "AbecsPinpad"
 Public Const SESSAO_AbecsPinpad_Device        As String = "AbecsPinpad_Device"
 
@@ -699,6 +703,10 @@ Public Enum PSP
     pspMatera = 12
     pspCielo = 13
     pspMercadoPago = 14
+    pspGate2All = 15
+    pspBanrisul = 16
+    pspC6Bank = 17
+    pspAppLess = 18
 End Enum
 
 Public Enum TipoChave

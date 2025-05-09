@@ -560,6 +560,17 @@ procedure TACBrSpedFiscalImportar_BlocoC.RegC350;
 begin
   with ACBrSpedFiscal.Bloco_C.RegistroC350New do
   begin
+    SER       := Valor;
+    SUB_SER   := Valor;
+    NUM_DOC   := Valor;
+    DT_DOC    := ValorD;
+    CNPJ_CPF  := Valor;
+    VL_MERC   := ValorF;
+    VL_DOC    := ValorF;
+    VL_DESC   := ValorF;
+    VL_PIS    := ValorF;
+    VL_COFINS := ValorF;
+    COD_CTA   := Valor;
   end;
 end;
 
@@ -567,6 +578,12 @@ procedure TACBrSpedFiscalImportar_BlocoC.RegC370;
 begin
   with ACBrSpedFiscal.Bloco_C.RegistroC370New do
   begin
+    NUM_ITEM := Valor;
+    COD_ITEM := Valor;
+    QTD      := ValorF;
+    UNID     := Valor;
+    VL_ITEM  := ValorF;
+    VL_DESC  := ValorF;
   end;
 end;
 
@@ -574,6 +591,14 @@ procedure TACBrSpedFiscalImportar_BlocoC.RegC390;
 begin
   with ACBrSpedFiscal.Bloco_C.RegistroC390New do
   begin
+    CST_ICMS   := Valor;
+    CFOP       := Valor;
+    ALIQ_ICMS  := ValorF;
+    VL_OPR     := ValorF;
+    VL_BC_ICMS := ValorF;
+    VL_ICMS    := ValorF;
+    VL_RED_BC  := ValorF;
+    COD_OBS    := Valor;
   end;
 end;
 

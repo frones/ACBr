@@ -671,6 +671,7 @@ end;
 procedure TBoletoW_Itau_API.GeraDadoBoleto(AJson: TACBrJSONObject);
 var
   LJsonDados: TACBrJSONObject;
+  LAceitarPagamentoParcial : boolean;
 begin
   LJsonDados := TACBrJSONObject.Create;
   try
@@ -682,12 +683,16 @@ begin
     LJsonDados.AddPair('valor_abatimento', IntToStrZero(round(ATitulo.ValorAbatimento * 100), 17));
     LJsonDados.AddPair('data_emissao', FormatDateBr(ATitulo.DataDocumento, 'yyyy-mm-dd'));
 
-    if ATitulo.TipoPagamento = tpAceita_Qualquer_Valor then
-      LJsonDados.AddPair('indicador_pagamento_parcial', 'True')
-    else
-      LJsonDados.AddPair('indicador_pagamento_parcial', 'False');
+    LAceitarPagamentoParcial := ((ATitulo.QtdePagamentoParcial > 0) or (ATitulo.TipoPagamento <> tpNao_Aceita_Valor_Divergente));
+    LJsonDados.AddPair('indicador_pagamento_parcial', LAceitarPagamentoParcial);
 
-    LJsonDados.AddPair('quantidade_maximo_parcial', 0);
+    if ((LAceitarPagamentoParcial) and (ATitulo.QtdePagamentoParcial = 0)) then
+      raise EACBrBoletoWSException.Create
+        (ClassName + sLineBreak+'Quando TipoPagamento aceitar pagamento parcial,'+sLineBreak+
+         'informar QtdePagamentoParcial maior que zero !');
+
+    LJsonDados.AddPair('quantidade_maximo_parcial', ATitulo.QtdePagamentoParcial);
+
     LJsonDados.AddPair('desconto_expresso', 'False');
 
     GerarPagador(LJsonDados);

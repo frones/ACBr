@@ -351,8 +351,6 @@ type
     procedure SetPathPayKit(AValue: String);
 
   protected
-    function CalcPayKitPath(ASubFolder: String): String;
-
     procedure LoadLibFunctions;
     procedure UnLoadLibFunctions;
     procedure ClearMethodPointers;
@@ -365,6 +363,7 @@ type
     procedure VerificarCarregada;
     procedure VerificarEAjustarConf;
     procedure CriarArquivoConfSeNaoExistir;
+    function VerificarSeEstaEmTransacao: Boolean;
 
     procedure IdentificacaoAutomacaoComercial;
     procedure ConfiguraModoDesfazimento;
@@ -372,6 +371,15 @@ type
     procedure ConfiguraEmpresaLojaPDV;
     procedure ConfiguraComunicacaoDTEF;
     procedure BuscaCertificado;
+
+    procedure ExibirMensagem(const AMsg: String; TipoMensagem: TACBrTEFPayKitTipoMensagem = msgInfo;
+      MilissegundosExibicao: Integer = -1);
+    procedure PerguntarMenu(const Titulo: String; Opcoes: TStringList; var ItemSelecionado: Integer);
+    procedure PerguntarCampo(DefinicaoCampo: TACBrTEFPayKitDefinicaoCampo;
+      var Resposta: String; var Acao: Integer);
+    function VerificarTransacaoEmAndamento(EstadoOperacao: TACBrTEFPayKitEstadoOperacao): Boolean;
+
+    procedure ExibirQRCode(const DadosQRCode: String);
   public
     constructor Create;
     destructor Destroy; override;
@@ -402,10 +410,10 @@ type
     function VersaoDPOS: String;
     procedure InicializaDPOS(Forcar: Boolean = False);
     procedure FinalizaDPOS(Forcar: Boolean = False);
+    function CalcPayKitPath(ASubFolder: String): String;
 
-    procedure TransacaoEspecial(iCodigoTransacao: LongInt; var Dados: String);
+    procedure TransacaoEspecial(iCodigoTransacao: LongInt; var Dados: AnsiString);
     procedure ExibirMensagemPinPad(const MsgPinPad: String; Tempo: Integer);
-    function ListaArquivosMultimidia: String;
     function LeIdentificacaoPinPad: String;
 
     procedure TransacaoCartaoCreditoCompleta(ValorTransacao: Double;
@@ -413,15 +421,6 @@ type
       TipoOperacao: TACBrTEFPayKitTipoOperacao; NumeroParcelas: Integer;
       ValorParcela, ValorTaxaServico: Double; PermiteAlteracao: Boolean;
       const Reservado: String);
-
-    procedure ExibirMensagem(const AMsg: String; TipoMensagem: TACBrTEFPayKitTipoMensagem = msgInfo;
-      MilissegundosExibicao: Integer = -1);
-    procedure PerguntarMenu(const Titulo: String; Opcoes: TStringList; var ItemSelecionado: Integer);
-    procedure PerguntarCampo(DefinicaoCampo: TACBrTEFPayKitDefinicaoCampo;
-      var Resposta: String; var Acao: Integer);
-    function VerificarTransacaoEmAndamento(EstadoOperacao: TACBrTEFPayKitEstadoOperacao): Boolean;
-
-    procedure ExibirQRCode(const DadosQRCode: String);
 
     property NomeAutomacao: String read fNomeAutomacao write SetNomeAutomacao;
     property VersaoAutomacao: String read fVersaoAutomacao write SetVersaoAutomacao;
@@ -1256,33 +1255,32 @@ begin
 end;
 
 procedure TACBrTEFPayKitAPI.TransacaoEspecial(iCodigoTransacao: LongInt;
-  var Dados: String);
+  var Dados: AnsiString);
 var
-  pDados: AnsiString;
   p: PAnsiChar;
   iRet: LongInt;
 begin
   GravarLog('TransacaoEspecial( '+IntToStr(iCodigoTransacao)+', '+Dados+' )');
-  pDados := PadRight(Dados, 2048);
-  p := PAnsiChar(pDados);
-  iRet := xTransacaoEspecial(iCodigoTransacao, p);
-  Dados := String(pDados);
-  GravarLog('  ret: '+IntToStr(iRet)+', Dados: '+Dados);
-  TratarErroPayKit(iRet);
+  //pDados := PadRight(Dados, 2048);
+  fEmTransacao := True;
+  try
+    p := PAnsiChar(Dados);
+    iRet := xTransacaoEspecial(iCodigoTransacao, p);
+    Dados := Trim(Dados);
+    GravarLog('  ret: '+IntToStr(iRet)+', Dados: '+Dados);
+    TratarErroPayKit(iRet);
+  finally
+    fEmTransacao := False;
+  end;
 end;
 
 procedure TACBrTEFPayKitAPI.ExibirMensagemPinPad(const MsgPinPad: String;
   Tempo: Integer);
 var
-  Dados: String;
+  Dados: AnsiString;
 begin
   Dados := PadRight(MsgPinPad, 32) + Format('%.6d',[Tempo]);
   TransacaoEspecial(106, Dados);
-end;
-
-function TACBrTEFPayKitAPI.ListaArquivosMultimidia: String;
-begin
-  TransacaoEspecial(126, Result);
 end;
 
 function TACBrTEFPayKitAPI.LeIdentificacaoPinPad: String;
@@ -1291,6 +1289,7 @@ var
   pDados: PAnsiChar;
 begin
   pDados := AllocMem(110);
+  fEmTransacao := True;
   try
     GravarLog('LeIdentificacaoPinPad');
     iRet := xLeIdentificacaoPinPad(pDados);
@@ -1298,6 +1297,7 @@ begin
     GravarLog('  ret: '+IntToStr(iRet)+', Dados: '+Result);
   finally
     Freemem(pDados);
+    fEmTransacao := False;
   end;
   TratarErroPayKit(iRet);
 end;
@@ -1322,6 +1322,7 @@ begin
   pPermiteAlteracao := IfThen(PermiteAlteracao, 'S', 'N');
   pReservado := PadRight('0000', 161);
 
+  fEmTransacao := True;
   pNumeroControle := AllocMem(6);
   try
     GravarLog('TransacaoCartaoCreditoCompleta( '+pValorTransacao+', '+pNumeroCupomVenda+', ,'+
@@ -1341,12 +1342,15 @@ begin
     TratarErroPayKit(iRet);
   finally
     Freemem(pNumeroControle);
+    fEmTransacao := False;
   end;
 end;
 
 procedure TACBrTEFPayKitAPI.ExibirMensagem(const AMsg: String;
   TipoMensagem: TACBrTEFPayKitTipoMensagem; MilissegundosExibicao: Integer);
 begin
+  if not VerificarSeEstaEmTransacao then
+    Exit;
   if Assigned(fOnExibeMensagem) then
     fOnExibeMensagem(AMsg, TipoMensagem, MilissegundosExibicao);
 end;
@@ -1354,6 +1358,8 @@ end;
 procedure TACBrTEFPayKitAPI.PerguntarMenu(const Titulo: String;
   Opcoes: TStringList; var ItemSelecionado: Integer);
 begin
+  if not VerificarSeEstaEmTransacao then
+    Exit;
   if Assigned(fQuandoPerguntarMenu) then
     fQuandoPerguntarMenu(Titulo, Opcoes, ItemSelecionado);
 end;
@@ -1362,6 +1368,8 @@ procedure TACBrTEFPayKitAPI.PerguntarCampo(
   DefinicaoCampo: TACBrTEFPayKitDefinicaoCampo; var Resposta: String;
   var Acao: Integer);
 begin
+  if not VerificarSeEstaEmTransacao then
+    Exit;
   Acao := 0; // 0 - O operador digitou o valor, -1 - A operação foi cancelada
   if Assigned(fQuandoPerguntarCampo) then
     fQuandoPerguntarCampo(DefinicaoCampo, Resposta, Acao);
@@ -1373,6 +1381,12 @@ function TACBrTEFPayKitAPI.VerificarTransacaoEmAndamento(
 var
   Cancelar: Boolean;
 begin
+  if not VerificarSeEstaEmTransacao then
+  begin
+    Cancelar := True;
+    Exit;
+  end;
+
   Cancelar := False;
   if Assigned(fOnTransacaoEmAndamento) then
     fOnTransacaoEmAndamento(EstadoOperacao, Cancelar);
@@ -1382,6 +1396,8 @@ end;
 
 procedure TACBrTEFPayKitAPI.ExibirQRCode(const DadosQRCode: String);
 begin
+  if not VerificarSeEstaEmTransacao then
+    Exit;
   if Assigned(fQuandoExibirQRCode) then
     fQuandoExibirQRCode(DadosQRCode);
 end;
@@ -1460,12 +1476,16 @@ begin
   if (pURL = '') then
     pURL := CPayKitURLCertificado;
 
-  pPathCertificado := PathWithoutDelim(CalcPayKitPath(CPayKitDirBin));
-
-  GravarLog('BuscaCertificado( '+pURL+', '+pPathCertificado+' )');
-  iRet := xBuscaCertificado(PAnsiChar(pURL), PAnsiChar(pPathCertificado));
-  GravarLog('  ret: '+IntToStr(iRet));
-  TratarErroPayKit(iRet);
+  fEmTransacao := True;
+  try
+    pPathCertificado := PathWithoutDelim(CalcPayKitPath(CPayKitDirBin));
+    GravarLog('BuscaCertificado( '+pURL+', '+pPathCertificado+' )');
+    iRet := xBuscaCertificado(PAnsiChar(pURL), PAnsiChar(pPathCertificado));
+    GravarLog('  ret: '+IntToStr(iRet));
+    TratarErroPayKit(iRet);
+  finally
+    fEmTransacao := False;
+  end;
 end;
 
 procedure TACBrTEFPayKitAPI.SetInicializada(AValue: Boolean);
@@ -1657,6 +1677,13 @@ begin
   finally
     Ini.Free;
   end;
+end;
+
+function TACBrTEFPayKitAPI.VerificarSeEstaEmTransacao: Boolean;
+begin
+  Result := EmTransacao;
+  if not Result then
+    GravarLog('  Sem Transacao');
 end;
 
 procedure TACBrTEFPayKitAPI.LoadLibFunctions;

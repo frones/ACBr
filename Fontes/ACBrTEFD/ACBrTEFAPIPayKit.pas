@@ -116,7 +116,6 @@ type
     function VerificarPresencaPinPad: Byte; override;
 
     procedure ObterListaImagensPinPad(ALista: TStrings); override;
-    procedure ObterDimensoesVisorPinPad(out Width: Word; out Height: Word); override;
 
     procedure ExibirImagemPinPad(const NomeImagem: String); override;
     procedure ApagarImagemPinPad(const NomeImagem: String); override;
@@ -420,7 +419,7 @@ function TACBrTEFAPIClassPayKit.ObterDadoPinPad(
   TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: Integer; MinLen: SmallInt;
   MaxLen: SmallInt): String;
 var
-  Dados: String;
+  Dados: AnsiString;
   TipoColeta: Integer;
 begin
   case TipoDado of
@@ -506,9 +505,13 @@ procedure TACBrTEFAPIClassPayKit.ObterListaImagensPinPad(ALista: TStrings);
 var
   p, l: Integer;
   s, n: String;
+  Dados: AnsiString;
 begin
   ALista.Clear;
-  s := Trim(GetTEFPayKitAPI.ListaArquivosMultimidia);
+  Dados := StringOfChar(' ', 993);
+
+  GetTEFPayKitAPI.TransacaoEspecial(126, Dados);
+  s := Trim(Dados);
   p := 1;
   l := Length(s);
   while p < l do
@@ -519,26 +522,51 @@ begin
   end;
 end;
 
-procedure TACBrTEFAPIClassPayKit.ObterDimensoesVisorPinPad(out Width: Word; out
-  Height: Word);
-begin
-  inherited ObterDimensoesVisorPinPad(Width, Height);
-end;
-
 procedure TACBrTEFAPIClassPayKit.ExibirImagemPinPad(const NomeImagem: String);
+var
+  Dados: AnsiString;
 begin
-  inherited ExibirImagemPinPad(NomeImagem);
+  Dados := PadRight(NomeImagem, 8);
+  GetTEFPayKitAPI.TransacaoEspecial(125, Dados);
 end;
 
 procedure TACBrTEFAPIClassPayKit.ApagarImagemPinPad(const NomeImagem: String);
+var
+  Dados: AnsiString;
 begin
-  inherited ApagarImagemPinPad(NomeImagem);
+  Dados := PadRight(NomeImagem, 993, #0);
+  GetTEFPayKitAPI.TransacaoEspecial(127, Dados);
 end;
 
 procedure TACBrTEFAPIClassPayKit.CarregarImagemPinPad(const NomeImagem: String;
   AStream: TStream; TipoImagem: TACBrTEFAPIImagemPinPad);
+var
+  tmpFile, ext: String;
+  Dados: AnsiString;
+  ms: TMemoryStream;
 begin
-  inherited CarregarImagemPinPad(NomeImagem, AStream, TipoImagem);
+  ext := IfThen(TipoImagem=imgPNG, '.png', '.jpg');
+  tmpFile := GetTEFPayKitAPI.CalcPayKitPath(CPayKitDirBin) +
+             NomeImagem + ext;
+  ms := TMemoryStream.Create;
+  try
+    AStream.Position := 0;
+    ms.LoadFromStream(AStream);
+    ms.Position := 0;
+    ms.SaveToFile(tmpFile);
+  finally
+    ms.Free;
+  end;
+
+  if FileExists(tmpFile) then
+  begin
+    try
+      Dados := IfThen(TipoImagem=imgPNG,'1','2')+'000' + NomeImagem + PadRight(tmpFile, 256, #0);
+      GetTEFPayKitAPI.TransacaoEspecial(123, Dados);
+    finally
+      DeleteFile(tmpFile);
+    end;
+  end;
 end;
 
 end.

@@ -328,9 +328,11 @@ begin
               Space(9)                                          + // 009-017 / Campo sem Preenchimento
               IfThen(TipoInscricao = pFisica, '1', '2')         + // 018-018 / Tipo de Inscrição da Empresa
               PadLeft(Trim(OnlyNumber(CNPJCPF)), 14, '0')       + // 019-032 / Número de Inscrição da Empresa
-              PadLeft(CodigoCedente, 20, ' ')                   + // 033-052 / Código do Convênio no Banco
+              Space(20) +
+              //PadLeft(CodigoCedente, 20, ' ')                   + // 033-052 / Código do Convênio no Banco
               PadRight(Agencia, 5, '0')                         + // 053-057 / Agência Mantenedora da Conta
-              PadLeft(AgenciaDigito, 1)                         + // 058-058 / Dígito Verificador da Agência
+              Space(1) +
+              //PadLeft(AgenciaDigito, 1)                       + // 058-058 / Dígito Verificador da Agência
               PadLeft(Conta, 12, '0')                           + // 059-070 / Número da Conta Corrente
               PadLeft(ContaDigito, 1)                           + // 071-071 / Dígito Verificador da Conta
               ' '                                               + // 072-072 / Dígito Verificador da Ag/Conta
@@ -355,15 +357,17 @@ begin
                '01'                                                             + // 010-011 / Tipo de Serviço
                Space(2)                                                         + // 012-013 / Campo sem Preenchimento
                PadLeft(IntToStr(fpLayoutVersaoLote), 3, '0')                    + // 014-016 / Nº da versão do layout do Lote
-               ' '                                                              + // 017-017 / Campo sem preenchimento
+               Space(1)                                                         + // 017-017 / Campo sem preenchimento
                IfThen(TipoInscricao = pFisica, '1', '2')                        + // 018-018 / Tipo de Inscrição da Empresa
                PadLeft(Trim(OnlyNumber(CNPJCPF)), 15, '0')                      + // 019-033 / Número de Inscrição da Empresa
-               PadLeft(CodigoCedente, 20, ' ')                                  + // 034-053 / Código do Convênio no Banco
+               Space(20)+
+               //PadLeft(CodigoCedente, 20, ' ')                                  + // 034-053 / Código do Convênio no Banco
                PadRight(Agencia, 5, '0')                                        + // 054-058 / Agência Mantenedora da Conta
-               PadLeft(AgenciaDigito, 1)                                        + // 059-059 / Dígito Verificador da Agência
+               Space(1)+
+               //PadLeft(AgenciaDigito, 1)                                        + // 059-059 / Dígito Verificador da Agência
                PadLeft(Conta, 12, '0')                                          + // 060-071 / Número da Conta Corrente
                PadLeft(ContaDigito, 1)                                          + // 072-072 / Dígito Verificador da Conta
-               ' '                                                              + // 073-073 / Dígito Verificador da Ag/Conta
+               Space(1)                                                         + // 073-073 / Dígito Verificador da Ag/Conta
                PadRight(Nome, 30)                                               + // 074-103 / Nome da Empresa
                Space(40)                                                        + // 104-143 / Mensagem 1
                Space(40)                                                        + // 144-183 / Mensagem 2

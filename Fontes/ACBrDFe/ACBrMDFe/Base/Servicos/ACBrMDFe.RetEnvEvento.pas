@@ -472,6 +472,8 @@ begin
 
           Ler_InfEvento(AuxNode.Childrens.FindAnyNs('infEvento'));
 
+          LerSignature(AuxNode.Childrens.FindAnyNs('Signature'), signature);
+
           AuxNode := ANode.Childrens.FindAnyNs('retEventoMDFe');
 
           if AuxNode <> nil then
@@ -495,8 +497,6 @@ begin
 
         if (ANode.LocalName = 'eventoMDFe') or (ANode.LocalName = 'evento') then
           Ler_InfEvento(ANode.Childrens.FindAnyNs('infEvento'));
-
-        LerSignature(ANode.Childrens.FindAnyNs('Signature'), signature);
       end;
 
       Result := True;

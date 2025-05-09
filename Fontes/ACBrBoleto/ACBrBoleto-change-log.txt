@@ -50,6 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 09/04/2025
 --ACBrBoletoW_Itau_API, ACBrBoletoRet_Itau_API--
+[*] TK-6746 - Corrigido Raise da consulta; Mapeado as propriedades do PAGADOR no retorno da consulta isbNenhum (indicadorPix = true)
+    https://www.projetoacbr.com.br/forum/topic/82290-dados-do-sacado-no-retorno-da-consulta-itau/
+	Por RodrigoLopez / Daniel Morais InfoCotidano
+
+09/04/2025
+--ACBrBoletoW_Itau_API, ACBrBoletoRet_Itau_API--
 [-] TK-6888 - Ajustar quando aceitar valor divirgente (TipoPagamento) enviar QtdePagamentoParcial correta.
     https://www.projetoacbr.com.br/forum/topic/82767-ajuste-boleto-itau-api/
 	Por Ray Hildebrant / Daniel Morais InfoCotidano

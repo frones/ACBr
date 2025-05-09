@@ -356,7 +356,7 @@ end;
 
 function TRetornoEnvio_Itau_API.LerListaRetorno: Boolean;
 var
-  LJsonObject, LJsonBoletoObject, LErrosObject: TACBrJSONObject;
+  LJsonObject, LJsonBoletoObject, LJsonPagadorObject, LErrosObject: TACBrJSONObject;
   LJsonArray, LJsonBoletosArray, LJsonBoletoIndividualArray, LJsonArrayMensagens, LJsonArrayErros, LJsonArrayOperacaoCobranca : TACBrJSONArray;
   ListaRetorno: TACBrBoletoRetornoWS;
   LListaRejeicao : TACBrBoletoRejeicao;
@@ -451,6 +451,26 @@ begin
                   ListaRetorno.DadosRet.TituloRet.Informativo.Add( LJsonBoletosArray.ItemAsJSONObject[J].AsString['texto_informacao_cliente_beneficiario'] );
                   ListaRetorno.DadosRet.TituloRet.Mensagem.Add(LJsonBoletosArray.ItemAsJSONObject[J].AsString['local_pagamento']);
 
+                end;
+
+                if LJsonBoletoObject.AsJSONObject['dado_boleto'].AsJSONObject['pagador'].IsJSONObject('pessoa') then
+                begin
+                  LJsonPagadorObject := LJsonBoletoObject.AsJSONObject['dado_boleto'].AsJSONObject['pagador'];
+
+                  ListaRetorno.DadosRet.TituloRet.Sacado.NomeSacado     := LJsonPagadorObject.AsJSONObject['pessoa'].AsString['nome_pessoa'];
+                  if (ListaRetorno.DadosRet.TituloRet.Sacado.NomeSacado = '') then
+                    ListaRetorno.DadosRet.TituloRet.Sacado.NomeSacado   := LJsonPagadorObject.AsJSONObject['pessoa'].AsString['nome_razao_social_pagador'];
+
+                  if LJsonPagadorObject.AsJSONObject['pessoa'].AsJSONObject['tipo_pessoa'].AsString['codigo_tipo_pessoa'] = 'F' then
+                    ListaRetorno.DadosRet.TituloRet.Sacado.CNPJCPF        := LJsonPagadorObject.AsJSONObject['pessoa'].AsJSONObject['tipo_pessoa'].AsString['numero_cadastro_pessoa_fisica']
+                  else
+                    ListaRetorno.DadosRet.TituloRet.Sacado.CNPJCPF        := LJsonPagadorObject.AsJSONObject['pessoa'].AsJSONObject['tipo_pessoa'].AsString['numero_cadastro_nacional_pessoa_juridica'];
+
+                  ListaRetorno.DadosRet.TituloRet.Sacado.Logradouro := LJsonPagadorObject.AsJSONObject['endereco'].AsString['nome_logradouro'];
+                  ListaRetorno.DadosRet.TituloRet.Sacado.Bairro     := LJsonPagadorObject.AsJSONObject['endereco'].AsString['nome_bairro'];
+                  ListaRetorno.DadosRet.TituloRet.Sacado.Cidade     := LJsonPagadorObject.AsJSONObject['endereco'].AsString['nome_cidade'];
+                  ListaRetorno.DadosRet.TituloRet.Sacado.UF         := LJsonPagadorObject.AsJSONObject['endereco'].AsString['sigla_UF'];
+                  ListaRetorno.DadosRet.TituloRet.Sacado.Cep        := LJsonPagadorObject.AsJSONObject['endereco'].AsString['numero_CEP'];
                 end;
 
                 if LJsonBoletoObject.AsJSONObject['dado_boleto'].IsJSONArray('pagamentos_cobranca') then

@@ -388,7 +388,7 @@ begin
               begin
                 {ATENÇÃO consulta qq situação antes da francesinha}
                 if Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio = 0 then
-                   raise Exception.Create(ACBrStr('Para consultas isbAberto, utilizar filtro: '+LineBreak+
+                   raise Exception.Create(ACBrStr('Para consultas isbNenhum, utilizar filtro: '+LineBreak+
                                  'dataRegistro DataInicio'));
 
                 LConsulta.Add('id_beneficiario=' + LId_Beneficiario);

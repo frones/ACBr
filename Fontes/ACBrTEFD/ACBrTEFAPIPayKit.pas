@@ -55,6 +55,7 @@ type
 
   TACBrTEFAPIClassPayKit = class(TACBrTEFAPIClass)
   private
+    fTempoMsgPinPad: Integer;
     function GetTEFPayKitAPI: TACBrTEFPayKitAPI;
 
     procedure QuandoGravarLogAPI(const ALogLine: String; var Tratado: Boolean);
@@ -64,6 +65,8 @@ type
       var ItemSelecionado: Integer);
     procedure QuandoPerguntarCampoAPI(DefinicaoCampo: TACBrTEFPayKitDefinicaoCampo;
       var Resposta: String; var Acao: Integer);
+    procedure VerificarTransacaoEmAndamentoAPI(EstadoOperacao: TACBrTEFPayKitEstadoOperacao;
+      out Cancelar: Boolean);
 
     procedure QuandoExibirQRCodeAPI(const DadosQRCode: String);
 
@@ -107,15 +110,27 @@ type
     procedure AbortarTransacaoEmAndamento; override;
 
     procedure ExibirMensagemPinPad(const MsgPinPad: String); override;
+    function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
+      TimeOut: Integer = 30000; MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String; override;
+    function MenuPinPad(const Titulo: String; Opcoes: TStrings; TimeOut: Integer = 30000): Integer; override;
+    function VerificarPresencaPinPad: Byte; override;
+
     procedure ObterListaImagensPinPad(ALista: TStrings); override;
+    procedure ObterDimensoesVisorPinPad(out Width: Word; out Height: Word); override;
+
+    procedure ExibirImagemPinPad(const NomeImagem: String); override;
+    procedure ApagarImagemPinPad(const NomeImagem: String); override;
+    procedure CarregarImagemPinPad(const NomeImagem: String; AStream: TStream;
+      TipoImagem: TACBrTEFAPIImagemPinPad ); override;
 
     property TEFPayKitAPI: TACBrTEFPayKitAPI read GetTEFPayKitAPI;
+    property TempoMsgPinPad: Integer read fTempoMsgPinPad write fTempoMsgPinPad default 5000;
   end;
 
 implementation
 
 uses
-  math, StrUtils,
+  math, StrUtils, TypInfo,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO;
 
@@ -134,11 +149,13 @@ begin
   inherited;
 
   fpTEFRespClass := TACBrTEFRespPayKit;
+  fTempoMsgPinPad := 5000;
 
   with GetTEFPayKitAPI do
   begin
     OnGravarLog := QuandoGravarLogAPI;
     OnExibeMensagem := QuandoExibirMensagemAPI;
+    OnTransacaoEmAndamento := VerificarTransacaoEmAndamentoAPI;
     QuandoPerguntarMenu := QuandoPerguntarMenuAPI;
     QuandoPerguntarCampo := QuandoPerguntarCampoAPI;
     QuandoExibirQRCode := QuandoExibirQRCodeAPI;
@@ -317,6 +334,20 @@ begin
     Acao := 0;
 end;
 
+procedure TACBrTEFAPIClassPayKit.VerificarTransacaoEmAndamentoAPI(
+  EstadoOperacao: TACBrTEFPayKitEstadoOperacao; out Cancelar: Boolean);
+var
+  op: TACBrTEFAPIOperacaoAPI;
+begin
+  Cancelar := False;
+  with TACBrTEFAPI(fpACBrTEFAPI) do
+  begin
+    op := opapiPinPad;
+    if Assigned( QuandoEsperarOperacao ) then
+      QuandoEsperarOperacao( op, Cancelar );
+  end;
+end;
+
 procedure TACBrTEFAPIClassPayKit.QuandoExibirQRCodeAPI(const DadosQRCode: String);
 begin
   with TACBrTEFAPI(fpACBrTEFAPI) do
@@ -382,7 +413,93 @@ end;
 
 procedure TACBrTEFAPIClassPayKit.ExibirMensagemPinPad(const MsgPinPad: String);
 begin
-  GetTEFPayKitAPI.ExibirMensagemPinPad(MsgPinPad, 5000);
+  GetTEFPayKitAPI.ExibirMensagemPinPad(MsgPinPad, fTempoMsgPinPad);
+end;
+
+function TACBrTEFAPIClassPayKit.ObterDadoPinPad(
+  TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: Integer; MinLen: SmallInt;
+  MaxLen: SmallInt): String;
+var
+  Dados: String;
+  TipoColeta: Integer;
+begin
+  case TipoDado of
+    dpDDD: TipoColeta := 91;
+    dpRedDDD: TipoColeta := 92;
+    dpFone: TipoColeta := 93;
+    dpRedFone: TipoColeta := 94;
+    dpDDDeFone: TipoColeta := 2;
+    dpRedDDDeFone: TipoColeta := 6;
+    dpCPF: TipoColeta := 1;
+    dpRedCPF: TipoColeta := 8;
+    dpRG: TipoColeta := 9;
+    dpRedRG: TipoColeta := 10;
+    dp4UltDigitos: TipoColeta := 11;
+    dpCodSeguranca: TipoColeta := 12;
+    dpCNPJ: TipoColeta := 13;
+    dpRedCNPJ: TipoColeta := 14;
+    dpDataDDMMAAAA: TipoColeta := 3;
+    dpDataDDMMAA: TipoColeta := 16;
+    dpDataDDMM: TipoColeta := 17;
+    dpDiaDD: TipoColeta := 18;
+    dpMesMM: TipoColeta := 19;
+    dpAnoAA: TipoColeta := 20;
+    dpAnoAAAA: TipoColeta := 21;
+    dpDataNascimentoDDMMAAAA: TipoColeta := 22;
+    dpDataNascimentoDDMMAA: TipoColeta := 23;
+    dpDataNascimentoDDMM: TipoColeta := 24;
+    dpDiaNascimentoDD: TipoColeta := 25;
+    dpMesNascimentoMM: TipoColeta := 26;
+    dpAnoNascimentoAA: TipoColeta := 27;
+    dpAnoNascimentoAAAA: TipoColeta := 28;
+    dpIdentificacao: TipoColeta := 29;
+    dpCodFidelidade: TipoColeta := 30;
+    dpNumeroMesa: TipoColeta := 31;
+    dpQtdPessoas: TipoColeta := 32;
+    dpQuantidade: TipoColeta := 33;
+    dpNumeroBomba: TipoColeta := 34;
+    dpNumeroVaga: TipoColeta := 35;
+    dpNumeroGuiche: TipoColeta := 36;
+    dpCodVendedor: TipoColeta := 37;
+    dpCodGarcom: TipoColeta := 38;
+    dpNotaAtendimento: TipoColeta := 39;
+    dpNumeroNotaFiscal: TipoColeta := 40;
+    dpNumeroComanda: TipoColeta := 41;
+    dpPlacaVeiculo: TipoColeta := 42;
+    dpQuilometragem: TipoColeta := 43;
+    dpQuilometragemInicial: TipoColeta := 44;
+    dpQuilometragemFinal: TipoColeta := 45;
+    dpPorcentagem: TipoColeta := 46;
+    dpPesquisaSatisfacao0_10: TipoColeta := 47;
+    dpAvalieAtendimento0_10: TipoColeta := 48;
+    dpToken: TipoColeta := 49;
+    dpNumeroCartao: TipoColeta := 50;
+    dpNumeroParcelas: TipoColeta := 51;
+    dpCodigoPlano: TipoColeta := 52;
+    dpCodigoProduto: TipoColeta := 53;
+  else
+    fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPICapturaNaoSuportada),
+      [GetEnumName(TypeInfo(TACBrTEFAPIDadoPinPad), integer(TipoDado) ), ClassName] ));
+  end;
+
+  if (MinLen = 0) and (MaxLen = 0) then
+    CalcularTamanhosCampoDadoPinPad(TipoDado, MinLen, MaxLen);
+
+  Dados := Format('%.2d',[MinLen]) + Format('%.2d',[MaxLen]) +
+           Format('%.2d',[TipoColeta]) + StringOfChar(' ', 32);
+  GetTEFPayKitAPI.TransacaoEspecial(121, Dados);
+  Result := Trim(copy(Dados, 7, 32));
+end;
+
+function TACBrTEFAPIClassPayKit.MenuPinPad(const Titulo: String;
+  Opcoes: TStrings; TimeOut: Integer): Integer;
+begin
+  Result := inherited MenuPinPad(Titulo, Opcoes, TimeOut);
+end;
+
+function TACBrTEFAPIClassPayKit.VerificarPresencaPinPad: Byte;
+begin
+  Result := inherited VerificarPresencaPinPad;
 end;
 
 procedure TACBrTEFAPIClassPayKit.ObterListaImagensPinPad(ALista: TStrings);
@@ -400,6 +517,28 @@ begin
     ALista.Add(n);
     Inc(p, 8);
   end;
+end;
+
+procedure TACBrTEFAPIClassPayKit.ObterDimensoesVisorPinPad(out Width: Word; out
+  Height: Word);
+begin
+  inherited ObterDimensoesVisorPinPad(Width, Height);
+end;
+
+procedure TACBrTEFAPIClassPayKit.ExibirImagemPinPad(const NomeImagem: String);
+begin
+  inherited ExibirImagemPinPad(NomeImagem);
+end;
+
+procedure TACBrTEFAPIClassPayKit.ApagarImagemPinPad(const NomeImagem: String);
+begin
+  inherited ApagarImagemPinPad(NomeImagem);
+end;
+
+procedure TACBrTEFAPIClassPayKit.CarregarImagemPinPad(const NomeImagem: String;
+  AStream: TStream; TipoImagem: TACBrTEFAPIImagemPinPad);
+begin
+  inherited CarregarImagemPinPad(NomeImagem, AStream, TipoImagem);
 end;
 
 end.

@@ -70,7 +70,7 @@ type
 
   TACBrTEFPayKitGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
 
-  TACBrTEFPayKitTipoMensagem = (msgInfo, msgAlerta, msgErro, msgAdicional, msgTerminal);
+  TACBrTEFPayKitTipoMensagem = (msgInfo, msgAlerta, msgErro, msgAdicional, msgTerminal, msgPreview);
 
   TACBrTEFPayKitQuandoExibirMensagem = procedure(
     const Mensagem: String;
@@ -115,6 +115,11 @@ type
 
   TACBrTEFPayKitQuandoExibirQRCode = procedure(const DadosQRCode: String) of object ;
 
+  TACBrTEFPayKitEstadoOperacao = ( pkeOperacaoCancelada );
+
+  TACBrTEFPayKitTransacaoEmAndamento = procedure(
+    EstadoOperacao: TACBrTEFPayKitEstadoOperacao; out Cancelar: Boolean) of object;
+
   TACBrTEFPayKitCallBackDisplayTerminal = procedure(pMensagem: PAnsiChar);
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
   TACBrTEFPayKitCallBackDisplayErro = procedure(pMensagem: PAnsiChar);
@@ -141,7 +146,7 @@ type
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
   TACBrTEFPayKitCallBackOperacaoCancelada = function: LongInt;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-  TACBrTEFPayKitCallBackSetaOperacaoCancelada = function(bCancelada: Boolean): LongInt;
+  TACBrTEFPayKitCallBackSetaOperacaoCancelada = function(iCancelada: LongInt): LongInt;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
   TACBrTEFPayKitCallBackProcessaMensagens = procedure;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -178,6 +183,7 @@ type
     fCNPJEstabelecimento: String;
     fConfiguracaoIpPortaSsl: String;
     fOnExibeMensagem: TACBrTEFPayKitQuandoExibirMensagem;
+    fOnTransacaoEmAndamento: TACBrTEFPayKitTransacaoEmAndamento;
     fQuandoExibirQRCode: TACBrTEFPayKitQuandoExibirQRCode;
     fQuandoPerguntarCampo: TACBrTEFAPIQuandoPerguntarCampo;
     fQuandoPerguntarMenu: TACBrTEFPayKitQuandoPerguntarMenu;
@@ -379,6 +385,8 @@ type
     property OnGravarLog: TACBrTEFPayKitGravarLog read fOnGravarLog write fOnGravarLog;
     property OnExibeMensagem: TACBrTEFPayKitQuandoExibirMensagem read fOnExibeMensagem
       write fOnExibeMensagem;
+    property OnTransacaoEmAndamento: TACBrTEFPayKitTransacaoEmAndamento read fOnTransacaoEmAndamento
+      write fOnTransacaoEmAndamento;
     property QuandoPerguntarMenu: TACBrTEFPayKitQuandoPerguntarMenu read fQuandoPerguntarMenu
       write fQuandoPerguntarMenu;
     property QuandoPerguntarCampo: TACBrTEFAPIQuandoPerguntarCampo read fQuandoPerguntarCampo
@@ -395,7 +403,7 @@ type
     procedure InicializaDPOS(Forcar: Boolean = False);
     procedure FinalizaDPOS(Forcar: Boolean = False);
 
-    function TransacaoEspecial(iCodigoTransacao: LongInt; var Dados: String): LongInt;
+    procedure TransacaoEspecial(iCodigoTransacao: LongInt; var Dados: String);
     procedure ExibirMensagemPinPad(const MsgPinPad: String; Tempo: Integer);
     function ListaArquivosMultimidia: String;
     function LeIdentificacaoPinPad: String;
@@ -411,6 +419,7 @@ type
     procedure PerguntarMenu(const Titulo: String; Opcoes: TStringList; var ItemSelecionado: Integer);
     procedure PerguntarCampo(DefinicaoCampo: TACBrTEFPayKitDefinicaoCampo;
       var Resposta: String; var Acao: Integer);
+    function VerificarTransacaoEmAndamento(EstadoOperacao: TACBrTEFPayKitEstadoOperacao): Boolean;
 
     procedure ExibirQRCode(const DadosQRCode: String);
 
@@ -457,7 +466,7 @@ type
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
   function CallBackOperacaoCancelada: LongInt;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-  function CallBackSetaOperacaoCancelada(bCancelada: Boolean): LongInt;
+  function CallBackSetaOperacaoCancelada(iCancelada: LongInt): LongInt;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
   procedure CallBackProcessaMensagens;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -550,12 +559,27 @@ begin
 end;
 
 function CallBackSolicitaConfirmacao(pMensagem: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s: String;
+  sl: TStringList;
+  ItemSelecionado: Integer;
 begin
-  Result := 0;
+  Result := 1;   // NAO
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackSolicitaConfirmacao( '+String(pMensagem)+' )');
-    //TODO
+    s := String(pMensagem);
+    GravarLog('CallBackSolicitaConfirmacao( '+s+' )');
+    sl := TStringList.Create;
+    try
+      ItemSelecionado := 0;
+      sl.Add('1-SIM');
+      sl.Add('2-NAO');
+      PerguntarMenu(s, sl, ItemSelecionado);
+      if (ItemSelecionado = 0) then     //-2 - Volta no Fluxo, -1 - Cancela o Fluxo
+        Result := 0;  // SIM
+    finally
+      sl.Free;
+    end;
     GravarLog('  ret:'+IntToStr(Result))
   end;
 end;
@@ -689,7 +713,9 @@ begin
 
       PerguntarMenu(titulo, sl, iOpcaoSelecionada);
       if (iOpcaoSelecionada < 0) then     // -2 - Volta no Fluxo, -1 - Cancela o Fluxo
-        Result := -1;
+        Result := -1
+      else
+        Inc(iOpcaoSelecionada);  // Converte de Indice 0 para indice 1
     finally
       sl.Free;
     end;
@@ -776,18 +802,19 @@ begin
   with GetTEFPayKitAPI do
   begin
     GravarLog('CallBackOperacaoCancelada');
-    { code here }
+    if not VerificarTransacaoEmAndamento(pkeOperacaoCancelada) then
+      Result := 1;
     GravarLog('  ret:'+IntToStr(Result));
   end;
 end;
 
-function CallBackSetaOperacaoCancelada(bCancelada: Boolean): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+function CallBackSetaOperacaoCancelada(iCancelada: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
   Result := 0;
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackSetaOperacaoCancelada( '+BoolToStr(bCancelada, True)+' )');
-    { code here }
+    GravarLog('CallBackSetaOperacaoCancelada( '+IntToStr(iCancelada)+' )');
+    { O que fazer aqui ? }
     GravarLog('  ret:'+IntToStr(Result));
   end;
 end;
@@ -829,7 +856,12 @@ end;
 function CallBackConsultaAVS(cEndereco, cNumero, cApto, cBloco, cCEP, cBairro,
   cCPF: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-  Result := 0;
+  Result := -1;  // A operação foi cancelada;
+  with GetTEFPayKitAPI do
+  begin
+    GravarLog('CallBackConsultaAVS');
+    GravarLog('  ret:'+IntToStr(Result))
+  end;
 end;
 
 function CallBackMensagemAdicional(pMensagemAdicional: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -924,11 +956,14 @@ begin
 end;
 
 procedure CallBackPreviewComprovante(cComprovante: PAnsiChar); {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+var
+  s: String;
 begin
   with GetTEFPayKitAPI do
   begin
-    GravarLog('CallBackPreviewComprovante( '+String(cComprovante)+' )');
-    { code here }
+    s := String(cComprovante);
+    GravarLog('CallBackPreviewComprovante( '+s+' )');
+    ExibirMensagem(s, msgPreview, 0);
   end;
 end;
 
@@ -1040,6 +1075,7 @@ begin
 
   fOnGravarLog := Nil;
   fOnExibeMensagem := Nil;
+  fOnTransacaoEmAndamento := Nil;
   fQuandoPerguntarMenu := Nil;
   fQuandoExibirQRCode := Nil;
   fQuandoPerguntarCampo := Nil;
@@ -1049,6 +1085,7 @@ destructor TACBrTEFPayKitAPI.Destroy;
 begin
   fOnGravarLog := Nil;
   fOnExibeMensagem := Nil;
+  fOnTransacaoEmAndamento := Nil;
   fQuandoPerguntarMenu := Nil;
   fQuandoExibirQRCode := Nil;
   fQuandoPerguntarCampo := Nil;
@@ -1065,6 +1102,8 @@ begin
 
   if not Assigned(fOnExibeMensagem) then
     DoException(Format(sErrEventoNaoAtribuido, ['OnExibeMensagem']));
+  if not Assigned(fOnTransacaoEmAndamento) then
+    DoException(Format(sErrEventoNaoAtribuido, ['OnTransacaoEmAndamento']));
   if not Assigned(fQuandoPerguntarMenu) then
     DoException(Format(sErrEventoNaoAtribuido, ['QuandoPerguntarMenu']));
   if not Assigned(fQuandoPerguntarCampo) then
@@ -1216,38 +1255,34 @@ begin
   end;
 end;
 
-function TACBrTEFPayKitAPI.TransacaoEspecial(iCodigoTransacao: LongInt;
-  var Dados: String): LongInt;
+procedure TACBrTEFPayKitAPI.TransacaoEspecial(iCodigoTransacao: LongInt;
+  var Dados: String);
 var
   pDados: AnsiString;
   p: PAnsiChar;
+  iRet: LongInt;
 begin
   GravarLog('TransacaoEspecial( '+IntToStr(iCodigoTransacao)+', '+Dados+' )');
   pDados := PadRight(Dados, 2048);
   p := PAnsiChar(pDados);
-  Result := xTransacaoEspecial(iCodigoTransacao, p);
+  iRet := xTransacaoEspecial(iCodigoTransacao, p);
   Dados := String(pDados);
-  GravarLog('  ret: '+IntToStr(Result)+', Dados: '+Dados);
+  GravarLog('  ret: '+IntToStr(iRet)+', Dados: '+Dados);
+  TratarErroPayKit(iRet);
 end;
 
 procedure TACBrTEFPayKitAPI.ExibirMensagemPinPad(const MsgPinPad: String;
   Tempo: Integer);
 var
-  iRet: LongInt;
   Dados: String;
 begin
   Dados := PadRight(MsgPinPad, 32) + Format('%.6d',[Tempo]);
-  iRet := TransacaoEspecial(106, Dados);
-  TratarErroPayKit(iRet);
+  TransacaoEspecial(106, Dados);
 end;
 
 function TACBrTEFPayKitAPI.ListaArquivosMultimidia: String;
-var
-  iRet: LongInt;
 begin
-  Result := '';
-  iRet := TransacaoEspecial(126, Result);
-  TratarErroPayKit(iRet);
+  TransacaoEspecial(126, Result);
 end;
 
 function TACBrTEFPayKitAPI.LeIdentificacaoPinPad: String;
@@ -1330,6 +1365,19 @@ begin
   Acao := 0; // 0 - O operador digitou o valor, -1 - A operação foi cancelada
   if Assigned(fQuandoPerguntarCampo) then
     fQuandoPerguntarCampo(DefinicaoCampo, Resposta, Acao);
+  Acao := min(max(Acao, -1), 0);
+end;
+
+function TACBrTEFPayKitAPI.VerificarTransacaoEmAndamento(
+  EstadoOperacao: TACBrTEFPayKitEstadoOperacao): Boolean;
+var
+  Cancelar: Boolean;
+begin
+  Cancelar := False;
+  if Assigned(fOnTransacaoEmAndamento) then
+    fOnTransacaoEmAndamento(EstadoOperacao, Cancelar);
+
+  Result := not Cancelar;
 end;
 
 procedure TACBrTEFPayKitAPI.ExibirQRCode(const DadosQRCode: String);

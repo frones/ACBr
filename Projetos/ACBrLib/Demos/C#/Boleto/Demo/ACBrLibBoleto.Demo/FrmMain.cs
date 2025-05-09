@@ -850,5 +850,40 @@ namespace ACBrLibBoleto.Demo
         {
             rtbRespostas.Clear(); 
         }
+
+        private void btnConsultaPorPeriodoClasse_Click(object sender, EventArgs e)
+        {
+            /*
+             Tópico com informações sobre consulta:
+             https://www.projetoacbr.com.br/forum/topic/82822-centralizando-filtros-de-consulta-em-lista-solução-acbrboleto-tpconsulta/
+             */
+
+            ConsultaTitulosPorPeriodo consulta = new ConsultaTitulosPorPeriodo();
+
+            consulta.IndicadorSituacaoBoleto = ACBrIndicadorSituacaoBoleto.isbBaixado;
+            //consulta.BoletoVencido = ACBrIndicadorBoletoVencido.ibvNao
+
+            //consulta.DataInicioRegistro = new DateTime(2025, 4, 30);
+            //consulta.DataFinalRegistro = new DateTime(2025, 4, 30);
+
+            consulta.DataInicioMovimento = new DateTime(2025, 4, 20);
+            consulta.DataFinalMovimento = new DateTime(2025, 4, 30);
+
+            //consulta.DataInicioVencimento = new DateTime(2025, 4, 30);
+            //consulta.DataFinalVencimento = new DateTime(2025, 4, 30);
+
+            //consulta.CnpjCpfPagador = "9999999999";
+            //consulta.ContaCaucao = 0;
+            //consulta.CodigoEstadoTituloCobranca = 0;
+            //consulta.ModalidadeCobranca = 0;
+            //consulta.Carteira = 0;
+            //consulta.CarteiraVariacao = 0;
+            consulta.IndiceContinuidade = 0;
+            //consulta.NumeroProtocolo = 0;
+            //consulta.Identificador = 0;
+
+            var ret = boleto.ConsultarTitulosPorPeriodo(consulta.ToString());
+            rtbRespostas.AppendLine(ret);
+        }
     }
 }

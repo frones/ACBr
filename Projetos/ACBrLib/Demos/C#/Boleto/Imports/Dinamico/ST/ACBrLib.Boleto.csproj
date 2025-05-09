@@ -95,14 +95,13 @@
     <Compile Include="..\Shared\Titulo\TipoPagamento.cs" Link="Titulo\TipoPagamento.cs" />
     <Compile Include="..\Shared\Titulo\Titulo.cs" Link="Titulo\Titulo.cs" />
     <Compile Include="..\Shared\WebserviceConfig.cs" Link="WebserviceConfig.cs" />
+	<Compile Include="..\Shared\Consulta\ACBrIndicadorBoletoVencido.cs" Link="Consulta\ACBrIndicadorBoletoVencido.cs" />
+	<Compile Include="..\Shared\Consulta\ACBrIndicadorSituacaoBoleto.cs" Link="Consulta\ACBrIndicadorSituacaoBoleto.cs"/>
+	<Compile Include="..\Shared\Consulta\ConsultaTitulosPorPeriodo.cs" Link="Consulta\ConsultaTitulosPorPeriodo.cs"/>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Titulo\" />
   </ItemGroup>
 
 </Project>

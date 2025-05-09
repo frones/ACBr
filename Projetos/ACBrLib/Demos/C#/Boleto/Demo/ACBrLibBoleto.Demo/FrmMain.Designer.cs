@@ -140,6 +140,7 @@
             this.cmbOperacao = new System.Windows.Forms.ComboBox();
             this.label43 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.rdbSandBox = new System.Windows.Forms.RadioButton();
             this.rdbHomologacao = new System.Windows.Forms.RadioButton();
             this.rdbProducao = new System.Windows.Forms.RadioButton();
             this.label42 = new System.Windows.Forms.Label();
@@ -191,7 +192,7 @@
             this.btnGerarRemessaStream = new System.Windows.Forms.Button();
             this.btnLerRetornoStream = new System.Windows.Forms.Button();
             this.btnLimparResposta = new System.Windows.Forms.Button();
-            this.rdbSandBox = new System.Windows.Forms.RadioButton();
+            this.btnConsultaPorPeriodoClasse = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpCedente.SuspendLayout();
             this.tbpLayout.SuspendLayout();
@@ -1416,6 +1417,17 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Ambiente";
             // 
+            // rdbSandBox
+            // 
+            this.rdbSandBox.AutoSize = true;
+            this.rdbSandBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdbSandBox.Location = new System.Drawing.Point(203, 19);
+            this.rdbSandBox.Name = "rdbSandBox";
+            this.rdbSandBox.Size = new System.Drawing.Size(68, 17);
+            this.rdbSandBox.TabIndex = 2;
+            this.rdbSandBox.Text = "SandBox";
+            this.rdbSandBox.UseVisualStyleBackColor = true;
+            // 
             // rdbHomologacao
             // 
             this.rdbHomologacao.AutoSize = true;
@@ -1917,22 +1929,22 @@
             this.btnLimparResposta.UseVisualStyleBackColor = true;
             this.btnLimparResposta.Click += new System.EventHandler(this.btnLimparResposta_Click);
             // 
-            // rdbSandBox
+            // btnConsultaPorPeriodoClasse
             // 
-            this.rdbSandBox.AutoSize = true;
-            this.rdbSandBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbSandBox.Location = new System.Drawing.Point(203, 19);
-            this.rdbSandBox.Name = "rdbSandBox";
-            this.rdbSandBox.Size = new System.Drawing.Size(68, 17);
-            this.rdbSandBox.TabIndex = 2;
-            this.rdbSandBox.Text = "SandBox";
-            this.rdbSandBox.UseVisualStyleBackColor = true;
+            this.btnConsultaPorPeriodoClasse.Location = new System.Drawing.Point(402, 680);
+            this.btnConsultaPorPeriodoClasse.Name = "btnConsultaPorPeriodoClasse";
+            this.btnConsultaPorPeriodoClasse.Size = new System.Drawing.Size(180, 23);
+            this.btnConsultaPorPeriodoClasse.TabIndex = 36;
+            this.btnConsultaPorPeriodoClasse.Text = "Consulta Por Periodo (Classe)";
+            this.btnConsultaPorPeriodoClasse.UseVisualStyleBackColor = true;
+            this.btnConsultaPorPeriodoClasse.Click += new System.EventHandler(this.btnConsultaPorPeriodoClasse_Click);
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 747);
+            this.Controls.Add(this.btnConsultaPorPeriodoClasse);
             this.Controls.Add(this.btnLimparResposta);
             this.Controls.Add(this.btnLerRetornoStream);
             this.Controls.Add(this.btnGerarRemessaStream);
@@ -2166,6 +2178,7 @@
         private System.Windows.Forms.Button btnLerRetornoStream;
         private System.Windows.Forms.Button btnLimparResposta;
         private System.Windows.Forms.RadioButton rdbSandBox;
+        private System.Windows.Forms.Button btnConsultaPorPeriodoClasse;
     }
 }
 

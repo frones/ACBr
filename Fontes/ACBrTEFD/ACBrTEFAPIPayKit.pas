@@ -389,7 +389,41 @@ function TACBrTEFAPIClassPayKit.EfetuarPagamento(ValorPagto: Currency;
   Modalidade: TACBrTEFModalidadePagamento; CartoesAceitos: TACBrTEFTiposCartao;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte;
   DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
+var
+  NumeroControle: String;
+  TipoOp: TACBrTEFPayKitTipoOperacao;
 begin
+  VerificarIdentificadorVendaInformado;
+  if (ValorPagto <= 0) then
+    fpACBrTEFAPI.DoException(sACBrTEFAPIValorPagamentoInvalidoException);
+
+  NumeroControle := '';
+  case Financiamento of
+    tefmfParceladoEmissor, tefmfCreditoEmissor: TipoOp := opFinancAdm;
+    tefmfParceladoEstabelecimento, tefmfPredatado: TipoOp := opFinancLoja;
+  else
+    TipoOp := opAVista;
+  end;
+
+  if (Modalidade in [tefmpNaoDefinido, tefmpCartao]) then
+  begin
+    if ((CartoesAceitos = []) or (teftcCredito in CartoesAceitos)) then
+    begin
+      GetTEFPayKitAPI.TransacaoCartaoCredito( ValorPagto,
+        StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0),
+        NumeroControle);
+      //GetTEFPayKitAPI.TransacaoCartaoCreditoCompleta( ValorPagto,
+      //  StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0),
+      //  NumeroControle, TipoOp,
+      //  Parcelas, 0, 0, True, DadosAdicionais);
+    end
+    else if (teftcDebito in CartoesAceitos) then
+    begin
+
+    end;
+  end;
+
+  Result := (NumeroControle <> '');
 end;
 
 procedure TACBrTEFAPIClassPayKit.FinalizarTransacao(const Rede, NSU,

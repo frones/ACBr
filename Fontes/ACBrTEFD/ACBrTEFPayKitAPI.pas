@@ -64,9 +64,9 @@ resourcestring
 type
   EACBrTEFPayKitAPI = class(Exception);
 
-  TACBrTEFPayKitTipoOperacao = ( opAV,   // À Vista
-                                 opFL,   // Financiamento Lojista
-                                 opFA ); // Financiamento Administradora
+  TACBrTEFPayKitTipoOperacao = ( opAVista,       // À Vista
+                                 opFinancLoja,   // Financiamento Lojista
+                                 opFinancAdm );  // Financiamento Administradora
 
   TACBrTEFPayKitGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
 
@@ -416,6 +416,9 @@ type
     procedure ExibirMensagemPinPad(const MsgPinPad: String; Tempo: Integer);
     function LeIdentificacaoPinPad: String;
 
+    procedure TransacaoCartaoCredito(ValorTransacao: Double;
+      const NumeroCupomVenda: Integer; var NumeroControle: String);
+
     procedure TransacaoCartaoCreditoCompleta(ValorTransacao: Double;
       const NumeroCupomVenda: Integer; var NumeroControle: String;
       TipoOperacao: TACBrTEFPayKitTipoOperacao; NumeroParcelas: Integer;
@@ -520,7 +523,7 @@ begin
   begin
     s := String(pMensagem);
     GravarLog('CallBackDisplayTerminal( '+s+' )');
-    ExibirMensagem(s, msgTerminal);
+    ExibirMensagem(ACBrStr(s), msgTerminal);
   end;
 end;
 
@@ -532,7 +535,7 @@ begin
   begin
     s := String(pMensagem);
     GravarLog('CallBackDisplayErro( '+s+' )');
-    ExibirMensagem(s, msgErro);
+    ExibirMensagem(ACBrStr(s), msgErro);
   end;
 end;
 
@@ -544,7 +547,7 @@ begin
   begin
     s := String(pMensagem);
     GravarLog('CallBackMensagem( '+s+' )');
-    ExibirMensagem(s, msgInfo);
+    ExibirMensagem(ACBrStr(s), msgInfo);
   end;
 end;
 
@@ -594,7 +597,7 @@ begin
   begin
     s := String(pLabel);
     GravarLog('CallBackEntraCartao( '+s+' )');
-    def.TituloPergunta := s;
+    def.TituloPergunta := ACBrStr(s);
     def.TipoDeEntrada := teCartao;
     def.TamanhoMaximo := 19;
 
@@ -620,7 +623,7 @@ begin
   begin
     s := String(pLabel);
     GravarLog('CallBackEntraDataValidade( '+s+' )');
-    def.TituloPergunta := s;
+    def.TituloPergunta := ACBrStr(s);
     def.TipoDeEntrada := teValidade;
 
     resp := String(pDataValidade);
@@ -646,7 +649,7 @@ begin
   begin
     s := String(pLabel);
     GravarLog('CallBackEntraData( '+s+' )');
-    def.TituloPergunta := s;
+    def.TituloPergunta := ACBrStr(s);
     def.TipoDeEntrada := teData;
 
     resp := String(pData);
@@ -672,7 +675,7 @@ begin
   begin
     s := String(pLabel);
     GravarLog('CallBackEntraCodigoSeguranca( '+s+', '+IntToStr(iTamanhoMax)+' )');
-    def.TituloPergunta := s;
+    def.TituloPergunta := ACBrStr(s);
     def.TipoDeEntrada := teCodSeguranca;
     def.TamanhoMaximo := iTamanhoMax;
 
@@ -707,10 +710,11 @@ begin
         s := sl[i];
         p1 := max(Pos('"' ,s),1);
         p2 := min(PosEx('"' ,s, p1+1), Length(s));
-        sl[i] := copy(s, p1+1, p2-p1-1);
+        sl[i] := ACBrStr(copy(s, p1+1, p2-p1-1));
       end;
+      iOpcaoSelecionada := min(max(iOpcaoSelecionada, 1), sl.Count)-1;
 
-      PerguntarMenu(titulo, sl, iOpcaoSelecionada);
+      PerguntarMenu(ACBrStr(titulo), sl, iOpcaoSelecionada);
       if (iOpcaoSelecionada < 0) then     // -2 - Volta no Fluxo, -1 - Cancela o Fluxo
         Result := -1
       else
@@ -735,7 +739,7 @@ begin
     vmin := String(pValorMinimo);
     vmax := String(pValorMaximo);
     GravarLog('CallBackEntraValor( '+s+', '+vmin+', '+vmax+' )');
-    def.TituloPergunta := s;
+    def.TituloPergunta := ACBrStr(s);
     def.ValorMinimo := StrToIntDef(vmin, 0)/100;
     def.ValorMaximo := StrToIntDef(vmax, 0)/100;
     def.TamanhoMinimo := 1;
@@ -771,7 +775,7 @@ begin
     vmax := String(pNumeroMaximo);
     GravarLog( 'CallBackEntraNumero( '+s+', '+vmin+', '+vmax+', '+
                IntToStr(iMinimoDigitos)+', '+IntToStr(iMaximoDigitos)+', '+IntToStr(iDigitosExatos)+' )');
-    def.TituloPergunta := s;
+    def.TituloPergunta := ACBrStr(s);
     def.ValorMinimo := StrToIntDef(vmin, 0);
     def.ValorMaximo := StrToIntDef(vmax, 0);
     def.TamanhoMinimo := iMinimoDigitos;
@@ -837,7 +841,7 @@ begin
   begin
     s := String(pLabel);
     GravarLog('CallBackEntraString( '+s+', '+String(pTamanhoMaximo)+' )');
-    def.TituloPergunta := s;
+    def.TituloPergunta := ACBrStr(s);
     def.TamanhoMaximo := StrToIntDef(String(pTamanhoMaximo), 0);
     def.TipoDeEntrada := teString;
 
@@ -872,7 +876,7 @@ begin
   begin
     s := String(pMensagemAdicional);
     GravarLog('CallBackMensagemAdicional( '+s+' )');
-    ExibirMensagem(s, msgAdicional);
+    ExibirMensagem(ACBrStr(s), msgAdicional);
     GravarLog('  ret:'+IntToStr(Result))
   end;
 end;
@@ -901,7 +905,7 @@ begin
     with GetTEFPayKitAPI do
     begin
       GravarLog('CallBackEntraCodigoBarras( '+s+' )');
-      def.TituloPergunta := s;
+      def.TituloPergunta := ACBrStr(s);
       def.TipoDeEntrada := teBarrasDigitado;
       resp := '';
       acao := 0;
@@ -928,7 +932,7 @@ begin
     with GetTEFPayKitAPI do
     begin
       GravarLog('CallBackEntraCodigoBarrasLido( '+s+' )');
-      def.TituloPergunta := s;
+      def.TituloPergunta := ACBrStr(s);
       def.TipoDeEntrada := teBarrasLido;
       resp := '';
       acao := 0;
@@ -950,7 +954,7 @@ begin
   begin
     s := String(pMensagemAlerta);
     GravarLog('CallBackMensagemAlerta( '+s+' )');
-    ExibirMensagem(s, msgAlerta, 0);
+    ExibirMensagem(ACBrStr(s), msgAlerta, 0);
   end;
 end;
 
@@ -962,7 +966,7 @@ begin
   begin
     s := String(cComprovante);
     GravarLog('CallBackPreviewComprovante( '+s+' )');
-    ExibirMensagem(s, msgPreview, 0);
+    ExibirMensagem(ACBrStr(s), msgPreview, 0);
   end;
 end;
 
@@ -1001,7 +1005,7 @@ begin
     s := String(pLabel);
     p := String(pParametros);
     GravarLog('CallBackEntraValorEspecial( '+s+', '+p+' )');
-    def.TituloPergunta := s;
+    def.TituloPergunta := ACBrStr(s);
     def.ValorMinimo := StrToIntDef(copy(p,  1, 12), 0);
     def.ValorMaximo := StrToIntDef(copy(p, 13, 12), 0);
     decimais := StrToIntDef(copy(p, 25, 1), 0);
@@ -1152,18 +1156,14 @@ end;
 
 function TACBrTEFPayKitAPI.VersaoDPOS: String;
 var
-  pVersao: PAnsiChar;
+  pVersao: AnsiString;
 begin
   Result := '';
-  pVersao := AllocMem(100);
-  try
-    GravarLog('VersaoDPOS');
-    xVersaoDPOS(pVersao);
-    Result := String(pVersao);
-    GravarLog('  Result: '+Result);
-  finally
-    Freemem(pVersao);
-  end;
+  pVersao := StringOfChar(' ', 100);
+  GravarLog('VersaoDPOS');
+  xVersaoDPOS(PAnsiChar(pVersao));
+  Result := String(pVersao);
+  GravarLog('  Result: '+Result);
 end;
 
 procedure TACBrTEFPayKitAPI.InicializaDPOS(Forcar: Boolean);
@@ -1257,15 +1257,12 @@ end;
 procedure TACBrTEFPayKitAPI.TransacaoEspecial(iCodigoTransacao: LongInt;
   var Dados: AnsiString);
 var
-  p: PAnsiChar;
   iRet: LongInt;
 begin
   GravarLog('TransacaoEspecial( '+IntToStr(iCodigoTransacao)+', '+Dados+' )');
-  //pDados := PadRight(Dados, 2048);
   fEmTransacao := True;
   try
-    p := PAnsiChar(Dados);
-    iRet := xTransacaoEspecial(iCodigoTransacao, p);
+    iRet := xTransacaoEspecial(iCodigoTransacao, PAnsiChar(Dados));
     Dados := Trim(Dados);
     GravarLog('  ret: '+IntToStr(iRet)+', Dados: '+Dados);
     TratarErroPayKit(iRet);
@@ -1286,20 +1283,43 @@ end;
 function TACBrTEFPayKitAPI.LeIdentificacaoPinPad: String;
 var
   iRet: LongInt;
-  pDados: PAnsiChar;
+  pDados: AnsiString;
 begin
-  pDados := AllocMem(110);
+  pDados := StringOfChar(' ', 110);
   fEmTransacao := True;
   try
     GravarLog('LeIdentificacaoPinPad');
-    iRet := xLeIdentificacaoPinPad(pDados);
+    iRet := xLeIdentificacaoPinPad(PAnsiChar(pDados));
     Result := String(pDados);
     GravarLog('  ret: '+IntToStr(iRet)+', Dados: '+Result);
   finally
-    Freemem(pDados);
     fEmTransacao := False;
   end;
   TratarErroPayKit(iRet);
+end;
+
+procedure TACBrTEFPayKitAPI.TransacaoCartaoCredito(ValorTransacao: Double;
+  const NumeroCupomVenda: Integer; var NumeroControle: String);
+var
+  iRet: LongInt;
+  pValorTransacao, pNumeroCupomVenda, pNumeroControle: AnsiString;
+begin
+  pValorTransacao := Format('%.12d',[Round(ValorTransacao*100)]);
+  pNumeroCupomVenda := Format('%.6d',[NumeroCupomVenda]);
+  pNumeroControle := StringOfChar('0',6);
+
+  fEmTransacao := True;
+  try
+    GravarLog('TransacaoCartaoCredito( '+pValorTransacao+', '+pNumeroCupomVenda+' )');
+    iRet := xTransacaoCartaoCredito( PAnsiChar(pValorTransacao),
+                                     PAnsiChar(pNumeroCupomVenda),
+                                     PAnsiChar(pNumeroControle) );
+    NumeroControle := String(pNumeroControle);
+    GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+NumeroControle);
+    TratarErroPayKit(iRet);
+  finally
+    fEmTransacao := False;
+  end;
 end;
 
 procedure TACBrTEFPayKitAPI.TransacaoCartaoCreditoCompleta(
@@ -1310,27 +1330,27 @@ procedure TACBrTEFPayKitAPI.TransacaoCartaoCreditoCompleta(
 var
   iRet: LongInt;
   pValorTransacao, pNumeroCupomVenda, pTipoOperacao, pNumeroParcelas,
-    pValorParcela, pValorTaxaServico, pPermiteAlteracao, pReservado: AnsiString;
-  pNumeroControle: PAnsiChar;
+    pValorParcela, pValorTaxaServico, pPermiteAlteracao, pReservado,
+    pNumeroControle: AnsiString;
 begin
-  pValorTransacao := Format('%.12d',[RoundTo(ValorTransacao*100, 0)]);
+  pValorTransacao := Format('%.12d',[Round(ValorTransacao*100)]);
   pNumeroCupomVenda := Format('%.6d',[NumeroCupomVenda]);
-  pTipoOperacao := IfThen(TipoOperacao=opAV, 'AV', IfThen(TipoOperacao=opFA, 'FA', 'FL'));
+  pTipoOperacao := IfThen(TipoOperacao=opAVista, 'AV', IfThen(TipoOperacao=opFinancAdm, 'FA', 'FL'));
   pNumeroParcelas := Format('%.2d',[NumeroParcelas]);
-  pValorParcela := Format('%.12d',[RoundTo(ValorParcela*100, 0)]);
-  pValorTaxaServico := Format('%.12d',[RoundTo(ValorTaxaServico*100, 0)]);
+  pValorParcela := Format('%.12d',[Round(ValorParcela*100)]);
+  pValorTaxaServico := Format('%.12d',[Round(ValorTaxaServico*100)]);
   pPermiteAlteracao := IfThen(PermiteAlteracao, 'S', 'N');
   pReservado := PadRight('0000', 161);
 
   fEmTransacao := True;
-  pNumeroControle := AllocMem(6);
+  pNumeroControle := StringOfChar('0',6);
   try
     GravarLog('TransacaoCartaoCreditoCompleta( '+pValorTransacao+', '+pNumeroCupomVenda+', ,'+
       pTipoOperacao+', '+pNumeroParcelas+', '+pValorParcela+', '+pValorTaxaServico+', '+
       pPermiteAlteracao+', '+ pReservado+' )');
     iRet := xTransacaoCartaoCreditoCompleta( PAnsiChar(pValorTransacao),
                                              PAnsiChar(pNumeroCupomVenda),
-                                             pNumeroControle,
+                                             PAnsiChar(pNumeroControle),
                                              PAnsiChar(pTipoOperacao),
                                              PAnsiChar(pNumeroParcelas),
                                              PAnsiChar(pValorParcela),
@@ -1341,7 +1361,7 @@ begin
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+NumeroControle);
     TratarErroPayKit(iRet);
   finally
-    Freemem(pNumeroControle);
+    //Freemem(pNumeroControle);
     fEmTransacao := False;
   end;
 end;

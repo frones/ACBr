@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/05/2025
+-- AssessorPublico.GravarXml/AssessorPublico.LerXml --
+[*] #TK-7039: Ajustes na leitura e escrita do XML do RPS, não estava lendo a tag LOCAL 
+    e ao ler a tag ATIVIDADE estava atribuindo o seu conteudo a campo incorretamente.
+   Por: Italo Giurizzato Junior
 -- Aspec.LerJson/Bauhaus.LerJson/eISS.LerJson/EL.Provider/XTRTecnologia.LerJson --
 [*] Remoção de Warnings e Hints.
    Por: Italo Giurizzato Junior

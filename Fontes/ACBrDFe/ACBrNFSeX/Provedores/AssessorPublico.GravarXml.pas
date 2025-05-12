@@ -92,7 +92,8 @@ begin
   NFSeNode.AppendChild(AddNode(tcHor, '#1', 'HORAEMISSAO', 1, 10, 1,
                                                          NFSe.DataEmissao, ''));
 
-  if NFSe.Servico.CodigoMunicipio = IntToStr(NFSe.Servico.MunicipioIncidencia) then
+  if (NFSe.Servico.CodigoMunicipio = IntToStr(NFSe.Servico.MunicipioIncidencia)) or
+     (NFSe.Servico.LocalPrestacao = lpMunicipio) then
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'LOCAL', 1, 1, 1, 'D', ''))
   else
   begin
@@ -115,7 +116,7 @@ begin
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'RETIDO', 1, 1, 1, 'N', ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ATIVIDADE', 1, 10, 1,
-                                            NFSe.Servico.CodigoCnae, ''));
+                                                  NFSe.Servico.CodigoCnae, ''));
 
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ALIQUOTAAPLICADA', 1, 5, 1,
                                             NFSe.Servico.Valores.Aliquota, ''));

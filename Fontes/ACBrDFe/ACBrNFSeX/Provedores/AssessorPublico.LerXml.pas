@@ -349,9 +349,19 @@ begin
 
     DataEmissao := StrToDateTimeDef(aValor, 0);
 
+    aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('LOCAL'), tcStr);
+
+    if aValor = 'D' then
+      NFSe.Servico.LocalPrestacao := lpMunicipio
+    else
+      NFSe.Servico.LocalPrestacao := lpForaMunicipio;
+
+    NFSe.Servico.UFPrestacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('UFFORA'), tcStr);
+    NFSe.Servico.MunicipioIncidencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('MUNICIPIOFORA'), tcStr);
+
     Situacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('SITUACAO'), tcInt);
 
-    Servico.ItemListaServico := ObterConteudo(AuxNode.Childrens.FindAnyNs('ATIVIDADE'), tcStr);
+    Servico.CodigoCnae := ObterConteudo(AuxNode.Childrens.FindAnyNs('ATIVIDADE'), tcStr);
 
     Servico.Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('OBSERVACAO'), tcStr);
     Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,

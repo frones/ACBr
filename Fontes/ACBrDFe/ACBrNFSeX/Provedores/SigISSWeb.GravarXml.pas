@@ -241,11 +241,121 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'codigo_nbs', 1, 12, 1,
                                                    NFSe.Servico.CodigoNBS, ''));
 
+  if NFSe.Servico.CodigoPais <> 1058 then
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'exterior_prestacao_servico', 1, 1, 1,
+                                                                       '1', ''))
+  else
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'exterior_prestacao_servico', 1, 1, 1,
+                                                                      '0', ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'pais_local_prest', 1, 60, 1,
+                                                       NFSe.Servico.xPais, ''));
+
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cidade_local_prest', 1, 60, 1,
                                    NFSe.Servico.MunicipioPrestacaoServico, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'uf_local_prest', 2, 2, 1,
                                                  NFSe.Servico.UFPrestacao, ''));
+
+  if NFSe.ConstrucaoCivil.Endereco.Endereco <> '' then
+  begin
+    // <nome_obra>Ampliação e revitalização de salão comercial</nome_obra>
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cep_obra', 9, 9, 1,
+                                        NFSe.ConstrucaoCivil.Endereco.CEP, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cidade_obra', 1, 60, 1,
+                                 NFSe.ConstrucaoCivil.Endereco.xMunicipio, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'uf_obra', 2, 2, 1,
+                                         NFSe.ConstrucaoCivil.Endereco.UF, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'bairro_obra', 1, 60, 1,
+                                     NFSe.ConstrucaoCivil.Endereco.Bairro, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'logradouro_obra', 1, 60, 1,
+                                   NFSe.ConstrucaoCivil.Endereco.Endereco, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'logradouro_numero_obra', 1, 10, 1,
+                                     NFSe.ConstrucaoCivil.Endereco.Numero, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'insc_imobiliaria_fiscal_obra', 1, 60, 1,
+                                                 NFSe.ConstrucaoCivil.Art, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cno_obra', 1, 60, 1,
+                                          NFSe.ConstrucaoCivil.CodigoObra, ''));
+
+    if NFSe.ConstrucaoCivil.Endereco.CodigoPais <> 1058 then
+      NFSeNode.AppendChild(AddNode(tcStr, '#1', 'exterior_obra', 1, 1, 1,
+                                                                       '1', ''))
+    else
+      NFSeNode.AppendChild(AddNode(tcStr, '#1', 'exterior_obra', 1, 1, 1,
+                                                                      '0', ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cidade_exterior_obra', 1, 60, 1,
+                                                                       '', ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'estado_regiao_exterior_obra', 1, 60, 1,
+                                                                       '', ''));
+  end;
+
+  if NFSe.Intermediario.Identificacao.CpfCnpj <> '' then
+  begin
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cnpj_cpf_intermediario', 1, 14, 1,
+                                 NFSe.Intermediario.Identificacao.CpfCnpj, ''));
+
+    if Length(NFSe.Intermediario.Identificacao.CpfCnpj) = 14 then
+      NFSeNode.AppendChild(AddNode(tcStr, '#1', 'pessoa_intermediario', 1, 1, 1,
+                                                                       'J', ''))
+    else
+      NFSeNode.AppendChild(AddNode(tcStr, '#1', 'pessoa_intermediario', 1, 1, 1,
+                                                                      'F', ''));
+    if NFSe.Intermediario.Endereco.CodigoPais <> 1058 then
+      NFSeNode.AppendChild(AddNode(tcStr, '#1', 'exterior_intermediario', 1, 1, 1,
+                                                                       '1', ''))
+    else
+      NFSeNode.AppendChild(AddNode(tcStr, '#1', 'exterior_intermediario', 1, 1, 1,
+                                                                      '0', ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ie_intermediario', 1, 14, 1,
+                       NFSe.Intermediario.Identificacao.InscricaoEstadual, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'im_intermediario', 1, 14, 1,
+                      NFSe.Intermediario.Identificacao.InscricaoMunicipal, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'razao_social_intermediario', 1, 60, 1,
+                                           NFSe.Intermediario.RazaoSocial, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'endereco_intermediario', 1, 60, 1,
+                                     NFSe.Intermediario.Endereco.Endereco, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'numero_ende_intermediario', 1, 60, 1,
+                                       NFSe.Intermediario.Endereco.Numero, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'complemento_ende_intermediario', 1, 60, 1,
+                                  NFSe.Intermediario.Endereco.Complemento, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'bairro_intermediario', 1, 60, 1,
+                                       NFSe.Intermediario.Endereco.Bairro, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cep_intermediario', 1, 60, 1,
+                                          NFSe.Intermediario.Endereco.CEP, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cidade_intermediario', 1, 60, 1,
+                                   NFSe.Intermediario.Endereco.xMunicipio, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'uf_intermediario', 2, 2, 1,
+                                           NFSe.Intermediario.Endereco.UF, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'pais_intermediario', 1, 60, 1,
+                                        NFSe.Intermediario.Endereco.xPais, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'fone_intermediario', 1, 60, 1,
+                                      NFSe.Intermediario.Contato.Telefone, ''));
+
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'email_intermediario', 1, 60, 1,
+                                         NFSe.Intermediario.Contato.Email, ''));
+  end;
+
 
   Result := True;
 end;

@@ -95,9 +95,6 @@ type
     function TributacaoDescricao(const t: TTributacao): String; override;
   end;
 
-var
-  xToken: string;
-
 implementation
 
 uses
@@ -251,10 +248,11 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
+  xRetorno: string;
 begin
-  xToken := SeparaDados(Response.ArquivoRetorno, 'descricao');
+  xRetorno := SeparaDados(Response.ArquivoRetorno, 'descricao');
 
-  if Pos('Bearer', xToken) = 0 then
+  if Pos('Bearer', xRetorno) = 0 then
   begin
     Document := TACBrXmlDocument.Create;
 
@@ -288,7 +286,7 @@ begin
     end;
   end
   else
-    Response.Token := xToken;
+    Response.Token := xRetorno;
 end;
 
 procedure TACBrNFSeProviderSigISSWeb.PrepararCancelaNFSe(
@@ -560,7 +558,7 @@ end;
 procedure TACBrNFSeXWebserviceSigISSWeb.SetHeaders(aHeaderReq: THTTPHeader);
 begin
   if FAjustaSetHeader then
-    aHeaderReq.AddHeader('Authorization', xToken);
+    aHeaderReq.AddHeader('Authorization', TACBrNFSeX(FPDFeOwner).WebService.GerarToken.Token);
 end;
 
 function TACBrNFSeXWebserviceSigISSWeb.GerarToken(const ACabecalho,

@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/05/2025
+-- ACBrNFSeXServicos --
+[*] #TK-7042: A cidade de Santa Cruz do Rio Pardo/SP trocou de provedor, agora é SimplISS
+    versão 2.03
+  Por: Light System Software
 -- ACBrNFSeXClass --
 [*] #TK-6959: Incluido o campo xPais que é usado no provedor SigISSWeb.
 -- SigISSWeb.GravarXml --

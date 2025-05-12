@@ -93,9 +93,9 @@ begin
   Result := False;
   tpXML := txmlNFSe;
 
-  try
-    jsRet := TACBrJSONObject.Parse(String(ArquivoRetorno));
+  jsRet := TACBrJSONObject.Parse(String(ArquivoRetorno));
 
+  try
     if Assigned(jsRet.AsJSONObject['DadosNfse']) then
     begin
       LerNota(jsRet.AsJSONObject['DadosNfse'], False);
@@ -118,9 +118,9 @@ begin
   Result := False;
   tpXML := txmlRPS;
 
-  try
-    jsRet := TACBrJSONObject.Parse(String(ArquivoRetorno));
+  jsRet := TACBrJSONObject.Parse(String(ArquivoRetorno));
 
+  try
     if Assigned(jsRet.AsJSONObject['DadosNota']) then
     begin
       LerNota(jsRet.AsJSONObject['DadosNota'], True);

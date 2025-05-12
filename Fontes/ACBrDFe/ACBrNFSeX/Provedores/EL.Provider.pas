@@ -1106,23 +1106,24 @@ begin
                 aXmlRetorno := AuxNode.OuterXml;
 
                 if AResumo.NumeroNota <> '' then
+                begin
                   ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(AResumo.NumeroNota);
 
-                if not Assigned(ANota) then
-                  ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(AResumo.NumeroRps);
+                  if not Assigned(ANota) then
+                    ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(AResumo.NumeroRps);
 
-                if Assigned(ANota) then
-                begin
-                  if ANota.XmlRps = '' then
-                    aXmlNota := GerarXmlNota(ANota.XmlNfse, aXmlRetorno)
-                  else
-                    aXmlNota := GerarXmlNota(ANota.XmlRps, aXmlRetorno);
+                  if Assigned(ANota) then
+                  begin
+                    if ANota.XmlRps = '' then
+                      aXmlNota := GerarXmlNota(ANota.XmlNfse, aXmlRetorno)
+                    else
+                      aXmlNota := GerarXmlNota(ANota.XmlRps, aXmlRetorno);
 
-                  ANota.XmlNfse := aXmlNota;
+                    ANota.XmlNfse := aXmlNota;
 
-                  SalvarXmlNfse(ANota);
+                    SalvarXmlNfse(ANota);
+                  end;
                 end;
-
               end
               else
               begin

@@ -1503,7 +1503,8 @@ function TACBrBancoSicoob.CalcularTamMaximoNossoNumero(const Carteira: String; c
 begin
 
   case StrToIntDef(Carteira,0) of
-    1 : begin
+    1..5 :
+      begin
         if fpLayoutVersaoArquivo = 810 then
           Result := 8
         else

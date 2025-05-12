@@ -178,6 +178,8 @@ type
     FEstadoTituloCobranca : String;
     FLiquidadoBanco:integer;
     FEMV: String;
+    FTxID: String;
+    FURL: String;
 
 
 
@@ -219,6 +221,8 @@ type
     property HoraBaixa: String read FHoraBaixa write FHoraBaixa;
     property LiquidadoBanco: integer read FLiquidadoBanco write FLiquidadoBanco;
     property EMV: String read FEMV write FEMV;
+    property TxID: String read FTxID write FTxID;
+    property URL:  String read FURL write FURL;
   end;
 
   { TRetornoBoleto }
@@ -946,7 +950,9 @@ begin
     SeuNumero := ACBrBoleto.ListadeBoletos[FID].SeuNumero;
     CodTipoOcorrencia := GetEnumName( TypeInfo(TACBrTipoOcorrencia),
                                              Integer(ACBrBoleto.ListadeBoletos[FID].OcorrenciaOriginal.Tipo));
-    EMV := ACBrBoleto.ListadeBoletos[FID].QrCode.emv;
+    EMV  := ACBrBoleto.ListadeBoletos[FID].QrCode.emv;
+    TxID := ACBrBoleto.ListadeBoletos[FID].QrCode.txId;
+    FURL := ACBrBoleto.ListadeBoletos[FID].QrCode.url;
 
     if ACBrBoleto.ListadeBoletos[FID].Liquidacao.Banco > 0 then
        LiquidadoBanco := ACBrBoleto.ListadeBoletos[FID].Liquidacao.Banco;

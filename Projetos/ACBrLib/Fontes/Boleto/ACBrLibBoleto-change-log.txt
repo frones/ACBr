@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/05/2025
+-- ACBrLibBoletoRespostas --
+[*] TK-7041 Realizado o mapeamento das propriedades do pix txid e url no retorno; 
+    https://www.projetoacbr.com.br/forum/topic/83149-%E2%80%8B%E2%80%8B%E2%80%8B%E2%80%8B%E2%80%8B%E2%80%8B%E2%80%8B124y-chavepix-sicred-arquivo-retorno/
+    Por: Daniel de Morais InfoCotidiano
+
 31/03/2025
 -- ACBrBoletoBase, ACBrBoletoMT, ACBrBoletoServicosMT, ACBrBoletoServicosST, ACBrBoletoST --
 [*] #TK-6723: Implementada opção de geração do boleto em arquivo pdf.

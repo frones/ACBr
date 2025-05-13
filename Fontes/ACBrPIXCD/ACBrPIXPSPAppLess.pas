@@ -331,8 +331,24 @@ end;
 procedure TACBrPSPAppLess.DoQuandoReceberRespostaEndPoint(const aEndPoint, aURL, aMethod: String;
   var aResultCode: Integer; var aRespostaHttp: AnsiString);
 var
+  ja: TACBrJSONArray;
   Cancelamento: Boolean;
 begin
+  if (aResultCode <> HTTP_OK) and (aResultCode <> HTTP_CREATED) then
+  begin
+    if NaoEstaZerado(Pos('[', aRespostaHttp)) then
+    begin
+      ja := TACBrJSONArray.Parse(aRespostaHttp);
+      try
+        if NaoEstaZerado(ja.Count) then
+          aRespostaHttp := ja.ItemAsJSONObject[0].ToJSON;
+      finally
+        ja.Free;
+      end;
+    end;
+    Exit;
+  end;
+
   if (AEndPoint = cEndPointCob) or (AEndPoint = cEndPointCobV) then
   begin
     Cancelamento := (Pos(cAppLessEndpointCancel, aURL) > 0);

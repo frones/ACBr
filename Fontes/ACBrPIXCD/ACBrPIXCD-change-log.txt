@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/05/2025
+-- ACBrPSPAppLess --
+[-] Correção do formato da resposta em caso de erro na requisição.
+    por: Elias César
+
 10/04/2025
 -- ACBrPIXCD --
 [*] Ajuste para preencher o CopiaECola automaticamente, caso o PSP não retorne 

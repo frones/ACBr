@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  IniFiles,
   ACBrXmlBase,
   ACBrXmlDocument,
   ACBrNFSeXGravarXml_ABRASFv1,
@@ -51,6 +52,8 @@ type
     procedure Configuracao; override;
 
     function GerarItensServico: TACBrXmlNodeArray; override;
+
+    procedure GerarINISecaoItens(const AINIRec: TMemIniFile); override;
   end;
 
   { TNFSeW_SimplISS203 }
@@ -63,6 +66,8 @@ type
 implementation
 
 uses
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
   ACBrNFSeXConversao,
   ACBrNFSeXConsts;
 
@@ -108,6 +113,21 @@ begin
 
   if NFSe.Servico.ItemServico.Count > 999 then
     wAlerta('#54', 'ItensServico', '', ERR_MSG_MAIOR_MAXIMO + '999');
+end;
+
+procedure TNFSeW_SimplISS.GerarINISecaoItens(const AINIRec: TMemIniFile);
+var
+  I: Integer;
+  LSecao: string;
+begin
+  for I := 0 to NFSe.Servico.ItemServico.Count - 1 do
+  begin
+    LSecao:= 'Itens' + IntToStrZero(I + 1, 3);
+
+    AINIRec.WriteString(LSecao, 'Descricao', ChangeLineBreak(NFSe.Servico.ItemServico.Items[I].Descricao, FpAOwner.ConfigGeral.QuebradeLinha));
+    AINIRec.WriteFloat(LSecao, 'Quantidade', NFSe.Servico.ItemServico.Items[I].Quantidade);
+    AINIRec.WriteFloat(LSecao, 'ValorUnitario', NFSe.Servico.ItemServico.Items[I].ValorUnitario);
+  end;
 end;
 
 { TNFSeW_SimplISS203 }

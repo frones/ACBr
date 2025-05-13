@@ -215,6 +215,9 @@ type
     function LerXML(const aXML: String; var aNFSe: TNFSe; var ATipo: TtpXML;
       var aXmlTratado: string): Boolean; virtual;
 
+    function GerarIni(const aNFSe: TNFSe): string; virtual;
+    function LerIni(const aINI: String; var aNFSe: TNFSe): Boolean; virtual;
+
     procedure GeraLote; virtual;
     procedure Emite; virtual;
     procedure ConsultaSituacao; virtual;
@@ -1453,6 +1456,46 @@ begin
 
     if aNFSe.Tomador.RazaoSocial = '' then
       aNFSe.Tomador.RazaoSocial := 'Tomador Não Identificado';
+  finally
+    AReader.Destroy;
+  end;
+end;
+
+function TACBrNFSeXProvider.GerarIni(const aNFSe: TNFSe): string;
+var
+  AWriter: TNFSeWClass;
+begin
+  AWriter := CriarGeradorXml(aNFSe);
+
+  try
+    Result := AWriter.GerarIni;
+
+  finally
+    AWriter.Destroy;
+  end;
+end;
+
+function TACBrNFSeXProvider.LerIni(const aINI: String;
+  var aNFSe: TNFSe): Boolean;
+var
+  AReader: TNFSeRClass;
+begin
+  AReader := CriarLeitorXml(aNFSe);
+  AReader.Arquivo := aINI;
+
+  try
+    with TACBrNFSeX(FAOwner) do
+    begin
+      if Configuracoes.WebServices.AmbienteCodigo = 1 then
+        AReader.Ambiente := taProducao
+      else
+        AReader.Ambiente := taHomologacao;
+
+      AReader.Provedor := Configuracoes.Geral.Provedor;
+      AReader.IniParams := Configuracoes.Geral.PIniParams;
+    end;
+
+    Result := AReader.LerIni;
   finally
     AReader.Destroy;
   end;

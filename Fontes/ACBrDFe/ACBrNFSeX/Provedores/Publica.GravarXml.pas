@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  IniFiles,
   ACBrXmlBase,
   ACBrXmlDocument,
   ACBrNFSeXGravarXml_ABRASFv1;
@@ -51,11 +52,14 @@ type
 
     function GerarCondicaoPagamento: TACBrXmlNode; override;
     function GerarParcelas: TACBrXmlNodeArray; override;
+
+    procedure GerarINISecaoParcelas(const AINIRec: TMemIniFile); override;
   end;
 
 implementation
 
 uses
+  ACBrUtil.Base,
   ACBrNFSeXConsts;
 
 //==============================================================================
@@ -126,6 +130,22 @@ begin
 
   if NFSe.CondicaoPagamento.Parcelas.Count > 10 then
     wAlerta('#54', 'Parcelas', '', ERR_MSG_MAIOR_MAXIMO + '10');
+end;
+
+procedure TNFSeW_Publica.GerarINISecaoParcelas(const AINIRec: TMemIniFile);
+var
+  I: Integer;
+  sSecao: string;
+begin
+  for I := 0 to NFSe.CondicaoPagamento.Parcelas.Count - 1 do
+  begin
+    sSecao:= 'Parcelas' + IntToStrZero(I + 1, 2);
+
+    AINIRec.WriteString(sSecao, 'Parcela', NFSe.CondicaoPagamento.Parcelas.Items[I].Parcela);
+    AINIRec.WriteDate(sSecao, 'DataVencimento', NFSe.CondicaoPagamento.Parcelas.Items[I].DataVencimento);
+    AINIRec.WriteFloat(sSecao, 'Valor', NFSe.CondicaoPagamento.Parcelas.Items[I].Valor);
+    AINIRec.WriteString(sSecao, 'Condicao', FpAOwner.CondicaoPagToStr(NFSe.CondicaoPagamento.Parcelas.Items[I].Condicao));
+  end;
 end;
 
 end.

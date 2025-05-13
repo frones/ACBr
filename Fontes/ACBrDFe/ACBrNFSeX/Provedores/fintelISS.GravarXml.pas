@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  IniFiles,
   ACBrXmlBase,
   ACBrXmlDocument,
   ACBrNFSeXGravarXml_ABRASFv2;
@@ -58,20 +59,25 @@ type
     procedure Configuracao; override;
 
     procedure DefinirIDRps; override;
+
     function GerarListaServicos: TACBrXmlNode; override;
     function GerarItemServicos: TACBrXmlNodeArray;
     function GerarItemValores(i: Integer): TACBrXmlNodeArray; override;
     function GerarServico: TACBrXmlNode; override;
     function GerarValoresServico: TACBrXmlNode; override;
+
+    procedure GerarINISecaoItemValores(const AINIRec: TMemIniFile); override;
   end;
 
   TNFSeW_fintelISS204 = class(TNFSeW_ABRASFv2)
+  protected
     procedure Configuracao; override;
   end;
 
 implementation
 
 uses
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrNFSeXConsts;
 
@@ -251,6 +257,25 @@ begin
   Result[0].AppendChild(AddNode(tcDe2, '#28', 'DescontoCondicionado  ', 1, 15, NrOcorrDescCond,
               NFSe.Servico.ItemServico[i].DescontoCondicionado, DSC_VDESCCOND));
   }
+end;
+
+procedure TNFSeW_fintelISS202.GerarINISecaoItemValores(
+  const AINIRec: TMemIniFile);
+var
+  I: Integer;
+  sSecao: string;
+begin
+  for I := 0 to NFSe.Servico.ItemServico.Count - 1 do
+  begin
+    sSecao:= 'Itens' + IntToStrZero(I + 1, 3);
+
+    AINIRec.WriteString(sSecao, 'Descricao', ChangeLineBreak(NFSe.Servico.ItemServico[I].Descricao, FpAOwner.ConfigGeral.QuebradeLinha));
+    AINIRec.WriteFloat(sSecao, 'ValorTotal', NFSe.Servico.ItemServico[I].ValorTotal);
+    AINIRec.WriteFloat(sSecao, 'ValorDeducoes', NFSe.Servico.ItemServico[I].ValorDeducoes);
+    AINIRec.WriteFloat(sSecao, 'ValorIss', NFSe.Servico.ItemServico[I].ValorISS);
+    AINIRec.WriteFloat(sSecao, 'Aliquota', NFSe.Servico.ItemServico[I].Aliquota);
+    AINIRec.WriteFloat(sSecao, 'BaseCalculo', NFSe.Servico.ItemServico[I].BaseCalculo);
+  end;
 end;
 
 { TNFSeW_fintelISS204 }

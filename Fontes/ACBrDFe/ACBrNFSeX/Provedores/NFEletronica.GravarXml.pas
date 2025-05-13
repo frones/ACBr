@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  IniFiles,
   ACBrXmlDocument,
   ACBrNFSeXGravarXml_ABRASFv1;
 
@@ -57,6 +58,8 @@ type
     function Gerar_CondicaoPagamento: TACBrXmlNode;
     function GerarIdentificacaoTomador: TACBrXmlNode; override;
     function GerarCPFCNPJTomador(const CPFCNPJ: string): TACBrXmlNode;
+
+    procedure GerarINISecaoCondicaoPagamento(const AINIRec: TMemIniFile); override;
   end;
 
 implementation
@@ -241,6 +244,28 @@ begin
 
   Result.AppendChild(AddNode(tcInt, '#45', 'CodigoVencimento', 3, 3, 1,
                          NFSe.CondicaoPagamento.CodigoVencimento, DSC_CODVENV));
+end;
+
+procedure TNFSeW_NFEletronica.GerarINISecaoCondicaoPagamento(
+  const AINIRec: TMemIniFile);
+var
+  sSecao: string;
+begin
+  if NFSe.CondicaoPagamento.QtdParcela > 0 then
+  begin
+    sSecao:= 'CondicaoPagamento';
+
+    if NFSe.CondicaoPagamento.DataVencimento > 0 then
+    begin
+      AINIRec.WriteDate(sSecao, 'DataVencimento', NFSe.CondicaoPagamento.DataVencimento);
+      AINIRec.WriteString(sSecao, 'InstrucaoPagamento', NFSe.CondicaoPagamento.InstrucaoPagamento);
+      AINIRec.WriteInteger(sSecao, 'CodigoVencimento', NFSe.CondicaoPagamento.CodigoVencimento);
+      if NFSe.CondicaoPagamento.DataCriacao > 0 then
+        AINIRec.ReadDateTime(sSecao, 'DataCriacao', NFSe.CondicaoPagamento.DataCriacao)
+      else
+        AINIRec.ReadDateTime(sSecao, 'DataCriacao', Now);
+    end;
+  end;
 end;
 
 end.

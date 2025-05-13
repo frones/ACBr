@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  IniFiles,
   ACBrXmlBase,
   ACBrXmlDocument,
   ACBrNFSeXGravarXml_ABRASFv2;
@@ -53,11 +54,14 @@ type
 
     function GerarQuartos: TACBrXmlNode; override;
     function GerarQuarto: TACBrXmlNodeArray; override;
+
+    procedure GerarINISecaoQuartos(const AINIRec: TMemIniFile); override;
   end;
 
 implementation
 
 uses
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrNFSeXConsts,
   ACBrNFSeXConversao;
@@ -144,6 +148,22 @@ begin
         Result.AppendChild(nodeArray[i]);
       end;
     end;
+  end;
+end;
+
+procedure TNFSeW_iiBrasil204.GerarINISecaoQuartos(const AINIRec: TMemIniFile);
+var
+  I: Integer;
+  sSecao: string;
+begin
+  for I := 0 to NFSe.Quartos.Count - 1 do
+  begin
+    sSecao := 'Quartos' + IntToStrZero(I + 1, 3);
+
+    AINIRec.WriteInteger(sSecao, 'CodigoInternoQuarto', NFSe.Quartos[I].CodigoInternoQuarto);
+    AINIRec.WriteInteger(sSecao, 'QtdHospedes', NFSe.Quartos[I].QtdHospedes);
+    AINIRec.WriteDateTime(sSecao, 'CheckIn', NFSe.Quartos[I].CheckIn);
+    AINIRec.WriteFloat(sSecao, 'QtdDiarias', NFSe.Quartos[I].ValorDiaria);
   end;
 end;
 

@@ -38,8 +38,10 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  IniFiles,
   ACBrXmlBase,
   ACBrXmlDocument,
+  ACBrNFSeXClass,
   ACBrNFSeXGravarXml_ABRASFv2;
 
 type
@@ -52,11 +54,16 @@ type
     function GerarListaItensServico: TACBrXmlNode; override;
     function GerarItemServico: TACBrXmlNodeArray; override;
     function GerarDadosDeducao(Item: Integer): TACBrXmlNode;
+
+    procedure GerarINISecaoServicos(const AINIRec: TMemIniFile); override;
+    procedure GerarINISecaoDadosDeducao(const AINIRec: TMemIniFile;
+      Item: TItemServicoCollectionItem; const AIndice: Integer); override;
   end;
 
 implementation
 
 uses
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrNFSeXConsts,
   ACBrNFSeXConversao;
@@ -201,6 +208,44 @@ begin
       Result.AppendChild(nodeArray[i]);
     end;
   end;
+end;
+
+procedure TNFSeW_Elotech203.GerarINISecaoServicos(const AINIRec: TMemIniFile);
+var
+  I: Integer;
+  sSecao: string;
+begin
+  for I := 0 to NFSe.Servico.ItemServico.Count - 1 do
+  begin
+    sSecao:= 'Itens' + IntToStrZero(I + 1, 3);
+
+    AINIRec.WriteString(sSecao, 'ItemListaServico', NFSe.Servico.ItemServico[I].ItemListaServico);
+    AINIRec.WriteString(sSecao, 'CodigoCnae', NFSe.Servico.ItemServico[I].CodigoCnae);
+    AINIRec.WriteString(sSecao, 'Descricao', ChangeLineBreak(NFSe.Servico.ItemServico[I].Descricao, FpAOwner.ConfigGeral.QuebradeLinha));
+    AINIRec.WriteString(sSecao, 'Tributavel', FpAOwner.SimNaoToStr(NFSe.Servico.ItemServico[I].Tributavel));
+    AINIRec.WriteFloat(sSecao, 'Quantidade', NFSe.Servico.ItemServico[I].Quantidade);
+    AINIRec.WriteFloat(sSecao, 'ValorUnitario', NFSe.Servico.ItemServico[I].ValorUnitario);
+    AINIRec.WriteFloat(sSecao, 'DescontoIncondicionado', NFSe.Servico.ItemServico[I].DescontoIncondicionado);
+    AINIRec.WriteFloat(sSecao, 'ValorTotal', NFSe.Servico.ItemServico[I].ValorTotal);
+
+    GerarINISecaoDadosDeducao(AINIRec, NFSe.Servico.ItemServico[I], I);
+  end;
+end;
+
+procedure TNFSeW_Elotech203.GerarINISecaoDadosDeducao(
+  const AINIRec: TMemIniFile; Item: TItemServicoCollectionItem;
+  const AIndice: Integer);
+var
+  sSecao: string;
+begin
+  sSecao := 'DadosDeducao' + IntToStrZero(AIndice + 1, 3);
+
+  AINIRec.WriteString(sSecao, 'TipoDeducao', FpAOwner.TipoDeducaoToStr(Item.DadosDeducao.TipoDeducao));
+  AINIRec.WriteString(sSecao, 'CpfCnpj', Item.DadosDeducao.CpfCnpj);
+  AINIRec.WriteString(sSecao, 'NumeroNotaFiscalReferencia', Item.DadosDeducao.NumeroNotaFiscalReferencia);
+  AINIRec.WriteFloat(sSecao, 'ValorTotalNotaFiscal', Item.DadosDeducao.ValorTotalNotaFiscal);
+  AINIRec.WriteFloat(sSecao, 'PercentualADeduzir', Item.DadosDeducao.PercentualADeduzir);
+  AINIRec.WriteFloat(sSecao, 'ValorADeduzir', Item.DadosDeducao.ValorADeduzir);
 end;
 
 end.

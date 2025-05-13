@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  IniFiles,
   ACBrNFSeXLerXml_ABRASFv1, ACBrNFSeXLerXml_ABRASFv2, ACBrXmlDocument, ACBrXmlBase;
 
 type
@@ -46,6 +47,7 @@ type
   TNFSeR_SimplISS = class(TNFSeR_ABRASFv1)
   protected
 
+    procedure LerINISecaoItens(const AINIRec: TMemIniFile); override;
   public
 
   end;
@@ -61,11 +63,37 @@ type
 
 implementation
 
+uses
+  ACBrUtil.Base,
+  ACBrUtil.Strings;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     SimplISS
 //==============================================================================
 
+{ TNFSeR_SimplISS }
+
+procedure TNFSeR_SimplISS.LerINISecaoItens(const AINIRec: TMemIniFile);
+var
+  I: Integer;
+  LSecao: String;
+begin
+  I := 0;
+  while True do
+  begin
+    LSecao:= 'Itens' + IntToStrZero(I + 1, 3);
+    if not AINIRec.SectionExists(LSecao) then
+      break;
+
+    NFSe.Servico.ItemServico.New;
+    NFSe.Servico.ItemServico.Items[I].Descricao := ChangeLineBreak(AINIRec.ReadString(LSecao, 'Descricao', ''), FpAOwner.ConfigGeral.QuebradeLinha);
+    NFSe.Servico.ItemServico.Items[I].Quantidade := AINIRec.ReadFloat(LSecao, 'Quantidade', 0);
+    NFSe.Servico.ItemServico.Items[I].ValorUnitario := AINIRec.ReadFloat(LSecao, 'ValorUnitario', 0);
+
+    Inc(I);
+  end;
+end;
 
 { TNFSeR_SimplISS203 }
 

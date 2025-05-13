@@ -38,7 +38,9 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  IniFiles,
   ACBrXmlDocument, ACBrXmlBase,
+  ACBrNFSeXClass,
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
@@ -50,11 +52,18 @@ type
     procedure LerListaServicos(const ANode: TACBrXmlNode); override;
     procedure LerServicos(const ANode: TACBrXmlNode); override;
     procedure LerDadosDeducao(const ANode: TACBrXmlNode; Item: Integer);
+
+    procedure LerINISecaoServicos(const AINIRec: TMemIniFile); override;
+    procedure LerINISecaoDadosDeducao(const AINIRec: TMemIniFile;
+        Item: TItemServicoCollectionItem; const AIndice: Integer); override;
   public
 
   end;
 
 implementation
+
+uses
+  ACBrUtil.Base;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -62,6 +71,57 @@ implementation
 //==============================================================================
 
 { TNFSeR_EloTech203 }
+
+procedure TNFSeR_EloTech203.LerINISecaoServicos(const AINIRec: TMemIniFile);
+var
+  i: Integer;
+  sSecao, sFim: string;
+  Item: TItemServicoCollectionItem;
+  Ok: Boolean;
+begin
+  i := 1;
+  while true do
+  begin
+    sSecao := 'Itens' + IntToStrZero(i, 3);
+    sFim := AINIRec.ReadString(sSecao, 'Descricao'  ,'FIM');
+
+    if (sFim = 'FIM') then
+      break;
+
+    Item := NFSe.Servico.ItemServico.New;
+
+    Item.ItemListaServico := AINIRec.ReadString(sSecao, 'ItemListaServico', '');
+    Item.xItemListaServico := AINIRec.ReadString(sSecao, 'xItemListaServico', '');
+    Item.CodigoCnae := AINIRec.ReadString(sSecao, 'CodigoCnae', '');
+    Item.Descricao := StringReplace(sFim, FpAOwner.ConfigGeral.QuebradeLinha, sLineBreak, [rfReplaceAll]);
+    Item.Tributavel := FpAOwner.StrToSimNao(Ok, AINIRec.ReadString(sSecao, 'Tributavel', '1'));
+    Item.Quantidade := StringToFloatDef(AINIRec.ReadString(sSecao, 'Quantidade', ''), 0);
+    Item.ValorUnitario := StringToFloatDef(AINIRec.ReadString(sSecao, 'ValorUnitario', ''), 0);
+    Item.DescontoIncondicionado := StringToFloatDef(AINIRec.ReadString(sSecao, 'DescontoIncondicionado', ''), 0);
+    Item.ValorTotal := StringToFloatDef(AINIRec.ReadString(sSecao, 'ValorTotal', ''), 0);
+
+    LerINISecaoDadosDeducao(AINIRec, Item, i);
+  end;
+end;
+
+procedure TNFSeR_EloTech203.LerINISecaoDadosDeducao(const AINIRec: TMemIniFile;
+  Item: TItemServicoCollectionItem; const AIndice: Integer);
+var
+  sSecao: string;
+  Ok: Boolean;
+begin
+  sSecao := 'DadosDeducao' + IntToStrZero(AIndice + 1, 3);
+
+  if AINIRec.SectionExists(sSecao) then
+  begin
+    Item.DadosDeducao.TipoDeducao := FpAOwner.StrToTipoDeducao(Ok, AINIRec.ReadString(sSecao, 'TipoDeducao', ''));
+    Item.DadosDeducao.CpfCnpj := AINIRec.ReadString(sSecao, 'CpfCnpj', '');
+    Item.DadosDeducao.NumeroNotaFiscalReferencia := AINIRec.ReadString(sSecao, 'NumeroNotaFiscalReferencia', '');
+    Item.DadosDeducao.ValorTotalNotaFiscal := StrToFloatDef(AINIRec.ReadString(sSecao, 'ValorTotalNotaFiscal', ''), 0);
+    Item.DadosDeducao.PercentualADeduzir := StrToFloatDef(AINIRec.ReadString(sSecao, 'PercentualADeduzir', ''), 0);
+    Item.DadosDeducao.ValorADeduzir := StrToFloatDef(AINIRec.ReadString(sSecao, 'ValorADeduzir', ''), 0);
+  end;
+end;
 
 procedure TNFSeR_EloTech203.LerListaServicos(const ANode: TACBrXmlNode);
 var

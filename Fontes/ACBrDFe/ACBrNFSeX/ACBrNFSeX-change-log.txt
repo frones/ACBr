@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/05/2025
+-- Diversos --
+[*] #TK-6995: Refatoração na rotina que realiza a leitura do arquivo INI para os
+    provedores que utilização a versão 1 e 2 da ABRASF.
+   Por: Italo Giurizzato Junior
+
 12/05/2025
 -- ACBrNFSeXServicos --
 [*] #TK-7042: A cidade de Santa Cruz do Rio Pardo/SP trocou de provedor, agora é SimplISS

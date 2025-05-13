@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  IniFiles,
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
@@ -46,15 +47,48 @@ type
   TNFSeR_iiBrasil204 = class(TNFSeR_ABRASFv2)
   protected
 
+    procedure LerINISecaoQuartos(const AINIRec: TMemIniFile); override;
   public
 
   end;
 
 implementation
 
+uses
+  ACBrUtil.Base;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     iiBrasil
 //==============================================================================
+
+{ TNFSeR_iiBrasil204 }
+
+procedure TNFSeR_iiBrasil204.LerINISecaoQuartos(const AINIRec: TMemIniFile);
+var
+  I: Integer;
+  sSecao, sFim: string;
+begin
+  i := 1;
+  while true do
+  begin
+    sSecao := 'Quartos' + IntToStrZero(i, 3);
+    sFim := AINIRec.ReadString(sSecao, 'CodigoInternoQuarto', 'FIM');
+
+    if(Length(sFim) <= 0) or (sFim = 'FIM')then
+      break;
+
+    with NFSe.Quartos.New do
+    begin
+      CodigoInternoQuarto := StrToIntDef(sFim, 0);
+      QtdHospedes := AINIRec.ReadInteger(sSecao, 'QtdHospedes', 0);
+      CheckIn := AINIRec.ReadDateTime(sSecao, 'CheckIn', 0);
+      QtdDiarias := AINIRec.ReadInteger(sSecao, 'QtdDiarias', 0);
+      ValorDiaria := StrToFloatDef(AINIRec.ReadString(sSecao, 'ValorDiaria', ''), 0);
+    end;
+
+    Inc(i);
+  end;
+end;
 
 end.

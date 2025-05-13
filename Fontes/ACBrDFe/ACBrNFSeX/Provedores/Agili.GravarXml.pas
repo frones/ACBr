@@ -38,7 +38,8 @@ interface
 
 uses
   SysUtils, Classes, StrUtils, MaskUtils,
-  ACBrXmlBase, ACBrXmlDocument,
+  ACBrXmlBase, ACBrXmlDocument, IniFiles,
+  ACBrNFSeXClass,
   ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXConversao, ACBrNFSeXConsts;
 
 type
@@ -79,9 +80,25 @@ type
     function GerarDadosProfissionalParceiro(Indice: Integer): TACBrXmlNode;
     function GerarIdentificacaoProfissionalParceiro(Indice: Integer): TACBrXmlNode;
 
+    // Gerar o arquivo INI
+    procedure GerarINIIdentificacaoNFSe(AINIRec: TMemIniFile);
+    procedure GerarINIIdentificacaoPrestador(AINIRec: TMemIniFile);
+    procedure GerarINIIdentificacaoRps(AINIRec: TMemIniFile);
+    procedure GerarINIDadosTomador(AINIRec: TMemIniFile);
+    procedure GerarINIDadosIntermediario(AINIRec: TMemIniFile);
+    procedure GerarINIConstrucaoCivil(AINIRec: TMemIniFile);
+    procedure GerarINIDadosServico(AINIRec: TMemIniFile);
+    procedure GerarINIDadosValores(AINIRec: TMemIniFile);
+    procedure GerarINIListaServico(AINIRec: TMemIniFile);
+    procedure GerarINIDadosProfissionalParceiro(AINIRec: TMemIniFile;
+      DadosParceiro: TDadosProfissionalParceiro; Indice: Integer);
+
+    procedure GerarIniRps(AINIRec: TMemIniFile);
+    procedure GerarIniNfse(AINIRec: TMemIniFile);
   public
     function GerarXml: Boolean; override;
 
+    function GerarIni: string; override;
   end;
 
 implementation
@@ -631,6 +648,231 @@ begin
 
   Result.AppendChild(AddNode(tcDat, '#1', 'DataEmissao', 10, 10, 1,
                                                   NFSe.DataEmissao, DSC_DHEMI));
+end;
+
+function TNFSeW_Agili.GerarIni: string;
+var
+  INIRec: TMemIniFile;
+  IniNFSe: TStringList;
+begin
+  Result:= '';
+// Usar FpAOwner no lugar de FProvider
+
+  INIRec := TMemIniFile.Create('');
+  try
+    if NFSe.tpXML = txmlRPS then
+      GerarIniRps(INIRec)
+    else
+      GerarIniNfse(INIRec);
+  finally
+    IniNFSe := TStringList.Create;
+    try
+      INIRec.GetStrings(IniNFSe);
+      INIRec.Free;
+
+      Result := StringReplace(IniNFSe.Text, sLineBreak + sLineBreak, sLineBreak, [rfReplaceAll]);
+    finally
+      IniNFSe.Free;
+    end;
+  end;
+end;
+
+procedure TNFSeW_Agili.GerarIniNfse(AINIRec: TMemIniFile);
+begin
+  GerarINIIdentificacaoNFSe(AINIRec);
+end;
+
+procedure TNFSeW_Agili.GerarIniRps(AINIRec: TMemIniFile);
+begin
+  GerarINIIdentificacaoNFSe(AINIRec);
+  GerarINIIdentificacaoPrestador(AINIRec);
+  GerarINIIdentificacaoRps(AINIRec);
+  GerarINIDadosTomador(AINIRec);
+  GerarINIDadosIntermediario(AINIRec);
+  GerarINIConstrucaoCivil(AINIRec);
+  GerarINIDadosServico(AINIRec);
+  GerarINIDadosValores(AINIRec);
+  GerarINIListaServico(AINIRec);
+end;
+
+procedure TNFSeW_Agili.GerarINIIdentificacaoNFSe(AINIRec: TMemIniFile);
+var
+  sSecao: string;
+begin
+  sSecao:= 'IdentificacaoNFSe';
+
+  if NFSe.tpXML = txmlRPS then
+    AINIRec.WriteString(sSecao, 'TipoXML', 'RPS')
+  else
+    AINIRec.WriteString(sSecao, 'TipoXML', 'NFSE');
+{
+  AINIRec.WriteString(sSecao, 'Numero', NFSe.Numero);
+  AINIRec.WriteString(sSecao, 'StatusNFSe', StatusNFSeToStr(NFSe.SituacaoNfse));
+
+  if NFSe.CodigoVerificacao <> '' then
+    AINIRec.WriteString(sSecao, 'CodigoVerificacao', NFSe.CodigoVerificacao);
+
+  if NFSe.InfNFSe.Id <> '' then
+    AINIRec.WriteString(sSecao, 'ID', NFSe.InfNFse.ID);
+}
+  if NFSe.NfseSubstituida <> '' then
+    AINIRec.WriteString(sSecao, 'NfseSubstituida', NFSe.NfseSubstituida);
+{
+  if NFSe.NfseSubstituidora <> '' then
+    AINIRec.WriteString(sSecao, 'NfseSubstituidora', NFSe.NfseSubstituidora);
+
+  AINIRec.WriteFloat(sSecao, 'ValorCredito', NFSe.ValorCredito);
+  AINIRec.WriteString(sSecao, 'Link', NFSe.Link);
+}
+end;
+
+procedure TNFSeW_Agili.GerarINIIdentificacaoPrestador(AINIRec: TMemIniFile);
+var
+  sSecao: string;
+begin
+  sSecao := 'Prestador';
+
+  AINIRec.WriteString(sSecao, 'Regime', FpAOwner.RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao));
+  AINIRec.WriteString(sSecao, 'OptanteSN', FpAOwner.SimNaoToStr(NFSe.OptanteSimplesNacional));
+  AINIRec.WriteString(sSecao, 'OptanteMEISimei', FpAOwner.SimNaoToStr(NFSe.OptanteMEISimei));
+  AINIRec.WriteString(sSecao, 'CNPJ', NFSe.Prestador.IdentificacaoPrestador.CpfCnpj);
+  AINIRec.WriteString(sSecao, 'InscricaoMunicipal', NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal);
+end;
+
+procedure TNFSeW_Agili.GerarINIIdentificacaoRps(AINIRec: TMemIniFile);
+var
+  sSecao: string;
+begin
+  sSecao := 'IdentificacaoRps';
+
+  AINIRec.WriteString(sSecao, 'OutrasInformacoes', NFSe.OutrasInformacoes);
+  AINIRec.WriteString(sSecao, 'Numero', NFSe.IdentificacaoRps.Numero);
+  AINIRec.WriteString(sSecao, 'Serie', NFSe.IdentificacaoRps.Serie);
+  AINIRec.WriteString(sSecao, 'Tipo', FpAOwner.TipoRPSToStr(NFSe.IdentificacaoRps.Tipo));
+  AINIRec.WriteString(sSecao, 'DataEmissao', DateTimeToStr(NFSe.DataEmissao));
+end;
+
+procedure TNFSeW_Agili.GerarINIDadosTomador(AINIRec: TMemIniFile);
+var
+  sSecao: string;
+begin
+  sSecao := 'Tomador';
+
+  AINIRec.WriteString(sSecao, 'CNPJCPF', NFSe.Tomador.IdentificacaoTomador.CpfCnpj);
+  AINIRec.WriteString(sSecao, 'InscricaoMunicipal', NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal);
+  AINIRec.WriteString(sSecao, 'InscricaoEstadual', NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual);
+
+  AINIRec.WriteString(sSecao, 'RazaoSocial', NFSe.Tomador.RazaoSocial);
+
+  AINIRec.WriteString(sSecao, 'TipoLogradouro', NFSe.Tomador.Endereco.TipoLogradouro);
+  AINIRec.WriteString(sSecao, 'Logradouro', NFSe.Tomador.Endereco.Endereco);
+  AINIRec.WriteString(sSecao, 'Numero', NFSe.Tomador.Endereco.Numero);
+  AINIRec.WriteString(sSecao, 'Complemento', NFSe.Tomador.Endereco.Complemento);
+  AINIRec.WriteString(sSecao, 'Bairro', NFSe.Tomador.Endereco.Bairro);
+  AINIRec.WriteString(sSecao, 'CodigoMunicipio', NFSe.Tomador.Endereco.CodigoMunicipio);
+  AINIRec.WriteString(sSecao, 'xMunicipio', NFSe.Tomador.Endereco.xMunicipio);
+  AINIRec.WriteString(sSecao, 'UF', NFSe.Tomador.Endereco.UF);
+  AINIRec.WriteInteger(sSecao, 'CodigoPais', NFSe.Tomador.Endereco.CodigoPais);
+  AINIRec.WriteString(sSecao, 'CEP', NFSe.Tomador.Endereco.CEP);
+  AINIRec.WriteString(sSecao, 'xPais', NFSe.Tomador.Endereco.xPais);
+
+  AINIRec.WriteString(sSecao, 'Telefone', NFSe.Tomador.Contato.Telefone);
+  AINIRec.WriteString(sSecao, 'Email', NFSe.Tomador.Contato.Email);
+end;
+
+procedure TNFSeW_Agili.GerarINIDadosIntermediario(AINIRec: TMemIniFile);
+var
+  sSecao: string;
+begin
+  if NFSe.Intermediario.Identificacao.CpfCnpj <> '' then
+  begin
+    sSecao := 'Intermediario';
+
+    AINIRec.WriteString(sSecao, 'CNPJCPF', NFSe.Intermediario.Identificacao.CpfCnpj);
+    AINIRec.WriteString(sSecao, 'InscricaoMunicipal', NFSe.Intermediario.Identificacao.InscricaoMunicipal);
+    AINIRec.WriteString(sSecao, 'RazaoSocial', NFSe.Intermediario.RazaoSocial);
+  end;
+end;
+
+procedure TNFSeW_Agili.GerarINIConstrucaoCivil(AINIRec: TMemIniFile);
+var
+  sSecao: string;
+begin
+  if NFSe.ConstrucaoCivil.CodigoObra <> '' then
+  begin
+    sSecao := 'ConstrucaoCivil';
+
+    AINIRec.WriteString(sSecao, 'CodigoObra', NFSe.ConstrucaoCivil.CodigoObra);
+    AINIRec.WriteString(sSecao, 'Art', NFSe.ConstrucaoCivil.Art);
+  end;
+end;
+
+procedure TNFSeW_Agili.GerarINIDadosServico(AINIRec: TMemIniFile);
+var
+  sSecao: string;
+begin
+  sSecao := 'Servico';
+
+  AINIRec.WriteString(sSecao, 'CodigoCnae', NFSe.Servico.CodigoCnae);
+  AINIRec.WriteString(sSecao, 'CodigoTributacaoMunicipio', NFSe.Servico.CodigoTributacaoMunicipio);
+  AINIRec.WriteString(sSecao, 'ExigibilidadeISS', FpAOwner.ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS));
+  AINIRec.WriteInteger(sSecao, 'MunicipioIncidencia', NFSe.Servico.MunicipioIncidencia);
+  AINIRec.WriteString(sSecao, 'NumeroProcesso', NFSe.Servico.NumeroProcesso);
+  AINIRec.WriteString(sSecao, 'ResponsavelRetencao', FpAOwner.ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao));
+end;
+
+procedure TNFSeW_Agili.GerarINIDadosValores(AINIRec: TMemIniFile);
+var
+  sSecao: string;
+begin
+  sSecao := 'Valores';
+
+  AINIRec.WriteFloat(sSecao, 'ValorServicos', NFSe.Servico.Valores.ValorServicos);
+  AINIRec.WriteFloat(sSecao, 'ValorPis', NFSe.Servico.Valores.ValorPis);
+  AINIRec.WriteFloat(sSecao, 'ValorCofins', NFSe.Servico.Valores.ValorCofins);
+  AINIRec.WriteFloat(sSecao, 'ValorInss', NFSe.Servico.Valores.ValorInss);
+  AINIRec.WriteFloat(sSecao, 'ValorIr', NFSe.Servico.Valores.ValorIr);
+  AINIRec.WriteFloat(sSecao, 'ValorCsll', NFSe.Servico.Valores.ValorCsll);
+  AINIRec.WriteString(sSecao, 'ISSRetido', FpAOwner.SituacaoTributariaToStr(NFSe.Servico.Valores.ISSRetido));
+  AINIRec.WriteFloat(sSecao, 'valorOutrasRetencoes', NFSe.Servico.Valores.valorOutrasRetencoes);
+  AINIRec.WriteFloat(sSecao, 'DescontoIncondicionado', NFSe.Servico.Valores.DescontoIncondicionado);
+  AINIRec.WriteFloat(sSecao, 'BaseCalculo', NFSe.Servico.Valores.BaseCalculo);
+  AINIRec.WriteFloat(sSecao, 'Aliquota', NFSe.Servico.Valores.Aliquota);
+  AINIRec.WriteFloat(sSecao, 'ValorIss', NFSe.Servico.Valores.ValorIss);
+  AINIRec.WriteFloat(sSecao, 'ValorLiquidoNfse', NFSe.Servico.Valores.ValorLiquidoNfse);
+end;
+
+procedure TNFSeW_Agili.GerarINIListaServico(AINIRec: TMemIniFile);
+var
+  I: Integer;
+  sSecao: string;
+begin
+  for I := 0 to NFSe.Servico.ItemServico.Count - 1 do
+  begin
+    sSecao:= 'Itens' + IntToStrZero(I + 1, 3);
+
+    AINIRec.WriteString(sSecao, 'CodServico', NFSe.Servico.ItemServico[I].CodServ);
+    AINIRec.WriteString(sSecao, 'Descricao', ChangeLineBreak(NFSe.Servico.ItemServico[I].Descricao, FpAOwner.ConfigGeral.QuebradeLinha));
+    AINIRec.WriteString(sSecao, 'CodigoCnae', NFSe.Servico.ItemServico[I].CodigoCnae);
+    AINIRec.WriteFloat(sSecao, 'Quantidade', NFSe.Servico.ItemServico[I].Quantidade);
+    AINIRec.WriteFloat(sSecao, 'ValorUnitario', NFSe.Servico.ItemServico[I].ValorUnitario);
+    AINIRec.WriteFloat(sSecao, 'DescontoIncondicionado', NFSe.Servico.ItemServico[I].DescontoIncondicionado);
+
+    GerarINIDadosProfissionalParceiro(AINIRec, NFSe.Servico.ItemServico[I].DadosProfissionalParceiro, I);
+  end;
+end;
+
+procedure TNFSeW_Agili.GerarINIDadosProfissionalParceiro(AINIRec: TMemIniFile;
+  DadosParceiro: TDadosProfissionalParceiro; Indice: Integer);
+var
+  sSecao: string;
+begin
+  sSecao := 'DadosProssionalParceiro' + IntToStrZero(Indice + 1, 3);
+
+  AINIRec.WriteString(sSecao, 'CpfCnpj', DadosParceiro.IdentificacaoParceiro.CpfCnpj);
+  AINIRec.WriteString(sSecao, 'InscricaoMunicipal', DadosParceiro.IdentificacaoParceiro.InscricaoMunicipal);
+  AINIRec.WriteString(sSecao, 'RazaoSocial', DadosParceiro.RazaoSocial);
+  AINIRec.WriteFloat(sSecao, 'PercentualProfissionalParceiro', DadosParceiro.PercentualProfissionalParceiro);
 end;
 
 end.

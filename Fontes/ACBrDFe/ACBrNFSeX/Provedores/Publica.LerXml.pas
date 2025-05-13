@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  IniFiles,
   ACBrXmlBase, ACBrXmlDocument,
   ACBrNFSeXLerXml_ABRASFv1;
 
@@ -49,12 +50,17 @@ type
     procedure LerCondicaoPagamento(const ANode: TACBrXmlNode);
     procedure LerInfNfse(const ANode: TACBrXmlNode); override;
 
+    procedure LerINISecaoParcelas(const AINIRec: TMemIniFile); override;
   public
     function LerXmlRps(const ANode: TACBrXmlNode): Boolean; override;
 
   end;
 
 implementation
+
+uses
+  ACBrUtil.Base,
+  ACBrNFSeXClass;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -117,6 +123,33 @@ begin
 
   if AuxNode <> nil then
     LerCondicaoPagamento(AuxNode);
+end;
+
+procedure TNFSeR_Publica.LerINISecaoParcelas(const AINIRec: TMemIniFile);
+var
+  i: Integer;
+  sSecao, sFim: string;
+  Item: TParcelasCollectionItem;
+  Ok: Boolean;
+begin
+  i := 1;
+  while true do
+  begin
+    sSecao := 'Parcelas' + IntToStrZero(i, 2);
+    sFim := AINIRec.ReadString(sSecao, 'Parcela'  ,'FIM');
+
+    if (sFim = 'FIM') then
+      break;
+
+    Item := NFSe.CondicaoPagamento.Parcelas.New;
+
+    Item.Parcela := sFim;
+    Item.DataVencimento := AINIRec.ReadDate(sSecao, 'DataVencimento', Now);
+    Item.Valor := StringToFloatDef(AINIRec.ReadString(sSecao, 'Valor', ''), 0);
+    Item.Condicao := FpAOwner.StrToCondicaoPag(Ok, AINIRec.ReadString(sSecao, 'Condicao', ''));
+
+    Inc(i);
+  end;
 end;
 
 end.

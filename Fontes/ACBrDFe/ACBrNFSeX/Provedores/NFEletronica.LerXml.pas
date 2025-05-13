@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  IniFiles,
   ACBrXmlDocument,
   ACBrNFSeXLerXml_ABRASFv1;
 
@@ -63,6 +64,8 @@ type
     procedure Ler_Prestador(const ANode: TACBrXmlNode);
     procedure Ler_Tomador(const ANode: TACBrXmlNode);
     procedure Ler_servico(const ANode: TACBrXmlNode);
+
+    procedure LerINISecaoCondicaoPagamento(const AINIRec: TMemIniFile); override;
   public
     function LerXml: Boolean; override;
     function LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
@@ -265,6 +268,21 @@ begin
       ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_unit'), tcDe6);
       ValorTotal := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor'), tcDe10);
     end;
+  end;
+end;
+
+procedure TNFSeR_NFEletronica.LerINISecaoCondicaoPagamento(
+  const AINIRec: TMemIniFile);
+var
+  sSecao: string;
+begin
+  sSecao := 'CondicaoPagamento';
+
+  if AINIRec.SectionExists(sSecao) then
+  begin
+    NFSe.CondicaoPagamento.DataVencimento := AINIRec.ReadDate(sSecao, 'DataVencimento', Now);
+    NFSe.CondicaoPagamento.InstrucaoPagamento := AINIRec.ReadString(sSecao, 'InstrucaoPagamento', '');
+    NFSe.CondicaoPagamento.CodigoVencimento := AINIRec.ReadInteger(sSecao, 'CodigoVencimento', 0);
   end;
 end;
 

@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  INIFiles,
   ACBrXmlBase, ACBrXmlDocument,
   ACBrNFSeXLerXml_ABRASFv1, ACBrNFSeXLerXml_ABRASFv2;
 
@@ -45,9 +46,13 @@ type
   { TNFSeR_Betha }
 
   TNFSeR_Betha = class(TNFSeR_ABRASFv1)
+  private
+    LSecao: string;
   protected
     procedure LerCondicaoPagamento(const ANode: TACBrXmlNode);
 
+    procedure LerINISecaoCondicaoPagamento(const AINIRec: TMemIniFile); override;
+    procedure LerINISecaoParcelas(const AINIRec: TMemIniFile); override;
   public
     function LerXmlRps(const ANode: TACBrXmlNode): Boolean; override;
 
@@ -63,6 +68,10 @@ type
   end;
 
 implementation
+
+uses
+  ACBrUtil.Base,
+  ACBrNFSeXClass;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -98,6 +107,43 @@ begin
         Parcelas[i].Valor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Valor'), tcDe2);
       end;
     end;
+  end;
+end;
+
+procedure TNFSeR_Betha.LerINISecaoCondicaoPagamento(const AINIRec: TMemIniFile);
+var
+  Ok: Boolean;
+begin
+  LSecao := 'CondicaoPagamento';
+
+  if AINIRec.SectionExists(LSecao) then
+  begin
+    NFSe.CondicaoPagamento.QtdParcela := AINIRec.ReadInteger(LSecao, 'QtdParcela', 0);
+    NFSe.CondicaoPagamento.Condicao := FpAOwner.StrToCondicaoPag(Ok, AINIRec.ReadString(LSecao, 'Condicao', 'A_VISTA'));
+  end;
+end;
+
+procedure TNFSeR_Betha.LerINISecaoParcelas(const AINIRec: TMemIniFile);
+var
+  i: Integer;
+  sFim: string;
+  Item: TParcelasCollectionItem;
+begin
+  i := 1;
+  while true do
+  begin
+    LSecao := 'Parcelas' + IntToStrZero(i, 2);
+    sFim := AINIRec.ReadString(LSecao, 'Parcela', 'FIM');
+
+    if (sFim = 'FIM') then
+      break;
+
+    Item := NFSe.CondicaoPagamento.Parcelas.New;
+    Item.Parcela := sFim;
+    Item.DataVencimento := AINIRec.ReadDate(LSecao, 'DataVencimento', Now);
+    Item.Valor := StringToFloatDef(AINIRec.ReadString(LSecao, 'Valor', ''), 0);
+
+    Inc(i);
   end;
 end;
 

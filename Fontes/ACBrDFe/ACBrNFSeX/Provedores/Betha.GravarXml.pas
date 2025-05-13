@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
+  INIFiles,
   ACBrXmlBase,
   ACBrXmlDocument,
   ACBrNFSeXGravarXml_ABRASFv1,
@@ -49,11 +50,16 @@ type
   { TNFSeW_Betha }
 
   TNFSeW_Betha = class(TNFSeW_ABRASFv1)
+  private
+    LSecao: string;
   protected
     procedure Configuracao; override;
 
     function GerarCondicaoPagamento: TACBrXmlNode; override;
     function GerarParcelas: TACBrXmlNodeArray; override;
+
+    procedure GerarINISecaoCondicaoPagamento(const AINIRec: TMemIniFile); override;
+    procedure GerarINISecaoParcelas(const AINIRec: TMemIniFile); override;
   public
     function GerarXml: Boolean; override;
   end;
@@ -72,6 +78,7 @@ type
 implementation
 
 uses
+  ACBrUtil.Base,
   ACBrUtil.Strings;
 
 //==============================================================================
@@ -121,6 +128,32 @@ begin
   else
     Result.AppendChild(AddNode(tcStr, '#53', 'Condicao', 1, 15, 1,
                                                           'A_VISTA', DSC_TPAG));
+end;
+
+procedure TNFSeW_Betha.GerarINISecaoCondicaoPagamento(
+  const AINIRec: TMemIniFile);
+begin
+  if NFSe.CondicaoPagamento.QtdParcela > 0 then
+  begin
+    LSecao:= 'CondicaoPagamento';
+    AINIRec.WriteInteger(LSecao, 'QtdParcela', NFSe.CondicaoPagamento.QtdParcela);
+    AINIRec.WriteString(LSecao, 'Condicao', FpAOwner.CondicaoPagToStr(NFSe.CondicaoPagamento.Condicao));
+  end;
+end;
+
+procedure TNFSeW_Betha.GerarINISecaoParcelas(const AINIRec: TMemIniFile);
+var
+  I: Integer;
+begin
+  //Lista de parcelas, xx pode variar de 01-99 (provedor Betha versão 1 do Layout da ABRASF)
+  for I := 0 to NFSe.CondicaoPagamento.Parcelas.Count - 1 do
+  begin
+    LSecao:= 'Parcelas' + IntToStrZero(I + 1, 2);
+
+    AINIRec.WriteString(LSecao, 'Parcela', NFSe.CondicaoPagamento.Parcelas.Items[I].Parcela);
+    AINIRec.WriteDate(LSecao, 'DataVencimento', NFSe.CondicaoPagamento.Parcelas.Items[I].DataVencimento);
+    AINIRec.WriteFloat(LSecao, 'Valor', NFSe.CondicaoPagamento.Parcelas.Items[I].Valor);
+  end;
 end;
 
 function TNFSeW_Betha.GerarParcelas: TACBrXmlNodeArray;

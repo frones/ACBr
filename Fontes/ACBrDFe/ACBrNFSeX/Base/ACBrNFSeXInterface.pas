@@ -45,6 +45,9 @@ type
     function LerXml(const AXML: String; var ANFSe: TNFSe; var ATipo: TtpXML;
       var aXmlTratado: string): Boolean;
 
+    function GerarIni(const ANFSe: TNFSe): string;
+    function LerIni(const AINI: String; var ANFSe: TNFSe): Boolean;
+
     procedure GeraLote;
     procedure Emite;
     procedure ConsultaSituacao;

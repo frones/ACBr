@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  IniFiles,
   ACBrXmlBase,
   ACBrXmlDocument,
   ACBrNFSeXClass,
@@ -151,8 +152,24 @@ type
     function GerargDevTribCBS(gCBS: TgCBSValores): TACBrXmlNode;
     function GerargDesonCBS(gCBS: TgCBSValores): TACBrXmlNode;
 
+    //====== Gerar o Arquivo INI=========================================
+    procedure GerarINISecaoIdentificacaoNFSe(const AINIRec: TMemIniFile);
+    {
+    procedure GerarINIIdentificacaoNFSe(AINIRec: TMemIniFile);
+    procedure GerarINIIdentificacaoPrestador(AINIRec: TMemIniFile);
+    procedure GerarINIIdentificacaoRps(AINIRec: TMemIniFile);
+    procedure GerarINIDadosTomador(AINIRec: TMemIniFile);
+    procedure GerarINIDadosIntermediario(AINIRec: TMemIniFile);
+    procedure GerarINIConstrucaoCivil(AINIRec: TMemIniFile);
+    procedure GerarINIDadosServico(AINIRec: TMemIniFile);
+    procedure GerarINIDadosValores(AINIRec: TMemIniFile);
+    procedure GerarINIListaServico(AINIRec: TMemIniFile);
+    }
+    procedure GerarIniRps(AINIRec: TMemIniFile);
+    procedure GerarIniNfse(AINIRec: TMemIniFile);
   public
     function GerarXml: Boolean; override;
+    function GerarIni: string; override;
   end;
 
 implementation
@@ -1761,6 +1778,85 @@ begin
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pAliqCBSDeson', 1, 5, 1,
                                                        gCBS.pAliqCBSDeson, ''));
+end;
+
+//====== Gerar o Arquivo INI=========================================
+function TNFSeW_PadraoNacional.GerarIni: string;
+var
+  INIRec: TMemIniFile;
+  IniNFSe: TStringList;
+begin
+  Result:= '';
+// Usar FpAOwner no lugar de FProvider
+
+  INIRec := TMemIniFile.Create('');
+  try
+    if NFSe.tpXML = txmlRPS then
+      GerarIniRps(INIRec)
+    else
+      GerarIniNfse(INIRec);
+  finally
+    IniNFSe := TStringList.Create;
+    try
+      INIRec.GetStrings(IniNFSe);
+      INIRec.Free;
+
+      Result := StringReplace(IniNFSe.Text, sLineBreak + sLineBreak, sLineBreak, [rfReplaceAll]);
+    finally
+      IniNFSe.Free;
+    end;
+  end;
+end;
+
+procedure TNFSeW_PadraoNacional.GerarINISecaoIdentificacaoNFSe(
+  const AINIRec: TMemIniFile);
+begin
+  LSecao:= 'IdentificacaoNFSe';
+
+  if NFSe.tpXML = txmlRPS then
+    AINIRec.WriteString(LSecao, 'TipoXML', 'RPS')
+  else
+    AINIRec.WriteString(LSecao, 'TipoXML', 'NFSE');
+
+  AINIRec.WriteString(LSecao, 'Numero', NFSe.Numero);
+  AINIRec.WriteString(LSecao, 'StatusNFSe', StatusNFSeToStr(NFSe.SituacaoNfse));
+
+  if NFSe.CodigoVerificacao <> '' then
+    AINIRec.WriteString(LSecao, 'CodigoVerificacao', NFSe.CodigoVerificacao);
+
+  if NFSe.InfNFSe.Id <> '' then
+    AINIRec.WriteString(LSecao, 'ID', NFSe.InfNFse.ID);
+
+  if NFSe.NfseSubstituida <> '' then
+    AINIRec.WriteString(LSecao, 'NfseSubstituida', NFSe.NfseSubstituida);
+
+  if NFSe.NfseSubstituidora <> '' then
+    AINIRec.WriteString(LSecao, 'NfseSubstituidora', NFSe.NfseSubstituidora);
+
+  AINIRec.WriteFloat(LSecao, 'ValorCredito', NFSe.ValorCredito);
+  AINIRec.WriteString(LSecao, 'Link', NFSe.Link);
+end;
+
+procedure TNFSeW_PadraoNacional.GerarIniNfse(AINIRec: TMemIniFile);
+begin
+  {
+  GerarINIIdentificacaoNFSe(AINIRec);
+  }
+end;
+
+procedure TNFSeW_PadraoNacional.GerarIniRps(AINIRec: TMemIniFile);
+begin
+  {
+  GerarINIIdentificacaoNFSe(AINIRec);
+  GerarINIIdentificacaoPrestador(AINIRec);
+  GerarINIIdentificacaoRps(AINIRec);
+  GerarINIDadosTomador(AINIRec);
+  GerarINIDadosIntermediario(AINIRec);
+  GerarINIConstrucaoCivil(AINIRec);
+  GerarINIDadosServico(AINIRec);
+  GerarINIDadosValores(AINIRec);
+  GerarINIListaServico(AINIRec);
+  }
 end;
 
 end.

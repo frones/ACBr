@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/05/2025
+-- ACBrPixPSPBradesco --
+[-] Ajuste para alterar o ResultCode para o esperado conforme padrão Bacen
+    https://www.projetoacbr.com.br/forum/topic/83201-devolução-pix-bradesco/
+    por: arpa_sistemas
+
+13/05/2025
 -- ACBrPSPAppLess --
 [-] Correção do formato da resposta em caso de erro na requisição.
     por: Elias César

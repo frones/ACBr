@@ -133,13 +133,29 @@ implementation
 uses
   math, StrUtils, TypInfo,
   ACBrUtil.Strings,
-  ACBrUtil.FilesIO;
+  ACBrUtil.FilesIO,
+  ACBrJSON;
 
 { TACBrTEFRespPayKit }
 
 procedure TACBrTEFRespPayKit.ConteudoToProperty;
+var
+  j: String;
+  js, jsLog: TACBrJSONObject;
 begin
-  inherited;
+  j := Conteudo.LeInformacao(899,300).AsString;
+  js := TACBrJSONObject.Parse(j);
+  try
+    jsLog := js.AsJSONObject['LogTransacao'];
+    if not Assigned(jsLog) then
+      Exit;
+
+    Finalizacao := jsLog.AsString['NumeroControle'];
+    NSU_TEF := Finalizacao;
+    NFCeSAT.CNPJCredenciadora := jsLog.AsString['CNPJRedeAdquirente'];
+  finally
+    js.Free;
+  end;
 end;
 
 
@@ -207,22 +223,38 @@ begin
 end;
 
 procedure TACBrTEFAPIClassPayKit.InterpretarRespostaAPI;
-//var
-//  i: Integer;
-//  AChave, AValue: String;
+var
+  j, NumeroControle, Cupom: String;
+  js, jsLog: TACBrJSONObject;
 begin
-  fpACBrTEFAPI.UltimaRespostaTEF.Clear;
-  fpACBrTEFAPI.UltimaRespostaTEF.ViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
+  NumeroControle := '';
+  Cupom := '';
+  with GetTEFPayKitAPI do
+  begin
+    j := ObtemLogTransacaoJson('');
+    js := TACBrJSONObject.Parse(j);
+    try
+      jsLog := js.AsJSONObject['LogTransacao'];
+      if Assigned(jsLog) then
+        NumeroControle := jsLog.AsString['NumeroControle'];
+    finally
+      js.Free;
+    end;
 
-  //for i := 0 to fTEFPayKitAPI.DadosDaTransacao.Count-1 do
-  //begin
-  //  AChave := fTEFPayKitAPI.DadosDaTransacao.Names[i];
-  //  AValue := fTEFPayKitAPI.DadosDaTransacao.ValueFromIndex[i];
-  //
-  //  fpACBrTEFAPI.UltimaRespostaTEF.Conteudo.GravaInformacao(AChave, AValue);
-  //end;
+    if (NumeroControle <> '') then
+      Cupom := ObtemComprovanteTransacao(NumeroControle, fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida);
+  end;
 
-  fpACBrTEFAPI.UltimaRespostaTEF.ConteudoToProperty;
+  with fpACBrTEFAPI.UltimaRespostaTEF do
+  begin
+    Clear;
+    Conteudo.GravaInformacao(899,300, j);
+    ImagemComprovante1aVia.Text := Cupom;
+    ImagemComprovante2aVia.Text := Cupom;
+    DocumentoVinculado := fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao;
+    AtualizarHeader;
+    ConteudoToProperty;
+  end;
 end;
 
 function TACBrTEFAPIClassPayKit.ExibirVersaoPayKit: Boolean;
@@ -249,25 +281,21 @@ begin
 
   slMenu := TStringList.Create;
   try
-    slMenu.Add(ACBrStr('Versão'));
-    slMenu.Add(ACBrStr('Teste Comunicação'));
     slMenu.Add(ACBrStr('Reimpressão'));
-    slMenu.Add(ACBrStr('Cancelamento'));
     slMenu.Add(ACBrStr('Resumo de Vendas'));
     slMenu.Add(ACBrStr('Finalizar Dia'));
-    slMenu.Add(ACBrStr('Recarga de Celular'));
     slMenu.Add(ACBrStr('Administrativo'));
+    slMenu.Add(ACBrStr('Versão'));
+    slMenu.Add(ACBrStr('Teste Comunicação'));
     ItemSel := -1;
     TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( 'Menu Administrativo', slMenu, ItemSel );
     case ItemSel of
-      0: Result := tefopVersao;
-      1: Result := tefopTesteComunicacao;
-      2: Result := tefopReimpressao;
-      3: Result := tefopCancelamento;
-      4: Result := tefopRelatResumido;
-      5: Result := tefopFechamento;
-      6: Result := tefopPrePago;
-      7: Result := tefopAdministrativo;
+      0: Result := tefopReimpressao;
+      1: Result := tefopRelatResumido;
+      2: Result := tefopFechamento;
+      3: Result := tefopAdministrativo;
+      4: Result := tefopVersao;
+      5: Result := tefopTesteComunicacao;
     end;
   finally
     slMenu.Free;
@@ -406,24 +434,16 @@ begin
   case CodOperacaoAdm of
     tefopVersao:
       Result := ExibirVersaoPayKit();
-
     tefopTesteComunicacao:
       Result := TestarComunicacaoPayKit();
-
     tefopReimpressao:
-      ;
-    tefopCancelamento:
-      ;
+      GetTEFPayKitAPI.TransacaoReimpressaoCupom;
     tefopRelatResumido:
-      ;
+      GetTEFPayKitAPI.TransacaoResumoVendas;
     tefopFechamento:
       GetTEFPayKitAPI.FinalizaDPOS(True);
-
-    tefopPrePago:;
-    tefopAdministrativo:;
-
   else
-    //OpScope := scoMenu;
+    GetTEFPayKitAPI.TransacaoFuncoesAdministrativas();
   end;
 end;
 
@@ -436,7 +456,8 @@ function TACBrTEFAPIClassPayKit.CancelarTransacao(const NSU,
   CodigoAutorizacaoTransacao: string; DataHoraTransacao: TDateTime;
   Valor: Double; const CodigoFinalizacao: string; const Rede: string): Boolean;
 begin
-  //TODO
+  GetTEFPayKitAPI.CancelarTransacao(CodigoFinalizacao);
+  Result := True;
 end;
 
 function TACBrTEFAPIClassPayKit.EfetuarPagamento(ValorPagto: Currency;
@@ -444,8 +465,9 @@ function TACBrTEFAPIClassPayKit.EfetuarPagamento(ValorPagto: Currency;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte;
   DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
 var
-  NumeroControle: String;
+  NumeroControle, e: String;
   TipoOp: TACBrTEFPayKitTipoOperacao;
+  c: TACBrTEFTipoCartao;
 begin
   VerificarIdentificadorVendaInformado;
   if (ValorPagto <= 0) then
@@ -471,8 +493,8 @@ begin
     begin
       if (teftcCredito in CartoesAceitos) then
       begin
-        TransacaoCartaoCredito( ValorPagto,
-          StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0), NumeroControle);
+        NumeroControle := TransacaoCartaoCredito( ValorPagto,
+          StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0));
         //TransacaoCartaoCreditoCompleta( ValorPagto,
         //  StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0),
         //  NumeroControle, TipoOp,
@@ -480,28 +502,37 @@ begin
       end
       else if (teftcDebito in CartoesAceitos) then
       begin
-        TransacaoCartaoDebito( ValorPagto,
-          StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0), NumeroControle);
+        NumeroControle := TransacaoCartaoDebito( ValorPagto,
+          StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0));
       end
       else if (teftcVoucher in CartoesAceitos) then
       begin
-        TransacaoCartaoVoucher( ValorPagto,
-          StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0), NumeroControle);
+        NumeroControle := TransacaoCartaoVoucher( ValorPagto,
+          StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0));
       end
       else if (teftcFrota in CartoesAceitos) then
       begin
-        TransacaoCartaoVoucher( ValorPagto,
-          StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0), NumeroControle);
+        NumeroControle := TransacaoCartaoVoucher( ValorPagto,
+          StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0));
       end
       else
-        fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPICapturaNaoSuportada),
-          [GetEnumName(TypeInfo(TACBrTEFTipoCartao), integer(Low(CartoesAceitos)) ), ClassName] ));
+      begin
+        e := '[ ';
+        For c := Low(TACBrTEFTipoCartao) to High(TACBrTEFTipoCartao) do
+        begin
+          if c in CartoesAceitos then
+            e := e + GetEnumName(TypeInfo(TACBrTEFTipoCartao), integer(c) )+', '
+        end;
+        e := e + ' ]';
+
+        fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPICapturaNaoSuportada), [e, ClassName] ));
+      end;
 
     end
     else if (Modalidade = tefmpCarteiraVirtual) then
     begin
-      TransacaoQRCode( ValorPagto,
-        StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0), NumeroControle, '');
+      NumeroControle := TransacaoQRCode( ValorPagto,
+        StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0), '');
     end
     else
       fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPICapturaNaoSuportada),
@@ -517,9 +548,9 @@ begin
   with GetTEFPayKitAPI do
   begin
     if (AStatus in [tefstsSucessoAutomatico, tefstsSucessoManual]) then
-      ConfirmarTransacao(NSU)
+      ConfirmarTransacao(CodigoFinalizacao)
     else
-      DesfazerTransacao(NSU);
+      DesfazerTransacao(CodigoFinalizacao);
   end;
 end;
 

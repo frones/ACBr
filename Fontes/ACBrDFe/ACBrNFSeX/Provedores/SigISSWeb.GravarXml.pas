@@ -356,7 +356,6 @@ begin
                                          NFSe.Intermediario.Contato.Email, ''));
   end;
 
-
   Result := True;
 end;
 

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/05/2025
+-- SigISSWeb.LerXml --
+[*] #TK-6959: Incluido novas tags para atender as alterações promovidas pelo provedor.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] #TK-6995: Refatoração na rotina que realiza a leitura do arquivo INI para os
     provedores que utilização a versão 1 e 2 da ABRASF.

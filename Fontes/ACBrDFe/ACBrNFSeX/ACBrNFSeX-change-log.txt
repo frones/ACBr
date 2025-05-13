@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/05/2025
+-- ACBrNFSeXClass/Infisc.GravarXml/Infisc.LerXml --
+[*] #TK-7046: Incluido a tag <infAdicAT>.
+   Por: Italo Giurizzato Junior
 -- SigISSWeb.LerXml --
 [*] #TK-6959: Incluido novas tags para atender as alterações promovidas pelo provedor.
    Por: Italo Giurizzato Junior

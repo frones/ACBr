@@ -379,6 +379,7 @@ procedure TNFSeR_Infisc.LerInformacoesAdic(const ANode: TACBrXmlNode);
 var
   ANodes: TACBrXmlNodeArray;
   i: Integer;
+  aValor: string;
 begin
   NFSe.OutrasInformacoes := '';
 
@@ -387,11 +388,17 @@ begin
   for i := 0 to Length(ANodes) - 1 do
   begin
     NFSe.OutrasInformacoes := NFSe.OutrasInformacoes + ANodes[i].Content;
-//                  ObterConteudo(ANodes[i].Childrens.FindAnyNs('infAdic'), tcStr);
   end;
 
   NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
                                                     sLineBreak, [rfReplaceAll]);
+
+  aValor := ObterConteudo(ANode.Childrens.FindAnyNs('infAdicAT'), tcStr);
+
+  if aValor = '1' then
+     NFSe.infAdicAT := snSim
+  else
+     NFSe.infAdicAT := snNao;
 end;
 
 procedure TNFSeR_Infisc.LerISS(const ANode: TACBrXmlNode);

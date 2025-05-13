@@ -1769,6 +1769,7 @@ type
     FModeloNFSe: string;
     FTransportadora: TDadosTransportadora;
     FCanhoto: TnfseCanhoto;
+    FinfAdicAT: TnfseSimNao;
 
     Femail: TemailCollection;
     FTipoRecolhimento: string;
@@ -1886,6 +1887,7 @@ type
     property Canhoto: TnfseCanhoto read FCanhoto Write FCanhoto;
     property Transportadora: TDadosTransportadora read FTransportadora write FTransportadora;
     property Despesa: TDespesaCollection read FDespesa write SetDespesa;
+    property infAdicAT: TnfseSimNao read FinfAdicAT write FinfAdicAT;
     // Provedor Governa
     property TipoRecolhimento: string read FTipoRecolhimento write FTipoRecolhimento;
 

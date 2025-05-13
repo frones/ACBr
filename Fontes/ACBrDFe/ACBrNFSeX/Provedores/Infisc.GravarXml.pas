@@ -706,6 +706,11 @@ begin
     if (lResultadoSobra > 0) and (lDeOndeIniciaCopia > 0) then
       Result.AppendChild(AddNode(tcStr, '#1', 'infAdic', 1, 100, 1,
                         Copy(lTexto, lIndex * lLimiteLinha, lLimiteLinha), ''));
+
+    if NFSe.infAdicAT = snSim then
+      Result.AppendChild(AddNode(tcStr, '#1', 'infAdicAT', 1, 1, 1, '1', ''))
+    else
+      Result.AppendChild(AddNode(tcStr, '#1', 'infAdicAT', 1, 1, 1, '0', ''));
   end;
 end;
 

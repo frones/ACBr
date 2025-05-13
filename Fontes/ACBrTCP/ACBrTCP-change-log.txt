@@ -36,6 +36,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/05/2025
+-- ACBrIBGE --
+[-] Workaround para retorno inválido do IBGE, quando "microrregiao": null,
+    https://www.projetoacbr.com.br/forum/topic/83170-acbribge-argument-out-of-range/
+    (por: DSA)
+
 11/02/2025
 -- ACBrCupomVerde --
 [+] Inclusão do novo componente ACBrCupomVerde.

@@ -763,6 +763,14 @@ begin
         oCidade.UF    := AsString['sigla'];
       end;
 
+      if (oCidade.CodUF = 0) then
+      begin
+        with JSonCidade.AsJSONObject['regiao-imediata'].AsJSONObject['regiao-intermediaria'].AsJSONObject['UF'] do
+        begin
+          oCidade.CodUF := AsInteger['id'];
+          oCidade.UF    := AsString['sigla'];
+        end;
+      end;
       Add(oCidade);
     end;
   finally
@@ -892,6 +900,9 @@ begin
     Result := UTF8ToNativeString(Resp)
   else
     Result := String(Resp);
+
+  // DEBUG
+  //WriteToFile('C:\TEMP\body.txt', Result);
 end;
 
 procedure TACBrIBGE.HTTPGetCompressed(const AURL: String);
@@ -1119,6 +1130,7 @@ end;
 procedure TACBrIBGE.SalvarCidades(AStringList: TStrings);
 var
   CodUF, I, J: Integer;
+  Cidade: TACBrIBGECidade;
 begin
   CodUF := 0;
   fListaCidades.SortByCodMunicipio;
@@ -1128,9 +1140,14 @@ begin
   begin
     if CodUF <> fListaCidades[I].CodUF then
     begin
-      CodUF := fListaCidades[I].CodUF;
-      J := fListaUFs.Find(CodUF);
-      AStringList.Add(fListaUFs[J].AsString);
+      Cidade := fListaCidades[I];
+      CodUF := Cidade.CodUF;
+      if (CodUF > 0) then
+      begin
+        J := fListaUFs.Find(CodUF);
+        if (J >= 0) and (J < fListaUFs.Count) then
+          AStringList.Add(fListaUFs[J].AsString);
+      end;
     end;
 
     AStringList.Add(fListaCidades[I].AsString);

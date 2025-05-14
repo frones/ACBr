@@ -357,7 +357,7 @@ begin
       NFSe.Servico.LocalPrestacao := lpForaMunicipio;
 
     NFSe.Servico.UFPrestacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('UFFORA'), tcStr);
-    NFSe.Servico.MunicipioIncidencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('MUNICIPIOFORA'), tcStr);
+    NFSe.Servico.MunicipioIncidencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('MUNICIPIOFORA'), tcInt);
 
     Situacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('SITUACAO'), tcInt);
 

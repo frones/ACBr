@@ -48,9 +48,14 @@ type
   protected
     procedure Configuracao; override;
 
+  public
+    function GerarXml: Boolean; Override;
   end;
 
 implementation
+
+uses
+  ACBrNFSeXConversao;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -76,11 +81,16 @@ begin
   NrOcorrValorInss := 1;
   NrOcorrOutrasRet := 1;
   NrOcorrCodigoPaisTomador := 1;
+end;
 
-  NrOcorrValorIss := 1;
-
-  if FpAOwner.ConfigGeral.Params.ParamTemValor('NaoGerarTag', 'ValorIss') then
+function TNFSeW_DeISS203.GerarXml: Boolean;
+begin
+  if NFSe.Servico.Valores.IssRetido = stRetencao then
+    NrOcorrValorIss := 1
+  else
     NrOcorrValorIss := -1;
+
+  Result := inherited GerarXml;
 end;
 
 end.

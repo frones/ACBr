@@ -1610,7 +1610,6 @@ type
     function FormatarMsgPinPad(const MsgPinPad: String): String;
 
     function PerguntarValorTransacao: Double;
-    function TratarNomeImagemPinPad(const NomeImagem: String): String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -2661,7 +2660,7 @@ begin
   sfile := ExtractFileName(warq);
   spath := ExtractFilePath(warq);
   sext := LowerCase(ExtractFileExt(warq));
-  wimg := TratarNomeImagemPinPad(NomeImagem);
+  wimg := NomeImagem;
   if (sext = '.png') then
     ct := '1'
   else
@@ -2687,7 +2686,7 @@ var
   s: AnsiString;
 begin
   VerificarCarregada;
-  s := AnsiString(TratarNomeImagemPinPad(NomeImagem));
+  s := NomeImagem;
   GravarLog('ScopePPMMDisplayImage( '+s+' )');
   ret := xScopePPMMDisplayImage(PAnsiChar(s));
   GravarLog('  ret: '+IntToStr(ret));
@@ -2701,7 +2700,7 @@ var
   s: AnsiString;
 begin
   VerificarCarregada;
-  s := AnsiString(TratarNomeImagemPinPad(NomeImagem));
+  s := NomeImagem;
   GravarLog('ScopePPMMFileDelete( '+s+' )');
   ret := xScopePPMMFileDelete(PAnsiChar(s));
   GravarLog('  ret: '+IntToStr(ret));
@@ -4060,11 +4059,6 @@ begin
     Result := -2
   else
     Result := -1;
-end;
-
-function TACBrTEFScopeAPI.TratarNomeImagemPinPad(const NomeImagem: String): String;
-begin
-  Result := UpperCase(PadRight(OnlyAlphaNum(NomeImagem), 8, '0'));
 end;
 
 procedure TACBrTEFScopeAPI.AbrirPinPad;

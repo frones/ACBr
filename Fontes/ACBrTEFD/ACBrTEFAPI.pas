@@ -65,7 +65,8 @@ type
                       tefAditumAPI,
                       tefScopeAPI,
                       tefDestaxaAPI,
-                      tefTPag);
+                      tefTPag,
+                      tefPayKit);
 
   TACBrTEFAPIExibicaoQRCode = ( qrapiNaoSuportado,
                                 qrapiAuto,
@@ -224,6 +225,8 @@ type
     procedure SetModelo(const AValue: TACBrTEFAPITipo);
     function GetPathDLL: String;
     procedure SetPathDLL(const Value: String);
+
+    function TratarNomeImagemPinPad(const NomeImagem: String): String;
   protected
 
   public
@@ -292,7 +295,8 @@ uses
   ACBrTEFAPIAditum,
   ACBrTEFAPIScope,
   ACBrTEFAPIDestaxa,
-  ACBrTEFAPITPag;
+  ACBrTEFAPITPag,
+  ACBrTEFAPIPayKit;
 
 { TACBrTEFAPIClass }
 
@@ -503,9 +507,12 @@ begin
 end;
 
 procedure TACBrTEFAPI.ExibirImagemPinPad(const NomeImagem: String);
+var
+  n: String;
 begin
   GravarLog('ExibirImagemPinPad( '+NomeImagem+' )');
-  TEF.ExibirImagemPinPad(NomeImagem);
+  n := TratarNomeImagemPinPad(NomeImagem);
+  TEF.ExibirImagemPinPad(n);
 end;
 
 {$IfDef HAS_PNG}
@@ -580,16 +587,22 @@ end;
 {$EndIf}
 
 procedure TACBrTEFAPI.ApagarImagemPinPad(const NomeImagem: String);
+var
+  n: String;
 begin
   GravarLog('ApagarImagemPinPad( '+NomeImagem+' )');
-  TEF.ApagarImagemPinPad(NomeImagem);
+  n := TratarNomeImagemPinPad(NomeImagem);
+  TEF.ApagarImagemPinPad(n);
 end;
 
 procedure TACBrTEFAPI.CarregarImagemPinPad(const NomeImagem: String;
   AStream: TStream; TipoImagem: TACBrTEFAPIImagemPinPad);
+var
+  n: String;
 begin
   GravarLog('CarregarImagemPinPad( '+NomeImagem+', '+IntToStr(AStream.Size)+' bytes )');
-  TEF.CarregarImagemPinPad(NomeImagem, AStream, TipoImagem);
+  n := TratarNomeImagemPinPad(NomeImagem);
+  TEF.CarregarImagemPinPad(n, AStream, TipoImagem);
 end;
 
 procedure TACBrTEFAPI.CarregarImagemPinPad(const NomeImagem: String;
@@ -644,6 +657,7 @@ begin
     tefScopeAPI    : fpTEFAPIClass := TACBrTEFAPIClassScope.Create( Self );
     tefDestaxaAPI  : fpTEFAPIClass := TACBrTEFAPIClassDestaxa.Create( Self );
     tefTPag        : fpTEFAPIClass := TACBrTEFAPIClassTPag.Create( Self );
+    tefPayKit      : fpTEFAPIClass := TACBrTEFAPIClassPayKit.Create( Self );
   else
     fpTEFAPIClass := TACBrTEFAPIClass.Create( Self );
   end;
@@ -665,6 +679,11 @@ procedure TACBrTEFAPI.SetPathDLL(const Value: String);
 begin
   if Assigned(fpTEFAPIClass) then
     fpTEFAPIClass.PathDLL := value;
+end;
+
+function TACBrTEFAPI.TratarNomeImagemPinPad(const NomeImagem: String): String;
+begin
+  Result := UpperCase(PadRight(OnlyAlphaNum(NomeImagem), 8, '0'));
 end;
 
 function TACBrTEFAPI.GetTEFAPIClass: TACBrTEFAPIClass;

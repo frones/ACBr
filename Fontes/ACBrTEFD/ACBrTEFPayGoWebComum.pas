@@ -51,6 +51,8 @@ resourcestring
   sErrLibNaoPermiteMudarPath = 'Path da PGWebLib deve ser %s';
   sErrEventoNaoAtribuido = 'Evento %s não atribuido';
   sErrLibVersaoInvalida = 'Biblioteca %s tem versão %s, inferior a %s';
+  sErrArquivoNaoExistente = 'Arquivo: %s não encontrado';
+  sErrBibliotecaNaoTemMetodo = 'Essa versão da biblioteca não possui o método %s';
   sErrPWRET_WRITERR = 'Falha de gravação no diretório %s';
   sErrPWRET_INVCALL = 'Já foi efetuada uma chamada à função PW_iInit';
   sErrPWRET_INVCALL2 = 'Não há captura de dados no PIN-pad em curso.';
@@ -62,7 +64,8 @@ resourcestring
   sErrPWRET_TRNNOTINIT = 'Não foi iniciada uma Transação';
   sErrPWRET_INVALIDTRN = 'A transação informada para confirmação não existe ou já foi confirmada anteriormente';
   sErrPWRET_NOTINST = 'É necessário efetuar uma transação de Instalação';
-  sErrPWRET_INVPARAM = 'Valor %s Inválido para parâmetro %s';
+  sErrPWRET_INVPARAM = 'Parâmetro Inválido';
+  sErrPWRET_INVPARAM1 = 'Valor %s Inválido para parâmetro %s';
   sErrPWRET_INVPARAM2 = 'O valor de uiIndex informado não corresponde a uma captura de dados deste tipo.';
   sErrPWRET_NOMANDATORY = 'Parâmetros obrigatórios não informados';
   sErrPWRET_PPCOMERR = 'Falha na comunicação com o PIN-pad.';
@@ -642,6 +645,9 @@ type
               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPDisplay: function(const pszMsg: PAnsiChar): SmallInt;
               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xPW_iPPDisplayImage: function(pszImagePath: PAnsiChar; iTimeOut: SmallInt;
+              fWaitKey: SmallInt; var piKey: SmallInt): SmallInt;
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iPPGetUserData: function(uiMessageId: Word; bMinLen: Byte; bMaxLen: Byte;
               iToutSec:  SmallInt; pszData: PAnsiChar): SmallInt;
               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -733,6 +739,8 @@ type
     procedure TratarTransacaoPendente;
     function VerificarPresencaPinPad: Byte;
     procedure ExibirMensagemPinPad(const MsgPinPad: String);
+    function ExibirImagemPinPad(const NomeArquivoImagem: String;
+      TimeOutSec: SmallInt = 20; AguardaTecla: Boolean = False): SmallInt;
     function ObterDadoPinPad(iMessageId: Word; MinLen, MaxLen: Byte;
       TimeOutSec: SmallInt): String;
     function VersaoLib: String;
@@ -1282,6 +1290,7 @@ begin
   xPW_iPPDataConfirmation := Nil;
   xPW_iPPTestKey := Nil;
   xPW_iPPDisplay := Nil;
+  xPW_iPPDisplayImage := Nil;
   xPW_iPPGetUserData := Nil;
   xPW_iPPWaitEvent := Nil;
   xPW_iPPRemoveCard := Nil;
@@ -1481,7 +1490,7 @@ begin
   if (iRet <> PWRET_OK) then
   begin
     case iRet of
-      PWRET_INVPARAM: MsgError := Format(sErrPWRET_INVPARAM, [AValor, PWINFOToString(iINFO)]);
+      PWRET_INVPARAM: MsgError := Format(sErrPWRET_INVPARAM1, [AValor, PWINFOToString(iINFO)]);
       PWRET_DLLNOTINIT: MsgError := sErrPWRET_DLLNOTINIT;
       PWRET_NOTINST: MsgError := sErrPWRET_NOTINST;
       PWRET_TRNNOTINIT: MsgError := sErrPWRET_TRNNOTINIT;
@@ -1801,6 +1810,54 @@ begin
 
   if (MsgError <> '') then
     DoException(ACBrStr(MsgError));
+end;
+
+function TACBrTEFPGWebAPI.ExibirImagemPinPad(const NomeArquivoImagem: String;
+  TimeOutSec: SmallInt; AguardaTecla: Boolean): SmallInt;
+var
+  iRetPP, fWaitKey, piKey: SmallInt;
+  warq: AnsiString;
+  MsgError: String;
+begin
+  warq := Trim(NomeArquivoImagem);
+  if (warq = '') then
+    Exit;
+
+  if not FileExists(warq) then
+    DoException(Format(sErrArquivoNaoExistente, [warq]));
+
+  warq := StringReplace(warq, '\', '\\', [rfReplaceAll]);
+  if not Assigned(xPW_iPPDisplayImage) then
+    DoException(Format(sErrBibliotecaNaoTemMetodo, ['PW_iPPDisplayImage']));
+
+  fWaitKey := IfThen(AguardaTecla, 1, 0);
+  piKey := 0;
+  GravarLog('PW_iPPDisplayImage( '+warq+', '+IntToStr(TimeOutSec)+', '+IntToStr(fWaitKey)+' )');
+  iRetPP := xPW_iPPDisplayImage( PAnsiChar(warq), TimeOutSec, fWaitKey, piKey);
+  GravarLog('  '+PWRETToString(iRetPP));
+
+  MsgError := '';
+  if (iRetPP <> PWRET_OK) then
+  begin
+    case iRetPP of
+      PWRET_CANCEL, PWRET_PPS_CANCEL, PWRET_PPS_CANCEL2,
+      PWRET_TIMEOUT, PWRET_PPS_TIMEOUT, PWRET_PPS_TIMEOUT2,
+      PWRET_PPABORT:
+        MsgError := '';
+      PWRET_DLLNOTINIT: MsgError := sErrPWRET_DLLNOTINIT;
+      PWRET_NOTINST: MsgError := sErrPWRET_NOTINST;
+      PWRET_PPCOMERR: MsgError := sErrPWRET_PPCOMERR;
+      PWRET_INVCALL: MsgError := sErrPWRET_INVCALL3;
+      PWRET_INVPARAM: MsgError := sErrPWRET_INVPARAM;
+    else
+      MsgError := PWRETToString(iRetPP);
+    end;
+  end;
+
+  if (MsgError <> '') then
+    DoException(ACBrStr(MsgError));
+
+  Result := piKey;
 end;
 
 function TACBrTEFPGWebAPI.ObterDadoPinPad(iMessageId: Word; MinLen,
@@ -2905,6 +2962,7 @@ procedure TACBrTEFPGWebAPI.LoadLibFunctions;
    PGWebFunctionDetect(sLibName, 'PW_iPPConfirmData', @xPW_iPPConfirmData);
    PGWebFunctionDetect(sLibName, 'PW_iPPGenericCMD', @xPW_iPPGenericCMD);
    PGWebFunctionDetect(sLibName, 'PW_iPPDisplay', @xPW_iPPDisplay);
+   PGWebFunctionDetect(sLibName, 'PW_iPPDisplayImage', @xPW_iPPDisplayImage, False);
    PGWebFunctionDetect(sLibName, 'PW_iPPGetUserData', @xPW_iPPGetUserData);
    PGWebFunctionDetect(sLibName, 'PW_iPPWaitEvent', @xPW_iPPWaitEvent);
    PGWebFunctionDetect(sLibName, 'PW_iPPRemoveCard', @xPW_iPPRemoveCard);

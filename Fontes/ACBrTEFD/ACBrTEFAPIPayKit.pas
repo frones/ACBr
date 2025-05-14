@@ -69,6 +69,7 @@ type
       out Cancelar: Boolean);
 
     procedure QuandoExibirQRCodeAPI(const DadosQRCode: String);
+    procedure QuandoAvaliarTransacaoPendenteAPI(const NumeroControle, MsgErro: String);
 
   protected
     procedure InterpretarRespostaAPI; override;
@@ -131,30 +132,96 @@ type
 implementation
 
 uses
-  math, StrUtils, TypInfo,
+  math, StrUtils, TypInfo, DateUtils,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
+  ACBrUtil.Math,
   ACBrJSON;
 
 { TACBrTEFRespPayKit }
 
 procedure TACBrTEFRespPayKit.ConteudoToProperty;
 var
-  j: String;
-  js, jsLog: TACBrJSONObject;
+  json, cupom, s: String;
+  jso, jsLog: TACBrJSONObject;
+  dh: TDateTime;
 begin
-  j := Conteudo.LeInformacao(899,300).AsString;
-  js := TACBrJSONObject.Parse(j);
+  fpCNFEnviado := (UpperCase(Conteudo.LeInformacao(899,1).AsString) = 'S');
+  fpHeader := Conteudo.LeInformacao(899,100).AsString;
+
+  cupom := StringToBinaryString(Conteudo.LeInformacao(899,300).AsString);
+  ImagemComprovante1aVia.Text := cupom;
+  ImagemComprovante2aVia.Text := cupom;
+  Confirmar := (cupom <> '');
+
+  json := Conteudo.LeInformacao(899,200).AsString;
+  jso := TACBrJSONObject.Parse(json);
   try
-    jsLog := js.AsJSONObject['LogTransacao'];
+    jsLog := jso.AsJSONObject['LogTransacao'];
     if not Assigned(jsLog) then
       Exit;
 
+    NFCeSAT.CNPJCredenciadora := jsLog.AsString['CNPJRedeAdquirente'];
+    NFCeSAT.DataExpiracao := jsLog.AsString['VencimentoCartao'];
+    NFCeSAT.DonoCartao := jsLog.AsString['NomePortador'];
+    s := jsLog.AsString['NumeroCartao'];
+    while (RightStr(s, 1) = '*') do
+      Delete(s, Length(s), 1);
+
+    BIN := s;
+    NFCeSAT.UltimosQuatroDigitos := RightStr(s, 4);
+
+    s := UpperCase(jsLog.AsString['TipoRegistro']);
+    Debito := (s = 'CDB');
+    Credito := (s = 'CCR');
+    Voucher := (s = 'CCV');
+
+    s := jsLog.AsString['Hora'] ;
+    s := s + jsLog.AsString['Data'] ;
+    if TryEncodeDateTime( StrToIntDef(copy(s,11,4), YearOf(date)),
+                          StrToIntDef(copy(s, 9,2), 0),
+                          StrToIntDef(copy(s, 7,2), 0),
+                          StrToIntDef(copy(s, 1,2), 0),
+                          StrToIntDef(copy(s, 3,2), 0),
+                          StrToIntDef(copy(s, 5,2), 0), 0, dh ) then
+    begin
+      DataHoraTransacaoHost := dh;
+      DataHoraTransacaoLocal := dh;
+    end;
+
+    s := jsLog.AsString['TipoOperacao'];
+    if (s = 'PD') then
+      TipoOperacao := opPreDatado
+    else if (pos(s, 'FL,FA,PC,PS') > 0) then
+      TipoOperacao := opParcelado
+    else
+      TipoOperacao := opAVista;
+
+    if (s = 'FA') then
+      ParceladoPor := parcADM
+    else
+      ParceladoPor := parcLoja;
+
+    QtdParcelas := jsLog.AsInteger['NumeroParcelas'];
+    Digitado := (jsLog.AsString['TipoColetaCartao'] = '1');
+
+    Desconto := jsLog.AsInt64['ValorDesconto']/100;
+    ValorTotal := jsLog.AsInt64['ValorFinal']/100;
+    TaxaServico := jsLog.AsInt64['ValorTaxaServico']/100;
+    CodigoBandeiraPadrao := jsLog.AsString['CodigoBandeira'];
+    CodigoRedeAutorizada := jsLog.AsString['CodigoOperadora'];
+    NomeAdministradora := jsLog.AsString['NomeOperadora'];
+    CodigoPSP := jsLog.AsString['CodigoPSP'];
+    EndToEndID := jsLog.AsString['IdEndToEnd'];
+
+    DocumentoVinculado := jsLog.AsString['NumeroCupom'] ;
+    NSU := jsLog.AsString['NumeroAutorizacaoRede'];
     Finalizacao := jsLog.AsString['NumeroControle'];
     NSU_TEF := Finalizacao;
-    NFCeSAT.CNPJCredenciadora := jsLog.AsString['CNPJRedeAdquirente'];
+
+    Sucesso := (jsLog.AsInteger['CodigoResposta'] = 0);
   finally
-    js.Free;
+    jso.Free;
   end;
 end;
 
@@ -176,6 +243,7 @@ begin
     QuandoPerguntarMenu := QuandoPerguntarMenuAPI;
     QuandoPerguntarCampo := QuandoPerguntarCampoAPI;
     QuandoExibirQRCode := QuandoExibirQRCodeAPI;
+    QuandoAvaliarTransacaoPendente := QuandoAvaliarTransacaoPendenteAPI;
   end;
 end;
 
@@ -224,33 +292,45 @@ end;
 
 procedure TACBrTEFAPIClassPayKit.InterpretarRespostaAPI;
 var
-  j, NumeroControle, Cupom: String;
-  js, jsLog: TACBrJSONObject;
+  json, Cupom: String;
+  jso, jsLog: TACBrJSONObject;
+  nc: Integer;
 begin
-  NumeroControle := '';
+  json := '';
   Cupom := '';
+
   with GetTEFPayKitAPI do
   begin
-    j := ObtemLogTransacaoJson('');
-    js := TACBrJSONObject.Parse(j);
-    try
-      jsLog := js.AsJSONObject['LogTransacao'];
-      if Assigned(jsLog) then
-        NumeroControle := jsLog.AsString['NumeroControle'];
-    finally
-      js.Free;
-    end;
+    if (UltimoNumeroControle > 0) then
+    begin
+      json := ObtemLogTransacaoJson( IntToStr(UltimoNumeroControle) );
+      jso := TACBrJSONObject.Parse(json);
+      try
+        jsLog := jso.AsJSONObject['LogTransacao'];
+        if Assigned(jsLog) then
+          nc := jsLog.AsInteger['NumeroControle']
+        else
+          nc := -1;
 
-    if (NumeroControle <> '') then
-      Cupom := ObtemComprovanteTransacao(NumeroControle, fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida);
+        if (nc > 0) and (UltimoNumeroControle <> nc) then  // Se Retorno Log errado (antigo)...
+        begin
+          nc := 0;                           // então nem vamos tentar ler o Cupom...
+          json := '';                                     // Ignore Json retornado
+        end;
+      finally
+        jso.Free;
+      end;
+
+      if (nc > 0) then
+        Cupom := ObtemComprovanteTransacao(IntToStr(nc), fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida);
+    end;
   end;
 
   with fpACBrTEFAPI.UltimaRespostaTEF do
   begin
     Clear;
-    Conteudo.GravaInformacao(899,300, j);
-    ImagemComprovante1aVia.Text := Cupom;
-    ImagemComprovante2aVia.Text := Cupom;
+    Conteudo.GravaInformacao(899,200, json);
+    Conteudo.GravaInformacao(899,300, BinaryStringToString(Cupom) );
     DocumentoVinculado := fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao;
     AtualizarHeader;
     ConteudoToProperty;
@@ -287,6 +367,7 @@ begin
     slMenu.Add(ACBrStr('Administrativo'));
     slMenu.Add(ACBrStr('Versão'));
     slMenu.Add(ACBrStr('Teste Comunicação'));
+    slMenu.Add(ACBrStr('Atualiza Tabelas Pinpad'));
     ItemSel := -1;
     TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( 'Menu Administrativo', slMenu, ItemSel );
     case ItemSel of
@@ -296,6 +377,7 @@ begin
       3: Result := tefopAdministrativo;
       4: Result := tefopVersao;
       5: Result := tefopTesteComunicacao;
+      6: Result := tefopNenhuma;
     end;
   finally
     slMenu.Free;
@@ -425,6 +507,16 @@ begin
   end;
 end;
 
+procedure TACBrTEFAPIClassPayKit.QuandoAvaliarTransacaoPendenteAPI(
+  const NumeroControle, MsgErro: String);
+begin
+  with fpACBrTEFAPI do
+  begin
+    UltimaRespostaTEF.Finalizacao := NumeroControle;
+    ProcessarTransacaoPendente(MsgErro);
+  end;
+end;
+
 function TACBrTEFAPIClassPayKit.EfetuarAdministrativa(CodOperacaoAdm: TACBrTEFOperacao): Boolean;
 begin
   Result := True;
@@ -442,6 +534,8 @@ begin
       GetTEFPayKitAPI.TransacaoResumoVendas;
     tefopFechamento:
       GetTEFPayKitAPI.FinalizaDPOS(True);
+    tefopNenhuma:
+      GetTEFPayKitAPI.ForcaAtualizacaoTabelasPinpad;
   else
     GetTEFPayKitAPI.TransacaoFuncoesAdministrativas();
   end;
@@ -475,10 +569,10 @@ begin
 
   NumeroControle := '';
   case Financiamento of
-    tefmfParceladoEmissor, tefmfCreditoEmissor: TipoOp := opFinancAdm;
-    tefmfParceladoEstabelecimento, tefmfPredatado: TipoOp := opFinancLoja;
+    tefmfParceladoEmissor, tefmfCreditoEmissor: TipoOp := opkFinancAdm;
+    tefmfParceladoEstabelecimento, tefmfPredatado: TipoOp := opkFinancLoja;
   else
-    TipoOp := opAVista;
+    TipoOp := opkAVista;
   end;
 
   if (CartoesAceitos = []) then
@@ -495,10 +589,9 @@ begin
       begin
         NumeroControle := TransacaoCartaoCredito( ValorPagto,
           StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0));
-        //TransacaoCartaoCreditoCompleta( ValorPagto,
+        //NumeroControle := TransacaoCartaoCreditoCompleta( ValorPagto,
         //  StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0),
-        //  NumeroControle, TipoOp,
-        //  Parcelas, 0, 0, True, DadosAdicionais);
+        //  TipoOp, Parcelas, 0, 0, True, DadosAdicionais);
       end
       else if (teftcDebito in CartoesAceitos) then
       begin
@@ -544,13 +637,41 @@ end;
 
 procedure TACBrTEFAPIClassPayKit.FinalizarTransacao(const Rede, NSU,
   CodigoFinalizacao: String; AStatus: TACBrTEFStatusTransacao);
+var
+  Resposta, MensagemErro: String;
+  n, iRet, status: Integer;
 begin
   with GetTEFPayKitAPI do
   begin
     if (AStatus in [tefstsSucessoAutomatico, tefstsSucessoManual]) then
-      ConfirmarTransacao(CodigoFinalizacao)
+      iRet := ConfirmarTransacao(CodigoFinalizacao)
     else
-      DesfazerTransacao(CodigoFinalizacao);
+      iRet := DesfazerTransacao(CodigoFinalizacao);
+
+    if (iRet <> 0) then
+    begin
+      n := StrToIntDef(CodigoFinalizacao, 0);
+      status := -1;
+      if (n > 0) then
+      begin
+        try
+          ConsultaTransacao(date, n, Resposta, MensagemErro);
+          status := StrToIntDef(copy(Resposta, 21, 2), status);
+        except
+        end;
+      end;
+
+      if (AStatus in [tefstsSucessoAutomatico, tefstsSucessoManual]) then
+      begin
+        if (status <> 0) then
+          fpACBrTEFAPI.DoException(ACBrStr('Erro ao confirmar a Transação'));
+      end
+      else
+      begin
+        if (status <> 86) then
+          fpACBrTEFAPI.DoException(ACBrStr('Erro ao desfazer a Transação'));
+      end;
+    end;
   end;
 end;
 
@@ -686,26 +807,27 @@ begin
 end;
 
 procedure TACBrTEFAPIClassPayKit.ExibirImagemPinPad(const NomeImagem: String);
-var
-  Dados: AnsiString;
+//var
+//  Dados: AnsiString;
 begin
-  Dados := PadRight(NomeImagem, 8);
-  GetTEFPayKitAPI.TransacaoEspecial(125, Dados);
+  //Dados := PadRight(NomeImagem, 8);
+  //GetTEFPayKitAPI.TransacaoEspecial(125, Dados);
 end;
 
 procedure TACBrTEFAPIClassPayKit.ApagarImagemPinPad(const NomeImagem: String);
-var
-  Dados: AnsiString;
+//var
+//  Dados: AnsiString;
 begin
-  Dados := PadRight(NomeImagem, 993, #0);
-  GetTEFPayKitAPI.TransacaoEspecial(127, Dados);
+  //Dados := PadRight(NomeImagem, 993, #0);
+  //GetTEFPayKitAPI.TransacaoEspecial(127, Dados);
+  GetTEFPayKitAPI.ApagaImagemPinPadPayKit(NomeImagem);
 end;
 
 procedure TACBrTEFAPIClassPayKit.CarregarImagemPinPad(const NomeImagem: String;
   AStream: TStream; TipoImagem: TACBrTEFAPIImagemPinPad);
 var
   tmpFile, ext: String;
-  Dados: AnsiString;
+  //Dados: AnsiString;
   ms: TMemoryStream;
 begin
   ext := IfThen(TipoImagem=imgPNG, '.png', '.jpg');
@@ -724,8 +846,9 @@ begin
   if FileExists(tmpFile) then
   begin
     try
-      Dados := IfThen(TipoImagem=imgPNG,'1','2')+'000' + NomeImagem + PadRight(tmpFile, 256, #0);
-      GetTEFPayKitAPI.TransacaoEspecial(123, Dados);
+      GetTEFPayKitAPI.ExibeImagemPinPadPayKit(tmpFile);
+      //Dados := IfThen(TipoImagem=imgPNG,'1','2')+'000' + NomeImagem + PadRight(tmpFile, 256, #0);
+      //GetTEFPayKitAPI.TransacaoEspecial(123, Dados);
     finally
       DeleteFile(tmpFile);
     end;

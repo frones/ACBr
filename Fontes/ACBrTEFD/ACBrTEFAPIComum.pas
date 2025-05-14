@@ -236,6 +236,7 @@ type
       AStatus: TACBrTEFStatusTransacao = tefstsSucessoManual); virtual;
 
     procedure AbortarTransacaoEmAndamento; virtual;
+    procedure FinalizarVenda; virtual;
 
     property Inicializado: Boolean read fpInicializado;
     property OperacaoEmAndamento: TACBrTEFAPIMetodo read fpMetodoOperacao;
@@ -391,6 +392,7 @@ type
     procedure EstornarTransacoesPendentes;
     procedure CancelarOuEstornarTransacoesDiretorioTrabalho;
     procedure FinalizarTransacoesPendentes(Status: TACBrTEFStatusTransacao = tefstsSucessoAutomatico);
+    procedure FinalizarVenda;
 
     procedure GravarLog(const AString: AnsiString); virtual;
 
@@ -859,6 +861,11 @@ end;
 procedure TACBrTEFAPIComumClass.AbortarTransacaoEmAndamento;
 begin
   ErroAbstract('AbortarTransacaoEmAndamento');
+end;
+
+procedure TACBrTEFAPIComumClass.FinalizarVenda;
+begin
+  { Nada a fazer, sobreescrever se necessário }
 end;
 
 procedure TACBrTEFAPIComumClass.InicializarChamadaAPI(
@@ -1533,6 +1540,8 @@ begin
   finally
     RespostasTEFAtuais.Free;
   end;
+
+  FinalizarVenda;
 end;
 
 procedure TACBrTEFAPIComum.FinalizarTransacoesPendentes(Status: TACBrTEFStatusTransacao);
@@ -1554,6 +1563,18 @@ begin
                           ATEFResp.Finalizacao,
                           Status );
     end;
+  end;
+
+  FinalizarVenda;
+end;
+
+procedure TACBrTEFAPIComum.FinalizarVenda;
+begin
+  GravarLog('FinalizarVenda');
+  if (RespostasTEF.Count > 0) then
+  begin
+    fpTEFAPIClass.FinalizarVenda;
+    LimparRespostasTEF;
   end;
 end;
 

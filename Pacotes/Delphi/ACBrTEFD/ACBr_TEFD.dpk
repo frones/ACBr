@@ -87,6 +87,8 @@ contains
   ACBrTEFScopeAPI in '..\..\..\Fontes\ACBrTEFD\ACBrTEFScopeAPI.pas',
   ACBrTEFAPIScope in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIScope.pas',
   ACBrTEFAPITPag in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPITPag.pas',
-  ACBrTEFTPagAPI in '..\..\..\Fontes\ACBrTEFD\ACBrTEFTPagAPI.pas';
+  ACBrTEFTPagAPI in '..\..\..\Fontes\ACBrTEFD\ACBrTEFTPagAPI.pas',
+  ACBrTEFAPIPayKit in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIPayKit.pas',
+  ACBrTEFPayKitAPI in '..\..\..\Fontes\ACBrTEFD\ACBrTEFPayKitAPI.pas';
 
 end.

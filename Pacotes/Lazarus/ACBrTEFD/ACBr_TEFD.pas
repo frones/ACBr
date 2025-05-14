@@ -17,7 +17,7 @@ uses
   ACBrTEFDDirecao, ACBrTEFDDialScopeGetcard, ACBrTEFDElgin, 
   ACBrTEFAPIStoneAutoTEF, ACBrTEFAPIAditum, ACBrTEFDestaxaComum, 
   ACBrTEFAPIDestaxa, ACBrTEFScopeAPI, ACBrTEFAPIScope, ACBrTEFAPITPag, 
-  ACBrTEFTPagAPI, LazarusPackageIntf;
+  ACBrTEFTPagAPI, ACBrTEFAPIPayKit, ACBrTEFPayKitAPI, LazarusPackageIntf;
 
 implementation
 

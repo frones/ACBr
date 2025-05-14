@@ -43,6 +43,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+14/05/2025
+-- DoACBrNFeUnit --
+[*] #TK-7028: Adiciona nome do arquivo no início da resposta conforme padrão para outros documentos.
+  Por: Diego Folieni
+
 07/05/2025
 -- ACBrMonitor1, DoBoletoUnit, ACBrMonitorConfig --
 [*] #TK-7024 Add no monitor LayoutVersaoLote que não estava sendo alimentada.

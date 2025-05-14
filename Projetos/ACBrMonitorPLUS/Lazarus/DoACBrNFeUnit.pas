@@ -1731,6 +1731,8 @@ begin
   if (Alertas <> '') then
     Resp := Resp + sLineBreak + 'Alertas:' + Alertas;
 
+  fpCmd.Resposta := Resp + sLineBreak;
+
   LNFe.WebServices.Enviar.Sincrono := ASincrono;
 
   if (ALote = 0) then

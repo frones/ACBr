@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2025
+-- ACBrUtil.XMLHTML, ACBrNFSeXWebserviceBase --
+[+] #SemTK - Movida função ConverteANSIparaUTF8() da unit ACBrNFSeXWebserviceBase para a ACBrUtil.XMLHTML renomeada para ConverteANSItoUTF8()
+    por: Renato Rubinho
+
 28/03/2025
 -- ACBrUtil.DateTime --
 [*] Ajuste referente à UTC no método DateTimeToUnixMilliseconds

@@ -108,7 +108,7 @@ type
     function ExtrairRetorno(const ARetorno: string; responseTag: array of string): string; virtual;
     function TratarXmlRetornado(const aXML: string): string; virtual;
     function RetornaHTMLNota(const Retorno: string): string;
-    function ConverteANSIparaUTF8(const Retorno: string): string;
+    function ConverteANSIparaUTF8(const Retorno: string): string; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método ConverteANSItoUTF8() da unit ACBrUtil.XMLHTML.pas' {$ENDIF};
 
     procedure VerificarErroNoRetorno(const ADocument: TACBrXmlDocument); virtual;
     procedure UsarCertificado; virtual;
@@ -1276,13 +1276,7 @@ end;
 function TACBrNFSeXWebservice.ConverteANSIparaUTF8(
   const Retorno: string): string;
 begin
-  Result := RemoverDeclaracaoXML(Retorno);
-
-  Result := AnsiToNativeString(Result);
-  Result := NativeStringToUTF8(Result);
-
-  if StringIsXML(Result) then
-    Result := '<?xml version="1.0" encoding="UTF-8"?>' + Result;
+  Result := ConverteANSItoUTF8(Retorno);
 end;
 
 function TACBrNFSeXWebservice.SubstituirNFSe(const ACabecalho, AMSG: string): string;

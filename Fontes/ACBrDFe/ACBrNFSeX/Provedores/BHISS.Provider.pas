@@ -196,7 +196,7 @@ end;
 function TACBrNFSeXWebserviceBHISS.TratarXmlRetornado(
   const aXML: string): string;
 begin
-  Result := ConverteANSIparaUTF8(aXML);
+  Result := ConverteANSItoUTF8(aXML);
   Result := RemoverDeclaracaoXML(Result);
 
   Result := inherited TratarXmlRetornado(Result);

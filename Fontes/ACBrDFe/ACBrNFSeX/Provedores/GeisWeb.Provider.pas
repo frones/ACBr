@@ -941,7 +941,7 @@ end;
 function TACBrNFSeXWebserviceGeisWeb.TratarXmlRetornado(
   const aXML: string): string;
 begin
-  Result := ConverteANSIparaUTF8(aXML);
+  Result := ConverteANSItoUTF8(aXML);
   Result := inherited TratarXmlRetornado(Result);
 
   Result := ParseText(Result);

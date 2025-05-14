@@ -604,7 +604,7 @@ function TACBrNFSeXWebserviceSigISSWeb.TratarXmlRetornado(
 var
   Xml: string;
 begin
-  Xml := ConverteANSIparaUTF8(aXML);
+  Xml := ConverteANSItoUTF8(aXML);
   Xml := RemoverDeclaracaoXML(Xml);
 
   if StringIsXML(Xml) then

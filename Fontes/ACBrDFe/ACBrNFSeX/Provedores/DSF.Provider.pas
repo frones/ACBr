@@ -216,7 +216,7 @@ function TACBrNFSeXWebserviceDSF.TratarXmlRetornado(const aXML: string): string;
 var
   Xml: string;
 begin
-  Xml := ConverteANSIparaUTF8(aXML);
+  Xml := ConverteANSItoUTF8(aXML);
   Xml := RemoverDeclaracaoXML(Xml);
 
   Result := inherited TratarXmlRetornado(Xml);
@@ -441,7 +441,7 @@ function TACBrNFSeXWebserviceDSF200.TratarXmlRetornado(
 //var
 //  Xml: string;
 begin
-  //Xml := ConverteANSIparaUTF8(aXML);
+  //Xml := ConverteANSItoUTF8(aXML);
   //Xml := RemoverDeclaracaoXML(Xml);
 
   Result := inherited TratarXmlRetornado(aXml);

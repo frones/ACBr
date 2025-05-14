@@ -122,6 +122,7 @@ function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
 function LerTagXML( const AXML, ATag: String; IgnoreCase: Boolean = True) : String; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método SeparaDados()' {$ENDIF};
 function XmlEhUTF8(const AXML: String): Boolean;
 function XmlEhUTF8BOM(const AXML: String): Boolean;
+function ConverteANSItoUTF8(const AXML: string): string;
 function ConverteXMLtoUTF8(const AXML: String): String;
 function ConverteXMLtoNativeString(const AXML: String): String;
 function ObtemDeclaracaoXML(const AXML: String): String;
@@ -149,7 +150,7 @@ implementation
 
 uses
   ACBrUtil.Compatibilidade, ACBrUtil.Base, ACBrUtil.Strings,
-  ACBrUtil.Math,
+  ACBrUtil.Math, ACBrUtil.FilesIO,
   StrUtilsEx;
 
 {------------------------------------------------------------------------------
@@ -266,6 +267,21 @@ begin
   Result := (LBytesOfXML[0] = UTF8BOM[0]) and
             (LBytesOfXML[1] = UTF8BOM[1]) and
             (LBytesOfXML[2] = UTF8BOM[2]) ;
+end;
+
+{------------------------------------------------------------------------------
+   Se XML não contiver a TAG de encoding em UTF8, no seu início, adiciona a TAG
+   e converte o conteudo do mesmo para UTF8 (se necessário, dependendo da IDE)
+ ------------------------------------------------------------------------------}
+function ConverteANSItoUTF8(const AXML: string): string;
+begin
+  Result := RemoverDeclaracaoXML(AXML);
+
+  Result := AnsiToNativeString(Result);
+  Result := NativeStringToUTF8(Result);
+
+  if StringIsXML(Result) then
+    Result := '<?xml version="1.0" encoding="UTF-8"?>' + Result;
 end;
 
 {------------------------------------------------------------------------------

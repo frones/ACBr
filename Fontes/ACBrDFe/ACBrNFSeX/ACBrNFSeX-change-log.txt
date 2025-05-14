@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/05/2025
+-- ACBrNFSeXServicos --
+[+] #TK-7049: Incluída a cidade de Dianopolis/TO, o provedor é WebISS versão 2.02.
+  Por: maxdatasistema
+[+] #TK-7047: Incluída a cidade de Brumado/BA, o provedor é WebISS versão 2.02.
+  Por: João Antônio
+[*] #TK-7050: A cidade de Acreuna/GO trocou de provedor, agora é Siep versao 2.00.
+  Por: Diego Reckziegel
 -- AssessorPublico.LerXML --
 [*] #TK-7053: Ajuste no tipo do campo MunicípioIncidencia para corrigir erro na leitura do XML.
    Por: Diego Folieni 

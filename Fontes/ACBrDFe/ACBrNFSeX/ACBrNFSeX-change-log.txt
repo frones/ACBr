@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/05/2025
+-- ACBrNFSeXGravarXml_ABRASFv1/Ginfes.GravarXml --
+[*] #TK-7056: Criado um parâmetro interno chamado: GerarTagTomadorMesmoVazia tipo Boolean
+    que definie se a tag (grupo) Tomador deve ser gerada no XML mesmo vazia.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] #TK-7049: Incluída a cidade de Dianopolis/TO, o provedor é WebISS versão 2.02.
   Por: maxdatasistema

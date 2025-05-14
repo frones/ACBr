@@ -83,6 +83,7 @@ type
     FNrOcorrValorIss: Integer;
     FNrOcorrValorCofins: Integer;
     FNrOcorrInscMunTomador: Integer;
+    FGerarTagTomadorMesmoVazia: Boolean;
 
   protected
     procedure Configuracao; override;
@@ -184,6 +185,8 @@ type
 
     property NrOcorrRegimeEspecialTributacao: Integer read FNrOcorrRegimeEspecialTributacao write FNrOcorrRegimeEspecialTributacao;
     property NrOcorrInformacoesComplemetares: Integer read FNrOcorrInformacoesComplemetares write FNrOcorrInformacoesComplemetares;
+
+    property GerarTagTomadorMesmoVazia: Boolean read FGerarTagTomadorMesmoVazia write FGerarTagTomadorMesmoVazia;
   end;
 
 implementation
@@ -256,6 +259,8 @@ begin
   FNrOcorrOutrasInformacoes := -1;
 
   FNrOcorrInformacoesComplemetares := -1;
+
+  FGerarTagTomadorMesmoVazia := False;
 end;
 
 function TNFSeW_ABRASFv1.GerarXml: Boolean;
@@ -515,13 +520,17 @@ begin
   // Em conformidade com a versão 1 do layout da ABRASF não deve ser alterado
   Result := nil;
 
+  if GerarTagTomadorMesmoVazia then
+    Result := CreateElement('Tomador');
+
   if (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
      (NFSe.Tomador.RazaoSocial <> '') or
      (NFSe.Tomador.Endereco.Endereco <> '') or
      (NFSe.Tomador.Contato.Telefone <> '') or
      (NFSe.Tomador.Contato.Email <>'') then
   begin
-    Result := CreateElement('Tomador');
+    if not GerarTagTomadorMesmoVazia then
+      Result := CreateElement('Tomador');
 
     if (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
        (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '') then

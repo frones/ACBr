@@ -78,6 +78,8 @@ begin
     DivAliq100 := False;
 
   PrefixoPadrao := 'ns4';
+
+  GerarTagTomadorMesmoVazia := True;
 end;
 
 function TNFSeW_Ginfes.GerarXml: Boolean;

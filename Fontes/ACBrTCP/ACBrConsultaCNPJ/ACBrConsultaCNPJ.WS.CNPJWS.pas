@@ -114,6 +114,13 @@ begin
       FResposta.EFR                  := '';
       FResposta.CapitalSocial        := StrToFloatDef(StringReplace(LJson.AsString['capital_social'],'.',',',[rfReplaceAll]),0);
 
+      FResposta.Simples              := LJson.AsJSONObject['simples'].AsString['simples'] = 'Sim';
+      FResposta.DataOpcaoSimples     := StringToDateTimeDef(LJson.AsJSONObject['simples'].AsString['data_opcao_simples'],0,'yyyy/mm/dd');
+      FResposta.DataExclusaoSimples  := StringToDateTimeDef(LJson.AsJSONObject['simples'].AsString['data_exclusao_simples'],0,'yyyy/mm/dd');
+      FResposta.Mei                  := LJson.AsJSONObject['simples'].AsString['mei']= 'Sim';
+      FResposta.DataOpcaoMei         := StringToDateTimeDef(LJson.AsJSONObject['simples'].AsString['data_opcao_mei'],0,'yyyy/mm/dd');
+      FResposta.DataExclusaoMei      := StringToDateTimeDef(LJson.AsJSONObject['simples'].AsString['data_exclusao_mei'],0,'yyyy/mm/dd');
+
       FResposta.CNAE1 := LJsonObject.AsJSONObject['atividade_principal'].AsString['id'] + ' ' +
                          LJsonObject.AsJSONObject['atividade_principal'].AsString['descricao'];
 

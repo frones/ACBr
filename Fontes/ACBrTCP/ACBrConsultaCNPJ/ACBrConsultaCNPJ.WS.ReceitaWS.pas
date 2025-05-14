@@ -120,6 +120,12 @@ begin
         FResposta.EFR                  := LJsonObject.AsString['efr'];
         FResposta.MotivoSituacaoCad    := LJsonObject.AsString['motivo_situacao'];
         FResposta.CapitalSocial        := LJsonObject.AsFloat['capital_social'];
+        FResposta.Simples              := LJsonObject.AsJSONObject['simples'].AsBoolean['optante'];
+        FResposta.DataOpcaoSimples     := StringToDateTimeDef(LJsonObject.AsJSONObject['simples'].AsString['data_opcao'],0);
+        FResposta.DataExclusaoSimples  := StringToDateTimeDef(LJsonObject.AsJSONObject['simples'].AsString['data_exclusao'],0);
+        FResposta.Mei                  := LJsonObject.AsJSONObject['simei'].AsBoolean['optante'];
+        FResposta.DataOpcaoMei         := StringToDateTimeDef(LJsonObject.AsJSONObject['simei'].AsString['data_opcao'],0);
+        FResposta.DataExclusaoMei      := StringToDateTimeDef(LJsonObject.AsJSONObject['simei'].AsString['data_exclusao'],0);
         Result := true;
       end else
       begin

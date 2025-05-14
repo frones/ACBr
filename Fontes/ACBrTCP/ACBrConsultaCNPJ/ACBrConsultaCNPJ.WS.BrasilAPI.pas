@@ -114,6 +114,13 @@ begin
         FResposta.EFR                  := '';
         FResposta.CapitalSocial        := LJsonObject.AsFloat['capital_social'];
 
+        FResposta.Simples              := LJsonObject.AsBoolean['opcao_pelo_simples'];
+        FResposta.DataOpcaoSimples     := StringToDateTimeDef(LJsonObject.AsString['data_opcao_pelo_simples'],0,'yyyy/mm/dd');
+        FResposta.DataExclusaoSimples  := StringToDateTimeDef(LJsonObject.AsString['data_exclusao_do_simples'],0,'yyyy/mm/dd');
+        FResposta.Mei                  := LJsonObject.AsBoolean['opcao_pelo_mei'];
+        FResposta.DataOpcaoMei         := StringToDateTimeDef(LJsonObject.AsString['data_opcao_pelo_mei'],0,'yyyy/mm/dd');
+        FResposta.DataExclusaoMei      := StringToDateTimeDef(LJsonObject.AsString['data_exclusao_do_mei'],0,'yyyy/mm/dd');
+
         FResposta.MotivoSituacaoCad    := LJsonObject.AsString['motivo_situacao_cadastral'];
 
         Result := True;

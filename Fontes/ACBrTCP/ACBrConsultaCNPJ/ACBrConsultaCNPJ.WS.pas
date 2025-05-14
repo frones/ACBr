@@ -74,6 +74,12 @@ type
     CodigoIBGE           : string;
     InscricaoEstadual    : string;
     CapitalSocial        : Double;
+    Simples              : Boolean;
+    DataOpcaoSimples     : TDateTime;
+    DataExclusaoSimples  : TDateTime;
+    Mei                  : Boolean;
+    DataOpcaoMei         : TDateTime;
+    DataExclusaoMei      : TDateTime;
     ResultString         : string;
     ResultCode           : integer;
   end;

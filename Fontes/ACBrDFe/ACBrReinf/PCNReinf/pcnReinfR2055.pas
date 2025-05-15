@@ -66,7 +66,7 @@ type
     constructor Create(AACBrReinf: TObject); override;
     destructor  Destroy; override;
 
-    function GerarXML: Boolean; override;
+    function GerarXML: Boolean; overload;
     function LerArqIni(const AIniString: String): Boolean;
 
     property ideEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
@@ -403,9 +403,9 @@ end;
 
 function TevtAqProd.GerarXML: Boolean;
 begin
-  try
-    Self.VersaoDF := TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF;
+  inherited GerarXML;
 
+  try
     Self.Id := GerarChaveReinf(now, self.ideContri.NrInsc, self.Sequencial, self.ideContri.TpInsc);
 
     GerarCabecalho('evt2055AquisicaoProdRural');

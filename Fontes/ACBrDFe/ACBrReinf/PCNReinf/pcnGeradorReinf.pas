@@ -79,7 +79,7 @@ type
     constructor Create(AACBrReinf: TObject); reintroduce; virtual;//->recebe a instancia da classe TACBrReinf
     destructor Destroy; override;
 
-    function  GerarXML: boolean; virtual; abstract;
+    function  GerarXML: boolean;
     procedure SaveToFile(const CaminhoArquivo: string);
     function  Assinar(const XMLEvento: String; NomeEvento: String): AnsiString;
     function  GerarChaveReinf(const emissao: TDateTime;
@@ -356,6 +356,18 @@ end;
 procedure TReinfEvento.GerarRodape;
 begin
   Gerador.wGrupo('/Reinf');
+end;
+
+function TReinfEvento.GerarXML: boolean;
+begin
+  with TACBrReinf(FACBrReinf).Configuracoes.Geral do
+  begin
+    Self.VersaoDF := VersaoDF;
+    Self.Gerador.Opcoes.FormatoAlerta := FormatoAlerta;
+    Self.Gerador.Opcoes.RetirarAcentos := RetirarAcentos;
+    Self.Gerador.Opcoes.RetirarEspacos := RetirarEspacos;
+    Self.Gerador.Opcoes.IdentarXML := IdentarXML;
+  end;
 end;
 
 procedure TReinfEvento.GerarIdeEvento(pEvt: TIdeEvento; const GeraGrupo: boolean);

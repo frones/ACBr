@@ -44,7 +44,7 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnConversao, pcnGerador, ACBrUtil.FilesIO,
+  pcnConversao, pcnGerador, ACBrUtil.FilesIO, ACBrUtil.XMLHTML,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
 type
@@ -75,7 +75,7 @@ type
     constructor Create(AACBrReinf: TObject); override;
     destructor  Destroy; override;
 
-    function GerarXML: Boolean; override;
+    function GerarXML: Boolean; overload;
     function LerArqIni(const AIniString: String): Boolean;
 
     property ideEvento: TIdeEvento read FIdeEvento write FIdeEvento;
@@ -185,9 +185,9 @@ end;
 
 function TevtExclusao.GerarXML: Boolean;
 begin
-  try
-    Self.VersaoDF := TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF;
+  inherited GerarXML;
 
+  try
     Self.Id := GerarChaveReinf(now, self.ideContri.NrInsc, self.Sequencial, self.ideContri.TpInsc);
 
     GerarCabecalho('evtExclusao');
@@ -202,7 +202,7 @@ begin
 
     GerarRodape;
 
-    XML := Gerador.ArquivoFormatoXML;
+    XML := ConverteANSItoUTF8(Gerador.ArquivoFormatoXML);
 //    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtExclusao');
 
 //    Validar(schevtExclusao);

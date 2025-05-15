@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2025
+-- Diversos --
+[*] #TK-6785 - Alterações visando controlar a geração de xmls acentuados, com espaços e indentados nos eventos
+  Por: Renato Rubinho
+
 15/10/2024
 -- pcnReinfR4010, pcnReinfR4020 --
 [*] #TK-6070 Ajustes para o leiaute 2.1.2.a

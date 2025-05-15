@@ -101,7 +101,7 @@ type
     constructor Create(AACBrReinf: TObject); override;
     destructor  Destroy; override;
 
-    function GerarXML: Boolean; override;
+    function GerarXML: Boolean; overload;
     function LerArqIni(const AIniString: String): Boolean;
 
     property ideEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;

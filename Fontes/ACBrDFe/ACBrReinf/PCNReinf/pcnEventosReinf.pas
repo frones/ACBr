@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes, synautil,
-  ACBrUtil.Strings, ACBrUtil.FilesIO,
+  ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.XMLHTML,
   pcnConversaoReinf,
   pcnReinfR1000, pcnReinfR1050, pcnReinfR1070, pcnReinfR2010, pcnReinfR2020,
   pcnReinfR2030,
@@ -228,61 +228,118 @@ var
   i: Integer;
 begin
   for i := 0 to Self.R1000.Count - 1 do
+  begin
     Self.R1000.Items[i].evtInfoContri.GerarXML;
+    Self.R1000.Items[i].evtInfoContri.XML := ConverteANSItoUTF8(Self.R1000.Items[i].evtInfoContri.XML);
+  end;
 
   for i := 0 to Self.R1050.Count - 1 do
+  begin
     Self.R1050.Items[i].evtTabLig.GerarXML;
+    Self.R1050.Items[i].evtTabLig.XML := ConverteANSItoUTF8(Self.R1050.Items[i].evtTabLig.XML);
+  end;
 
   for i := 0 to Self.R1070.Count - 1 do
+  begin
     Self.R1070.Items[i].evtTabProcesso.GerarXML;
+    Self.R1070.Items[i].evtTabProcesso.XML := ConverteANSItoUTF8(Self.R1070.Items[i].evtTabProcesso.XML);
+  end;
 
   for i := 0 to Self.R2010.Count - 1 do
+  begin
     Self.R2010.Items[i].evtServTom.GerarXML;
+    Self.R2010.Items[i].evtServTom.XML := ConverteANSItoUTF8(Self.R2010.Items[i].evtServTom.XML);
+  end;
 
   for i := 0 to Self.R2020.Count - 1 do
+  begin
     Self.R2020.Items[i].evtServPrest.GerarXML;
+    Self.R2020.Items[i].evtServPrest.XML := ConverteANSItoUTF8(Self.R2020.Items[i].evtServPrest.XML);
+  end;
 
   for i := 0 to Self.R2030.Count - 1 do
+  begin
     Self.R2030.Items[i].evtAssocDespRec.GerarXML;
+    Self.R2030.Items[i].evtAssocDespRec.XML := ConverteANSItoUTF8(Self.R2030.Items[i].evtAssocDespRec.XML);
+  end;
 
   for i := 0 to Self.R2040.Count - 1 do
+  begin
     Self.R2040.Items[i].evtAssocDespRep.GerarXML;
+    Self.R2040.Items[i].evtAssocDespRep.XML := ConverteANSItoUTF8(Self.R2040.Items[i].evtAssocDespRep.XML);
+  end;
 
   for i := 0 to Self.R2050.Count - 1 do
+  begin
     Self.R2050.Items[i].evtComProd.GerarXML;
+    Self.R2050.Items[i].evtComProd.XML := ConverteANSItoUTF8(Self.R2050.Items[i].evtComProd.XML);
+  end;
 
   for i := 0 to Self.R2055.Count - 1 do
+  begin
     Self.R2055.Items[i].evtAqProd.GerarXML;
+    Self.R2055.Items[i].evtAqProd.XML := ConverteANSItoUTF8(Self.R2055.Items[i].evtAqProd.XML);
+  end;
 
   for i := 0 to Self.R2060.Count - 1 do
+  begin
     Self.R2060.Items[i].evtCPRB.GerarXML;
+    Self.R2060.Items[i].evtCPRB.XML := ConverteANSItoUTF8(Self.R2060.Items[i].evtCPRB.XML);
+  end;
 
   for i := 0 to Self.R2070.Count - 1 do
+  begin
     Self.R2070.Items[i].evtPgtosDivs.GerarXML;
+    Self.R2070.Items[i].evtPgtosDivs.XML := ConverteANSItoUTF8(Self.R2070.Items[i].evtPgtosDivs.XML);
+  end;
 
   for i := 0 to Self.R2098.Count - 1 do
+  begin
     Self.R2098.Items[i].evtReabreEvPer.GerarXML;
+    Self.R2098.Items[i].evtReabreEvPer.XML := ConverteANSItoUTF8(Self.R2098.Items[i].evtReabreEvPer.XML);
+  end;
 
   for i := 0 to Self.R2099.Count - 1 do
+  begin
     Self.R2099.Items[i].evtFechaEvPer.GerarXML;
+    Self.R2099.Items[i].evtFechaEvPer.XML := ConverteANSItoUTF8(Self.R2099.Items[i].evtFechaEvPer.XML);
+  end;
 
   for i := 0 to Self.R3010.Count - 1 do
+  begin
     Self.R3010.Items[i].evtEspDesportivo.GerarXML;
+    Self.R3010.Items[i].evtEspDesportivo.XML := ConverteANSItoUTF8(Self.R3010.Items[i].evtEspDesportivo.XML);
+  end;
 
   for i := 0 to Self.R4010.Count - 1 do
+  begin
     Self.R4010.Items[i].evtRetPF.GerarXML;
+    Self.R4010.Items[i].evtRetPF.XML := ConverteANSItoUTF8(Self.R4010.Items[i].evtRetPF.XML);
+  end;
 
   for i := 0 to Self.R4020.Count - 1 do
+  begin
     Self.R4020.Items[i].evtRetPJ.GerarXML;
+    Self.R4020.Items[i].evtRetPJ.XML := ConverteANSItoUTF8(Self.R4020.Items[i].evtRetPJ.XML);
+  end;
 
   for i := 0 to Self.R4040.Count - 1 do
+  begin
     Self.R4040.Items[i].evtBenefNId.GerarXML;
+    Self.R4040.Items[i].evtBenefNId.XML := ConverteANSItoUTF8(Self.R4040.Items[i].evtBenefNId.XML);
+  end;
 
   for i := 0 to Self.R4080.Count - 1 do
+  begin
     Self.R4080.Items[i].evtRetRec.GerarXML;
+    Self.R4080.Items[i].evtRetRec.XML := ConverteANSItoUTF8(Self.R4080.Items[i].evtRetRec.XML);
+  end;
 
   for i := 0 to Self.R4099.Count - 1 do
+  begin
     Self.R4099.Items[i].evtFech.GerarXML;
+    Self.R4099.Items[i].evtFech.XML := ConverteANSItoUTF8(Self.R4099.Items[i].evtFech.XML);
+  end;
 
   for i := 0 to Self.R9000.Count - 1 do
     Self.R9000.Items[i].evtExclusao.GerarXML;

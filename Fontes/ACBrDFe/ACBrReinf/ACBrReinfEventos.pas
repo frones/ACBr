@@ -44,6 +44,7 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase,
+  ACBrUtil.XMLHTML,
   pcnEventosReinf, pcnConversaoReinf;
 
 type
@@ -231,7 +232,7 @@ begin
   XML := DecodeToString(XMLOriginal, True);
 
   if ArqXML then
-    Result := LoadFromString(XML)
+    Result := LoadFromString(ConverteANSItoUTF8(XML))
   else
     Result := LoadFromStringINI(XML);
 end;

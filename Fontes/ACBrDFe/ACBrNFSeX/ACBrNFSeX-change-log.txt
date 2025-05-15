@@ -43,11 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/05/2025
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Escada/PE, o provedor é Tributus versão 2.04
+   Por: Italo Giurizzato Junior
+[-] #TK-7015: Alterado de https para http as URLs da cidade de Regente Deijó/SP.
+   Por: Italo Giurizzato Junior
 -- Thema.Provider --
-[*] #TK-7060: Ajustes para retornar a descrilção de cada tipo de Natureza da Operação
+[*] #TK-7060: Ajustes para retornar a descrição de cada tipo de Natureza da Operação
     utilizado pelo provedor Thema.
    Por: Italo Giurizzato Junior
-
 -- ISSDSF.Provider --
 [*] Ajustes para pegar a mensagem do erro quando este não vem segundo o padrão esperado.
    Por: Milton Campanhã

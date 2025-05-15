@@ -337,6 +337,9 @@ begin
   begin
     Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
     Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
+    if Descricao = '' then begin
+       Descricao := ANodeArray[I].AsString;
+    end;
 
     ANodeAux := ANodeArray[I].Childrens.FindAnyNs('ChaveRPS');
     if (ANodeAux <> nil) then

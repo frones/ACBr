@@ -728,7 +728,6 @@ end;
 function TEventoCTe.Gerar_InfEvento(Idx: Integer): TACBrXmlNode;
 var
   sDoc: string;
-  Serie: Integer;
 begin
   if VersaoDF >= ve400 then
     Evento[Idx].InfEvento.id := 'ID' + Evento[Idx].InfEvento.TipoEvento +
@@ -755,16 +754,6 @@ begin
 
   if EstaVazio(sDoc) then
     sDoc := ExtrairCNPJCPFChaveAcesso(Evento[Idx].InfEvento.chCTe);
-
-  // Verifica a Série do Documento, caso esteja no intervalo de 910-969
-  // o emitente é pessoa fisica, logo na chave temos um CPF.
-  Serie := ExtrairSerieChaveAcesso(Evento[Idx].InfEvento.chCTe);
-
-  if (Length(sDoc) = 14) and (Serie >= 910) and (Serie <= 969) and
-     not (Evento[Idx].InfEvento.tpEvento in [teManifDestConfirmacao..teManifDestOperNaoRealizada]) then
-  begin
-    sDoc := Copy(sDoc, 4, 11);
-  end;
 
   if Length(sDoc) = 14 then
   begin

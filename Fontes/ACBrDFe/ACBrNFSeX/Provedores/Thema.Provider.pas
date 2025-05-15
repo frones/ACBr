@@ -286,8 +286,31 @@ function TACBrNFSeProviderThema.NaturezaOperacaoDescricao(
   const t: TnfseNaturezaOperacao): string;
 begin
   case t of
-    no63 : Result := '6.3 - Tributação fora do municipio com retenção de ISS';
-    no64 : Result := '6.4 - Tributacao fora do municipio sem retenção de ISS';
+    no50 : Result := '5.0 - Prestação de Serviços no Município';
+    no51 : Result := '5.1 - Imposto Devido no municipio, com obrigação de retenção na fonte';
+    no52 : Result := '5.2 - Imposto devido no municipio, sem obrigação de retenção na fonte';
+    no53 : Result := '5.3 - Imposto recolhido pelo Regime Único de Arrecadação (Simples Nacional)';
+    no54 : Result := '5.4 - Imposto devido ao municipio, com obrigação de retenção na fonte, tributado de acordo com o Regime único Arrec.';
+    no55 : Result := '5.5 - Isento';
+    no56 : Result := '5.6 - Isento';
+    no57 : Result := '5.7 - Exigibilidade suspensa por decisão judicial';
+    no58 : Result := '5.8 - Imposto recolhido com valor fixo';
+    no59 : Result := '5.9 - ';
+    no60 : Result := '6.0 - Prestação de Serviços para outros municípios da federação';
+    no61 : Result := '6.1 - Imposto devido no municipio, com obrigação de retenção na fonte';
+    no62 : Result := '6.2 - Imposto devido no municipio, sem obrigação de retenção na fonte';
+    no63 : Result := '6.3 - Imposto recolhido pelo Regime Único de Arrecadação (Simples Nacional)';
+    no64 : Result := '6.4 - Imposto devido fora do municipio com obrigação de retenção';
+    no65 : Result := '6.5 - Isento';
+    no66 : Result := '6.6 - Imune';
+    no67 : Result := '6.7 - Exigibilidade suspensa por decisão judicial';
+    no68 : Result := '6.8 - Imposto recolhido com valor fixo';
+    no69 : Result := '6.9 - Imposto devido fora do municipio sem obrigação de retenção';
+    no70 : Result := '7.0 - Prestação de Serviços para o Exterior';
+    no71 : Result := '7.1 - Imposto devido ao municipio';
+    no72 : Result := '7.2 - Não tributável';
+    no78 : Result := '7.8 - ';
+    no79 : Result := '7.9 - ';
   else
     Result := inherited NaturezaOperacaoDescricao(t);
   end;

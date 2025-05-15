@@ -43,10 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/05/2025
+-- PadraoNacional.LerXml --
+[*] Incluida uma linha na leitura do INI do RPS e da NFS-e para setar o campo tpXML
+    com o valor txmlRPS ou txmlNFSe dependendo to INI que esta sendo lido.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Escada/PE, o provedor é Tributus versão 2.04
    Por: Italo Giurizzato Junior
-[-] #TK-7015: Alterado de https para http as URLs da cidade de Regente Deijó/SP.
+[-] #TK-7015: Alterado de https para http as URLs da cidade de Regente Feijó/SP.
    Por: Italo Giurizzato Junior
 -- Thema.Provider --
 [*] #TK-7060: Ajustes para retornar a descrição de cada tipo de Natureza da Operação

@@ -2004,6 +2004,8 @@ end;
 
 procedure TNFSeR_PadraoNacional.LerIniRps(AINIRec: TMemIniFile);
 begin
+  NFSe.tpXML := txmlRPS;
+
   LerINIIdentificacaoNFSe(AINIRec);
   LerINIIdentificacaoRps(AINIRec);
   LerININFSeSubstituicao(AINIRec);
@@ -2036,6 +2038,8 @@ end;
 
 procedure TNFSeR_PadraoNacional.LerIniNfse(AINIRec: TMemIniFile);
 begin
+  NFSe.tpXML := txmlNFSe;
+
   LerINIIdentificacaoNFSe(AINIRec);
   LerINIDadosEmitente(AINIRec);
   LerINIValoresNFSe(AINIRec);
@@ -2093,7 +2097,7 @@ begin
   sSecao := 'IdentificacaoNFSe';
   if AINIRec.SectionExists(sSecao) then
   begin
-    if FpTipoXML = 'NFSE' then
+    if NFSe.tpXML = txmlNFSe then
     begin
       NFSe.infNFSe.ID := AINIRec.ReadString(sSecao, 'Id', '');
       NFSe.infNFSe.xLocEmi := AINIRec.ReadString(sSecao, 'xLocEmi', '');

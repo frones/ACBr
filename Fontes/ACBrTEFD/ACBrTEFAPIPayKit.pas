@@ -312,10 +312,10 @@ begin
         else
           nc := -1;
 
-        if (nc > 0) and (UltimoNumeroControle <> nc) then  // Se Retorno Log errado (antigo)...
+        if (nc > 0) and (UltimoNumeroControle <> nc) then  // Se Retornou Log errado (antigo)...
         begin
-          nc := 0;                           // então nem vamos tentar ler o Cupom...
-          json := '';                                     // Ignore Json retornado
+          nc := 0;                    // então nem vamos tentar ler o Cupom...
+          json := '';                 // e Ignore Json retornado
         end;
       finally
         jso.Free;
@@ -350,6 +350,8 @@ end;
 function TACBrTEFAPIClassPayKit.TestarComunicacaoPayKit: Boolean;
 begin
   GetTEFPayKitAPI.InicializaDPOS();
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem('InicializaDPOS executado com sucesso', telaOperador, 0);
+  Result := True;
 end;
 
 function TACBrTEFAPIClassPayKit.PerguntarMenuAdmPayKit: TACBrTEFOperacao;
@@ -361,20 +363,20 @@ begin
 
   slMenu := TStringList.Create;
   try
-    slMenu.Add(ACBrStr('Reimpressão'));
-    slMenu.Add(ACBrStr('Resumo de Vendas'));
-    slMenu.Add(ACBrStr('Finalizar Dia'));
-    slMenu.Add(ACBrStr('Administrativo'));
-    slMenu.Add(ACBrStr('Versão'));
-    slMenu.Add(ACBrStr('Teste Comunicação'));
-    slMenu.Add(ACBrStr('Atualiza Tabelas Pinpad'));
+    slMenu.Add(ACBrStr('1-Reimpressão'));
+    slMenu.Add(ACBrStr('2-Administrativo'));
+    slMenu.Add(ACBrStr('3-Resumo de Vendas'));
+    slMenu.Add(ACBrStr('4-Finalizar Dia'));
+    slMenu.Add(ACBrStr('5-Versão'));
+    slMenu.Add(ACBrStr('6-Teste Comunicação'));
+    slMenu.Add(ACBrStr('7-Atualiza Tabelas Pinpad'));
     ItemSel := -1;
     TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( 'Menu Administrativo', slMenu, ItemSel );
     case ItemSel of
       0: Result := tefopReimpressao;
-      1: Result := tefopRelatResumido;
-      2: Result := tefopFechamento;
-      3: Result := tefopAdministrativo;
+      1: Result := tefopAdministrativo;
+      2: Result := tefopRelatResumido;
+      3: Result := tefopFechamento;
       4: Result := tefopVersao;
       5: Result := tefopTesteComunicacao;
       6: Result := tefopNenhuma;

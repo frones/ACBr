@@ -45,6 +45,28 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2025
+-- ACBrTEFAPI, ACBrTEFAPIPayKit, ACBrTEFPayKitAPI --
+[+] Novo modelo de TEF suportado "PayKit" (D-TEF Linx)"
+    https://paykitlinx.github.io/PaykitApiDesktop/
+
+-- ACBrTEFAPI --
+[+] Adicionado método para Normatizar o Nome da Imagem, que é enviada ao PinPad
+    'TratarNomeImagemPinPad'
+
+-- ACBrTEFAPIComum --
+[+] Adicionado o método 'TACBrTEFAPIComumClass.FinalizarVenda' e
+    'TACBrTEFAPIComum.FinalizarVenda'.
+    Permite que a Classe de TEF execute uma operação final quando todos os arquivos
+    de Backup forem removidos.
+    Será chamado em'CancelarOuEstornarTransacoesDiretorioTrabalho' e
+    'FinalizarTransacoesPendentes'
+
+-- ACBrTEFPayGoWebComum --
+[+] Adicionado o método "TACBrTEFPGWebAPI.ExibirImagemPinPad", para exibir imagem
+    no PinPad, usando a PGWebLib
+    (por: DSA)
+
 03/05/2025
 -- ACBrTEFAPIScope, ACBrTEFScopeAPI --
 [+] Adicionada a propriedade para controlar a gravação de Log da DLL no 'scope.ini'

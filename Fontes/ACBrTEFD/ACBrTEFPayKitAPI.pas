@@ -58,6 +58,10 @@ const
   RET_OK = 0;
 
 resourcestring
+  sErrCNPJNaoInformado = 'CNPJ do Estabelecimento, não informado';
+  sErrEmpresaNaoInformada = 'Número de Empresa não informado';
+  sErrLojaNaoInformada = 'Número de Loja não informado';
+
   sErrArqPayKitNaoEncontrado = 'Arquivo do PayKit: "%s", não encontrado em: %s';
   sErrLibJaInicializada = 'Biblioteca DPOSDRV já foi inicializada';
   sErrLibNaoInicializada = 'Biblioteca DPOSDRV ainda NÃO foi carregada';
@@ -315,6 +319,9 @@ type
     xApagaImagemPinPadPayKit: function(pNomeImagem: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
+    xObtemDadosEmpresaLojaTEF: function(pCNPJ, pCodigoEmpresa, pCodigoLoja: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+
     xRegPDVDisplayTerminal: procedure(pCallBackDisplayTerminal: TACBrTEFPayKitCallBackDisplayTerminal);
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xRegPDVDisplayErro: procedure(pCallBackDisplayErro: TACBrTEFPayKitCallBackDisplayErro);
@@ -482,6 +489,8 @@ type
     procedure ForcaAtualizacaoTabelasPinpad;
     procedure ExibeImagemPinPadPayKit(const NomeArq: String);
     procedure ApagaImagemPinPadPayKit(const NomeImagem: String);
+    function ObtemDadosEmpresaLojaTEF(const CNPJ: String; out CodigoEmpresa: String;
+      out CodigoLoja: String): LongInt;
 
     property NomeAutomacao: String read fNomeAutomacao write SetNomeAutomacao;
     property VersaoAutomacao: String read fVersaoAutomacao write SetVersaoAutomacao;
@@ -754,7 +763,7 @@ end;
 
 function CallBackSelecionaOpcao(pLabel, pOpcoes: PAnsiChar; iOpcaoSelecionada: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 var
-  titulo, opcoes, s: String;
+  titulo, opcoes, s, atalho: String;
   sl: TStringList;
   i, p1, p2: Integer;
 begin
@@ -770,9 +779,15 @@ begin
       for i := 0 to sl.Count-1 do
       begin
         s := sl[i];
+        p1 := pos(',',s);
+        if (p1 > 0) then
+          atalho := copy(s,2,p1-2);
         p1 := max(Pos('"' ,s),1);
         p2 := min(PosEx('"' ,s, p1+1), Length(s));
-        sl[i] := ACBrStr(copy(s, p1+1, p2-p1-1));
+        s := ACBrStr(copy(s, p1+1, p2-p1-1));
+        if copy(s, 1, Length(atalho)) <> atalho then
+          s := atalho +'-'+ s;
+        sl[i] := s;
       end;
       iOpcaoSelecionada := min(max(iOpcaoSelecionada, 1), sl.Count)-1;
 
@@ -1360,7 +1375,11 @@ begin
   try
     GravarLog('Lib.TransacaoEspecial( '+IntToStr(iCodigoTransacao)+', '+Dados+' )');
     iRet := xTransacaoEspecial(iCodigoTransacao, PAnsiChar(Dados));
-    Dados := Trim(Dados);
+    if (iRet = RET_OK) then
+      Dados := Trim(Dados)
+    else
+      Dados := '';
+
     GravarLog('  ret: '+IntToStr(iRet)+', Dados: '+Dados);
     TratarErroPayKit(iRet);
   finally
@@ -1406,7 +1425,11 @@ begin
   try
     GravarLog('Lib.LeIdentificacaoPinPad');
     iRet := xLeIdentificacaoPinPad(PAnsiChar(pDados));
-    Result := String(pDados);
+    if (iRet = RET_OK) then
+      Result := String(pDados)
+    else
+      Result := '';
+
     GravarLog('  ret: '+IntToStr(iRet)+', Dados: '+Result);
   finally
     fEmTransacao := False;
@@ -1453,7 +1476,11 @@ begin
                                               PAnsiChar(pNumeroCupom),
                                               PAnsiChar(pNumeroControle),
                                               PAnsiChar(pReservado) );
-    Result := String(pNumeroControle);
+    if (iRet = RET_OK) then
+      Result := String(pNumeroControle)
+    else
+      Result := '';
+
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
     TratarErroPayKit(iRet);
   finally
@@ -1480,7 +1507,11 @@ begin
     iRet := xTransacaoCartaoCredito( PAnsiChar(pValorTransacao),
                                      PAnsiChar(pNumeroCupomVenda),
                                      PAnsiChar(pNumeroControle) );
-    Result := String(pNumeroControle);
+    if (iRet = RET_OK) then
+      Result := String(pNumeroControle)
+    else
+      Result := '';
+
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
     TratarErroPayKit(iRet);
   finally
@@ -1526,7 +1557,11 @@ begin
                                              PAnsiChar(pValorTaxaServico),
                                              PAnsiChar(pPermiteAlteracao),
                                              PAnsiChar(pReservado));
-    Result := String(pNumeroControle);
+    if (iRet = RET_OK) then
+      Result := String(pNumeroControle)
+    else
+      Result := '';
+
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
     TratarErroPayKit(iRet);
   finally
@@ -1553,7 +1588,11 @@ begin
     iRet := xTransacaoCartaoDebito( PAnsiChar(pValorTransacao),
                                     PAnsiChar(pNumeroCupomVenda),
                                     PAnsiChar(pNumeroControle) );
-    Result := String(pNumeroControle);
+    if (iRet = RET_OK) then
+      Result := String(pNumeroControle)
+    else
+      Result := '';
+
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
     TratarErroPayKit(iRet);
   finally
@@ -1580,7 +1619,11 @@ begin
     iRet := xTransacaoCartaoVoucher( PAnsiChar(pValorTransacao),
                                      PAnsiChar(pNumeroCupomVenda),
                                      PAnsiChar(pNumeroControle) );
-    Result := String(pNumeroControle);
+    if (iRet = RET_OK) then
+      Result := String(pNumeroControle)
+    else
+      Result := '';
+
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
     TratarErroPayKit(iRet);
   finally
@@ -1607,7 +1650,11 @@ begin
     iRet := xTransacaoCartaoFrota( PAnsiChar(pValorTransacao),
                                    PAnsiChar(pNumeroCupomVenda),
                                    PAnsiChar(pNumeroControle) );
-    Result := String(pNumeroControle);
+    if (iRet = RET_OK) then
+      Result := String(pNumeroControle)
+    else
+      Result := '';
+
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
     TratarErroPayKit(iRet);
   finally
@@ -1636,7 +1683,11 @@ begin
                               PAnsiChar(pNumeroCupomVenda),
                               PAnsiChar(pNumeroControle),
                               PAnsiChar(pTransactionParamsData) );
-    Result := String(pNumeroControle);
+    if (iRet = RET_OK) then
+      Result := String(pNumeroControle)
+    else
+      Result := '';
+
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
     TratarErroPayKit(iRet);
   finally
@@ -1727,7 +1778,11 @@ begin
   try
     GravarLog('Lib.TransacaoResumoVendas()');
     iRet := xTransacaoResumoVendas( PAnsiChar(pNumeroControle) );
-    Result := String(pNumeroControle);
+    if (iRet = RET_OK) then
+      Result := String(pNumeroControle)
+    else
+      Result := '';
+
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
     TratarErroPayKit(iRet);
   finally
@@ -1816,6 +1871,8 @@ begin
   pSolicitacao := FormatDateTime('YYYYMMDD', Data) + Format('%.6d',[NSU]) + StringOfChar(' ', 88);
   pResposta := StringOfChar(' ', 102);
   pMensagem := StringOfChar(' ', 64);
+  Resposta := '';
+  MensagemErro := '';
 
   fEmTransacao := True;
   try
@@ -1827,8 +1884,11 @@ begin
                                 PAnsiChar(pResposta),
                                 PAnsiChar(pMensagem));
 
-    Resposta := Trim(String(pResposta));
-    MensagemErro := Trim(String(pMensagem));
+    if (iRet = RET_OK) then
+    begin
+      Resposta := Trim(String(pResposta));
+      MensagemErro := Trim(String(pMensagem));
+    end;
 
     GravarLog('  ret: '+IntToStr(iRet)+', Resp: '+Resposta+', Msg: '+MensagemErro);
     TratarErroPayKit(iRet);
@@ -1889,6 +1949,34 @@ begin
     iRet := xApagaImagemPinPadPayKit( PAnsiChar(pNomeImagem) );
     GravarLog('  ret: '+IntToStr(iRet));
     TratarErroPayKit(iRet);
+  finally
+    fEmTransacao := False;
+  end;
+end;
+
+function TACBrTEFPayKitAPI.ObtemDadosEmpresaLojaTEF(const CNPJ: String; out
+  CodigoEmpresa: String; out CodigoLoja: String): LongInt;
+var
+  pCNPJ, pCodigoEmpresa, pCodigoLoja: AnsiString;
+begin
+  CodigoEmpresa := '';
+  CodigoLoja := '';
+  fEmTransacao := True;
+  try
+    pCNPJ := PadLeft(Trim(CNPJ), 14, '0');
+    pCodigoEmpresa := space(5);
+    pCodigoLoja := space(5);
+
+    GravarLog('Lib.ObtemDadosEmpresaLojaTEF( '+pCNPJ+' )');
+    Result := xObtemDadosEmpresaLojaTEF( PAnsiChar(pCNPJ),
+                                         PAnsiChar(pCodigoEmpresa),
+                                         PAnsiChar(pCodigoLoja) );
+    if (Result = RET_OK) then
+    begin
+      CodigoEmpresa := String(pCodigoEmpresa);
+      CodigoLoja := String(pCodigoLoja);
+    end;
+    GravarLog('  ret: '+IntToStr(Result)+', Empresa:'+CodigoEmpresa+', Loja:'+CodigoLoja);
   finally
     fEmTransacao := False;
   end;
@@ -1982,6 +2070,9 @@ var
   iRet: LongInt;
   pCNPJEstabelecimento: AnsiString;
 begin
+  if (Trim(fCNPJEstabelecimento) = '') then
+    DoException(sErrCNPJNaoInformado);
+
   pCNPJEstabelecimento := PadRight(fCNPJEstabelecimento, 14);
   GravarLog('Lib.ConfiguraCNPJEstabelecimento( '+pCNPJEstabelecimento+' )');
   iRet := xConfiguraCNPJEstabelecimento(PAnsiChar(pCNPJEstabelecimento));
@@ -1993,7 +2084,23 @@ procedure TACBrTEFPayKitAPI.ConfiguraEmpresaLojaPDV;
 var
   iRet: LongInt;
   pNumeroEmpresa, pNumeroLoja, pNumeroPDV: AnsiString;
+  emp, loja: String;
 begin
+  if (fNumeroEmpresa <= 0) or (fNumeroLoja <= 0) then
+  begin
+    if ObtemDadosEmpresaLojaTEF(fCNPJEstabelecimento, emp, loja) = 0 then
+    begin
+      NumeroEmpresa := StrToIntDef(emp, 0);
+      NumeroLoja := StrToIntDef(loja, 0);
+    end;
+  end;
+
+  if (fNumeroEmpresa <= 0) then
+    DoException(sErrEmpresaNaoInformada);
+
+  if (fNumeroLoja <= 0) then
+    DoException(sErrLojaNaoInformada);
+
   pNumeroEmpresa := Format('%.4d',[fNumeroEmpresa]);
   pNumeroLoja := Format('%.4d',[fNumeroLoja]);
   pNumeroPDV := Format('%.4d',[fNumeroPDV]);
@@ -2322,6 +2429,7 @@ begin
   PayKitFunctionDetect(sLibName, 'ForcaAtualizacaoTabelasPinpad', @xForcaAtualizacaoTabelasPinpad);
   PayKitFunctionDetect(sLibName, 'ExibeImagemPinPadPayKit', @xExibeImagemPinPadPayKit);
   PayKitFunctionDetect(sLibName, 'ApagaImagemPinPadPayKit', @xApagaImagemPinPadPayKit);
+  PayKitFunctionDetect(sLibName, 'ObtemDadosEmpresaLojaTEF', @xObtemDadosEmpresaLojaTEF);
 
   PayKitFunctionDetect(sLibName, 'RegPDVDisplayTerminal', @xRegPDVDisplayTerminal);
   PayKitFunctionDetect(sLibName, 'RegPDVDisplayErro', @xRegPDVDisplayErro);
@@ -2410,6 +2518,7 @@ begin
   xForcaAtualizacaoTabelasPinpad := Nil;
   xExibeImagemPinPadPayKit := Nil;
   xApagaImagemPinPadPayKit := Nil;
+  xObtemDadosEmpresaLojaTEF := Nil;
 
   xRegPDVDisplayTerminal := Nil;
   xRegPDVDisplayErro := Nil;
@@ -2486,12 +2595,15 @@ begin
 end;
 
 procedure TACBrTEFPayKitAPI.DoException(const AErrorMsg: String);
+var
+  s: String;
 begin
   if (Trim(AErrorMsg) = '') then
     Exit;
 
-  GravarLog('EACBrTEFPayKitAPI: '+AErrorMsg);
-  raise EACBrTEFPayKitAPI.Create(ACBrStr(AErrorMsg));
+  s := ACBrStr(AErrorMsg);
+  GravarLog('EACBrTEFPayKitAPI: '+s);
+  raise EACBrTEFPayKitAPI.Create(s);
 end;
 
 procedure TACBrTEFPayKitAPI.VerificarCarregada;

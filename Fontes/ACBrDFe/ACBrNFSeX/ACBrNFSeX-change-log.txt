@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/05/2025
+-- ACBrNFSeXServicos --
+[+] #TK-7066: Incluída a cidade de Santa Maria da Vitoria/BA, o provedor é Fisco versão 2.03
+   Por: PrimeSoftware
+[*] #TK-7071: A cidade de Catanduvas/SC trocou de provedor, agora é Publica.
+   Por: Eduardo Birck
+
 15/05/2025
 -- PadraoNacional.LerXml --
 [*] Incluida uma linha na leitura do INI do RPS e da NFS-e para setar o campo tpXML

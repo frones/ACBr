@@ -44,6 +44,8 @@ Símbolo : Significado
 
 19/05/2025
 -- ACBrNFSeXServicos --
+[+] #TK-7057: Incluída a cidade de Quintana/SP, o provedor é Fiorilli versão 2.00
+   Por: PrimeSoftware/Italo Giurizzato Junior
 [+] #TK-7066: Incluída a cidade de Santa Maria da Vitoria/BA, o provedor é Fisco versão 2.03
    Por: PrimeSoftware
 [*] #TK-7071: A cidade de Catanduvas/SC trocou de provedor, agora é Publica.

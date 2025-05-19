@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/05/2025
+-- pcesConversaoeSocial --
+[*] #TK-7067: Corrigida ordem do TTipoEventoString com relação ao TTipoEvento no eSocial - https://www.projetoacbr.com.br/forum/topic/83280-fun%C3%A7%C3%A3o-pcesconversaoesocialtipoeventotostr-retornado-evento-errado
+  Por: Renato Rubinho
+
 28/04/2025
 -- pcesS3500 --
 [*] #TK-6982: Correção no preenchimento do ideSeqProc no evento S3500 - https://www.projetoacbr.com.br/forum/topic/83008-valor-incorreto-no-evento-s-3500/

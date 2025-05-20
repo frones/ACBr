@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/05/2025
+[*] Ajustes necessários para deixar em conformidade com a versão 1.02 dos Schemas.
+  Por: Italo Giurizzato Junior
+
 15/05/2025
 -- ACBrCTe.EnvEvento --
 [*] Removido as linhas que checavam a série de emissão do CT-e no envio do evento.

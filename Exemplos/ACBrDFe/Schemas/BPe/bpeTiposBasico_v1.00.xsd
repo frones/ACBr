@@ -198,6 +198,12 @@ para tpEmis diferente de 1</xs:documentation>
 											</xs:simpleType>
 										</xs:element>
 									</xs:sequence>
+									<xs:element name="nroBPIATA" type="TNF" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Informação do número do bilhete de passagem conforme definido pela IATA</xs:documentation>
+											<xs:documentation>Número que identifica o bilhete 1 a 999999999.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
 									<xs:element name="gCompraGov" type="TCompraGov" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Grupo de Compras Governamentais</xs:documentation>
@@ -227,14 +233,6 @@ para tpEmis diferente de 1</xs:documentation>
 									<xs:element name="IE">
 										<xs:annotation>
 											<xs:documentation>Inscrição Estadual do emitente</xs:documentation>
-										</xs:annotation>
-										<xs:simpleType>
-											<xs:restriction base="TIe"/>
-										</xs:simpleType>
-									</xs:element>
-									<xs:element name="IEST" minOccurs="0">
-										<xs:annotation>
-											<xs:documentation>Inscrição Estadual do Substituto Tributário</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="TIe"/>
@@ -650,19 +648,6 @@ Informar quando diferente do passageiro</xs:documentation>
 Informar se tpTrecho = 3</xs:documentation>
 											<xs:documentation>Formato AAAA-MM-DDTHH:MM:DD TZD</xs:documentation>
 										</xs:annotation>
-									</xs:element>
-									<xs:element name="poltrona" minOccurs="0">
-										<xs:annotation>
-											<xs:documentation>Número do assento</xs:documentation>
-										</xs:annotation>
-										<xs:simpleType>
-											<xs:restriction base="xs:string">
-												<xs:whiteSpace value="preserve"/>
-												<xs:minLength value="1"/>
-												<xs:maxLength value="3"/>
-												<xs:pattern value="0|[1-9]{1}[0-9]{0,2}"/>
-											</xs:restriction>
-										</xs:simpleType>
 									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
@@ -1083,18 +1068,6 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 									<xs:minLength value="50"/>
 									<xs:maxLength value="1000"/>
 									<xs:pattern value="((HTTPS?|https?)://.*\?chBPe=[0-9]{44}&amp;tpAmb=[1-2](&amp;sign=[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1})?)"/>
-								</xs:restriction>
-							</xs:simpleType>
-						</xs:element>
-						<xs:element name="boardPassBPe" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation>Texto contendo o boarding Pass impresso no DABPE (padrão PDF417)</xs:documentation>
-								<xs:documentation>O boarding Pass poderá ser gerado no padrão PDF417 e impresso no DABPE opcionalmente pelo emitente para colocar informações operacionais do bilhete e/ou prestar informações para a agência reguladora do setor</xs:documentation>
-							</xs:annotation>
-							<xs:simpleType>
-								<xs:restriction base="TString">
-									<xs:minLength value="50"/>
-									<xs:maxLength value="1000"/>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>

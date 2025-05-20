@@ -399,6 +399,7 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, blcksock, FileCtrl, Grids, IniFiles, Printers,
   pcnConversao,
+//  ACBrDFeConversao,
   ACBrOpenSSLUtils, OpenSSLExt,
   ACBrDFeConfiguracoes, ACBrDFeSSL,
   ACBrDFeUtil,
@@ -674,6 +675,75 @@ begin
 
 //      ConstrucaoCivil.CodigoObra := '88888';
 //      ConstrucaoCivil.Art        := '433';
+
+      // Reforma Tributária
+      {
+      IBSCBS.dest.CNPJCPF := '12345678901';
+      IBSCBS.dest.Nif := '';
+      IBSCBS.dest.cNaoNIF := tnnNaoInformado;
+      IBSCBS.dest.CAEPF := '';
+      IBSCBS.dest.xNome := 'Nome do Destinatario';
+      IBSCBS.dest.fone := '1622223333';
+      IBSCBS.dest.email := 'nome@provedor.com.br';
+      IBSCBS.dest.ender.endNac.cMun := StrToIntDef(edtCodCidade.Text, 0);
+      IBSCBS.dest.ender.endNac.CEP := '14800000';
+      IBSCBS.dest.ender.xLgr := 'RUA PRINCIPAL';
+      IBSCBS.dest.ender.nro := '100';
+      IBSCBS.dest.ender.xCpl := '';
+      IBSCBS.dest.ender.xBairro := 'CENTRO';
+
+      IBSCBS.adq.CNPJCPF := '12345678901';
+      IBSCBS.adq.Nif := '';
+      IBSCBS.adq.cNaoNIF := tnnNaoInformado;
+      IBSCBS.adq.CAEPF := '';
+      IBSCBS.adq.xNome := 'Nome do Destinatario';
+      IBSCBS.adq.fone := '1622223333';
+      IBSCBS.adq.email := 'nome@provedor.com.br';
+      IBSCBS.adq.ender.endNac.cMun := StrToIntDef(edtCodCidade.Text, 0);
+      IBSCBS.adq.ender.endNac.CEP := '14800000';
+      IBSCBS.adq.ender.xLgr := 'RUA PRINCIPAL';
+      IBSCBS.adq.ender.nro := '100';
+      IBSCBS.adq.ender.xCpl := '';
+      IBSCBS.adq.ender.xBairro := 'CENTRO';
+
+      IBSCBS.serv.modoPrestServ := '1';
+      IBSCBS.serv.clocalPrestServ := StrToIntDef(edtCodCidade.Text, 0);
+      IBSCBS.serv.cPaisPrestServ := 0;
+      IBSCBS.serv.cCIB := '1';
+
+      // icgNenhum, icgSim, icgNao
+      IBSCBS.serv.gCompraGov.indCompGov := icgSim;
+
+      IBSCBS.valores.trib.gIBSCBS.cstIBSCBS := cst000;
+      IBSCBS.valores.trib.gIBSCBS.cClassTribIBSCBS := ct000001;
+
+      IBSCBS.valores.trib.gIBSCBS.gIBSCredPres.cCredPresIBS := 100;
+      IBSCBS.valores.trib.gIBSCBS.gIBSCredPres.pCredPresIBS := 5;
+
+      IBSCBS.valores.trib.gIBSCBS.gIBSUF.pDifUF := 5;
+      IBSCBS.valores.trib.gIBSCBS.gIBSUF.vDevTribUF := 100;
+
+      IBSCBS.valores.trib.gIBSCBS.gIBSUF.cstUFDeson := cst000;
+      IBSCBS.valores.trib.gIBSCBS.gIBSUF.cClassTribUFDeson := ct000001;
+      IBSCBS.valores.trib.gIBSCBS.gIBSUF.pAliqUFDeson := 5;
+
+      IBSCBS.valores.trib.gIBSCBS.gIBSMun.pDifMun := 5;
+      IBSCBS.valores.trib.gIBSCBS.gIBSMun.vDevTribMun := 100;
+
+      IBSCBS.valores.trib.gIBSCBS.gIBSMun.cstMunDeson := cst000;
+      IBSCBS.valores.trib.gIBSCBS.gIBSMun.cClassTribMunDeson := ct000001;
+      IBSCBS.valores.trib.gIBSCBS.gIBSMun.pAliqMunDeson := 5;
+
+      IBSCBS.valores.trib.gIBSCBS.gCBS.cCredPresCBS := 100;
+      IBSCBS.valores.trib.gIBSCBS.gCBS.pCredPresCBS := 5;
+
+      IBSCBS.valores.trib.gIBSCBS.gCBS.pDifCBS := 5;
+      IBSCBS.valores.trib.gIBSCBS.gCBS.vDevTribCBS := 100;
+
+      IBSCBS.valores.trib.gIBSCBS.gCBS.cstCBSDeson := cst000;
+      IBSCBS.valores.trib.gIBSCBS.gCBS.cClassTribCBSDeson := ct000001;
+      IBSCBS.valores.trib.gIBSCBS.gCBS.pAliqCBSDeson := 5;
+      }
     end;
   end;
 end;
@@ -3315,7 +3385,7 @@ begin
   try
     ArqINI.Text := ACBrNFSeX1.NotasFiscais.GerarIni;
 
-    SaveDlg.Title := 'Escolha o local onde gerar o INI';
+    SaveDlg.Title := 'Escolha o local onde salvar o INI';
     SaveDlg.DefaultExt := '*.INI';
     SaveDlg.Filter := 'Arquivo INI(*.INI)|*.INI|Arquivo ini(*.ini)|*.ini|Todos os arquivos(*.*)|*.*';
 
@@ -3323,7 +3393,6 @@ begin
       ArqINI.SaveToFile(SaveDlg.FileName);
 
     memoLog.Lines.Add('Arquivo Salvo: ' + SaveDlg.FileName);
-
   finally
     SaveDlg.Free;
     ArqINI.Free;
@@ -3344,7 +3413,7 @@ begin
   try
     ArqINI.Text := ACBrNFSeX1.NotasFiscais.GerarIni;
 
-    SaveDlg.Title := 'Escolha o local onde gerar o INI';
+    SaveDlg.Title := 'Escolha o local onde salvar o INI';
     SaveDlg.DefaultExt := '*.INI';
     SaveDlg.Filter := 'Arquivo INI(*.INI)|*.INI|Arquivo ini(*.ini)|*.ini|Todos os arquivos(*.*)|*.*';
 

@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/05/2025
+[*] A SEFAZ-CE contratou a SVRS para recepcionar as NFCe, alterado o envio para o
+    ambiente de homologação para a SVRS.
+  Por: Italo Giurizzato Junior
 [*] Ajustes necessários para deixar em conformidade com a versão 1.02 dos Schemas.
   Por: Italo Giurizzato Junior
 

@@ -35,7 +35,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
-  ShellAPI, XMLIntf, XMLDoc, zlib,
+  ShellAPI, XMLIntf, XMLDoc, zlib, UITypes,
   ACBrBase, ACBrMail, ACBrDFe, ACBrDFeReport, ACBrCTe,
   ACBrCTeDACTEClass, ACBrCTeDACTeRLClass;
 
@@ -347,6 +347,7 @@ uses
   ACBrUtil.DateTime,
   ACBrUtil.XMLHTML,
   ACBrCTe.Classes, pcnConversao, pcteConversaoCTe,
+//  ACBrDFeConversao,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   ACBrCTeConhecimentos, ACBrCTeConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado;
@@ -641,8 +642,8 @@ begin
     // Reforma Tributária
     {
     Imp.vTotDFe := 100;
-    Imp.IBSCBS.CST := 100;
-    Imp.IBSCBS.cClassTrib := 100000;
+    Imp.IBSCBS.CST := cst000;
+    Imp.IBSCBS.cClassTrib := ct000001;
 
     Imp.IBSCBS.gIBSCBS.vBC := 100;
 
@@ -670,8 +671,8 @@ begin
     Imp.IBSCBS.gIBSCBS.gCBS.gRed.pAliqEfet := 5;
     Imp.IBSCBS.gIBSCBS.gCBS.vCBS := 50;
 
-    Imp.IBSCBS.gIBSCBS.gTribRegular.CSTReg := 100;
-    Imp.IBSCBS.gIBSCBS.gTribRegular.cClassTribReg := 100000;
+    Imp.IBSCBS.gIBSCBS.gTribRegular.CSTReg := cst000;
+    Imp.IBSCBS.gIBSCBS.gTribRegular.cClassTribReg := ct000001;
     Imp.IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegIBSUF := 5;
     Imp.IBSCBS.gIBSCBS.gTribRegular.vTribRegIBSUF := 50;
     Imp.IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegIBSMun := 5;
@@ -1143,8 +1144,8 @@ begin
     // Reforma Tributária
     {
     Imp.vTotDFe := 100;
-    Imp.IBSCBS.CST := 100;
-    Imp.IBSCBS.cClassTrib := 100000;
+    Imp.IBSCBS.CST := cst000;
+    Imp.IBSCBS.cClassTrib := ct000001;
 
     Imp.IBSCBS.gIBSCBS.vBC := 100;
 
@@ -1172,8 +1173,8 @@ begin
     Imp.IBSCBS.gIBSCBS.gCBS.gRed.pAliqEfet := 5;
     Imp.IBSCBS.gIBSCBS.gCBS.vCBS := 50;
 
-    Imp.IBSCBS.gIBSCBS.gTribRegular.CSTReg := 100;
-    Imp.IBSCBS.gIBSCBS.gTribRegular.cClassTribReg := 100000;
+    Imp.IBSCBS.gIBSCBS.gTribRegular.CSTReg := cst000;
+    Imp.IBSCBS.gIBSCBS.gTribRegular.cClassTribReg := ct000001;
     Imp.IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegIBSUF := 5;
     Imp.IBSCBS.gIBSCBS.gTribRegular.vTribRegIBSUF := 50;
     Imp.IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegIBSMun := 5;
@@ -1505,8 +1506,8 @@ begin
     // Reforma Tributária
     {
     Imp.vTotDFe := 100;
-    Imp.IBSCBS.CST := 100;
-    Imp.IBSCBS.cClassTrib := 100000;
+    Imp.IBSCBS.CST := cst000;
+    Imp.IBSCBS.cClassTrib := ct000001;
 
     Imp.IBSCBS.gIBSCBS.vBC := 100;
 
@@ -1534,8 +1535,8 @@ begin
     Imp.IBSCBS.gIBSCBS.gCBS.gRed.pAliqEfet := 5;
     Imp.IBSCBS.gIBSCBS.gCBS.vCBS := 50;
 
-    Imp.IBSCBS.gIBSCBS.gTribRegular.CSTReg := 100;
-    Imp.IBSCBS.gIBSCBS.gTribRegular.cClassTribReg := 100000;
+    Imp.IBSCBS.gIBSCBS.gTribRegular.CSTReg := cst000;
+    Imp.IBSCBS.gIBSCBS.gTribRegular.cClassTribReg := ct000001;
     Imp.IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegIBSUF := 5;
     Imp.IBSCBS.gIBSCBS.gTribRegular.vTribRegIBSUF := 50;
     Imp.IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegIBSMun := 5;
@@ -3487,7 +3488,7 @@ begin
   try
     ArqINI.Text := ACBrCTe1.Conhecimentos.GerarIni;
 
-    SaveDlg.Title := 'Escolha o local onde gerar o INI';
+    SaveDlg.Title := 'Escolha o local onde salvar o INI';
     SaveDlg.DefaultExt := '*.INI';
     SaveDlg.Filter := 'Arquivo INI(*.INI)|*.INI|Arquivo ini(*.ini)|*.ini|Todos os arquivos(*.*)|*.*';
 

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/05/2025
+-- Diversos --
+[*] Criado os tipos e funções de conversão para os campos CST e cClassTrib da 
+    Reforma Tributária e outros ajustes necessários para o uso dos novos tipos.
+  Por: Italo Giurizzato Junior
+
 19/05/2025
 -- ACBrNFSeXServicos --
 [+] #TK-7057: Incluída a cidade de Quintana/SP, o provedor é Fiorilli versão 2.00

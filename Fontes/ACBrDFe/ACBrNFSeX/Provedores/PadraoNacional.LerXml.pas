@@ -223,12 +223,13 @@ type
 implementation
 
 uses
+  ACBrDFeUtil,
+//  ACBrDFeConversao,
   ACBrUtil.Base,
   ACBrUtil.XMLHTML,
   ACBrUtil.DateTime,
   ACBrUtil.Strings,
-  ACBrUtil.FilesIO,
-  ACBrDFeUtil;
+  ACBrUtil.FilesIO;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -1721,8 +1722,8 @@ procedure TNFSeR_PadraoNacional.Ler_gIBSCBS(
 begin
   if not Assigned(ANode) then Exit;
 
-  gIBSCBS.cstIBSCBS := ObterConteudo(ANode.Childrens.FindAnyNs('cstIBSCBS'), tcInt);
-  gIBSCBS.cClassTribIBSCBS := ObterConteudo(ANode.Childrens.FindAnyNs('cClassTribIBSCBS'), tcInt);
+  gIBSCBS.cstIBSCBS := StrToCSTIBSCBS(ObterConteudo(ANode.Childrens.FindAnyNs('cstIBSCBS'), tcStr));
+  gIBSCBS.cClassTribIBSCBS := StrTocClassTrib(ObterConteudo(ANode.Childrens.FindAnyNs('cClassTribIBSCBS'), tcStr));
 
   Ler_gIBSCredPres(ANode.Childrens.FindAnyNs('gIBSCredPres'), gIBSCBS.gIBSCredPres);
   Ler_gIBSUF(ANode.Childrens.FindAnyNs('gIBSUF'), gIBSCBS.gIBSUF);
@@ -1770,8 +1771,8 @@ procedure TNFSeR_PadraoNacional.Ler_gDesonUF(
 begin
   if not Assigned(ANode) then Exit;
 
-  gIBSUF.cstUFDeson := ObterConteudo(ANode.Childrens.FindAnyNs('cstUFDeson'), tcInt);
-  gIBSUF.cClassTribUFDeson := ObterConteudo(ANode.Childrens.FindAnyNs('cClassTribUFDeson'), tcInt);
+  gIBSUF.cstUFDeson := StrToCSTIBSCBS(ObterConteudo(ANode.Childrens.FindAnyNs('cstUFDeson'), tcStr));
+  gIBSUF.cClassTribUFDeson := StrTocClassTrib(ObterConteudo(ANode.Childrens.FindAnyNs('cClassTribUFDeson'), tcStr));
   gIBSUF.pAliqUFDeson := ObterConteudo(ANode.Childrens.FindAnyNs('pAliqUFDeson'), tcDe2);
 end;
 
@@ -1806,8 +1807,8 @@ procedure TNFSeR_PadraoNacional.Ler_gDesonMun(
 begin
   if not Assigned(ANode) then Exit;
 
-  gIBSMun.cstMunDeson := ObterConteudo(ANode.Childrens.FindAnyNs('cstMunDeson'), tcInt);
-  gIBSMun.cClassTribMunDeson := ObterConteudo(ANode.Childrens.FindAnyNs('cClassTribMunDeson'), tcInt);
+  gIBSMun.cstMunDeson := StrToCSTIBSCBS(ObterConteudo(ANode.Childrens.FindAnyNs('cstMunDeson'), tcStr));
+  gIBSMun.cClassTribMunDeson := StrTocClassTrib(ObterConteudo(ANode.Childrens.FindAnyNs('cClassTribMunDeson'), tcStr));
   gIBSMun.pAliqMunDeson := ObterConteudo(ANode.Childrens.FindAnyNs('pAliqMunDeson'), tcDe2);
 end;
 
@@ -1852,8 +1853,8 @@ procedure TNFSeR_PadraoNacional.Ler_gDesonCBS(
 begin
   if not Assigned(ANode) then Exit;
 
-  gCBS.cstCBSDeson := ObterConteudo(ANode.Childrens.FindAnyNs('cstCBSDeson'), tcInt);
-  gCBS.cClassTribCBSDeson := ObterConteudo(ANode.Childrens.FindAnyNs('cClassTribCBSDeson'), tcInt);
+  gCBS.cstCBSDeson := StrToCSTIBSCBS(ObterConteudo(ANode.Childrens.FindAnyNs('cstCBSDeson'), tcStr));
+  gCBS.cClassTribCBSDeson := StrTocClassTrib(ObterConteudo(ANode.Childrens.FindAnyNs('cClassTribCBSDeson'), tcStr));
   gCBS.pAliqCBSDeson := ObterConteudo(ANode.Childrens.FindAnyNs('pAliqCBSDeson'), tcDe2);
 end;
 
@@ -1878,7 +1879,7 @@ procedure TNFSeR_PadraoNacional.Ler_CompGov(const ANode: TACBrXmlNode;
 begin
   if not Assigned(ANode) then Exit;
 
-  CompGov.tpCompraGov := StrTotpCompraGov(ObterConteudo(ANode.Childrens.FindAnyNs('tpCompraGov'), tcStr));
+  CompGov.tpCompraGov := StrTotpEnteGov(ObterConteudo(ANode.Childrens.FindAnyNs('tpCompraGov'), tcStr));
   CompGov.pRedutor := ObterConteudo(ANode.Childrens.FindAnyNs('pRedutor'), tcDe2);
 end;
 
@@ -2695,8 +2696,8 @@ begin
   sSecao := 'gIBSCBS';
   if AINIRec.SectionExists(sSecao) then
   begin
-    gIBSCBS.cstIBSCBS := AINIRec.ReadInteger(sSecao, 'cstIBSCBS', 0);
-    gIBSCBS.cClassTribIBSCBS := AINIRec.ReadInteger(sSecao, 'cClassTribIBSCBS', 0);
+    gIBSCBS.cstIBSCBS := StrToCSTIBSCBS(AINIRec.ReadString(sSecao, 'cstIBSCBS', ''));
+    gIBSCBS.cClassTribIBSCBS := StrTocClassTrib(AINIRec.ReadString(sSecao, 'cClassTribIBSCBS', ''));
 
     LerINIgIBSCredPres(AINIRec, gIBSCBS.gIBSCredPres);
     LerINIgIBSUF(AINIRec, gIBSCBS.gIBSUF);
@@ -2728,8 +2729,8 @@ begin
   begin
     gIBSUF.pDifUF := StringToFloatDef(AINIRec.ReadString(sSecao, 'pDifUF', ''), 0);
     gIBSUF.vDevTribUF := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDevTribUF', ''), 0);
-    gIBSUF.cstUFDeson := AINIRec.ReadInteger(sSecao, 'cstUFDeson', 0);
-    gIBSUF.cClassTribUFDeson := AINIRec.ReadInteger(sSecao, 'cClassTribUFDeson', 0);
+    gIBSUF.cstUFDeson := StrToCSTIBSCBS(AINIRec.ReadString(sSecao, 'cstUFDeson', ''));
+    gIBSUF.cClassTribUFDeson := StrTocClassTrib(AINIRec.ReadString(sSecao, 'cClassTribUFDeson', ''));
     gIBSUF.pAliqUFDeson := StringToFloatDef(AINIRec.ReadString(sSecao, 'pAliqUFDeson', ''), 0);
   end;
 end;
@@ -2744,8 +2745,8 @@ begin
   begin
     gIBSMun.pDifMun := StringToFloatDef(AINIRec.ReadString(sSecao, 'pDifMun', ''), 0);
     gIBSMun.vDevTribMun := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDevTribMun', ''), 0);
-    gIBSMun.cstMunDeson := AINIRec.ReadInteger(sSecao, 'cstMunDeson', 0);
-    gIBSMun.cClassTribMunDeson := AINIRec.ReadInteger(sSecao, 'cClassTribMunDeson', 0);
+    gIBSMun.cstMunDeson := StrToCSTIBSCBS(AINIRec.ReadString(sSecao, 'cstMunDeson', ''));
+    gIBSMun.cClassTribMunDeson := StrTocClassTrib(AINIRec.ReadString(sSecao, 'cClassTribMunDeson', ''));
     gIBSMun.pAliqMunDeson := StringToFloatDef(AINIRec.ReadString(sSecao, 'pAliqMunDeson', ''), 0);
   end;
 end;
@@ -2763,8 +2764,8 @@ begin
 
     gCBS.pDifCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'pDifCBS', ''), 0);
     gCBS.vDevTribCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDevTribCBS', ''), 0);
-    gCBS.cstCBSDeson := AINIRec.ReadInteger(sSecao, 'cstCBSDeson', 0);
-    gCBS.cClassTribCBSDeson := AINIRec.ReadInteger(sSecao, 'cClassTribCBSDeson', 0);
+    gCBS.cstCBSDeson := StrToCSTIBSCBS(AINIRec.ReadString(sSecao, 'cstCBSDeson', ''));
+    gCBS.cClassTribCBSDeson := StrTocClassTrib(AINIRec.ReadString(sSecao, 'cClassTribCBSDeson', ''));
     gCBS.pAliqCBSDeson := StringToFloatDef(AINIRec.ReadString(sSecao, 'pAliqCBSDeson', ''), 0);
   end;
 end;

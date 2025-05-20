@@ -178,6 +178,7 @@ uses
   ACBrUtil.DateTime,
   ACBrUtil.Strings,
   ACBrNFSeXConsts,
+//  ACBrDFeConversao,
   ACBrNFSeXConversao;
 
 //==============================================================================
@@ -262,7 +263,10 @@ begin
   Result.AppendChild(GerarValores);
 
   // Reforma Tributária
-//  Result.AppendChild(GerarIBSCBS(NFSe.IBSCBS));
+  if (NFSe.IBSCBS.dest.xNome <> '') or (NFSe.IBSCBS.adq.xNome <> '') or
+     (NFSe.IBSCBS.serv.modoPrestServ <> '') or
+     (NFSe.IBSCBS.valores.trib.gIBSCBS.gIBSCredPres.pCredPresIBS > 0) then
+    Result.AppendChild(GerarIBSCBS(NFSe.IBSCBS));
 end;
 
 function TNFSeW_PadraoNacional.GerarSubstituicao: TACBrXmlNode;
@@ -1597,11 +1601,11 @@ function TNFSeW_PadraoNacional.GerargIBSCBS(
 begin
   Result := CreateElement('gIBSCBS');
 
-  Result.AppendChild(AddNode(tcInt, '#1', 'cstIBSCBS', 3, 3, 1,
-                                                        gIBSCBS.cstIBSCBS, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'cstIBSCBS', 3, 3, 1,
+                                        CSTIBSCBSToStr(gIBSCBS.cstIBSCBS), ''));
 
-  Result.AppendChild(AddNode(tcInt, '#1', 'cClassTribIBSCBS', 6, 6, 1,
-                                                 gIBSCBS.cClassTribIBSCBS, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'cClassTribIBSCBS', 6, 6, 1,
+                                cClassTribToStr(gIBSCBS.cClassTribIBSCBS), ''));
 
   Result.AppendChild(GerargIBSCredPres(gIBSCBS.gIBSCredPres));
   Result.AppendChild(GerargIBSUF(gIBSCBS.gIBSUF));
@@ -1659,11 +1663,11 @@ function TNFSeW_PadraoNacional.GerargDesonUF(
 begin
   Result := CreateElement('gDeson');
 
-  Result.AppendChild(AddNode(tcInt, '#1', 'cstUFDeson', 3, 3, 1,
-                                                        gIBSUF.cstUFDeson, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'cstUFDeson', 3, 3, 1,
+                                        CSTIBSCBSToStr(gIBSUF.cstUFDeson), ''));
 
-  Result.AppendChild(AddNode(tcInt, '#1', 'cClassTribUFDeson', 6, 6, 1,
-                                                 gIBSUF.cClassTribUFDeson, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'cClassTribUFDeson', 6, 6, 1,
+                                cClassTribToStr(gIBSUF.cClassTribUFDeson), ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pAliqUFDeson', 1, 5, 1,
                                                       gIBSUF.pAliqUFDeson, ''));
@@ -1707,11 +1711,11 @@ function TNFSeW_PadraoNacional.GerargDesonMun(
 begin
   Result := CreateElement('gDeson');
 
-  Result.AppendChild(AddNode(tcInt, '#1', 'cstMunDeson', 3, 3, 1,
-                                                      gIBSMun.cstMunDeson, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'cstMunDeson', 3, 3, 1,
+                                      CSTIBSCBSToStr(gIBSMun.cstMunDeson), ''));
 
-  Result.AppendChild(AddNode(tcInt, '#1', 'cClassTribMunDeson', 6, 6, 1,
-                                               gIBSMun.cClassTribMunDeson, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'cClassTribMunDeson', 6, 6, 1,
+                              cClassTribToStr(gIBSMun.cClassTribMunDeson), ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pAliqMunDeson', 1, 5, 1,
                                                     gIBSMun.pAliqMunDeson, ''));
@@ -1770,11 +1774,11 @@ function TNFSeW_PadraoNacional.GerargDesonCBS(
 begin
   Result := CreateElement('gDeson');
 
-  Result.AppendChild(AddNode(tcInt, '#1', 'cstCBSDeson', 3, 3, 1,
-                                                         gCBS.cstCBSDeson, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'cstCBSDeson', 3, 3, 1,
+                                         CSTIBSCBSToStr(gCBS.cstCBSDeson), ''));
 
-  Result.AppendChild(AddNode(tcInt, '#1', 'cClassTribCBSDeson', 6, 6, 1,
-                                                  gCBS.cClassTribCBSDeson, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'cClassTribCBSDeson', 6, 6, 1,
+                                 cClassTribToStr(gCBS.cClassTribCBSDeson), ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pAliqCBSDeson', 1, 5, 1,
                                                        gCBS.pAliqCBSDeson, ''));

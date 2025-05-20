@@ -49,6 +49,7 @@ uses
   ACBrBase,
   ACBrUtil.DateTime,
   ACBrUtil.Strings,
+//  ACBrDFeConversao,
   ACBrNFSeXConversao;
 
 type
@@ -1357,11 +1358,11 @@ type
   TCompGov = class(TObject)
   private
     FindCompGov: TindCompGov;
-    FtpCompraGov: TtpCompraGov;
+    FtpCompraGov: TtpEnteGov;
     FpRedutor: Double;
   public
     property indCompGov: TindCompGov read FindCompGov write FindCompGov;
-    property tpCompraGov: TtpCompraGov read FtpCompraGov write FtpCompraGov;
+    property tpCompraGov: TtpEnteGov read FtpCompraGov write FtpCompraGov;
     property pRedutor: Double read FpRedutor write FpRedutor;
   end;
 
@@ -1587,14 +1588,14 @@ type
   private
     FpDifUF: Double;
     FvDevTribUF: Double;
-    FcstUFDeson: Integer;
-    FcClassTribUFDeson: Integer;
+    FcstUFDeson: TCSTIBSCBS;
+    FcClassTribUFDeson: TcClassTrib;
     FpAliqUFDeson: Double;
   public
     property pDifUF: Double read FpDifUF write FpDifUF;
     property vDevTribUF: Double read FvDevTribUF write FvDevTribUF;
-    property cstUFDeson: Integer read FcstUFDeson write FcstUFDeson;
-    property cClassTribUFDeson: Integer read FcClassTribUFDeson write FcClassTribUFDeson;
+    property cstUFDeson: TCSTIBSCBS read FcstUFDeson write FcstUFDeson;
+    property cClassTribUFDeson: TcClassTrib read FcClassTribUFDeson write FcClassTribUFDeson;
     property pAliqUFDeson: Double read FpAliqUFDeson write FpAliqUFDeson;
   end;
 
@@ -1604,14 +1605,14 @@ type
   private
     FpDifMun: Double;
     FvDevTribMun: Double;
-    FcstMunDeson: Integer;
-    FcClassTribMunDeson: Integer;
+    FcstMunDeson: TCSTIBSCBS;
+    FcClassTribMunDeson: TcClassTrib;
     FpAliqMunDeson: Double;
   public
     property pDifMun: Double read FpDifMun write FpDifMun;
     property vDevTribMun: Double read FvDevTribMun write FvDevTribMun;
-    property cstMunDeson: Integer read FcstMunDeson write FcstMunDeson;
-    property cClassTribMunDeson: Integer read FcClassTribMunDeson write FcClassTribMunDeson;
+    property cstMunDeson: TCSTIBSCBS read FcstMunDeson write FcstMunDeson;
+    property cClassTribMunDeson: TcClassTrib read FcClassTribMunDeson write FcClassTribMunDeson;
     property pAliqMunDeson: Double read FpAliqMunDeson write FpAliqMunDeson;
   end;
 
@@ -1623,16 +1624,16 @@ type
     FpCredPresCBS: Double;
     FpDifCBS: Double;
     FvDevTribCBS: Double;
-    FcstCBSDeson: Integer;
-    FcClassTribCBSDeson: Integer;
+    FcstCBSDeson: TCSTIBSCBS;
+    FcClassTribCBSDeson: TcClassTrib;
     FpAliqCBSDeson: Double;
   public
     property cCredPresCBS: Integer read FcCredPresCBS write FcCredPresCBS;
     property pCredPresCBS: Double read FpCredPresCBS write FpCredPresCBS;
     property pDifCBS: Double read FpDifCBS write FpDifCBS;
     property vDevTribCBS: Double read FvDevTribCBS write FvDevTribCBS;
-    property cstCBSDeson: Integer read FcstCBSDeson write FcstCBSDeson;
-    property cClassTribCBSDeson: Integer read FcClassTribCBSDeson write FcClassTribCBSDeson;
+    property cstCBSDeson: TCSTIBSCBS read FcstCBSDeson write FcstCBSDeson;
+    property cClassTribCBSDeson: TcClassTrib read FcClassTribCBSDeson write FcClassTribCBSDeson;
     property pAliqCBSDeson: Double read FpAliqCBSDeson write FpAliqCBSDeson;
   end;
 
@@ -1640,8 +1641,8 @@ type
 
   TgIBSCBS = class(TObject)
   private
-    FcstIBSCBS: Integer;
-    FcClassTribIBSCBS: Integer;
+    FcstIBSCBS: TCSTIBSCBS;
+    FcClassTribIBSCBS: TcClassTrib;
     FgIBSCredPres: TgIBSCredPres;
     FgIBSUF: TgIBSUFValores;
     FgIBSMun: TgIBSMunValores;
@@ -1650,8 +1651,8 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property cstIBSCBS: Integer read FcstIBSCBS write FcstIBSCBS;
-    property cClassTribIBSCBS: Integer read FcClassTribIBSCBS write FcClassTribIBSCBS;
+    property cstIBSCBS: TCSTIBSCBS read FcstIBSCBS write FcstIBSCBS;
+    property cClassTribIBSCBS: TcClassTrib read FcClassTribIBSCBS write FcClassTribIBSCBS;
     property gIBSCredPres: TgIBSCredPres read FgIBSCredPres write FgIBSCredPres;
 
     property gIBSUF: TgIBSUFValores read FgIBSUF write FgIBSUF;

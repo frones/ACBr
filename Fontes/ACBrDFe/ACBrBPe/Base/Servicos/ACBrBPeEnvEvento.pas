@@ -152,7 +152,7 @@ uses
   ACBrUtil.FilesIO,
   ACBrUtil.DateTime,
   ACBrBPeRetEnvEvento,
-  ACBrDFeConversao,
+//  ACBrDFeConversao,
   ACBrBPeConversao;
 
 { TEventoBPe }

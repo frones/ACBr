@@ -184,6 +184,7 @@ uses
   Math,
   ACBrDFeConsts,
   ACBrBPeConsts,
+//  ACBrDFeConversao,
   ACBrValidador,
   ACBrDFeUtil,
   ACBrUtil.Base,
@@ -1541,14 +1542,15 @@ function TBPeXmlWriter.Gerar_IBSCBS(IBSCBS: TIBSCBS): TACBrXmlNode;
 begin
   Result := nil;
 
-  if (IBSCBS.cClassTrib > 0) then
+  if (IBSCBS.gIBSCBS.vBC > 0) then
   begin
     Result := FDocument.CreateElement('IBSCBS');
 
-    Result.AppendChild(AddNode(tcInt, '#1', 'CST', 3, 3, 1, IBSCBS.CST, DSC_CST));
+    Result.AppendChild(AddNode(tcStr, '#1', 'CST', 3, 3, 1,
+                                          CSTIBSCBSToStr(IBSCBS.CST), DSC_CST));
 
-    Result.AppendChild(AddNode(tcInt, '#2', 'cClassTrib', 6, 6, 1,
-                                            IBSCBS.cClassTrib, DSC_CCLASSTRIB));
+    Result.AppendChild(AddNode(tcStr, '#2', 'cClassTrib', 6, 6, 1,
+                           cClassTribToStr(IBSCBS.cClassTrib), DSC_CCLASSTRIB));
 
     if IBSCBS.gIBSCBS.vBC > 0 then
       Result.AppendChild(Gerar_IBSCBS_gIBSCBS(IBSCBS.gIBSCBS));
@@ -1702,11 +1704,11 @@ function TBPeXmlWriter.Gerar_IBSCBSSel_gIBSCBS_gTribRegular(
 begin
   Result := FDocument.CreateElement('gTribRegular');
 
-  Result.AppendChild(AddNode(tcInt, '#56', 'CSTReg', 3, 3, 1,
-                                                 gTribRegular.CSTReg, DSC_CST));
+  Result.AppendChild(AddNode(tcStr, '#56', 'CSTReg', 3, 3, 1,
+                                 CSTIBSCBSToStr(gTribRegular.CSTReg), DSC_CST));
 
-  Result.AppendChild(AddNode(tcInt, '#57', 'cClassTribReg', 6, 6, 1,
-                                   gTribRegular.cClassTribReg, DSC_CCLASSTRIB));
+  Result.AppendChild(AddNode(tcStr, '#57', 'cClassTribReg', 6, 6, 1,
+                  cClassTribToStr(gTribRegular.cClassTribReg), DSC_CCLASSTRIB));
 
   Result.AppendChild(AddNode(tcDe4, '#58', 'pAliqEfetRegIBSUF', 1, 7, 1,
                                     gTribRegular.pAliqEfetRegIBSUF, DSC_PALIQ));
@@ -1772,10 +1774,6 @@ begin
 
   Result.AppendChild(AddNode(tcDe2, '#14', 'vCredPresCondSus', 1, 15, 1,
                                   gIBS.vCredPresCondSus, DSC_VCREDPRESCONDSUS));
-  {
-  Result.AppendChild(AddNode(tcDe2, '#15', 'vIBSTot', 1, 15, 1,
-                                                    gIBS.vIBS, DSC_VIBSTOT));
-  }
 end;
 
 function TBPeXmlWriter.Gerar_IBSCBSTot_gIBS_gIBSUFTot(

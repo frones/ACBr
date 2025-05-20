@@ -118,6 +118,7 @@ implementation
 
 uses
   ACBrXmlBase, ACBrUtil.Base,
+//  ACBrDFeConversao,
   ACBrNF3eConversao;
 
 { TNF3eXmlReader }
@@ -1126,8 +1127,8 @@ procedure TNF3eXmlReader.Ler_IBSCBS(const ANode: TACBrXmlNode; IBSCBS: TIBSCBS);
 begin
   if not Assigned(ANode) then Exit;
 
-  IBSCBS.CST := ObterConteudo(ANode.Childrens.Find('CST'), tcInt);
-  IBSCBS.cClassTrib := ObterConteudo(ANode.Childrens.Find('cClassTrib'), tcInt);
+  IBSCBS.CST := StrToCSTIBSCBS(ObterConteudo(ANode.Childrens.Find('CST'), tcStr));
+  IBSCBS.cClassTrib := StrTocClassTrib(ObterConteudo(ANode.Childrens.Find('cClassTrib'), tcStr));
 
   Ler_IBSCBS_gIBSCBS(ANode.Childrens.Find('gIBSCBS'), IBSCBS.gIBSCBS);
 end;
@@ -1261,8 +1262,8 @@ procedure TNF3eXmlReader.Ler_gIBSCBS_gTribRegular(const ANode: TACBrXmlNode;
 begin
   if not Assigned(ANode) then Exit;
 
-  gTribRegular.CSTReg := ObterConteudo(ANode.Childrens.Find('CSTReg'), tcInt);
-  gTribRegular.cClassTribReg := ObterConteudo(ANode.Childrens.Find('cClassTribReg'), tcInt);
+  gTribRegular.CSTReg := StrToCSTIBSCBS(ObterConteudo(ANode.Childrens.Find('CSTReg'), tcStr));
+  gTribRegular.cClassTribReg := StrTocClassTrib(ObterConteudo(ANode.Childrens.Find('cClassTribReg'), tcStr));
   gTribRegular.pAliqEfetRegIBSUF := ObterConteudo(ANode.Childrens.Find('pAliqEfetRegIBSUF'), tcDe4);
   gTribRegular.vTribRegIBSUF := ObterConteudo(ANode.Childrens.Find('vTribRegIBSUF'), tcDe2);
   gTribRegular.pAliqEfetRegIBSMun := ObterConteudo(ANode.Childrens.Find('pAliqEfetRegIBSMun'), tcDe4);

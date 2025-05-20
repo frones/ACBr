@@ -123,6 +123,7 @@ implementation
 uses
   ACBrXmlBase,
   ACBrDFeUtil,
+//  ACBrDFeConversao,
   ACBrNF3e,
   ACBrUtil.Base;
 
@@ -982,12 +983,12 @@ procedure TNF3eIniWriter.Gerar_IBSCBS(AINIRec: TMemIniFile; IBSCBS: TIBSCBS; Idx
 var
   sSecao: string;
 begin
-  if (IBSCBS.cClassTrib > 0) then
+  if (IBSCBS.gIBSCBS.vBC > 0) then
   begin
     sSecao := 'IBSCBS' + IntToStrZero(Idx1, 2) + IntToStrZero(Idx2, 3);
 
-    AINIRec.WriteInteger(sSecao, 'CST', IBSCBS.CST);
-    AINIRec.WriteInteger(sSecao, 'cClassTrib', IBSCBS.cClassTrib);
+    AINIRec.WriteString(sSecao, 'CST', CSTIBSCBSToStr(IBSCBS.CST));
+    AINIRec.WriteString(sSecao, 'cClassTrib', cClassTribToStr(IBSCBS.cClassTrib));
 
     if IBSCBS.gIBSCBS.vBC > 0 then
       Gerar_IBSCBS_gIBSCBS(AINIRec, IBSCBS.gIBSCBS, Idx1, Idx2);
@@ -1005,6 +1006,9 @@ begin
   Gerar_gIBSUF(AINIRec, gIBSCBS.gIBSUF, Idx1, Idx2);
   Gerar_gIBSMun(AINIRec, gIBSCBS.gIBSMun, Idx1, Idx2);
   Gerar_gCBS(AINIRec, gIBSCBS.gCBS, Idx1, Idx2);
+
+  if gIBSCBS.gTribRegular.pAliqEfetRegIBSUF > 0 then
+    Gerar_IBSCBS_gIBSCBS_gTribReg(AINIRec, gIBSCBS.gTribRegular, Idx1, Idx2);
 
   if gIBSCBS.gIBSCredPres.pCredPres > 0 then
     Gerar_gIBSCredPres(AINIRec, gIBSCBS.gIBSCredPres, Idx1, Idx2);
@@ -1076,8 +1080,8 @@ var
 begin
   sSecao := 'gTribRegular' + IntToStrZero(Idx1, 2) + IntToStrZero(Idx2, 3);
 
-  AINIRec.WriteInteger(sSecao, 'CSTReg', gTribRegular.CSTReg);
-  AINIRec.WriteInteger(sSecao, 'cClassTribReg', gTribRegular.cClassTribReg);
+  AINIRec.WriteString(sSecao, 'CSTReg', CSTIBSCBSToStr(gTribRegular.CSTReg));
+  AINIRec.WriteString(sSecao, 'cClassTribReg', cClassTribToStr(gTribRegular.cClassTribReg));
   AINIRec.WriteFloat(sSecao, 'pAliqEfetRegIBSUF', gTribRegular.pAliqEfetRegIBSUF);
   AINIRec.WriteFloat(sSecao, 'vTribRegIBSUF', gTribRegular.vTribRegIBSUF);
   AINIRec.WriteFloat(sSecao, 'pAliqEfetRegIBSMun', gTribRegular.pAliqEfetRegIBSMun);

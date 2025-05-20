@@ -109,6 +109,7 @@ implementation
 
 uses
   ACBrXmlBase,
+//  ACBrDFeConversao,
   ACBrNFCom,
   ACBrUtil.Base,
   ACBrUtil.Strings,
@@ -698,8 +699,8 @@ begin
   sSecao := 'IBSCBS' + IntToStrZero(Idx, 3);
   if AINIRec.SectionExists(sSecao) then
   begin
-    IBSCBS.CST := AINIRec.ReadInteger(sSecao, 'CST', 0);
-    IBSCBS.cClassTrib := AINIRec.ReadInteger(sSecao, 'cClassTrib', 0);
+    IBSCBS.CST := StrToCSTIBSCBS(AINIRec.ReadString(sSecao, 'CST', '000'));
+    IBSCBS.cClassTrib := StrTocClassTrib(AINIRec.ReadString(sSecao, 'cClassTrib', '000001'));
 
     Ler_IBSCBS_gIBSCBS(AINIRec, IBSCBS.gIBSCBS, Idx);
   end;
@@ -790,8 +791,8 @@ var
 begin
   sSecao := 'gTribRegular' + IntToStrZero(Idx, 3);
 
-  gTribRegular.CSTReg := AINIRec.ReadInteger(sSecao, 'CSTReg', 0);
-  gTribRegular.cClassTribReg := AINIRec.ReadInteger(sSecao, 'cClassTribReg', 0);
+  gTribRegular.CSTReg := StrToCSTIBSCBS(AINIRec.ReadString(sSecao, 'CSTReg', '000'));
+  gTribRegular.cClassTribReg := StrTocClassTrib(AINIRec.ReadString(sSecao, 'cClassTribReg', '000001'));
   gTribRegular.pAliqEfetRegIBSUF := StringToFloatDef( AINIRec.ReadString(sSecao,'pAliqEfetRegIBSUF','') ,0);
   gTribRegular.vTribRegIBSUF := StringToFloatDef( AINIRec.ReadString(sSecao,'vTribRegIBSUF','') ,0);
   gTribRegular.pAliqEfetRegIBSMun := StringToFloatDef( AINIRec.ReadString(sSecao,'pAliqEfetRegIBSMun','') ,0);

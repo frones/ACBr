@@ -111,6 +111,7 @@ implementation
 uses
   ACBrXmlBase,
   ACBrDFeUtil,
+//  ACBrDFeConversao,
   ACBrNFCom,
   ACBrUtil.Base;
 
@@ -645,12 +646,12 @@ procedure TNFComIniWriter.Gerar_IBSCBS(AINIRec: TMemIniFile; IBSCBS: TIBSCBS; Id
 var
   sSecao: string;
 begin
-  if (IBSCBS.cClassTrib > 0) then
+  if (IBSCBS.gIBSCBS.vBC > 0) then
   begin
     sSecao := 'IBSCBS' + IntToStrZero(Idx + 1, 3);
 
-    AINIRec.WriteInteger(sSecao, 'CST', IBSCBS.CST);
-    AINIRec.WriteInteger(sSecao, 'cClassTrib', IBSCBS.cClassTrib);
+    AINIRec.WriteString(sSecao, 'CST', CSTIBSCBSToStr(IBSCBS.CST));
+    AINIRec.WriteString(sSecao, 'cClassTrib', cClassTribToStr(IBSCBS.cClassTrib));
 
     if IBSCBS.gIBSCBS.vBC > 0 then
       Gerar_IBSCBS_gIBSCBS(AINIRec, IBSCBS.gIBSCBS, Idx);
@@ -743,8 +744,8 @@ var
 begin
   sSecao := 'gTribRegular' + IntToStrZero(Idx + 1, 3);;
 
-  AINIRec.WriteInteger(sSecao, 'CSTReg', gTribRegular.CSTReg);
-  AINIRec.WriteInteger(sSecao, 'cClassTribReg', gTribRegular.cClassTribReg);
+  AINIRec.WriteString(sSecao, 'CSTReg', CSTIBSCBSToStr(gTribRegular.CSTReg));
+  AINIRec.WriteString(sSecao, 'cClassTribReg', cClassTribToStr(gTribRegular.cClassTribReg));
   AINIRec.WriteFloat(sSecao, 'pAliqEfetRegIBSUF', gTribRegular.pAliqEfetRegIBSUF);
   AINIRec.WriteFloat(sSecao, 'vTribRegIBSUF', gTribRegular.vTribRegIBSUF);
   AINIRec.WriteFloat(sSecao, 'pAliqEfetRegIBSMun', gTribRegular.pAliqEfetRegIBSMun);

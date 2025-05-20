@@ -235,6 +235,9 @@ type
     btnPagOperacaoTransp: TButton;
     ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
     btnEnviarEventoEmail: TButton;
+    tsoutros: TTabSheet;
+    btnLerArqINI: TButton;
+    btnGerarArqINI: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathMDFeClick(Sender: TObject);
@@ -292,6 +295,8 @@ type
     procedure btnInclusaoDFeClick(Sender: TObject);
     procedure btnPagOperacaoTranspClick(Sender: TObject);
     procedure btnEnviarEventoEmailClick(Sender: TObject);
+    procedure btnLerArqINIClick(Sender: TObject);
+    procedure btnGerarArqINIClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -1246,6 +1251,39 @@ begin
 
 end;
 
+procedure TfrmACBrMDFe.btnGerarArqINIClick(Sender: TObject);
+var
+  vAux: string;
+  SaveDlg: TSaveDialog;
+  ArqINI: TStringList;
+begin
+  vAux := '1';
+  if not(InputQuery('Gerar Arquivo INI', 'Numero do Manifesto', vAux)) then
+    exit;
+
+  ACBrMDFe1.Manifestos.Clear;
+  AlimentarComponente(vAux);
+  ACBrMDFe1.Manifestos.GerarMDFe;
+
+  ArqINI := TStringList.Create;
+  SaveDlg := TSaveDialog.Create(nil);
+  try
+    ArqINI.Text := ACBrMDFe1.Manifestos.GerarIni;
+
+    SaveDlg.Title := 'Escolha o local onde salvar o INI';
+    SaveDlg.DefaultExt := '*.INI';
+    SaveDlg.Filter := 'Arquivo INI(*.INI)|*.INI|Arquivo ini(*.ini)|*.ini|Todos os arquivos(*.*)|*.*';
+
+    if SaveDlg.Execute then
+      ArqINI.SaveToFile(SaveDlg.FileName);
+
+    memoLog.Lines.Add('Arquivo Salvo: ' + SaveDlg.FileName);
+  finally
+    SaveDlg.Free;
+    ArqINI.Free;
+  end;
+end;
+
 procedure TfrmACBrMDFe.btnGerarPDFClick(Sender: TObject);
 var
   CarregarMaisXML: Boolean;
@@ -1658,6 +1696,42 @@ begin
     //  ShowMessage('ERRO: '+Erro)
 
     pgRespostas.ActivePageIndex := 0;
+  end;
+end;
+
+procedure TfrmACBrMDFe.btnLerArqINIClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o Arquivo INI';
+  OpenDialog1.DefaultExt := '*.ini';
+  OpenDialog1.Filter :=
+    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrMDFe1.Manifestos.Clear;
+    ACBrMDFe1.Manifestos.LoadFromIni(OpenDialog1.FileName);
+    ACBrMDFe1.Manifestos.Assinar;
+    ACBrMDFe1.Manifestos.GravarXML();
+
+    memoLog.Lines.Add('Arquivo gerado em: ' + ACBrMDFe1.Manifestos[0].NomeArq);
+
+    try
+      ACBrMDFe1.Manifestos.Validar;
+
+      if ACBrMDFe1.Manifestos[0].Alertas <> '' then
+        MemoDados.Lines.Add('Alertas: '+ACBrMDFe1.Manifestos[0].Alertas);
+
+      ShowMessage('Manifesto de Documentos Fiscais Eletrônicos Valido');
+    except
+      on E: Exception do
+      begin
+        pgRespostas.ActivePage := Dados;
+        MemoDados.Lines.Add('Exception: ' + E.Message);
+        MemoDados.Lines.Add('Erro: ' + ACBrMDFe1.Manifestos[0].ErroValidacao);
+        MemoDados.Lines.Add('Erro Completo: ' + ACBrMDFe1.Manifestos[0].ErroValidacaoCompleto);
+      end;
+    end;
   end;
 end;
 

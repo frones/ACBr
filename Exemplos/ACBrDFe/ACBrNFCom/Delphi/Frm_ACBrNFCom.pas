@@ -291,6 +291,7 @@ uses
   IniFiles, Printers,
   ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.XMLHTML, ACBrUtil.DateTime,
   ACBrUtil.Strings,
+//  ACBrDFeConversao,
   ACBrDFeUtil, ACBrDFeSSL, ACBrDFeOpenSSL,
   ACBrXmlBase,
   pcnConversao,
@@ -526,11 +527,10 @@ begin
           vIRRF := 0;
         end;
 
-
         // Reforma Tributária
         {
-        IBSCBS.CST := 100;
-        IBSCBS.cClassTrib := 100000;
+        IBSCBS.CST := cst000;
+        IBSCBS.cClassTrib := ct000001;
 
         IBSCBS.gIBSCBS.vBC := 100;
 
@@ -558,8 +558,8 @@ begin
         IBSCBS.gIBSCBS.gCBS.gRed.pAliqEfet := 5;
         IBSCBS.gIBSCBS.gCBS.vCBS := 50;
 
-        IBSCBS.gIBSCBS.gTribRegular.CSTReg := 100;
-        IBSCBS.gIBSCBS.gTribRegular.cClassTribReg := 100000;
+        IBSCBS.gIBSCBS.gTribRegular.CSTReg := cst000;
+        IBSCBS.gIBSCBS.gTribRegular.cClassTribReg := ct000001;
         IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegIBSUF := 5;
         IBSCBS.gIBSCBS.gTribRegular.vTribRegIBSUF := 50;
         IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegIBSMun := 5;
@@ -1118,7 +1118,7 @@ begin
   try
     ArqINI.Text := ACBrNFCom1.NotasFiscais.GerarIni;
 
-    SaveDlg.Title := 'Escolha o local onde gerar o INI';
+    SaveDlg.Title := 'Escolha o local onde salvar o INI';
     SaveDlg.DefaultExt := '*.INI';
     SaveDlg.Filter := 'Arquivo INI(*.INI)|*.INI|Arquivo ini(*.ini)|*.ini|Todos os arquivos(*.*)|*.*';
 

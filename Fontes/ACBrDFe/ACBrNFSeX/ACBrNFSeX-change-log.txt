@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/05/2025
+-- SigISSWeb.LerXml --
+[*] #TK-7072: Alteração visando ajustar o valor do ISS Retido em função de ele estar
+    retido ou não.
+   Por: Guilherme Consolação Dias
 -- ACBrNFSeXServicos --
 [+] #TK-7079: Incluída a cidade de Tocantis/MG, o provedor é Adm versão 2.01
    Por: Anderson Grolli

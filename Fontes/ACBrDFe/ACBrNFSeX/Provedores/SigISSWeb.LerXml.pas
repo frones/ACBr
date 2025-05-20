@@ -207,6 +207,10 @@ begin
 
     Servico.Valores.Aliquota := ObterConteudo(ANode.Childrens.FindAnyNs('aliq_iss'), tcDe2);
     Servico.Valores.ValorIss := ObterConteudo(ANode.Childrens.FindAnyNs('valor_iss'), tcDe2);
+    Servico.Valores.ValorIssRetido := 0;
+
+    if Servico.Valores.IssRetido = stRetencao then
+      Servico.Valores.ValorIssRetido := Servico.Valores.ValorIss;
 
     Servico.Valores.BaseCalculo := ObterConteudo(ANode.Childrens.FindAnyNs('bc_pis'), tcDe2);
     Servico.Valores.AliquotaPis := ObterConteudo(ANode.Childrens.FindAnyNs('aliq_pis'), tcDe2);

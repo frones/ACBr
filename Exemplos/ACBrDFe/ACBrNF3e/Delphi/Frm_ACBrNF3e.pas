@@ -37,7 +37,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
-  ShellAPI, XMLIntf, XMLDoc, zlib,
+  ShellAPI, XMLIntf, XMLDoc, zlib, UITypes,
   ACBrDFe, ACBrDFeReport, ACBrBase,
   ACBrPosPrinter, ACBrNF3eDANF3eClass, ACBrNF3eDANF3eESCPOS, ACBrNF3e, ACBrMail,
   ACBrNF3e.DANF3ERLClass;
@@ -330,6 +330,7 @@ uses
   IniFiles, Printers,
   ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.XMLHTML, ACBrUtil.DateTime,
   ACBrUtil.Strings,
+//  ACBrDFeConversao,
   ACBrDFeUtil, ACBrDFeSSL, ACBrDFeOpenSSL,
   ACBrXmlBase,
   pcnAuxiliar, pcnConversao,
@@ -510,8 +511,8 @@ begin
 
             // Reforma Tributária
             {
-            IBSCBS.CST := 100;
-            IBSCBS.cClassTrib := 100000;
+            IBSCBS.CST := cst000;
+            IBSCBS.cClassTrib := ct000001;
 
             IBSCBS.gIBSCBS.vBC := 100;
 
@@ -539,8 +540,8 @@ begin
             IBSCBS.gIBSCBS.gCBS.gRed.pAliqEfet := 5;
             IBSCBS.gIBSCBS.gCBS.vCBS := 50;
 
-            IBSCBS.gIBSCBS.gTribRegular.CSTReg := 100;
-            IBSCBS.gIBSCBS.gTribRegular.cClassTribReg := 100000;
+            IBSCBS.gIBSCBS.gTribRegular.CSTReg := cst000;
+            IBSCBS.gIBSCBS.gTribRegular.cClassTribReg := ct000001;
             IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegIBSUF := 5;
             IBSCBS.gIBSCBS.gTribRegular.vTribRegIBSUF := 50;
             IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegIBSMun := 5;
@@ -1109,7 +1110,7 @@ begin
   try
     ArqINI.Text := ACBrNF3e1.NotasFiscais.GerarIni;
 
-    SaveDlg.Title := 'Escolha o local onde gerar o INI';
+    SaveDlg.Title := 'Escolha o local onde salvar o INI';
     SaveDlg.DefaultExt := '*.INI';
     SaveDlg.Filter := 'Arquivo INI(*.INI)|*.INI|Arquivo ini(*.ini)|*.ini|Todos os arquivos(*.*)|*.*';
 

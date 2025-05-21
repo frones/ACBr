@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/05/2025
+-- ACBrDFe.Conversao --
+[+] Criada a unit para inicialmente concentrar os tipos e funções de conversão 
+    referente a Reforma Tributária.
+   Por: Italo Giurizzato Junior
+
 28/11/2024
 -- ACBrXmlBase --
 [*] Comentado a linha que executa o ParseText na função FiltrarTextoXML, uma vez que

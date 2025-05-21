@@ -47,6 +47,7 @@ Agradecimentos:
 |*  http://receita.economia.gov.br/orientacao/tributaria/declaracoes-e-demonstrativos/lcdpr-livro-|*caixa-digital-do-produtor-rural/leiaute-1-0-lcdpr.xlsx
 |*  http://receita.economia.gov.br/orientacao/tributaria/declaracoes-e-demonstrativos/lcdpr-livro-|*caixa-digital-do-produtor-rural/manual-de-preenchimento-do-lcdpr-1-0.docx
 |*  http://receita.economia.gov.br/orientacao/tributaria/declaracoes-e-demonstrativos/lcdpr-livro-|*caixa-digital-do-produtor-rural/manual-de-preenchimento-do-lcdpr-1-2.docx
+|*  https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/manuais/manual-lcdpr/manual-lcdpr-1-3
 |*
 |* PROPÓSITO: Registro de Alterações
 ******************************************************************************}
@@ -57,3 +58,8 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/05/2025
+-- UACBrLCDPR --
+[*] TK-7084 Ajustado o campo CAD_ITR Numeric 8, para completar com zeros a esquerda.Não estava passando no validador com 7 posições.
+    https://www.projetoacbr.com.br/forum/topic/83310-erro-de-valida%C3%A7%C3%A3o-lcdpr
+    Por: Daniel de Morais InfoCotidiano

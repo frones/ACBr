@@ -37,7 +37,7 @@ uses
   ACBrBase,
   SysUtils, Classes,
   Registro0000, Registro0010, Registro0030, Bloco0040, Bloco0050, BlocoQ,
-  Registro9999, LCDPRUtils, LCDPRBlocos, uDadosContador;
+  Registro9999, LCDPRUtils, LCDPRBlocos, uDadosContador, ACBrUtil.Base;
 
 type
   {$IFDEF RTL230_UP}
@@ -325,7 +325,7 @@ begin
             AddCampo(Format('%.3d',[(COD_IMOVEL)])) +
             AddCampo(PAIS) +
             AddCampo(MOEDA) +
-            AddCampo(IntToStr(CAD_ITR)) +
+            AddCampo(IntToStrZero(CAD_ITR,8)) +
             AddCampo(CAEPF) +
             AddCampo(INSCR_ESTADUAL) +
             AddCampo(NOME_IMOVEL) +

@@ -161,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  void onFinish() {
+  void dispose() {
     _posPrinter.finalizar();
     super.dispose();
   }

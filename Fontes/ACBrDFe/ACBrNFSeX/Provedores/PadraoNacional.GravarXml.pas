@@ -178,7 +178,7 @@ uses
   ACBrUtil.DateTime,
   ACBrUtil.Strings,
   ACBrNFSeXConsts,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrNFSeXConversao;
 
 //==============================================================================

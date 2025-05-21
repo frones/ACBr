@@ -224,7 +224,7 @@ implementation
 
 uses
   ACBrDFeUtil,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrUtil.Base,
   ACBrUtil.XMLHTML,
   ACBrUtil.DateTime,

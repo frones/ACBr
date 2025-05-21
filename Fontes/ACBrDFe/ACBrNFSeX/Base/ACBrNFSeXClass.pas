@@ -49,7 +49,7 @@ uses
   ACBrBase,
   ACBrUtil.DateTime,
   ACBrUtil.Strings,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrNFSeXConversao;
 
 type

@@ -118,7 +118,7 @@ implementation
 
 uses
   ACBrXmlBase, ACBrUtil.Base,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrNF3eConversao;
 
 { TNF3eXmlReader }

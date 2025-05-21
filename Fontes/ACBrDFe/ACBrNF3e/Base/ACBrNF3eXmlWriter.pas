@@ -208,7 +208,7 @@ uses
   ACBrNF3eConsts,
   ACBrValidador,
   ACBrDFeUtil,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrUtil.Base,
   ACBrUtil.DateTime,
   ACBrUtil.Strings;

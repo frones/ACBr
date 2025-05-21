@@ -123,7 +123,7 @@ implementation
 uses
   ACBrXmlBase,
   ACBrDFeUtil,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrNF3e,
   ACBrUtil.Base;
 

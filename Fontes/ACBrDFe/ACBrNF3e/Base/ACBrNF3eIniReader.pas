@@ -126,7 +126,7 @@ implementation
 
 uses
   ACBrXmlBase,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrNF3e,
   ACBrUtil.Base,
   ACBrUtil.Strings,

@@ -47,7 +47,7 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   pcnConversao,
   pcnConversaoNFe,
   pcnSignature, pcnProcNFe, pcnGerador,

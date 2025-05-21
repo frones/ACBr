@@ -158,7 +158,7 @@ uses
   ACBrUtil.DateTime,
   ACBrDFeUtil,
   ACBrNFe,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   pcnConversao,
   pcnConversaoNFe;
 

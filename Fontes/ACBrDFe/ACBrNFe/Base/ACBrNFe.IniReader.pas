@@ -157,7 +157,7 @@ implementation
 
 uses
   StrUtils,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrXmlBase,
   ACBrUtil.Base,
   ACBrUtil.Strings,

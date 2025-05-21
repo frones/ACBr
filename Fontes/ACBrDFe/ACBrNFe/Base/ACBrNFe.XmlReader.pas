@@ -126,7 +126,7 @@ uses
   pcnConversao,
   ACBrXmlBase,
   ACBrUtil.Base,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   pcnConversaoNFe;
 
 { TNFeXmlReader }

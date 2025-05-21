@@ -236,7 +236,7 @@ uses
   ACBrValidador,
   ACBrDFeUtil,
   ACBrDFeConsts,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrUtil.Strings, ACBrUtil.Base, ACBrUtil.DateTime,
   ACBrNFe.Consts,
   ACBrNFe;

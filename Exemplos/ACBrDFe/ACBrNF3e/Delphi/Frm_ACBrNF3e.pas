@@ -330,7 +330,7 @@ uses
   IniFiles, Printers,
   ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.XMLHTML, ACBrUtil.DateTime,
   ACBrUtil.Strings,
-//  ACBrDFeConversao,
+//  ACBrDFe.Conversao,
   ACBrDFeUtil, ACBrDFeSSL, ACBrDFeOpenSSL,
   ACBrXmlBase,
   pcnAuxiliar, pcnConversao,

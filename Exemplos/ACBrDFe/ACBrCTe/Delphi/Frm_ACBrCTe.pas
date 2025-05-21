@@ -347,7 +347,7 @@ uses
   ACBrUtil.DateTime,
   ACBrUtil.XMLHTML,
   ACBrCTe.Classes, pcnConversao, pcteConversaoCTe,
-//  ACBrDFeConversao,
+//  ACBrDFe.Conversao,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   ACBrCTeConhecimentos, ACBrCTeConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado;

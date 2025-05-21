@@ -193,7 +193,7 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
   ACBrDFeUtil,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrNFComConsts;
 
 constructor TNFComXmlWriter.Create(AOwner: TNFCom);

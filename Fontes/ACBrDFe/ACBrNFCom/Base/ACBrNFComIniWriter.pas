@@ -111,7 +111,7 @@ implementation
 uses
   ACBrXmlBase,
   ACBrDFeUtil,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrNFCom,
   ACBrUtil.Base;
 

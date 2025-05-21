@@ -148,7 +148,7 @@ implementation
 
 uses
   StrUtils,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrCTe,
   ACBrXmlBase,
   ACBrUtil.Base,

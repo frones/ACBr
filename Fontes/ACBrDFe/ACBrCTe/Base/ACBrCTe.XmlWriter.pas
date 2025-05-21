@@ -294,7 +294,7 @@ uses
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrDFeUtil,
   ACBrDFeConsts,
   ACBrCTe,

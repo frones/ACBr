@@ -149,7 +149,7 @@ implementation
 uses
   ACBrXmlBase,
   ACBrDFeUtil,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrCTe,
   ACBrUtil.Base;
 

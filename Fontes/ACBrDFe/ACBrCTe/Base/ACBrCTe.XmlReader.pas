@@ -149,7 +149,7 @@ uses
   ACBrUtil.Base, 
   pcnConversao, 
   ACBrXmlBase, 
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   pcteConversaoCTe;
 
 { TCTeXmlReader }

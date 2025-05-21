@@ -391,7 +391,7 @@ uses
   ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.DateTime, ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
   ACBrNFe.Classes,
-//  ACBrDFeConversao,
+//  ACBrDFe.Conversao,
   pcnConversao, pcnConversaoNFe,
   pcnNFeRTXT,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,

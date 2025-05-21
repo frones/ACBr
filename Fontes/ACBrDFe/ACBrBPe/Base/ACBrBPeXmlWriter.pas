@@ -184,7 +184,7 @@ uses
   Math,
   ACBrDFeConsts,
   ACBrBPeConsts,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrValidador,
   ACBrDFeUtil,
   ACBrUtil.Base,

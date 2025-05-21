@@ -47,7 +47,7 @@ uses
   {$IfEnd}
   ACBrBase,
   ACBrXmlBase,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrBPeConversao,
   ACBrDFeComum.Proc,
 //  ACBrDFeComum.SignatureClass,

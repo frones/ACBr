@@ -126,7 +126,7 @@ implementation
 
 uses
   ACBrXmlBase, ACBrUtil.Base,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrBPeConversao;
 
 { TBPeXmlReader }

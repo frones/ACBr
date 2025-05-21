@@ -110,7 +110,7 @@ implementation
 
 uses
   ACBrXmlBase,
-//  ACBrDFeConversao,
+  ACBrDFe.Conversao,
   ACBrBPe,
   ACBrUtil.Base,
   ACBrUtil.Strings,

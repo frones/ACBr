@@ -7,7 +7,7 @@
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
-        <ProjectVersion>20.2</ProjectVersion>
+        <ProjectVersion>20.3</ProjectVersion>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <ProjectName Condition="'$(ProjectName)'==''">ACBrInstall_Trunk2</ProjectName>
     </PropertyGroup>
@@ -93,13 +93,14 @@
         <Manifest_File>ACBrInstall_Trunk2.manifest</Manifest_File>
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=Projeto ACBr;FileVersion=3.1.1.1;InternalName=ACBrInstall;LegalCopyright=;LegalTrademarks=;OriginalFilename=ACBrInstall;ProductVersion=3.1;Comments=Instalador do componentes do Projeto ACBr para Delphi;ProgramID=ACBrInstall;FileDescription=ACBrInstall;ProductName=ACBrInstall</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Projeto ACBr;FileVersion=3.1.1.2;InternalName=ACBrInstall;LegalCopyright=Projeto ACBr;LegalTrademarks=Projeto ACBr;OriginalFilename=ACBrInstall;ProductVersion=3.1;Comments=Instalador do componentes do Projeto ACBr para Delphi;ProgramID=ACBrInstall;FileDescription=ACBrInstall;ProductName=ACBrInstall</VerInfo_Keys>
         <DCC_DebugInformation>0</DCC_DebugInformation>
         <VerInfo_MajorVer>3</VerInfo_MajorVer>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
-        <VerInfo_Build>1</VerInfo_Build>
+        <VerInfo_Build>2</VerInfo_Build>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Release>1</VerInfo_Release>
+        <Icon_MainIcon>$(ProjectName).Artwork\Windows\AppIcon.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
@@ -155,9 +156,8 @@
                     <Source Name="MainSource">ACBrInstall_Trunk2.dpr</Source>
                 </Source>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="C:\Users\Public\Documents\Embarcadero\Studio\22.0\Bpl\ConceitusSkinRS28.bpl">ExpressSkins - ConceitusSkin</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k280.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp280.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k290.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp290.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Platforms>
@@ -278,6 +278,16 @@
                     </Platform>
                     <Platform Name="Android64">
                         <RemoteDir>res\values-v31</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AndroidSplashStylesV35">
+                    <Platform Name="Android">
+                        <RemoteDir>res\values-v35</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="Android64">
+                        <RemoteDir>res\values-v35</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>

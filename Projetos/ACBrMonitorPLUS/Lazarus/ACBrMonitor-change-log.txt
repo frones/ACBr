@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/05/2025
+-- ACBrMonitor1 --
+[+] #TK-7062: Adiciona a versão 3.0 do QrCode na tela de configurações.
+  Por: Diego Folieni 
+
 14/05/2025
 -- DoACBrNFeUnit --
 [*] #TK-7028: Adiciona nome do arquivo no início da resposta conforme padrão para outros documentos.

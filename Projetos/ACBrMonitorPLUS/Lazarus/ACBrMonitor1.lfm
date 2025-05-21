@@ -26897,6 +26897,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       '0'
                       '1'
                       '2'
+                      '3'
                     )
                     ParentFont = False
                     TabOrder = 3

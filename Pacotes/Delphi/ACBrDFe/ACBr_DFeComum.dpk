@@ -37,6 +37,7 @@ requires
   ACBr_TCP;
 
 contains
+  ACBrDFe.Conversao in '..\..\..\Fontes\ACBrDFe\ACBrDFe.Conversao.pas',
   ACBrDFeConsts in '..\..\..\Fontes\ACBrDFe\ACBrDFeConsts.pas',
 
   ACBrXmlBase in '..\..\..\Fontes\ACBrDFe\ACBrXmlBase.pas',

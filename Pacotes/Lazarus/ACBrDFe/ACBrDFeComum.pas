@@ -14,7 +14,7 @@ uses
   ACBrDFeComum.RetConsCad, ACBrDFeComum.ConsReciDFe, ACBrDFeComum.RetConsReciDFe, 
   ACBrDFeComum.ConsStatServ, ACBrDFeComum.RetConsStatServ, ACBrDFeComum.Proc,
   ACBrDFeComum.DistDFeInt, ACBrDFeComum.RetDistDFeInt, ACBrDFeComum.SignatureClass,
-  ACBrDFeComum.RetEnvio;
+  ACBrDFeComum.RetEnvio, ACBrDFe.Conversao;
 
 implementation
 

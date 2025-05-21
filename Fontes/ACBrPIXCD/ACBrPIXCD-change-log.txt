@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/05/2025
+-- ACBrSchemaMatera --
+[*] #TK-6962: Corrige conversão do tipo mdtUnknown em StringToMateraDocumentType.
+   Por: theiler
+
 13/05/2025
 -- ACBrPixPSPBradesco --
 [-] Ajuste para alterar o ResultCode para o esperado conforme padrão Bacen

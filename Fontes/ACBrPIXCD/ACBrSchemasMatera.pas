@@ -3520,7 +3520,7 @@ begin
     Result := mdtLifeProof
   else if (s = 'BIOMETRY') then
     Result := mdtBiometry
-  else if (s = 'UNKNOW') then
+  else if (s = 'UNKNOWN') then
     Result := mdtUnknown
   else
     Result := mdtNone;

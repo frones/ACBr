@@ -110,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  void finish() {
+  void dispose() {
     super.dispose();
   }
 }

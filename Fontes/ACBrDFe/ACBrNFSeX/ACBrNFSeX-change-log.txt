@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/05/2025
+-- PublicSoft.GravarXml/PublicSoft.Provider --
+[*] Alteração visando atender a nova API do provedor.
+  Por: Mariana Beza Madeira/Italo Giurizzato Junior
 -- Diversos --
 [*] Alteração visando usar a unit ACBrDFe.Conversao que contem os tipos e funções
     da Reforma Tributária.

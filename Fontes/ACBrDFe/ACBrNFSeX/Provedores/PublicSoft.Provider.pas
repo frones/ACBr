@@ -44,12 +44,13 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebservicePublicSoft203 = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebservicePublicSoft203 = class(TACBrNFSeXWebserviceRest)
   private
     FSetHeaderTokenPrefeitura: Boolean;
 
   protected
-    function GerarXmlHeader: string;
+    procedure SetHeaders(aHeaderReq: THTTPHeader); override;
+//    function GerarXmlHeader: string;
   public
     function Recepcionar(const ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
@@ -66,6 +67,8 @@ type
   end;
 
   TACBrNFSeProviderPublicSoft203 = class (TACBrNFSeProviderABRASFv2)
+  private
+    FpPath: string;
   protected
     procedure Configuracao; override;
 
@@ -73,20 +76,29 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
+    procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
+      Params: TNFSeParamsResponse); override;
+
+    procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
+    procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
+    procedure PrepararConsultaNFSeServicoPrestado(Response: TNFSeConsultaNFSeResponse); override;
+    procedure PrepararConsultaNFSeServicoTomado(Response: TNFSeConsultaNFSeResponse); override;
+    procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
+    procedure PrepararSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse); override;
+
     procedure PrepararGerarToken(Response: TNFSeGerarTokenResponse); override;
     procedure TratarRetornoGerarToken(Response: TNFSeGerarTokenResponse); override;
 
     procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
   end;
 
-var
-  xToken: string;
-
 implementation
 
 uses
   ACBrDFeException,
   ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.FilesIO,
+  ACBrNFSeX,
   ACBrNFSeXConfiguracoes,
   PublicSoft.GravarXml, PublicSoft.LerXml;
 
@@ -111,6 +123,7 @@ begin
     SubstituirNFSe    := True;
   end;
 
+  ConfigSchemas.Validar := False;
   (*
   with ConfigGeral do
   begin
@@ -154,7 +167,11 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebservicePublicSoft203.Create(FAOwner, AMetodo, URL)
+  begin
+    URL := URL + FpPath;
+    Result := TACBrNFSeXWebservicePublicSoft203.Create(FAOwner, AMetodo, URL,
+      'POST', 'application/xml');
+  end
   else
   begin
     if ConfigGeral.Ambiente = taProducao then
@@ -164,12 +181,126 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProviderPublicSoft203.PrepararEmitir(
+  Response: TNFSeEmiteResponse);
+begin
+  inherited PrepararEmitir(Response);
+
+  case Response.ModoEnvio of
+    meLoteSincrono:
+      FpPath := '/api/enviar-lote-rps-sincrono-envio';
+
+    meUnitario:
+      FpPath := '/api/gerar-nfse-envio';
+  else
+    FpPath := '/api/enviar-lote-rps-envio';
+  end;
+end;
+
+procedure TACBrNFSeProviderPublicSoft203.GerarMsgDadosEmitir(
+  Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+  Prestador: string;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  with Params do
+  begin
+    if Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono, meTeste] then
+    begin
+      if ConfigMsgDados.GerarPrestadorLoteRps then
+      begin
+        Prestador := '<' + Prefixo2 + 'Prestador>' +
+                       '<' + Prefixo2 + 'CpfCnpj>' +
+                         GetCpfCnpj(Emitente.CNPJ, Prefixo2) +
+                       '</' + Prefixo2 + 'CpfCnpj>' +
+                       GetInscMunic(Emitente.InscMun, Prefixo2) +
+                     '</' + Prefixo2 + 'Prestador>'
+      end
+      else
+        Prestador := '<' + Prefixo2 + 'CpfCnpj>' +
+                       GetCpfCnpj(Emitente.CNPJ, Prefixo2) +
+                     '</' + Prefixo2 + 'CpfCnpj>' +
+                     GetInscMunic(Emitente.InscMun, Prefixo2);
+
+      Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + ' ' + NameSpace + '>' +
+                             '<' + Prefixo + 'LoteRps' + Versao + '>' +
+                               '<' + Prefixo2 + 'NumeroLote>' +
+                                  Response.NumeroLote +
+                               '</' + Prefixo2 + 'NumeroLote>' +
+                               Prestador +
+                               '<' + Prefixo2 + 'QuantidadeRps>' +
+                                  IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
+                               '</' + Prefixo2 + 'QuantidadeRps>' +
+                               '<' + Prefixo2 + 'ListaRps>' +
+                                  Xml +
+                               '</' + Prefixo2 + 'ListaRps>' +
+                             '</' + Prefixo + 'LoteRps>' +
+                           '</' + Prefixo + TagEnvio + '>';
+    end
+    else
+      Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + '>' +
+                              Xml +
+                           '</' + Prefixo + TagEnvio + '>';
+  end;
+end;
+
+procedure TACBrNFSeProviderPublicSoft203.PrepararConsultaLoteRps(
+  Response: TNFSeConsultaLoteRpsResponse);
+begin
+  inherited PrepararConsultaLoteRps(Response);
+
+  FpPath := '/api/consultar-lote-rps-envio';
+end;
+
+procedure TACBrNFSeProviderPublicSoft203.PrepararConsultaNFSeporRps(
+  Response: TNFSeConsultaNFSeporRpsResponse);
+begin
+  inherited PrepararConsultaNFSeporRps(Response);
+
+  FpPath := '/api/consultar-nfse-rps-envio';
+end;
+
+procedure TACBrNFSeProviderPublicSoft203.PrepararConsultaNFSeServicoPrestado(
+  Response: TNFSeConsultaNFSeResponse);
+begin
+  inherited PrepararConsultaNFSeServicoPrestado(Response);
+
+  FpPath := '/api/consultar-nfse-servico-prestado-envio';
+end;
+
+procedure TACBrNFSeProviderPublicSoft203.PrepararConsultaNFSeServicoTomado(
+  Response: TNFSeConsultaNFSeResponse);
+begin
+  inherited PrepararConsultaNFSeServicoTomado(Response);
+
+  FpPath := '/api/consultar-nfse-servico-tomado-envio';
+end;
+
+procedure TACBrNFSeProviderPublicSoft203.PrepararCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse);
+begin
+  inherited PrepararCancelaNFSe(Response);
+
+  FpPath := '/api/cancelar-nfse-envio';
+end;
+
+procedure TACBrNFSeProviderPublicSoft203.PrepararSubstituiNFSe(
+  Response: TNFSeSubstituiNFSeResponse);
+begin
+  inherited PrepararSubstituiNFSe(Response);
+
+  FpPath := '/api/substituir-nfse-envio';
+end;
+
 procedure TACBrNFSeProviderPublicSoft203.PrepararGerarToken(
   Response: TNFSeGerarTokenResponse);
 begin
   Response.Clear;
 
   Response.ArquivoEnvio := '';
+  FpPath := '/api/gerar-token';
 end;
 
 procedure TACBrNFSeProviderPublicSoft203.TratarRetornoGerarToken(
@@ -178,10 +309,11 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
+  xRetorno: string;
 begin
-  xToken := SeparaDados(Response.ArquivoRetorno, 'Mensagem');
+  xRetorno := SeparaDados(Response.ArquivoRetorno, 'Mensagem');
 
-  if Pos('Bearer', xToken) = 0 then
+  if Pos('erro', xRetorno) > 0 then
   begin
     Document := TACBrXmlDocument.Create;
 
@@ -215,7 +347,7 @@ begin
     end;
   end
   else
-    Response.Token := xToken;
+    Response.Token := xRetorno;
 end;
 
 procedure TACBrNFSeProviderPublicSoft203.ValidarSchema(
@@ -229,6 +361,7 @@ end;
 
 { TACBrNFSeXWebservicePublicSoft203 }
 
+{
 function TACBrNFSeXWebservicePublicSoft203.GerarXmlHeader: string;
 var
   Producao: Boolean;
@@ -239,7 +372,7 @@ begin
   if FSetHeaderTokenPrefeitura then
     aToken := TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSChaveAcesso
   else
-    aToken := xToken;
+    aToken := TACBrNFSeX(FPDFeOwner).WebService.GerarToken.Token;
 
   aCodigo := TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSSenha;
 
@@ -251,34 +384,46 @@ begin
               aCodigo +
             '</codigoCidade>';
 end;
+}
+procedure TACBrNFSeXWebservicePublicSoft203.SetHeaders(aHeaderReq: THTTPHeader);
+var
+  aToken: string;
+begin
+  if FSetHeaderTokenPrefeitura then
+    aToken := TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSChaveAcesso
+  else
+    aToken := TACBrNFSeX(FPDFeOwner).WebService.GerarToken.Token;
+
+  aHeaderReq.AddHeader('codigoCidade',
+                    TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSSenha);
+
+  aHeaderReq.AddHeader('token', aToken);
+
+  if (TConfiguracoesNFSe(FPConfiguracoes).WebServices.AmbienteCodigo = 1) then
+    aHeaderReq.AddHeader('producao', 'true');
+end;
 
 function TACBrNFSeXWebservicePublicSoft203.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
-  Request, xHeader: string;
+  Request: string;
 begin
   FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
-  xHeader := GerarXmlHeader;
 
-  Request := '<urn:EnviarLoteRpsEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
-  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
-  Request := Request + '</urn:EnviarLoteRpsEnvio>';
+  Request := '<?xml version="1.0" encoding="UTF-8"?>' + AMSG;
 
-  Result := Executar('urn:index.EnviarLoteRpsEnvio#EnviarLoteRpsEnvio', Request,
-                     xHeader,
-                     ['return', 'EnviarLoteRpsResposta'],
-                     ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
-                      'xmlns:urn="urn:index.EnviarLoteRpsEnvio"']);
+  Result := Executar('', Request, [], []);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
-var
-  Request, xHeader: string;
+//var
+//  Request, xHeader: string;
 begin
   FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  {
   xHeader := GerarXmlHeader;
 
   Request := '<urn:EnviarLoteRpsSincronoEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
@@ -290,15 +435,19 @@ begin
                      ['return', 'EnviarLoteRpsResposta'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
                       'xmlns:urn="urn:index.EnviarLoteRpsSincronoEnvio"']);
+  }
+
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.GerarNFSe(const ACabecalho,
   AMSG: String): string;
-var
-  Request, xHeader: string;
+//var
+//  Request, xHeader: string;
 begin
   FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  {
   xHeader := GerarXmlHeader;
 
   Request := '<urn:GerarNfseEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
@@ -310,15 +459,19 @@ begin
                      ['return', 'EnviarLoteRpsResposta'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
                       'xmlns:urn="urn:index.GerarNfseEnvio"']);
+  }
+
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.ConsultarLote(const ACabecalho,
   AMSG: String): string;
-var
-  Request, xHeader: string;
+//var
+//  Request, xHeader: string;
 begin
   FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  {
   xHeader := GerarXmlHeader;
 
   Request := '<urn:ConsultarLoteRpsEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
@@ -330,15 +483,19 @@ begin
                      ['return', 'ConsultarLoteRpsResposta'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
                       'xmlns:urn="urn:index.ConsultarLoteRpsEnvio"']);
+  }
+
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
-var
-  Request, xHeader: string;
+//var
+//  Request, xHeader: string;
 begin
   FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  {
   xHeader := GerarXmlHeader;
 
   Request := '<urn:ConsultarNfseRpsEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
@@ -350,15 +507,19 @@ begin
                      ['return', 'ConsultarNfseRpsResposta'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
                       'xmlns:urn="urn:index.ConsultarNfseRpsEnvio"']);
+  }
+
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.ConsultarNFSeServicoPrestado(const ACabecalho,
   AMSG: String): string;
-var
-  Request, xHeader: string;
+//var
+//  Request, xHeader: string;
 begin
   FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  {
   xHeader := GerarXmlHeader;
 
   Request := '<urn:ConsultarNfseServicoPrestadoEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
@@ -370,15 +531,19 @@ begin
                      ['return', 'ConsultarNfseServicoPrestadoResposta'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
                       'xmlns:urn="urn:index.ConsultarNfseServicoPrestadoEnvio"']);
+  }
+
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.ConsultarNFSeServicoTomado(const ACabecalho,
   AMSG: String): string;
-var
-  Request, xHeader: string;
+//var
+//  Request, xHeader: string;
 begin
   FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  {
   xHeader := GerarXmlHeader;
 
   Request := '<urn:ConsultarNfseServicoTomadoEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
@@ -390,14 +555,18 @@ begin
                      ['return', 'ConsultarNfseServicoTomadoResposta'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
                       'xmlns:urn="urn:index.ConsultarNfseServicoTomadoEnvio"']);
+  }
+
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.Cancelar(const ACabecalho, AMSG: String): string;
-var
-  Request, xHeader: string;
+//var
+//  Request, xHeader: string;
 begin
   FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  {
   xHeader := GerarXmlHeader;
 
   Request := '<urn:CancelarNfseEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
@@ -409,15 +578,19 @@ begin
                      ['return', 'CancelarNfseResposta'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
                       'xmlns:urn="urn:index.CancelarNfseEnvio"']);
+  }
+
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
-var
-  Request, xHeader: string;
+//var
+//  Request, xHeader: string;
 begin
   FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  {
   xHeader := GerarXmlHeader;
 
   Request := '<urn:SubstituirNfseEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
@@ -429,24 +602,18 @@ begin
                      ['return', 'SubstituirNfseResposta'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
                       'xmlns:urn="urn:index.SubstituirNfseEnvio"']);
+  }
+
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.GerarToken(const ACabecalho,
   AMSG: String): string;
-var
-  Request, xHeader: string;
 begin
   FSetHeaderTokenPrefeitura := True;
   FPMsgOrig := AMSG;
-  xHeader := GerarXmlHeader;
 
-  Request := '<urn:GerarToken soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
-  Request := Request + '</urn:GerarToken>';
-
-  Result := Executar('urn:index.GerarToken#GerarToken',  Request, xHeader,
-                     ['return', 'EnviarLoteRpsResposta'],
-                     ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
-                      'xmlns:urn="urn:index.GerarToken"']);
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.TratarXmlRetornado(

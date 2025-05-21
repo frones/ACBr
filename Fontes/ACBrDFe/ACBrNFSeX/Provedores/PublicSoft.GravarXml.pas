@@ -46,6 +46,7 @@ type
   TNFSeW_PublicSoft203 = class(TNFSeW_ABRASFv2)
   protected
 
+    procedure Configuracao; override;
   end;
 
 implementation
@@ -55,5 +56,14 @@ implementation
 //     PublicSoft
 //==============================================================================
 
+
+{ TNFSeW_PublicSoft203 }
+
+procedure TNFSeW_PublicSoft203.Configuracao;
+begin
+  inherited Configuracao;
+
+  NrOcorrID := 1;
+end;
 
 end.

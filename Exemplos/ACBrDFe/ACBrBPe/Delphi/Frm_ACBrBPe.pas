@@ -340,7 +340,7 @@ uses
   ACBrUtil.XMLHTML,
   pcnConversao,
   ACBrXmlBase,
-//  ACBrDFeConversao,
+//  ACBrDFe.Conversao,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   ACBrBPeClass,
   ACBrBPeConversao, ACBrDFeComum.ConsReciDFe,

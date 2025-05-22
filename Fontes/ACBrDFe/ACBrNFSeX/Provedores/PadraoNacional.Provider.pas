@@ -137,6 +137,8 @@ begin
     ServicosDisponibilizados.ConsultarEvento := True;
     ServicosDisponibilizados.ConsultarDFe := True;
     ServicosDisponibilizados.ConsultarParam := True;
+
+    Particularidades.AtendeReformaTributaria := True;
   end;
 
   with ConfigWebServices do

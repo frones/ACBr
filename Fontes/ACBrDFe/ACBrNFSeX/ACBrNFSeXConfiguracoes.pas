@@ -180,9 +180,11 @@ type
   private
     FPermiteMaisDeUmServico: Boolean;
     FPermiteTagOutrasInformacoes: Boolean;
+    FAtendeReformaTributaria: Boolean;
   public
     property PermiteMaisDeUmServico: Boolean read FPermiteMaisDeUmServico write FPermiteMaisDeUmServico;
     property PermiteTagOutrasInformacoes: Boolean read FPermiteTagOutrasInformacoes write FPermiteTagOutrasInformacoes;
+    property AtendeReformaTributaria: Boolean read FAtendeReformaTributaria write FAtendeReformaTributaria;
   end;
 
   { TGeralConfNFSe }

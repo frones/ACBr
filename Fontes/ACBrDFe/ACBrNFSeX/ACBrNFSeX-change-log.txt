@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/05/2025
+-- ACBrNFSeX/ACBrNFSeXConfiguracoes/ACBrNFSeXParametros/ACBrNFSeXProviderBase --
+-- PadraoNacional.Provider --
+[+] Implementado o parâmetro AtendeReformaTributaria na classe Particularidades
+    para indicar se o provedor atende a reforma tributária ou não.
+  Por: Italo Giurizzato Junior
+
 21/05/2025
 -- PublicSoft.GravarXml/PublicSoft.Provider --
 [*] Alteração visando atender a nova API do provedor.

@@ -675,6 +675,7 @@ begin
 
     Particularidades.PermiteMaisDeUmServico := False;
     Particularidades.PermiteTagOutrasInformacoes := False;
+    Particularidades.AtendeReformaTributaria := False;
 
     Provedor := TACBrNFSeX(FAOwner).Configuracoes.Geral.Provedor;
     Versao := TACBrNFSeX(FAOwner).Configuracoes.Geral.Versao;

@@ -361,6 +361,7 @@ begin
 
   Configuracoes.Geral.Particularidades.PermiteTagOutrasInformacoes := FProvider.ConfigGeral.Particularidades.PermiteTagOutrasInformacoes;
   Configuracoes.Geral.Particularidades.PermiteMaisDeUmServico := FProvider.ConfigGeral.Particularidades.PermiteMaisDeUmServico;
+  Configuracoes.Geral.Particularidades.AtendeReformaTributaria := FProvider.ConfigGeral.Particularidades.AtendeReformaTributaria;
 end;
 
 function TACBrNFSeX.GetNomeModeloDFe: String;

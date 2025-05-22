@@ -1633,7 +1633,7 @@ object frmACBrNFe: TfrmACBrNFe
     TabOrder = 1
     object pgcBotoes: TPageControl
       Left = 1
-      Top = 1
+      Top = 41
       Width = 567
       Height = 197
       ActivePage = tsEnvios
@@ -2044,9 +2044,9 @@ object frmACBrNFe: TfrmACBrNFe
     end
     object pgRespostas: TPageControl
       Left = 1
-      Top = 198
+      Top = 238
       Width = 567
-      Height = 413
+      Height = 373
       ActivePage = Dados
       Align = alClient
       TabOrder = 1
@@ -2056,7 +2056,7 @@ object frmACBrNFe: TfrmACBrNFe
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 345
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -2069,11 +2069,11 @@ object frmACBrNFe: TfrmACBrNFe
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 345
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000C6390000CA2700000000000000000000000000000000000000000000
+            4C000000C6390000A82300000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -2087,7 +2087,7 @@ object frmACBrNFe: TfrmACBrNFe
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 345
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -2100,7 +2100,7 @@ object frmACBrNFe: TfrmACBrNFe
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 345
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -2113,7 +2113,7 @@ object frmACBrNFe: TfrmACBrNFe
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 345
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -2126,7 +2126,7 @@ object frmACBrNFe: TfrmACBrNFe
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 345
           Align = alClient
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2141,6 +2141,26 @@ object frmACBrNFe: TfrmACBrNFe
           WordWrap = False
         end
       end
+    end
+    object rgReformaTributaria: TRadioGroup
+      Left = 1
+      Top = 1
+      Width = 567
+      Height = 40
+      Align = alTop
+      Caption = 'Gera os campos da ReformaTributaria'
+      Columns = 2
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ItemIndex = 1
+      Items.Strings = (
+        'Sim'
+        'N'#227'o')
+      ParentFont = False
+      TabOrder = 2
     end
   end
   object ACBrNFe1: TACBrNFe
@@ -2165,7 +2185,7 @@ object frmACBrNFe: TfrmACBrNFe
     Configuracoes.RespTec.IdCSRT = 0
     DANFE = ACBrNFeDANFeRL1
     Left = 330
-    Top = 239
+    Top = 279
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -2193,7 +2213,7 @@ object frmACBrNFe: TfrmACBrNFe
     ExibeResumoCanhoto = False
     ExibeCampoFatura = False
     Left = 427
-    Top = 239
+    Top = 279
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -2223,7 +2243,7 @@ object frmACBrNFe: TfrmACBrNFe
     FonteLinhaItem.Name = 'Lucida Console'
     FonteLinhaItem.Style = []
     Left = 562
-    Top = 239
+    Top = 279
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -2248,7 +2268,7 @@ object frmACBrNFe: TfrmACBrNFe
     FormularioContinuo = True
     PosPrinter = ACBrPosPrinter1
     Left = 561
-    Top = 295
+    Top = 335
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscPosEpson
@@ -2263,7 +2283,7 @@ object frmACBrNFe: TfrmACBrNFe
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 5
     Left = 425
-    Top = 295
+    Top = 335
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -2274,7 +2294,7 @@ object frmACBrNFe: TfrmACBrNFe
     DefaultCharset = UTF_8
     IDECharset = CP1252
     Left = 330
-    Top = 295
+    Top = 335
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '*-nfe.XML'
@@ -2283,7 +2303,7 @@ object frmACBrNFe: TfrmACBrNFe
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
     Left = 427
-    Top = 351
+    Top = 391
   end
   object ACBrNFeDANFCeFortesA41: TACBrNFeDANFCeFortesA4
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -2306,6 +2326,6 @@ object frmACBrNFe: TfrmACBrNFe
     CasasDecimais.MaskAliquota = ',0.00'
     FormularioContinuo = True
     Left = 560
-    Top = 352
+    Top = 392
   end
 end

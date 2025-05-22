@@ -93,6 +93,11 @@ class _MyHomePageState extends State<MyHomePage> {
     setResultPeso(0.0);
   }
 
+ //Metodo exemplo para aplicar configurações
+  void onClickConfigurar () async {
+    await acbrbalplugin.configGravarValor("Principal", "LogNivel", "4");
+    await acbrbalplugin.configGravar();
+  }
   @override
   Widget build(BuildContext context) {
     inicializar();
@@ -125,6 +130,8 @@ class _MyHomePageState extends State<MyHomePage> {
               text: _ativado ? 'Desativar' : 'Ativar',
               onPressed: toggleAtivado,
             ),
+
+            CustomButton(text: "Configurar", onPressed: onClickConfigurar)
           ],
         ),
       ),

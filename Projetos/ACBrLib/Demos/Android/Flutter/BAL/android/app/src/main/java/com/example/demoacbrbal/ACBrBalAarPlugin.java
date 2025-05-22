@@ -3,8 +3,10 @@ package com.example.demoacbrbal;
 import androidx.annotation.NonNull;
 
 import java.io.File;
+
 import android.content.Context;
 import android.util.Log;
+
 import br.com.acbr.lib.bal.ACBrLibBAL;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
@@ -34,7 +36,7 @@ public class ACBrBalAarPlugin implements FlutterPlugin, MethodChannel.MethodCall
             acbrBal.finalizar();
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             channel.setMethodCallHandler(null);
         }
     }
@@ -78,6 +80,11 @@ public class ACBrBalAarPlugin implements FlutterPlugin, MethodChannel.MethodCall
             case "configGravar":
                 handleConfigGravar(result);
                 break;
+
+            case "configGravarValor":
+                handleConfigGravarValor(call, result);
+                break;
+
             case "configLerValor":
                 handleConfigLerValor(call, result);
                 break;
@@ -207,18 +214,18 @@ public class ACBrBalAarPlugin implements FlutterPlugin, MethodChannel.MethodCall
         }
     }
 
+    private void handleConfigGravarValor(MethodCall call, MethodChannel.Result result) {
+        try {
+            int status =  acbrBal.configGravarValor(call.argument("sessao"), call.argument("chave"), call.argument("valor"));
+            result.success(status);
+        } catch (Exception e) {
+            result.error("Erro ao gravar valor de configuração", e.getMessage(), e);
+        }
+    }
+
 
     private void aplicaConfiguracoesPadrao() throws Exception {
         acbrBal.configGravarValor("Principal", "LogPath", appDir.getAbsolutePath());
-        acbrBal.configGravarValor("BAL", "Modelo", "2");
-        acbrBal.configGravarValor("BAL", "Porta", "/dev/ttyUSER0");
-        acbrBal.configGravarValor("BAL_Device", "Baud", "9600");
-        acbrBal.configGravarValor("BAL_Device", "Data", "8");
-        acbrBal.configGravarValor("BAL_Device", "Parity", "0");
-        acbrBal.configGravarValor("BAL_Device", "Stop", "0");
-        acbrBal.configGravarValor("BAL_Device", "HandShake", "0");
-        acbrBal.configGravarValor("BAL_Device", "SoftFlow", "1");
-        acbrBal.configGravarValor("BAL_Device", "HardFlow", "1");
         acbrBal.configGravar();
     }
 

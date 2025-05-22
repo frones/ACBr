@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/05/2025
+-- PagFor.Sicoob.GravarTxtRemessa --
+[*] TK-7090: Alteração visando gerar o numero do convênio com zeros a esquerda.
+  Por: Vinício Rocha
+
 17/04/2025
 -- PagFor.Itau.GravarTxtRemessa --
 [*] TK-6926: Comentado as linhas que incrementam o numero sequencial do registro

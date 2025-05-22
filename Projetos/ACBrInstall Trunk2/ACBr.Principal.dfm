@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = edtDirDestino
+  ActiveControl = Panel1
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Assistente de Instala'#231#227'o de Componente Projeto ACBr - Delphi'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 740
     Height = 630
-    ActivePage = wizPgConfiguracao
+    ActivePage = wizPgInicio
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -12916,10 +12916,8 @@ object frmPrincipal: TfrmPrincipal
           Height = 17
           Hint = '*Recomendado Desabilita o usa da DLL XMLSec'
           Caption = 'N'#227'o utilizar XMLSec'
-          Checked = True
           ParentShowHint = False
           ShowHint = True
-          State = cbChecked
           TabOrder = 1
         end
         object ckbCargaDllTardia: TCheckBox
@@ -12937,7 +12935,7 @@ object frmPrincipal: TfrmPrincipal
         end
         object ckbRemoverCastWarnings: TCheckBox
           Left = 6
-          Top = 58
+          Top = 79
           Width = 379
           Height = 17
           Hint = 
@@ -12948,28 +12946,28 @@ object frmPrincipal: TfrmPrincipal
             'ng'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 4
+          TabOrder = 6
         end
         object ckbNaoUtilizarMsXML: TCheckBox
           Left = 6
-          Top = 81
+          Top = 58
           Width = 227
           Height = 17
           Hint = '*Recomendado'
           Caption = 'N'#227'o utilizar MsXML (Recomendado)'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 5
+          TabOrder = 4
         end
         object ckbUsarACBrXmlDocument: TCheckBox
           Left = 302
-          Top = 81
+          Top = 58
           Width = 227
           Height = 17
-          Caption = 'Usar ACBrXmlDocument (Em Teste)'
+          Caption = 'Usar ACBrXmlDocument'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 6
+          TabOrder = 5
         end
       end
       object grpInstalacao: TGroupBox
@@ -12983,7 +12981,7 @@ object frmPrincipal: TfrmPrincipal
           Left = 279
           Top = 16
           Width = 257
-          Height = 25
+          Height = 26
           Caption = 'BETA: A suite ACBr n'#227'o est'#225' 100% compativel com o C++ Builder.'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -13153,27 +13151,173 @@ object frmPrincipal: TfrmPrincipal
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
-        ExplicitWidth = 574
-        ExplicitHeight = 517
         inherited pnlBotoesMarcar: TPanel
           Top = 476
           Width = 574
-          ExplicitTop = 476
-          ExplicitWidth = 574
+          StyleElements = [seFont, seClient, seBorder]
           inherited btnPacotesDesmarcarTodos: TSpeedButton
             Left = 524
-            ExplicitLeft = 524
           end
           inherited btnPacotesMarcarTodos: TSpeedButton
             Left = 474
-            ExplicitLeft = 474
           end
         end
         inherited ScrollBox1: TScrollBox
           Width = 568
           Height = 470
-          ExplicitWidth = 568
-          ExplicitHeight = 470
+          inherited Label1: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label2: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label3: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label4: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label8: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label9: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label5: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label6: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label7: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label10: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label11: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label12: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label13: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label14: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label15: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label16: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label17: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label18: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label19: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label20: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label21: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label22: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label23: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label24: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label25: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label26: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label27: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label28: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited lbl1: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited lbl2: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited lbl3: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label29: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited lblacb: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited lblSubTituloFPDF: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited lblFPDF_BoletoDPK: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label30: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label31: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label32: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited lblNFCom: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label33: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label34: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label35: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label36: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label37: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label38: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label39: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label40: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label41: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label42: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label43: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label44: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
         end
       end
     end
@@ -13606,7 +13750,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 65
+        FrameIndex = 85
         Image.Data = {
           9A470500474946383961F401F401E64100FFCC80FFB2403FCF10F3FCF0D9F6D0
           59D5307FDF60B3ECA04CD2208CE27099E680E6F9E066D940CCF3C0BFEFB0A6E9
@@ -24637,7 +24781,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 1
+        FrameIndex = 3
         Image.Data = {
           E02E00004749463839613F012800F70300CECFD1A3A8AD727882FFFFFFE9EBEB
           414C5C8C9099D8D8DAB9BBC0E0E2E3535C6AC4C5C8636A76AFB1B7989CA38084
@@ -25032,7 +25176,7 @@ object frmPrincipal: TfrmPrincipal
       object imgLogomarca: TImage
         Left = 0
         Top = 0
-        Width = 128
+        Width = 114
         Height = 114
         Align = alClient
         AutoSize = True

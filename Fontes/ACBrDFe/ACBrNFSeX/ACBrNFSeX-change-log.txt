@@ -43,6 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/05/2025
+-- ACBrNFSeXServicos --
+[*] #TK-7081: A cidade de Julio de Castilhos/RS mudou a URL, o provedor continua
+    o mesmo.
+   Por: C4Dev
+[*] #TK-7085: A cidade de Alfredo Chaves/ES mudou a URL e versão, o provedor continua
+    o mesmo.
+   Por: claudney.dbmgroup
+[*] #TK-7089: Incluído o parâmetro NaoDividir100 para a cidade de Guaxupe/MG.
+   Por: Milton Campanhã
+[*] #TK-7091: A cidade de Saudades/SC mudou de provedor, agora é IPM versão 2.04
+   Por: santacat
 -- ACBrNFSeX/ACBrNFSeXConfiguracoes/ACBrNFSeXParametros/ACBrNFSeXProviderBase --
 -- PadraoNacional.Provider --
 [+] Implementado o parâmetro AtendeReformaTributaria na classe Particularidades

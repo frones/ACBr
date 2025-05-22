@@ -1715,9 +1715,9 @@ object frmACBrNFSe: TfrmACBrNFSe
     TabOrder = 1
     object pgRespostas: TPageControl
       Left = 1
-      Top = 164
+      Top = 204
       Width = 567
-      Height = 447
+      Height = 407
       ActivePage = TabSheet8
       Align = alClient
       TabOrder = 0
@@ -1728,7 +1728,7 @@ object frmACBrNFSe: TfrmACBrNFSe
           Left = 0
           Top = 0
           Width = 559
-          Height = 419
+          Height = 379
           Align = alClient
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1747,11 +1747,11 @@ object frmACBrNFSe: TfrmACBrNFSe
           Left = 0
           Top = 0
           Width = 559
-          Height = 419
+          Height = 379
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000C63900004E2B00000000000000000000000000000000000000000000
+            4C000000C63900002C2700000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1765,11 +1765,11 @@ object frmACBrNFSe: TfrmACBrNFSe
           Left = 0
           Top = 0
           Width = 559
-          Height = 419
+          Height = 379
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000C63900004E2B00000000000000000000000000000000000000000000
+            4C000000C63900002C2700000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1782,11 +1782,11 @@ object frmACBrNFSe: TfrmACBrNFSe
           Left = 0
           Top = 0
           Width = 559
-          Height = 419
+          Height = 379
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000C63900004E2B00000000000000000000000000000000000000000000
+            4C000000C63900002C2700000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1796,7 +1796,7 @@ object frmACBrNFSe: TfrmACBrNFSe
     end
     object pgcProvedores: TPageControl
       Left = 1
-      Top = 1
+      Top = 41
       Width = 567
       Height = 163
       ActivePage = tsDemais
@@ -2419,6 +2419,26 @@ object frmACBrNFSe: TfrmACBrNFSe
         end
       end
     end
+    object rgReformaTributaria: TRadioGroup
+      Left = 1
+      Top = 1
+      Width = 567
+      Height = 40
+      Align = alTop
+      Caption = 'Gera os campos da ReformaTributaria (somente Padr'#227'o Nacional)'
+      Columns = 2
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ItemIndex = 1
+      Items.Strings = (
+        'Sim'
+        'N'#227'o')
+      ParentFont = False
+      TabOrder = 2
+    end
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '*-nfe.XML'
@@ -2426,8 +2446,8 @@ object frmACBrNFSe: TfrmACBrNFSe
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 336
-    Top = 208
+    Left = 352
+    Top = 248
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -2437,8 +2457,8 @@ object frmACBrNFSe: TfrmACBrNFSe
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    Left = 336
-    Top = 320
+    Left = 352
+    Top = 360
   end
   object ACBrNFSeX1: TACBrNFSeX
     MAIL = ACBrMail1
@@ -2459,8 +2479,8 @@ object frmACBrNFSe: TfrmACBrNFSe
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     DANFSE = ACBrNFSeXDANFSeRL1
-    Left = 334
-    Top = 265
+    Left = 350
+    Top = 305
   end
   object ACBrNFSeXDANFSeRL1: TACBrNFSeXDANFSeRL
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -2487,7 +2507,7 @@ object frmACBrNFSe: TfrmACBrNFSe
     FormatarNumeroDocumentoNFSe = True
     Provedor = proNenhum
     Producao = snSim
-    Left = 470
-    Top = 265
+    Left = 486
+    Top = 305
   end
 end

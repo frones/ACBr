@@ -97,7 +97,9 @@
     <Compile Include="..\Shared\NotaFiscal\ICMSUFDESTNFe.cs" Link="NotaFiscal\ICMSUFDESTNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\IdentificacaoNFe.cs" Link="NotaFiscal\IdentificacaoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\IIProdutoNFe.cs" Link="NotaFiscal\IIProdutoNFe.cs" />
-    <Compile Include="..\Shared\NotaFiscal\ImpostoDevolNFe.cs" Link="NotaFiscal\ImpostoDevolNFe.cs" />
+	<Compile Include="..\Shared\NotaFiscal\ISProdutoNFe.cs" Link="NotaFiscal\ISProdutoNFe.cs" />
+	<Compile Include="..\Shared\NotaFiscal\IBSCBSProdutoNFe.cs" Link="NotaFiscal\IBSCBSProdutoNFe.cs" />
+	<Compile Include="..\Shared\NotaFiscal\ImpostoDevolNFe.cs" Link="NotaFiscal\ImpostoDevolNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\IndEscala.cs" Link="NotaFiscal\IndEscala.cs" />
     <Compile Include="..\Shared\NotaFiscal\IndicadorPagamento.cs" Link="NotaFiscal\IndicadorPagamento.cs" />
     <Compile Include="..\Shared\NotaFiscal\IndicadorProcesso.cs" Link="NotaFiscal\IndicadorProcesso.cs" />
@@ -142,12 +144,15 @@
     <Compile Include="..\Shared\NotaFiscal\TipoRef.cs" Link="NotaFiscal\TipoRef.cs" />
     <Compile Include="..\Shared\NotaFiscal\TipoViaTransp.cs" Link="NotaFiscal\TipoViaTransp.cs" />
     <Compile Include="..\Shared\NotaFiscal\TotalNFe.cs" Link="NotaFiscal\TotalNFe.cs" />
-    <Compile Include="..\Shared\NotaFiscal\TpIntegra.cs" Link="NotaFiscal\TpIntegra.cs" />
+	<Compile Include="..\Shared\NotaFiscal\ISTotNFe.cs" Link="NotaFiscal\ISTotNFe.cs" />
+	<Compile Include="..\Shared\NotaFiscal\IBSCBSTotNFe.cs" Link="NotaFiscal\IBSCBSTotNFe.cs" />
+	<Compile Include="..\Shared\NotaFiscal\TpIntegra.cs" Link="NotaFiscal\TpIntegra.cs" />
     <Compile Include="..\Shared\NotaFiscal\TransportadorNFe.cs" Link="NotaFiscal\TransportadorNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\VeiculoNFe.cs" Link="NotaFiscal\VeiculoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\VolumeNFe.cs" Link="NotaFiscal\VolumeNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\MotRedAdRem.cs" Link="NotaFiscal\MotRedAdRem.cs" />
 	<Compile Include="..\Shared\NotaFiscal\CreditoPresumidoNFe.cs" Link="NotaFiscal\CreditoPresumidoNFe.cs" />
+	<Compile Include="..\Shared\NotaFiscal\DFeReferenciado.cs" Link="NotaFiscal\DFeReferenciado.cs" />
 	<Compile Include="..\Shared\Respostas\CancelamentoResposta.cs" Link="Respostas\CancelamentoResposta.cs" />
     <Compile Include="..\Shared\Respostas\ConsultaNFeDetEventoResposta.cs" Link="Respostas\ConsultaNFeDetEventoResposta.cs" />
     <Compile Include="..\Shared\Respostas\ConsultaNFeInfCanResposta.cs" Link="Respostas\ConsultaNFeInfCanResposta.cs" />
@@ -165,7 +170,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NotaFiscal\" />
     <Folder Include="Respostas\" />
   </ItemGroup>
 

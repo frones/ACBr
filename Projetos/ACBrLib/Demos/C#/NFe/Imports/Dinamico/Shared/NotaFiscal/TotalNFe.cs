@@ -5,6 +5,13 @@
     /// </summary>
     public class TotalNFe
     {
+        #region Constructors
+        public TotalNFe()
+        {
+            ISTot = new ISTotNFe();
+            IBSCBSTot = new IBSCBSTotNFe();
+        }
+        #endregion Constructors
         #region Properties
 
         /// <summary>
@@ -130,6 +137,18 @@
         /// Valor total do ICMS monofásico retido anteriormente
         /// </summary>
         public decimal? vICMSMonoRet { get; set; }
+
+        /// <summary>
+        /// Grupo total do imposto seletivo
+        /// </summary>
+        public ISTotNFe ISTot { get; }
+
+        /// <summary>
+        /// Totais da NF-e com IBS e CBS
+        /// </summary>
+        public IBSCBSTotNFe IBSCBSTot { get; }
+
+        public decimal vNFTot { get; set; }
 
         #endregion Properties
     }

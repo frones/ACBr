@@ -180,6 +180,33 @@ namespace ACBrLib.NFe
         /// Código do Município de Ocorrência do Fato Gerador
         /// </summary>
         public int cMunFG { get; set; }
+        
+        /// <summary>
+        /// Código do Município de Consumo, fato gerador do IBS/CBS
+        /// </summary>
+        public int? cMunFGIBS { get; set; }
+
+        /// <summary>
+        /// Tipo da Nota de Débito
+        /// </summary>
+        public TipoNFeDebito tpNFDebito { get; set; }
+
+        /// <summary>
+        /// Tipo da Nota de Crédito
+        /// </summary>
+        public TipoNFeCredito tpNFCredito { get; set; }
+
+        /// <summary>
+        /// Tipo de Ente Governamental
+        /// </summary>
+        public TipoEnteGov tpEnteGov { get; set; }
+
+        /// <summary>
+        /// Percentual de redução de alíquota em compra governamental
+        /// </summary>
+        public decimal pRedutor { get; set; }
+
+
 
         #endregion Properties
     }

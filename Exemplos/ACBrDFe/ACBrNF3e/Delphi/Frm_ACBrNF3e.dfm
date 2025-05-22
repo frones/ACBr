@@ -1495,7 +1495,7 @@ object frmACBrNF3e: TfrmACBrNF3e
     TabOrder = 1
     object pgcBotoes: TPageControl
       Left = 1
-      Top = 1
+      Top = 41
       Width = 567
       Height = 163
       ActivePage = tsEnvios
@@ -1713,9 +1713,9 @@ object frmACBrNF3e: TfrmACBrNF3e
     end
     object pgRespostas: TPageControl
       Left = 1
-      Top = 164
+      Top = 204
       Width = 567
-      Height = 447
+      Height = 407
       ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
@@ -1725,7 +1725,7 @@ object frmACBrNF3e: TfrmACBrNF3e
           Left = 0
           Top = 0
           Width = 559
-          Height = 419
+          Height = 379
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1738,11 +1738,11 @@ object frmACBrNF3e: TfrmACBrNF3e
           Left = 0
           Top = 0
           Width = 559
-          Height = 419
+          Height = 379
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000C63900004E2B00000000000000000000000000000000000000000000
+            4C000000C63900002C2700000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1756,7 +1756,7 @@ object frmACBrNF3e: TfrmACBrNF3e
           Left = 0
           Top = 0
           Width = 559
-          Height = 419
+          Height = 379
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1769,7 +1769,7 @@ object frmACBrNF3e: TfrmACBrNF3e
           Left = 0
           Top = 0
           Width = 559
-          Height = 419
+          Height = 379
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1782,7 +1782,7 @@ object frmACBrNF3e: TfrmACBrNF3e
           Left = 0
           Top = 0
           Width = 559
-          Height = 419
+          Height = 379
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1795,7 +1795,7 @@ object frmACBrNF3e: TfrmACBrNF3e
           Left = 0
           Top = 0
           Width = 559
-          Height = 419
+          Height = 379
           Align = alClient
           Lines.Strings = (
             '')
@@ -1804,6 +1804,26 @@ object frmACBrNF3e: TfrmACBrNF3e
           WordWrap = False
         end
       end
+    end
+    object rgReformaTributaria: TRadioGroup
+      Left = 1
+      Top = 1
+      Width = 567
+      Height = 40
+      Align = alTop
+      Caption = 'Gera os campos da ReformaTributaria'
+      Columns = 2
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ItemIndex = 1
+      Items.Strings = (
+        'Sim'
+        'N'#227'o')
+      ParentFont = False
+      TabOrder = 2
     end
   end
   object ACBrPosPrinter1: TACBrPosPrinter

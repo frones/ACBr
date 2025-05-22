@@ -1366,7 +1366,7 @@ object frmACBrCTe: TfrmACBrCTe
     TabOrder = 1
     object pgcBotoes: TPageControl
       Left = 1
-      Top = 1
+      Top = 41
       Width = 567
       Height = 197
       ActivePage = tsEnvios
@@ -1696,9 +1696,9 @@ object frmACBrCTe: TfrmACBrCTe
     end
     object pgRespostas: TPageControl
       Left = 1
-      Top = 198
+      Top = 238
       Width = 567
-      Height = 413
+      Height = 373
       ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
@@ -1708,7 +1708,7 @@ object frmACBrCTe: TfrmACBrCTe
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 345
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1721,11 +1721,11 @@ object frmACBrCTe: TfrmACBrCTe
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 345
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000C6390000CA2700000000000000000000000000000000000000000000
+            4C000000C6390000A82300000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1739,7 +1739,7 @@ object frmACBrCTe: TfrmACBrCTe
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 345
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1752,7 +1752,7 @@ object frmACBrCTe: TfrmACBrCTe
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 345
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1765,7 +1765,7 @@ object frmACBrCTe: TfrmACBrCTe
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 345
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1778,7 +1778,7 @@ object frmACBrCTe: TfrmACBrCTe
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 345
           Align = alClient
           Lines.Strings = (
             '')
@@ -1786,6 +1786,26 @@ object frmACBrCTe: TfrmACBrCTe
           TabOrder = 0
         end
       end
+    end
+    object rgReformaTributaria: TRadioGroup
+      Left = 1
+      Top = 1
+      Width = 567
+      Height = 40
+      Align = alTop
+      Caption = 'Gera os campos da ReformaTributaria'
+      Columns = 2
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ItemIndex = 1
+      Items.Strings = (
+        'Sim'
+        'N'#227'o')
+      ParentFont = False
+      TabOrder = 2
     end
   end
   object ACBrMail1: TACBrMail
@@ -1797,7 +1817,7 @@ object frmACBrCTe: TfrmACBrCTe
     DefaultCharset = UTF_8
     IDECharset = CP1252
     Left = 330
-    Top = 295
+    Top = 335
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '*-nfe.XML'
@@ -1806,7 +1826,7 @@ object frmACBrCTe: TfrmACBrCTe
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
     Left = 427
-    Top = 295
+    Top = 335
   end
   object ACBrCTe1: TACBrCTe
     MAIL = ACBrMail1
@@ -1824,7 +1844,7 @@ object frmACBrCTe: TfrmACBrCTe
     Configuracoes.RespTec.IdCSRT = 0
     DACTE = ACBrCTeDACTeRL1
     Left = 330
-    Top = 239
+    Top = 279
   end
   object ACBrCTeDACTeRL1: TACBrCTeDACTeRL
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -1856,6 +1876,6 @@ object frmACBrCTe: TfrmACBrCTe
     ImprimeDescPorc = False
     PrintDialog = True
     Left = 430
-    Top = 238
+    Top = 278
   end
 end

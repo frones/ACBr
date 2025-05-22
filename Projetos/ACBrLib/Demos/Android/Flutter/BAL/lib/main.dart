@@ -35,10 +35,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+
   String _resultPeso = '0.0';
   bool _ativado = false;
   bool _inicializado = false;
   final acbrbalplugin = Acbrbalplugin();
+
 
   void inicializar() async {
     try {
@@ -100,7 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   @override
   Widget build(BuildContext context) {
-    inicializar();
 
     return Scaffold(
       appBar: AppBar(
@@ -137,6 +139,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+
+  @override
+  void initState() {
+    super.initState();
+    acbrbalplugin.inicializar();
+  }
+
 }
 
 class CustomButton extends StatelessWidget {

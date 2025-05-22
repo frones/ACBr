@@ -48,6 +48,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+22/05/2025
+--ACBrBoletoW_Sicredi_APIV2--
+[*] TK-6567 - Corrigido tamanho maximo logradouro + numero para 40
+    https://www.projetoacbr.com.br/forum/topic/81573-gerarenderecopagador-no-sicred-acbrboletow_sicredi_apiv2/#comment-529084
+	Por Rodrigo Cardoso da Cruz Silva / Daniel Morais InfoCotidano
+	
 09/04/2025
 --ACBrBoletoW_Itau_API, ACBrBoletoRet_Itau_API--
 [*] TK-6746 - Corrigido Raise da consulta; Mapeado as propriedades do PAGADOR no retorno da consulta isbNenhum (indicadorPix = true)

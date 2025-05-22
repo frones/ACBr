@@ -80,6 +80,7 @@ type
     procedure RequisicaoConsultaDetalhe;
     procedure RequisicaoConcederAbatimento;
     procedure GerarPagador(AJson: TACBrJSONObject);
+    procedure GerarEnderecoPagador(AJson: TACBrJSONObject);
     procedure GerarBenificiarioFinal(AJson: TACBrJSONObject);
     procedure GerarInfomativo(AJson: TACBrJSONObject);
     procedure GerarMensagem(AJson: TACBrJSONObject);
@@ -601,18 +602,34 @@ begin
 
     LJsonPagadorObject.AddPair('tipoPessoa', IfThen(Length( OnlyNumber(ATitulo.Sacado.CNPJCPF)) = 11,'PESSOA_FISICA','PESSOA_JURIDICA') );
     LJsonPagadorObject.AddPair('documento', OnlyNumber(ATitulo.Sacado.CNPJCPF));
-    LJsonPagadorObject.AddPair('nome', ATitulo.Sacado.NomeSacado);
-    LJsonPagadorObject.AddPair('endereco', ATitulo.Sacado.Logradouro + ' ' + ATitulo.Sacado.Numero);
-    LJsonPagadorObject.AddPair('cidade', ATitulo.Sacado.Cidade);
-    LJsonPagadorObject.AddPair('uf', ATitulo.Sacado.UF);
-    LJsonPagadorObject.AddPair('cep', OnlyNumber(ATitulo.Sacado.CEP) );
+    LJsonPagadorObject.AddPair('nome', Copy(ATitulo.Sacado.NomeSacado, 1, 40));
+
+    GerarEnderecoPagador(LJsonPagadorObject);
+
     if ATitulo.Sacado.Fone <> '' then
-      LJsonPagadorObject.AddPair('telefone', ATitulo.Sacado.Fone);
+      LJsonPagadorObject.AddPair('telefone', Copy(ATitulo.Sacado.Fone, 1, 11));
     if ATitulo.Sacado.Email <> '' then
-      LJsonPagadorObject.AddPair('email', ATitulo.Sacado.Email);
+      LJsonPagadorObject.AddPair('email', Copy(ATitulo.Sacado.Email, 1, 40));
 
     AJson.AddPair('pagador', LJsonPagadorObject);
   end;
+end;
+
+procedure TBoletoW_Sicredi_APIV2.GerarEnderecoPagador(AJson: TACBrJSONObject);
+var
+  LTamanhoNumero, LTamanhoLogradouro: Integer;
+  LLogradouro: string;
+begin
+  LTamanhoNumero     := Length(trim(ATitulo.Sacado.Numero)) + 1;
+  LTamanhoLogradouro := Length(trim(ATitulo.Sacado.Logradouro)) + LTamanhoNumero;
+
+  LLogradouro :=  ifthen(LTamanhoLogradouro > 40,Copy(trim(ATitulo.Sacado.Logradouro), 1, (40 - LTamanhoNumero)),
+                                                        trim(ATitulo.Sacado.Logradouro));
+
+  AJson.AddPair('endereco', LLogradouro + ',' + trim(ATitulo.Sacado.Numero));
+  AJson.AddPair('cidade', Copy(ATitulo.Sacado.Cidade, 1, 25));
+  AJson.AddPair('uf', Copy(ATitulo.Sacado.UF, 1, 2));
+  AJson.AddPair('cep', Copy(OnlyNumber(ATitulo.Sacado.CEP), 1, 8));
 end;
 
 procedure TBoletoW_Sicredi_APIV2.GerarBenificiarioFinal(AJson: TACBrJSONObject);

@@ -187,6 +187,7 @@ begin
     Servico.Valores.ValorServicos := ObterConteudo(ANode.Childrens.FindAnyNs('valor_nf'), tcDe2);
     Servico.Valores.ValorDeducoes := ObterConteudo(ANode.Childrens.FindAnyNs('deducao'), tcDe2);
     Servico.Valores.ValorLiquidoNfse := ObterConteudo(ANode.Childrens.FindAnyNs('valor_servico'), tcDe2);
+
     aValor := ObterConteudo(ANode.Childrens.FindAnyNs('iss_retido'), tcStr);
 
     if aValor = 'S' then
@@ -238,6 +239,13 @@ begin
 
     Servico.Valores.ValorTotalNotaFiscal := Servico.Valores.ValorServicos -
       Servico.Valores.DescontoCondicionado - Servico.Valores.DescontoIncondicionado;
+
+    Servico.Valores.ValorLiquidoNfse := (Servico.Valores.ValorServicos
+                                         - Servico.Valores.RetencoesFederais
+                                         - Servico.Valores.OutrasRetencoes
+                                         - Servico.Valores.ValorIssRetido
+                                         - Servico.Valores.DescontoIncondicionado
+                                         - Servico.Valores.DescontoCondicionado);
 
     ValoresNfse.ValorLiquidoNfse := Servico.Valores.ValorServicos;
 

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/05/2025
+-- SigISSWeb.LerXml --
+[*] #TK-7098: Ajustes para calcular corretamente o valor liquido da nota ao ler o XML.
+   Por: Guilherme Consolação Dias
 -- ACBrNFSeXServicos --
 [*] #TK-7081: A cidade de Julio de Castilhos/RS mudou a URL, o provedor continua
     o mesmo.

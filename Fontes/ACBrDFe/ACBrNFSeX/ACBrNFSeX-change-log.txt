@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/05/2025
+-- Infisc.GravarXml --
+[*] #TK-7097: Alteração visando gerar a tag tpImp.
+   Por: Daniel Ostoic Programador DNA.
 -- SigISSWeb.LerXml --
 [*] #TK-7098: Ajustes para calcular corretamente o valor liquido da nota ao ler o XML.
    Por: Guilherme Consolação Dias

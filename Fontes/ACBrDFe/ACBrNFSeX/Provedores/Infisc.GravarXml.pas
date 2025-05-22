@@ -570,6 +570,9 @@ begin
   // chave de acesso 39 caracteres
   Result.AppendChild(AddNode(tcStr, '#1', 'refNF', 1, 39, 1, NFSe.refNF, ''));
 
+  // Formato de impressão tem que ser fixo valor "1".
+  Result.AppendChild(AddNode(tcStr, '#1', 'tpImp', 1, 1, 1, '1', ''));
+
   // N- Normal C- Contigencia
   Result.AppendChild(AddNode(tcStr, '#1', 'tpEmis', 1, 1, 1,
                                        TipoEmissaoToStr(NFSe.TipoEmissao), ''));

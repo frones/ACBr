@@ -1055,7 +1055,8 @@ type
    TACBrTabCodAjBaseCalcContrib = (tcaVendasCanceladas,      // 01 - Vendas canceladas de receitas tributadas em períodos anteriores
                                    tcaDevolucoesVendas,      // 02 - Devoluções de vendas tributadas em períodos anteriores
                                    tcaICMSaRecolher,         // 21 - ICMS a recolher sobre Operações próprias
-                                   tcaOutrVlrsDecJudicial,   // 41 - Outros valores a excluir, vinculados a decisão judicial
+                                   tcaICMSDestacado,         // 25 - ICMS destacado em documento fiscal complementar, referente a receitas tributadas em períodos anteriores 
+								   tcaOutrVlrsDecJudicial,   // 41 - Outros valores a excluir, vinculados a decisão judicial
                                    tcaOutrVlrsSemDecJudicial // 42 - Outros valores a excluir, não vinculados a decisão judicial
                                    );
 
@@ -2207,6 +2208,8 @@ begin
     Result := '02'
   else if AValue = tcaICMSaRecolher then
     Result := '21'
+  else if AValue = tcaICMSDestacado then
+    Result := '25'  
   else if AValue = tcaOutrVlrsDecJudicial then
     Result := '41'
   else if AValue = tcaOutrVlrsSemDecJudicial then
@@ -2522,12 +2525,14 @@ begin
     Result :=  tcaDevolucoesVendas
   else if AValue = '21' then
     Result := tcaICMSaRecolher
+  else if AValue = '25' then
+    Result := tcaICMSDestacado
   else if AValue = '41' then
     Result := tcaOutrVlrsDecJudicial
   else if AValue = '42' then
     Result := tcaOutrVlrsSemDecJudicial
   else
-    raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,21,41 e 42)', [AValue]));
+    raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,21,25,41 e 42)', [AValue]));
 end;
 
 

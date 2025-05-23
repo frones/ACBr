@@ -1705,7 +1705,7 @@ var
   sSecao: string;
 begin
   sSecao := 'RodoOS';
-  if (rodoOS.TAF <> '')  then
+  if (rodoOS.TAF <> '') or (rodoOS.NroRegEstadual <> '') then
   begin
     AINIRec.WriteString(sSecao, 'TAF', rodoOS.TAF);
     AINIRec.WriteString(sSecao, 'NroRegEstadual', rodoOS.NroRegEstadual);

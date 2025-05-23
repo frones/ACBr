@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/05/2025
+-- ACBrCTe.IniReader, ACBrCTeIniWriter --
+[*] #TK-7103: Ajuste visando a correta geração das informações do veículo e do proprietário quando preenchido NroRegEstadual ao invés do TAF para CTeOS.
+  Por: Diego Folieni
+
 21/05/2025
 -- Diversos --
 [*] Alteração visando usar a unit ACBrDFe.Conversao que contem os tipos e funções

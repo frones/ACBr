@@ -2132,7 +2132,8 @@ var
 begin
   //Rodoviário CT-e OS
   sSecao := 'RodoOS';
-  if AINIRec.ReadString(sSecao,'TAF', AINIRec.ReadString(sSecao,'NroRegEstadual','') ) <> ''  then
+  if (AINIRec.ReadString(sSecao,'TAF', '') <> '') or
+     (AINIRec.ReadString(sSecao,'NroRegEstadual','') <> '')  then
   begin
     rodoOS.TAF            := AINIRec.ReadString(sSecao,'TAF','');
     rodoOS.NroRegEstadual := AINIRec.ReadString(sSecao,'NroRegEstadual','');

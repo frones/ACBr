@@ -45,6 +45,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/05/2025
+-- ACBrTEFAPIPayKit --
+[*] Melhoria em 'QuandoExibirQRCodeAPI' para respeitar parâmetros de configuração
+    do componente, quanto a exibição do QRCode na Tela
+[*] Ajustes em 'TACBrTEFAPIClassPayKit.EfetuarPagamento',
+    - Enviar o parâmetro Tipo Operação como String
+    - usar o método 'TransacaoCartaoDebitoCompleta', para transações de Débito
+    - correção na chamada de TransacaoCartaoFrota
+
+-- ACBrTEFPayKitAPI --
+[*] Remoção do tipo 'TACBrTEFPayKitTipoOperacao' (parâmetro modificado para String)
+[*] Melhoria no controle do Flag 'EmTransacao', e limpeza de variáveis de trabalho
+[+] Inclusão do método 'TransacaoCartaoDebitoCompleta'
+[*] Callback 'DisplayErro' modificado para exibir msg com botão OK
+[*] CallBack 'SolicitaConfirmacao', modificado para ignorar chamadas com parâmetro
+    'Mensagem' vazio
+[-] Correção em CallBack 'Comandos', na captura da String do QRCode, desprezava
+    o primeiro caractere
+[-] Correção em 'TransacaoCartaoCreditoCompleta', para não ocorrer A.V.
+    (por: DSA)
+
 14/05/2025
 -- ACBrTEFAPI, ACBrTEFAPIPayKit, ACBrTEFPayKitAPI --
 [+] Novo modelo de TEF suportado "PayKit" (D-TEF Linx)"

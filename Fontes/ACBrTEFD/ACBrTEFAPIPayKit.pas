@@ -504,8 +504,9 @@ procedure TACBrTEFAPIClassPayKit.QuandoExibirQRCodeAPI(const DadosQRCode: String
 begin
   with TACBrTEFAPI(fpACBrTEFAPI) do
   begin
-    if Assigned( QuandoExibirQRCode ) then
-      QuandoExibirQRCode( DadosQRCode );
+    if (ExibicaoQRCode in [qrapiAuto, qrapiExibirAplicacao]) then
+      if Assigned( QuandoExibirQRCode ) then
+        QuandoExibirQRCode( DadosQRCode );
   end;
 end;
 
@@ -561,8 +562,7 @@ function TACBrTEFAPIClassPayKit.EfetuarPagamento(ValorPagto: Currency;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte;
   DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
 var
-  NumeroControle, e: String;
-  TipoOp: TACBrTEFPayKitTipoOperacao;
+  NumeroControle, e, TipoOp: String;
   c: TACBrTEFTipoCartao;
 begin
   VerificarIdentificadorVendaInformado;
@@ -571,10 +571,10 @@ begin
 
   NumeroControle := '';
   case Financiamento of
-    tefmfParceladoEmissor, tefmfCreditoEmissor: TipoOp := opkFinancAdm;
-    tefmfParceladoEstabelecimento, tefmfPredatado: TipoOp := opkFinancLoja;
+    tefmfParceladoEmissor, tefmfCreditoEmissor: TipoOp := 'FA';
+    tefmfParceladoEstabelecimento, tefmfPredatado: TipoOp := 'FL';
   else
-    TipoOp := opkAVista;
+    TipoOp := 'AV';
   end;
 
   if (CartoesAceitos = []) then
@@ -589,16 +589,34 @@ begin
     begin
       if (teftcCredito in CartoesAceitos) then
       begin
-        NumeroControle := TransacaoCartaoCredito( ValorPagto,
-          StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0));
-        //NumeroControle := TransacaoCartaoCreditoCompleta( ValorPagto,
-        //  StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0),
-        //  TipoOp, Parcelas, 0, 0, True, DadosAdicionais);
+        case Financiamento of
+          tefmfParceladoEmissor, tefmfCreditoEmissor: TipoOp := 'FA';
+          tefmfParceladoEstabelecimento, tefmfPredatado: TipoOp := 'FL';
+        else
+          TipoOp := 'AV';
+        end;
+
+        //NumeroControle := TransacaoCartaoCredito( ValorPagto,
+        //  StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0));
+        NumeroControle := TransacaoCartaoCreditoCompleta( ValorPagto,
+          StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0),
+          TipoOp, Parcelas, 0, 0, False, DadosAdicionais);
       end
       else if (teftcDebito in CartoesAceitos) then
       begin
-        NumeroControle := TransacaoCartaoDebito( ValorPagto,
-          StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0));
+        case Financiamento of
+          tefmfParceladoEmissor, tefmfCreditoEmissor: TipoOp := 'PS';
+          tefmfParceladoEstabelecimento: TipoOp := 'PC';
+          tefmfPredatado: TipoOp := 'PD';
+        else
+          TipoOp := 'AV';
+        end;
+
+        //NumeroControle := TransacaoCartaoDebito( ValorPagto,
+        //  StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0));
+        NumeroControle := TransacaoCartaoDebitoCompleta( ValorPagto,
+          StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0),
+          TipoOp, Parcelas, 1, DataPreDatado, 0, 0, False, DadosAdicionais);
       end
       else if (teftcVoucher in CartoesAceitos) then
       begin
@@ -607,7 +625,7 @@ begin
       end
       else if (teftcFrota in CartoesAceitos) then
       begin
-        NumeroControle := TransacaoCartaoVoucher( ValorPagto,
+        NumeroControle := TransacaoCartaoFrota( ValorPagto,
           StrToIntDef(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao, 0));
       end
       else

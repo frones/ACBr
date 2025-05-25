@@ -72,10 +72,6 @@ resourcestring
 type
   EACBrTEFPayKitAPI = class(Exception);
 
-  TACBrTEFPayKitTipoOperacao = ( opkAVista,       // À Vista
-                                 opkFinancLoja,   // Financiamento Lojista
-                                 opkFinancAdm );  // Financiamento Administradora
-
   TACBrTEFPayKitGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
 
   TACBrTEFPayKitTipoMensagem = (msgInfo, msgAlerta, msgErro, msgAdicional, msgTerminal, msgPreview);
@@ -209,6 +205,7 @@ type
     fOnGravarLog: TACBrTEFPayKitGravarLog;
     fPortaPinPad: String;
     fUltimoNumeroControle: Integer;
+    fUltimaMsgEnviada: String;
     fURLCertificado: String;
     fVersaoAutomacao: String;
 
@@ -219,18 +216,12 @@ type
     xTransacaoCartaoCredito: function(pValorTransacao, pNumeroCupomVenda,
       pNumeroControle: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-    //xConfirmacaoCartaoCredito: function(pNumeroControle: PAnsiChar): LongInt;
-    //  {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xTransacaoCartaoDebito: function(pValorTransacao, pNumeroCupomVenda,
       pNumeroControle: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-    //xConfirmacaoCartaoDebito: function(pNumeroControle: PAnsiChar): LongInt;
-    //  {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xTransacaoCartaoVoucher: function (pValorTransacao, pNumeroCupomVenda,
       pNumeroControle: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-    //xConfirmacaoCartaoVoucher: function(pNumeroControle: PAnsiChar): LongInt;
-    //  {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xTransacaoCartaoFrota: function (pValorTransacao, pNumeroCupomVenda,
       pNumeroControle: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -290,21 +281,17 @@ type
       pReservado: PAnsiChar): LongInt;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
-    // Definicao das funcoes de transacao completa
     xTransacaoCartaoCreditoCompleta: function( pValorTransacao, pNumeroCupomVenda,
       pNumeroControle, pTipoOperacao, pNumeroParcelas, pValorParcela,
       pValorTaxaServico, pPermiteAlteracao, pReservado: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-
     xTransacaoCartaoDebitoCompleta: function ( pValorTransacao, pNumeroCupomVenda,
       pNumeroControle, pTipoOperacao, pNumeroParcelas, pSequenciaParcela, pDataDebito,
       pValorParcela, pValorTaxaServico, pPermiteAlteracao, pReservado: PAnsiChar): LongInt;
      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-
     xTransacaoCartaoVoucherCompleta: function (pValorTransacao, pNumeroCupomVenda,
       pNumeroControle, pReservado: PAnsiChar): LongInt;
      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-
     xTransacaoManualPOSCompleta: function(pValorTransacao, pCodigoEstabelecimento,
       pData, pHora, pNumeroAutorizadora, pNumeroCartao, pTipoOperacao,
       pNumeroParcelas, pDataPreDatado, pNumeroControle: PAnsiChar): LongInt;
@@ -379,6 +366,7 @@ type
 
     procedure SetCNPJEstabelecimento(AValue: String);
     procedure SetConfiguracaoIpPortaSsl(AValue: String);
+    procedure SetEmTransacao(AValue: Boolean);
     procedure SetURLCertificado(AValue: String);
     procedure SetInicializada(AValue: Boolean);
     procedure SetModoDesfazimento(AValue: Byte);
@@ -428,7 +416,7 @@ type
 
     property Carregada: Boolean read fCarregada;
     property Inicializada: Boolean read fInicializada write SetInicializada;
-    property EmTransacao: Boolean read fEmTransacao;
+    property EmTransacao: Boolean read fEmTransacao write SetEmTransacao;
 
     property OnGravarLog: TACBrTEFPayKitGravarLog read fOnGravarLog write fOnGravarLog;
     property OnExibeMensagem: TACBrTEFPayKitQuandoExibirMensagem read fOnExibeMensagem
@@ -464,10 +452,15 @@ type
 
     function TransacaoCartaoCredito(ValorTransacao: Double; const NumeroCupomVenda: Integer): String;
     function TransacaoCartaoCreditoCompleta(ValorTransacao: Double;
-      const NumeroCupomVenda: Integer; TipoOperacao: TACBrTEFPayKitTipoOperacao;
+      const NumeroCupomVenda: Integer; TipoOperacao: String;
       NumeroParcelas: Integer; ValorParcela, ValorTaxaServico: Double;
       PermiteAlteracao: Boolean; const Reservado: String): String;
     function TransacaoCartaoDebito(ValorTransacao: Double; const NumeroCupomVenda: Integer): String;
+    function TransacaoCartaoDebitoCompleta(ValorTransacao: Double;
+      const NumeroCupomVenda: Integer; TipoOperacao: String;
+      NumeroParcelas, SequenciaParcela: Integer; DataDebito: TDate;
+      ValorParcela, ValorTaxaServico: Double;
+      PermiteAlteracao: Boolean; const Reservado: String): String;
     function TransacaoCartaoVoucher(ValorTransacao: Double; const NumeroCupomVenda: Integer): String;
     function TransacaoCartaoFrota(ValorTransacao: Double; const NumeroCupomVenda: Integer): String;
     function TransacaoQRCode(ValorTransacao: Double; const NumeroCupomVenda: Integer;
@@ -571,7 +564,7 @@ var
 implementation
 
 uses
-  IniFiles, Math, StrUtils,
+  IniFiles, Math, StrUtils, DateUtils,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO;
 
@@ -603,7 +596,7 @@ begin
   begin
     s := String(pMensagem);
     GravarLog('  CallBackDisplayErro( '+s+' )');
-    ExibirMensagem(ACBrStr(s), msgErro);
+    ExibirMensagem(ACBrStr(s), msgErro, 0);
   end;
 end;
 
@@ -640,19 +633,27 @@ begin
     s := Trim(String(pMensagem));
     GravarLog('  CallBackSolicitaConfirmacao( '+s+' )');
     if (s = '') then
-      s := 'CONFIRMA ?';
+    begin
+      if (fUltimaMsgEnviada <> '') then
+        ExibirMensagem(fUltimaMsgEnviada, msgAlerta, 0);
 
-    sl := TStringList.Create;
-    try
-      ItemSelecionado := 0;
-      sl.Add('1-SIM');
-      sl.Add('2-NAO');
-      PerguntarMenu(s, sl, ItemSelecionado);
-      if (ItemSelecionado = 0) then     //-2 - Volta no Fluxo, -1 - Cancela o Fluxo
-        Result := 0;  // SIM
-    finally
-      sl.Free;
+      Result := 0;  // SIM
+    end
+    else
+    begin
+      sl := TStringList.Create;
+      try
+        ItemSelecionado := 0;
+        sl.Add('1-SIM');
+        sl.Add('2-NAO');
+        PerguntarMenu(s, sl, ItemSelecionado);
+        if (ItemSelecionado = 0) then     //-2 - Volta no Fluxo, -1 - Cancela o Fluxo
+          Result := 0;  // SIM
+      finally
+        sl.Free;
+      end;
     end;
+
     GravarLog('    ret:'+IntToStr(Result))
   end;
 end;
@@ -1145,7 +1146,7 @@ begin
 
     comando := copy(s,1,3);
     tamanho := StrToIntDef(copy(s, 4, 6), 0);
-    s := copy(s, 11, tamanho);
+    s := copy(s, 10, tamanho);
 
     if (comando = '001') then
       ExibirQRCode(s)
@@ -1171,6 +1172,7 @@ begin
   fVersaoAutomacao := '';
   fUltimoNumeroControle := -1;
   fModoDesfazimento := 1;
+  fUltimaMsgEnviada := '';
 
   fOnGravarLog := Nil;
   fOnExibeMensagem := Nil;
@@ -1224,6 +1226,7 @@ begin
 
   fInicializada := True;
   fUltimoNumeroControle := -1;
+  fUltimaMsgEnviada := '';
 end;
 
 procedure TACBrTEFPayKitAPI.DesInicializar;
@@ -1300,14 +1303,14 @@ begin
       Exit;
     end;
 
-    fEmTransacao := True;
+    EmTransacao := True;
     try
       GravarLog('Lib.InicializaDPOS');
       iRet := xInicializaDPOS;
       GravarLog('  ret: '+IntToStr(iRet));
       TratarErroPayKit(iRet);
     finally
-      fEmTransacao := False;
+      EmTransacao := False;
     end;
 
     ini.WriteDateTime(CSecMovimentoACBr, 'Data', Date);
@@ -1348,14 +1351,14 @@ begin
       Exit;
     end;
 
-    fEmTransacao := True;
+    EmTransacao := True;
     try
       GravarLog('Lib.FinalizaDPOS');
       iRet := xFinalizaDPOS;
       GravarLog('  ret: '+IntToStr(iRet));
       TratarErroPayKit(iRet);
     finally
-      fEmTransacao := False;
+      EmTransacao := False;
     end;
 
     ini.WriteDateTime(CSecMovimentoACBr, 'Data', Date);
@@ -1371,7 +1374,7 @@ var
   iRet: LongInt;
 begin
   fUltimoNumeroControle := -1;
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.TransacaoEspecial( '+IntToStr(iCodigoTransacao)+', '+Dados+' )');
     iRet := xTransacaoEspecial(iCodigoTransacao, PAnsiChar(Dados));
@@ -1383,7 +1386,7 @@ begin
     GravarLog('  ret: '+IntToStr(iRet)+', Dados: '+Dados);
     TratarErroPayKit(iRet);
   finally
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1393,7 +1396,7 @@ var
   iRet, iTamanho: LongInt;
   pValorParametro: AnsiString;
 begin
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     pValorParametro := LeftStr(ValorParametro, 4096);
     iTamanho := Length(pValorParametro);
@@ -1402,7 +1405,7 @@ begin
     GravarLog('  ret: '+IntToStr(iRet));
     TratarErroPayKit(iRet);
   finally
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1421,7 +1424,7 @@ var
   pDados: AnsiString;
 begin
   pDados := StringOfChar(' ', 110);
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.LeIdentificacaoPinPad');
     iRet := xLeIdentificacaoPinPad(PAnsiChar(pDados));
@@ -1432,7 +1435,7 @@ begin
 
     GravarLog('  ret: '+IntToStr(iRet)+', Dados: '+Result);
   finally
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
   TratarErroPayKit(iRet);
 end;
@@ -1469,7 +1472,7 @@ begin
   pNumeroControle := StringOfChar('0',6);
   Result := '';
 
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.TransacaoFuncoesAdministrativas( '+pValorTransacao+', '+pNumeroCupom+', '+pReservado+' )');
     iRet := xTransacaoFuncoesAdministrativas( PAnsiChar(pValorTransacao),
@@ -1477,15 +1480,13 @@ begin
                                               PAnsiChar(pNumeroControle),
                                               PAnsiChar(pReservado) );
     if (iRet = RET_OK) then
-      Result := String(pNumeroControle)
-    else
-      Result := '';
+      Result := String(pNumeroControle);
 
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
     TratarErroPayKit(iRet);
   finally
     fUltimoNumeroControle := StrToIntDef(Result, -1);
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1501,30 +1502,27 @@ begin
   pNumeroControle := StringOfChar('0',6);
   Result := '';
 
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.TransacaoCartaoCredito( '+pValorTransacao+', '+pNumeroCupomVenda+' )');
     iRet := xTransacaoCartaoCredito( PAnsiChar(pValorTransacao),
                                      PAnsiChar(pNumeroCupomVenda),
                                      PAnsiChar(pNumeroControle) );
     if (iRet = RET_OK) then
-      Result := String(pNumeroControle)
-    else
-      Result := '';
+      Result := String(pNumeroControle);
 
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
-    TratarErroPayKit(iRet);
   finally
     fUltimoNumeroControle := StrToIntDef(Result, -1);
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
 function TACBrTEFPayKitAPI.TransacaoCartaoCreditoCompleta(
   ValorTransacao: Double; const NumeroCupomVenda: Integer;
-  TipoOperacao: TACBrTEFPayKitTipoOperacao; NumeroParcelas: Integer;
-  ValorParcela, ValorTaxaServico: Double; PermiteAlteracao: Boolean;
-  const Reservado: String): String;
+  TipoOperacao: String; NumeroParcelas: Integer; ValorParcela,
+  ValorTaxaServico: Double; PermiteAlteracao: Boolean; const Reservado: String
+  ): String;
 var
   iRet: LongInt;
   pValorTransacao, pNumeroCupomVenda, pTipoOperacao, pNumeroParcelas,
@@ -1535,15 +1533,15 @@ begin
   pValorTransacao := Format('%.12d',[Round(ValorTransacao*100)]);
   pNumeroCupomVenda := Format('%.6d',[NumeroCupomVenda]);
   pNumeroControle := StringOfChar('0',6);
-  pTipoOperacao := IfThen(TipoOperacao=opkAVista, 'AV', IfThen(TipoOperacao=opkFinancAdm, 'FA', 'FL'));
-  pNumeroParcelas := Format('%.2d',[NumeroParcelas]);
+  pTipoOperacao := PadRight(TipoOperacao, 3);
+  pNumeroParcelas := Format('%.2d',[max(NumeroParcelas, 1)]);
   pValorParcela := Format('%.12d',[Round(ValorParcela*100)]);
   pValorTaxaServico := Format('%.12d',[Round(ValorTaxaServico*100)]);
   pPermiteAlteracao := IfThen(PermiteAlteracao, 'S', 'N');
-  pReservado := PadRight('0000', 161, '0')+#0;
+  pReservado := PadRight( IfEmptyThen(Reservado, '0000'), 148, ' ');
   Result := '';
 
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.TransacaoCartaoCreditoCompleta( '+pValorTransacao+', '+pNumeroCupomVenda+', '+
       pNumeroControle+', '+pTipoOperacao+', '+pNumeroParcelas+', '+pValorParcela+', '+
@@ -1558,15 +1556,12 @@ begin
                                              PAnsiChar(pPermiteAlteracao),
                                              PAnsiChar(pReservado));
     if (iRet = RET_OK) then
-      Result := String(pNumeroControle)
-    else
-      Result := '';
+      Result := String(pNumeroControle);
 
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
-    TratarErroPayKit(iRet);
   finally
     fUltimoNumeroControle := StrToIntDef(Result, -1);
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1582,22 +1577,72 @@ begin
   pNumeroControle := StringOfChar('0',6);
   Result := '';
 
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.TransacaoCartaoDebito( '+pValorTransacao+', '+pNumeroCupomVenda+' )');
     iRet := xTransacaoCartaoDebito( PAnsiChar(pValorTransacao),
                                     PAnsiChar(pNumeroCupomVenda),
                                     PAnsiChar(pNumeroControle) );
     if (iRet = RET_OK) then
-      Result := String(pNumeroControle)
-    else
-      Result := '';
+      Result := String(pNumeroControle);
 
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
-    TratarErroPayKit(iRet);
   finally
     fUltimoNumeroControle := StrToIntDef(Result, -1);
-    fEmTransacao := False;
+    EmTransacao := False;
+  end;
+end;
+
+function TACBrTEFPayKitAPI.TransacaoCartaoDebitoCompleta(
+  ValorTransacao: Double; const NumeroCupomVenda: Integer;
+  TipoOperacao: String; NumeroParcelas, SequenciaParcela: Integer;
+  DataDebito: TDate; ValorParcela, ValorTaxaServico: Double;
+  PermiteAlteracao: Boolean; const Reservado: String): String;
+var
+  iRet: LongInt;
+  pValorTransacao, pNumeroCupomVenda, pTipoOperacao, pNumeroParcelas,
+    pSequenciaParcela, pDataDebito,
+    pValorParcela, pValorTaxaServico, pPermiteAlteracao, pReservado,
+    pNumeroControle: AnsiString;
+begin
+  DefineTagACBr;
+  pValorTransacao := Format('%.12d',[Round(ValorTransacao*100)]);
+  pNumeroCupomVenda := Format('%.6d',[NumeroCupomVenda]);
+  pNumeroControle := StringOfChar('0',6);
+  pTipoOperacao := PadRight(TipoOperacao, 3);
+  pNumeroParcelas := Format('%.2d',[max(NumeroParcelas, 1)]);
+  pDataDebito := IfThen(DataDebito = 0, StringOfChar('0',8), FormatDateTime('DDMMYYYY', DataDebito));
+  pSequenciaParcela := Format('%.2d',[max(SequenciaParcela, 1)]);
+  pValorParcela := Format('%.12d',[Round(ValorParcela*100)]);
+  pValorTaxaServico := Format('%.12d',[Round(ValorTaxaServico*100)]);
+  pPermiteAlteracao := IfThen(PermiteAlteracao, 'S', 'N');
+  pReservado := PadRight('0000', 148, ' ');
+  Result := '';
+
+  EmTransacao := True;
+  try
+    GravarLog('Lib.TransacaoCartaoDebitoCompleta( '+pValorTransacao+', '+pNumeroCupomVenda+', '+
+      pNumeroControle+', '+pTipoOperacao+', '+pNumeroParcelas+', '+pSequenciaParcela+', '+
+      pDataDebito+', '+pValorParcela+', '+pValorTaxaServico+', '+pPermiteAlteracao+', '+
+      pReservado+' )');
+    iRet := xTransacaoCartaoDebitoCompleta( PAnsiChar(pValorTransacao),
+                                            PAnsiChar(pNumeroCupomVenda),
+                                            PAnsiChar(pNumeroControle),
+                                            PAnsiChar(pTipoOperacao),
+                                            PAnsiChar(pNumeroParcelas),
+                                            PAnsiChar(pSequenciaParcela),
+                                            PAnsiChar(pDataDebito),
+                                            PAnsiChar(pValorParcela),
+                                            PAnsiChar(pValorTaxaServico),
+                                            PAnsiChar(pPermiteAlteracao),
+                                            PAnsiChar(pReservado) );
+    if (iRet = RET_OK) then
+      Result := String(pNumeroControle);
+
+    GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
+  finally
+    fUltimoNumeroControle := StrToIntDef(Result, -1);
+    EmTransacao := False;
   end;
 end;
 
@@ -1613,22 +1658,19 @@ begin
   pNumeroControle := StringOfChar('0',6);
   Result := '';
 
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.TransacaoCartaoVoucher( '+pValorTransacao+', '+pNumeroCupomVenda+' )');
     iRet := xTransacaoCartaoVoucher( PAnsiChar(pValorTransacao),
                                      PAnsiChar(pNumeroCupomVenda),
                                      PAnsiChar(pNumeroControle) );
     if (iRet = RET_OK) then
-      Result := String(pNumeroControle)
-    else
-      Result := '';
+      Result := String(pNumeroControle);
 
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
-    TratarErroPayKit(iRet);
   finally
     fUltimoNumeroControle := StrToIntDef(Result, -1);
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1644,22 +1686,19 @@ begin
   pNumeroControle := StringOfChar('0',6);
   Result := '';
 
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.TransacaoCartaoFrota( '+pValorTransacao+', '+pNumeroCupomVenda+' )');
     iRet := xTransacaoCartaoFrota( PAnsiChar(pValorTransacao),
                                    PAnsiChar(pNumeroCupomVenda),
                                    PAnsiChar(pNumeroControle) );
     if (iRet = RET_OK) then
-      Result := String(pNumeroControle)
-    else
-      Result := '';
+      Result := String(pNumeroControle);
 
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
-    TratarErroPayKit(iRet);
   finally
     fUltimoNumeroControle := StrToIntDef(Result, -1);
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1676,7 +1715,7 @@ begin
   pTransactionParamsData := Trim(TransactionParamsData);
   Result := '';
 
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.TransacaoQRCode( '+pValorTransacao+', '+pNumeroCupomVenda+', '+pTransactionParamsData+' )');
     iRet := xTransacaoQRCode( PAnsiChar(pValorTransacao),
@@ -1684,16 +1723,13 @@ begin
                               PAnsiChar(pNumeroControle),
                               PAnsiChar(pTransactionParamsData) );
     if (iRet = RET_OK) then
-      Result := String(pNumeroControle)
-    else
-      Result := '';
+      Result := String(pNumeroControle);
 
     GravarLog('  ret: '+IntToStr(iRet)+', NumeroControle: '+Result);
-    TratarErroPayKit(iRet);
   finally
     fUltimoNumeroControle := StrToIntDef(Result, -1);
     ExibirQRCode('');  // Remove o QRCode
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1703,14 +1739,14 @@ var
   pNumeroControle: AnsiString;
 begin
   pNumeroControle := Trim(NumeroControle);
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.ObtemLogTransacaoJson( '+pNumeroControle+' )');
     p := xObtemLogTransacaoJson( PAnsiChar(pNumeroControle) );
     Result := String(p);
     GravarLog('  json: '+Result);
   finally
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1757,14 +1793,14 @@ var
   iRet: LongInt;
 begin
   fUltimoNumeroControle := -1;
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.TransacaoReimpressaoCupom()');
     iRet := xTransacaoReimpressaoCupom;
     GravarLog('  ret: '+IntToStr(iRet));
     TratarErroPayKit(iRet);
   finally
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1774,7 +1810,7 @@ var
   pNumeroControle: AnsiString;
 begin
   pNumeroControle := StringOfChar('0',6);
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.TransacaoResumoVendas()');
     iRet := xTransacaoResumoVendas( PAnsiChar(pNumeroControle) );
@@ -1787,7 +1823,7 @@ begin
     TratarErroPayKit(iRet);
   finally
     fUltimoNumeroControle := StrToIntDef(Result, -1);
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1798,13 +1834,13 @@ var
 begin
   pNumeroControle := PadRight(NumeroControle, 6);
 
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.ConfirmaCartao( '+pNumeroControle+' )');
     Result := xConfirmaCartao( PAnsiChar(pNumeroControle) );
     GravarLog('  ret: '+IntToStr(Result));
   finally
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1815,13 +1851,13 @@ var
 begin
   pNumeroControle := PadRight(NumeroControle, 6);
 
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.DesfazCartao( '+pNumeroControle+' )');
     Result := xDesfazCartao( PAnsiChar(pNumeroControle) );
     GravarLog('  ret: '+IntToStr(Result));
   finally
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1832,14 +1868,14 @@ var
 begin
   pNumeroControle := PadRight(NumeroControle, 6);
 
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.TransacaoCancelamentoPagamento( '+pNumeroControle+' )');
     iRet := xTransacaoCancelamentoPagamento( PAnsiChar(pNumeroControle) );
     GravarLog('  ret: '+IntToStr(iRet));
     TratarErroPayKit(iRet);
   finally
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1847,14 +1883,14 @@ procedure TACBrTEFPayKitAPI.FinalizarTransacao;
 var
   iRet: LongInt;
 begin
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.FinalizaTransacao');
     iRet := xFinalizaTransacao;
     GravarLog('  ret: '+IntToStr(iRet));
     TratarErroPayKit(iRet);
   finally
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1874,7 +1910,7 @@ begin
   Resposta := '';
   MensagemErro := '';
 
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.ConsultaTransacao( '+pNumeroEmpresa+', '+pNumeroLoja+', '+pNumeroPDV+', '+pSolicitacao+' )');
     iRet := xConsultaTransacao( PAnsiChar(pNumeroEmpresa),
@@ -1893,27 +1929,27 @@ begin
     GravarLog('  ret: '+IntToStr(iRet)+', Resp: '+Resposta+', Msg: '+MensagemErro);
     TratarErroPayKit(iRet);
   finally
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
 procedure TACBrTEFPayKitAPI.AbortarTransacao;
 begin
-  fEmTransacao := False;
+  EmTransacao := False;
 end;
 
 procedure TACBrTEFPayKitAPI.ForcaAtualizacaoTabelasPinpad;
 var
   iRet: LongInt;
 begin
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     GravarLog('Lib.ForcaAtualizacaoTabelasPinpad');
     iRet := xForcaAtualizacaoTabelasPinpad;
     GravarLog('  ret: '+IntToStr(iRet));
     TratarErroPayKit(iRet);
   finally
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1922,7 +1958,7 @@ var
   iRet: LongInt;
   pcNomeArquivo: AnsiString;
 begin
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     pcNomeArquivo := Trim(NomeArq);
     if not FileExists(pcNomeArquivo) then
@@ -1933,7 +1969,7 @@ begin
     GravarLog('  ret: '+IntToStr(iRet));
     TratarErroPayKit(iRet);
   finally
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1942,7 +1978,7 @@ var
   iRet: LongInt;
   pNomeImagem: AnsiString;
 begin
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     pNomeImagem := Trim(NomeImagem);
     GravarLog('Lib.ApagaImagemPinPadPayKit( '+pNomeImagem+' )');
@@ -1950,7 +1986,7 @@ begin
     GravarLog('  ret: '+IntToStr(iRet));
     TratarErroPayKit(iRet);
   finally
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1961,7 +1997,7 @@ var
 begin
   CodigoEmpresa := '';
   CodigoLoja := '';
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     pCNPJ := PadLeft(Trim(CNPJ), 14, '0');
     pCodigoEmpresa := space(5);
@@ -1978,7 +2014,7 @@ begin
     end;
     GravarLog('  ret: '+IntToStr(Result)+', Empresa:'+CodigoEmpresa+', Loja:'+CodigoLoja);
   finally
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -1987,8 +2023,14 @@ procedure TACBrTEFPayKitAPI.ExibirMensagem(const AMsg: String;
 begin
   if not VerificarSeEstaEmTransacao then
     Exit;
+
   if Assigned(fOnExibeMensagem) then
     fOnExibeMensagem(AMsg, TipoMensagem, MilissegundosExibicao);
+
+  if MilissegundosExibicao >= 0 then
+    fUltimaMsgEnviada := ''
+  else
+    fUltimaMsgEnviada := AMsg;
 end;
 
 procedure TACBrTEFPayKitAPI.PerguntarMenu(const Titulo: String;
@@ -1996,6 +2038,7 @@ procedure TACBrTEFPayKitAPI.PerguntarMenu(const Titulo: String;
 begin
   if not VerificarSeEstaEmTransacao then
     Exit;
+
   GravarLog('TACBrTEFPayKitAPI.PerguntarMenu( '+Titulo+' )');
   if Assigned(fQuandoPerguntarMenu) then
     fQuandoPerguntarMenu(Titulo, Opcoes, ItemSelecionado);
@@ -2134,7 +2177,7 @@ begin
   if (pURL = '') then
     pURL := CPayKitURLCertificado;
 
-  fEmTransacao := True;
+  EmTransacao := True;
   try
     pPathCertificado := PathWithoutDelim(CalcPayKitPath(CPayKitDirBin));
     GravarLog('Lib.BuscaCertificado( '+pURL+', '+pPathCertificado+' )');
@@ -2142,7 +2185,7 @@ begin
     GravarLog('  ret: '+IntToStr(iRet));
     TratarErroPayKit(iRet);
   finally
-    fEmTransacao := False;
+    EmTransacao := False;
   end;
 end;
 
@@ -2180,6 +2223,18 @@ begin
   if fInicializada then
     DoException(sErrLibJaInicializada);
   fConfiguracaoIpPortaSsl := AValue;
+end;
+
+procedure TACBrTEFPayKitAPI.SetEmTransacao(AValue: Boolean);
+begin
+  if (fEmTransacao = AValue) then
+    Exit;
+
+  if AValue then
+    fUltimoNumeroControle := -1;
+
+  fEmTransacao := AValue;
+  fUltimaMsgEnviada := '';
 end;
 
 procedure TACBrTEFPayKitAPI.SetURLCertificado(AValue: String);
@@ -2392,11 +2447,8 @@ begin
 
   PayKitFunctionDetect(sLibName, 'TransacaoCheque', @xTransacaoCheque);
   PayKitFunctionDetect(sLibName, 'TransacaoCartaoCredito', @xTransacaoCartaoCredito);
-  //PayKitFunctionDetect(sLibName, 'ConfirmacaoCartaoCredito', @xConfirmacaoCartaoCredito);
   PayKitFunctionDetect(sLibName, 'TransacaoCartaoDebito', @xTransacaoCartaoDebito);
-  //PayKitFunctionDetect(sLibName, 'ConfirmacaoCartaoDebito', @xConfirmacaoCartaoDebito);
   PayKitFunctionDetect(sLibName, 'TransacaoCartaoVoucher', @xTransacaoCartaoVoucher);
-  //PayKitFunctionDetect(sLibName, 'ConfirmacaoCartaoVoucher', @xConfirmacaoCartaoVoucher);
   PayKitFunctionDetect(sLibName, 'TransacaoCartaoFrota', @xTransacaoCartaoFrota);
   PayKitFunctionDetect(sLibName, 'TransacaoQRCode', @xTransacaoQRCode);
   PayKitFunctionDetect(sLibName, 'TransacaoCancelamentoPagamento', @xTransacaoCancelamentoPagamento);
@@ -2481,11 +2533,8 @@ procedure TACBrTEFPayKitAPI.ClearMethodPointers;
 begin
   xTransacaoCheque := Nil;
   xTransacaoCartaoCredito := Nil;
-  //xConfirmacaoCartaoCredito := Nil;
   xTransacaoCartaoDebito := Nil;
-  //xConfirmacaoCartaoDebito := Nil;
   xTransacaoCartaoVoucher := Nil;
-  //xConfirmacaoCartaoVoucher := Nil;
   xTransacaoCartaoFrota := Nil;
   xTransacaoQRCode := Nil;
   xTransacaoCancelamentoPagamento := Nil;

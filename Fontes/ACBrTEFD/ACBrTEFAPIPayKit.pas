@@ -220,6 +220,8 @@ begin
     NSU_TEF := Finalizacao;
 
     Sucesso := (jsLog.AsInteger['CodigoResposta'] = 0);
+    if (StrToIntDef(Finalizacao, -1) = CPayKitNumControleReimpressao) then
+      Confirmar := False;
   finally
     jso.Free;
   end;
@@ -294,16 +296,32 @@ procedure TACBrTEFAPIClassPayKit.InterpretarRespostaAPI;
 var
   json, Cupom: String;
   jso, jsLog: TACBrJSONObject;
-  nc: Integer;
+  unc, nc: Integer;
 begin
   json := '';
   Cupom := '';
 
   with GetTEFPayKitAPI do
   begin
-    if (UltimoNumeroControle > 0) then
+    unc := UltimoNumeroControle;
+    nc := 0;
+
+    fpACBrTEFAPI.GravarLog('TACBrTEFAPIClassPayKit.InterpretarRespostaAPI - NumeroControle: '+IntToStr(unc));
+    if (unc = CPayKitNumControleReimpressao) then
     begin
-      json := ObtemLogTransacaoJson( IntToStr(UltimoNumeroControle) );
+      Cupom := ObtemComprovanteTransacao(IntToStr(unc), fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida);
+      json := '{"LogTransacao":{"CodigoResposta":"00",'+
+                '"Data":"'+FormatDateTime('DDMMYYYY', Date)+'",'+
+                '"Hora":"'+FormatDateTime('HHNNSS', Now)+'",'+
+                '"NumeroControle": "'+IntToStr(unc)+'",'+
+                '"NumeroEmpresa":"'+IntToStr(NumeroEmpresa)+'",'+
+                '"NumeroEquipamento":"'+IntToStr(NumeroPDV)+'",'+
+                '"NumeroLoja":"'+IntToStr(NumeroLoja)+'"}}';
+    end
+
+    else if (unc > 0) then
+    begin
+      json := ObtemLogTransacaoJson( IntToStr(unc) );
       jso := TACBrJSONObject.Parse(json);
       try
         jsLog := jso.AsJSONObject['LogTransacao'];
@@ -312,18 +330,20 @@ begin
         else
           nc := -1;
 
-        if (nc > 0) and (UltimoNumeroControle <> nc) then  // Se Retornou Log errado (antigo)...
+        fpACBrTEFAPI.GravarLog('  JSon.NumeroControle: '+IntToStr(nc));
+        if (nc > 0) and (unc <> nc) then  // Se Retornou Log errado (antigo)...
         begin
-          nc := 0;                    // então nem vamos tentar ler o Cupom...
-          json := '';                 // e Ignore Json retornado
+          nc := 0;
+          json := '';
+          fpACBrTEFAPI.GravarLog('    Num.Controle diferente, JSon ignorado');
         end;
       finally
         jso.Free;
       end;
-
-      if (nc > 0) then
-        Cupom := ObtemComprovanteTransacao(IntToStr(nc), fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida);
     end;
+
+    if (nc > 0) then
+      Cupom := ObtemComprovanteTransacao(IntToStr(nc), fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida);
   end;
 
   with fpACBrTEFAPI.UltimaRespostaTEF do
@@ -379,7 +399,7 @@ begin
       3: Result := tefopFechamento;
       4: Result := tefopVersao;
       5: Result := tefopTesteComunicacao;
-      6: Result := tefopNenhuma;
+      6: Result := tefopPagamento;
     end;
   finally
     slMenu.Free;
@@ -433,11 +453,20 @@ begin
   def.TituloPergunta := DefinicaoCampo.TituloPergunta;
   def.ValorInicial := DefinicaoCampo.ValorInicial;
   def.MascaraDeCaptura := DefinicaoCampo.MascaraDeCaptura;
-  def.TamanhoMaximo := DefinicaoCampo.TamanhoMaximo;
-  def.ValorMaximo := Trunc(DefinicaoCampo.ValorMaximo);
   def.TamanhoMinimo := DefinicaoCampo.TamanhoMinimo;
+  def.TamanhoMaximo := DefinicaoCampo.TamanhoMaximo;
   def.ValorMinimo := Trunc(DefinicaoCampo.ValorMinimo);
+  def.ValorMaximo := Trunc(DefinicaoCampo.ValorMaximo);
+
   def.TipoDeEntrada := tedTodos;
+  def.OcultarDadosDigitados := False;
+  def.ValidacaoDado := valdNenhuma;
+  def.MsgErroDeValidacao := '';
+  def.MsgErroDadoMaior := '';
+  def.MsgErroDadoMenor := '';
+  def.MsgConfirmacaoDuplaDigitacao := '';
+  def.TipoEntradaCodigoBarras := tbQualquer;
+  def.TipoCampo := 0;
 
   case DefinicaoCampo.TipoDeEntrada of
     teBarrasDigitado:
@@ -527,6 +556,8 @@ begin
     CodOperacaoAdm := PerguntarMenuAdmPayKit;
 
   case CodOperacaoAdm of
+    tefopNenhuma:
+      Result := False;
     tefopVersao:
       Result := ExibirVersaoPayKit();
     tefopTesteComunicacao:
@@ -537,7 +568,7 @@ begin
       GetTEFPayKitAPI.TransacaoResumoVendas;
     tefopFechamento:
       GetTEFPayKitAPI.FinalizaDPOS(True);
-    tefopNenhuma:
+    tefopPagamento:
       GetTEFPayKitAPI.ForcaAtualizacaoTabelasPinpad;
   else
     GetTEFPayKitAPI.TransacaoFuncoesAdministrativas();

@@ -53,6 +53,12 @@ Símbolo : Significado
     - Enviar o parâmetro Tipo Operação como String
     - usar o método 'TransacaoCartaoDebitoCompleta', para transações de Débito
     - correção na chamada de TransacaoCartaoFrota
+[-] Correção em 'TACBrTEFRespPayKit.ConteudoToProperty' para não tentar "Confirmar"
+    transações de Reimpressão
+[-] Correção em 'TACBrTEFAPIClassPayKit.InterpretarRespostaAPI' para processar
+    corretamente, transação de Reimpressão
+[-] Correção para CallBack 'QuandoPerguntarCampoAPI', para zerar valores default
+[-] Correções no fluxo do Menu Administrativo
 
 -- ACBrTEFPayKitAPI --
 [*] Remoção do tipo 'TACBrTEFPayKitTipoOperacao' (parâmetro modificado para String)
@@ -64,6 +70,9 @@ Símbolo : Significado
 [-] Correção em CallBack 'Comandos', na captura da String do QRCode, desprezava
     o primeiro caractere
 [-] Correção em 'TransacaoCartaoCreditoCompleta', para não ocorrer A.V.
+[-] Correções para processar corretamente Transação Administrativa de Reimpressao
+[*] M[etodo 'TACBrTEFPayKitAPI.ObtemComprovanteTransacao' modificado para
+    recuperar, cupom de Transação Administrativa de Reimpressao
     (por: DSA)
 
 14/05/2025

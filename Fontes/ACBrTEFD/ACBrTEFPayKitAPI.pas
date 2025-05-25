@@ -49,6 +49,7 @@ const
   CPayKitDirBin = 'Bin';
   CPayKitDirCupons = 'Cupons';
   CPayKitDirInterno = 'Interno';
+  CPayKitNumControleReimpressao = 999999;
 
   CPayKitConf = 'dposlocal.ini';
   CSecMovimentoACBr = 'Movimento_ACBr';
@@ -90,15 +91,15 @@ type
                                               // -2 - Volta no Fluxo
                                               // -1 - Cancela o Fluxo
 
-  TACBrTEFPayKitTiposEntrada = ( teCartao,
+  TACBrTEFPayKitTiposEntrada = ( teString,
+                                 teNumero,
+                                 teValor,
+                                 teCartao,
                                  teBarrasDigitado,
                                  teBarrasLido,
                                  teValidade,
                                  teData,
                                  teCodSeguranca,
-                                 teValor,
-                                 teNumero,
-                                 teString,
                                  teValorEspecial);
 
   TACBrTEFPayKitDefinicaoCampo = record
@@ -502,6 +503,7 @@ type
   end;
 
   function GetTEFPayKitAPI: TACBrTEFPayKitAPI;
+  procedure LimparDefinicaoCampo(out Adef: TACBrTEFPayKitDefinicaoCampo);
 
   procedure CallBackDisplayTerminal(pMensagem: PAnsiChar);
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -574,6 +576,18 @@ begin
     vTEFPayKit := TACBrTEFPayKitAPI.Create;
 
   Result := vTEFPayKit;
+end;
+
+procedure LimparDefinicaoCampo(out Adef: TACBrTEFPayKitDefinicaoCampo);
+begin
+  Adef.TituloPergunta := '';
+  Adef.MascaraDeCaptura := '';
+  Adef.TipoDeEntrada := teString;
+  Adef.TamanhoMinimo := 0;
+  Adef.TamanhoMaximo := 0;
+  Adef.ValorMinimo := 0;
+  Adef.ValorMaximo := 0;
+  Adef.ValorInicial := '';
 end;
 
 procedure CallBackDisplayTerminal(pMensagem: PAnsiChar); {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -669,6 +683,7 @@ begin
   begin
     s := String(pLabel);
     GravarLog('  CallBackEntraCartao( '+s+' )');
+    LimparDefinicaoCampo(def);
     def.TituloPergunta := ACBrStr(s);
     def.TipoDeEntrada := teCartao;
     def.TamanhoMaximo := 19;
@@ -695,6 +710,7 @@ begin
   begin
     s := String(pLabel);
     GravarLog('  CallBackEntraDataValidade( '+s+' )');
+    LimparDefinicaoCampo(def);
     def.TituloPergunta := ACBrStr(s);
     def.TipoDeEntrada := teValidade;
 
@@ -721,6 +737,7 @@ begin
   begin
     s := String(pLabel);
     GravarLog('  CallBackEntraData( '+s+' )');
+    LimparDefinicaoCampo(def);
     def.TituloPergunta := ACBrStr(s);
     def.TipoDeEntrada := teData;
 
@@ -747,6 +764,7 @@ begin
   begin
     s := String(pLabel);
     GravarLog('  CallBackEntraCodigoSeguranca( '+s+', '+IntToStr(iTamanhoMax)+' )');
+    LimparDefinicaoCampo(def);
     def.TituloPergunta := ACBrStr(s);
     def.TipoDeEntrada := teCodSeguranca;
     def.TamanhoMaximo := iTamanhoMax;
@@ -817,6 +835,7 @@ begin
     vmin := String(pValorMinimo);
     vmax := String(pValorMaximo);
     GravarLog('  CallBackEntraValor( '+s+', '+vmin+', '+vmax+' )');
+    LimparDefinicaoCampo(def);
     def.TituloPergunta := ACBrStr(s);
     def.ValorMinimo := StrToIntDef(vmin, 0)/100;
     def.ValorMaximo := StrToIntDef(vmax, 0)/100;
@@ -853,6 +872,7 @@ begin
     vmax := String(pNumeroMaximo);
     GravarLog( '  CallBackEntraNumero( '+s+', '+vmin+', '+vmax+', '+
                IntToStr(iMinimoDigitos)+', '+IntToStr(iMaximoDigitos)+', '+IntToStr(iDigitosExatos)+' )');
+    LimparDefinicaoCampo(def);
     def.TituloPergunta := ACBrStr(s);
     def.ValorMinimo := StrToIntDef(vmin, 0);
     def.ValorMaximo := StrToIntDef(vmax, 0);
@@ -920,6 +940,7 @@ begin
   begin
     s := String(pLabel);
     GravarLog('  CallBackEntraString( '+s+', '+String(pTamanhoMaximo)+' )');
+    LimparDefinicaoCampo(def);
     def.TituloPergunta := ACBrStr(s);
     def.TamanhoMaximo := StrToIntDef(String(pTamanhoMaximo), 0);
     def.TipoDeEntrada := teString;
@@ -984,6 +1005,7 @@ begin
     with GetTEFPayKitAPI do
     begin
       GravarLog('  CallBackEntraCodigoBarras( '+s+' )');
+      LimparDefinicaoCampo(def);
       def.TituloPergunta := ACBrStr(s);
       def.TipoDeEntrada := teBarrasDigitado;
       resp := '';
@@ -1011,6 +1033,7 @@ begin
     with GetTEFPayKitAPI do
     begin
       GravarLog('  CallBackEntraCodigoBarrasLido( '+s+' )');
+      LimparDefinicaoCampo(def);
       def.TituloPergunta := ACBrStr(s);
       def.TipoDeEntrada := teBarrasLido;
       resp := '';
@@ -1101,10 +1124,11 @@ begin
     s := String(pLabel);
     p := String(pParametros);
     GravarLog('  CallBackEntraValorEspecial( '+s+', '+p+' )');
+    LimparDefinicaoCampo(def);
     def.TituloPergunta := ACBrStr(s);
     def.ValorMinimo := StrToIntDef(copy(p,  1, 12), 0);
     def.ValorMaximo := StrToIntDef(copy(p, 13, 12), 0);
-    decimais := StrToIntDef(copy(p, 25, 1), 0);
+    decimais := StrToIntDef(copy(p, 25, 1), 2);
     def.TipoDeEntrada := teValorEspecial;
     def.MascaraDeCaptura := '@@@.@@@.@@@.@@@,'+StringOfChar('@', decimais);
 
@@ -1282,7 +1306,6 @@ begin
   if not FileExists(f) then
     DoException(Format(sErrArqPayKitNaoEncontrado, [CPayKitConf, p]));
 
-  fUltimoNumeroControle := -1;
   datamov := 0;
   fechado := False;
   ini := TMemIniFile.Create(f);
@@ -1334,7 +1357,6 @@ begin
   if not FileExists(f) then
     DoException(Format(sErrArqPayKitNaoEncontrado, [CPayKitConf, p]));
 
-  fUltimoNumeroControle := -1;
   fechado := False;
   datamov := 0;
   ini := TMemIniFile.Create(f);
@@ -1373,7 +1395,6 @@ procedure TACBrTEFPayKitAPI.TransacaoEspecial(iCodigoTransacao: LongInt;
 var
   iRet: LongInt;
 begin
-  fUltimoNumeroControle := -1;
   EmTransacao := True;
   try
     GravarLog('Lib.TransacaoEspecial( '+IntToStr(iCodigoTransacao)+', '+Dados+' )');
@@ -1755,14 +1776,27 @@ function TACBrTEFPayKitAPI.ObtemComprovanteTransacao(
 var
   p, f, fn, fr: String;
   sl: TStringList;
+  nc: Integer;
 begin
   GravarLog('TACBrTEFPayKitAPI.ObtemComprovanteTransacao( '+NumeroControle+' )');
   Result := '';
-  p := CalcPayKitPath(CPayKitDirCupons);
-  fn := PadLeft(Trim(NumeroControle), 6, '0') + '.' + Format('%.3d', [NumeroPDV]);
-  fr := 'R'+fn;
-  f := p + fn;
+  nc := StrToIntDef(NumeroControle, -1);
+  if (nc < 1) then
+    Exit;
 
+  p := CalcPayKitPath(CPayKitDirCupons);
+  if (nc = CPayKitNumControleReimpressao) then
+  begin
+    fn := 'ULTIMO.PRN';
+    fr := fn;
+  end
+  else
+  begin
+    fn := Format('%.6d', [nc]) + '.' + Format('%.3d', [NumeroPDV]);
+    fr := 'R'+fn;
+  end;
+
+  f := p + fn;
   if Resumida then
   begin
     if FileExists(p + fr) then
@@ -1792,14 +1826,15 @@ procedure TACBrTEFPayKitAPI.TransacaoReimpressaoCupom;
 var
   iRet: LongInt;
 begin
-  fUltimoNumeroControle := -1;
   EmTransacao := True;
   try
     GravarLog('Lib.TransacaoReimpressaoCupom()');
     iRet := xTransacaoReimpressaoCupom;
     GravarLog('  ret: '+IntToStr(iRet));
     TratarErroPayKit(iRet);
+    fUltimoNumeroControle := CPayKitNumControleReimpressao;
   finally
+    ExibirMensagem('', msgTerminal);
     EmTransacao := False;
   end;
 end;

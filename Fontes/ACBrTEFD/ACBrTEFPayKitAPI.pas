@@ -459,7 +459,7 @@ type
     function TransacaoCartaoDebito(ValorTransacao: Double; const NumeroCupomVenda: Integer): String;
     function TransacaoCartaoDebitoCompleta(ValorTransacao: Double;
       const NumeroCupomVenda: Integer; TipoOperacao: String;
-      NumeroParcelas, SequenciaParcela: Integer; DataDebito: TDate;
+      NumeroParcelas, SequenciaParcela: Integer; DataDebito: TDateTime;
       ValorParcela, ValorTaxaServico: Double;
       PermiteAlteracao: Boolean; const Reservado: String): String;
     function TransacaoCartaoVoucher(ValorTransacao: Double; const NumeroCupomVenda: Integer): String;
@@ -1617,7 +1617,7 @@ end;
 function TACBrTEFPayKitAPI.TransacaoCartaoDebitoCompleta(
   ValorTransacao: Double; const NumeroCupomVenda: Integer;
   TipoOperacao: String; NumeroParcelas, SequenciaParcela: Integer;
-  DataDebito: TDate; ValorParcela, ValorTaxaServico: Double;
+  DataDebito: TDateTime; ValorParcela, ValorTaxaServico: Double;
   PermiteAlteracao: Boolean; const Reservado: String): String;
 var
   iRet: LongInt;

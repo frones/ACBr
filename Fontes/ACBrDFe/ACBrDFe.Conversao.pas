@@ -97,6 +97,14 @@ const
     '620001', '620002', '620003', '620004', '620005', '800001', '800002',
     '810001', '820001', '820002', '820003', '820004', '820005');
 
+type
+  TcCredPres = (cpNenhum,
+    cp00);
+
+const
+  TcCredPresArrayStrings: array[TcCredPres] of string = ('',
+    '00');
+
 {
   Declaração das funções de conversão
 }
@@ -109,6 +117,9 @@ function StrToCSTIBSCBS(const s: string): TCSTIBSCBS;
 
 function cClassTribToStr(const t: TcClassTrib): string;
 function StrTocClassTrib(const s: string): TcClassTrib;
+
+function cCredPresToStr(const t: TcCredPres): string;
+function StrTocCredPres(const s: string): TcCredPres;
 
 implementation
 
@@ -174,6 +185,26 @@ begin
     end;
   end;
   raise EACBrException.CreateFmt('Valor string inválido para TcClassTrib: %s', [s]);
+end;
+
+function cCredPresToStr(const t: TcCredPres): string;
+begin
+  Result := TcCredPresArrayStrings[t];
+end;
+
+function StrTocCredPres(const s: string): TcCredPres;
+var
+  idx: TcCredPres;
+begin
+  for idx:= Low(TcCredPresArrayStrings) to High(TcCredPresArrayStrings) do
+  begin
+    if(TcCredPresArrayStrings[idx] = s)then
+    begin
+      Result := idx;
+      exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para TcCredPres: %s', [s]);
 end;
 
 end.

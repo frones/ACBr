@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/05/2025
+-- ACBrDFe.Conversao --
+[+] Criado o tipo TcCredPres e as funções de conversão.
+   Por: Italo Giurizzato Junior
+
 21/05/2025
 -- ACBrDFe.Conversao --
 [+] Criada a unit para inicialmente concentrar os tipos e funções de conversão 

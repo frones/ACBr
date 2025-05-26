@@ -1369,8 +1369,8 @@ type
 
   TgIS = class(TObject)
   private
-    FCSTIS: TCSTIBSCBS;
-    FcClassTribIS: TcClassTrib;
+    FCSTIS: TCSTIS;
+    FcClassTribIS: TcClassTribIS;
     FvBCIS: Double;
     FpIS: Double;
     FpISEspec: Double;
@@ -1380,8 +1380,8 @@ type
   public
     procedure Assign(Source: TgIS);
 
-    property CSTIS: TCSTIBSCBS read FCSTIS write FCSTIS;
-    property cClassTribIS: TcClassTrib read FcClassTribIS write FcClassTribIS;
+    property CSTIS: TCSTIS read FCSTIS write FCSTIS;
+    property cClassTribIS: TcClassTribIS read FcClassTribIS write FcClassTribIS;
     property vBCIS: Double read FvBCIS write FvBCIS;
     property pIS: Double read FpIS write FpIS;
     property pISEspec: Double read FpISEspec write FpISEspec;
@@ -1480,12 +1480,12 @@ type
 
   TgIBSCBSCredPres = class(TObject)
   private
-    FcCredPres: Integer;
+    FcCredPres: TcCredPres;
     FpCredPres: Double;
     FvCredPres: Double;
     FvCredPresCondSus: Double;
   public
-    property cCredPres: Integer read FcCredPres write FcCredPres;
+    property cCredPres: TcCredPres read FcCredPres write FcCredPres;
     property pCredPres: Double read FpCredPres write FpCredPres;
     property vCredPres: Double read FvCredPres write FvCredPres;
     property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;

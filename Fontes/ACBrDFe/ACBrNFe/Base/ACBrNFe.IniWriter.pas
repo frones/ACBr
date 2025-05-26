@@ -1550,8 +1550,8 @@ var
 begin
   sSecao := 'IS' + IntToStrZero(Idx + 1, 3);
 
-  AINIRec.WriteString(sSecao, 'CSTIS', CSTIBSCBSToStr(ISel.CSTIS));
-  AINIRec.WriteString(sSecao, 'cClassTribIS', cClassTribToStr(ISel.cClassTribIS));
+  AINIRec.WriteString(sSecao, 'CSTIS', CSTISToStr(ISel.CSTIS));
+  AINIRec.WriteString(sSecao, 'cClassTribIS', cClassTribISToStr(ISel.cClassTribIS));
   AINIRec.WriteFloat(sSecao, 'vBCIS', ISel.vBCIS);
   AINIRec.WriteFloat(sSecao, 'pIS', ISel.pIS);
   AINIRec.WriteFloat(sSecao, 'pISEspec', ISel.pISEspec);
@@ -1688,7 +1688,7 @@ var
 begin
   sSecao := Grupo + IntToStrZero(Idx + 1, 3);
 
-  AINIRec.WriteInteger(sSecao, 'cCredPres', IBSCredPres.cCredPres);
+  AINIRec.WriteString(sSecao, 'cCredPres', cCredPresToStr(IBSCredPres.cCredPres));
   AINIRec.WriteFloat(sSecao, 'pCredPres', IBSCredPres.pCredPres);
 
   if IBSCredPres.vCredPres > 0 then

@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/05/2025
+-- Diversos --
+[*] O campo CSTIS que antes era do tipo TCSTIBSCBS passou a ser do tipo TCSTIS,
+    o campo cClassTribIS que antes era do tipo TcClassTrib passou a ser do tipo TcClassTribIS,
+    o campo cCredPres que antes era do tipo Integer passou a ser do tipo TcCredPres
+  Por: Italo Giurizzato Junior
+
 22/05/2025
 -- ACBrNFeServicos --
 [+] #TK-7044: Adiciona a URL da Consulta de Cadastro para Sefaz Amazonas.

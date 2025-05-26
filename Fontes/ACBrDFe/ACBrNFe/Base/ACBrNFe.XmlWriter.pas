@@ -4091,10 +4091,10 @@ begin
   Result := FDocument.CreateElement('IS');
 
   Result.AppendChild(AddNode(tcStr, 'UB03', 'CSTIS', 3, 3, 1,
-                                          CSTIBSCBSToStr(ISel.CSTIS), DSC_CST));
+                                              CSTISToStr(ISel.CSTIS), DSC_CST));
 
   Result.AppendChild(AddNode(tcStr, 'UB04', 'cClassTribIS', 6, 6, 1,
-                           cClassTribToStr(ISel.cClassTribIS), DSC_CCLASSTRIB));
+                         cClassTribISToStr(ISel.cClassTribIS), DSC_CCLASSTRIB));
 
   if (ISel.vBCIS > 0) or (ISel.pIS > 0) or (ISel.uTrib <> '') or
      (ISel.qTrib > 0) or (ISel.vIS > 0) then
@@ -4308,8 +4308,8 @@ function TNFeXmlWriter.Gerar_IBSCBS_gIBSCBS_gIBSCBSCredPres(
 begin
   Result := FDocument.CreateElement(Grupo);
 
-  Result.AppendChild(AddNode(tcInt, 'UB56', 'cCredPres', 2, 2, 1,
-                                         IBSCredPres.cCredPres, DSC_CCREDPRES));
+  Result.AppendChild(AddNode(tcStr, 'UB56', 'cCredPres', 2, 2, 1,
+                         cCredPresToStr(IBSCredPres.cCredPres), DSC_CCREDPRES));
 
   Result.AppendChild(AddNode(tcDe4, 'UB57', 'pCredPres', 1, 7, 1,
                                          IBSCredPres.pCredPres, DSC_PCREDPRES));

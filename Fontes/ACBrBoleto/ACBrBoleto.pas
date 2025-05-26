@@ -1232,6 +1232,7 @@ type
     fTotalParcelas     : Integer;
     fValorDescontoAntDia: Currency;
     fVencimento        : TDateTime;
+    fDataRegistro      : TDateTime;
     fDataDocumento     : TDateTime;
     fNumeroDocumento   : String;
     fEspecieDoc        : String;
@@ -1348,6 +1349,8 @@ type
      property ACBrBoleto        : TACBrBoleto read fACBrBoleto;
      property LocalPagamento    : String      read fLocalPagamento    write fLocalPagamento;
      property Vencimento        : TDateTime   read fVencimento        write SetVencimento;
+     property DataRegistro      : TDateTime   read fDataRegistro      write fDataRegistro;
+
      property DataDocumento     : TDateTime   read fDataDocumento     write fDataDocumento;
      property NumeroDocumento   : String      read fNumeroDocumento   write fNumeroDocumento ;
      property EspecieDoc        : String      read fEspecieDoc        write fEspecieDoc;
@@ -4478,6 +4481,7 @@ begin
            IniRetorno.WriteString(wSessao,'Sacado.Nome', ListadeBoletos[I].Sacado.NomeSacado);
            IniRetorno.WriteString(wSessao,'Sacado.CNPJCPF', ListadeBoletos[I].Sacado.CNPJCPF);
            IniRetorno.WriteString(wSessao,'Vencimento',DateToStr(ListadeBoletos[I].Vencimento));
+           IniRetorno.WriteString(wSessao,'DataRegistro',DateToStr(ListadeBoletos[I].DataRegistro));
            IniRetorno.WriteString(wSessao,'DataDocumento',DateToStr(ListadeBoletos[I].DataDocumento));
            IniRetorno.WriteString(wSessao,'NumeroDocumento',ListadeBoletos[I].NumeroDocumento);
            IniRetorno.WriteString(wSessao,'DataProcessamento',DateToStr(ListadeBoletos[I].DataProcessamento));

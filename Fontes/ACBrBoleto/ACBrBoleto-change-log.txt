@@ -48,6 +48,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+26/05/2025
+-- ACBrBoleto.pas --
+[*] TK-6783 Mapeado o retorno DataRegistro para ser exibido na lib/monitor; 
+    https://www.projetoacbr.com.br/forum/topic/82408-acbrlibboleto-c-m%C3%A9todo-consultartitulosporperiodo-n%C3%A3o-informa-data-de-registro-dos-boletos/#comment-534372
+    Por: Daniel de Morais InfoCotidiano
+	
 22/05/2025
 --ACBrBoletoW_Sicredi_APIV2--
 [*] TK-6567 - Corrigido tamanho maximo logradouro + numero para 40

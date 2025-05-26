@@ -761,7 +761,7 @@ var
 begin
   sSecao := Grupo + IntToStrZero(Idx + 1, 3);;
 
-  AINIRec.WriteInteger(sSecao, 'cCredPres', gIBSCredPres.cCredPres);
+  AINIRec.WriteString(sSecao, 'cCredPres', cCredPresToStr(gIBSCredPres.cCredPres));
   AINIRec.WriteFloat(sSecao, 'pCredPres', gIBSCredPres.pCredPres);
   AINIRec.WriteFloat(sSecao, 'vCredPres', gIBSCredPres.vCredPres);
   AINIRec.WriteFloat(sSecao, 'vCredPresCondSus', gIBSCredPres.vCredPresCondSus);

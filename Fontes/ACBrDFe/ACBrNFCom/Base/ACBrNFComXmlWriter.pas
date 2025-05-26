@@ -1541,7 +1541,7 @@ begin
 
     if (idCSRT <> 0) and (CSRT <> '') then
     begin
-      Result.AppendChild(AddNode(tcInt, '#315', 'idCSRT', 2, 2, 1,
+      Result.AppendChild(AddNode(tcInt, '#315', 'idCSRT', 3, 3, 1,
                                                            idCSRT, DSC_IDCSRT));
 
       Result.AppendChild(AddNode(tcStr, '#316', 'hashCSRT', 28, 28, 1,
@@ -1792,8 +1792,8 @@ function TNFComXmlWriter.Gerar_IBSCBS_gIBSCBS_gIBSCBSCredPres(
 begin
   Result := FDocument.CreateElement(Grupo);
 
-  Result.AppendChild(AddNode(tcInt, '#63', 'cCredPres', 2, 2, 1,
-                                        gIBSCredPres.cCredPres, DSC_CCREDPRES));
+  Result.AppendChild(AddNode(tcStr, '#63', 'cCredPres', 2, 2, 1,
+                        cCredPresToStr(gIBSCredPres.cCredPres), DSC_CCREDPRES));
 
   Result.AppendChild(AddNode(tcDe4, '#64', 'pCredPres', 1, 7, 1,
                                         gIBSCredPres.pCredPres, DSC_PCREDPRES));

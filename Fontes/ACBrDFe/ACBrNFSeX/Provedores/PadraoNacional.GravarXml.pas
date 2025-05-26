@@ -264,7 +264,6 @@ begin
 
   // Reforma Tributária
   if (NFSe.IBSCBS.dest.xNome <> '') or (NFSe.IBSCBS.adq.xNome <> '') or
-     (NFSe.IBSCBS.serv.modoPrestServ <> '') or
      (NFSe.IBSCBS.valores.trib.gIBSCBS.gIBSCredPres.pCredPresIBS > 0) then
     Result.AppendChild(GerarIBSCBS(NFSe.IBSCBS));
 end;
@@ -1556,7 +1555,7 @@ begin
   Result := CreateElement('serv');
 
   Result.AppendChild(AddNode(tcStr, '#1', 'modoPrestServ', 1, 1, 1,
-                                                       serv.modoPrestServ, ''));
+                                   modoPrestServToStr(serv.modoPrestServ), ''));
 
   if serv.clocalPrestServ > 0 then
     Result.AppendChild(AddNode(tcInt, '#1', 'clocalPrestServ', 7, 7, 1,
@@ -1618,8 +1617,8 @@ function TNFSeW_PadraoNacional.GerargIBSCredPres(
 begin
   Result := CreateElement('gIBSCredPres');
 
-  Result.AppendChild(AddNode(tcInt, '#1', 'cCredPresIBS', 3, 3, 1,
-                                                gIBSCredPres.cCredPresIBS, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'cCredPresIBS', 3, 3, 1,
+                                cCredPresToStr(gIBSCredPres.cCredPresIBS), ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pCredPresIBS', 1, 5, 1,
                                                 gIBSCredPres.pCredPresIBS, ''));
@@ -1744,8 +1743,8 @@ function TNFSeW_PadraoNacional.GerargCBSCredPres(
 begin
   Result := CreateElement('gCredPres');
 
-  Result.AppendChild(AddNode(tcInt, '#1', 'cCredPresCBS', 2, 2, 1,
-                                                        gCBS.cCredPresCBS, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'cCredPresCBS', 2, 2, 1,
+                                        cCredPresToStr(gCBS.cCredPresCBS), ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pCredPresCBS', 1, 5, 1,
                                                         gCBS.pCredPresCBS, ''));

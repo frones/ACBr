@@ -1554,7 +1554,7 @@ type
 
   Tserv = class(TObject)
   private
-    FmodoPrestServ: string; //italo criar enumerados
+    FmodoPrestServ: TmodoPrestServ;
     FclocalPrestServ: Integer;
     FcPaisPrestServ: Integer;
     FcCIB: string;
@@ -1563,22 +1563,21 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property modoPrestServ: string read FmodoPrestServ write FmodoPrestServ;
+    property modoPrestServ: TmodoPrestServ read FmodoPrestServ write FmodoPrestServ;
     property clocalPrestServ: Integer read FclocalPrestServ write FclocalPrestServ;
     property cPaisPrestServ: Integer read FcPaisPrestServ write FcPaisPrestServ;
     property cCIB: string read FcCIB write FcCIB;
     property gCompraGov: TgCompraGov read FgCompraGov write FgCompraGov;
   end;
 
-
   { TgIBSCredPres }
 
   TgIBSCredPres = class(TObject)
   private
-    FcCredPresIBS: Integer;
+    FcCredPresIBS: TcCredPres;
     FpCredPresIBS: Double;
   public
-    property cCredPresIBS: Integer read FcCredPresIBS write FcCredPresIBS;
+    property cCredPresIBS: TcCredPres read FcCredPresIBS write FcCredPresIBS;
     property pCredPresIBS: Double read FpCredPresIBS write FpCredPresIBS;
   end;
 
@@ -1620,7 +1619,7 @@ type
 
   TgCBSValores = class(TObject)
   private
-    FcCredPresCBS: Integer;
+    FcCredPresCBS: TcCredPres;
     FpCredPresCBS: Double;
     FpDifCBS: Double;
     FvDevTribCBS: Double;
@@ -1628,7 +1627,7 @@ type
     FcClassTribCBSDeson: TcClassTrib;
     FpAliqCBSDeson: Double;
   public
-    property cCredPresCBS: Integer read FcCredPresCBS write FcCredPresCBS;
+    property cCredPresCBS: TcCredPres read FcCredPresCBS write FcCredPresCBS;
     property pCredPresCBS: Double read FpCredPresCBS write FpCredPresCBS;
     property pDifCBS: Double read FpDifCBS write FpDifCBS;
     property vDevTribCBS: Double read FvDevTribCBS write FvDevTribCBS;

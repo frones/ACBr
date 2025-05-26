@@ -620,6 +620,14 @@ type
 const
   TindCompGovArrayStrings: array[TindCompGov] of string = ('', '1', '0');
 
+type
+  TmodoPrestServ  = (mpsPresencial, mpsNaoPresencial);
+
+const
+  TmodoPrestServArrayStrings: array[TmodoPrestServ] of string = ('1', '2');
+
+
+
 {
   Declaração das funções de conversão
 }
@@ -801,6 +809,9 @@ function StrToLocalPrestacao(out ok: boolean; const s: string): TLocalPrestacao;
 // Reforma Tributária
 function indCompGovToStr(const t: TindCompGov): string;
 function StrToindCompGov(const s: string): TindCompGov;
+
+function modoPrestServToStr(const t: TmodoPrestServ): string;
+function StrTomodoPrestServ(const s: string): TmodoPrestServ;
 
 const
   SiglaISO2Pais: array[0..247] of string = ('AF', 'AL', 'CW', 'DE', 'BF', 'AD',
@@ -13342,6 +13353,26 @@ begin
     end;
   end;
   raise EACBrException.CreateFmt('Valor string inválido para TindCompGov: %s', [s]);
+end;
+
+function modoPrestServToStr(const t: TmodoPrestServ): string;
+begin
+  Result := TmodoPrestServArrayStrings[t];
+end;
+
+function StrTomodoPrestServ(const s: string): TmodoPrestServ;
+var
+  idx: TmodoPrestServ;
+begin
+  for idx:= Low(TmodoPrestServArrayStrings) to High(TmodoPrestServArrayStrings) do
+  begin
+    if(TmodoPrestServArrayStrings[idx] = s)then
+    begin
+      Result := idx;
+      exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para TmodoPrestServ: %s', [s]);
 end;
 
 end.

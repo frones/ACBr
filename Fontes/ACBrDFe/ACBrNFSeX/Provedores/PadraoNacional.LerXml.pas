@@ -1685,7 +1685,7 @@ procedure TNFSeR_PadraoNacional.Ler_ServicoIBSCBS(const ANode: TACBrXmlNode;
 begin
   if not Assigned(ANode) then Exit;
 
-  serv.modoPrestServ := ObterConteudo(ANode.Childrens.FindAnyNs('modoPrestServ'), tcStr);
+  serv.modoPrestServ := StrTomodoPrestServ(ObterConteudo(ANode.Childrens.FindAnyNs('modoPrestServ'), tcStr));
   serv.clocalPrestServ := ObterConteudo(ANode.Childrens.FindAnyNs('clocalPrestServ'), tcInt);
   serv.cPaisPrestServ := ObterConteudo(ANode.Childrens.FindAnyNs('cPaisPrestServ'), tcInt);
   serv.cCIB := ObterConteudo(ANode.Childrens.FindAnyNs('cCIB'), tcStr);
@@ -1736,7 +1736,7 @@ procedure TNFSeR_PadraoNacional.Ler_gIBSCredPres(const ANode: TACBrXmlNode;
 begin
   if not Assigned(ANode) then Exit;
 
-  gIBSCredPres.cCredPresIBS := ObterConteudo(ANode.Childrens.FindAnyNs('cCredPresIBS'), tcInt);
+  gIBSCredPres.cCredPresIBS := StrTocCredPres(ObterConteudo(ANode.Childrens.FindAnyNs('cCredPresIBS'), tcStr));
   gIBSCredPres.pCredPresIBS := ObterConteudo(ANode.Childrens.FindAnyNs('pCredPresIBS'), tcDe2);
 end;
 
@@ -1828,7 +1828,7 @@ procedure TNFSeR_PadraoNacional.Ler_gCBSCredPres(
 begin
   if not Assigned(ANode) then Exit;
 
-  gCBS.cCredPresCBS := ObterConteudo(ANode.Childrens.FindAnyNs('cCredPresCBS'), tcInt);
+  gCBS.cCredPresCBS := StrTocCredPres(ObterConteudo(ANode.Childrens.FindAnyNs('cCredPresCBS'), tcStr));
   gCBS.pCredPresCBS := ObterConteudo(ANode.Childrens.FindAnyNs('pCredPresCBS'), tcDe2);
 end;
 
@@ -2679,7 +2679,7 @@ begin
   sSecao := 'ServicoIBSCBS';
   if AINIRec.SectionExists(sSecao) then
   begin
-    serv.modoPrestServ := AINIRec.ReadString(sSecao, 'modoPrestServ', '');
+    serv.modoPrestServ := StrTomodoPrestServ(AINIRec.ReadString(sSecao, 'modoPrestServ', ''));
     serv.clocalPrestServ := AINIRec.ReadInteger(sSecao, 'clocalPrestServ', 0);
     serv.cPaisPrestServ := AINIRec.ReadInteger(sSecao, 'cPaisPrestServ', 0);
     serv.cCIB := AINIRec.ReadString(sSecao, 'cCIB', '');
@@ -2714,7 +2714,7 @@ begin
   sSecao := 'gIBSCredPres';
   if AINIRec.SectionExists(sSecao) then
   begin
-    gIBSCredPres.cCredPresIBS := AINIRec.ReadInteger(sSecao, 'cCredPresIBS', 0);
+    gIBSCredPres.cCredPresIBS := StrTocCredPres(AINIRec.ReadString(sSecao, 'cCredPresIBS', ''));
     gIBSCredPres.pCredPresIBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'pCredPresIBS', ''), 0);
   end;
 end;
@@ -2759,7 +2759,7 @@ begin
   sSecao := 'gCBS';
   if AINIRec.SectionExists(sSecao) then
   begin
-    gCBS.cCredPresCBS := AINIRec.ReadInteger(sSecao, 'cCredPresCBS', 0);
+    gCBS.cCredPresCBS := StrTocCredPres(AINIRec.ReadString(sSecao, 'cCredPresCBS', ''));
     gCBS.pCredPresCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'pCredPresCBS', ''), 0);
 
     gCBS.pDifCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'pDifCBS', ''), 0);

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/05/2025
+-- Diversos --
+[*] O campo modoPrestServ que antes era do tipo string passou a ser do tipo TmodoPrestServ,
+    o campo cCredPresIBS que antes era do tipo Integer passou a ser do tipo TcCredPres e
+    o campo cCredPresCBS que antes era do tipo Integer passou a ser do tipo TcCredPres
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXGravarXml --
 [-] #TK-7119: Ajuste visando a geração do INI a partir de NFS-e carregada na memória quando leiaute próprio.
    Por: Diego Folieni

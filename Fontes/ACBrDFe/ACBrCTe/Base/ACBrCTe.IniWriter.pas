@@ -290,12 +290,14 @@ begin
   Gerar_Recebedor(AINIRec, FCTe.receb);
   Gerar_Destinatario(AINIRec, FCTe.dest);
   Gerar_ValorPrestacao(AINIRec, FCTe.vPrest);
-  Gerar_ValorPrestacaoComposicao(AINIRec, FCTe.vPrest.Comp);
   Gerar_Imposto(AINIRec, FCTe.Imp);
 
   case FCTe.ide.tpCTe of
     tcNormal:
-      Gerar_InfCTeNormal(AINIRec, FCTe.infCTeNorm);
+      begin
+        Gerar_ValorPrestacaoComposicao(AINIRec, FCTe.vPrest.Comp);
+        Gerar_InfCTeNormal(AINIRec, FCTe.infCTeNorm);
+      end;
     tcComplemento:
       begin
         Gerar_InfCTeComplemento(AINIRec, FCTe.infCteComp);
@@ -318,9 +320,9 @@ begin
   Gerar_Tomador(AINIRec, FCTe.toma);
   Gerar_InfCarga(AINIRec, FCTe.infCarga);
   Gerar_Detalhamento(AINIRec, FCTe.det);
-  Gerar_InfModalRodoviario(AINIRec, FCTe.infmodal.rodo);
-  Gerar_InfModalAereo(AINIRec, FCTe.infmodal.aereo);
-  Gerar_InfModalAquav(AINIRec, FCTe.infmodal.aquav);
+  Gerar_InfModalRodoviario(AINIRec, FCTe.infModal.rodo);
+  Gerar_InfModalAereo(AINIRec, FCTe.infModal.aereo);
+  Gerar_InfModalAquav(AINIRec, FCTe.infModal.aquav);
   Gerar_InfCTeNormalCobr(AINIRec, FCTe.cobr);
   Gerar_InfCTeNormalInfCTeSub(AINIRec, FCTe.infCteSub);
   Gerar_Imposto(AINIRec, FCTe.imp);
@@ -741,7 +743,6 @@ begin
   Gerar_InfCTeNormalInfOutros(AINIRec, infCTeNorm.infDoc.infOutros);
   Gerar_InfCTeNormalInfDCe(AINIRec, infCTeNorm.infDoc.infDCe);
 
-
   Gerar_InfCTeNormalDocAnteriores(AINIRec, infCTeNorm.docAnt);
   Gerar_InfCTeNormalInfModal(AINIRec, infCTeNorm);
   Gerar_InfCTeNormalVeiculosNovos(AINIRec, infCTeNorm.veicNovos);
@@ -1086,11 +1087,11 @@ begin
   begin
     case FCTe.ide.modal of
       mdRodoviario:
-        Gerar_InfModalRodoviario(AINIRec, FCTe.infmodal.rodo);
+        Gerar_InfModalRodoviario(AINIRec, FCTe.infModal.rodo);
       mdAereo:
-        Gerar_InfModalAereo(AINIRec, FCTe.infmodal.aereo);
+        Gerar_InfModalAereo(AINIRec, FCTe.infModal.aereo);
       mdAquaviario:
-        Gerar_InfModalAquav(AINIRec, FCTe.infmodal.aquav);
+        Gerar_InfModalAquav(AINIRec, FCTe.infModal.aquav);
     end;
   end
   else
@@ -1969,7 +1970,7 @@ var
 begin
   sSecao := Grupo;
 
-  AINIRec.WriteInteger(sSecao, 'cCredPres', gIBSCredPres.cCredPres);
+  AINIRec.WriteString(sSecao, 'cCredPres', cCredPresToStr(gIBSCredPres.cCredPres));
   AINIRec.WriteFloat(sSecao, 'pCredPres', gIBSCredPres.pCredPres);
   AINIRec.WriteFloat(sSecao, 'vCredPres', gIBSCredPres.vCredPres);
   AINIRec.WriteFloat(sSecao, 'vCredPresCondSus', gIBSCredPres.vCredPresCondSus);

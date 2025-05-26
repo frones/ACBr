@@ -2438,7 +2438,7 @@ begin
   sSecao := 'gIBSCredPres';
   if AINIRec.SectionExists(sSecao) then
   begin
-    gIBSCredPres.cCredPres := AINIRec.ReadInteger(sSecao, 'cCredPres', 0);
+    gIBSCredPres.cCredPres := StrTocCredPres(AINIRec.ReadString(sSecao, 'cCredPres', ''));
     gIBSCredPres.pCredPres := StringToFloatDef( AINIRec.ReadString(sSecao,'pCredPres','') ,0);
     gIBSCredPres.vCredPres := StringToFloatDef( AINIRec.ReadString(sSecao,'vCredPres','') ,0);
     gIBSCredPres.vCredPresCondSus := StringToFloatDef( AINIRec.ReadString(sSecao,'vCredPresCondSus','') ,0);
@@ -2452,7 +2452,7 @@ begin
   sSecao := 'gCBSCredPres';
   if AINIRec.SectionExists(sSecao) then
   begin
-    gCBSCredPres.cCredPres := AINIRec.ReadInteger(sSecao, 'cCredPres', 0);
+    gCBSCredPres.cCredPres := StrTocCredPres(AINIRec.ReadString(sSecao, 'cCredPres', ''));
     gCBSCredPres.pCredPres := StringToFloatDef( AINIRec.ReadString(sSecao,'pCredPres','') ,0);
     gCBSCredPres.vCredPres := StringToFloatDef( AINIRec.ReadString(sSecao,'vCredPres','') ,0);
     gCBSCredPres.vCredPresCondSus := StringToFloatDef( AINIRec.ReadString(sSecao,'vCredPresCondSus','') ,0);

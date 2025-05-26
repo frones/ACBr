@@ -46,6 +46,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[-] TK-7010 Correção de alinhamento do grupo do pagador
+  por Edson_Ramos / Alexandre de Paula
+
 [*]TK-4457 Ajustes em quebra de linha da mensagem adicional
   por Celonir / Victor H Gonzales - Pandaaa
 

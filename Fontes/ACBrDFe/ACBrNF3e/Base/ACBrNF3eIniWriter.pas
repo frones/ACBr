@@ -1096,7 +1096,7 @@ var
 begin
   sSecao := 'gIBSCredPres' + IntToStrZero(Idx1, 2) + IntToStrZero(Idx2, 3);
 
-  AINIRec.WriteInteger(sSecao, 'cCredPres', gIBSCredPres.cCredPres);
+  AINIRec.WriteString(sSecao, 'cCredPres', cCredPresToStr(gIBSCredPres.cCredPres));
   AINIRec.WriteFloat(sSecao, 'pCredPres', gIBSCredPres.pCredPres);
   AINIRec.WriteFloat(sSecao, 'vCredPres', gIBSCredPres.vCredPres);
   AINIRec.WriteFloat(sSecao, 'vCredPresCondSus', gIBSCredPres.vCredPresCondSus);
@@ -1108,7 +1108,7 @@ var
 begin
   sSecao := 'gCBSCredPres' + IntToStrZero(Idx1, 2) + IntToStrZero(Idx2, 3);
 
-  AINIRec.WriteInteger(sSecao, 'cCredPres', gCBSCredPres.cCredPres);
+  AINIRec.WriteString(sSecao, 'cCredPres', cCredPresToStr(gCBSCredPres.cCredPres));
   AINIRec.WriteFloat(sSecao, 'pCredPres', gCBSCredPres.pCredPres);
   AINIRec.WriteFloat(sSecao, 'vCredPres', gCBSCredPres.vCredPres);
   AINIRec.WriteFloat(sSecao, 'vCredPresCondSus', gCBSCredPres.vCredPresCondSus);

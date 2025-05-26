@@ -172,12 +172,12 @@ type
 
   TgIBSCBSCredPres = class(TObject)
   private
-    FcCredPres: Integer;
+    FcCredPres: TcCredPres;
     FpCredPres: Double;
     FvCredPres: Double;
     FvCredPresCondSus: Double;
   public
-    property cCredPres: Integer read FcCredPres write FcCredPres;
+    property cCredPres: TcCredPres read FcCredPres write FcCredPres;
     property pCredPres: Double read FpCredPres write FpCredPres;
     property vCredPres: Double read FvCredPres write FvCredPres;
     property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;

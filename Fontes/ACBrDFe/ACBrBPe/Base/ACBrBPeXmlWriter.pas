@@ -1734,8 +1734,8 @@ function TBPeXmlWriter.Gerar_IBSCBS_gIBSCBS_gIBSCBSCredPres(
 begin
   Result := FDocument.CreateElement(Grupo);
 
-  Result.AppendChild(AddNode(tcInt, '#63', 'cCredPres', 2, 2, 1,
-                                        gIBSCredPres.cCredPres, DSC_CCREDPRES));
+  Result.AppendChild(AddNode(tcStr, '#63', 'cCredPres', 2, 2, 1,
+                        cCredPresToStr(gIBSCredPres.cCredPres), DSC_CCREDPRES));
 
   Result.AppendChild(AddNode(tcDe4, '#64', 'pCredPres', 1, 7, 1,
                                         gIBSCredPres.pCredPres, DSC_PCREDPRES));

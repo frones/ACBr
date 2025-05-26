@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/05/2025
+-- ACBrNFSeXServicos --
+[+] #TK-7107: Incluída a cidade de Guariba/SP, o provedor é ISSIntel.
+   Por: Italo Giurizzato Junior
+[*] #TK-7108: Incluída a URL de homologação da cidade de Valinhos/SP, o provedor é SigISSWeb.
+   Por: R.Postal
+[+] #TK-7104: Incluída a cidade de Serro/MG, o provedor é Fiorilli.
+   Por: Willian Delan
+
 22/05/2025
 -- Infisc.GravarXml --
 [*] #TK-7097: Alteração visando gerar a tag tpImp.

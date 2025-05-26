@@ -1,6 +1,6 @@
-Ôªø{ Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2025 Daniel Simoes de Almeida               }
 {                                                                              }
@@ -8,27 +8,27 @@
 {                              Antonio Carlos Junior                           }
 {                                                                              }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
+{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -109,13 +109,13 @@ type
     public
       constructor Create(AOwner: TComponent); override;
       destructor Destroy; override;
-      // Adicione propriedades, m√©todos e eventos espec√≠ficos do componente
+      // Adicione propriedades, mÈtodos e eventos especÌficos do componente
       procedure ImprimirDAMDFe(MDFE: TMDFe = nil); override;
       procedure ImprimirDAMDFePDF(MDFE: TMDFe = nil); override;
       procedure ImprimirDAMDFePDF(AStream: TStream; MDFE: TMDFe = nil); override;
 
     published
-      // Declare propriedades publicamente acess√≠veis aqui
+      // Declare propriedades publicamente acessÌveis aqui
   end;
 
 implementation
@@ -400,7 +400,7 @@ begin
     //
   end;
 
-  // Para n√£o ser exibido nas pr√≥ximas p√°ginas
+  // Para n„o ser exibido nas prÛximas p·ginas
   Visible := False;
 end;
 
@@ -499,7 +499,7 @@ begin
           AddBand(TBlocoTabelaInformacoesComposicaoCargaFerroviarioMDFe.Create(FMDFeUtils));
         end;
     end;
-    //Protocolo de Autoriza√ß√£o
+    //Protocolo de AutorizaÁ„o
     AddBand(TBlocoProtocoloAutorizacaoMDFe.Create(FMDFeUtils));
 
     AddBand(TBlocoObservacoesMDFe.Create(FMDFeUtils));
@@ -618,16 +618,16 @@ begin
   LPDF := Args.PDF;
   LMDFE := FMDFeUtils.MDFe;
 
-  // Posi√ß√£o inicial
+  // PosiÁ„o inicial
   x := 10;
   y := - 20;
 
-  // Cabe√ßalho - Logo
+  // CabeÁalho - Logo
   LPDF.SetFont('Arial', 'B', 10);
   LPDF.Rect(x, y, 40, 30); // Logo
   LPDF.Text(x + 2, y + 15, 'LOGO EMPRESA');
 
-  // Cabe√ßalho - Emitente
+  // CabeÁalho - Emitente
   LPDF.SetFont('Arial', 'B', 12);
   x1 := x + 45;
   y1 := y + 2;
@@ -708,7 +708,7 @@ begin
   LPDF := Args.PDF;
   LMDFE := FMDFeUtils.MDFe;
 
-  //Posi√ß√£o Inicial
+  //PosiÁ„o Inicial
   x := 10;
   y := 0;
 
@@ -716,7 +716,7 @@ begin
   LPDF.SetFont('Arial', 'B', 10);
   x1 := x;
   y1 := y - 65;
-  LTexto := 'DAMDFe - Documento Auxiliar do Manifesto Eletr√¥nico de Documentos Fiscais';
+  LTexto := 'DAMDFe - Documento Auxiliar do Manifesto EletrÙnico de Documentos Fiscais';
   LPDF.TextBox(x1, y1, 150, 5, LTexto, 'T', 'L', 0, '');
 
   // Campos fixos
@@ -735,7 +735,7 @@ begin
   x1 := x + 14;
   y1 := y - 55;
   LPDF.SetFont('Arial', '', 9);
-  LTexto := 'S√©rie';
+  LTexto := 'SÈrie';
   LPDF.TextBox(x1, y1, 14, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 14;
@@ -747,7 +747,7 @@ begin
   x1 := x + 28;
   y1 := y - 55;
   LPDF.SetFont('Arial', '', 9);
-  LTexto := 'N√∫mero';
+  LTexto := 'N˙mero';
   LPDF.TextBox(x1, y1, 14, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 28;
@@ -771,7 +771,7 @@ begin
   x1 := x + 60;
   y1 := y - 55;
   LPDF.SetFont('Arial', '', 9);
-  LTexto := 'Data e hora de Emiss√£o';
+  LTexto := 'Data e hora de Emiss„o';
   LPDF.TextBox(x1, y1, 35, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 60;
@@ -830,15 +830,15 @@ begin
   LPDF := Args.PDF;
   LMDFE := FMDFeUtils.MDFe;
 
-  //Posi√ß√£o Inicial
+  //PosiÁ„o Inicial
   x := 10;
   y := 0;
 
-  // T√≠tulo da carga
+  // TÌtulo da carga
   x1 := x;
   y1 := y - 121;
   LPDF.SetFont('Arial', 'B', 12);
-  LTexto := 'Modelo Rodovi√°rio de Carga';
+  LTexto := 'Modelo Rodovi·rio de Carga';
   LPDF.TextBox(x1, y1, 55, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 92;
@@ -921,15 +921,15 @@ begin
   LPDF := Args.PDF;
   LMDFE := FMDFeUtils.MDFe;
 
-  //Posi√ß√£o Inicial
+  //PosiÁ„o Inicial
   x := 10;
   y := 0;
 
-  // T√≠tulo da carga
+  // TÌtulo da carga
   x1 := x;
   y1 := y - 121;
   LPDF.SetFont('Arial', 'B', 12);
-  LTexto := 'Modelo A√©reo de Carga';
+  LTexto := 'Modelo AÈreo de Carga';
   LPDF.TextBox(x1, y1, 55, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 92;
@@ -1011,29 +1011,29 @@ begin
   LPDF := Args.PDF;
   LMDFE := FMDFeUtils.MDFe;
 
-  //Posi√ß√£o Inicial
+  //PosiÁ„o Inicial
   x := 10;
   y := 0;
 
 
-  //Embarca√ß√£o
+  //EmbarcaÁ„o
   x1 := x;
   y1 := y - 126;
   LPDF.SetFont('Arial', 'B', 10);
-  LTexto := 'Embarca√ß√£o';
+  LTexto := 'EmbarcaÁ„o';
   LPDF.TextBox(x1, y1, 55, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
   y1 := y - 121;
   LPDF.SetFont('Arial', '', 10);
-  LTexto := '0123456789 - Informa√ß√£o sobre a embarca√ß√£o';
+  LTexto := '0123456789 - InformaÁ„o sobre a embarcaÁ„o';
   LPDF.TextBox(x1, y1, 136, 5, LTexto, 'T', 'L', 0, '');
 
-  // T√≠tulo da carga
+  // TÌtulo da carga
   x1 := x;
   y1 := y - 112;
   LPDF.SetFont('Arial', 'B', 12);
-  LTexto := 'Modelo Aquavi√°rio de Carga';
+  LTexto := 'Modelo Aquavi·rio de Carga';
   LPDF.TextBox(x1, y1, 55, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 92;
@@ -1127,15 +1127,15 @@ begin
   LPDF := Args.PDF;
   LMDFE := FMDFeUtils.MDFe;
 
-  //Posi√ß√£o Inicial
+  //PosiÁ„o Inicial
   x := 10;
   y := 0;
 
-  //Informa√ß√µes da Composi√ß√£o do trem.
+  //InformaÁıes da ComposiÁ„o do trem.
   x1 := x;
   y1 := y - 127;
   LPDF.SetFont('Arial', 'B', 11);
-  LTexto := 'Informa√ß√µes da Composi√ß√£o do trem';
+  LTexto := 'InformaÁıes da ComposiÁ„o do trem';
   LPDF.TextBox(x1, y1, 65, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
@@ -1189,7 +1189,7 @@ begin
   x1 := x + 115;
   y1 := y - 123;
   LPDF.SetFont('Arial', '', 10);
-  LTexto := 'Qtd. de vag√µes carregados';
+  LTexto := 'Qtd. de vagıes carregados';
   LPDF.TextBox(x1, y1, 45, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 115;
@@ -1198,11 +1198,11 @@ begin
   LTexto := '6';
   LPDF.TextBox(x1, y1, 25, 5, LTexto, 'T', 'L', 0, '');
 
-  // T√≠tulo da carga
+  // TÌtulo da carga
   x1 := x;
   y1 := y - 112;
   LPDF.SetFont('Arial', 'B', 12);
-  LTexto := 'Modelo Ferrovi√°rio de Carga';
+  LTexto := 'Modelo Ferrovi·rio de Carga';
   LPDF.TextBox(x1, y1, 55, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 92;
@@ -1284,15 +1284,15 @@ begin
   LPDF := Args.PDF;
   LMDFE := FMDFeUtils.MDFe;
 
-  //Posi√ß√£o Inicial
+  //PosiÁ„o Inicial
   x := 10;
   y := 0;
 
-  //Protocolo de autoriza√ß√£o
+  //Protocolo de autorizaÁ„o
   x1 := x;
   y1 := y - 175;
   LPDF.SetFont('Arial', 'B', 9);
-  LTexto := 'Protocolo de autoriza√ß√£o';
+  LTexto := 'Protocolo de autorizaÁ„o';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
@@ -1346,15 +1346,15 @@ begin
   LPDF := Args.PDF;
   LMDFE := FMDFeUtils.MDFe;
 
-  //Posi√ß√£o Inicial
+  //PosiÁ„o Inicial
   x := 10;
   y := 0;
 
-  // Tabela de Ve√≠culo
+  // Tabela de VeÌculo
   x1 := x;
   y1 := y - 146;
   LPDF.SetFont('Arial', 'B', 10);
-  LTexto := 'Ve√≠culo';
+  LTexto := 'VeÌculo';
   LPDF.TextBox(x1, y1, 20, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
@@ -1418,17 +1418,17 @@ begin
     end;
   LPDF.TextBox(x1, y1, 50, 5, Trim(LTexto), 'T', 'L', 0, '');
 
-  //Vale Ped√°gio
+  //Vale Ped·gio
   x1 := x;
   y1 := y - 116;
   LPDF.SetFont('Arial', 'B', 10);
-  LTexto := 'Vale Ped√°gio';
+  LTexto := 'Vale Ped·gio';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
   y1 := y - 110;
   LPDF.SetFont('Arial', 'B', 10);
-  LTexto := 'Respons√°vel CNPJ';
+  LTexto := 'Respons·vel CNPJ';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
@@ -1458,7 +1458,7 @@ begin
   x1 := x + 70;
   y1 := y - 110;
   LPDF.SetFont('Arial', 'B', 10);
-  LTexto := 'N¬∞ Comprovante';
+  LTexto := 'N∞ Comprovante';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 70;
@@ -1495,7 +1495,7 @@ begin
   LPDF := Args.PDF;
   LMDFE := FMDFeUtils.MDFe;
 
-  //Posi√ß√£o Inicial
+  //PosiÁ„o Inicial
   x := 10;
   y := 0;
 
@@ -1540,7 +1540,7 @@ begin
   x1 := x + 92;
   y1 := y - 140;
   LPDF.SetFont('Arial', '', 10);
-  LTexto := 'N√∫mero';
+  LTexto := 'N˙mero';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 92;
@@ -1561,11 +1561,11 @@ begin
   LTexto := DateTimeToStr(LMDFE.aereo.dVoo);
   LPDF.TextBox(x1, y1, 40, 5, Trim(LTexto), 'T', 'L', 0, '');
 
-  //Aer√≥dromo
+  //AerÛdromo
   x1 := x;
   y1 := y - 116;
   LPDF.SetFont('Arial', 'B', 10);
-  LTexto := 'Aer√≥dromo';
+  LTexto := 'AerÛdromo';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
@@ -1615,11 +1615,11 @@ var
 begin
   LPDF := Args.PDF;
 
-  //Posi√ß√£o Inicial
+  //PosiÁ„o Inicial
   x := 10;
   y := 0;
 
-  // Tabela de Aquavi√°rio
+  // Tabela de Aquavi·rio
   x1 := x;
   y1 := y - 146;
   LPDF.SetFont('Arial', 'B', 10);
@@ -1632,18 +1632,18 @@ begin
   LTexto := 'Carregamento';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
-  //C√≥digo Carregamento
+  //CÛdigo Carregamento
   x1 := x;
   y1 := y - 136;
   LPDF.SetFont('Arial', 'B', 9);
   LTexto := '99999999';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
-  //Descri√ß√£o Carregamento
+  //DescriÁ„o Carregamento
   x1 := x + 30;
   y1 := y - 136;
   LPDF.SetFont('Arial', 'B', 9);
-  LTexto := 'Descri√ß√£o sobre Carregamento';
+  LTexto := 'DescriÁ„o sobre Carregamento';
   LPDF.TextBox(x1, y1, 60, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 92;
@@ -1652,18 +1652,18 @@ begin
   LTexto := 'Descarregamento';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
-  //C√≥digo Descarregamento
+  //CÛdigo Descarregamento
   x1 := x + 92;
   y1 := y - 136;
   LPDF.SetFont('Arial', 'B', 9);
   LTexto := '99999999';
   LPDF.TextBox(x1, y1, 40, 5, Trim(LTexto), 'T', 'L', 0, '');
 
-  //Descri√ß√£o Carregamento
+  //DescriÁ„o Carregamento
   x1 := x + 130;
   y1 := y - 136;
   LPDF.SetFont('Arial', 'B', 9);
-  LTexto := 'Descri√ß√£o sobre Descarregamento';
+  LTexto := 'DescriÁ„o sobre Descarregamento';
   LPDF.TextBox(x1, y1, 60, 5, Trim(LTexto), 'T', 'L', 0, '');
 end;
 
@@ -1689,22 +1689,22 @@ var
 begin
   LPDF := Args.PDF;
 
-  //Posi√ß√£o Inicial
+  //PosiÁ„o Inicial
   x := 10;
   y := 0;
 
-  //Tabela Ferrovi√°rio
+  //Tabela Ferrovi·rio
   x1 := x;
   y1 := y - 146;
   LPDF.SetFont('Arial', 'B', 10);
-  LTexto := 'Informa√ß√µes dos vag√µes';
+  LTexto := 'InformaÁıes dos vagıes';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
-  //S√©rie de Identifica√ß√£o
+  //SÈrie de IdentificaÁ„o
   x1 := x;
   y1 := y - 140;
   LPDF.SetFont('Arial', '', 10);
-  LTexto := 'S√©rie de ident.';
+  LTexto := 'SÈrie de ident.';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
@@ -1713,11 +1713,11 @@ begin
   LTexto := 'X99';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
-  //N√∫mero de Identifica√ß√£o
+  //N˙mero de IdentificaÁ„o
   x1 := x + 28;
   y1 := y - 140;
   LPDF.SetFont('Arial', '', 10);
-  LTexto := 'N√∫m. ident.';
+  LTexto := 'N˙m. ident.';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 28;
@@ -1739,11 +1739,11 @@ begin
   LTexto := '999';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
-  //Ton. √ötil
+  //Ton. ⁄til
   x1 := x + 68;
   y1 := y - 140;
   LPDF.SetFont('Arial', '', 10);
-  LTexto := 'Ton. √ötil.';
+  LTexto := 'Ton. ⁄til.';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 68;
@@ -1778,21 +1778,21 @@ begin
   LPDF := Args.PDF;
   LMDFE := FMDFeUtils.MDFe;
 
-  //Posi√ß√£o Inicial
+  //PosiÁ„o Inicial
   x := 10;
   y := 0;
 
-  //Informa√ß√µes da Composi√ß√£o da Carga
+  //InformaÁıes da ComposiÁ„o da Carga
   x1 := x;
   y1 := y - 90;
   LPDF.SetFont('Arial', 'B', 10);
-  LTexto := 'Informa√ß√µes da Composi√ß√£o da Carga';
+  LTexto := 'InformaÁıes da ComposiÁ„o da Carga';
   LPDF.TextBox(x1, y1, 100, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
   y1 := y - 84;
   LPDF.SetFont('Arial', 'B', 8);
-  LTexto := 'Informa√ß√µes dos documentos fiscais vinculados ao manifesto';
+  LTexto := 'InformaÁıes dos documentos fiscais vinculados ao manifesto';
   LPDF.TextBox(x1, y1, 90, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
@@ -1807,7 +1807,7 @@ begin
   x1 := x + 90;
   y1 := y - 84;
   LPDF.SetFont('Arial', 'B', 8);
-  LTexto := 'Informa√ß√µes da unidade de transporte';
+  LTexto := 'InformaÁıes da unidade de transporte';
   LPDF.TextBox(x1, y1, 55, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 90;
@@ -1815,14 +1815,14 @@ begin
   LPDF.SetFont('Arial', '', 9);
   for i := 0 to LMDFE.rodo.veicTracao.condutor.Count - 1 do
     begin
-      LTexto := 'Rodovi√°rio Tra√ß√£o';
+      LTexto := 'Rodovi·rio TraÁ„o';
     end;
   LPDF.TextBox(x1, y1, 55, 5, Trim(LTexto), 'T', 'L', 0, '');
 
   x1 := x + 145;
   y1 := y - 84;
   LPDF.SetFont('Arial', 'B', 8);
-  LTexto := 'Informa√ß√µes da unidade de carga';
+  LTexto := 'InformaÁıes da unidade de carga';
   LPDF.TextBox(x1, y1, 55, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 145;
@@ -1862,21 +1862,21 @@ begin
   LPDF := Args.PDF;
   LMDFE := FMDFeUtils.MDFe;
 
-  //Posi√ß√£o Inicial
+  //PosiÁ„o Inicial
   x := 10;
   y := 0;
 
-  //Informa√ß√µes da Composi√ß√£o da Carga
+  //InformaÁıes da ComposiÁ„o da Carga
   x1 := x;
   y1 := y - 90;
   LPDF.SetFont('Arial', 'B', 10);
-  LTexto := 'Informa√ß√µes da Composi√ß√£o da Carga';
+  LTexto := 'InformaÁıes da ComposiÁ„o da Carga';
   LPDF.TextBox(x1, y1, 100, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
   y1 := y - 84;
   LPDF.SetFont('Arial', 'B', 8);
-  LTexto := 'Informa√ß√µes dos documentos fiscais vinculados ao manifesto';
+  LTexto := 'InformaÁıes dos documentos fiscais vinculados ao manifesto';
   LPDF.TextBox(x1, y1, 90, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
@@ -1891,7 +1891,7 @@ begin
   x1 := x + 90;
   y1 := y - 84;
   LPDF.SetFont('Arial', 'B', 8);
-  LTexto := 'Informa√ß√µes da unidade de transporte';
+  LTexto := 'InformaÁıes da unidade de transporte';
   LPDF.TextBox(x1, y1, 55, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 90;
@@ -1906,7 +1906,7 @@ begin
   x1 := x + 145;
   y1 := y - 84;
   LPDF.SetFont('Arial', 'B', 8);
-  LTexto := 'Informa√ß√µes da unidade de carga';
+  LTexto := 'InformaÁıes da unidade de carga';
   LPDF.TextBox(x1, y1, 55, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 145;
@@ -1947,21 +1947,21 @@ begin
   LPDF := Args.PDF;
   LMDFE := FMDFeUtils.MDFe;
 
-  //Posi√ß√£o Inicial
+  //PosiÁ„o Inicial
   x := 10;
   y := 0;
 
-  //Informa√ß√µes da Composi√ß√£o da Carga
+  //InformaÁıes da ComposiÁ„o da Carga
   x1 := x;
   y1 := y - 90;
   LPDF.SetFont('Arial', 'B', 10);
-  LTexto := 'Informa√ß√µes da Composi√ß√£o da Carga';
+  LTexto := 'InformaÁıes da ComposiÁ„o da Carga';
   LPDF.TextBox(x1, y1, 100, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
   y1 := y - 84;
   LPDF.SetFont('Arial', 'B', 8);
-  LTexto := 'Informa√ß√µes dos documentos fiscais vinculados ao manifesto';
+  LTexto := 'InformaÁıes dos documentos fiscais vinculados ao manifesto';
   LPDF.TextBox(x1, y1, 90, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
@@ -1976,7 +1976,7 @@ begin
   x1 := x + 90;
   y1 := y - 84;
   LPDF.SetFont('Arial', 'B', 8);
-  LTexto := 'Informa√ß√µes da unidade de transporte';
+  LTexto := 'InformaÁıes da unidade de transporte';
   LPDF.TextBox(x1, y1, 55, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 90;
@@ -1991,7 +1991,7 @@ begin
   x1 := x + 145;
   y1 := y - 84;
   LPDF.SetFont('Arial', 'B', 8);
-  LTexto := 'Informa√ß√µes da unidade de carga';
+  LTexto := 'InformaÁıes da unidade de carga';
   LPDF.TextBox(x1, y1, 55, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 145;
@@ -2032,21 +2032,21 @@ begin
   LPDF := Args.PDF;
   LMDFE := FMDFeUtils.MDFe;
 
-  //Posi√ß√£o Inicial
+  //PosiÁ„o Inicial
   x := 10;
   y := 0;
 
-  //Informa√ß√µes da Composi√ß√£o da Carga
+  //InformaÁıes da ComposiÁ„o da Carga
   x1 := x;
   y1 := y - 90;
   LPDF.SetFont('Arial', 'B', 10);
-  LTexto := 'Informa√ß√µes da Composi√ß√£o da Carga';
+  LTexto := 'InformaÁıes da ComposiÁ„o da Carga';
   LPDF.TextBox(x1, y1, 100, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
   y1 := y - 84;
   LPDF.SetFont('Arial', 'B', 8);
-  LTexto := 'Informa√ß√µes dos documentos fiscais vinculados ao manifesto';
+  LTexto := 'InformaÁıes dos documentos fiscais vinculados ao manifesto';
   LPDF.TextBox(x1, y1, 90, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x;
@@ -2061,7 +2061,7 @@ begin
   x1 := x + 90;
   y1 := y - 84;
   LPDF.SetFont('Arial', 'B', 8);
-  LTexto := 'Informa√ß√µes da unidade de transporte';
+  LTexto := 'InformaÁıes da unidade de transporte';
   LPDF.TextBox(x1, y1, 55, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 90;
@@ -2076,7 +2076,7 @@ begin
   x1 := x + 145;
   y1 := y - 84;
   LPDF.SetFont('Arial', 'B', 8);
-  LTexto := 'Informa√ß√µes da unidade de carga';
+  LTexto := 'InformaÁıes da unidade de carga';
   LPDF.TextBox(x1, y1, 55, 5, LTexto, 'T', 'L', 0, '');
 
   x1 := x + 145;
@@ -2114,15 +2114,15 @@ begin
   LPDF := Args.PDF;
   LMDFE := FMDFeUtils.MDFe;
 
-  //Posi√ß√£o Inicial
+  //PosiÁ„o Inicial
   x := 10;
   y := 0;
 
-  //Observa√ß√µes
+  //ObservaÁıes
   x1 := x;
   y1 := y - 39;
   LPDF.SetFont('Arial', 'B', 10);
-  LTexto := 'Observa√ß√µes';
+  LTexto := 'ObservaÁıes';
   LPDF.TextBox(x1, y1, 40, 5, LTexto, 'T', 'L', 0, '');
 
   LPDF.SetFont('Arial', '', 9);

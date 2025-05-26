@@ -273,13 +273,15 @@ begin
 
       if (ATitulo.ValorMoraJuros > 0) then
       begin
+        //26/05/2025 - https://developers.c6bank.com.br/apis/bankslip#tag/bank_slips/POST/
+        //Valor ou percentual dos juros por atraso.
+        //Se o tipo for "V", esse valor será fixo por dia.
+        //Se for "P", o valor é um percentual do título, e será dividido por 30 para calcular o valor diário.
         case ATitulo.CodigoMoraJuros of
           cjValorDia    : LValorMoraJuros := ATitulo.ValorMoraJuros;
-          cjTaxaDiaria  : LValorMoraJuros := ATitulo.ValorMoraJuros;
-          cjValorMensal : LValorMoraJuros := RoundABNT(ATitulo.ValorMoraJuros / 30, 2);
-          cjTaxaMensal  : LValorMoraJuros := RoundABNT(ATitulo.ValorMoraJuros / 30, 2);
-          else
-            LValorMoraJuros := ATitulo.ValorMoraJuros;
+          cjValorMensal : LValorMoraJuros := ATitulo.ValorMoraJuros / 30;
+          cjTaxaDiaria  : LValorMoraJuros := RoundABNT(ATitulo.ValorMoraJuros * 30,2);
+          cjTaxaMensal  : LValorMoraJuros := ATitulo.ValorMoraJuros;
         end;
 
         LJson.AddPair('interest',

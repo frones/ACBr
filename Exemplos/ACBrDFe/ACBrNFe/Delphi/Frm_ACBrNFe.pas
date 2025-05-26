@@ -34,7 +34,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, Dialogs, ExtCtrls, StdCtrls, UITypes,
+  Controls, Forms, Dialogs, ExtCtrls, StdCtrls,
   Spin, Buttons, ComCtrls, OleCtrls, SHDocVw, ACBrMail,
   ACBrPosPrinter, ACBrNFeDANFeESCPOS, ACBrNFeDANFEClass, ACBrDANFCeFortesFr,
   ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFeRLClass, ACBrBase, ACBrDFe,
@@ -594,8 +594,10 @@ begin
     if rgReformaTributaria.ItemIndex = 0 then
     begin
       Ide.cMunFGIBS := StrToInt(edtEmitCodCidade.Text);
+
       Ide.tpNFDebito := tdNenhum;
       Ide.tpNFCredito := tcNenhum;
+
       Ide.gCompraGov.tpEnteGov := tcgEstados;
       Ide.gCompraGov.pRedutor := 5;
     end;
@@ -707,7 +709,10 @@ begin
       // Reforma Tributária
       if rgReformaTributaria.ItemIndex = 0 then
       begin
+        // Valor total do Item, correspondente à sua participação no total da nota.
+        // A soma dos itens deverá corresponder ao total da nota.
         vItem := 100;
+        // Referenciamento de item de outro Documento Fiscal Eletrônico - DF-e
         DFeReferenciado.chaveAcesso := '';
         DFeReferenciado.nItem := 1;
       end;
@@ -913,8 +918,9 @@ begin
         // Reforma Tributária
         if rgReformaTributaria.ItemIndex = 0 then
         begin
-          ISel.CSTIS := cst000;
-          ISel.cClassTribIS := ct000001;
+          //  Informações do tributo: Imposto Seletivo
+          ISel.CSTIS := cstis000;
+          ISel.cClassTribIS := ctis000001;
 
           ISel.vBCIS := 100;
           ISel.pIS := 5;
@@ -923,6 +929,7 @@ begin
           ISel.qTrib := 10;
           ISel.vIS := 100;
 
+          //  Informações do tributo: IBS / CBS
           IBSCBS.CST := cst000;
           IBSCBS.cClassTrib := ct000001;
 
@@ -970,16 +977,17 @@ begin
           IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegCBS := 5;
           IBSCBS.gIBSCBS.gTribRegular.vTribRegCBS := 50;
 
-          IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := 1;
+          IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := cp00;
           IBSCBS.gIBSCBS.gIBSCredPres.pCredPres := 5;
           IBSCBS.gIBSCBS.gIBSCredPres.vCredPres := 100;
           IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus := 100;
 
-          IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := 1;
+          IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := cp00;
           IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
           IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 100;
           IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 100;
 
+          //  Informações do tributo: IBS / CBS em operações com imposto monofásico
           IBSCBS.gIBSCBSMono.qBCMono := 1;
           IBSCBS.gIBSCBSMono.adRemIBS := 5;
           IBSCBS.gIBSCBSMono.adRemCBS := 5;
@@ -1003,6 +1011,10 @@ begin
 
           IBSCBS.gIBSCBSMono.vTotIBSMonoItem := 100;
           IBSCBS.gIBSCBSMono.vTotCBSMonoItem := 100;
+
+          //  Informações da Transferencia de Crédito
+          IBSCBS.gTransfCred.vIBS := 100;
+          IBSCBS.gTransfCred.vCBS := 100;
         end;
       end;
     end;
@@ -1071,6 +1083,7 @@ begin
       Total.IBSCBSTot.gMono.vIBSMonoRet := 100;
       Total.IBSCBSTot.gMono.vCBSMonoRet := 100;
 
+      // Valor total da NF-e com IBS / CBS / IS
       Total.vNFTot := 100;
     end;
 
@@ -1119,7 +1132,6 @@ begin
     // (agenciador, plataforma de delivery, marketplace e similar) de serviços e de
     // negócios.
     infIntermed.idCadIntTran := '';
-
   end;
 
   ACBrNFe1.NotasFiscais.GerarNFe;
@@ -1183,8 +1195,10 @@ begin
   if rgReformaTributaria.ItemIndex = 0 then
   begin
     NotaF.NFe.Ide.cMunFGIBS := StrToInt(edtEmitCodCidade.Text);
+
     NotaF.NFe.Ide.tpNFDebito := tdNenhum;
     NotaF.NFe.Ide.tpNFCredito := tcNenhum;
+
     NotaF.NFe.Ide.gCompraGov.tpEnteGov := tcgEstados;
     NotaF.NFe.Ide.gCompraGov.pRedutor := 5;
   end;
@@ -1472,7 +1486,10 @@ begin
   // Reforma Tributária
   if rgReformaTributaria.ItemIndex = 0 then
   begin
+    // Valor total do Item, correspondente à sua participação no total da nota.
+    // A soma dos itens deverá corresponder ao total da nota.
     Produto.vItem := 100;
+    // Referenciamento de item de outro Documento Fiscal Eletrônico - DF-e
     Produto.DFeReferenciado.chaveAcesso := '';
     Produto.DFeReferenciado.nItem := 1;
   end;
@@ -1719,8 +1736,9 @@ begin
     // Reforma Tributária
     if rgReformaTributaria.ItemIndex = 0 then
     begin
-      ISel.CSTIS := cst000;
-      ISel.cClassTribIS := ct000001;
+      //  Informações do tributo: Imposto Seletivo
+      ISel.CSTIS := cstis000;
+      ISel.cClassTribIS := ctis000001;
 
       ISel.vBCIS := 100;
       ISel.pIS := 5;
@@ -1729,6 +1747,7 @@ begin
       ISel.qTrib := 10;
       ISel.vIS := 100;
 
+      //  Informações do tributo: IBS / CBS
       IBSCBS.CST := cst000;
       IBSCBS.cClassTrib := ct000001;
 
@@ -1776,16 +1795,17 @@ begin
       IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegCBS := 5;
       IBSCBS.gIBSCBS.gTribRegular.vTribRegCBS := 50;
 
-      IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := 1;
+      IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := cp00;
       IBSCBS.gIBSCBS.gIBSCredPres.pCredPres := 5;
       IBSCBS.gIBSCBS.gIBSCredPres.vCredPres := 100;
       IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus := 100;
 
-      IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := 1;
+      IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := cp00;
       IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
       IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 100;
       IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 100;
 
+      //  Informações do tributo: IBS / CBS em operações com imposto monofásico
       IBSCBS.gIBSCBSMono.qBCMono := 1;
       IBSCBS.gIBSCBSMono.adRemIBS := 5;
       IBSCBS.gIBSCBSMono.adRemCBS := 5;
@@ -1810,6 +1830,7 @@ begin
       IBSCBS.gIBSCBSMono.vTotIBSMonoItem := 100;
       IBSCBS.gIBSCBSMono.vTotCBSMonoItem := 100;
 
+      //  Informações da Transferencia de Crédito
       IBSCBS.gTransfCred.vIBS := 100;
       IBSCBS.gTransfCred.vCBS := 100;
     end;
@@ -1933,6 +1954,7 @@ begin
     NotaF.NFe.Total.IBSCBSTot.gMono.vIBSMonoRet := 100;
     NotaF.NFe.Total.IBSCBSTot.gMono.vCBSMonoRet := 100;
 
+    // Valor total da NF-e com IBS / CBS / IS
     NotaF.NFe.Total.vNFTot := 100;
   end;
 
@@ -4499,7 +4521,7 @@ begin
      Se o tipo for: teManifDestOperNaoRealizada, informar a justificativa
     }
     if AtpEvento = teManifDestOperNaoRealizada then
-      InfEvento.detEvento.xJust := 'justificativa';
+      InfEvento.detEvento.xJust := 'justificativa tem que ter no minimo 15 caracteres';
   end;
 
   ACBrNFe1.EnviarEvento(StrToInt(idLote));

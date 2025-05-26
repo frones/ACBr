@@ -150,6 +150,7 @@ type
     FSacado_CNPJCPF : String;
     FVencimento: TDateTime;
     FDataDocumento: TDateTime;
+    FDataRegistro: TDateTime;
     FNumeroDocumento: String;
     FDataProcessamento: TDateTime;
     FNossoNumero: String;
@@ -193,6 +194,7 @@ type
     property Sacado_CNPJCPF : String read FSacado_CNPJCPF write FSacado_CNPJCPF;
     property Vencimento: TDateTime read FVencimento write FVencimento;
     property DataDocumento: TDateTime read FDataDocumento write FDataDocumento;
+    property DataRegistro: TDateTime read FDataRegistro write FDataRegistro;
     property NumeroDocumento: String read FNumeroDocumento write FNumeroDocumento;
     property DataProcessamento: TDateTime read FDataProcessamento write FDataProcessamento;
     property NossoNumero: String read FNossoNumero write FNossoNumero;
@@ -318,6 +320,7 @@ type
     FSeuNumero: String;
     FTipoDiasProtesto: TACBrTipoDiasIntrucao;
     FVencimento: TDateTime;
+    FDataRegistro: TDateTime;
     FDataDocumento: TDateTime;
     FNumeroDocumento: String;
     FEspecieDoc: String;
@@ -396,6 +399,7 @@ type
     property SeuNumero: String read FSeuNumero write FSeuNumero ;
     property TipoDiasProtesto: TACBrTipoDiasIntrucao read FTipoDiasProtesto write FTipoDiasProtesto ;
     property Vencimento: TDateTime read FVencimento write FVencimento ;
+    property DataRegistro: TDateTime read FDataRegistro write FDataRegistro ;
     property DataDocumento: TDateTime read FDataDocumento write FDataDocumento ;
     property NumeroDocumento: String read FNumeroDocumento write FNumeroDocumento ;
     property EspecieDoc: String read FEspecieDoc write FEspecieDoc ;
@@ -685,6 +689,7 @@ begin
     SeuNumero:= DadosRet.TituloRet.SeuNumero;
     TipoDiasProtesto:= DadosRet.TituloRet.TipoDiasProtesto;
     Vencimento:= DadosRet.TituloRet.Vencimento;
+    DataRegistro:=DadosRet.TituloRet.DataRegistro;
     DataDocumento:= DadosRet.TituloRet.DataDocumento;
     NumeroDocumento:= DadosRet.TituloRet.NumeroDocumento;
     EspecieDoc:= DadosRet.TituloRet.EspecieDoc;
@@ -926,6 +931,7 @@ begin
     Sacado_Nome := ACBrBoleto.ListadeBoletos[FID].Sacado.NomeSacado;
     Sacado_CNPJCPF := ACBrBoleto.ListadeBoletos[FID].Sacado.CNPJCPF;
     Vencimento := ACBrBoleto.ListadeBoletos[FID].Vencimento;
+    DataRegistro:=ACBrBoleto.ListadeBoletos[FID].DataRegistro;
     DataDocumento := ACBrBoleto.ListadeBoletos[FID].DataDocumento;
     NumeroDocumento := ACBrBoleto.ListadeBoletos[FID].NumeroDocumento;
     DataProcessamento := ACBrBoleto.ListadeBoletos[FID].DataProcessamento;

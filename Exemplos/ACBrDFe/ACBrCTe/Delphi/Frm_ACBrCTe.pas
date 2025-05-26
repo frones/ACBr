@@ -35,7 +35,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
-  ShellAPI, XMLIntf, XMLDoc, zlib, UITypes,
+  ShellAPI, XMLIntf, XMLDoc, zlib,
   ACBrBase, ACBrMail, ACBrDFe, ACBrDFeReport, ACBrCTe,
   ACBrCTeDACTEClass, ACBrCTeDACTeRLClass;
 
@@ -685,12 +685,12 @@ begin
       Imp.IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegCBS := 5;
       Imp.IBSCBS.gIBSCBS.gTribRegular.vTribRegCBS := 50;
 
-      Imp.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := 99;
+      Imp.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := cp00;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.pCredPres := 5;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPres := 50;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus := 50;
 
-      Imp.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := 99;
+      Imp.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := cp00;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;
@@ -1191,12 +1191,12 @@ begin
       Imp.IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegCBS := 5;
       Imp.IBSCBS.gIBSCBS.gTribRegular.vTribRegCBS := 50;
 
-      Imp.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := 99;
+      Imp.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := cp00;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.pCredPres := 5;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPres := 50;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus := 50;
 
-      Imp.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := 99;
+      Imp.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := cp00;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;
@@ -1557,12 +1557,12 @@ begin
       Imp.IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegCBS := 5;
       Imp.IBSCBS.gIBSCBS.gTribRegular.vTribRegCBS := 50;
 
-      Imp.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := 99;
+      Imp.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := cp00;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.pCredPres := 5;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPres := 50;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus := 50;
 
-      Imp.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := 99;
+      Imp.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := cp00;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;
@@ -3465,6 +3465,7 @@ begin
     ShowMessage('Inicio: ' + Inicio + #13 + 'Fim: ' + Fim);
 
     try
+      ACBrCTe1.Conhecimentos.Assinar;
       ACBrCTe1.Conhecimentos.Validar;
 
       if ACBrCTe1.Conhecimentos[0].Alertas <> '' then

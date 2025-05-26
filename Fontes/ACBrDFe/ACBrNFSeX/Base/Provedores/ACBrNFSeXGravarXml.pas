@@ -542,10 +542,10 @@ function TNFSeWClass.GerarIni: string;
 begin
   // Usar o FpAOwner em vez de  FProvider
 
-  if NFSe.tpXML = txmlRPS then
-    Result := GerarIniRps
-  else
-    Result := GerarIniNfse;
+//  if NFSe.tpXML = txmlRPS then
+  Result := GerarIniRps
+//  else
+//    Result := GerarIniNfse;
 
 //  Result := '';
 //  raise EACBrDFeException.Create(ClassName + '.GerarIni, não implementado');

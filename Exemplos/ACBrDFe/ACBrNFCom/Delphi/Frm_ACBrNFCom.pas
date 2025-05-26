@@ -571,12 +571,12 @@ begin
           IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegCBS := 5;
           IBSCBS.gIBSCBS.gTribRegular.vTribRegCBS := 50;
 
-          IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := 99;
+          IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := cp00;
           IBSCBS.gIBSCBS.gIBSCredPres.pCredPres := 5;
           IBSCBS.gIBSCBS.gIBSCredPres.vCredPres := 50;
           IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus := 50;
 
-          IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := 99;
+          IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := cp00;
           IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
           IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
           IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;

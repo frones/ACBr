@@ -37,7 +37,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
-  ShellAPI, XMLIntf, XMLDoc, zlib, UITypes,
+  ShellAPI, XMLIntf, XMLDoc, zlib,
   ACBrDFe, ACBrDFeReport, ACBrBase,
   ACBrPosPrinter, ACBrNF3eDANF3eClass, ACBrNF3eDANF3eESCPOS, ACBrNF3e, ACBrMail,
   ACBrNF3e.DANF3ERLClass;
@@ -553,12 +553,12 @@ begin
               IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegCBS := 5;
               IBSCBS.gIBSCBS.gTribRegular.vTribRegCBS := 50;
 
-              IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := 99;
+              IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := cp00;
               IBSCBS.gIBSCBS.gIBSCredPres.pCredPres := 5;
               IBSCBS.gIBSCBS.gIBSCredPres.vCredPres := 50;
               IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus := 50;
 
-              IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := 99;
+              IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := cp00;
               IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
               IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
               IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;

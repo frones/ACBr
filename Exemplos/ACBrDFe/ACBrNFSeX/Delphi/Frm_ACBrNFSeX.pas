@@ -708,7 +708,7 @@ begin
         IBSCBS.adq.ender.xCpl := '';
         IBSCBS.adq.ender.xBairro := 'CENTRO';
 
-        IBSCBS.serv.modoPrestServ := '1';
+        IBSCBS.serv.modoPrestServ := mpsPresencial;
         IBSCBS.serv.clocalPrestServ := StrToIntDef(edtCodCidade.Text, 0);
         IBSCBS.serv.cPaisPrestServ := 0;
         IBSCBS.serv.cCIB := '1';
@@ -719,7 +719,7 @@ begin
         IBSCBS.valores.trib.gIBSCBS.cstIBSCBS := cst000;
         IBSCBS.valores.trib.gIBSCBS.cClassTribIBSCBS := ct000001;
 
-        IBSCBS.valores.trib.gIBSCBS.gIBSCredPres.cCredPresIBS := 100;
+        IBSCBS.valores.trib.gIBSCBS.gIBSCredPres.cCredPresIBS := cp00;
         IBSCBS.valores.trib.gIBSCBS.gIBSCredPres.pCredPresIBS := 5;
 
         IBSCBS.valores.trib.gIBSCBS.gIBSUF.pDifUF := 5;
@@ -736,7 +736,7 @@ begin
         IBSCBS.valores.trib.gIBSCBS.gIBSMun.cClassTribMunDeson := ct000001;
         IBSCBS.valores.trib.gIBSCBS.gIBSMun.pAliqMunDeson := 5;
 
-        IBSCBS.valores.trib.gIBSCBS.gCBS.cCredPresCBS := 100;
+        IBSCBS.valores.trib.gIBSCBS.gCBS.cCredPresCBS := cp00;
         IBSCBS.valores.trib.gIBSCBS.gCBS.pCredPresCBS := 5;
 
         IBSCBS.valores.trib.gIBSCBS.gCBS.pDifCBS := 5;

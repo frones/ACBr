@@ -43,11 +43,21 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/05/2025
+-- ACBrNFSeXServicos --
+[*] #TK-7105: Alterado as URLs da cidade de Piranga/MG, o provedor continua o mesmo.
+   Por: Guilherme
+[*] #TK-7116: Incluído as URLs de produção e homologação na cidade de Agrolândia/SC,
+    o provedor continua o mesmo.
+   Por: Alysson Rengel
+[*] #TK-7117: Incluído o Params Dividir100 na cidade de Mauá/SP.
+   Por: Ao3 Tech
+[+] #TK-7106: A cidade de São José do Rio Preto/SP mudou de provedor, agora é Giss.
+   Por: Italo Giurizzato Junior
 -- ISSDSF.Provider --
-[*] Alteração na procedure AssinaturaAdicional visando atender a cidade de Teresina
+[*] #TK-7094: Alteração na procedure AssinaturaAdicional visando atender a cidade de Teresina
   Por: Luis Claudio Jr
 -- ACBrNFSeXLerXml --
-[*] Melhorias na rotina VerificarSeConteudoEhLista para extrair parte do Json inserido
+[*] #TK-7073: Melhorias na rotina VerificarSeConteudoEhLista para extrair parte do Json inserido
     no campo Discriminacao
   Por: Guilherme Consolação Dias
 

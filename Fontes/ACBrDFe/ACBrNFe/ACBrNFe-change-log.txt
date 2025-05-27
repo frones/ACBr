@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/05/2025
+-- ACBrNFeServicos.ini --
+[*] A SEFAZ-CE contratou a SVRS para recepcionar as NFCe, alterado o envio para o
+    ambiente de produção para a SVRS.
+  Por: Alexandre de Paula
+
 26/05/2025
 -- Diversos --
 [*] O campo CSTIS que antes era do tipo TCSTIBSCBS passou a ser do tipo TCSTIS,

@@ -75,6 +75,7 @@ type
     function LerDescricaoServico(const ACodigo: string): string;
     function NormatizarCodigoMunicipio(const Codigo: string): string;
 
+    function ExtrairLista(const ADiscriminacao: string): string;
     procedure VerificarSeConteudoEhLista(const aDiscriminacao: string);
     procedure LerListaJson(const aDiscriminacao: string);
     procedure LerListaTabulada(const aDiscriminacao: string);
@@ -234,19 +235,72 @@ begin
     Result := txmlRPS;
 end;
 
+function TNFSeRClass.ExtrairLista(const ADiscriminacao: string): string;
+var
+  I, LContador: Integer;
+  LInicio, LFim: Integer;
+  LCaractereInicial, LCaractereFinal: Char;
+begin
+  Result := EmptyStr;
+
+  if ADiscriminacao = EmptyStr then
+    Exit;
+
+  LInicio := 0;
+
+  for I := 1 to Length(ADiscriminacao) do
+  begin
+    if ADiscriminacao[I] in ['{', '['] then
+    begin
+      LInicio := I;
+      LCaractereInicial := ADiscriminacao[I];
+      if LCaractereInicial = '{' then
+        LCaractereFinal := '}'
+      else
+        LCaractereFinal := ']';
+      Break;
+    end;
+  end;
+
+  if LInicio = 0 then
+  begin
+    Result := ADiscriminacao;
+    Exit;
+  end;
+
+  LContador := 1;
+  LFim := LInicio + 1;
+  while (LFim <= Length(ADiscriminacao)) and (LContador > 0) do
+  begin
+    if ADiscriminacao[LFim] = LCaractereInicial then
+      Inc(LContador)
+    else if ADiscriminacao[LFim] = LCaractereFinal then
+      Dec(LContador);
+    Inc(LFim);
+  end;
+
+  if LContador = 0 then
+    Result := Copy(ADiscriminacao, LInicio, LFim - LInicio)
+  else
+    Result := ADiscriminacao;
+end;
+
 procedure TNFSeRClass.VerificarSeConteudoEhLista(const aDiscriminacao: string);
+var
+  LDiscriminacao: string;
 begin
   FpAOwner.ConfigGeral.DetalharServico := False;
 
-  if (Pos('[', aDiscriminacao) > 0) and (Pos(']', aDiscriminacao) > 0) and
-     (Pos('{', aDiscriminacao) > 0) and (Pos('}', aDiscriminacao) > 0) then
+  LDiscriminacao := ExtrairLista(aDiscriminacao);
+  if (Pos('[', LDiscriminacao) > 0) and (Pos(']', LDiscriminacao) > 0) and
+     (Pos('{', LDiscriminacao) > 0) and (Pos('}', LDiscriminacao) > 0) then
   begin
     FpAOwner.ConfigGeral.DetalharServico := True;
 
-    if Pos('":', aDiscriminacao) > 0 then
-      LerListaJson(aDiscriminacao)
+    if Pos('":', LDiscriminacao) > 0 then
+      LerListaJson(LDiscriminacao)
     else
-      LerListaTabulada(aDiscriminacao);
+      LerListaTabulada(LDiscriminacao);
   end;
 end;
 

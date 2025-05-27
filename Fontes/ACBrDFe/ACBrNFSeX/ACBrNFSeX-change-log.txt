@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/05/2025
+-- ISSDSF.Provider --
+[*] Alteração na procedure AssinaturaAdicional visando atender a cidade de Teresina
+  Por: Luis Claudio Jr
 -- ACBrNFSeXLerXml --
 [*] Melhorias na rotina VerificarSeConteudoEhLista para extrair parte do Json inserido
     no campo Discriminacao

@@ -135,7 +135,8 @@ begin
       else
         sIndTomador := '3';
 
-    sTomador := sIndTomador + Poem_Zeros(sCPFCNPJTomador, 14);
+//    sTomador := sIndTomador + Poem_Zeros(sCPFCNPJTomador, 14);
+    sTomador := Poem_Zeros(sCPFCNPJTomador, 14);
 
     // Prestador Intermediario
     sCPFCNPJInter := OnlyNumber(NFSe.Intermediario.Identificacao.CpfCnpj);
@@ -160,7 +161,8 @@ begin
                    PadRight(NFSe.IdentificacaoRps.Serie, 5 , ' ') +
                    Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12) +
                    FormatDateTime('yyyymmdd', NFse.DataEmissao) +
-                   PadRight(TipoTributacaoRPSToStr(NFSe.TipoTributacaoRPS), 2, ' ') +
+//                   PadRight(TipoTributacaoRPSToStr(NFSe.TipoTributacaoRPS), 2, ' ') +
+                   PadRight(TributacaoToStr(NFSe.Servico.Tributacao), 2, ' ') +
                    sSituacao +
                    sISSRetido +
                    Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorServicos)), 15) +

@@ -1090,9 +1090,8 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#1', 'vtLiq', 1, 15, 1,
                                     NFSe.Servico.Valores.ValorLiquidoNfse, ''));
 
-  if FPVersao = ve100 then
-    Result.AppendChild(AddNode(tcDe2, '#1', 'totalAproxTrib', 1, 15, 0,
-                                    NFSe.Servico.Valores.totalAproxTrib, ''));
+  Result.AppendChild(AddNode(tcDe2, '#1', 'totalAproxTrib', 1, 15, 0,
+                                      NFSe.Servico.Valores.totalAproxTrib, ''));
 
   if (NFSe.Servico.Valores.ValorIr + NFSe.Servico.Valores.ValorPis +
       NFSe.Servico.Valores.ValorCofins + NFSe.Servico.Valores.ValorCsll +

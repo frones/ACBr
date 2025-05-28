@@ -359,6 +359,7 @@ begin
 
   if Assigned(FpSession) then
   begin
+    InternetSetOption(FpSession, INTERNET_OPTION_END_BROWSER_SESSION, nil, 0);
     InternetCloseHandle(FpSession);
     FpSession := Nil
   end;

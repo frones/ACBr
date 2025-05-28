@@ -668,7 +668,7 @@ namespace ACBrLibPIXCD.Demo
         {
             try
             {
-                var ret = ACBrPIXCD.CriarCobrancaImediata(rtbCriarCobranca.Text, txtTxIdCriarCobranca.Text);
+                var ret = ACBrPIXCD.CriarCobranca(rtbCriarCobranca.Text, txtTxIdCriarCobranca.Text);
                 rtbRespostas.AppendText(ret);
             }
             catch (Exception ex)

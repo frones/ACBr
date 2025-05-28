@@ -45,6 +45,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/05/2025
+-- ACBrTEFPayKitAPI --
+[-] Correção da exibição do título no Callback 'CallBackSolicitaConfirmacao'
+[-] Correção de A.V. na cópia da resposta nos CallBacks 'CallBackEntraCartao',
+    'CallBackEntraDataValidade', 'CallBackEntraData', 'CallBackEntraCodigoSeguranca',
+    'CallBackEntraValor', 'CallBackEntraNumero', 'CallBackEntraString',
+    'CallBackEntraCodigoBarras', 'CallBackEntraCodigoBarrasLido',
+    'CallBackEntraValorEspecial'
+[*] Método 'CalcPayKitPath', modificado com Flag para saber se valida a
+    existência das pastas
+[-] Correção em 'VerificarEAjustarConf', para conseguir criar diretórios da PayKit
+
+-- ACBrTEFAPIPayKit --
+[*] Ajuste em 'TACBrTEFAPIClassPayKit.QuandoPerguntarCampoAPI',  para retornar
+    Resposta do Campo, considerando a mascara de entrada
+    (por: DSA)
+
 25/05/2025
 -- ACBrTEFAPIPayKit --
 [*] Melhoria em 'QuandoExibirQRCodeAPI' para respeitar parâmetros de configuração

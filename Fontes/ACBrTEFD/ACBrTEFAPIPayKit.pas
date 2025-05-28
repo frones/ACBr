@@ -136,6 +136,7 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
   ACBrUtil.Math,
+  ACBrValidador,
   ACBrJSON;
 
 { TACBrTEFRespPayKit }
@@ -508,6 +509,9 @@ begin
   Validado := True;
   Cancelado := False;
   TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarCampo(def, Resposta, Validado, Cancelado);
+
+  if (def.MascaraDeCaptura <> '') then
+    Resposta := FormatarMascaraDinamica(Resposta, StringReplace(def.MascaraDeCaptura, '@', '*', [rfReplaceAll]) );
 
   if Cancelado then
     Acao := -1

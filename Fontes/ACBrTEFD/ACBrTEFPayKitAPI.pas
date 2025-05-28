@@ -441,7 +441,7 @@ type
     function VersaoDPOS: String;
     procedure InicializaDPOS(Forcar: Boolean = False);
     procedure FinalizaDPOS(Forcar: Boolean = False);
-    function CalcPayKitPath(ASubFolder: String): String;
+    function CalcPayKitPath(ASubFolder: String; VerificarSeExiste: Boolean = True): String;
 
     procedure TransacaoEspecial(iCodigoTransacao: LongInt; var Dados: AnsiString);
     procedure DefineParametroTransacao(iCodigoParametro: LongInt; const ValorParametro: AnsiString);
@@ -660,7 +660,7 @@ begin
         ItemSelecionado := 0;
         sl.Add('1-SIM');
         sl.Add('2-NAO');
-        PerguntarMenu(s, sl, ItemSelecionado);
+        PerguntarMenu(ACBrStr(s), sl, ItemSelecionado);
         if (ItemSelecionado = 0) then     //-2 - Volta no Fluxo, -1 - Cancela o Fluxo
           Result := 0;  // SIM
       finally
@@ -693,7 +693,7 @@ begin
     PerguntarCampo(def, resp, acao);
     Result := acao;
     if (acao >= 0) then
-      move(resp[1], pCartao, Length(resp));
+      move(resp[1], pCartao^, Length(resp)+1);
 
     GravarLog('    ret:'+IntToStr(Result)+', Cartao:'+String(pCartao))
   end;
@@ -720,7 +720,7 @@ begin
     resp := OnlyNumber(resp);
     Result := acao;
     if (acao >= 0) then
-      move(resp[1], pDataValidade, Length(resp));
+      move(resp[1], pDataValidade^, Length(resp)+1);
 
     GravarLog('    ret:'+IntToStr(Result)+', DataValidade:'+String(pDataValidade));
   end;
@@ -744,10 +744,9 @@ begin
     resp := String(pData);
     acao := 0;
     PerguntarCampo(def, resp, acao);
-    resp := OnlyNumber(resp);
     Result := acao;
     if (acao >= 0) then
-      move(resp[1], pData, Length(resp));
+      move(resp[1], pData^, Length(resp)+1);
 
     GravarLog('    ret:'+IntToStr(Result)+', Data:'+String(pData))
   end;
@@ -774,7 +773,7 @@ begin
     PerguntarCampo(def, resp, acao);
     Result := acao;
     if (acao >= 0) then
-      move(resp[1], pEntraCodigoSeguranca, Length(resp));
+      move(resp[1], pEntraCodigoSeguranca^, Length(resp)+1);
 
     GravarLog('    ret:'+IntToStr(Result)+', Cod:'+String(pEntraCodigoSeguranca));
   end;
@@ -850,7 +849,7 @@ begin
     resp := Format('%.12d',[StrToIntDef(OnlyNumber(resp), 0)]) ;
     Result := acao;
     if (acao >= 0) then
-      move(resp[1], pValor, Length(resp));
+      move(resp[1], pValor^, Length(resp)+1);
 
     GravarLog('    ret:'+IntToStr(Result)+', Valor:'+String(pValor));
   end;
@@ -891,7 +890,7 @@ begin
     PerguntarCampo(def, resp, acao);
     Result := acao;
     if (acao >= 0) then
-      move(resp[1], pNumero, Length(resp));
+      move(resp[1], pNumero^, Length(resp)+1);
 
     GravarLog('    ret:'+IntToStr(Result)+', Valor:'+String(pNumero));
   end;
@@ -950,7 +949,7 @@ begin
     PerguntarCampo(def, resp, acao);
     Result := acao;
     if (acao >= 0) then
-      move(resp[1], pString, Length(resp));
+      move(resp[1], pString^, Length(resp)+1);
 
     GravarLog('    ret:'+IntToStr(Result)+', String:'+String(pString));
   end;
@@ -1013,7 +1012,7 @@ begin
       PerguntarCampo(def, resp, acao);
       Result := acao;
       if (acao >= 0) then
-        move(resp[1], pCampo, Length(resp));
+        move(resp[1], pCampo^, Length(resp)+1);
 
       GravarLog('    ret:'+IntToStr(Result)+', Campo:'+String(pCampo));
     end;
@@ -1041,7 +1040,7 @@ begin
       PerguntarCampo(def, resp, acao);
       Result := acao;
       if (acao >= 0) then
-        move(resp[1], pCampo, Length(resp));
+        move(resp[1], pCampo^, Length(resp)+1);
 
       GravarLog('    ret:'+IntToStr(Result)+', Campo:'+String(pCampo));
     end;
@@ -1138,7 +1137,7 @@ begin
     resp := Format('%.12d',[StrToIntDef(OnlyNumber(resp), 0)]) ;
     Result := acao;
     if (acao >= 0) then
-      move(resp[1], pValor, Length(resp));
+      move(resp[1], pValor^, Length(resp)+1);
 
     GravarLog('    ret:'+IntToStr(Result)+', Valor:'+String(pValor));
   end;
@@ -2360,7 +2359,8 @@ begin
   fPathPayKit := p;
 end;
 
-function TACBrTEFPayKitAPI.CalcPayKitPath(ASubFolder: String): String;
+function TACBrTEFPayKitAPI.CalcPayKitPath(ASubFolder: String;
+  VerificarSeExiste: Boolean): String;
 var
   p: String;
 begin
@@ -2368,7 +2368,7 @@ begin
   if (p = '') then
     p := ApplicationPath;
 
-  if not DirectoryExists(p + ASubFolder) then
+  if VerificarSeExiste and (not DirectoryExists(p + ASubFolder)) then
     DoException(Format(sErrDirPayKitInvalido, [ASubFolder, p]));
 
   Result := p + ASubFolder + PathDelim;
@@ -2386,10 +2386,10 @@ begin
   if not FileExists(ArqIni) then
     DoException(Format(sErrArqPayKitNaoEncontrado, [CPayKitConf, Path]));
 
-  PathCupom := CalcPayKitPath(CPayKitDirCupons);
+  PathCupom := CalcPayKitPath(CPayKitDirCupons, False);
   if not DirectoryExists(PathCupom) then
     ForceDirectories(PathCupom);
-  PathInterno := CalcPayKitPath(CPayKitDirInterno);
+  PathInterno := CalcPayKitPath(CPayKitDirInterno, False);
   if not DirectoryExists(PathInterno) then
     ForceDirectories(PathInterno);
 

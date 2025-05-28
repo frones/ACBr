@@ -5497,7 +5497,13 @@ begin
   with ACBrNFSeX1.Configuracoes.Geral do
   begin
     LayoutNFSe := TLayoutNFSe(cbLayoutNFSe.ItemIndex);
-    CodigoMunicipio := StrToIntDef(edtCodCidade.Text, -1);
+
+    try
+      CodigoMunicipio := StrToIntDef(edtCodCidade.Text, -1);
+    except
+      on E: Exception do
+        ShowMessage('Erro ao configurar o componente: ' + E.Message);
+    end;
   end;
 
   lblSchemas.Caption := ACBrNFSeX1.Configuracoes.Geral.xProvedor;

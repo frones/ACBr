@@ -126,6 +126,7 @@ begin
     flPagamentoAutenticacao, flTEDMesmaTitularidade, flTEDOutraTitularidade:
       Versao := '045';
 
+    flLiquidacaoTitulosProprioBanco,
     flLiquidacaoTitulosOutrosBancos:
       Versao := '040';
 

@@ -48,6 +48,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+29/05/2025
+-- ACBrMonitorPlus --
+[+] TK-7131 Implementada a configuração da tag VersaoDF ao utilizar o método ConfigurarDados. 
+	https://www.projetoacbr.com.br/forum/topic/83371-erro-http_code500-no-acbrmonitorplus-ao-enviar-boleto-sicoob-via-api-v3/
+	Por: Júlio Cavalcanti
+
 26/05/2025
 -- ACBrBoleto.pas --
 [*] TK-6783 Mapeado o retorno DataRegistro para ser exibido na lib/monitor; 

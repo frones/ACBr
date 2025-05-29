@@ -4115,6 +4115,7 @@ begin
         Configuracoes.WebService.SSLCryptLib := TSSLCryptLib( IniBoletos.ReadInteger(CWebService,'SSLCryptLib',Integer(Configuracoes.WebService.SSLCryptLib)));
         Configuracoes.WebService.SSLXmlSignLib:= TSSLXmlSignLib( IniBoletos.ReadInteger(CWebService,'SSLXmlSignLib',Integer(Configuracoes.WebService.SSLXmlSignLib)));
         Configuracoes.WebService.SSLType := TSSLType( IniBoletos.ReadInteger(CWebService,'SSLType',Integer(Configuracoes.WebService.SSLType)));
+        Configuracoes.WebService.VersaoDF := IniBoletos.ReadString(CWebService, 'VersaoDF', Configuracoes.WebService.VersaoDF);
 
 
         Configuracoes.WebService.Senha := IniBoletos.ReadString(CWebService,'Senha',Configuracoes.WebService.Senha);

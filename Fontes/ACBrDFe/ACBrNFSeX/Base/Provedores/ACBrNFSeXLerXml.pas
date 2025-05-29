@@ -1237,6 +1237,9 @@ begin
 
       // Provedor Infisc
       Servico.Valores.totalAproxTrib := StringToFloatDef(AINIRec.ReadString(sSecao, 'totalAproxTrib', ''), 0);
+
+      // Provedor Equiplano
+      Servico.Valores.dsImpostos := AINIRec.ReadString(sSecao, 'dsImpostos', '');
     end;
 
     sSecao := 'ValoresNFSe';

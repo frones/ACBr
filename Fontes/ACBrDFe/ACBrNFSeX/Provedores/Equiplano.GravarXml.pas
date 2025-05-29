@@ -129,7 +129,11 @@ begin
   NFSeNode.AppendChild(xmlNode);
 
   if NFSe.Servico.Valores.DescontoIncondicionado > 0 then
-    NFseNode.AppendChild(AddNode(tcDe2, '#1', 'vlDesconto', 1, 15, 1, NFSe.Servico.Valores.DescontoIncondicionado, ''));
+    NFseNode.AppendChild(AddNode(tcDe2, '#1', 'vlDesconto', 1, 15, 1,
+                              NFSe.Servico.Valores.DescontoIncondicionado, ''));
+
+  NFseNode.AppendChild(AddNode(tcStr, '#1', 'dsImpostos', 1, 500, 0,
+                                          NFSe.Servico.Valores.dsImpostos, ''));
 
   Result := True;
 end;

@@ -535,7 +535,7 @@ end;
 function TNFSeWClass.GerarXml: Boolean;
 begin
   Result := False;
-  raise EACBrDFeException.Create(ClassName + '.GerarXml, não implementado');
+  raise EACBrNFSeException.Create(ClassName + '.GerarXml, não implementado');
 end;
 
 function TNFSeWClass.GerarIni: string;
@@ -548,7 +548,7 @@ begin
 //    Result := GerarIniNfse;
 
 //  Result := '';
-//  raise EACBrDFeException.Create(ClassName + '.GerarIni, não implementado');
+//  raise EACBrNFSeException.Create(ClassName + '.GerarIni, não implementado');
 end;
 
 function TNFSeWClass.GerarIniNfse: string;

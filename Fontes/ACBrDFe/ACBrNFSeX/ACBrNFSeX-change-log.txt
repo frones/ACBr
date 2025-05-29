@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/05/2025
+-- ACBrNFSeXClass/ACBrNFSeXLerXml/Equiplano.GravarXml/Equiplano.LerXml --
+[*] #TK-7137: Acrescentado o campo dsImpostos para o provedor Equiplano, esse 
+    campo se destina a descrição dos impostos.
+   Por: Italo Giurizzato Junior
+
 -- ACBrNFSeXServicos --
 [*] #TK-7134: Alterado a URL da cidade de Catanduvas/PR, o provedor continua o mesmo.
    Por: Rafael Luís Acco

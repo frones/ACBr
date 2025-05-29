@@ -361,6 +361,7 @@ type
     FDescontoCondicionado: Double;
     FDescontoIncondicionado: Double;
     FJustificativaDeducao: string;
+    FdsImpostos: string;
     FvalorOutrasRetencoes: Double;
     FDescricaoOutrasRetencoes: string;
     FvalorRepasse: Double; // Governa
@@ -423,6 +424,7 @@ type
     property DescontoIncondicionado: Double read FDescontoIncondicionado write FDescontoIncondicionado;
     //Just. usada pelo provedor Equiplano
     property JustificativaDeducao: string read FJustificativaDeducao write FJustificativaDeducao;
+    property dsImpostos: string read FdsImpostos write FdsImpostos;
     //propriedade do Provedor Governa
     property valorOutrasRetencoes: Double read FvalorOutrasRetencoes write FvalorOutrasRetencoes;
     property DescricaoOutrasRetencoes: string read FDescricaoOutrasRetencoes write FDescricaoOutrasRetencoes;

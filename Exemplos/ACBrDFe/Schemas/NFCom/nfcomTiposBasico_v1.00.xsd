@@ -2969,7 +2969,7 @@ Observação: 28 caracteres são representados no schema como 20 bytes do tipo b
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:minLength value="1"/>
-			<xs:maxLength value="1"/>
+			<xs:maxLength value="2"/>
 			<xs:whiteSpace value="preserve"/>
 			<xs:enumeration value="1"/>
 			<xs:enumeration value="2"/>

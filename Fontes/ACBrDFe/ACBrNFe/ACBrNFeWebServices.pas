@@ -3599,7 +3599,7 @@ begin
             end;
 
             { Converte de UTF8 para a String nativa e Decodificar caracteres HTML Entity }
-            Texto := UTF8ToNativeString(ParseText(Texto));
+            Texto := UTF8ToNativeString(Texto);
           end;
 
           // Se o evento for rejeitado a propriedade XML conterá uma string vazia

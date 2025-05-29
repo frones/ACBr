@@ -88,6 +88,10 @@ public class ACBrBalAarPlugin implements FlutterPlugin, MethodChannel.MethodCall
             case "configLerValor":
                 handleConfigLerValor(call, result);
                 break;
+
+            case "configExportar":
+                handleConfigExportar(result);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -216,7 +220,7 @@ public class ACBrBalAarPlugin implements FlutterPlugin, MethodChannel.MethodCall
 
     private void handleConfigGravarValor(MethodCall call, MethodChannel.Result result) {
         try {
-            int status =  acbrBal.configGravarValor(call.argument("sessao"), call.argument("chave"), call.argument("valor"));
+            int status = acbrBal.configGravarValor(call.argument("sessao"), call.argument("chave"), call.argument("valor"));
             result.success(status);
         } catch (Exception e) {
             result.error("Erro ao gravar valor de configuração", e.getMessage(), e);
@@ -227,6 +231,15 @@ public class ACBrBalAarPlugin implements FlutterPlugin, MethodChannel.MethodCall
     private void aplicaConfiguracoesPadrao() throws Exception {
         acbrBal.configGravarValor("Principal", "LogPath", appDir.getAbsolutePath());
         acbrBal.configGravar();
+    }
+
+    private void handleConfigExportar(MethodChannel.Result result) {
+        try {
+            String resultStr = acbrBal.configExportar();
+            result.success(resultStr);
+        } catch (Exception e) {
+            result.error("Erro ao exportar configuração", e.getMessage(), e);
+        }
     }
 
 }

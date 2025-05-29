@@ -43,7 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/05/2025
--- Giss.Provider.pas --
+-- AssessorPublico.GravarXml/AssessorPublico.LerXml --
+[+] #TK-6995: Implementado a escrita e leitura dos arquivos INI do RPS e NFS-e.
+   Por: Italo Giurizzato Junior
+-- Giss.Provider --
 [*] #TK-7133: Realizado alterações na montagem do pedido de consulta visando 
     eliminar o erro de validação apontado pelo provedor.
    Por: Italo Giurizzato Junior

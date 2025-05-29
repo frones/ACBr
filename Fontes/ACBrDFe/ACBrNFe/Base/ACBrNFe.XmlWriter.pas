@@ -4483,9 +4483,6 @@ begin
 
   Result.AppendChild(AddNode(tcDe2, 'W48', 'vCredPres', 1, 15, 1,
                                                  IBS.vCredPres, DSC_VCREDPRES));
-
-//  Result.AppendChild(AddNode(tcDe2, 'W49', 'vCredPresCondSus', 1, 15, 1,
-//                                   IBS.vCredPresCondSus, DSC_VCREDPRESCONDSUS));
 end;
 
 function TNFeXmlWriter.Gerar_IBSCBSTot_gIBS_gIBSUFTot(
@@ -4533,9 +4530,6 @@ begin
 
   Result.AppendChild(AddNode(tcDe2, 'W51', 'vCredPres', 1, 15, 1,
                                                  CBS.vCredPres, DSC_VCRESPRES));
-
-//  Result.AppendChild(AddNode(tcDe2, 'W52', 'vCredPresCondSus', 1, 15, 1,
-//                                   CBS.vCredPresCondSus, DSC_VCREDPRESCONDSUS));
 end;
 
 function TNFeXmlWriter.Gerar_IBSCBSTot_gMono(Mono: TgMono): TACBrXmlNode;

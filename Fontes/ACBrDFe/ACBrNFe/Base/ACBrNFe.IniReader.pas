@@ -2069,7 +2069,6 @@ begin
   begin
     IBS.vIBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBS', ''), 0);
     IBS.vCredPres := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPres', ''), 0);
-//    IBS.vCredPresCondSus := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPresCondSus', ''), 0);
 
     Ler_IBSCBSTot_gIBS_gIBSUFTot(AINIRec, IBS.gIBSUFTot);
     Ler_IBSCBSTot_gIBS_gIBSMunTot(AINIRec, IBS.gIBSMunTot);
@@ -2119,7 +2118,6 @@ begin
     gCBS.vDevTrib := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDevTrib', ''), 0);
     gCBS.vCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCBS', ''), 0);
     gCBS.vCredPres := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPres', ''), 0);
-//    gCBS.vCredPresCondSus := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPresCondSus', ''), 0);
   end;
 end;
 

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/05/2025
+-- Diversos --
+[*] Remoção de linhas de código comentadas.
+  Por: Italo Giurizzato Junior
+
 27/05/2025
 -- ACBrNFeServicos.ini --
 [*] A SEFAZ-CE contratou a SVRS para recepcionar as NFCe, alterado o envio para o

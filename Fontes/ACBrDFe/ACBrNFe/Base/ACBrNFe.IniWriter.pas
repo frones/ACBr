@@ -1790,7 +1790,6 @@ begin
 
   AINIRec.WriteFloat(sSecao, 'vIBS', IBS.vIBS);
   AINIRec.WriteFloat(sSecao, 'vCredPres', IBS.vCredPres);
-//  AINIRec.WriteFloat(sSecao, 'vCredPresCondSus', IBS.vCredPresCondSus);
 
   Gerar_IBSCBSTot_gIBS_gIBSUFTot(AINIRec, IBS.gIBSUFTot);
   Gerar_IBSCBSTot_gIBS_gIBSMunTot(AINIRec, IBS.gIBSMunTot);
@@ -1831,7 +1830,6 @@ begin
   AINIRec.WriteFloat(sSecao, 'vDevTrib', gCBS.vDevTrib);
   AINIRec.WriteFloat(sSecao, 'vCBS', gCBS.vCBS);
   AINIRec.WriteFloat(sSecao, 'vCredPres', gCBS.vCredPres);
-//  AINIRec.WriteFloat(sSecao, 'vCredPresCondSus', gCBS.vCredPresCondSus);
 end;
 
 procedure TNFeIniWriter.Gerar_IBSCBSTot_gMono(AINIRec: TMemIniFile;

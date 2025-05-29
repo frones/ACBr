@@ -1949,7 +1949,6 @@ type
     FgIBSMunTot: TgIBSMunTot;
     FvIBS: Double;
     FvCredPres: Double;
-//    FvCredPresCondSus: Double;
   public
     constructor Create;
     destructor Destroy; override;
@@ -1960,7 +1959,6 @@ type
     property gIBSMunTot: TgIBSMunTot read FgIBSMunTot write FgIBSMunTot;
     property vIBS: Double read FvIBS write FvIBS;
     property vCredPres: Double read FvCredPres write FvCredPres;
-//    property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;
   end;
 
   { TgCBSTot }
@@ -1971,13 +1969,11 @@ type
     FvDevTrib: Double;
     FvCBS: Double;
     FvCredPres: Double;
-//    FvCredPresCondSus: Double;
   public
     property vDif: Double read FvDif write FvDif;
     property vDevTrib: Double read FvDevTrib write FvDevTrib;
     property vCBS: Double read FvCBS write FvCBS;
     property vCredPres: Double read FvCredPres write FvCredPres;
-//    property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;
   end;
 
   { TgMono }
@@ -5140,7 +5136,6 @@ begin
   gIBSMunTot := Source.gIBSMunTot;
   vIBS := Source.vIBS;
   vCredPres := Source.vCredPres;
-//  vCredPresCondSus := Source.vCredPresCondSus;
 end;
 
 constructor TgIBSTot.Create;

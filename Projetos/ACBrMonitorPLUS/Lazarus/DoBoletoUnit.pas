@@ -1357,7 +1357,8 @@ begin
       begin
         ArquivoKEY := fACBrBoleto.Configuracoes.WebService.ArquivoKEY;
         ArquivoCRT := fACBrBoleto.Configuracoes.WebService.ArquivoCRT;
-        CertificadoHTTP:= fACBrBoleto.Configuracoes.WebService.UseCertificateHTTP;;
+        CertificadoHTTP:= fACBrBoleto.Configuracoes.WebService.UseCertificateHTTP;
+        VersaoDF := fACBrBoleto.Configuracoes.WebService.VersaoDF;
       end;
 
     with RemessaRetorno do

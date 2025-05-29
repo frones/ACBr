@@ -333,20 +333,15 @@ end;
 
 function TACBrTEFSIWebAndroid.OnActivityResult(RequestCode, ResultCode: Integer; AIntent: JIntent): Boolean;
 begin
-  Result := False;
   fEmTransacao := False;
   GravarLog(Format('TACBrTEFSIWebAndroid.OnActivityResult: RequestCode: %d, ResultCode: %d', [RequestCode, ResultCode]));
 
-  if not Assigned(AIntent) then
-  begin
-    GravarLog('   no Intent');
-    Exit;
-  end;
-
+  Result := Assigned(AIntent);
   try
-    Result := True;
+    if not Result then
+      GravarLog('   no Intent');
 
-    if RequestCode = COD_REQUEST_REPORT then
+    if (RequestCode = COD_REQUEST_REPORT) then
       ObterDadosDaTransacao(AIntent);  // Mapeia as respostas intents para as PWINFOs
 
     if Assigned(fOnDepoisTerminarTransacao) then

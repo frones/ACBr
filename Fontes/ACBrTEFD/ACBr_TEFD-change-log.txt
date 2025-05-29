@@ -45,6 +45,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/05/2025
+-- ACBrTEFMSitefAndroidAPI --
+[-] Correções para tratativas em 'TACBrTEFSIWebAndroid.OnActivityResult',
+    para chamar 'OnDepoisTerminarTransacao' e atribuir o erro 'cErroNoIntent'
+    https://www.projetoacbr.com.br/forum/index.php?showtopic=83475
+    (por: Dércio Luis Zanatta e DSA)
+
 26/05/2025
 -- ACBrTEFPayKitAPI --
 [-] Correção da exibição do título no Callback 'CallBackSolicitaConfirmacao'

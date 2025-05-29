@@ -274,6 +274,8 @@ begin
     if (fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao <> '') then
       PA.ValueInfo[PWINFO_FISCALREF] := fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao;
 
+    PA.ValueInfo[PWOPER_TRANSHABILITADA] := fTransacoesHabilitadas;
+
     fTEFMSitefAPI.IniciarTransacao(OpByte, PA);
     Result := True;  // TEF no Android trabalha de modo Assincrono
   finally

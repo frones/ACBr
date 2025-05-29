@@ -82,6 +82,10 @@ type
     procedure GerarMsgDadosConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse;
       Params: TNFSeParamsResponse); override;
 
+    procedure PrepararConsultaNFSeServicoTomado(Response: TNFSeConsultaNFSeResponse); override;
+    procedure GerarMsgDadosConsultaNFSeServicoTomado(Response: TNFSeConsultaNFSeResponse;
+      Params: TNFSeParamsResponse); override;
+
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
       Params: TNFSeParamsResponse); override;
@@ -552,6 +556,47 @@ begin
                               IntToStr(Response.InfConsultaNFSe.Pagina) +
                            '</' + Prefixo + 'Pagina>' +
                          '</' + Prefixo + 'ConsultarNfseFaixaEnvio>';
+  end;
+end;
+
+procedure TACBrNFSeProviderGiss204.PrepararConsultaNFSeServicoTomado(
+  Response: TNFSeConsultaNFSeResponse);
+begin
+  with ConfigMsgDados do
+  begin
+    Prefixo := 'ns3';
+    PrefixoTS := 'ns4';
+  end;
+
+  inherited PrepararConsultaNFSeServicoTomado(Response);
+end;
+
+procedure TACBrNFSeProviderGiss204.GerarMsgDadosConsultaNFSeServicoTomado(
+  Response: TNFSeConsultaNFSeResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+  Consulente: string;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  with Params do
+  begin
+    Xml := StringReplace(Xml, 'ns4', 'ns3', [rfReplaceAll]);
+
+    Consulente :='<' + Prefixo + 'Consulente>' +
+                   '<' + Prefixo2 + 'CpfCnpj>' +
+                     GetCpfCnpj(Emitente.CNPJ, Prefixo2) +
+                   '</' + Prefixo2 + 'CpfCnpj>' +
+                   GetInscMunic(Emitente.InscMun, Prefixo2) +
+                 '</' + Prefixo + 'Consulente>';
+
+    Response.ArquivoEnvio := '<' + Prefixo + 'ConsultarNfseServicoTomadoEnvio' + NameSpace + '>' +
+                           Consulente +
+                           Xml +
+                           '<' + Prefixo + 'Pagina>' +
+                              IntToStr(Response.InfConsultaNFSe.Pagina) +
+                           '</' + Prefixo + 'Pagina>' +
+                         '</' + Prefixo + 'ConsultarNfseServicoTomadoEnvio>';
   end;
 end;
 

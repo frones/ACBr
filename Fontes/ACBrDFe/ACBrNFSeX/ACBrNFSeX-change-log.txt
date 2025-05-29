@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/05/2025
+-- ACBrNFSeXServicos --
+[*] #TK-7134: Alterado a URL da cidade de Catanduvas/PR, o provedor continua o mesmo.
+   Por: Rafael Luís Acco
+[+] #TK-7138: Incluída a cidade de Mirante/BA, o provedor é Saatri versão 2.03.
+   Por: João Antônio
+[*] #TK-7139: A cidade de Mirante/BA trocou de URLs e versão, o provedor continua o mesmo.
+   Por: João Antônio
+
 27/05/2025
 -- Infisc.GravarXml --
 [*] #TK-7019: Removido a condição imposta para gerar a tag totalAproxTrib.
@@ -54,7 +63,7 @@ Símbolo : Significado
    Por: Alysson Rengel
 [*] #TK-7117: Incluído o Params Dividir100 na cidade de Mauá/SP.
    Por: Ao3 Tech
-[+] #TK-7106: A cidade de São José do Rio Preto/SP mudou de provedor, agora é Giss.
+[*] #TK-7106: A cidade de São José do Rio Preto/SP mudou de provedor, agora é Giss.
    Por: Italo Giurizzato Junior
 -- ISSDSF.Provider --
 [*] #TK-7094: Alteração na procedure AssinaturaAdicional visando atender a cidade de Teresina

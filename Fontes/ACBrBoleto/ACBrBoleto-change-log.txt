@@ -48,9 +48,16 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+30/05/2025
+-- ACBrBoletoW_Cora --
+[-] TK-6969 Ajustado campos juros "interest" para enviar minusculo conforme suporte e resultou em sucesso. documentacao esta "Interest"
+	https://www.projetoacbr.com.br/forum/topic/82915-banco-cora-dificuldade-no-registro-de-juros-via-api/
+	Por: Daniel Morais InfoCotidiano
+
 29/05/2025
--- ACBrMonitorPlus --
-[+] TK-7131 Implementada a configuração da tag VersaoDF ao utilizar o método ConfigurarDados. 
+-- ACBrBoleto.pas --
+[+] TK-7131 Implementada a configuração da tag VersaoDF ao utilizar o método ConfigurarDados. usado no monitor
 	https://www.projetoacbr.com.br/forum/topic/83371-erro-http_code500-no-acbrmonitorplus-ao-enviar-boleto-sicoob-via-api-v3/
 	Por: Júlio Cavalcanti
 

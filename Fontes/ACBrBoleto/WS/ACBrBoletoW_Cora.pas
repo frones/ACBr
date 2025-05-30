@@ -554,7 +554,7 @@ begin
         2: LJSON.AddPair('rate', ATitulo.ValorMoraJuros);
       end;
       if LJSON <> nil then
-        AJson.AddPair('Interest', LJSON);
+        AJson.AddPair('interest', LJSON);
     end;
   end;
 end;

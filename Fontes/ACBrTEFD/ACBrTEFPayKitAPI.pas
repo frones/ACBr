@@ -145,7 +145,7 @@ type
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
   TACBrTEFPayKitCallBackEntraCodigoSeguranca = function(pLabel, pEntraCodigoSeguranca: PAnsiChar; iTamanhoMax: LongInt): LongInt;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-  TACBrTEFPayKitCallBackSelecionaOpcao = function(pLabel, pOpcoes: PAnsiChar; iOpcaoSelecionada: LongInt): LongInt;
+  TACBrTEFPayKitCallBackSelecionaOpcao = function(pLabel, pOpcoes: PAnsiChar; var iOpcaoSelecionada: LongInt): LongInt;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
   TACBrTEFPayKitCallBackEntraValor = function(pLabel, pValor, pValorMinimo, pValorMaximo: PAnsiChar): LongInt;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -523,7 +523,7 @@ type
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
   function CallBackEntraCodigoSeguranca(pLabel, pEntraCodigoSeguranca: PAnsiChar; iTamanhoMax: LongInt): LongInt;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-  function CallBackSelecionaOpcao(pLabel, pOpcoes: PAnsiChar; iOpcaoSelecionada: LongInt): LongInt;
+  function CallBackSelecionaOpcao(pLabel, pOpcoes: PAnsiChar; var iOpcaoSelecionada: LongInt): LongInt;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
   function CallBackEntraValor(pLabel, pValor, pValorMinimo, pValorMaximo: PAnsiChar): LongInt;
     {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -779,7 +779,7 @@ begin
   end;
 end;
 
-function CallBackSelecionaOpcao(pLabel, pOpcoes: PAnsiChar; iOpcaoSelecionada: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+function CallBackSelecionaOpcao(pLabel, pOpcoes: PAnsiChar; var iOpcaoSelecionada: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 var
   titulo, opcoes, s, atalho: String;
   sl: TStringList;
@@ -904,7 +904,7 @@ begin
     GravarLog('  CallBackOperacaoCancelada');
     if (not EmTransacao) or
        (not VerificarTransacaoEmAndamento(pkeOperacaoCancelada)) then
-      Result := 1;
+      Result := 1;    // Interrompe o Fluxo
     GravarLog('    ret:'+IntToStr(Result));
   end;
 end;
@@ -958,7 +958,7 @@ end;
 function CallBackConsultaAVS(cEndereco, cNumero, cApto, cBloco, cCEP, cBairro,
   cCPF: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-  Result := -1;  // A operação foi cancelada;
+  Result := -1;  // A operação foi cancelada;  (não implementado)
   with GetTEFPayKitAPI do
   begin
     GravarLog('  CallBackConsultaAVS');
@@ -982,11 +982,11 @@ end;
 
 function CallBackImagemAdicional(iIndiceImagem: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-  Result := 0;
+  Result := 0;   // Sempre deve retornar 0
   with GetTEFPayKitAPI do
   begin
     GravarLog('  CallBackImagemAdicional( '+IntToStr(iIndiceImagem)+' )');
-    { code here }
+    { ainda não implementado }
     GravarLog('    ret:'+IntToStr(Result))
   end;
 end;
@@ -1093,7 +1093,7 @@ function CallBackSelecionaPlanos(iCodigoRede, iCodigoTransacao,
   iMaxDiasPreDatado: LongInt; pNumeroParcelas, pValorTransacao, pValorParcela,
   pValorEntrada, pData: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-  Result := -1;  // Os planos não serão tratados
+  Result := -1;  // Os planos não serão tratados (não implementado)
   with GetTEFPayKitAPI do
   begin
     GravarLog('  CallBackSelecionaPlanos');
@@ -1103,7 +1103,7 @@ end;
 
 function CallBackSelecionaPlanosEx(pSolicitacao, pRetorno: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 begin
-  Result := -1;  // Os planos não serão tratados
+  Result := -1;  // Os planos não serão tratados (não implementado)
   with GetTEFPayKitAPI do
   begin
     GravarLog('  CallBackSelecionaPlanosEx');
@@ -1145,7 +1145,7 @@ end;
 
 function CallBackComandos(pParametrosEntrada, pDadosRetorno: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 var
-  s, comando: String;
+  dados, comando: String;
   tamanho: integer;
 begin
   Result := 0;
@@ -1164,15 +1164,15 @@ begin
 
   with GetTEFPayKitAPI do
   begin
-    s := String(pParametrosEntrada);
-    GravarLog('  CallBackComandos( '+s+' )');
+    dados := String(pParametrosEntrada);
+    GravarLog('  CallBackComandos( '+dados+' )');
 
-    comando := copy(s,1,3);
-    tamanho := StrToIntDef(copy(s, 4, 6), 0);
-    s := copy(s, 10, tamanho);
+    comando := copy(dados,1,3);
+    tamanho := StrToIntDef(copy(dados, 4, 6), 0);
+    dados := copy(dados, 10, tamanho);
 
     if (comando = '001') then
-      ExibirQRCode(s)
+      ExibirQRCode(dados)
     else
       Result := -1;
 

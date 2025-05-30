@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/05/2025
+-- Agili.GravarXml/Agili.LerXml --
+[+] #TK-6995: Implementado a escrita e leitura dos arquivos INI do RPS e NFS-e.
+   Por: Italo Giurizzato Junior
+
 28/05/2025
 -- AssessorPublico.GravarXml/AssessorPublico.LerXml --
 [+] #TK-6995: Implementado a escrita e leitura dos arquivos INI do RPS e NFS-e.

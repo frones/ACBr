@@ -43,6 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/05/2025
+-- ACBrNFSeXServicos --
+[*] #TK-7147: Incluído o Parâmetro Versao 1.01 para a cidade de Agrolandia/SC, 
+    o provendor continua o mesmo.
+   Por: Alysson Rengel
+[*] #TK-7142: A cidade de Sapiranga/RS trocou de provedor, agora é o DBSeller
+   Por: MGWare Dev
+[*] #TK-7140: A cidade de Araraquara/SP trocou de provedor, agora é o Giap
+   Por: New Standard Software/Italo Giurizzato Junior
+[*] #TK-6790: A cidade de João Pessoa/PB trocou de provedor, agora é o DSF versão
+    2.03
+   Por: Andre C M Pereira/Eraldo CG
 -- Agili.GravarXml/Agili.LerXml --
 [+] #TK-6995: Implementado a escrita e leitura dos arquivos INI do RPS e NFS-e.
    Por: Italo Giurizzato Junior

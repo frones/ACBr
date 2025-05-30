@@ -2,10 +2,19 @@
 {
     public enum SerialParity
     {
-        None = 'N',
-        Odd = 'O',
-        Even = 'E',
-        Mark = 'M',
-        Space = 'S'
+        [EnumValue("N")]
+        None,
+
+        [EnumValue("O")]
+        Odd,
+
+        [EnumValue("E")]
+        Even,
+
+        [EnumValue("M")]
+        Mark,
+
+        [EnumValue("S")]
+        Space
     }
 }

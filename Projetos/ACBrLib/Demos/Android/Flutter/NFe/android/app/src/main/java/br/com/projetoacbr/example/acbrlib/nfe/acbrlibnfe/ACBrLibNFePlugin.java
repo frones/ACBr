@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 
 import java.io.File;
 import android.content.Context;
-import android.util.Log;
 
 import br.com.acbr.lib.nfe.ACBrLibNFe;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -450,7 +449,7 @@ public class ACBrLibNFePlugin implements FlutterPlugin, MethodChannel.MethodCall
             ACBrNFe.Assinar();
             result.success("Assinado com sucesso");
         } catch (Exception e) {
-            Log.e("Erro ao assinar", e.getMessage(), e);
+            result.error("Erro ao assinar", e.getMessage(), e);
         }
     }
 
@@ -459,7 +458,7 @@ public class ACBrLibNFePlugin implements FlutterPlugin, MethodChannel.MethodCall
             ACBrNFe.Validar();
             result.success("Validado com sucesso");
         } catch (Exception e) {
-            Log.e("Erro ao validar", e.getMessage(), e);
+            result.error("Erro ao validar", e.getMessage(), e);
         }
     }
 
@@ -468,7 +467,7 @@ public class ACBrLibNFePlugin implements FlutterPlugin, MethodChannel.MethodCall
             String retorno = ACBrNFe.ValidarRegrasdeNegocios();
             result.success(retorno);
         } catch (Exception e) {
-            Log.e("Erro ao validar regras de negócio", e.getMessage(), e);
+            result.error("Erro ao validar regras de negócio", e.getMessage(), e);
         }
     }
 
@@ -477,7 +476,7 @@ public class ACBrLibNFePlugin implements FlutterPlugin, MethodChannel.MethodCall
             String retorno = ACBrNFe.VerificarAssinatura();
             result.success(retorno);
         } catch (Exception e) {
-            Log.e("Erro ao validar regras de negócio", e.getMessage(), e);
+            result.error("Erro ao validar regras de negócio", e.getMessage(), e);
         }
     }
 
@@ -531,7 +530,7 @@ public class ACBrLibNFePlugin implements FlutterPlugin, MethodChannel.MethodCall
             String retorno = ACBrNFe.GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi, AEmissao, ACNPJCPF);
             result.success(retorno);
         } catch (Exception e){
-            Log.e("Erro ao gerar chave", e.getMessage(), e);
+            result.error("Erro ao gerar chave", e.getMessage(), e);
         }
     }
 
@@ -540,7 +539,7 @@ public class ACBrLibNFePlugin implements FlutterPlugin, MethodChannel.MethodCall
             String retorno = ACBrNFe.ObterCertificados();
             result.success(retorno);
         } catch (Exception e) {
-            Log.e("Erro ao obter certificado", e.getMessage(), e);
+            result.error("Erro ao obter certificado", e.getMessage(), e);
         }
     }
 
@@ -555,7 +554,7 @@ public class ACBrLibNFePlugin implements FlutterPlugin, MethodChannel.MethodCall
             String retorno = ACBrNFe.GetPath(ATipo);
             result.success(retorno);
         } catch (Exception e) {
-            Log.e("Erro ao obter caminho", e.getMessage(), e);
+            result.error("Erro ao obter caminho", e.getMessage(), e);
         }
     }
 
@@ -565,7 +564,7 @@ public class ACBrLibNFePlugin implements FlutterPlugin, MethodChannel.MethodCall
             String retorno = ACBrNFe.GetPathEvento(ACodEvento);
             result.success(retorno);
         } catch (Exception e) {
-            Log.e("Erro ao obter caminho do Evento", e.getMessage(), e);
+            result.error("Erro ao obter caminho do Evento", e.getMessage(), e);
         }
     }
 
@@ -574,7 +573,7 @@ public class ACBrLibNFePlugin implements FlutterPlugin, MethodChannel.MethodCall
             String retorno = ACBrNFe.StatusServico();
             result.success(retorno);
         } catch (Exception e) {
-            Log.e("Erro ao obter Status Serviço", e.getMessage(), e);
+            result.error("Erro ao obter Status Serviço", e.getMessage(), e);
         }
     }
 
@@ -585,7 +584,7 @@ public class ACBrLibNFePlugin implements FlutterPlugin, MethodChannel.MethodCall
             String retorno = ACBrNFe.Consultar(eChaveOuNFe, AExtrairEventos);
             result.success(retorno);
         } catch (Exception e) {
-            Log.e("Erro ao Consultar", e.getMessage(), e);
+            result.error("Erro ao Consultar", e.getMessage(), e);
         }
     }
 
@@ -595,7 +594,7 @@ public class ACBrLibNFePlugin implements FlutterPlugin, MethodChannel.MethodCall
             String retorno = ACBrNFe.ConsultarRecibo(ARecibo);
             result.success(retorno);
         } catch (Exception e) {
-            Log.e("Erro ao Consultar Recibo", e.getMessage(), e);
+            result.error("Erro ao Consultar Recibo", e.getMessage(), e);
         }
     }
 
@@ -607,7 +606,7 @@ public class ACBrLibNFePlugin implements FlutterPlugin, MethodChannel.MethodCall
             String retorno = ACBrNFe.ConsultaCadastro(cUF, nDocumento, nIE);
             result.success(retorno);
         } catch (Exception e) {
-            Log.e("Erro ao Consultar Cadastro", e.getMessage(), e);
+            result.error("Erro ao Consultar Cadastro", e.getMessage(), e);
         }
     }
 
@@ -654,7 +653,7 @@ public class ACBrLibNFePlugin implements FlutterPlugin, MethodChannel.MethodCall
             String retorno = ACBrNFe.Inutilizar(ACNPJ, AJustificativa, Ano, Modelo, Serie, numeroInicial, numeroFinal);
             result.success(retorno);
         } catch (Exception e){
-            Log.e("Erro ao Inutilizar", e.getMessage(), e);
+            result.error("Erro ao Inutilizar", e.getMessage(), e);
         }
     }
 

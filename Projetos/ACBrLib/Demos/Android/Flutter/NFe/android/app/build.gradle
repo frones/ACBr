@@ -39,8 +39,14 @@ android {
     }
 
     dependencies {
-        implementation(files('./libs/ACBrLibNFe-debug.aar'))
+        implementation(files('./libs/ACBrLibNFe-release.aar'))
         implementation 'net.java.dev.jna:jna:5.14.0@aar'
+    }
+
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = true
+        }
     }
 }
 

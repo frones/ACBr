@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/05/2025
+-- ACBrBase --
+[*] Ajustes em métodos de TACBrInformacao: GetAsDate, GetAsTime, GetAsTimeStamp,
+    GetAsTimeStampSQL, para evitar Exception silenciosa.
+    (por: DSA)
+
 14/05/2025
 -- ACBrUtil.XMLHTML, ACBrNFSeXWebserviceBase --
 [+] #SemTK - Movida função ConverteANSIparaUTF8() da unit ACBrNFSeXWebserviceBase para a ACBrUtil.XMLHTML renomeada para ConverteANSItoUTF8()

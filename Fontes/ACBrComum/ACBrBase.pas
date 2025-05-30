@@ -557,7 +557,10 @@ function TACBrInformacao.GetAsDate : TDateTime;
 var
    DataStr, AnoStr: String;
 begin
+  Result := 0;
   DataStr := OnlyNumber( Trim(fInfo) );
+  if (DataStr = '') then
+    Exit;
 
   if (Length(DataStr) = 6) then // DDMMYY, converte para DDMMYYYY
   begin
@@ -565,13 +568,10 @@ begin
     DataStr := copy(DataStr,1,4) + copy(AnoStr,1,2) + copy(DataStr,5,2);
   end;
 
-  try
-    Result := EncodeDate( StrToInt(copy(DataStr,5,4)),
-                          StrToInt(copy(DataStr,3,2)),
-                          StrToInt(copy(DataStr,1,2)) ) ;
-  except
-    Result := 0 ;
-  end;
+  TryEncodeDate( StrToIntDef(copy(DataStr,5,4), 0),
+                 StrToIntDef(copy(DataStr,3,2), 0),
+                 StrToIntDef(copy(DataStr,1,2), 0),
+                 Result );
 end;
 
 function TACBrInformacao.GetAsBinary: AnsiString;
@@ -616,51 +616,54 @@ function TACBrInformacao.GetAsTime : TDateTime;
 var
   TimeStr : String;
 begin
+  Result := 0;
   TimeStr := OnlyNumber( Trim(fInfo) );
+  if (TimeStr = '') then
+    Exit;
 
-  try
-    Result := EncodeTime( StrToInt(copy(TimeStr,1,2)),
-                          StrToInt(copy(TimeStr,3,2)),
-                          StrToInt(copy(TimeStr,5,2)), 0) ;
-  except
-    Result := 0 ;
-  end;
+  TryEncodeTime( StrToIntDef(copy(TimeStr,1,2), 0),
+                 StrToIntDef(copy(TimeStr,3,2), 0),
+                 StrToIntDef(copy(TimeStr,5,2), 0),
+                 0,
+                 Result );
 end;
 
 function TACBrInformacao.GetAsTimeStamp : TDateTime;
 var
   DateTimeStr : String;
 begin
+  Result := 0;
   DateTimeStr := OnlyNumber( Trim(fInfo) );
+  if (DateTimeStr = '') then
+    Exit;
 
-  try
-    Result := EncodeDateTime( YearOf(now),
-                              StrToInt(copy(DateTimeStr,3,2)),
-                              StrToInt(copy(DateTimeStr,1,2)),
-                              StrToIntDef(copy(DateTimeStr,5,2),0),
-                              StrToIntDef(copy(DateTimeStr,7,2),0),
-                              StrToIntDef(copy(DateTimeStr,9,2),0), 0) ;
-  except
-    Result := 0 ;
-  end;
+  TryEncodeDateTime( YearOf(now),
+                     StrToIntDef(copy(DateTimeStr,3,2), 0),
+                     StrToIntDef(copy(DateTimeStr,1,2), 0),
+                     StrToIntDef(copy(DateTimeStr,5,2), 0),
+                     StrToIntDef(copy(DateTimeStr,7,2), 0),
+                     StrToIntDef(copy(DateTimeStr,9,2), 0),
+                     0,
+                     Result );
 end;
 
 function TACBrInformacao.GetAsTimeStampSQL : TDateTime;
 var
   DateTimeStr : String;
 begin
+  Result := 0;
   DateTimeStr := OnlyNumber( Trim(fInfo) );
+  if (DateTimeStr = '') then
+    Exit;
 
-  try
-    Result := EncodeDateTime( StrToInt(copy(DateTimeStr,1,4)),
-                              StrToInt(copy(DateTimeStr,5,2)),
-                              StrToInt(copy(DateTimeStr,7,2)),
-                              StrToIntDef(copy(DateTimeStr,9,2),0),
-                              StrToIntDef(copy(DateTimeStr,11,2),0),
-                              StrToIntDef(copy(DateTimeStr,13,2),0), 0) ;
-  except
-    Result := 0 ;
-  end;
+  TryEncodeDateTime( StrToIntDef(copy(DateTimeStr, 1,4), 0),
+                     StrToIntDef(copy(DateTimeStr, 5,2), 0),
+                     StrToIntDef(copy(DateTimeStr, 7,2), 0),
+                     StrToIntDef(copy(DateTimeStr, 9,2), 0),
+                     StrToIntDef(copy(DateTimeStr,11,2), 0),
+                     StrToIntDef(copy(DateTimeStr,13,2), 0),
+                     0,
+                     Result );
 end;
 
 procedure TACBrInformacao.SetAsBinary(AValue: AnsiString);

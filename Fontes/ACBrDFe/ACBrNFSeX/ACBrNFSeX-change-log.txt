@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/06/2025
+-- Bauhaus.GravarJson/Bauhaus.LerJson --
+[+] #TK-6995: Implementado a escrita e leitura dos arquivos INI do RPS e NFS-e.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-7161: Alterado as URLs de homologação da cidade de Birigui/SP, o provedor continua o mesmo.
    Por: netoap.cardoso

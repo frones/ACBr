@@ -47,6 +47,10 @@ Símbolo : Significado
 [+] #TK-6995: Implementado a escrita e leitura dos arquivos INI do RPS e NFS-e.
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
+[+] #TK-7166: Incluída a cidade de Sarzedo/MG, o provedor é Betha.
+   Por: Filipe Novaes - Alterdata
+[+] #TK-7162: Incluída a cidade de Rio Bonito do Iguacu/PR, o provedor é Equiplano.
+   Por: Desenvolvimento GDL Sistemas
 [*] #TK-7161: Alterado as URLs de homologação da cidade de Birigui/SP, o provedor continua o mesmo.
    Por: netoap.cardoso
 [*] #TK-7160: A cidade de Buritama/SP trocou de provedor, agora é Sam.

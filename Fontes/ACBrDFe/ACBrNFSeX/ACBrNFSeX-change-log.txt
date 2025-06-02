@@ -44,6 +44,14 @@ Símbolo : Significado
 
 02/06/2025
 -- ACBrNFSeXServicos --
+[*] #TK-7161: Alterado as URLs de homologação da cidade de Birigui/SP, o provedor continua o mesmo.
+   Por: netoap.cardoso
+[*] #TK-7160: A cidade de Buritama/SP trocou de provedor, agora é Sam.
+   Por: netoap.cardoso
+[+] #TK-7159: Incluída a cidade de Auriflama/SP, o provedor é Fiorilli.
+   Por: netoap.cardoso
+[*] #TK-7158: Alterado as URLs da cidade de Edeia/GO, o provedor continua o mesmo.
+   Por: netoap.cardoso
 [+] #TK-7155: Incluída a cidade de Lagamar/MG, o provedor é NFSeBrasil.
    Por: João Antônio
 [+] #TK-7152: Incluída a cidade de Nova Ponte/MG, o provedor é Governa versão 1.01

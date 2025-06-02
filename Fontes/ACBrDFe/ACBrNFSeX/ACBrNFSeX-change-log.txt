@@ -42,6 +42,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/06/2025
+-- ACBrNFSeXServicos --
+[+] #TK-7155: Incluída a cidade de Lagamar/MG, o provedor é NFSeBrasil.
+   Por: João Antônio
+[+] #TK-7152: Incluída a cidade de Nova Ponte/MG, o provedor é Governa versão 1.01
+   Por: João Antônio
+[+] #TK-7151: Incluída a cidade de Maravilhas/MG, o provedor é NFSeBrasil.
+   Por: João Antônio
+[+] #TK-7150: Incluída a cidade de Morada Nova de Minas/MG, o provedor é NFSeBrasil.
+   Por: João Antônio
+[+] #TK-7149: Incluída a cidade de Passa Tempo/MG, o provedor é NFSeBrasil.
+   Por: Italo Giurizzato Junior
+
 30/05/2025
 -- Aspec.GravarJson/Aspec.LerJson --
 [+] #TK-6995: Implementado a escrita e leitura dos arquivos INI do RPS e NFS-e.

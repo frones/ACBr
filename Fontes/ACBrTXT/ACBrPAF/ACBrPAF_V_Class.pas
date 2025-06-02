@@ -197,7 +197,7 @@ begin
         with FRegistrosV2.Items[intFor] do
         begin
           Add( LFill('V2') +
-               LFill(DATA) +
+               LFill(DATA, 'yyyymmdd') +
                LFill(DAV,13));
         end;
       end;
@@ -231,7 +231,7 @@ begin
         with FRegistrosV3.Items[intFor] do
         begin
           Add( LFill('V3') +
-               LFill(DATA) +
+               LFill(DATA, 'yyyymmdd') +
                LFill(DAV,13));
         end;
       end;
@@ -265,7 +265,7 @@ begin
   begin
     if Assigned(FRegistroV4) then
       Add( LFill('V4') +
-        LFill(FRegistroV4.DATA));
+        LFill(FRegistroV4.DATA, 'yyyymmdd'));
   end;
 end;
 

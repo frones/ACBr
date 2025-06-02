@@ -4952,11 +4952,6 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element name="gCompraGov" type="TCompraGov" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation>Grupo de Compras Governamentais</xs:documentation>
-							</xs:annotation>
-						</xs:element>
 					</xs:sequence>
 					<xs:attribute name="versao" use="required">
 						<xs:annotation>

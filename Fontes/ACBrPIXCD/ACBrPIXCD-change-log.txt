@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/06/2025
+-- ACBrPIXPSPAilos --
+[*] Alteração da URL de homologação.
+[*] Ajuste no body da autenticação para incluir o certificado e chave.
+    por: Eduardo Frota Vicentini
+
 21/05/2025
 -- ACBrSchemaMatera --
 [*] #TK-6962: Corrige conversão do tipo mdtUnknown em StringToMateraDocumentType.

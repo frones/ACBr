@@ -50,7 +50,7 @@ uses
   ACBrPIXCD, ACBrOpenSSLUtils;
 
 const
-  cAilosURLSandbox      = 'https://apiendpointhml.ailos.coop.br/qa/ailos/pix-cobranca/api/v1';
+  cAilosURLSandbox      = 'https://pixcobranca-h.ailos.coop.br/qa/ailos/pix-cobranca/api/v1';
   cAilosURLProducao     = 'https://pixcobranca.ailos.coop.br/ailos/pix-cobranca/api/v1';
   cAilosPathAuthToken   = '/client/connect/token';
   cAilosURLAuthTeste    = cAilosURLSandbox+cAilosPathAuthToken;
@@ -106,6 +106,8 @@ begin
     qp.Values['client_secret'] := ClientSecret;
     qp.Values['scope'] := ScopesToString(Scopes);
     qp.Values['cacert'] := RootCrt;
+    qp.Values['key'] := ArquivoChavePrivada;
+    qp.Values['cert'] := ArquivoCertificado;
     Body := qp.AsURL;
     WriteStrToStream(Http.Document, Body);
     Http.MimeType := CContentTypeApplicationWwwFormUrlEncoded;

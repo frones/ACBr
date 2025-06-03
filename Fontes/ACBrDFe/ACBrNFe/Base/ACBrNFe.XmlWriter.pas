@@ -305,6 +305,7 @@ var
   Gerar: boolean;
   xCNPJCPF: string;
   nfeNode, xmlNode: TACBrXmlNode;
+  qrCode: string;
 begin
   {
     Os campos abaixo tem que ser os mesmos da configuração
@@ -362,11 +363,15 @@ begin
   xmlNode := GerarInfNFe();
   nfeNode.AppendChild(xmlNode);
 
-  if NFe.infNFeSupl.qrCode <> '' then
+  qrCode := NFe.infNFeSupl.qrCode;
+  if qrCode <> '' then
   begin
+    if Pos('?p=', qrCode) = 0 then
+      qrCode := '<![CDATA[' + qrCode + ']]>';
+
     xmlNode := nfeNode.AddChild('infNFeSupl');
     xmlNode.AppendChild(AddNode(tcStr, 'ZX02', 'qrCode', 100, 600,
-                                1, '<![CDATA[' + NFe.infNFeSupl.qrCode + ']]>', DSC_INFQRCODE, False));
+                                1, qrCode, DSC_INFQRCODE, False));
 
     if NFe.infNFe.Versao >= 4 then
       xmlNode.AppendChild(AddNode(tcStr, 'ZX03', 'urlChave', 21,

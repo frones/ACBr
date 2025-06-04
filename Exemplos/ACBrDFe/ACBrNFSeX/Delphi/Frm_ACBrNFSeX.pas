@@ -890,6 +890,9 @@ begin
       }
       FrmRec := frmFixoAnual;
 
+      // Provedor Giap
+      OutrasInformacoes := 'Observacao';
+
       {=========================================================================
         Numero, Série e Tipo do Rps que esta sendo substituido por este
       =========================================================================}
@@ -1014,14 +1017,14 @@ begin
       else
       begin
         // Provedor Giap
-        Servico.Endereco.Bairro := 'Bairro onde o serviço foi prestado';
-        Servico.Endereco.CEP := 'cep do local da prestação do serviço';
-        Servico.Endereco.xMunicipio := 'município do local da prestação do serviço';
-        Servico.Endereco.Complemento := 'complemento do local da prestação do serviço';
+        Servico.Endereco.Bairro := 'Centro';
+        Servico.Endereco.CEP := '14800000';
+        Servico.Endereco.xMunicipio := 'Araraquara';
+        Servico.Endereco.Complemento := '';
         Servico.Endereco.Endereco := 'endereço do local da prestação do serviço';
-        Servico.Endereco.Numero := 'numero do local da prestação do serviço';
-        Servico.Endereco.xPais := 'pais do local da prestação do serviço';
-        Servico.Endereco.UF := 'UF do local da prestação do serviço';
+        Servico.Endereco.Numero := '100';
+        Servico.Endereco.xPais := 'Brasil';
+        Servico.Endereco.UF := 'SP';
 
         Servico.Valores.ValorServicos := 100.35;
         Servico.Valores.ValorDeducoes := 0.00;
@@ -2716,7 +2719,7 @@ end;
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoPrestadoPorIntermediarioClick(
   Sender: TObject);
 var
-  xTitulo, NumPagina, CPFCNPJInter, IMInter: String;
+  xTitulo, NumPagina, CPFCNPJInter, IMInter, DataIni, DataFin: String;
 begin
   xTitulo := 'Consultar NFSe Serviço Prestado Por Intermediário';
 
@@ -2732,8 +2735,17 @@ begin
   if not(InputQuery(xTitulo, 'Pagina:', NumPagina)) then
     exit;
 
+  DataIni := DateToStr(Date);
+  if not (InputQuery(xTitulo, 'Data Inicial (DD/MM/AAAA):', DataIni)) then
+    exit;
+
+  DataFin := DataIni;
+  if not (InputQuery(xTitulo, 'Data Final (DD/MM/AAAA):', DataFin)) then
+    exit;
+
   ACBrNFSeX1.ConsultarNFSeServicoPrestadoPorIntermediario(CPFCNPJInter,
-    IMInter, StrToIntDef(NumPagina, 1));
+    IMInter, StrToIntDef(NumPagina, 1), StrToDateDef(DataIni, 0),
+    StrToDateDef(DataFin, 0));
 
   ChecarResposta(tmConsultarNFSeServicoPrestado);
 end;
@@ -2785,7 +2797,7 @@ end;
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoPrestadoPorTomadorClick(
   Sender: TObject);
 var
-  xTitulo, NumPagina, CPFCNPJTomador, IMTomador: String;
+  DataIni, DataFin, xTitulo, NumPagina, CPFCNPJTomador, IMTomador: String;
 begin
   xTitulo := 'Consultar NFSe Serviço Prestado Por Tomador';
 
@@ -2801,8 +2813,17 @@ begin
   if not(InputQuery(xTitulo, 'Pagina:', NumPagina)) then
     exit;
 
+  DataIni := DateToStr(Date);
+  if not (InputQuery(xTitulo, 'Data Inicial (DD/MM/AAAA):', DataIni)) then
+    exit;
+
+  DataFin := DataIni;
+  if not (InputQuery(xTitulo, 'Data Final (DD/MM/AAAA):', DataFin)) then
+    exit;
+
   ACBrNFSeX1.ConsultarNFSeServicoPrestadoPorTomador(CPFCNPJTomador,
-    IMTomador, StrToIntDef(NumPagina, 1));
+    IMTomador, StrToIntDef(NumPagina, 1), StrToDateDef(DataIni, 0),
+    StrToDateDef(DataFin, 0));
 
   ChecarResposta(tmConsultarNFSeServicoPrestado);
 end;
@@ -2810,7 +2831,7 @@ end;
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoTomadoPorIntermediarioClick(
   Sender: TObject);
 var
-  xTitulo, NumPagina, CPFCNPJInter, IMInter: String;
+  xTitulo, NumPagina, CPFCNPJInter, IMInter, DataIni, DataFin: String;
 begin
   xTitulo := 'Consultar NFSe Serviço Tomado Por Intermediário';
 
@@ -2826,8 +2847,17 @@ begin
   if not(InputQuery(xTitulo, 'Pagina:', NumPagina)) then
     exit;
 
+  DataIni := DateToStr(Date);
+  if not (InputQuery(xTitulo, 'Data Inicial (DD/MM/AAAA):', DataIni)) then
+    exit;
+
+  DataFin := DataIni;
+  if not (InputQuery(xTitulo, 'Data Final (DD/MM/AAAA):', DataFin)) then
+    exit;
+
   ACBrNFSeX1.ConsultarNFSeServicoTomadoPorIntermediario(CPFCNPJInter,
-    IMInter, StrToIntDef(NumPagina, 1));
+    IMInter, StrToIntDef(NumPagina, 1), StrToDateDef(DataIni, 0),
+    StrToDateDef(DataFin, 0));
 
   ChecarResposta(tmConsultarNFSeServicoTomado);
 end;
@@ -4120,7 +4150,7 @@ end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoTomadoPorPrestadorClick(Sender: TObject);
 var
-  xTitulo, NumPagina, CPFCNPJPrestador, IMPrestador: String;
+  xTitulo, NumPagina, CPFCNPJPrestador, IMPrestador, DataIni, DataFin: String;
 begin
   xTitulo := 'Consultar NFSe Serviço Tomado Por Prestador';
 
@@ -4136,8 +4166,17 @@ begin
   if not(InputQuery(xTitulo, 'Pagina:', NumPagina)) then
     exit;
 
+  DataIni := DateToStr(Date);
+  if not (InputQuery(xTitulo, 'Data Inicial (DD/MM/AAAA):', DataIni)) then
+    exit;
+
+  DataFin := DataIni;
+  if not (InputQuery(xTitulo, 'Data Final (DD/MM/AAAA):', DataFin)) then
+    exit;
+
   ACBrNFSeX1.ConsultarNFSeServicoTomadoPorPrestador(CPFCNPJPrestador,
-    IMPrestador, StrToIntDef(NumPagina, 1));
+    IMPrestador, StrToIntDef(NumPagina, 1), StrToDateDef(DataIni, 0),
+    StrToDateDef(DataFin, 0));
 
   ChecarResposta(tmConsultarNFSeServicoTomado);
 end;
@@ -4161,16 +4200,13 @@ begin
   if not(InputQuery(xTitulo, 'Pagina:', NumPagina)) then
     exit;
 
-  if ACBrNFSeX1.Configuracoes.Geral.Provedor = proISSSaoPaulo then
-  begin
-    DataIni := DateToStr(Date);
-    if not (InputQuery(xTitulo, 'Data Inicial (DD/MM/AAAA):', DataIni)) then
-      exit;
+  DataIni := DateToStr(Date);
+  if not (InputQuery(xTitulo, 'Data Inicial (DD/MM/AAAA):', DataIni)) then
+    exit;
 
-    DataFin := DataIni;
-    if not (InputQuery(xTitulo, 'Data Final (DD/MM/AAAA):', DataFin)) then
-      exit;
-  end;
+  DataFin := DataIni;
+  if not (InputQuery(xTitulo, 'Data Final (DD/MM/AAAA):', DataFin)) then
+    exit;
 
   ACBrNFSeX1.ConsultarNFSeServicoTomadoPorTomador(CPFCNPJTomador,
     IMTomador, StrToIntDef(NumPagina, 1), StrToDateDef(DataIni, 0),

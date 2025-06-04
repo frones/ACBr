@@ -782,7 +782,11 @@ begin
   AddInfo(cKeyFabricante, Ret);
 
   // Lendo a versão do Firmware
-  Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 0, True );
+  Ret := '';
+  try
+    Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 0, True );
+  except
+  end;
   AddInfo(cKeyFirmware, Ret);
 
   // Lendo o Modelo

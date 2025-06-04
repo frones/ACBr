@@ -120,7 +120,9 @@ begin
   begin
     TfrxPictureView(Sender).Visible := not (emvQrCode = '');
     if (emvQrCode <> '') then
-      PintarQRCode(emvQrCode, TfrxPictureView(Sender).Picture.Bitmap, qrAuto);
+      PintarQRCode(emvQrCode, TfrxPictureView(Sender).Picture.Bitmap, qrAuto)
+    else
+      TfrxPictureView(Sender).Picture := nil;
   end;
 end;
 

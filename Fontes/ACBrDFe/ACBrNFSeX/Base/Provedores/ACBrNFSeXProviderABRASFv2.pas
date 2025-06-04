@@ -1532,7 +1532,7 @@ procedure TACBrNFSeProviderABRASFv2.PrepararConsultaNFSeServicoPrestado(
   Response: TNFSeConsultaNFSeResponse);
 var
   aParams: TNFSeParamsResponse;
-  XmlConsulta, NameSpace, Prefixo, PrefixoTS: string;
+  XmlConsulta, NameSpace, Prefixo, PrefixoTS, TagPeriodo: string;
 begin
   Prefixo := '';
   PrefixoTS := '';
@@ -1580,16 +1580,21 @@ begin
   else
     XmlConsulta := '';
 
+  if Response.InfConsultaNFSe.tpPeriodo = tpEmissao then
+    TagPeriodo := 'PeriodoEmissao'
+  else
+    TagPeriodo := 'PeriodoCompetencia';
+
   if (Response.InfConsultaNFSe.DataInicial > 0) and (Response.InfConsultaNFSe.DataFinal > 0) then
     XmlConsulta := XmlConsulta +
-                     '<' + Prefixo + 'PeriodoEmissao>' +
-                       '<' + PrefixoTS + 'DataInicial>' +
+                     '<' + Prefixo + TagPeriodo + '>' +
+                       '<' + Prefixo + 'DataInicial>' +
                           FormatDateTime('yyyy-mm-dd', Response.InfConsultaNFSe.DataInicial) +
-                       '</' + PrefixoTS + 'DataInicial>' +
-                       '<' + PrefixoTS + 'DataFinal>' +
+                       '</' + Prefixo + 'DataInicial>' +
+                       '<' + Prefixo + 'DataFinal>' +
                           FormatDateTime('yyyy-mm-dd', Response.InfConsultaNFSe.DataFinal) +
-                       '</' + PrefixoTS + 'DataFinal>' +
-                     '</' + Prefixo + 'PeriodoEmissao>';
+                       '</' + Prefixo + 'DataFinal>' +
+                     '</' + Prefixo + TagPeriodo + '>';
 
   if NaoEstaVAzio(Response.InfConsultaNFSe.CNPJTomador) then
   begin
@@ -1793,7 +1798,7 @@ procedure TACBrNFSeProviderABRASFv2.PrepararConsultaNFSeServicoTomado(
   Response: TNFSeConsultaNFSeResponse);
 var
   aParams: TNFSeParamsResponse;
-  XmlConsulta, NameSpace, Prefixo, PrefixoTS: string;
+  XmlConsulta, NameSpace, Prefixo, PrefixoTS, TagPeriodo: string;
 begin
   Prefixo := '';
   PrefixoTS := '';
@@ -1841,16 +1846,21 @@ begin
   else
     XmlConsulta := '';
 
+  if Response.InfConsultaNFSe.tpPeriodo = tpEmissao then
+    TagPeriodo := 'PeriodoEmissao'
+  else
+    TagPeriodo := 'PeriodoCompetencia';
+
   if (Response.InfConsultaNFSe.DataInicial > 0) and (Response.InfConsultaNFSe.DataFinal > 0) then
     XmlConsulta := XmlConsulta +
-                     '<' + Prefixo + 'PeriodoEmissao>' +
-                       '<' + PrefixoTS + 'DataInicial>' +
+                     '<' + Prefixo + TagPeriodo + '>' +
+                       '<' + Prefixo + 'DataInicial>' +
                           FormatDateTime('yyyy-mm-dd', Response.InfConsultaNFSe.DataInicial) +
-                       '</' + PrefixoTS + 'DataInicial>' +
-                       '<' + PrefixoTS + 'DataFinal>' +
+                       '</' + Prefixo + 'DataInicial>' +
+                       '<' + Prefixo + 'DataFinal>' +
                           FormatDateTime('yyyy-mm-dd', Response.InfConsultaNFSe.DataFinal) +
-                       '</' + PrefixoTS + 'DataFinal>' +
-                     '</' + Prefixo + 'PeriodoEmissao>';
+                       '</' + Prefixo + 'DataFinal>' +
+                     '</' + Prefixo + TagPeriodo + '>';
 
   if NaoEstaVAzio(Response.InfConsultaNFSe.CNPJPrestador) then
   begin

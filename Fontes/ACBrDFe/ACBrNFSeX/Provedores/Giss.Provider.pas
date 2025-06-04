@@ -82,6 +82,8 @@ type
     procedure GerarMsgDadosConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse;
       Params: TNFSeParamsResponse); override;
 
+    procedure PrepararConsultaNFSeServicoPrestado(Response: TNFSeConsultaNFSeResponse); override;
+
     procedure PrepararConsultaNFSeServicoTomado(Response: TNFSeConsultaNFSeResponse); override;
     procedure GerarMsgDadosConsultaNFSeServicoTomado(Response: TNFSeConsultaNFSeResponse;
       Params: TNFSeParamsResponse); override;
@@ -559,6 +561,18 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProviderGiss204.PrepararConsultaNFSeServicoPrestado(
+  Response: TNFSeConsultaNFSeResponse);
+begin
+  with ConfigMsgDados do
+  begin
+    Prefixo := 'ns3';
+    PrefixoTS := 'ns4';
+  end;
+
+  inherited PrepararConsultaNFSeServicoPrestado(Response);
+end;
+
 procedure TACBrNFSeProviderGiss204.PrepararConsultaNFSeServicoTomado(
   Response: TNFSeConsultaNFSeResponse);
 begin
@@ -581,7 +595,7 @@ begin
 
   with Params do
   begin
-    Xml := StringReplace(Xml, 'ns4', 'ns3', [rfReplaceAll]);
+//    Xml := StringReplace(Xml, 'ns4', 'ns3', [rfReplaceAll]);
 
     Consulente :='<' + Prefixo + 'Consulente>' +
                    '<' + Prefixo2 + 'CpfCnpj>' +

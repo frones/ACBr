@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/06/2025
+-- Giss.Provider/ACBrNFSeXProviderABRASFv2 --
+[*] #TK-7133: Realizado mais algumas alterações visando gerar corretamente os pedidos
+    de Consulta a Serviço Prestado e Tomado para os provedores que disponibilizaram
+    esses tipos de serviços.
+   Por: Italo Giurizzato Junior
+
 02/06/2025
 -- Bauhaus.GravarJson/Bauhaus.LerJson --
 [+] #TK-6995: Implementado a escrita e leitura dos arquivos INI do RPS e NFS-e.

@@ -225,13 +225,63 @@ type
     property XML: string read FXML write FXML;
   end;
 
+  { TdetPagResposta }
+  TdetPagResposta = class(TACBrLibRespostaBase)
+  private
+    FindPag: String;
+    FtPag: String;
+    FvPag: Double;
+    FdPag: TDateTime;
+    FCNPJPag: String;
+    FUFPag: String;
+    FtBand: String;
+    FcAut: String;
+    FCNPJReceb: String;
+    FUFReceb: String;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+      const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const AdetPag: TdetPagCollectionItem);
+  published
+    property indPag: String read FindPag write FindPag;
+    property tPag: String read FtPag write FtPag;
+    property vPag: Double read FvPag write FvPag;
+    property dPag: TDateTime read FdPag write FdPag;
+    property CNPJPag: String read FCNPJPag write FCNPJPag;
+    property UFPag: String read FUFPag write FUFPag;
+    property tBand: String read FtBand write FtBand;
+    property cAut: String read FcAut write FcAut;
+    property CNPJReceb: String read FCNPJReceb write FCNPJReceb;
+    property UFReceb: String read FUFReceb write FUFReceb;
+  end;
+
+  { TdetEventoResposta }
+  TdetEventoResposta = class(TACBrLibRespostaBase)
+  private
+    FdescEvento: String;
+    FverAplic: String;
+    FnProtEvento: String;
+    FdetPag: TObjectList;
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo;
+      const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy; override;
+
+  published
+    property descEvento: String read FdescEvento write FdescEvento;
+    property verAplic: String read FverAplic write FverAplic;
+    property nProtEvento: String read FnProtEvento write FnProtEvento;
+    property detPag: TObjectList read FdetPag;
+  end;
+
   { TEventoResposta }
   TEventoResposta = class(TLibNFeServiceResposta)
   private
     FidLote: Integer;
     FcOrgao: Integer;
     FItems: TObjectList;
-
+    FdetEvento: TdetEventoResposta;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
@@ -242,7 +292,7 @@ type
     property idLote: Integer read FidLote write FidLote;
     property cOrgao: Integer read FcOrgao write FcOrgao;
     property Items: TObjectList read FItems;
-
+    property detEvento: TdetEventoResposta read FdetEvento;
   end;
 
   { TConsultaNFeInfCanResposta }
@@ -836,18 +886,43 @@ begin
   XML := AInfEvento.XML;
 end;
 
+{ TdetPagResposta }
+constructor TdetPagResposta.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(ASessao, ATipo, AFormato);
+end;
+
+procedure TdetPagResposta.Processar(const AdetPag: TdetPagCollectionItem);
+begin
+  FindPag := IndpagToStrEX(AdetPag.indPag);
+  FtPag := FormaPagamentoToStr(AdetPag.tPag);
+  FvPag := AdetPag.vPag;
+  FdPag := AdetPag.dPag;
+  FCNPJPag := AdetPag.CNPJPag;
+  FUFPag := AdetPag.UFPag;
+  FtBand := BandeiraCartaoToStr(AdetPag.tBand);
+  FcAut := AdetPag.cAut;
+  FCNPJReceb := AdetPag.CNPJReceb;
+  FUFReceb := AdetPag.UFReceb;
+end;
+
 { TEventoResposta }
 constructor TEventoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespEvento, ATipo, AFormato);
 
   FItems := TObjectList.Create;
+  // Criado sobre demanda, para que seja criado somente quando houverem as chaves no xml
+  // FdetEvento := TdetEventoResposta.Create(1, Tipo, Codificacao);
 end;
 
 destructor TEventoResposta.Destroy;
 begin
   FItems.Clear;
   FItems.Free;
+  if Assigned(FdetEvento) then
+    FdetEvento.Free;
 
   inherited Destroy;
 end;
@@ -856,6 +931,8 @@ procedure TEventoResposta.Processar(const ACBrNFe: TACBrNFe);
 Var
   I: Integer;
   Item: TEventoItemResposta;
+  ItemDetPag: TdetPagResposta;
+  InfEvento: TInfEvento;
 begin
   with ACBrNFe.WebServices.EnvEvento do
   begin
@@ -865,6 +942,31 @@ begin
     Self.XMotivo := EventoRetorno.XMotivo;
     Self.idLote := EventoRetorno.IdLote;
     Self.cOrgao := EventoRetorno.cOrgao;
+
+    if (EventoRetorno.InfEvento.detEvento.nProtEvento <> '') or
+       (EventoRetorno.InfEvento.detEvento.detPag.Count > 0) then
+      InfEvento := EventoRetorno.InfEvento
+    else if ACBrNFe.EventoNFe.Evento.Count > 0 then
+      InfEvento := ACBrNFe.EventoNFe.Evento.Items[0].InfEvento
+    else
+      InfEvento := nil;
+
+    if Assigned(InfEvento) then
+    begin
+      FdetEvento := TdetEventoResposta.Create(Tipo, Codificacao);
+      FdetEvento.descEvento := InfEvento.detEvento.descEvento;
+      if FdetEvento.descEvento = '' then
+        FdetEvento.descEvento := InfEvento.DescEvento;
+      FdetEvento.verAplic := InfEvento.detEvento.verAplic;
+      FdetEvento.nProtEvento := InfEvento.detEvento.nProtEvento;
+
+      for I := 0 to InfEvento.detEvento.detPag.Count - 1 do
+      begin
+        ItemDetPag := TdetPagResposta.Create('DetPag' + Trim(IntToStrZero(I + 1, 3)), Tipo, Codificacao);
+        ItemDetPag.Processar(InfEvento.detEvento.detPag[I]);
+        FdetEvento.FdetPag.Add(ItemDetPag);
+      end;
+    end;
 
     for I := 0 to EventoRetorno.retEvento.Count - 1 do
     begin
@@ -1005,6 +1107,23 @@ begin
     Xml := Inutilizacao.XML_ProcInutNFe;
 
   end;
+end;
+
+{ TdetEventoResposta }
+constructor TdetEventoResposta.Create(const ATipo: TACBrLibRespostaTipo;
+  const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create('DetEvento', ATipo, AFormato);
+
+  FdetPag := TObjectList.Create;
+end;
+
+destructor TdetEventoResposta.Destroy;
+begin
+  FdetPag.Clear;
+  FdetPag.Free;
+
+  inherited Destroy;
 end;
 
 { TConsultaNFeResposta }

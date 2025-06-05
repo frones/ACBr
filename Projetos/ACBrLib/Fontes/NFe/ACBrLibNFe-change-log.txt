@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/06/2025
+-- Diversos --
+[*] #TK-7037 - Implementada classe em c# para leitura do retorno do evento ECONF e Cancelamento do ECONF - https://www.projetoacbr.com.br/forum/topic/83169-atualiza%C3%A7%C3%A3o-fontes-c-nuget-acbrlibnfemt-econf/
+    Por: Renato Rubinho
+
 04/04/2025
 -- ConsultaNFeProcEventoResposta.cs, ConsultaNFeResposta.cs, ConsultaNFeRetEventoResposta.cs --
 [*] #TK-6748 - Implementada classe em c# para leitura dos dados de RetEvento, na consulta de NFe 

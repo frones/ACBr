@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ACBrLib.Core.DFe.Respostas;
 
 namespace ACBrLib.Core.DFe
 {
@@ -16,6 +17,8 @@ namespace ACBrLib.Core.DFe
         public int cOrgao { get; set; }
 
         public List<TEvento> Items { get; } = new List<TEvento>();
+
+        public EventoDetEvento DetEvento;
 
         #endregion Properties
 
@@ -37,6 +40,22 @@ namespace ACBrLib.Core.DFe
 
                 ret.Items.Add(item);
             } while (item != null);
+
+            ret.DetEvento = iniresposta.ReadFromIni<EventoDetEvento>($"DetEvento");
+
+            if (ret.DetEvento != null)
+            {
+                i = 0;
+                EventoDetPag detPag;
+                do
+                {
+                    i++;
+                    detPag = iniresposta.ReadFromIni<EventoDetPag>($"DetPag{i:000}");
+                    if (detPag == null) continue;
+
+                    ret.DetEvento.DetPag.Add(detPag);
+                } while (detPag != null);
+            }
 
             return ret;
         }

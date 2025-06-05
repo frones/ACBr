@@ -96,5 +96,17 @@ namespace ACBrLib.NFe
 
         [EnumValue("610601")]
         teCTeCancelado,
+
+        [EnumValue("110192")]
+        teInsucessoEntregaNFe,
+
+        [EnumValue("110193")]
+        teCancInsucessoEntregaNFe,
+
+        [EnumValue("110750")]
+        teConcFinanceira,
+
+        [EnumValue("110751")]
+        teCancConcFinanceira,
     }
 }

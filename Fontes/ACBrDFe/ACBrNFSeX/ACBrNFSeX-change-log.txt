@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/06/2025
+-- ACBrNFSeXServicos --
+[+] #TK-7166: Incluída a cidade de Sud Mennucci/SP, o provedor é Fiorilli.
+   Por: netoap.cardoso
+
 04/06/2025
 -- Giss.Provider/ACBrNFSeXProviderABRASFv2 --
 [*] #TK-7133: Realizado mais algumas alterações visando gerar corretamente os pedidos

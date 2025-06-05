@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/06/2025
+-- ACBrNFe.EnvEvento --
+[*] #TK-7088: Alteração visando gerar a tag xJust no evento de Desconhecimento da Operação.
+  Por: Diego Folieni/Italo Giurizzato Junior
 -- ACBrNFe.RetEnvEvento --
 [*] #TK-7037: Alimentar as propriedades do retorno do evento ECONF e Cancelamento do ECONF
   Por: Renato Rubinho

@@ -637,6 +637,9 @@ begin
 
   Result.AppendChild(AddNode(tcStr, 'HP19', 'descEvento', 4, 60, 1,
                                             Evento[Idx].FInfEvento.DescEvento));
+
+  Result.AppendChild(AddNode(tcStr, 'HP20', 'xJust', 15, 255, 0,
+                                       Evento[Idx].FInfEvento.detEvento.xJust));
 end;
 
 function TEventoNFe.Gerar_Evento_ManifDestOperNaoRealizada(

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 05/06/2025
 -- ACBrNFSeXServicos --
+[+] #TK-7176: Incluída a cidade de Caete/MG, o provedor é Pronim versão 2.02
+   Por: Anadilson
+[+] #TK-7164: Incluída a cidade de Alto Alegre/SP, o provedor é Fiorilli.
+   Por: Light System Software
 [+] #TK-7166: Incluída a cidade de Sud Mennucci/SP, o provedor é Fiorilli.
    Por: netoap.cardoso
 

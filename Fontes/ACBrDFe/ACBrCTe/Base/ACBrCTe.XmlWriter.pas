@@ -452,7 +452,7 @@ begin
     wAlerta('C11', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
   Result.AppendChild(AddNode(tcInt, 'C13', 'cPais', 4, 4, 0,
-                                                     CODIGO_BRASIL, DSC_CPAIS));
+                                                    Endereco.cPais, DSC_CPAIS));
 
   Result.AppendChild(AddNode(tcStr, 'C15', 'xPais', 2, 60, 0,
                                      Endereco.xPais, DSC_XPAIS));

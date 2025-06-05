@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/06/2025
+-- ACBrCTe.XmlWriter --
+[*] #TK-7173: Ajustes na escrita do XML para gerar corretamente o código do pais.  
+  Por: Datacamp/Italo Giurizzato Junior
+
 26/05/2025
 -- Diversos --
 [*] O campo cCredPres que antes era do tipo Integer passou a ser do tipo TcCredPres

@@ -4469,7 +4469,7 @@ end;
 
 procedure TfrmACBrNFe.btnManifDestConfirmacaoClick(Sender: TObject);
 var
-  Chave, idLote, CNPJ, Titulo: string;
+  Chave, idLote, CNPJ, Titulo, Justificativa: string;
   AtpEvento: TpcnTpEvento;
 begin
   if Sender = btnManifDestConfirmacao then
@@ -4496,6 +4496,13 @@ begin
   if not(InputQuery(Titulo, 'CNPJ ou CPF do autor do Evento', CNPJ)) then
      exit;
 
+  Justificativa := 'justificativa tem que ter no minimo 15 caracteres';
+  if AtpEvento in [teManifDestOperNaoRealizada, teManifDestDesconhecimento] then
+  begin
+  if not(InputQuery(Titulo, 'Justificativa', Justificativa)) then
+     exit;
+  end;
+
   ACBrNFe1.EventoNFe.Evento.Clear;
 
   with ACBrNFe1.EventoNFe.Evento.New do
@@ -4518,10 +4525,10 @@ begin
     infEvento.tpEvento := AtpEvento;
 
     {
-     Se o tipo for: teManifDestOperNaoRealizada, informar a justificativa
+     Se o tipo for: teManifDestOperNaoRealizada, é obrigatório informar a justificativa
+     Se o tipo for: teManifDestDesconhecimento, é opcional informar a justificativa
     }
-    if AtpEvento = teManifDestOperNaoRealizada then
-      InfEvento.detEvento.xJust := 'justificativa tem que ter no minimo 15 caracteres';
+    InfEvento.detEvento.xJust := Justificativa;
   end;
 
   ACBrNFe1.EnviarEvento(StrToInt(idLote));

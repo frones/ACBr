@@ -101,6 +101,7 @@ uses
   synacode,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML,
   ACBrDFeException,
+  ACBrCompress,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   Bauhaus.GravarJson, Bauhaus.LerJson;
 
@@ -275,12 +276,12 @@ var
   AErro: TNFSeEventoCollectionItem;
 begin
   if EstaVazio(Response.NumeroRps) then
-    begin
-      AErro := Response.Erros.New;
-      AErro.Codigo := Cod102;
-      AErro.Descricao := ACBrStr(Desc102);
-      Exit;
-    end;
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod102;
+    AErro.Descricao := ACBrStr(Desc102);
+    Exit;
+  end;
 
   Response.ArquivoEnvio := '?NumeroRps=' +
     Response.NumeroRps;
@@ -294,16 +295,17 @@ procedure TACBrNFSeProviderBauhaus.TratarRetornoConsultaNFSeporRps(
 var
   jDocument, jRps, jNfse, jCancel: TACBrJSONObject;
   AErro: TNFSeEventoCollectionItem;
-  NumRps: string;
+  NumRps, NFSeXml: string;
   ANota: TNotaFiscal;
+  DocumentXml: TACBrXmlDocument;
 begin
   if Response.ArquivoRetorno = '' then
-    begin
-      AErro := Response.Erros.New;
-      AErro.Codigo := Cod201;
-      AErro.Descricao := ACBrStr(Desc201);
-      Exit
-    end;
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod201;
+    AErro.Descricao := ACBrStr(Desc201);
+    Exit
+  end;
 
   jDocument := TACBrJSONObject.Parse(Response.ArquivoRetorno);
 
@@ -313,51 +315,91 @@ begin
       Response.Sucesso := (Response.Erros.Count = 0);
 
       if Response.Sucesso then
+      begin
+        jNfse := jDocument.AsJSONObject['DadosNfse'];
+        jRps := jNfse.AsJSONObject['Rps'];
+        NumRps := jRps.AsString['Numero'];
+
+        if Assigned(jNfse) then
         begin
-          jNfse := jDocument.AsJSONObject['DadosNfse'];
-          jRps := jNfse.AsJSONObject['Rps'];
-          NumRps := jRps.AsString['Numero'];
+          with Response do
+          begin
+            NumeroNota := jNfse.AsString['NumeroNfse'];
+            SerieNota := jRps.AsString['Serie'];
+            Data := jNfse.AsISODateTime['DataEmissao'];
+            Link := jNfse.AsString['LinkNfse'];
+            Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
+            Protocolo := jNfse.AsString['CodigoValidacao'];
+            Situacao := jNfse.AsString['SituacaoNfse'];
+            NumeroLote := NumRps;
 
-          if Assigned(jNfse) then
+            if Situacao = '2' then
             begin
-              with Response do
-                begin
-                  NumeroNota := jNfse.AsString['NumeroNfse'];
-                  SerieNota := jRps.AsString['Serie'];
-                  Data := jNfse.AsISODateTime['DataEmissao'];
-                  Link := jNfse.AsString['LinkNfse'];
-                  Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
-                  Protocolo := jNfse.AsString['CodigoValidacao'];
-                  Situacao := jNfse.AsString['SituacaoNfse'];
-                  NumeroLote := NumRps;
+              DescSituacao := 'Cancelada';
+              jCancel := jNfse.AsJSONObject['Cancelamento'];
+              DataCanc := jCancel.AsISODate['Data'];
+            end
+            else
+              DescSituacao := 'Normal';
+          end;
 
-                  if Situacao = '2' then
-                    begin
-                      DescSituacao := 'Cancelada';
-                      jCancel := jNfse.AsJSONObject['Cancelamento'];
-                      DataCanc := jCancel.AsISODate['Data'];
-                    end
-                  else
-                    DescSituacao := 'Normal';
+          if NumRps <> '' then
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
+          else
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(Response.NumeroNota);
+
+          ANota := CarregarXmlNfse(ANota, Response.ArquivoRetorno);
+          SalvarXmlNfse(ANota);
+
+          NFSeXml := jNfse.AsString['XmlCompactado'];
+
+          if NFSeXml <> '' then
+          begin
+            NFSeXml := DeCompress(DecodeBase64(NFSeXml));
+
+            DocumentXml := TACBrXmlDocument.Create;
+
+            try
+              try
+                if NFSeXml = '' then
+                begin
+                  AErro := Response.Erros.New;
+                  AErro.Codigo := Cod203;
+                  AErro.Descricao := ACBrStr(Desc203);
+                  Exit
                 end;
 
-              if NumRps <> '' then
-                ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
-              else
-                ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(Response.NumeroNota);
+                DocumentXml.LoadFromXml(NFSeXml);
 
-              ANota := CarregarXmlNfse(ANota, Response.ArquivoRetorno);
-              SalvarXmlNfse(ANota);
+                ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+
+                ANota := CarregarXmlNfse(ANota, DocumentXml.Root.OuterXml);
+
+                ConfigGeral.FormatoArqNota := tfaXml;
+                SalvarXmlNfse(ANota);
+                ConfigGeral.FormatoArqNota := tfaJson;
+              except
+                on E:Exception do
+                begin
+                  AErro := Response.Erros.New;
+                  AErro.Codigo := Cod999;
+                  AErro.Descricao := ACBrStr(Desc999 + E.Message);
+                end;
+              end;
+            finally
+              FreeAndNil(DocumentXml);
             end;
+          end;
         end;
+      end;
     except
       on E: Exception do
-        begin
-          Response.Sucesso := False;
-          AErro := Response.Erros.New;
-          AErro.Codigo := Cod999;
-          AErro.Descricao := ACBrStr(Desc999 + E.Message);
-        end;
+      begin
+        Response.Sucesso := False;
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
+      end;
     end;
   finally
     FreeAndNil(jDocument);
@@ -389,8 +431,9 @@ procedure TACBrNFSeProviderBauhaus.TratarRetornoConsultaNFSeporNumero
 var
   jDocument, jRps, jNfse, jCancel: TACBrJSONObject;
   AErro: TNFSeEventoCollectionItem;
-  NumRps: string;
+  NumRps, NFSeXml: string;
   ANota: TNotaFiscal;
+  DocumentXml: TACBrXmlDocument;
 begin
   if Response.ArquivoRetorno = '' then
   begin
@@ -445,6 +488,46 @@ begin
 
             ANota := CarregarXmlNfse(ANota, Response.ArquivoRetorno);
             SalvarXmlNfse(ANota);
+
+            NFSeXml := jNfse.AsString['XmlCompactado'];
+
+            if NFSeXml <> '' then
+            begin
+              NFSeXml := DeCompress(DecodeBase64(NFSeXml));
+
+              DocumentXml := TACBrXmlDocument.Create;
+
+              try
+                try
+                  if NFSeXml = '' then
+                  begin
+                    AErro := Response.Erros.New;
+                    AErro.Codigo := Cod203;
+                    AErro.Descricao := ACBrStr(Desc203);
+                    Exit
+                  end;
+
+                  DocumentXml.LoadFromXml(NFSeXml);
+
+                  ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+
+                  ANota := CarregarXmlNfse(ANota, DocumentXml.Root.OuterXml);
+
+                  ConfigGeral.FormatoArqNota := tfaXml;
+                  SalvarXmlNfse(ANota);
+                  ConfigGeral.FormatoArqNota := tfaJson;
+                except
+                  on E:Exception do
+                  begin
+                    AErro := Response.Erros.New;
+                    AErro.Codigo := Cod999;
+                    AErro.Descricao := ACBrStr(Desc999 + E.Message);
+                  end;
+                end;
+              finally
+                FreeAndNil(DocumentXml);
+              end;
+            end;
           end;
         end;
       except

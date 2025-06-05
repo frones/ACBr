@@ -93,6 +93,7 @@ type
     procedure Ler_DetEvento(const ANode: TACBrXmlNode);
     procedure Ler_Dest(const ANode: TACBrXmlNode);
     procedure Ler_autXML(const ANode: TACBrXmlNode);
+    procedure Ler_detPag(const ANode: TACBrXmlNode);
   public
     constructor Create;
     destructor Destroy; override;
@@ -208,9 +209,34 @@ begin
   Item.CNPJCPF := ObterConteudoTagCNPJCPF(ANode);
 end;
 
+procedure TRetEventoNFe.Ler_detPag(const ANode: TACBrXmlNode);
+var
+  ok: Boolean;
+  Item: TdetPagCollectionItem;
+begin
+  if not Assigned(ANode) then Exit;
+
+  Item := InfEvento.detEvento.detPag.New;
+
+  Item.indPag := StrToIndpagEX(ObterConteudoTag(ANode.Childrens.FindAnyNs('indPag'), tcStr));
+  Item.tPag := StrToFormaPagamento(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tPag'), tcStr));
+  Item.xPag := ObterConteudoTag(ANode.Childrens.FindAnyNs('xPag'), tcStr);
+  Item.vPag := ObterConteudoTag(ANode.Childrens.FindAnyNs('vPag'), tcDe2);
+  Item.dPag := ObterConteudoTag(ANode.Childrens.FindAnyNs('dPag'), tcDat);
+  Item.CNPJPag := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJPag'), tcStr);
+  Item.UFPag := ObterConteudoTag(ANode.Childrens.FindAnyNs('UFPag'), tcStr);
+  Item.CNPJIF := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJIF'), tcStr);
+  Item.tBand := StrToBandeiraCartao(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tBand'), tcStr));
+  Item.cAut := ObterConteudoTag(ANode.Childrens.FindAnyNs('cAut'), tcStr);
+  Item.CNPJReceb := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJReceb'), tcStr);
+  Item.UFReceb := ObterConteudoTag(ANode.Childrens.FindAnyNs('UFReceb'), tcStr);
+end;
+
 procedure TRetEventoNFe.Ler_DetEvento(const ANode: TACBrXmlNode);
 var
   ok: Boolean;
+  i: Integer;
+  ANodes: TACBrXmlNodeArray;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -247,7 +273,11 @@ begin
   infEvento.detEvento.dhHashTentativaEntrega := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhHashTentativaEntrega'), tcDatHor);
 
   Ler_Dest(ANode.Childrens.FindAnyNs('dest'));
-  Ler_autXML(ANode.Childrens.FindAnyNs('autXML'))
+  Ler_autXML(ANode.Childrens.FindAnyNs('autXML'));
+
+  ANodes := ANode.Childrens.FindAll('detPag');
+  for i := 0 to Length(ANodes) - 1 do
+    Ler_detPag(ANodes[i]);
 end;
 
 procedure TRetEventoNFe.Ler_InfEvento(const ANode: TACBrXmlNode);

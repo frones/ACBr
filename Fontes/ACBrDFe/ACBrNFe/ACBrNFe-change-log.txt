@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/06/2025
+-- ACBrNFe.RetEnvEvento --
+[*] #TK-7037: Alimentar as propriedades do retorno do evento ECONF e Cancelamento do ECONF
+  Por: Renato Rubinho
+
 29/05/2025
 -- ACBrNFeWebServices --
 [-] #TK-7129: Remove o uso do ParseText no tratamento do retorno do envio de evento afim de evitar decodificação indevida das HTML Entitys.

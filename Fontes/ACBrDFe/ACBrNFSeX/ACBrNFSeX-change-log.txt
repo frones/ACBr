@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/06/2025
+-- Diversos --
+[+] Implementado a versão 1.01 no provedor Giap para atender a cidade de Araraquara/SP
+    A implementação não esta completa requer mais alguns ajustes.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] #TK-7176: Incluída a cidade de Caete/MG, o provedor é Pronim versão 2.02
    Por: Anadilson

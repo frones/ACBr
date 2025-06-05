@@ -44,6 +44,7 @@ uses
   ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
   ACBrNFSeXProviderProprio,
+  ACBrNFSeXProviderABRASFv1,
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
@@ -87,6 +88,33 @@ type
     function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria): string; override;
     function StrToSituacaoTributaria(out ok: boolean; const s: string): TnfseSituacaoTributaria; override;
     function SituacaoTributariaDescricao(const t: TnfseSituacaoTributaria): string; override;
+  end;
+
+  TACBrNFSeXWebserviceGiap101 = class(TACBrNFSeXWebserviceGiap)
+  private
+//    function GetNameSpace: string;
+  public
+    {
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+
+    function TratarXmlRetornado(const aXML: string): string; override;
+
+    property NameSpace: string read GetNameSpace;
+    }
+  end;
+
+  TACBrNFSeProviderGiap101 = class (TACBrNFSeProviderABRASFv1)
+  protected
+    procedure Configuracao; override;
+
+    function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
+    function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
+    function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
   end;
 
 implementation
@@ -611,6 +639,100 @@ begin
   FPMsgOrig := AMSG;
 
   Result := Executar('', AMSG, [], []);
+end;
+
+{ TACBrNFSeProviderGiap101 }
+
+procedure TACBrNFSeProviderGiap101.Configuracao;
+begin
+  inherited Configuracao;
+
+  ConfigGeral.QuebradeLinha := '\n';
+  with ConfigMsgDados do
+  begin
+    Prefixo := 'ns3';
+    PrefixoTS := 'ns4';
+
+    ConsultarNFSePorFaixa.DocElemento := 'ConsultarNfseEnvio';
+
+    DadosCabecalho := '<ns2:cabecalho versao="3" xmlns:ns2="http://www.ginfes.com.br/cabecalho_v03.xsd">' +
+                      '<versaoDados>3</versaoDados>' +
+                      '</ns2:cabecalho>';
+
+    XmlRps.xmlns := 'http://www.ginfes.com.br/tipos_v03.xsd';
+
+    LoteRps.xmlns := 'http://www.ginfes.com.br/servico_enviar_lote_rps_envio_v03.xsd';
+
+    ConsultarSituacao.xmlns := 'http://www.ginfes.com.br/servico_consultar_situacao_lote_rps_envio_v03.xsd';
+
+    ConsultarLote.xmlns := 'http://www.ginfes.com.br/servico_consultar_lote_rps_envio_v03.xsd';
+
+    ConsultarNFSeRps.xmlns := 'http://www.ginfes.com.br/servico_consultar_nfse_rps_envio_v03.xsd';
+
+    ConsultarNFSe.xmlns := 'http://www.ginfes.com.br/servico_consultar_nfse_envio_v03.xsd';
+
+    ConsultarNFSePorFaixa.xmlns := 'http://www.ginfes.com.br/servico_consultar_nfse_envio_v03.xsd';
+
+    CancelarNFSe.xmlns := 'http://www.ginfes.com.br/servico_cancelar_nfse_envio_v03.xsd';
+  end;
+
+  with ConfigAssinar do
+  begin
+    LoteRps := True;
+    ConsultarSituacao := True;
+    ConsultarLote := True;
+    ConsultarNFSeRps := True;
+    ConsultarNFSe := True;
+    ConsultarNFSePorFaixa := True;
+    CancelarNFSe := True;
+  end;
+
+  SetNomeXSD('***');
+
+  with ConfigSchemas do
+  begin
+    Recepcionar := 'servico_enviar_lote_rps_envio_v03.xsd';
+    ConsultarSituacao := 'servico_consultar_situacao_lote_rps_envio_v03.xsd';
+    ConsultarLote := 'servico_consultar_lote_rps_envio_v03.xsd';
+    ConsultarNFSeRps := 'servico_consultar_nfse_rps_envio_v03.xsd';
+    ConsultarNFSe := 'servico_consultar_nfse_envio_v03.xsd';
+    ConsultarNFSePorFaixa := 'servico_consultar_nfse_envio_v03.xsd';
+    CancelarNFSe := 'servico_cancelar_nfse_envio_v03.xsd';
+
+//    Validar := False;
+  end;
+end;
+
+function TACBrNFSeProviderGiap101.CriarGeradorXml(
+  const ANFSe: TNFSe): TNFSeWClass;
+begin
+  Result := TNFSeW_Giap101.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderGiap101.CriarLeitorXml(
+  const ANFSe: TNFSe): TNFSeRClass;
+begin
+  Result := TNFSeR_Giap101.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderGiap101.CriarServiceClient(
+  const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
+begin
+  URL := GetWebServiceURL(AMetodo);
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceGiap101.Create(FAOwner, AMetodo, URL)
+  else
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 end.

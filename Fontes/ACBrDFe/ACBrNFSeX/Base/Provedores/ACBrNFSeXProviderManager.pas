@@ -358,7 +358,17 @@ begin
       proGeisWeb:    Result := TACBrNFSeProviderGeisWeb.Create(ACBrNFSe);
       progeNFe:      Result := TACBrNFSeProvidergeNFe.Create(ACBrNFSe);
       proGestaoISS:  Result := TACBrNFSeProviderGestaoISS202.Create(ACBrNFSe);
-      proGiap:       Result := TACBrNFSeProviderGiap.Create(ACBrNFSe);
+
+      proGiap:
+        begin
+          case Versao of
+            ve100: Result := TACBrNFSeProviderGiap.Create(ACBrNFSe);
+            ve101: Result := TACBrNFSeProviderGiap101.Create(ACBrNFSe);
+          else
+            Result := nil;
+          end;
+        end;
+
       proGinfes:     Result := TACBrNFSeProviderGinfes.Create(ACBrNFSe);
       proGiss:       Result := TACBrNFSeProviderGiss204.Create(ACBrNFSe);
       proGovBr:      Result := TACBrNFSeProviderGovBr.Create(ACBrNFSe);

@@ -40,7 +40,8 @@ uses
   SysUtils, Classes, StrUtils,
   ACBrXmlBase,
   ACBrXmlDocument,
-  ACBrNFSeXGravarXml;
+  ACBrNFSeXGravarXml,
+  ACBrNFSeXGravarXml_ABRASFv1;
 
 type
   { TNFSeW_Giap }
@@ -59,9 +60,21 @@ type
 
   end;
 
+  { TNFSeW_Giap101 }
+
+  TNFSeW_Giap101 = class(TNFSeW_ABRASFv1)
+  protected
+    procedure Configuracao; override;
+
+  public
+    function GerarXml: Boolean; Override;
+
+  end;
+
 implementation
 
 uses
+  ACBrNFSeXConversao,
   ACBrUtil.Strings;
 
 //==============================================================================
@@ -269,6 +282,36 @@ begin
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'valor', 1, 15, 1,
                                        NFSe.Servico.Valores.ValorServicos, ''));
+end;
+
+{ TNFSeW_Giap101 }
+
+procedure TNFSeW_Giap101.Configuracao;
+begin
+  inherited Configuracao;
+
+  NrOcorrValorPis := 1;
+  NrOcorrValorCofins := 1;
+  NrOcorrValorInss := 1;
+  NrOcorrValorIr := 1;
+  NrOcorrValorCsll := 1;
+  NrOcorrValorIss := 1;
+  DivAliq100  := True;
+
+  if FpAOwner.ConfigGeral.Params.TemParametro('NaoDividir100') then
+    DivAliq100 := False;
+
+  PrefixoPadrao := 'ns4';
+
+  GerarTagTomadorMesmoVazia := True;
+end;
+
+function TNFSeW_Giap101.GerarXml: Boolean;
+begin
+  if NFSe.OptanteSimplesNacional = snSim then
+    NrOcorrAliquota := 1;
+
+  Result := inherited GerarXml;
 end;
 
 end.

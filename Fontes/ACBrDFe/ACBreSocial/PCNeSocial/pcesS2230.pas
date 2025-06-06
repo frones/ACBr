@@ -688,7 +688,7 @@ begin
         infoAfastamento.iniAfastamento.DtIniAfast     := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniAfast', '0'));
         infoAfastamento.iniAfastamento.codMotAfast    := eSStrTotpMotivosAfastamento(Ok, INIRec.ReadString(sSecao, 'codMotAfast', '00'));
         infoAfastamento.iniAfastamento.infoMesmoMtv   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'infoMesmoMtv', 'S'));
-        infoAfastamento.iniAfastamento.tpAcidTransito := eSStrTotpTpAcidTransito(Ok, INIRec.ReadString(sSecao, 'tpAcidTransito', '1'));
+        infoAfastamento.iniAfastamento.tpAcidTransito := eSStrTotpTpAcidTransito(Ok, INIRec.ReadString(sSecao, 'tpAcidTransito', '4'));
         infoAfastamento.iniAfastamento.Observacao     := INIRec.ReadString(sSecao, 'observacao', '');
       end;
 

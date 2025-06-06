@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/06/2025
+-- pcesS2230 --
+[*] #TK-7148: Configurada leitura do ini para considerar o valor 4 como padrão quando o infoAfastamento.iniAfastamento.tpAcidTransito não estiver preenchido - https://www.projetoacbr.com.br/forum/topic/57214-esocial-valor-default-para-o-evento-s-2230/
+  Por: IMATECH / Renato Rubinho
+
 19/05/2025
 -- pcesConversaoeSocial --
 [*] #TK-7067: Corrigida ordem do TTipoEventoString com relação ao TTipoEvento no eSocial - https://www.projetoacbr.com.br/forum/topic/83280-fun%C3%A7%C3%A3o-pcesconversaoesocialtipoeventotostr-retornado-evento-errado

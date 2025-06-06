@@ -50,6 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/06/2025
+-- ACBrBoletoRet_Sicredi_APIV2 --
+[*] TK-6984 Mapeado o EstadoTituloCobranca e CodigoEstadoTituloCobranca
+	https://www.projetoacbr.com.br/forum/topic/82856-retorno-do-sicredi/
+	Por: Daniel Morais InfoCotidiano
+
+06/06/2025
 -- ACBrBoletoW_Santander_API --
 [-] TK-6999 Adicionado a propriedade writeOffQuantityDays para quantidade de dias baixa automatica qdo informado DataBaixa 
 	https://www.projetoacbr.com.br/forum/topic/82157-poss%C3%ADvel-erro-na-api-do-santander/

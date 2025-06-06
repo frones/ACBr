@@ -51,6 +51,8 @@ type
  private
    function DateSicreditoDateTime(Const AValue : String) : TDateTime;
    function TimeSicreditoDateTime(Const AValue : String) : String;
+   function RetornaCodigoOcorrencia(pSituacaoGeralBoleto: string): String;
+   function RetornaDescricaoStatusTitulo(AStatus: string): String;
  public
    constructor Create(ABoletoWS: TACBrBoleto); override;
    destructor  Destroy; Override;
@@ -288,6 +290,7 @@ var
   LJsonArray: TACBrJSONArray;
   LListaRetorno: TACBrBoletoRetornoWS;
   LMensagemRejeicao: TACBrBoletoRejeicao;
+  LTipoLiquidacao : string;
   I: Integer;
 begin
   Result := True;
@@ -359,6 +362,9 @@ begin
             LListaRetorno.DadosRet.TituloRet.ValorOutrosCreditos        := LItemObject.AsFloat['multaLiquida'];
             LListaRetorno.DadosRet.TituloRet.ValorAbatimento            := LItemObject.AsFloat['abatimentoLiquido'];
             LListaRetorno.DadosRet.TituloRet.Mensagem.Text              := LItemObject.AsString['tipoLiquidacao'];
+            LTipoLiquidacao := AnsiUpperCase(LItemObject.AsString['tipoLiquidacao']);
+            LListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca       := RetornaDescricaoStatusTitulo(LTipoLiquidacao);
+            LListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca := RetornaCodigoOcorrencia(LTipoLiquidacao);
 
             LListaRetorno.DadosRet.TituloRet.DataCredito                := DateSicreditoDateTime(LItemObject.AsString['dataPagamento']);
           end;
@@ -395,6 +401,33 @@ begin
     end;
   end;
 end;
+
+function TRetornoEnvio_Sicredi_APIV2.RetornaCodigoOcorrencia(
+  pSituacaoGeralBoleto: string): String;
+begin
+  if (pSituacaoGeralBoleto  = 'REDE') or
+     (pSituacaoGeralBoleto  = 'COMPE') then
+    Result := '06'
+  else if pSituacaoGeralBoleto  = 'PIX' then
+    Result := 'PX'
+  else
+    Result := '99';
+
+end;
+
+function TRetornoEnvio_Sicredi_APIV2.RetornaDescricaoStatusTitulo(
+  AStatus: string): String;
+begin
+  if (AStatus = 'REDE') then
+    result := 'Liquidado via rede sicredi'
+  else if (AStatus = 'COMPE') then
+    result := 'Liquidado via compesacao'
+  else if (AStatus = 'PIX') then
+    result := 'Liquidado via pix'
+  else
+    result := AStatus;
+end;
+
 
 function TRetornoEnvio_Sicredi_APIV2.RetornoEnvio(const AIndex: Integer): Boolean;
 begin

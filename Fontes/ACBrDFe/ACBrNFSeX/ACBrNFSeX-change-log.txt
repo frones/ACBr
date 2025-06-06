@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/06/2025
+-- Giap.Provider --
+[-] Correções no pedido de consulta, cancelamento e no Processar Mensagem de Erros.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] #TK-7181: Incluída a URL para o QR-Code para a cidade de Uberaba/MG.
    Por: Diego Reckziegel

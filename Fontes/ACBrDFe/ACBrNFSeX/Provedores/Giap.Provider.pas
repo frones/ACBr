@@ -243,7 +243,11 @@ var
 begin
   ANode := RootNode.Document.Root.Childrens.FindAnyNs('notaFiscal');
 
-  if not Assigned(ANode) then exit;
+  if not Assigned(ANode) then
+    ANode := RootNode.Document.Root;
+
+  if not Assigned(ANode) then
+    exit;
 
   if ObterConteudoTag(ANode.Childrens.FindAnyNs('statusEmissao'), tcInt) <> 200 then
   begin
@@ -660,7 +664,17 @@ procedure TACBrNFSeProviderGiap101.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.QuebradeLinha := '\n';
+  with ConfigGeral do
+  begin
+    QuebradeLinha := '\n';
+
+    Autenticacao.RequerChaveAutorizacao := True;
+
+    ServicosDisponibilizados.EnviarLoteAssincrono := True;
+    ServicosDisponibilizados.ConsultarRps := True;
+    ServicosDisponibilizados.CancelarNfse := True;
+  end;
+
   with ConfigMsgDados do
   begin
     Prefixo := 'ns3';
@@ -675,29 +689,11 @@ begin
     XmlRps.xmlns := 'http://www.ginfes.com.br/tipos_v03.xsd';
 
     LoteRps.xmlns := 'http://www.ginfes.com.br/servico_enviar_lote_rps_envio_v03.xsd';
-
-    ConsultarSituacao.xmlns := 'http://www.ginfes.com.br/servico_consultar_situacao_lote_rps_envio_v03.xsd';
-
-    ConsultarLote.xmlns := 'http://www.ginfes.com.br/servico_consultar_lote_rps_envio_v03.xsd';
-
-    ConsultarNFSeRps.xmlns := 'http://www.ginfes.com.br/servico_consultar_nfse_rps_envio_v03.xsd';
-
-    ConsultarNFSe.xmlns := 'http://www.ginfes.com.br/servico_consultar_nfse_envio_v03.xsd';
-
-    ConsultarNFSePorFaixa.xmlns := 'http://www.ginfes.com.br/servico_consultar_nfse_envio_v03.xsd';
-
-    CancelarNFSe.xmlns := 'http://www.ginfes.com.br/servico_cancelar_nfse_envio_v03.xsd';
   end;
 
   with ConfigAssinar do
   begin
     LoteRps := True;
-    ConsultarSituacao := True;
-    ConsultarLote := True;
-    ConsultarNFSeRps := True;
-    ConsultarNFSe := True;
-    ConsultarNFSePorFaixa := True;
-    CancelarNFSe := True;
   end;
 
   SetNomeXSD('***');
@@ -705,14 +701,7 @@ begin
   with ConfigSchemas do
   begin
     Recepcionar := 'servico_enviar_lote_rps_envio_v03.xsd';
-    ConsultarSituacao := 'servico_consultar_situacao_lote_rps_envio_v03.xsd';
-    ConsultarLote := 'servico_consultar_lote_rps_envio_v03.xsd';
-    ConsultarNFSeRps := 'servico_consultar_nfse_rps_envio_v03.xsd';
-    ConsultarNFSe := 'servico_consultar_nfse_envio_v03.xsd';
-    ConsultarNFSePorFaixa := 'servico_consultar_nfse_envio_v03.xsd';
-    CancelarNFSe := 'servico_cancelar_nfse_envio_v03.xsd';
-
-//    Validar := False;
+    Validar := False;
   end;
 end;
 
@@ -1064,23 +1053,42 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  Codigo, Mensagem: string;
 begin
   ANode := RootNode.Document.Root.Childrens.FindAnyNs('notaFiscal');
 
-  if not Assigned(ANode) then exit;
+  if not Assigned(ANode) then
+    ANode := RootNode.Document.Root;
 
-  if ObterConteudoTag(ANode.Childrens.FindAnyNs('statusEmissao'), tcInt) <> 200 then
+  if not Assigned(ANode) then
+    exit;
+
+  Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('statusEmissao'), tcStr);
+
+  if StrToIntDef(Codigo, 0) <> 200 then
   begin
-    ANodeArray := ANode.Childrens.FindAllAnyNs('messages');
+    Mensagem := ObterConteudoTag(ANode.Childrens.FindAnyNs('messages'), tcStr);
 
-    for I := Low(ANodeArray) to High(ANodeArray) do
+    if Mensagem <> '' then
     begin
-      ANode := ANodeArray[I];
-
       AErro := Response.Erros.New;
-      AErro.Codigo := ObterValor(ANode, 'code');
-      AErro.Descricao := ObterValor(ANode, 'message');
+      AErro.Codigo := Codigo;
+      AErro.Descricao := Mensagem;
       AErro.Correcao := '';
+    end
+    else
+    begin
+      ANodeArray := ANode.Childrens.FindAllAnyNs('messages');
+
+      for I := Low(ANodeArray) to High(ANodeArray) do
+      begin
+        ANode := ANodeArray[I];
+
+        AErro := Response.Erros.New;
+        AErro.Codigo := ObterValor(ANode, 'code');
+        AErro.Descricao := ObterValor(ANode, 'message');
+        AErro.Correcao := '';
+      end;
     end;
   end;
 end;

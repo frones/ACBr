@@ -1,5 +1,6 @@
 package br.com.acbr.lib.nfe.notafiscal;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,10 @@ public class ProdutoNFe {
         COFINSST = new COFINSSTProdutoNFe();
         ISSQN = new ISSQNNFe();
         gCred = new CreditoPresumidoNFe();
+        IS = new ISProdutoNFe();
+        IBSCBS = new IBSCBSProdutoNFe();
+        DFeReferenciado = new DFeReferenciado();
+
     }
 
     private int nItem;
@@ -82,6 +87,11 @@ public class ProdutoNFe {
     private COFINSProdutoNFe COFINS;
     private COFINSSTProdutoNFe COFINSST;
     private ISSQNNFe ISSQN;
+    private ISProdutoNFe IS;
+    private IBSCBSProdutoNFe IBSCBS;
+    private DFeReferenciado DFeReferenciado;
+    private BigDecimal vItem;
+
 
     public int getnItem() { return nItem; }
     public void setnItem(int nItem) { this.nItem = nItem; }
@@ -248,4 +258,36 @@ public class ProdutoNFe {
 
     public ISSQNNFe getISSQN() { return ISSQN; }
     public void setISSQN(ISSQNNFe ISSQN) { this.ISSQN = ISSQN; }
+
+    public ISProdutoNFe getIS() {
+        return IS;
+    }
+
+    public void setIS(ISProdutoNFe IS) {
+        this.IS = IS;
+    }
+
+    public IBSCBSProdutoNFe getIBSCBS() {
+        return IBSCBS;
+    }
+
+    public void setIBSCBS(IBSCBSProdutoNFe IBSCBS) {
+        this.IBSCBS = IBSCBS;
+    }
+
+    public DFeReferenciado getDFeReferenciado() {
+        return DFeReferenciado;
+    }
+
+    public void setDFeReferenciado(DFeReferenciado DFeReferenciado) {
+        this.DFeReferenciado = DFeReferenciado;
+    }
+
+    public BigDecimal getvItem() {
+        return vItem;
+    }
+
+    public void setvItem(BigDecimal vItem) {
+        this.vItem = vItem;
+    }
 }

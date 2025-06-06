@@ -2,16 +2,20 @@ package br.com.acbr.lib.nfe.notafiscal;
 
 import androidx.annotation.NonNull;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import br.com.acbr.lib.comum.dfe.TipoAmbiente;
+import br.com.acbr.lib.comum.dfe.TipoEnteGov;
 import br.com.acbr.lib.nfe.ModeloDF;
 import br.com.acbr.lib.nfe.TipoDANFE;
 import br.com.acbr.lib.nfe.TipoEmissao;
 import br.com.acbr.lib.nfe.TipoNFe;
+import br.com.acbr.lib.nfe.TipoNFeCredito;
+import br.com.acbr.lib.nfe.TipoNFeDebito;
 
 public class IdentificacaoNFe {
 
@@ -39,6 +43,11 @@ public class IdentificacaoNFe {
     private String xJust;
     private List<NFRef> NFref = new ArrayList<>();
     private int cMunFG;
+    private int cMunFGIBS;
+    private TipoNFeDebito tpNFDebito;
+    private TipoNFeCredito tpNFCredito;
+    private TipoEnteGov tpEnteGov;
+    private BigDecimal pRedutor;
 
     public IdentificacaoNFe() {}
 
@@ -283,5 +292,45 @@ public class IdentificacaoNFe {
 
     public void setcMunFG(int cMunFG) {
         this.cMunFG = cMunFG;
+    }
+
+    public int getcMunFGIBS() {
+        return cMunFGIBS;
+    }
+
+    public void setcMunFGIBS(int cMunFGIBS) {
+        this.cMunFGIBS = cMunFGIBS;
+    }
+
+    public TipoNFeDebito getTpNFDebito() {
+        return tpNFDebito;
+    }
+
+    public void setTpNFDebito(TipoNFeDebito tpNFDebito) {
+        this.tpNFDebito = tpNFDebito;
+    }
+
+    public TipoNFeCredito getTpNFCredito() {
+        return tpNFCredito;
+    }
+
+    public void setTpNFCredito(TipoNFeCredito tpNFCredito) {
+        this.tpNFCredito = tpNFCredito;
+    }
+
+    public TipoEnteGov getTpEnteGov() {
+        return tpEnteGov;
+    }
+
+    public void setTpEnteGov(TipoEnteGov tpEnteGov) {
+        this.tpEnteGov = tpEnteGov;
+    }
+
+    public BigDecimal getpRedutor() {
+        return pRedutor;
+    }
+
+    public void setpRedutor(BigDecimal pRedutor) {
+        this.pRedutor = pRedutor;
     }
 }

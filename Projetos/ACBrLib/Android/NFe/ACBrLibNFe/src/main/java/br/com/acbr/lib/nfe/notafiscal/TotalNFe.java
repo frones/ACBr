@@ -3,6 +3,12 @@ package br.com.acbr.lib.nfe.notafiscal;
 import java.math.BigDecimal;
 
 public class TotalNFe {
+
+    public TotalNFe() {
+        ISTot = new ISTotNFe();
+        IBSCBSTot = new IBSCBSTotNFe();
+    }
+
     private BigDecimal vBC;
     private BigDecimal vICMS;
     private BigDecimal vICMSDeson;
@@ -32,8 +38,9 @@ public class TotalNFe {
     private BigDecimal vICMSMonoReten;
     private BigDecimal qBCMonoRet;
     private BigDecimal vICMSMonoRet;
-
-    public TotalNFe() {}
+    private ISTotNFe ISTot;
+    private IBSCBSTotNFe IBSCBSTot;
+    private BigDecimal vNFTot;
 
     public BigDecimal getVBC() {
         return vBC;
@@ -265,5 +272,29 @@ public class TotalNFe {
 
     public void setVICMSMonoRet(BigDecimal vICMSMonoRet) {
         this.vICMSMonoRet = vICMSMonoRet;
+    }
+
+    public ISTotNFe getISTot() {
+        return ISTot;
+    }
+
+    public void setISTot(ISTotNFe ISTot) {
+        this.ISTot = ISTot;
+    }
+
+    public IBSCBSTotNFe getIBSCBSTot() {
+        return IBSCBSTot;
+    }
+
+    public void setIBSCBSTot(IBSCBSTotNFe IBSCBSTot) {
+        this.IBSCBSTot = IBSCBSTot;
+    }
+
+    public BigDecimal getvNFTot() {
+        return vNFTot;
+    }
+
+    public void setvNFTot(BigDecimal vNFTot) {
+        this.vNFTot = vNFTot;
     }
 }

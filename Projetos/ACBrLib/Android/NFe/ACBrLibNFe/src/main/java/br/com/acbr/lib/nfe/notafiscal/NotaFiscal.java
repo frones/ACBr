@@ -2,18 +2,32 @@ package br.com.acbr.lib.nfe.notafiscal;
 
 import static br.com.acbr.lib.comum.dfe.CSOSNIcms.csosnVazio;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import br.com.acbr.lib.comum.dfe.CSOSNIcms;
 import br.com.acbr.lib.comum.dfe.CSTCofins;
+import br.com.acbr.lib.comum.dfe.CSTIBSCBS;
 import br.com.acbr.lib.comum.dfe.CSTIcms;
 import br.com.acbr.lib.comum.dfe.CSTPIS;
 import br.com.acbr.lib.comum.dfe.AutXML;
 import br.com.acbr.lib.comum.dfe.InfRespTec;
+import br.com.acbr.lib.comum.dfe.TcCredPres;
+import br.com.acbr.lib.comum.dfe.gCBS;
+import br.com.acbr.lib.comum.dfe.gCBSTot;
+import br.com.acbr.lib.comum.dfe.gCredPres;
+import br.com.acbr.lib.comum.dfe.gIBSCBS;
+import br.com.acbr.lib.comum.dfe.gIBSMun;
+import br.com.acbr.lib.comum.dfe.gIBSMunTot;
+import br.com.acbr.lib.comum.dfe.gIBSUF;
+import br.com.acbr.lib.comum.dfe.gIBSUFTot;
+import br.com.acbr.lib.comum.dfe.gTribRegular;
 import br.com.acbr.lib.comum.ini.ACBrIniFile;
 import br.com.acbr.lib.comum.ini.IniUtil;
+import br.com.acbr.lib.nfe.gIBSCBSMono;
+import br.com.acbr.lib.nfe.gIBSCBSMonoTot;
 
 public final class NotaFiscal {
 
@@ -230,6 +244,13 @@ public final class NotaFiscal {
             }
             IniUtil.readFromIni(iniData, EncerranteNFe.class, String.format("encerrante%03d", i));
 
+            DFeReferenciado dfeReferenciado = produto.getDFeReferenciado();
+            if(dfeReferenciado == null){
+                dfeReferenciado = new DFeReferenciado();
+                produto.setDFeReferenciado(dfeReferenciado);
+            }
+            IniUtil.readFromIni(iniData, DFeReferenciado.class, String.format("DFeReferenciado%03d", i));
+
             k = 0;
             OrigCombNFe origComb;
             do {
@@ -296,8 +317,86 @@ public final class NotaFiscal {
             }
             IniUtil.readFromIni(iniData, ISSQNNFe.class, String.format("ISSQN%03d", i));
 
+            ISProdutoNFe is = produto.getIS();
+            if(is == null){
+                is = new ISProdutoNFe();
+                produto.setIS(is);
+            }
+            IniUtil.readFromIni(iniData, ISProdutoNFe.class, String.format("IS%03d", i));
+
+            IBSCBSProdutoNFe ibscbs = produto.getIBSCBS();
+            if(ibscbs == null){
+                ibscbs = new IBSCBSProdutoNFe();
+                produto.setIBSCBS(ibscbs);
+            }
+            IniUtil.readFromIni(iniData, IBSCBSProdutoNFe.class, String.format("IBSCBS%03d", i));
+
+            gIBSCBS gIBSCBS = produto.getIBSCBS().getgIBSCBS();
+            if(gIBSCBS == null){
+                gIBSCBS = new gIBSCBS();
+                produto.getIBSCBS().setgIBSCBS(gIBSCBS);
+            }
+            IniUtil.readFromIni(iniData, gIBSCBS.class, String.format("gIBSCBS%03d", i));
+
+            gIBSUF gIBSUF = produto.getIBSCBS().getgIBSCBS().getgIBSUF();
+            if(gIBSUF == null){
+                gIBSUF = new gIBSUF();
+                produto.getIBSCBS().getgIBSCBS().setgIBSUF(gIBSUF);
+            }
+            IniUtil.readFromIni(iniData, gIBSUF.class, String.format("gIBSUF%03d", i));
+
+            gIBSMun gIBSMun = produto.getIBSCBS().getgIBSCBS().getgIBSMun();
+            if(gIBSMun == null){
+                gIBSMun = new gIBSMun();
+                produto.getIBSCBS().getgIBSCBS().setgIBSMun(gIBSMun);
+            }
+            IniUtil.readFromIni(iniData, gIBSMun.class, String.format("gIBSMun%03d", i));
+
+            gCBS gCBS = produto.getIBSCBS().getgIBSCBS().getgCBS();
+            if(gCBS == null){
+                gCBS = new gCBS();
+                produto.getIBSCBS().getgIBSCBS().setgCBS(gCBS);
+            }
+            IniUtil.readFromIni(iniData, gCBS.class, String.format("gCBS%03d", i));
+
+            gTribRegular gTribRegular = produto.getIBSCBS().getgIBSCBS().getgTribRegular();
+            if(gTribRegular == null){
+                gTribRegular = new gTribRegular();
+                produto.getIBSCBS().getgIBSCBS().setgTribRegular(gTribRegular);
+            }
+            IniUtil.readFromIni(iniData, gTribRegular.class, String.format("gTribRegular%03d", i));
+
+            gCredPres gIBSCredPres = produto.getIBSCBS().getgIBSCBS().getgIBSCredPres();
+            if(gIBSCredPres == null){
+                gIBSCredPres = new gCredPres();
+                produto.getIBSCBS().getgIBSCBS().setgIBSCredPres(gIBSCredPres);
+            }
+            IniUtil.readFromIni(iniData, gCredPres.class, String.format("gIBSCredPres%03d", i));
+
+            gCredPres gCBSCredPres = produto.getIBSCBS().getgIBSCBS().getgCBSCredPres();
+            if(gCBSCredPres == null){
+                gCBSCredPres = new gCredPres();
+                produto.getIBSCBS().getgIBSCBS().setgCBSCredPres(gCBSCredPres);
+            }
+            IniUtil.readFromIni(iniData, gCredPres.class, String.format("gCBSCredPres%03d", i));
+
+            gIBSCBSMono gIBSCBSMono = produto.getIBSCBS().getgIBSCBSMono();
+            if(gIBSCBSMono == null){
+                gIBSCBSMono = new gIBSCBSMono();
+                produto.getIBSCBS().setgIBSCBSMono(gIBSCBSMono);
+            }
+            IniUtil.readFromIni(iniData, gIBSCBSMono.class, String.format("gIBSCBSMono%03d", i));
+
             TotalNFe total = IniUtil.readFromIni(iniData, TotalNFe.class, "Total");
             ISSQNtotNFe issqnTot = IniUtil.readFromIni(iniData, ISSQNtotNFe.class, "ISSQNtot");
+            ISTotNFe ISTot = IniUtil.readFromIni(iniData, ISTotNFe.class, "ISTot");
+            IBSCBSTotNFe IBSCBSTot = IniUtil.readFromIni(iniData, IBSCBSTotNFe.class, "IBSCBSTot");
+            IBSCBSTotNFe gIBS = IniUtil.readFromIni(iniData, IBSCBSTotNFe.class, "gIBS");
+            gIBSUFTot gIBSUFTot = IniUtil.readFromIni(iniData, gIBSUFTot.class, "gIBSUFTot");
+            gIBSMunTot gIBSMunTot = IniUtil.readFromIni(iniData, gIBSMunTot.class, "gIBSMunTot");
+            gCBSTot gCBSTot = IniUtil.readFromIni(iniData, gCBSTot.class, "gCBSTot");
+            gIBSCBSMonoTot gIBSCBSMonoTot = IniUtil.readFromIni(iniData, gIBSCBSMonoTot.class, "gMono");
+
             RetTribNFe retTrib = IniUtil.readFromIni(iniData, RetTribNFe.class, "retTrib");
             TransportadorNFe transportador = IniUtil.readFromIni(iniData, TransportadorNFe.class, "Transportador");
 
@@ -519,6 +618,10 @@ public final class NotaFiscal {
                 }
             }
 
+            if(produto.getDFeReferenciado().getChaveAcesso() != ""){
+                IniUtil.writeToIni(iniData, produto.getDFeReferenciado(), String.format("DFeReferenciado%03d", i + 1));
+            }
+
             IniUtil.writeToIni(iniData, produto.getICMS(), String.format("ICMS%03d", i + 1));
 
             if (produto.getICMSUFDEST().getPICMSInterPart() != null) {
@@ -552,6 +655,42 @@ public final class NotaFiscal {
             if (produto.getISSQN().getvBC() != null) {
                 IniUtil.writeToIni(iniData, produto.getISSQN(), String.format("ISSQN%03d", i + 1));
             }
+
+            if (produto.getIS().getCSTIS() != CSTIS.cstisNenhum){
+                IniUtil.writeToIni(iniData, produto.getIS(), String.format("IS%03d", i + 1));
+            }
+
+            if (produto.getIBSCBS().getCST() != CSTIBSCBS.cstVazio){
+                IniUtil.writeToIni(iniData, produto.getIBSCBS(), String.format("IBSCBS%03d", i + 1));
+
+                if (produto.getIBSCBS().getgIBSCBS().getvBC().compareTo(BigDecimal.ZERO) > 0){
+                    IniUtil.writeToIni(iniData, produto.getIBSCBS().getgIBSCBS(), String.format("gIBSCBS%03d", i + 1));
+                    IniUtil.writeToIni(iniData, produto.getIBSCBS().getgIBSCBS().getgIBSUF(), String.format("gIBSUF%03d", i + 1));
+                    IniUtil.writeToIni(iniData, produto.getIBSCBS().getgIBSCBS().getgIBSMun(), String.format("gIBSMun%03d", i + 1));
+                    IniUtil.writeToIni(iniData, produto.getIBSCBS().getgIBSCBS().getgCBS(), String.format("gCBS%03d", i + 1));
+
+                    if (produto.getIBSCBS().getgIBSCBS().getgTribRegular().getCSTReg() != CSTIBSCBS.cstVazio){
+                        IniUtil.writeToIni(iniData, produto.getIBSCBS().getgIBSCBS().getgTribRegular(), String.format("gTribRegular%03d", i + 1));
+                    }
+
+                    if(produto.getIBSCBS().getgIBSCBS().getgIBSCredPres().getcCredPres() != TcCredPres.cpNenhum){
+                        IniUtil.writeToIni(iniData, produto.getIBSCBS().getgIBSCBS().getgIBSCredPres(), String.format("gIBSCredPres%03d", i + 1));
+                    }
+
+                    if(produto.getIBSCBS().getgIBSCBS().getgCBSCredPres().getcCredPres() != TcCredPres.cpNenhum){
+                        IniUtil.writeToIni(iniData, produto.getIBSCBS().getgIBSCBS().getgCBSCredPres(), String.format("gCBSCredPres%03d", i + 1));
+                    }
+
+                }
+                else if (produto.getIBSCBS().getgIBSCBSMono().getAdRemIBS().compareTo(BigDecimal.ZERO) > 0){
+                    IniUtil.writeToIni(iniData, produto.getIBSCBS().getgIBSCBSMono(), String.format("gIBSCBSMono%03d", i + 1));
+                }
+                else{
+                    if(produto.getIBSCBS().getCST() == CSTIBSCBS.cst800){
+                        IniUtil.writeToIni(iniData, produto.getIBSCBS().getgTransfCred(), String.format("gTransfCred%03d", i + 1));
+                    }
+                }
+            }
         }
 
         IniUtil.writeToIni(iniData, Total, "Total");
@@ -559,6 +698,14 @@ public final class NotaFiscal {
         if (ISSQNtot.getVBC() != null) {
             IniUtil.writeToIni(iniData, ISSQNtot, "ISSQNtot");
         }
+
+        IniUtil.writeToIni(iniData, Total.getISTot(), "ISTot");
+        IniUtil.writeToIni(iniData, Total.getIBSCBSTot(), "IBSCBSTot");
+        IniUtil.writeToIni(iniData, Total.getIBSCBSTot().getgIBS(), "gIBS");
+        IniUtil.writeToIni(iniData, Total.getIBSCBSTot().getgIBS().getgIBSUF(), "gIBSUFTot");
+        IniUtil.writeToIni(iniData, Total.getIBSCBSTot().getgIBS().getgIBSMun(), "gIBSMunTot");
+        IniUtil.writeToIni(iniData, Total.getIBSCBSTot().getgCBS(), "gCBSTot");
+        IniUtil.writeToIni(iniData, Total.getIBSCBSTot().getgMono(), "gMono");
 
         IniUtil.writeToIni(iniData, RetTrib, "retTrib");
 

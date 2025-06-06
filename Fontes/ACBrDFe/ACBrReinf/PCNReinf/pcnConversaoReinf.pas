@@ -70,7 +70,7 @@ type
   TpIndCoop               = (icNaoecooperativa, icCooperativadeTrabalho,
                              icCooperativadeProducao, icOutrasCooperativas);
 
-  TtpProc                 = (tpAdministrativo, tpJudicial);
+  TtpProc                 = (tpAdministrativo, tpJudicial, tpSemProcesso);
 
   TindSusp                = (siLiminarMandadoSeguranca,
                              siDepositoJudicialMontanteIntegral,
@@ -804,12 +804,12 @@ end;
 
 function TpProcToStr(const t: TtpProc): string;
 begin
-  result := EnumeradoToStr2(t, ['1', '2']);
+  result := EnumeradoToStr2(t, ['1', '2', '3']);
 end;
 
 function StrToTpProc(var ok: boolean; const s: string): TtpProc;
 begin
-  result := TtpProc(StrToEnumerado2(ok , s, ['1', '2']));
+  result := TtpProc(StrToEnumerado2(ok , s, ['1', '2', '3']));
 end;
 
 function indAutoriaToStr(const t: TindAutoria): string;

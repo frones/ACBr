@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/06/2025
+-- pcnConversaoReinf, evt4010PagtoBeneficiarioPF-v2_01_02.xsd --
+[*] #TK-7070 - Incluído item tpSemProcesso no enumerado tpProcRRA do R4010 - https://www.projetoacbr.com.br/forum/topic/83266-erro-nas-fun%C3%A7%C3%B5es-de-convers%C3%A3o-tpproctostr-e-strtotpproc/
+  Por: Renato Rubinho
+
 15/05/2025
 -- Diversos --
 [*] #TK-6785 - Alterações visando controlar a geração de xmls acentuados, com espaços e indentados nos eventos

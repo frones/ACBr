@@ -776,10 +776,14 @@ begin
   Info.Clear;
 
   // Lendo o Fabricante
-  Ret := fpPosPrinter.TxRx( GS + 'IB', 0, 0, True );
+  Ret := '';
+  try
+    Ret := fpPosPrinter.TxRx( GS + 'IB', 0, 0, True );
+  except
+  end;
+  AddInfo(cKeyFabricante, Ret);
   if (Ret = '') and (not (Self is TACBrEscPosEpson)) then   // Nem todas GPrinter`s suportam leitura de Info
     Exit;
-  AddInfo(cKeyFabricante, Ret);
 
   // Lendo a versão do Firmware
   Ret := '';
@@ -790,31 +794,35 @@ begin
   AddInfo(cKeyFirmware, Ret);
 
   // Lendo o Modelo
-  Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 0, True );
+  Ret := '';
+  try
+    Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 0, True );
+  except
+  end;
   AddInfo(cKeyModelo, Ret);
 
   // Lendo o Número Serial
   Ret := '';
   try
     Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 0, True );
+    if (Ret = '') then
+      Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 0, False );
   except
   end;
-
-  if (Ret = '') then
-    Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 0, False );
-
-  if (Ret <> '') then
-    AddInfo('Serial', Ret);
+  AddInfo('Serial', Ret);
 
   // Lendo Bit de presença de Guilhotina
-  Ret := fpPosPrinter.TxRx( GS + 'I2', 1, 0, False );
-  if Length(Ret) > 0 then
-  begin
-    b := Ord(Ret[1]);
-    AddInfo(cKeyGuilhotina, TestBit(b, 1) );
-    AddInfo(cKeyCheque, TestBit(b, 3) );
-    AddInfo(cKeyMICR, TestBit(b, 3) );
-    AddInfo(cKeyAutenticacao, TestBit(b, 6) );
+  try
+    Ret := fpPosPrinter.TxRx( GS + 'I2', 1, 0, False );
+    if Length(Ret) > 0 then
+    begin
+      b := Ord(Ret[1]);
+      AddInfo(cKeyGuilhotina, TestBit(b, 1) );
+      AddInfo(cKeyCheque, TestBit(b, 3) );
+      AddInfo(cKeyMICR, TestBit(b, 3) );
+      AddInfo(cKeyAutenticacao, TestBit(b, 6) );
+    end;
+  except
   end;
 
   Result := Info.Text;

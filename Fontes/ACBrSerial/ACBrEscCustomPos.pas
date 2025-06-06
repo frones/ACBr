@@ -242,31 +242,39 @@ begin
 
   AddInfo(cKeyFabricante, 'CUSTOM');
 
-  Ret := fpPosPrinter.TxRx( GS + 'I'+#3, 4, 0, False );
+  Ret := '';
+  try
+    Ret := fpPosPrinter.TxRx( GS + 'I'+#3, 4, 0, False );
+  except
+  end;
   AddInfo(cKeyFirmware, Ret);
 
-  Ret := fpPosPrinter.TxRx( GS + 'I'+#1, 1, 0, False );
+  Ret := '';
   Desc := '';
-  if (Ret = #142) or (Ret = #255) then
-  begin
-    Ret := fpPosPrinter.TxRx( GS + 'I'+#255, 2, 0, False );
-    if (Ret = #02+#10) then
-      Desc := 'K3'
-    else if (Ret = #02+#41) then
-      Desc := 'Q3X'
-    else if (Ret = #02+#79) then
-      Desc := 'Q3X ETH';
-  end
-  else if (Ret = #95) or (Ret = #101) then
-  begin
-    Ret := fpPosPrinter.TxRx( GS + 'I'+#5, 1, 0, False );
-    if (Ret = #188) then
-      Desc := 'KUBE II'
-    else if (Ret = #166) then
-      Desc := 'KUBE II ETH'
+  try
+    Ret := fpPosPrinter.TxRx( GS + 'I'+#1, 1, 0, False );
+    if (Ret = #142) or (Ret = #255) then
+    begin
+      Ret := fpPosPrinter.TxRx( GS + 'I'+#255, 2, 0, False );
+      if (Ret = #02+#10) then
+        Desc := 'K3'
+      else if (Ret = #02+#41) then
+        Desc := 'Q3X'
+      else if (Ret = #02+#79) then
+        Desc := 'Q3X ETH';
+    end
+    else if (Ret = #95) or (Ret = #101) then
+    begin
+      Ret := fpPosPrinter.TxRx( GS + 'I'+#5, 1, 0, False );
+      if (Ret = #188) then
+        Desc := 'KUBE II'
+      else if (Ret = #166) then
+        Desc := 'KUBE II ETH'
+    end;
+  except
   end;
 
-  if (Desc = '') then
+  if (Desc = '') and (Ret <> '') then
     Desc := TranslateUnprintable(Ret);
   AddInfo(cKeyModelo, Desc);
 
@@ -274,11 +282,14 @@ begin
   //Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 0, True );
   //AddInfo(cKeySerial, Ret);
 
-  Ret := fpPosPrinter.TxRx( GS + 'I' + #02, 1, 0, False );
-  if Length(Ret) > 0 then
-  begin
-    b := Ord(Ret[1]);
-    AddInfo(cKeyGuilhotina, TestBit(b, 1)) ;
+  try
+    Ret := fpPosPrinter.TxRx( GS + 'I' + #02, 1, 0, False );
+    if Length(Ret) > 0 then
+    begin
+      b := Ord(Ret[1]);
+      AddInfo(cKeyGuilhotina, TestBit(b, 1)) ;
+    end;
+  except
   end;
 
   Result := Info.Text;

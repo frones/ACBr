@@ -60,7 +60,6 @@ type
     function ComandoImprimirImagemRasterStr(const RasterStr: AnsiString; AWidth: Integer;
       AHeight: Integer): AnsiString; override;
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
-    function LerInfo: String; override;
   end;
 
 implementation
@@ -174,45 +173,6 @@ begin
   except
     AStatus := AStatus + [stErroLeitura];
   end;
-end;
-
-function TACBrEscPosStar.LerInfo: String;
-var
-  Ret: AnsiString;
-  b: Byte;
-begin
-  Result := '';
-  Info.Clear;
-
-  // Lendo a versão do Firmware
-  Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 0, True );
-  if (Ret = '') then   // Nem todas impressoras suportam leitura de Info
-    Exit;
-  AddInfo(cKeyFirmware, Ret);
-
-  // Lendo o Fabricante
-  Ret := fpPosPrinter.TxRx( GS + 'IB', 0, 0, True );
-  AddInfo(cKeyFabricante, Ret);
-
-  // Lendo o Modelo
-  Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 0, True );
-  AddInfo(cKeyModelo, Ret);
-
-  // Lendo o Número Serial
-  Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 0, True );
-  AddInfo(cKeySerial, Ret);
-
-  // Lendo Bit de presença de Guilhotina
-  Ret := fpPosPrinter.TxRx( GS + 'I2', 1, 0, False );
-  if Length(Ret) > 0 then
-  begin
-    b := Ord(Ret[1]);
-    AddInfo(cKeyGuilhotina, TestBit(b, 1) );
-    AddInfo(cKeyCheque, TestBit(b, 3) );
-    AddInfo(cKeyMICR, TestBit(b, 3) );
-  end;
-
-  Result := Info.Text;
 end;
 
 end.

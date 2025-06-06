@@ -109,17 +109,22 @@ begin
   AddInfo(cKeyFabricante, 'Datecs');
 
   // Lendo Modelo e Firmware
-  Ret := fpPosPrinter.TxRx( ESC + 'Z', 0, 0, False );
+  Ret := '';
+  try
+    Ret := fpPosPrinter.TxRx( ESC + 'Z', 0, 0, False );
+  except
+  end;
   AddInfo(cKeyFirmware, Trim(copy(Ret, 23, 3)));
   AddInfo(cKeyModelo, Trim(copy(Ret,1 ,22)));
 
   // Lendo o Número Serial
+  Ret := '';
   try
     Ret := Trim(fpPosPrinter.TxRx( ESC + 'N', 0, 0, False ));
   except
-    Ret := '';
   end;
   AddInfo(cKeySerial, Ret);
+
   AddInfo(cKeyGuilhotina, False); ;
 
   Result := Info.Text;

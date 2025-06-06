@@ -295,20 +295,36 @@ begin
   Info.Clear;
 
   InfoCmd := GS + #249 + #39;
-  Ret := fpPosPrinter.TxRx( InfoCmd + #0, 10 );
+
+  Ret := '';
+  try
+    Ret := fpPosPrinter.TxRx( InfoCmd + #0, 10 );
+  except
+  end;
   AddInfo(cKeyModelo, Ret);
 
-  Ret := fpPosPrinter.TxRx( InfoCmd + #1, 0 );
+  Ret := '';
+  try
+    Ret := fpPosPrinter.TxRx( InfoCmd + #1, 0 );
+  except
+  end;
   AddInfo(cKeySerial, Ret);
 
-  Ret := fpPosPrinter.TxRx( InfoCmd + #3, 3 );
+  Ret := '';
+  try
+    Ret := fpPosPrinter.TxRx( InfoCmd + #3, 3 );
+  except
+  end;
   AddInfo(cKeyFirmware, Ret);
 
-  Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5 );
-  if Length(Ret) >= 3 then
-  begin
-    b := Ord(Ret[3]);
-    AddInfo(cKeyGuilhotina, not TestBit(b, 2)) ;
+  try
+    Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5 );
+    if Length(Ret) >= 3 then
+    begin
+      b := Ord(Ret[3]);
+      AddInfo(cKeyGuilhotina, not TestBit(b, 2)) ;
+    end;
+  except
   end;
 
   Result := Info.Text;

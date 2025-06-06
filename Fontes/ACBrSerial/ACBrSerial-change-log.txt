@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/06/2025
+-- ACBrEscPosEpson, ACBrEscBematech, ACBrEscCustomPos, ACBrEscDaruma, ACBrEscDatecs,
+   ACBrEscPosStar, ACBrEscSunmi --
+[*] Melhorias no método 'LerInfo', para evitar Exceptions nas tentativas de
+    leituras dos registradores existentes
+    (por: DSA)
+
 11/03/2025
 -- ACBrBal --
 [+] Adicionado novo modelo balança Weightech WT3000IR ABS por Leandro Araújo. TK-6260. 

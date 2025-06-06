@@ -331,23 +331,34 @@ begin
 
   AddInfo(cKeyFabricante, ':Daruma');
 
-  Ret := fpPosPrinter.TxRx( ESC + #199, 13, 0, True );
+  Ret := '';
+  try
+    Ret := fpPosPrinter.TxRx( ESC + #199, 13, 0, True );
+  except
+  end;
   AddInfo(cKeyFirmware, Ret);
 
-  Ret := fpPosPrinter.TxRx( ESC + #195, 13, 0, True );
+  Ret := '';
+  try
+    Ret := fpPosPrinter.TxRx( ESC + #195, 13, 0, True );
+  except
+  end;
   AddInfo(cKeyModelo, Ret);
 
   //Ret := fpPosPrinter.TxRx( ESC + #199, 13, 0, True );  // Não encontrado
   //AddInfo('Serial', ':');
 
-  Ret := fpPosPrinter.TxRx( ESC + #229, 13, 0, True );
-  AddInfo(cKeyGuilhotina, Copy(Ret,9,1));
+  try
+    Ret := fpPosPrinter.TxRx( ESC + #229, 13, 0, True );
+    AddInfo(cKeyGuilhotina, Copy(Ret,9,1));
 
-  b := Copy(Ret,12,1);
-  AddInfo(ckeyColunas, IntToStr(ifthen(b='2',34,ifthen(b='1',52,48))));
+    b := Copy(Ret,12,1);
+    AddInfo(ckeyColunas, IntToStr(ifthen(b='2',34,ifthen(b='1',52,48))));
 
-  b := Copy(Ret,40,1);
-  AddInfo(cKeyCodPage, b) ;
+    b := Copy(Ret,40,1);
+    AddInfo(cKeyCodPage, b) ;
+  except
+  end;
 
   Result := Info.Text;
 end;

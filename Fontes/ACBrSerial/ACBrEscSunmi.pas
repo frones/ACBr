@@ -191,26 +191,43 @@ begin
   Info.Clear;
 
   // Lendo a versão do Firmware
-  Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 0, True );
+  Ret := '';
+  try
+    Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 0, True );
+  except
+  end;
+  AddInfo(cKeyFirmware, Ret);
   if (Ret = '') then   // Nem todas impressoras suportam leitura de Info
     Exit;
-  AddInfo(cKeyFirmware, Ret);
 
   // Lendo o Fabricante
-  Ret := fpPosPrinter.TxRx( GS + 'IB', 0, 0, True );
+  Ret := '';
+  try
+    Ret := fpPosPrinter.TxRx( GS + 'IB', 0, 0, True );
+  except
+  end;
   AddInfo(cKeyFabricante, Ret);
   TemGuilhotina := (pos('sunmi', LowerCase(Ret)) > 0);
 
   // Lendo o Modelo
-  Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 0, True );
+  Ret := '';
+  try
+    Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 0, True );
+  except
+  end;
   AddInfo(cKeyModelo, Ret);
   TemGuilhotina := TemGuilhotina and (pos('nt', LowerCase(Ret)) > 0);
 
   // Lendo o Número Serial
-  Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 0, True );
+  Ret := '';
+  try
+    Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 0, True );
+  except
+  end;
   AddInfo(cKeySerial, Ret);
 
   AddInfo(cKeyGuilhotina, TemGuilhotina );
+
   Result := Info.text;
 end;
 

@@ -141,6 +141,7 @@ type
     procedure ApagarImagemPinPad(const NomeImagem: String); override;
     procedure CarregarImagemPinPad(const NomeImagem: String; AStream: TStream;
       TipoImagem: TACBrTEFAPIImagemPinPad); override;
+    function VersaoAPI: String; override;
 
     property TEFScopeAPI: TACBrTEFScopeAPI read fTEFScopeAPI;
     property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
@@ -1101,6 +1102,11 @@ begin
       DeleteFile(tmpFile);
     end;
   end;
+end;
+
+function TACBrTEFAPIClassScope.VersaoAPI: String;
+begin
+  Result := Trim(fTEFScopeAPI.ObterVersaoScope);
 end;
 
 procedure TACBrTEFAPIClassScope.SetDiretorioTrabalho(const AValue: String);

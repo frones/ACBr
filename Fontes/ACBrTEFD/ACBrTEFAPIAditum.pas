@@ -89,6 +89,7 @@ type
   TACBrTEFAPIClassAditum = class(TACBrTEFAPIClass)
   private
     FavailableBrands: TStringList;
+    FHostApplicationVersion: String;
     FHTTP: THTTPSend;
     FURL: String;
     FHTTPResponse: AnsiString;
@@ -153,11 +154,13 @@ type
     function MenuPinPad(const Titulo: String; Opcoes: TStrings; TimeOut: Integer = 30000
       ): Integer; override;
     function VerificarPresencaPinPad: Byte; override;
+    function VersaoAPI: String; override;
 
     procedure Deactivation;
     function Status: Boolean;
 
     property AvailableBrands: TStringList read FavailableBrands;
+    property HostApplicationVersion: String read FHostApplicationVersion;
     property HTTPResultCode: Integer read FHTTPResultCode;
     property HTTPResponse: AnsiString read FHTTPResponse;
     property URL: String read FURL;
@@ -267,6 +270,7 @@ begin
   FHTTP := THTTPSend.Create;
   FavailableBrands := TStringList.Create;
   fpTEFRespClass := TACBrTEFRespAditum;
+  FHostApplicationVersion := '';
   LimparRespostaHTTP;
 end;
 
@@ -572,7 +576,7 @@ end;
 
 procedure TACBrTEFAPIClassAditum.Autenticar;
 var
-  js, jspinpadMessages, jsmerchantInfo: TACBrJSONObject;
+  js, jspinpadMessages, jsMerchantInfo, jsHostInfo: TACBrJSONObject;
   sBody, cnpjTEF: String;
   jsa: TACBrJSONArray;
   i: Integer;
@@ -607,15 +611,19 @@ begin
       if (LowerCase(js.AsString['success']) <> 'true') then
         TratarRetornoComErro;
 
-      jsmerchantInfo := js.AsJSONObject['merchantInfo'];
-      if Assigned(jsmerchantInfo) then
+      jsHostInfo := js.AsJSONObject['hostInfo'];
+      if Assigned(jsHostInfo) then
+        FHostApplicationVersion := jsHostInfo.AsString['applicationVersion'];
+
+      jsMerchantInfo := js.AsJSONObject['merchantInfo'];
+      if Assigned(jsMerchantInfo) then
       begin
-        cnpjTEF := OnlyNumber(jsmerchantInfo.AsString['merchantDocument']);
+        cnpjTEF := OnlyNumber(jsMerchantInfo.AsString['merchantDocument']);
         if (OnlyNumber(fpACBrTEFAPI.DadosEstabelecimento.CNPJ) <> cnpjTEF) then
           DoException(ACBrStr(Format(sACBrAditumCNPJEstabelecimentoDiferente,
                                [fpACBrTEFAPI.DadosEstabelecimento.CNPJ, cnpjTEF]) ));
 
-        if (LowerCase(jsmerchantInfo.AsString['isActive']) <> 'true') then
+        if (LowerCase(jsMerchantInfo.AsString['isActive']) <> 'true') then
           DoException(ACBrStr( Format(sACBrAditumErroEstabelecimentoNaoAtivo, [cnpjTEF])));
       end;
 
@@ -1193,6 +1201,11 @@ begin
   finally
     js.Free;
   end;
+end;
+
+function TACBrTEFAPIClassAditum.VersaoAPI: String;
+begin
+  Result := FHostApplicationVersion;
 end;
 
 end.

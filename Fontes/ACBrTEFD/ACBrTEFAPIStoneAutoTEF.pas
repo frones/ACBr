@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-// https://microtefdocs.stone.com.br/reference/o-que-%C3%A9-o-autotef
+// https://autotef.stone.com.br/docs/o-que-e-microtef
 
 unit ACBrTEFAPIStoneAutoTEF;
 

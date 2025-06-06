@@ -131,6 +131,7 @@ type
     procedure CarregarImagemPinPad(const NomeImagem: String; AStream: TStream;
       TipoImagem: TACBrTEFAPIImagemPinPad ); override;
     procedure ExibirImagemPinPad(const NomeImagem: String); override;
+    function VersaoAPI: String; override;
 
     property TEFPayGoAPI: TACBrTEFPGWebAPI read fTEFPayGoAPI;
     property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
@@ -678,6 +679,11 @@ end;
 procedure TACBrTEFAPIClassPayGoWeb.ExibirImagemPinPad(const NomeImagem: String);
 begin
   {Não implementado em PGWebLib. Ignora Exception da classe mãe}
+end;
+
+function TACBrTEFAPIClassPayGoWeb.VersaoAPI: String;
+begin
+  Result := fTEFPayGoAPI.VersaoLib;
 end;
 
 procedure TACBrTEFAPIClassPayGoWeb.LimparUltimaTransacaoPendente;

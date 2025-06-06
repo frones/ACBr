@@ -45,6 +45,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/06/2025
+-- ACBrTEFAPI, ACBrTEFAPIAditum, ACBrTEFAPICliSiTef, ACBrTEFCliSiTefComum,
+  ACBrTEFAPIPayGoWeb, ACBrTEFAPIPayKit, ACBrTEFAPIScope, --
+[+] Implementação do método "VersaoAPI: String"
+    retornando a Versão da DLL, API do TEF utilizado
+    https://www.projetoacbr.com.br/forum/topic/83622-acbrtefapi-contribui%C3%A7%C3%A3o/
+    (por: DSA e  antoniojmsjr)
+
 30/05/2025
 -- ACBrTEFPayKitAPI --
 [-] Correção no CallBack 'TACBrTEFPayKitCallBackSelecionaOpcao' para retornar

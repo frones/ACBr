@@ -203,6 +203,7 @@ type
     procedure ApagarImagemPinPad(const NomeImagem: String); virtual;
     procedure CarregarImagemPinPad(const NomeImagem: String; AStream: TStream;
       TipoImagem: TACBrTEFAPIImagemPinPad ); virtual;
+    function VersaoAPI: String; virtual;
   end;
 
   { TACBrTEFAPI }
@@ -251,6 +252,7 @@ type
     procedure CarregarImagemPinPad(const NomeImagem: String; AStream: TStream;
       TipoImagem: TACBrTEFAPIImagemPinPad ); overload;
     procedure CarregarImagemPinPad(const NomeImagem: String; const Arquivo: String); overload;
+    function VersaoAPI: string;
 
     property TEF: TACBrTEFAPIClass read GetTEFAPIClass;
   published
@@ -394,6 +396,12 @@ begin
   ErroAbstract('VerificarPresencaPinPad');
 end;
 
+function TACBrTEFAPIClass.VersaoAPI: String;
+begin
+  Result := '';
+  ErroAbstract('VersaoAPI');
+end;
+
 procedure TACBrTEFAPIClass.ObterListaImagensPinPad(ALista: TStrings);
 begin
   ErroAbstract('ObterListaImagensPinPad');
@@ -488,6 +496,15 @@ begin
   GravarLog('VerificarPresencaPinPad');
   Result := TEF.VerificarPresencaPinPad;
   GravarLog('   '+IntToStr(Result));
+end;
+
+function TACBrTEFAPI.VersaoAPI: string;
+var
+  lVersaoAPI: string;
+begin
+  GravarLog('VersaoAPI');
+  lVersaoAPI := TEF.VersaoAPI;
+  GravarLog(lVersaoAPI);
 end;
 
 procedure TACBrTEFAPI.ObterListaImagensPinPad(ALista: TStrings);

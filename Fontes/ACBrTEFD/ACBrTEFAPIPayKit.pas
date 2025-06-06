@@ -117,6 +117,7 @@ type
     function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
       TimeOut: Integer = 30000; MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String; override;
     function VerificarPresencaPinPad: Byte; override;
+    function VersaoAPI: String; override;
 
     procedure ObterListaImagensPinPad(ALista: TStrings); override;
 
@@ -838,6 +839,11 @@ begin
     if (s <> '') then
       Result := StrToIntDef( OnlyNumber(ObterPortaPinPadINI), 0);
   end;
+end;
+
+function TACBrTEFAPIClassPayKit.VersaoAPI: String;
+begin
+  Result := Trim(GetTEFPayKitAPI.VersaoDPOS);
 end;
 
 procedure TACBrTEFAPIClassPayKit.ObterListaImagensPinPad(ALista: TStrings);

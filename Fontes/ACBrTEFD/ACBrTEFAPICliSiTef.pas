@@ -123,6 +123,8 @@ type
     procedure ExibirMensagemPinPad(const MsgPinPad: String); override;
     function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: integer = 30000;
       MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String; override;
+    function VerificarPresencaPinPad: Byte; override;
+    function VersaoAPI: String; override;
 
     property TEFCliSiTefAPI: TACBrTEFCliSiTefAPI read fTEFCliSiTefAPI;
 
@@ -1142,6 +1144,20 @@ begin
     AMsg := CACBrTEFCliSiTef_TransacaoNaoEfetuada;
 
   TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem(ACBrStr(AMsg), telaOperador, 0);
+end;
+
+function TACBrTEFAPIClassCliSiTef.VerificarPresencaPinPad: Byte;
+begin
+  Result := Ord(fTEFCliSiTefAPI.VerificaPresencaPinPad);
+end;
+
+function TACBrTEFAPIClassCliSiTef.VersaoAPI: String;
+var
+  lVersaoCliSiTef: String;
+  lVersaoCliSiTefI: String;
+begin
+  InterpretarRetornoCliSiTef( fTEFCliSiTefAPI.ObtemVersao(lVersaoCliSiTef, lVersaoCliSiTefI) );
+  Result := lVersaoCliSiTef;
 end;
 
 procedure TACBrTEFAPIClassCliSiTef.AbortarTransacaoEmAndamento;

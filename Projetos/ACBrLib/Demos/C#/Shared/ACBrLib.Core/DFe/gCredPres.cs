@@ -12,7 +12,7 @@ namespace ACBrLib.NFe
         /// <summary>
         /// Código de Classificação do Crédito Presumido
         /// </summary>
-        public int cCredPres { get; set; }
+        public TcCredPres cCredPres { get; set; }
 
         /// <summary>
         /// Percentual do Crédito Presumido

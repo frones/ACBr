@@ -101,7 +101,8 @@ type
 
     procedure EnviarEmail(const sPara, sAssunto: string; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
-      sReplyTo: TStrings = nil);
+      sReplyTo: TStrings = nil; ManterPDFSalvo: Boolean = True;
+      sBCC: Tstrings = nil);
 
     property NomeArq: string read FNomeArq write FNomeArq;
     property NomeArqPDF: string read FNomeArqPDF write FNomeArqPDF;
@@ -492,11 +493,12 @@ begin
 end;
 
 procedure TNotaFiscal.EnviarEmail(const sPara, sAssunto: string; sMensagem: TStrings;
-  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
+  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings;
+  ManterPDFSalvo: Boolean; sBCC: Tstrings);
 var
-  NomeArq_temp : string;
-  AnexosEmail:TStrings;
-  StreamNFCom : TMemoryStream;
+  NomeArqTemp: string;
+  AnexosEmail: TStrings;
+  StreamNFCom: TMemoryStream;
 begin
   if not Assigned(TACBrNFCom(TNotasFiscais(Collection).ACBrNFCom).MAIL) then
     raise EACBrNFComException.Create('Componente ACBrMail não associado');
@@ -518,15 +520,18 @@ begin
         if Assigned(DANFCom) then
         begin
           DANFCom.ImprimirDANFComPDF(FNFCom);
-          NomeArq_temp := PathWithDelim(DANFCom.PathPDF) + NumID + '-NFCom.pdf';
-          AnexosEmail.Add(NomeArq_temp);
+          NomeArqTemp := PathWithDelim(DANFCom.PathPDF) + NumID + '-nfcom.pdf';
+          AnexosEmail.Add(NomeArqTemp);
         end;
       end;
 
       EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNFCom,
-                   NumID +'-NFCom.xml', sReplyTo);
+                   NumID +'-NFCom.xml', sReplyTo, sBCC);
     end;
   finally
+    if not ManterPDFSalvo then
+      DeleteFile(NomeArqTemp);
+
     AnexosEmail.Free;
     StreamNFCom.Free;
   end;

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/06/2025
+-- ACBrNFSeXServicos --
+[+] #TK-7181: Incluída a URL para o QR-Code para a cidade de Uberaba/MG.
+   Por: Diego Reckziegel
 -- Giap.Provider --
 [+] Implementado para a versão 1.01 no provedor Giap as procedure que tratam dos serviços de
     Consulta a NFS-e por RPS, Cancelamento da NFS-e bem como o tratamento do retorno do Emitir.

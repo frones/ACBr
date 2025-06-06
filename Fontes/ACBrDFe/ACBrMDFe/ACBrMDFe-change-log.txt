@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/06/2025
+-- ACBrMDFeManifestos --
+[+] Implementado os parâmetros: ManterPDFSalvo e sBCC no método: EnviarEmail.
+  Por: Mateus Brunelli/Italo Giurizzato Junior
+
 09/05/2025
 -- ACBrMDFe.RetEnvEvento --
 [*] Alterado a posição da linha que faz a leitura do elemento Signature, pois não

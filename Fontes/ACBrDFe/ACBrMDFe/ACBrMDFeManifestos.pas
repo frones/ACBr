@@ -117,7 +117,8 @@ type
 
     procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
-      sReplyTo: TStrings = nil);
+      sReplyTo: TStrings = nil; ManterPDFSalvo: Boolean = True;
+      sBCC: TStrings = nil);
 
     function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
       PathArquivo: String = ''): String;
@@ -552,11 +553,12 @@ begin
 end;
 
 procedure TManifesto.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
-  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
+  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings;
+  ManterPDFSalvo: Boolean; sBCC: TStrings);
 var
-  NomeArqTemp : String;
-  AnexosEmail:TStrings;
-  StreamMDFe : TMemoryStream;
+  NomeArqTemp: string;
+  AnexosEmail: TStrings;
+  StreamMDFe: TMemoryStream;
 begin
   if not Assigned(TACBrMDFe(TManifestos(Collection).ACBrMDFe).MAIL) then
     raise EACBrMDFeException.Create('Componente ACBrMail não associado');
@@ -583,9 +585,12 @@ begin
       end;
 
       EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamMDFe,
-                   NumID + '-mdfe.xml', sReplyTo);
+                   NumID + '-mdfe.xml', sReplyTo, sBCC);
     end;
   finally
+    if not ManterPDFSalvo then
+      DeleteFile(NomeArqTemp);
+
     AnexosEmail.Free;
     StreamMDFe.Free;
   end;

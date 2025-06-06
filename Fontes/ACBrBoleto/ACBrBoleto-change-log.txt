@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/06/2025
+-- ACBrBoletoW_Santander_API --
+[-] TK-6999 Adicionado a propriedade writeOffQuantityDays para quantidade de dias baixa automatica qdo informado DataBaixa 
+	https://www.projetoacbr.com.br/forum/topic/82157-poss%C3%ADvel-erro-na-api-do-santander/
+	Por: deiviszi
+
 30/05/2025
 -- ACBrBoletoW_Cora --
 [-] TK-6969 Ajustado campos juros "interest" para enviar minusculo conforme suporte e resultou em sucesso. documentacao esta "Interest"

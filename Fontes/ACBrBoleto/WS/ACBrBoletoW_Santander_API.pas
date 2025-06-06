@@ -436,6 +436,8 @@ begin
       LJsonObject.AddPair('dueDate', FormatDateTime('yyyy-mm-dd', ATitulo.Vencimento));
       LJsonObject.AddPair('issueDate', FormatDateTime('yyyy-mm-dd', Now));
       LJsonObject.AddPair('nominalValue', StringReplace(FormatFloat('0.00', ATitulo.ValorDocumento), ',', '.', [rfReplaceAll]));
+      if (ATitulo.DataBaixa <> 0) and ((ATitulo.DataBaixa - ATitulo.Vencimento) > 0) then
+        LJsonObject.AddPair('writeOffQuantityDays', IntToStr(trunc(ATitulo.DataBaixa - ATitulo.Vencimento)));
 
       GerarPagador(LJsonObject);
       GerarSacadorAvalista(LJsonObject);

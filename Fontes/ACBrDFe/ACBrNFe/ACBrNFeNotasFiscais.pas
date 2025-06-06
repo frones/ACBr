@@ -115,7 +115,8 @@ type
 
     procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
-      sReplyTo: TStrings = nil);
+      sReplyTo: TStrings = nil; ManterPDFSalvo: Boolean = True;
+      sBCC: TStrings = nil);
 
     property NomeArq: String read FNomeArq write FNomeArq;
     function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
@@ -1650,10 +1651,12 @@ begin
 end;
 
 procedure NotaFiscal.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
-  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
+  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings;
+  ManterPDFSalvo: Boolean; sBCC: TStrings);
 var
+  NomeArqTemp: string;
   AnexosEmail:TStrings;
-  StreamNFe : TMemoryStream;
+  StreamNFe: TMemoryStream;
 begin
   if not Assigned(TACBrNFe(TNotasFiscais(Collection).ACBrNFe).MAIL) then
     raise EACBrNFeException.Create('Componente ACBrMail não associado');
@@ -1674,14 +1677,19 @@ begin
         if Assigned(DANFE) then
         begin
           DANFE.ImprimirDANFEPDF(FNFe);
-          AnexosEmail.Add(DANFE.ArquivoPDF);
+//          NomeArqTemp := PathWithDelim(DANFE.PathPDF) + NumID + '-nfe.pdf';
+          NomeArqTemp := DANFE.ArquivoPDF;
+          AnexosEmail.Add(NomeArqTemp);
         end;
       end;
 
       EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNFe,
-                   NumID +'-nfe.xml', sReplyTo);
+                   NumID +'-nfe.xml', sReplyTo, sBCC);
     end;
   finally
+    if not ManterPDFSalvo then
+      DeleteFile(NomeArqTemp);
+
     AnexosEmail.Free;
     StreamNFe.Free;
   end;

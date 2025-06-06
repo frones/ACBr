@@ -10,7 +10,7 @@
         /// <summary>
         /// Código da Situação Tributária do Imposto Seletivo
         /// </summary>
-        public int CSTIS { get; set; }
+        public CSTIS CSTIS { get; set; }
 
         /// <summary>
         /// Código de Classificação Tribútária do Imposto Seletivo

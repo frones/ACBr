@@ -66,7 +66,8 @@
     <Compile Include="..\Shared\NotaFiscal\CondicaoVeiculo.cs" Link="NotaFiscal\CondicaoVeiculo.cs" />
     <Compile Include="..\Shared\NotaFiscal\ConsumidorFinal.cs" Link="NotaFiscal\ConsumidorFinal.cs" />
     <Compile Include="..\Shared\NotaFiscal\CSTIPI.cs" Link="NotaFiscal\CSTIPI.cs" />
-    <Compile Include="..\Shared\NotaFiscal\DadosAdicionaisNFe.cs" Link="NotaFiscal\DadosAdicionaisNFe.cs" />
+	<Compile Include="..\Shared\NotaFiscal\CSTIS.cs" Link="NotaFiscal\CSTIS.cs" />
+	<Compile Include="..\Shared\NotaFiscal\DadosAdicionaisNFe.cs" Link="NotaFiscal\DadosAdicionaisNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\DeducNFe.cs" Link="NotaFiscal\DeducNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\DestinatarioNFe.cs" Link="NotaFiscal\DestinatarioNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\DestinoOperacao.cs" Link="NotaFiscal\DestinoOperacao.cs" />

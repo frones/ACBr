@@ -119,7 +119,8 @@ type
 
     procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
-      sReplyTo: TStrings = nil);
+      sReplyTo: TStrings = nil; ManterPDFSalvo: Boolean = True;
+      sBCC: Tstrings = nil);
 
     function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
       PathArquivo: String = ''): String;
@@ -642,9 +643,10 @@ begin
 end;
 
 procedure Conhecimento.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
-  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
+  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings;
+  ManterPDFSalvo: Boolean; sBCC: Tstrings);
 var
-  NomeArqTemp: String;
+  NomeArqTemp: string;
   AnexosEmail: TStrings;
   StreamCTe: TMemoryStream;
 begin
@@ -673,9 +675,12 @@ begin
       end;
 
       EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamCTe,
-                   NumID + '-cte.xml', sReplyTo);
+                   NumID + '-cte.xml', sReplyTo, sBCC);
     end;
   finally
+    if not ManterPDFSalvo then
+      DeleteFile(NomeArqTemp);
+
     AnexosEmail.Free;
     StreamCTe.Free;
   end;

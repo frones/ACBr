@@ -562,6 +562,14 @@ begin
               IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
               IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
               IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;
+
+              // Tipo Tributação Compra Governamental
+              IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSUF := 5;
+              IBSCBS.gIBSCBS.gTribCompraGov.vTribIBSUF := 50;
+              IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSMun := 5;
+              IBSCBS.gIBSCBS.gTribCompraGov.vTribIBSMun := 50;
+              IBSCBS.gIBSCBS.gTribCompraGov.pAliqCBS := 5;
+              IBSCBS.gIBSCBS.gTribCompraGov.vTribCBS := 50;
             end;
           end;
         end;

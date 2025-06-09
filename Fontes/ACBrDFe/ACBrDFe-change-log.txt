@@ -39,6 +39,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/06/2025
+-- ACBrDFe.Conversao --
+[+] Criado o tipo TtpOperGov e as funções de conversão.
+-- ACBrDFeConsts --
+[+] As constantes com as respectivas mensagens referente a Reforma Tributária
+    foram concentradas na referida unit em vez de estarem duplicadas em cada unit
+    de constantes de cada componente.
+   Por: Italo Giurizzato Junior
+
 26/05/2025
 -- ACBrDFe.Conversao --
 [+] Criado o tipo TcCredPres e as funções de conversão.

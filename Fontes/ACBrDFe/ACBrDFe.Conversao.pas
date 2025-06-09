@@ -46,6 +46,12 @@ const
   TtpEnteGovArrayStrings: array[TtpEnteGov] of string = ('1', '2', '3', '4');
 
 type
+  TtpOperGov = (togFornecimento, togRecebimentoPag);
+
+const
+  TtpOperGovArrayStrings: array[TtpOperGov] of string = ('1', '2');
+
+type
   TCSTIBSCBS = (cstNenhum,
     cst000, cst010, cst011, cst200, cst210, cst220, cst221, cst400, cst410,
     cst510, cst550, cst620, cst800, cst810, cst820);
@@ -112,6 +118,9 @@ const
 function tpEnteGovToStr(const t: TtpEnteGov): string;
 function StrTotpEnteGov(const s: string): TtpEnteGov;
 
+function tpOperGovToStr(const t: TtpOperGov): string;
+function StrTotpOperGov(const s: string): TtpOperGov;
+
 function CSTIBSCBSToStr(const t: TCSTIBSCBS): string;
 function StrToCSTIBSCBS(const s: string): TCSTIBSCBS;
 
@@ -145,6 +154,26 @@ begin
     end;
   end;
   raise EACBrException.CreateFmt('Valor string inválido para TtpEnteGov: %s', [s]);
+end;
+
+function tpOperGovToStr(const t: TtpOperGov): string;
+begin
+  Result := TtpOperGovArrayStrings[t];
+end;
+
+function StrTotpOperGov(const s: string): TtpOperGov;
+var
+  idx: TtpOperGov;
+begin
+  for idx:= Low(TtpOperGovArrayStrings) to High(TtpOperGovArrayStrings) do
+  begin
+    if(TtpOperGovArrayStrings[idx] = s)then
+    begin
+      Result := idx;
+      exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para TtpOperGov: %s', [s]);
 end;
 
 function CSTIBSCBSToStr(const t: TCSTIBSCBS): string;

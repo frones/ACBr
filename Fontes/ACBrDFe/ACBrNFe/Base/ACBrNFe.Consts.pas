@@ -382,43 +382,18 @@ resourcestring
   DSC_CMUNFGIBS = 'Código do Município de consumo, fato gerador do IBS / CBS';
   DSC_TPNFDEBITO = 'Tipo de Nota de Débito';
   DSC_TPNFCREDITO = 'Tipo de Nota de Crédito';
-  DSC_TPCOMPRAGOV = 'Tipo de compra governamental';
-  DSC_PREDUTOR = 'Percentual de redução de aliquota em compra governamental';
-  DSC_TIPONOTACREDITO = 'Indicador do tipo de nota de crédito que está sendo utilizada';
-  DSC_CCLASSTRIB = 'Código de Classificação Tributária do IBS e CBS';
-  DSC_INDPERECIMENTO = 'Indicador de Perecimento, furto, roubo ou extravio';
+  DSC_VITEM = 'Valor total do Item';
+  DSC_VNFTOT = 'Valor Total da NF considerando os impostos por fora IBS, CBS e IS';
   DSC_VBCIMPSEL = 'Valor da Base de Cálculo do Imposto Seletivo';
   DSC_PIMPSEL = 'Alíquota do Imposto Seletivo';
   DSC_PIMPSELESPEC = 'Alíquota específica por unidade de medida apropriada';
   DSC_VIMPSEL = 'Valor do Imposto Seletivo';
-  DSC_PIBSUF = 'Alíquota do IBS de competência das UF';
-  DSC_VTRIBOP = 'Valor bruto do tributo na operação';
-  DSC_VDIF = 'Valor do Diferimento';
-  DSC_VDEVTRIB = 'Valor do tributo devolvido';
-  DSC_PREDALIQ = 'Percentual da redução de alíquota';
-  DSC_PALIQEFET = 'Aliquota Efetiva do IBS de competência das UF que será aplicada a Base de Cálculo';
-  DSC_PALIQ = 'Valor da alíquota';
-  DSC_VDESON = 'Valor desonerado';
-  DSC_VIBSUF = 'Valor do IBS de competência da UF';
-  DSC_PIBSMUN = 'Alíquota do IBS de competência dos Municípios';
-  DSC_CCREDPRES = 'Código de Classificação do Crédito Presumido';
-  DSC_PCREDPRES = 'Percentual do Crédito Presumido';
-  DSC_VCREDPRES = 'Valor do Crédito Presumido';
-  DSC_VCREDPRESCONDSUS = 'Valor do Crédito Presumido em condição suspensiva.';
-  DSC_PCBS = 'Alíquota da CBS';
-  DSC_VCBS = 'Valor da CBS';
   DSC_ADREMIBS = 'Alíquota ad rem do IBS';
   DSC_ADREMCBS = 'Alíqutoa ad rem da CBS';
   DSC_VIBSMONO = 'Valor do IBS monofásico';
   DSC_VCBSMONO = 'Valor da CBS monofásica';
   DSC_ADREMIBSRETEN = 'Alíquota ad rem do imposto sujeito a retenção';
   DSC_VIBSMONORETEN = 'Valor do IBS monofásico sujeito a retenção';
-  {
-  DSC_PCREDPRESIBS = 'Percentual de crédito presumido do IBS monofásico';
-  DSC_VCREDPRESIBS = 'Valor do crédito presumido do IBS monofásico.';
-  DSC_PCREDPRESCBS = 'Percentual de crédito presumido da CBS monofásica';
-  DSC_VCREDPRESCBS = 'Valor do crédito presumido da CBS monofásica.';
-  }
   DSC_PDIFIBS = 'Percentual do diferimento do imposto monofásico';
   DSC_VIBSMONODIF = 'Valor do IBS mono diferido.';
   DSC_PDIFCBS = 'Percentual do diferimento do imposto monofásico';
@@ -426,22 +401,13 @@ resourcestring
   DSC_VTOTIBSMONO = 'Total de IBS Monofásico.';
   DSC_VTOTCBSMONO = 'Total da CBS Monofásica';
   DSC_CHAVEACESSO = 'Chave de acesso do DF-e referenciado';
-  DSC_VCBSOp = 'Valor da CBS Bruto na operação';
-  DSC_VTRIBREG = 'Valor do Tributo Regular';
-  DSC_VITEM = 'Valor total do Item';
   DSC_VIS = 'Valor Total do Imposto Seletivo';
-  DSC_VNFTOT = 'Valor Total da NF considerando os impostos por fora IBS, CBS e IS';
-  DSC_VIBS = 'Valor total do IBS';
-  DSC_VCBSMONORETEN = 'Valor total da CBS monofásica sujeita a retenção';
-  DSC_VIBSMONORET = 'Valor do IBS monofásico retido anteriormente';
-  DSC_VCBSMONORET = 'Valor da CBS monofásica retida anteriormente';
-
   DSC_VBCIBSCBS = 'Valor total da BC do IBS e da CBS';
   DSC_VBCSEL = 'Total da base de cálculo do imposto seletivo';
   DSC_VCRESPRES = 'Valor total do crédito presumido';
-  DSC_VIBSMUN = 'Valor total do IBS do Município';
-  DSC_VIBSTOT = 'Valor total do IBS';
-  DSC_VTOTNF = 'Valor total da NF-e com IBS / CBS / IS';
+  DSC_VCBSMONORETEN = 'Valor total da CBS monofásica sujeita a retenção';
+  DSC_VIBSMONORET = 'Valor do IBS monofásico retido anteriormente';
+  DSC_VCBSMONORET = 'Valor da CBS monofásica retida anteriormente';
 
 implementation
 

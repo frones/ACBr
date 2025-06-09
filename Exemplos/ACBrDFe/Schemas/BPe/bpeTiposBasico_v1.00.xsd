@@ -204,7 +204,7 @@ para tpEmis diferente de 1</xs:documentation>
 											<xs:documentation>Número que identifica o bilhete 1 a 999999999.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element name="gCompraGov" type="TCompraGov" minOccurs="0">
+									<xs:element name="gCompraGov" type="TCompraGovReduzido" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Grupo de Compras Governamentais</xs:documentation>
 										</xs:annotation>
@@ -1234,7 +1234,7 @@ para tpEmis diferente de 1</xs:documentation>
 											</xs:simpleType>
 										</xs:element>
 									</xs:sequence>
-									<xs:element name="gCompraGov" type="TCompraGov" minOccurs="0">
+									<xs:element name="gCompraGov" type="TCompraGovReduzido" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Grupo de Compras Governamentais</xs:documentation>
 										</xs:annotation>
@@ -1871,7 +1871,7 @@ para tpEmis diferente de 1</xs:documentation>
 											</xs:simpleType>
 										</xs:element>
 									</xs:sequence>
-									<xs:element name="gCompraGov" type="TCompraGov" minOccurs="0">
+									<xs:element name="gCompraGov" type="TCompraGovReduzido" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Grupo de Compras Governamentais</xs:documentation>
 										</xs:annotation>

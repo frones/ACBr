@@ -112,7 +112,7 @@ type
     procedure Ler_InfDocAnt(ANode: TACBrXmlNode; infDocAnt: TinfDocAntCollection);
 
     // Reforma Tributária
-    procedure Ler_gCompraGov(gCompraGov: TgCompraGov; const ANode: TACBrXmlNode);
+    procedure Ler_gCompraGov(gCompraGov: TgCompraGovReduzido; const ANode: TACBrXmlNode);
 
     procedure Ler_IBSCBS(const ANode: TACBrXmlNode; IBSCBS: TIBSCBS);
     procedure Ler_IBSCBS_gIBSCBS(const ANode: TACBrXmlNode; gIBSCBS: TgIBSCBS);
@@ -135,6 +135,7 @@ type
     procedure Ler_gIBSCBS_gTribRegular(const ANode: TACBrXmlNode; gTribRegular: TgTribRegular);
     procedure Ler_gIBSCredPres(const ANode: TACBrXmlNode; gIBSCredPres: TgIBSCBSCredPres);
     procedure Ler_gCBSCredPres(const ANode: TACBrXmlNode; gCBSCredPres: TgIBSCBSCredPres);
+    procedure Ler_gTribCompraGov(const ANode: TACBrXmlNode; gTribCompraGov: TgTribCompraGov);
   public
     constructor Create(AOwner: TCTe); reintroduce;
 
@@ -233,11 +234,11 @@ begin
   aquav.nCtrl := ObterConteudo(ANode.Childrens.FindAnyNs('nCtrl'), tcStr);
   aquav.xNavio := ObterConteudo(ANode.Childrens.FindAnyNs('xNavio'), tcStr);
   aquav.nViag := ObterConteudo(ANode.Childrens.FindAnyNs('nViag'), tcStr);
-  aquav.direc := StrToTpDirecao(ok, ObterConteudo(ANode.Childrens.FindAnyNs( 'direc'), tcStr));
+  aquav.direc := StrToTpDirecao(ok, ObterConteudo(ANode.Childrens.FindAnyNs('direc'), tcStr));
   aquav.prtEmb := ObterConteudo(ANode.Childrens.FindAnyNs('prtEmb'), tcStr);
   aquav.prtTrans := ObterConteudo(ANode.Childrens.FindAnyNs('prtTrans'), tcStr);
   aquav.prtDest := ObterConteudo(ANode.Childrens.FindAnyNs('prtDest'), tcStr);
-  aquav.tpNav := StrToTpNavegacao(ok, ObterConteudo(ANode.Childrens.FindAnyNs( 'tpNav'), tcStr));
+  aquav.tpNav := StrToTpNavegacao(ok, ObterConteudo(ANode.Childrens.FindAnyNs('tpNav'), tcStr));
   aquav.irin := ObterConteudo(ANode.Childrens.FindAnyNs('irin'), tcStr);
 
   aquav.balsa.Clear;
@@ -2103,7 +2104,7 @@ begin
 end;
 
 // Reforma Tributária
-procedure TCTeXmlReader.Ler_gCompraGov(gCompraGov: TgCompraGov;
+procedure TCTeXmlReader.Ler_gCompraGov(gCompraGov: TgCompraGovReduzido;
   const ANode: TACBrXmlNode);
 begin
   if not Assigned(ANode) then Exit;
@@ -2134,6 +2135,7 @@ begin
   Ler_gIBSCBS_gTribRegular(ANode.Childrens.Find('gTribRegular'), gIBSCBS.gTribRegular);
   Ler_gIBSCredPres(ANode.Childrens.Find('gIBSCredPres'), gIBSCBS.gIBSCredPres);
   Ler_gCBSCredPres(ANode.Childrens.Find('gCBSCredPres'), gIBSCBS.gCBSCredPres);
+  Ler_gTribCompraGov(ANode.Childrens.Find('gTribCompraGov'), gIBSCBS.gTribCompraGov);
 end;
 
 procedure TCTeXmlReader.Ler_gIBSUF(const ANode: TACBrXmlNode; gIBSUF: TgIBSUFValores);
@@ -2277,6 +2279,19 @@ begin
   gCBSCredPres.pCredPres := ObterConteudo(ANode.Childrens.Find('pCredPres'), tcDe4);
   gCBSCredPres.vCredPres := ObterConteudo(ANode.Childrens.Find('vCredPres'), tcDe2);
   gCBSCredPres.vCredPresCondSus := ObterConteudo(ANode.Childrens.Find('vCredPresCondSus'), tcDe2);
+end;
+
+procedure TCTeXmlReader.Ler_gTribCompraGov(const ANode: TACBrXmlNode;
+  gTribCompraGov: TgTribCompraGov);
+begin
+  if not Assigned(ANode) then Exit;
+
+  gTribCompraGov.pAliqIBSUF := ObterConteudo(ANode.Childrens.Find('pAliqIBSUF'), tcDe4);
+  gTribCompraGov.vTribIBSUF := ObterConteudo(ANode.Childrens.Find('vTribIBSUF'), tcDe2);
+  gTribCompraGov.pAliqIBSMun := ObterConteudo(ANode.Childrens.Find('pAliqIBSMun'), tcDe4);
+  gTribCompraGov.vTribIBSMun := ObterConteudo(ANode.Childrens.Find('vTribIBSMun'), tcDe2);
+  gTribCompraGov.pAliqCBS := ObterConteudo(ANode.Childrens.Find('pAliqCBS'), tcDe4);
+  gTribCompraGov.vTribCBS := ObterConteudo(ANode.Childrens.Find('vTribCBS'), tcDe2);
 end;
 
 end.

@@ -181,6 +181,25 @@ type
     property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;
   end;
 
+  { TgTribCompraGov }
+
+  TgTribCompraGov = class(TObject)
+  private
+    FpAliqIBSUF: Double;
+    FvTribIBSUF: Double;
+    FpAliqIBSMun: Double;
+    FvTribIBSMun: Double;
+    FpAliqCBS: Double;
+    FvTribCBS: Double;
+  public
+    property pAliqIBSUF: Double read FpAliqIBSUF write FpAliqIBSUF;
+    property vTribIBSUF: Double read FvTribIBSUF write FvTribIBSUF;
+    property pAliqIBSMun: Double read FpAliqIBSMun write FpAliqIBSMun;
+    property vTribIBSMun: Double read FvTribIBSMun write FvTribIBSMun;
+    property pAliqCBS: Double read FpAliqCBS write FpAliqCBS;
+    property vTribCBS: Double read FvTribCBS write FvTribCBS;
+  end;
+
   { TgIBSCBS }
 
   TgIBSCBS = class(TObject)
@@ -192,6 +211,7 @@ type
     FgTribRegular: TgTribRegular;
     FgIBSCredPres: TgIBSCBSCredPres;
     FgCBSCredPres: TgIBSCBSCredPres;
+    FgTribCompraGov: TgTribCompraGov;
   public
     constructor Create;
     destructor Destroy; override;
@@ -203,6 +223,7 @@ type
     property gTribRegular: TgTribRegular read FgTribRegular write FgTribRegular;
     property gIBSCredPres: TgIBSCBSCredPres read FgIBSCredPres write FgIBSCredPres;
     property gCBSCredPres: TgIBSCBSCredPres read FgCBSCredPres write FgCBSCredPres;
+    property gTribCompraGov: TgTribCompraGov read FgTribCompraGov write FgTribCompraGov;
   end;
 
   { TIBSCBS }
@@ -221,14 +242,13 @@ type
     property gIBSCBS: TgIBSCBS read FgIBSCBS write FgIBSCBS;
   end;
 
-  { TgCompraGov }
+  { TgCompraGovReduzido }
 
-  TgCompraGov = class(TObject)
+  TgCompraGovReduzido = class(TObject)
   private
     FtpEnteGov: TtpEnteGov;
     FpRedutor: Double;
   public
-
     property tpEnteGov: TtpEnteGov read FtpEnteGov write FtpEnteGov;
     property pRedutor: Double read FpRedutor write FpRedutor;
   end;
@@ -360,7 +380,7 @@ type
 
     FdhCont: TDateTime;
     FxJust: string;
-    FgCompraGov: TgCompraGov;
+    FgCompraGov: TgCompraGovReduzido;
 
     procedure SetinfPercurso(Value: TinfPercursoCollection);
   public
@@ -409,7 +429,7 @@ type
 
     property dhCont: TDateTime read FdhCont write FdhCont;
     property xJust: string     read FxJust  write FxJust;
-    property gCompraGov: TgCompraGov read FgCompraGov write FgCompraGov;
+    property gCompraGov: TgCompraGovReduzido read FgCompraGov write FgCompraGov;
   end;
 
   TPassCollectionItem = class(TObject)
@@ -2821,7 +2841,7 @@ begin
   FToma4 := TToma4.Create;
   FinfPercurso := TinfPercursoCollection.Create;
   FindGlobalizado := tiNao;
-  FgCompraGov := TgCompraGov.Create;
+  FgCompraGov := TgCompraGovReduzido.Create;
 end;
 
 destructor TIde.Destroy;
@@ -4924,6 +4944,7 @@ begin
   FgTribRegular := TgTribRegular.Create;
   FgIBSCredPres := TgIBSCBSCredPres.Create;
   FgCBSCredPres := TgIBSCBSCredPres.Create;
+  FgTribCompraGov := TgTribCompraGov.Create;
 end;
 
 destructor TgIBSCBS.Destroy;
@@ -4934,6 +4955,7 @@ begin
   FgTribRegular.Free;
   FgIBSCredPres.Free;
   FgCBSCredPres.Free;
+  FgTribCompraGov.Free;
 
   inherited Destroy;
 end;

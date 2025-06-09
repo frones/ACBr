@@ -238,7 +238,7 @@ type
     function Gerar_Total: TACBrXmlNode;
 
     // Reforma Tributária
-    function Gerar_Ide_CompraGov(gCompraGov: TgCompraGov): TACBrXmlNode;
+    function Gerar_Ide_CompraGov(gCompraGov: TgCompraGovReduzido): TACBrXmlNode;
 
     function Gerar_IBSCBS(IBSCBS: TIBSCBS): TACBrXmlNode;
     function Gerar_IBSCBS_gIBSCBS(gIBSCBS: TgIBSCBS): TACBrXmlNode;
@@ -257,6 +257,7 @@ type
     function Gerar_IBSCBSSel_gIBSCBS_gTribRegular(gTribRegular: TgTribRegular): TACBrXmlNode;
     function Gerar_IBSCBS_gIBSCBS_gIBSCBSCredPres(gIBSCredPres: TgIBSCBSCredPres;
       const Grupo: string): TACBrXmlNode;
+    function Gerar_gTribCompraGov(gTribCompraGov: TgTribCompraGov): TACBrXmlNode;
 
     function GetOpcoes: TCTeXmlWriterOptions;
     procedure SetOpcoes(AValue: TCTeXmlWriterOptions);
@@ -356,7 +357,7 @@ begin
   if Opcoes.NormatizarMunicipios then
     if ((EstaZerado(cMun)) and (xMun <> XMUN_EXTERIOR)) then
       cMun := ObterCodigoMunicipio(xMun, xUF, Opcoes.FPathArquivoMunicipios)
-    else if ( ( EstaVazio(xMun)) and (cMun <> CMUN_EXTERIOR) ) then
+    else if ((EstaVazio(xMun)) and (cMun <> CMUN_EXTERIOR)) then
       xMun := ObterNomeMunicipio(cMun, xUF, Opcoes.FPathArquivoMunicipios);
 end;
 
@@ -779,7 +780,7 @@ begin
 end;
 
 function TCTeXmlWriter.Gerar_Ide_CompraGov(
-  gCompraGov: TgCompraGov): TACBrXmlNode;
+  gCompraGov: TgCompraGovReduzido): TACBrXmlNode;
 begin
   Result := nil;
 
@@ -1443,7 +1444,7 @@ begin
 
   if (VersaoDF >= ve400) and (ModeloDF in [moCTe, moCTeOS]) then
     Result.AppendChild(AddNode(tcDe2, '#250', 'vTotDFe', 1, 15, 0,
-                                                 CTe.Imp.vTotDFe, DSC_VTOTDEF));
+                                                 CTe.Imp.vTotDFe, DSC_VTOTDFE));
 end;
 
 function TCTeXmlWriter.Gerar_ICMS: TACBrXmlNode;
@@ -4641,6 +4642,9 @@ begin
 
   if gIBSCBS.gCBSCredPres.pCredPres > 0 then
     Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSCBSCredPres(gIBSCBS.gCBSCredPres, 'gCBSCredPres'));
+
+  if gIBSCBS.gTribCompraGov.pAliqIBSUF > 0 then
+    Result.AppendChild(Gerar_gTribCompraGov(gIBSCBS.gTribCompraGov));
 end;
 
 function TCTeXmlWriter.Gerar_IBSCBS_gIBSCBS_gIBSUF(
@@ -4703,7 +4707,7 @@ begin
   Result := FDocument.CreateElement('gIBSMun');
 
   Result.AppendChild(AddNode(tcDe4, '#6', 'pIBSMun', 1, 7, 1,
-                                                     gIBSMun.pIBS, DSC_PIBSUF));
+                                                    gIBSMun.pIBS, DSC_PIBSMUN));
 
   if gIBSMun.gDif.pDif > 0 then
     Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSMun_gDif(gIBSMun.gDif));
@@ -4715,7 +4719,7 @@ begin
     Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gRed(gIBSMun.gRed));
 
   Result.AppendChild(AddNode(tcDe2, '#23', 'vIBSMun', 1, 15, 1,
-                                                      gIBSMun.vIBS, DSC_VIBSUF));
+                                                    gIBSMun.vIBS, DSC_VIBSMUN));
 end;
 
 function TCTeXmlWriter.Gerar_IBSCBS_gIBSCBS_gIBSMun_gDif(
@@ -4810,6 +4814,30 @@ begin
   else
     Result.AppendChild(AddNode(tcDe2, 'UB59', 'vCredPresCondSus', 1, 15, 1,
                           gIBSCredPres.vCredPresCondSus, DSC_VCREDPRESCONDSUS));
+end;
+
+function TCTeXmlWriter.Gerar_gTribCompraGov(
+  gTribCompraGov: TgTribCompraGov): TACBrXmlNode;
+begin
+  Result := FDocument.CreateElement('gTribCompraGov');
+
+  Result.AppendChild(AddNode(tcDe4, '#1', 'pAliqIBSUF', 1, 7, 1,
+                                    gTribCompraGov.pAliqIBSUF, DSC_PALIQIBSUF));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'vTribIBSUF', 1, 15, 1,
+                                    gTribCompraGov.vTribIBSUF, DSC_VTRIBIBSUF));
+
+  Result.AppendChild(AddNode(tcDe4, '#1', 'pAliqIBSMun', 1, 7, 1,
+                                  gTribCompraGov.pAliqIBSMun, DSC_PALIQIBSMUN));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'vTribIBSMun', 1, 15, 1,
+                                  gTribCompraGov.vTribIBSMun, DSC_VTRIBIBSMUN));
+
+  Result.AppendChild(AddNode(tcDe4, '#1', 'pAliqCBS', 1, 7, 1,
+                                        gTribCompraGov.pAliqCBS, DSC_PALIQCBS));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'vTribCBS', 1, 15, 1,
+                                        gTribCompraGov.vTribCBS, DSC_VTRIBCBS));
 end;
 
 end.

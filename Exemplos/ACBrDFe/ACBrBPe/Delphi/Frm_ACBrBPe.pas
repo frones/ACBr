@@ -694,7 +694,16 @@ begin
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;
+
+      // Tipo Tributação Compra Governamental
+      Imp.IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSUF := 5;
+      Imp.IBSCBS.gIBSCBS.gTribCompraGov.vTribIBSUF := 50;
+      Imp.IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSMun := 5;
+      Imp.IBSCBS.gIBSCBS.gTribCompraGov.vTribIBSMun := 50;
+      Imp.IBSCBS.gIBSCBS.gTribCompraGov.pAliqCBS := 5;
+      Imp.IBSCBS.gIBSCBS.gTribCompraGov.vTribCBS := 50;
     end;
+
     //
     // Informações sobre o Pagamento
     //
@@ -888,7 +897,16 @@ begin
           Imp.IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
           Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
           Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;
+
+          // Tipo Tributação Compra Governamental
+          Imp.IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSUF := 5;
+          Imp.IBSCBS.gIBSCBS.gTribCompraGov.vTribIBSUF := 50;
+          Imp.IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSMun := 5;
+          Imp.IBSCBS.gIBSCBS.gTribCompraGov.vTribIBSMun := 50;
+          Imp.IBSCBS.gIBSCBS.gTribCompraGov.pAliqCBS := 5;
+          Imp.IBSCBS.gIBSCBS.gTribCompraGov.vTribCBS := 50;
         end;
+
         //
         // Informações sobre os Componentes da Viagem
         //

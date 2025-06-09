@@ -153,7 +153,7 @@ para tpEmis diferente de 1</xs:documentation>
 											</xs:simpleType>
 										</xs:element>
 									</xs:sequence>
-									<xs:element name="gCompraGov" type="TCompraGov" minOccurs="0">
+									<xs:element name="gCompraGov" type="TCompraGovReduzido" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Grupo de Compras Governamentais</xs:documentation>
 										</xs:annotation>

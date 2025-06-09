@@ -182,6 +182,25 @@ type
     property vCredPresCondSus: Double read FvCredPresCondSus write FvCredPresCondSus;
   end;
 
+  { TgTribCompraGov }
+
+  TgTribCompraGov = class(TObject)
+  private
+    FpAliqIBSUF: Double;
+    FvTribIBSUF: Double;
+    FpAliqIBSMun: Double;
+    FvTribIBSMun: Double;
+    FpAliqCBS: Double;
+    FvTribCBS: Double;
+  public
+    property pAliqIBSUF: Double read FpAliqIBSUF write FpAliqIBSUF;
+    property vTribIBSUF: Double read FvTribIBSUF write FvTribIBSUF;
+    property pAliqIBSMun: Double read FpAliqIBSMun write FpAliqIBSMun;
+    property vTribIBSMun: Double read FvTribIBSMun write FvTribIBSMun;
+    property pAliqCBS: Double read FpAliqCBS write FpAliqCBS;
+    property vTribCBS: Double read FvTribCBS write FvTribCBS;
+  end;
+
   { TgIBSCBS }
 
   TgIBSCBS = class(TObject)
@@ -193,6 +212,7 @@ type
     FgTribRegular: TgTribRegular;
     FgIBSCredPres: TgIBSCBSCredPres;
     FgCBSCredPres: TgIBSCBSCredPres;
+    FgTribCompraGov: TgTribCompraGov;
   public
     constructor Create;
     destructor Destroy; override;
@@ -204,6 +224,7 @@ type
     property gTribRegular: TgTribRegular read FgTribRegular write FgTribRegular;
     property gIBSCredPres: TgIBSCBSCredPres read FgIBSCredPres write FgIBSCredPres;
     property gCBSCredPres: TgIBSCBSCredPres read FgCBSCredPres write FgCBSCredPres;
+    property gTribCompraGov: TgTribCompraGov read FgTribCompraGov write FgTribCompraGov;
   end;
 
   { TIBSCBS }
@@ -301,14 +322,14 @@ type
     property gCBS: TgCBS read FgCBS write FgCBS;
   end;
 
-  { TgCompraGov }
+  { TgCompraGovReduzido }
 
-  TgCompraGov = class(TObject)
+  TgCompraGovReduzido = class(TObject)
   private
     FtpEnteGov: TtpEnteGov;
     FpRedutor: Double;
   public
-    procedure Assign(Source: TgCompraGov);
+    procedure Assign(Source: TgCompraGovReduzido);
 
     property tpEnteGov: TtpEnteGov read FtpEnteGov write FtpEnteGov;
     property pRedutor: Double read FpRedutor write FpRedutor;
@@ -353,7 +374,7 @@ type
     FindNotaEntrada: TIndicador;
     FdhCont: TDateTime;
     FxJust: string;
-    FgCompraGov: TgCompraGov;
+    FgCompraGov: TgCompraGovReduzido;
   public
     constructor Create;
     destructor Destroy; override;
@@ -379,7 +400,7 @@ type
     property indNotaEntrada: TIndicador read FindNotaEntrada write FindNotaEntrada;
     property dhCont: TDateTime read FdhCont write FdhCont;
     property xJust: string read FxJust write FxJust;
-    property gCompraGov: TgCompraGov read FgCompraGov write FgCompraGov;
+    property gCompraGov: TgCompraGovReduzido read FgCompraGov write FgCompraGov;
   end;
 
   { TEndereco }
@@ -1522,7 +1543,7 @@ constructor TIde.Create;
 begin
   inherited Create;
 
-  FgCompraGov := TgCompraGov.Create;
+  FgCompraGov := TgCompraGovReduzido.Create;
 end;
 
 destructor TIde.Destroy;
@@ -1945,6 +1966,7 @@ begin
   FgTribRegular := TgTribRegular.Create;
   FgIBSCredPres := TgIBSCBSCredPres.Create;
   FgCBSCredPres := TgIBSCBSCredPres.Create;
+  FgTribCompraGov := TgTribCompraGov.Create;
 end;
 
 destructor TgIBSCBS.Destroy;
@@ -1955,6 +1977,7 @@ begin
   FgTribRegular.Free;
   FgIBSCredPres.Free;
   FgCBSCredPres.Free;
+  FgTribCompraGov.Free;
 
   inherited Destroy;
 end;
@@ -2051,9 +2074,9 @@ begin
   inherited Destroy;
 end;
 
-{ TgCompraGov }
+{ TgCompraGovReduzido }
 
-procedure TgCompraGov.Assign(Source: TgCompraGov);
+procedure TgCompraGovReduzido.Assign(Source: TgCompraGovReduzido);
 begin
   tpEnteGov := Source.tpEnteGov;
   pRedutor := Source.pRedutor;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/06/2025
+-- Diversos --
+[*] Ajustes necessários para deixar em conformidade com a versão 1.05 dos Schemas.
+  Por: Italo Giurizzato Junior
+
 06/06/2025
 -- ACBrNFComNotasFiscais --
 [+] Implementado os parâmetros: ManterPDFSalvo e sBCC no método: EnviarEmail.

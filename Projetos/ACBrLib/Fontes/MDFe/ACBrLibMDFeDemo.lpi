@@ -534,22 +534,25 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="5">
+    <RequiredPackages Count="6">
       <Item1>
-        <PackageName Value="ACBr_MDFe_DaMDFeRL"/>
+        <PackageName Value="ACBr_MDFe_DAMDFeFPDF"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBr_MDFe_DaMDFeRL"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_MDFe"/>
+        <PackageName Value="ACBrTCP"/>
       </Item3>
       <Item4>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBr_MDFe"/>
       </Item4>
       <Item5>
-        <PackageName Value="FCL"/>
+        <PackageName Value="LCL"/>
       </Item5>
+      <Item6>
+        <PackageName Value="FCL"/>
+      </Item6>
     </RequiredPackages>
     <Units Count="12">
       <Unit0>

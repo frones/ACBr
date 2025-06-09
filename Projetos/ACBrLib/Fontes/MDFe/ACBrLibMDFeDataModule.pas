@@ -38,7 +38,12 @@ interface
 
 uses
   Classes, SysUtils, syncobjs,
-  ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrMail,
+  ACBrMDFe,
+  {$IfNDef NOREPORT}
+  ACBrMDFeDAMDFeRLClass,
+  {$EndIf}
+  ACBrMDFeDAMDFeFPDF,
+  ACBrMail,
   ACBrLibComum, ACBrLibDataModule, ACBrLibConfig;
 
 type
@@ -49,7 +54,13 @@ type
     ACBrMail1: TACBrMail;
     ACBrMDFe1: TACBrMDFe;
   private
+    {$IfNDef NOREPORT}
     DAMDFe: TACBrMDFeDAMDFeRL;
+    {$EndIf}
+    FDAMDFeFPDF: TACBrMDFeDAMDFeFPDF;
+
+  protected
+    procedure FreeReports;
 
   public
     procedure AplicarConfiguracoes; override;
@@ -70,6 +81,16 @@ uses
 {$R *.lfm}
 
 { TLibMDFeDM }
+
+procedure TLibMDFeDM.FreeReports;
+begin
+  ACBrMDFe1.DAMDFE := nil;
+  {$IfNDef NOREPORT}
+  if Assigned(DAMDFe) then FreeAndNil(DAMDFe);
+  {$EndIf}
+  if Assigned(FDAMDFeFPDF) then FreeAndNil(FDAMDFeFPDF);
+end;
+
 procedure TLibMDFeDM.AplicarConfiguracoes;
 var
   LibConfig: TLibMDFeConfig;
@@ -124,8 +145,13 @@ Var
 begin
   GravarLog('ConfigurarImpressao - Iniciado', logNormal);
 
+  {$IfNDef NOREPORT}
   DAMDFe := TACBrMDFeDAMDFeRL.Create(nil);
   ACBrMDFe1.DAMDFE := DAMDFe;
+  {$Else}
+  FDAMDFeFPDF := TACBrMDFeDAMDFeFPDF.Create(nil);
+  ACBrMDFe1.DAMDFE := FDAMDFeFPDF;
+  {$EndIf}
 
   if ACBrMDFe1.Manifestos.Count > 0 then
   begin
@@ -134,8 +160,6 @@ begin
     else
       ACBrMDFe1.DAMDFe.Cancelada := False;
   end;
-
-  TLibMDFeConfig(Lib.Config).DAMDFe.Apply(DAMDFe, Lib);
 
 {$IFDEF Demo}
     for I:= 0 to ACBrMDFe1.Manifestos.Count -1 do
@@ -151,30 +175,48 @@ begin
     end;
 {$ENDIF}
 
-  if NaoEstaVazio(NomeImpressora) then
-    ACBrMDFe1.DAMDFe.Impressora := NomeImpressora;
+{$IfNDef NOREPORT}
+TLibMDFeConfig(Lib.Config).DAMDFe.Apply(DAMDFe, Lib);
 
-  if NaoEstaVazio(MostrarPreview) then
-    ACBrMDFe1.DAMDFe.MostraPreview := StrToBoolDef(MostrarPreview, False);
+if NaoEstaVazio(NomeImpressora) then
+  ACBrMDFe1.DAMDFe.Impressora := NomeImpressora;
 
-  if NaoEstaVazio(Protocolo) then
-    ACBrMDFe1.DAMDFe.Protocolo := Protocolo
-  else
-    ACBrMDFe1.DAMDFe.Protocolo := '';
+if NaoEstaVazio(MostrarPreview) then
+  ACBrMDFe1.DAMDFe.MostraPreview := StrToBoolDef(MostrarPreview, False);
 
-  if GerarPDF and not DirectoryExists(PathWithDelim(TLibMDFeConfig(Lib.Config).DAMDFe.PathPDF))then
-        ForceDirectories(PathWithDelim(TLibMDFeConfig(Lib.Config).DAMDFe.PathPDF));
+if NaoEstaVazio(Protocolo) then
+  ACBrMDFe1.DAMDFe.Protocolo := Protocolo
+else
+  ACBrMDFe1.DAMDFe.Protocolo := '';
 
+if GerarPDF and not DirectoryExists(PathWithDelim(TLibMDFeConfig(Lib.Config).DAMDFe.PathPDF))then
+      ForceDirectories(PathWithDelim(TLibMDFeConfig(Lib.Config).DAMDFe.PathPDF));
+{$Else}
+
+TLibMDFeConfig(Lib.Config).DAMDFe.Apply(FDAMDFeFPDF, Lib);
+
+if NaoEstaVazio(NomeImpressora) then
+  ACBrMDFe1.DAMDFe.Impressora := NomeImpressora;
+
+if NaoEstaVazio(MostrarPreview) then
+  ACBrMDFe1.DAMDFe.MostraPreview := StrToBoolDef(MostrarPreview, False);
+
+if NaoEstaVazio(Protocolo) then
+  ACBrMDFe1.DAMDFe.Protocolo := Protocolo
+else
+  ACBrMDFe1.DAMDFe.Protocolo := '';
+
+if GerarPDF and not DirectoryExists(PathWithDelim(TLibMDFeConfig(Lib.Config).DAMDFe.PathPDF))then
+      ForceDirectories(PathWithDelim(TLibMDFeConfig(Lib.Config).DAMDFe.PathPDF));
+
+{$EndIf}
   GravarLog('ConfigurarImpressao - Feito', logNormal);
 end;
 
 procedure TLibMDFeDM.FinalizarImpressao;
 begin
   GravarLog('FinalizarImpressao - Iniciado', logNormal);
-
-  ACBrMDFe1.DAMDFE := nil;
-  if Assigned(DAMDFe) then FreeAndNil(DAMDFe);
-
+  FreeReports;
   GravarLog('FinalizarImpressao - Feito', logNormal);
 end;
 

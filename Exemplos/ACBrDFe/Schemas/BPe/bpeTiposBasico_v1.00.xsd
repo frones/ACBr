@@ -141,6 +141,20 @@ Tabela do IBGE de código de unidades da federação.</xs:documentation>
 											<xs:restriction base="TTipoBPe"/>
 										</xs:simpleType>
 									</xs:element>
+									<xs:element name="tpServ">
+										<xs:annotation>
+											<xs:documentation>Tipo de serviço do BPe Aereo</xs:documentation>
+											<xs:documentation>0 - Normal 
+1 - BPe múltiplo (fretamento)
+2- Vinculado a BPe multiplo
+</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="TTipoServ">
+												<xs:whiteSpace value="preserve"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
 									<xs:element name="indPres" type="TIndPres">
 										<xs:annotation>
 											<xs:documentation>Indicador de presença do comprador no estabelecimento comercial no momento da operação</xs:documentation>
@@ -449,7 +463,7 @@ Informar quando diferente do passageiro</xs:documentation>
 											<xs:documentation>Formato AAAA-MM-DDTHH:MM:DD TZD</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element name="infPassageiro">
+									<xs:element name="infPassageiro" minOccurs="0" maxOccurs="unbounded">
 										<xs:annotation>
 											<xs:documentation>Informações do passageiro</xs:documentation>
 										</xs:annotation>
@@ -476,13 +490,9 @@ Informar quando diferente do passageiro</xs:documentation>
 													<xs:annotation>
 														<xs:documentation>Tipo do Documento de identificação</xs:documentation>
 														<xs:documentation>1-RG
-
 2-Título de Eleitor
-
 3-Passaporte
-
 4-CNH
-
 5-Outros</xs:documentation>
 													</xs:annotation>
 												</xs:element>
@@ -652,158 +662,179 @@ Informar se tpTrecho = 3</xs:documentation>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element name="infValorBPe">
-							<xs:annotation>
-								<xs:documentation>Informações dos valores do Bilhete de Passagem</xs:documentation>
-							</xs:annotation>
-							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="vBP" type="TDec_1302">
-										<xs:annotation>
-											<xs:documentation>Valor do Bilhete de Passagem</xs:documentation>
-											<xs:documentation>Pode conter zeros quando o BP-e for de complemento de ICMS</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-									<xs:element name="vDesconto" type="TDec_1302">
-										<xs:annotation>
-											<xs:documentation>Valor do desconto concedido ao comprador</xs:documentation>
-											<xs:documentation>Indicar o valor total concedido em função dos benefícios concedidos ou política de desconto da empresa
+						<xs:choice>
+							<xs:sequence>
+								<xs:annotation>
+									<xs:documentation>Informar quando BPe Normal ou Multiplo</xs:documentation>
+								</xs:annotation>
+								<xs:element name="infValorBPe">
+									<xs:annotation>
+										<xs:documentation>Informações dos valores do Bilhete de Passagem</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="vBP" type="TDec_1302">
+												<xs:annotation>
+													<xs:documentation>Valor do Bilhete de Passagem</xs:documentation>
+													<xs:documentation>Pode conter zeros quando o BP-e for de complemento de ICMS</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vDesconto" type="TDec_1302">
+												<xs:annotation>
+													<xs:documentation>Valor do desconto concedido ao comprador</xs:documentation>
+													<xs:documentation>Indicar o valor total concedido em função dos benefícios concedidos ou política de desconto da empresa
 Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-									<xs:element name="vPgto" type="TDec_1302">
-										<xs:annotation>
-											<xs:documentation>Valor pago pelo BP-e (vBP - vDesconto)</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-									<xs:element name="vTroco" type="TDec_1302">
-										<xs:annotation>
-											<xs:documentation>Valor do troco</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-									<xs:element name="tpDesconto" minOccurs="0">
-										<xs:annotation>
-											<xs:documentation>Tipo de desconto/benefício para o BP-e</xs:documentation>
-											<xs:documentation>03 - Crianças
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vPgto" type="TDec_1302">
+												<xs:annotation>
+													<xs:documentation>Valor pago pelo BP-e (vBP - vDesconto)</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vTroco" type="TDec_1302">
+												<xs:annotation>
+													<xs:documentation>Valor do troco</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="tpDesconto" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>Tipo de desconto/benefício para o BP-e</xs:documentation>
+													<xs:documentation>03 - Crianças
 09 - Profissional da Empresa  (empregados ou tripulantes da cia aérea)
 10 - Programas de fidelidade (Milhagem);
 11 - Acordos Corporativos
 12- Acordos com Grupos de Passageiros;
 13 - Acompanhante passageiro PNE
 99 - Outros</xs:documentation>
-										</xs:annotation>
-										<xs:simpleType>
-											<xs:restriction base="xs:string">
-												<xs:whiteSpace value="preserve"/>
-												<xs:enumeration value="03"/>
-												<xs:enumeration value="09"/>
-												<xs:enumeration value="10"/>
-												<xs:enumeration value="11"/>
-												<xs:enumeration value="12"/>
-												<xs:enumeration value="13"/>
-												<xs:enumeration value="99"/>
-											</xs:restriction>
-										</xs:simpleType>
-									</xs:element>
-									<xs:element name="xDesconto" minOccurs="0">
-										<xs:annotation>
-											<xs:documentation>Descrição do tipo de desconto/benefício concedido</xs:documentation>
-										</xs:annotation>
-										<xs:simpleType>
-											<xs:restriction base="TString">
-												<xs:maxLength value="100"/>
-												<xs:minLength value="2"/>
-											</xs:restriction>
-										</xs:simpleType>
-									</xs:element>
-									<xs:element name="cDesconto" minOccurs="0">
-										<xs:annotation>
-											<xs:documentation>Código do desconto quando informado com tipo 99 - Outros</xs:documentation>
-										</xs:annotation>
-										<xs:simpleType>
-											<xs:restriction base="TString">
-												<xs:maxLength value="20"/>
-												<xs:minLength value="2"/>
-											</xs:restriction>
-										</xs:simpleType>
-									</xs:element>
-									<xs:element name="Comp" maxOccurs="unbounded">
-										<xs:annotation>
-											<xs:documentation>Componentes do Valor do Bilhete</xs:documentation>
-										</xs:annotation>
-										<xs:complexType>
-											<xs:sequence>
-												<xs:element name="tpComp">
-													<xs:annotation>
-														<xs:documentation>Tipo do Componente</xs:documentation>
-														<xs:documentation>01 - TARIFA; 
+												</xs:annotation>
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:whiteSpace value="preserve"/>
+														<xs:enumeration value="03"/>
+														<xs:enumeration value="09"/>
+														<xs:enumeration value="10"/>
+														<xs:enumeration value="11"/>
+														<xs:enumeration value="12"/>
+														<xs:enumeration value="13"/>
+														<xs:enumeration value="99"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:element>
+											<xs:element name="xDesconto" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>Descrição do tipo de desconto/benefício concedido</xs:documentation>
+												</xs:annotation>
+												<xs:simpleType>
+													<xs:restriction base="TString">
+														<xs:maxLength value="100"/>
+														<xs:minLength value="2"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:element>
+											<xs:element name="cDesconto" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>Código do desconto quando informado com tipo 99 - Outros</xs:documentation>
+												</xs:annotation>
+												<xs:simpleType>
+													<xs:restriction base="TString">
+														<xs:maxLength value="20"/>
+														<xs:minLength value="2"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:element>
+											<xs:element name="Comp" maxOccurs="unbounded">
+												<xs:annotation>
+													<xs:documentation>Componentes do Valor do Bilhete</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="tpComp">
+															<xs:annotation>
+																<xs:documentation>Tipo do Componente</xs:documentation>
+																<xs:documentation>01 - TARIFA; 
 03 - TAXA EMBARQUE;
 06 - BAGAGEM
 07 - RESERVA DE ASSENTOS
 08 - TRANSPORTE DE ANIMAIS
 99 - OUTROS</xs:documentation>
-													</xs:annotation>
-													<xs:simpleType>
-														<xs:restriction base="xs:string">
-															<xs:whiteSpace value="preserve"/>
-															<xs:enumeration value="01"/>
-															<xs:enumeration value="03"/>
-															<xs:enumeration value="06"/>
-															<xs:enumeration value="07"/>
-															<xs:enumeration value="08"/>
-															<xs:enumeration value="99"/>
-														</xs:restriction>
-													</xs:simpleType>
-												</xs:element>
-												<xs:element name="vComp" type="TDec_1302">
-													<xs:annotation>
-														<xs:documentation>Valor do componente</xs:documentation>
-													</xs:annotation>
-												</xs:element>
-											</xs:sequence>
-										</xs:complexType>
-									</xs:element>
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>
-						<xs:element name="imp">
-							<xs:annotation>
-								<xs:documentation>Informações relativas aos Impostos</xs:documentation>
-							</xs:annotation>
-							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="IBSCBS" type="TTribBPe">
-										<xs:annotation>
-											<xs:documentation>Grupo de informações do IBS e CBS</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-									<xs:element name="vTotTrib" type="TDec_1302" minOccurs="0">
-										<xs:annotation>
-											<xs:documentation>Valor Total dos Tributos</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-									<xs:element name="infAdFisco" minOccurs="0">
-										<xs:annotation>
-											<xs:documentation>Informações adicionais de interesse do Fisco</xs:documentation>
-											<xs:documentation>Norma referenciada, informações complementares, etc</xs:documentation>
-										</xs:annotation>
-										<xs:simpleType>
-											<xs:restriction base="TString">
-												<xs:maxLength value="2000"/>
-												<xs:minLength value="1"/>
-											</xs:restriction>
-										</xs:simpleType>
-									</xs:element>
-									<xs:element name="vTotDFe" type="TDec_1302" minOccurs="0">
-										<xs:annotation>
-											<xs:documentation>Valor total do documento fiscal 
+															</xs:annotation>
+															<xs:simpleType>
+																<xs:restriction base="xs:string">
+																	<xs:whiteSpace value="preserve"/>
+																	<xs:enumeration value="01"/>
+																	<xs:enumeration value="03"/>
+																	<xs:enumeration value="06"/>
+																	<xs:enumeration value="07"/>
+																	<xs:enumeration value="08"/>
+																	<xs:enumeration value="99"/>
+																</xs:restriction>
+															</xs:simpleType>
+														</xs:element>
+														<xs:element name="vComp" type="TDec_1302">
+															<xs:annotation>
+																<xs:documentation>Valor do componente</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="imp">
+									<xs:annotation>
+										<xs:documentation>Informações relativas aos Impostos</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="IBSCBS" type="TTribBPe">
+												<xs:annotation>
+													<xs:documentation>Grupo de informações do IBS e CBS</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vTotTrib" type="TDec_1302" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>Valor Total dos Tributos</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="infAdFisco" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>Informações adicionais de interesse do Fisco</xs:documentation>
+													<xs:documentation>Norma referenciada, informações complementares, etc</xs:documentation>
+												</xs:annotation>
+												<xs:simpleType>
+													<xs:restriction base="TString">
+														<xs:maxLength value="2000"/>
+														<xs:minLength value="1"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:element>
+											<xs:element name="vTotDFe" type="TDec_1302" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>Valor total do documento fiscal 
 (vBP + total do IBS + total da CBS) 
 </xs:documentation>
-										</xs:annotation>
-									</xs:element>
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+							<xs:element name="infBPeVinculado">
+								<xs:annotation>
+									<xs:documentation>Informações do Serviço Vinculado a BPe Multiplo</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="chBPeMultiplo" type="TChDFe">
+											<xs:annotation>
+												<xs:documentation>Chave de acesso do BPe Multiplo</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
 						<xs:element name="pag" maxOccurs="10">
 							<xs:annotation>
 								<xs:documentation>Dados de Pagamento. </xs:documentation>
@@ -3709,6 +3740,17 @@ Observação: 28 caracteres são representados no schema como 20 bytes do tipo b
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
 			<xs:pattern value="[0-9]{1,15}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TTipoServ">
+		<xs:annotation>
+			<xs:documentation>Tipo Serviço BPe Aereo</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TModal">

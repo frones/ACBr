@@ -459,6 +459,11 @@
 								<xs:documentation>Total do Crédito Presumido</xs:documentation>
 							</xs:annotation>
 						</xs:element>
+						<xs:element name="vCredPresCondSus" type="TDec1302">
+							<xs:annotation>
+								<xs:documentation>Total do Crédito Presumido Condição Suspensiva</xs:documentation>
+							</xs:annotation>
+						</xs:element>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -486,6 +491,11 @@
 						<xs:element name="vCredPres" type="TDec1302">
 							<xs:annotation>
 								<xs:documentation>Total do Crédito Presumido</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="vCredPresCondSus" type="TDec1302">
+							<xs:annotation>
+								<xs:documentation>Total do Crédito Presumido Condição Suspensiva</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 					</xs:sequence>
@@ -680,7 +690,7 @@
 								<xs:documentation>Aliquota do IBS de competência das UF</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-						<xs:element name="gDif" type="TDifIBS" minOccurs="0">
+						<xs:element name="gDif" type="TDif" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Grupo de campos do Diferimento</xs:documentation>
 							</xs:annotation>
@@ -714,7 +724,7 @@
 								<xs:documentation>Aliquota do IBS Municipal</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-						<xs:element name="gDif" type="TDifIBS" minOccurs="0">
+						<xs:element name="gDif" type="TDif" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Grupo de campos do Diferimento</xs:documentation>
 							</xs:annotation>
@@ -748,7 +758,7 @@
 								<xs:documentation>Aliquota da CBS</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-						<xs:element name="gDif" type="TDifCBS" minOccurs="0">
+						<xs:element name="gDif" type="TDif" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Grupo de campos do Diferimento</xs:documentation>
 							</xs:annotation>
@@ -803,7 +813,7 @@
 					<xs:documentation>Percentual de redução de aliquota do cClassTrib</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="pAliqEfet" type="TDec1302">
+			<xs:element name="pAliqEfet" type="TDec_0302_04">
 				<xs:annotation>
 					<xs:documentation>Aliquota Efetiva que será aplicada a Base de Calculo</xs:documentation>
 				</xs:annotation>
@@ -839,24 +849,7 @@
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="TDifIBS">
-		<xs:annotation>
-			<xs:documentation>Tipo Diferimento</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="pDif" type="TDec_0302_04">
-				<xs:annotation>
-					<xs:documentation>Percentual do diferimento</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="vDif" type="TDec1302">
-				<xs:annotation>
-					<xs:documentation>Valor do diferimento</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="TDifCBS">
+	<xs:complexType name="TDif">
 		<xs:annotation>
 			<xs:documentation>Tipo Diferimento</xs:documentation>
 		</xs:annotation>
@@ -945,19 +938,19 @@ gás natural e em outras hipóteses definidas no regulamento</xs:documentation>
 			<xs:documentation>Tipo Tributação Compra Governamental</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="pAliqIBSUF" type="TDec_0302_04" />
+			<xs:element name="pAliqIBSUF" type="TDec_0302_04"/>
 			<xs:element name="vTribIBSUF" type="TDec1302">
 				<xs:annotation>
 					<xs:documentation>Valor que seria devido a UF, sem aplicação do Art. 473. da LC 214/2025</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="pAliqIBSMun" type="TDec_0302_04" />
+			<xs:element name="pAliqIBSMun" type="TDec_0302_04"/>
 			<xs:element name="vTribIBSMun" type="TDec1302">
 				<xs:annotation>
 					<xs:documentation>Valor que seria devido ao município, sem aplicação do Art. 473. da LC 214/2025</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="pAliqCBS" type="TDec_0302_04" />
+			<xs:element name="pAliqCBS" type="TDec_0302_04"/>
 			<xs:element name="vTribCBS" type="TDec1302">
 				<xs:annotation>
 					<xs:documentation>Valor que seria devido a CBS, sem aplicação do Art. 473. da LC 214/2025</xs:documentation>

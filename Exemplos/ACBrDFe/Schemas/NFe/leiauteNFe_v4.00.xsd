@@ -17,7 +17,7 @@
 <!-- PL_009l_NT2023_002_v100 - Alteração de Schema para evitar caracteres inválidos  -->
 <!-- PL_009m_NT2019_001_v155 - Inclusão de campos para Crédito Presumido e Redução da base de cálculo -->
 <!-- PL_009m_NT2023_004_v101 - Informações de Pagamentos e Outros -->
-<!-- PL_009p_NT2024_003_v101 - Produtos agropecuários -->
+<!-- PL_009p_NT2024_003_v103 - Produtos agropecuários -->
 <xs:schema xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:editix="http://www.portalfiscal.inf.br/nfe" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposBasico_v4.00.xsd"/>
@@ -495,6 +495,20 @@ Preencher com &quot;2B&quot;, quando se tratar de Cupom Fiscal emitido por máqu
 										<xs:annotation>
 											<xs:documentation>Grupo de Compras Governamentais</xs:documentation>
 										</xs:annotation>
+									</xs:element>
+									<xs:element name="gPagAntecipado" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Informado para abater as parcelas de antecipação de pagamento, conforme Art. 10. § 4º</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="refNFe" type="TChNFe" minOccurs="1" maxOccurs="99">
+													<xs:annotation>
+														<xs:documentation>Chave de acesso da NF-e de antecipação de pagamento</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
 									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
@@ -1067,7 +1081,7 @@ Formato ”CFOP9999”.</xs:documentation>
 												</xs:element>
 												<xs:element name="vUnTrib" type="TDec_1110v">
 													<xs:annotation>
-														<xs:documentation>Valor unitário de tributação - - alterado para aceitar 0 a 10 casas decimais e 11 inteiros</xs:documentation>
+														<xs:documentation>Valor unitário de tributação - alterado para aceitar 0 a 10 casas decimais e 11 inteiros</xs:documentation>
 													</xs:annotation>
 												</xs:element>
 												<xs:element name="vFrete" type="TDec_1302Opc" minOccurs="0">
@@ -1104,10 +1118,20 @@ Formato ”CFOP9999”.</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
+												<xs:element name="indBemMovelUsado" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Indicador de fornecimento de bem móvel usado: 1-Bem Móvel Usado</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:whiteSpace value="preserve"/>
+															<xs:enumeration value="1"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
 												<xs:element name="DI" minOccurs="0" maxOccurs="100">
 													<xs:annotation>
-														<xs:documentation>Delcaração de Importação
-(NT 2011/004)</xs:documentation>
+														<xs:documentation>Declaração de Importação (NT 2011/004)</xs:documentation>
 													</xs:annotation>
 													<xs:complexType>
 														<xs:sequence>
@@ -7321,7 +7345,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 	</xs:simpleType>
 	<xs:simpleType name="TTpNFDebito">
 		<xs:annotation>
-			<xs:documentation>Tipo de Nota de Débito (01=Transferência de créditos para Cooperativas; 02=Anulação de Crédito por Saídas Imunes/Isentas; 03=Débitos de notas fiscais não processadas na apuração; 04=Multa e juros; 05=Transferência de crédito de sucessão)</xs:documentation>
+			<xs:documentation>Tipo de Nota de Débito: 01=Transferência de créditos para Cooperativas; 02=Anulação de Crédito por Saídas Imunes/Isentas; 03=Débitos de notas fiscais não processadas na apuração; 04=Multa e juros; 05=Transferência de crédito de sucessão); 06=Pagamento antecipado; 07=Perda em estoque</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -7330,15 +7354,18 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 			<xs:enumeration value="03"/>
 			<xs:enumeration value="04"/>
 			<xs:enumeration value="05"/>
+			<xs:enumeration value="06"/>
+			<xs:enumeration value="07"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TTpNFCredito">
 		<xs:annotation>
-			<xs:documentation>Tipo de Nota de Crédito</xs:documentation>
+			<xs:documentation>Tipo de Nota de Crédito: 01=Multa e juros; 02=Apropriação de crédito presumido de IBS sobre o saldo devedor na ZFM (art. 450, § 1º, LC 214/25)</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
 			<xs:enumeration value="01"/>
+			<xs:enumeration value="02"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TProcEmi">

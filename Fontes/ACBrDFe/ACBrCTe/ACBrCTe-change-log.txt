@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/06/2025
+-- ACBrCTe.XmlReader --
+[-] Correção para evitar AV na leitura do XML.
+  Por: Juliomar Marchetti/Italo Giurizzato Junior
+
 09/06/2025
 -- Diversos --
 [*] Ajustes necessários para deixar em conformidade com a versão 1.05 dos Schemas.

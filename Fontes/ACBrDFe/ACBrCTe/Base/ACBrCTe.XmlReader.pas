@@ -1496,12 +1496,20 @@ begin
   FCTe.infCTeNorm.multimodal.indNegociavel := StrToindNegociavel(ok, ObterConteudo(ANode.Childrens.FindAnyNs('indNegociavel'), tcStr));
   // dados sobre o seguro informados somente na versão 3.00
   AuxNode := ANode.Childrens.FindAnyNs('seg');
-  FCTe.infCTeNorm.multimodal.nApol := ObterConteudo(AuxNode.Childrens.FindAnyNs('nApol'), tcStr);
-  FCTe.infCTeNorm.multimodal.nAver := ObterConteudo(AuxNode.Childrens.FindAnyNs('nAver'), tcStr);
 
-  AuxNode := AuxNode.Childrens.FindAnyNs('infSeg');
-  FCTe.infCTeNorm.multimodal.xSeg := ObterConteudo(AuxNode.Childrens.FindAnyNs('xSeg'), tcStr);
-  FCTe.infCTeNorm.multimodal.CNPJ := ObterConteudo(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
+  if Assigned(AuxNode) then
+  begin
+    FCTe.infCTeNorm.multimodal.nApol := ObterConteudo(AuxNode.Childrens.FindAnyNs('nApol'), tcStr);
+    FCTe.infCTeNorm.multimodal.nAver := ObterConteudo(AuxNode.Childrens.FindAnyNs('nAver'), tcStr);
+
+    AuxNode := AuxNode.Childrens.FindAnyNs('infSeg');
+
+    if Assigned(AuxNode) then
+    begin
+      FCTe.infCTeNorm.multimodal.xSeg := ObterConteudo(AuxNode.Childrens.FindAnyNs('xSeg'), tcStr);
+      FCTe.infCTeNorm.multimodal.CNPJ := ObterConteudo(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
+    end;
+  end;
 end;
 
 procedure TCTeXmlReader.Ler_ObsCont(ANodeArr: TACBrXmlNodeArray);

@@ -167,7 +167,7 @@ begin
    begin
       FS := TFileStream.Create( NomeArquivo, fmOpenReadWrite or fmShareExclusive );
       try
-         FS.Seek(0, soFromEnd);  // vai para EOF
+         FS.Seek(0, soEnd);  // vai para EOF
          FConteudo.SaveToStream( FS );
       finally
          FS.Free ;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/06/2025
+-- ACBrLibPIXCDBase --
+[-] Correção na validação de sucesso da requisição
+    por: Júlio Cavalcanti
+
 10/04/2025
 -- ACBrLibPIXCDDataModule, ACBrLibPIXCDConsts, ACBrLibPIXCDConfig --
 [+] Inclusão PSP AppLess - #TK-6880.

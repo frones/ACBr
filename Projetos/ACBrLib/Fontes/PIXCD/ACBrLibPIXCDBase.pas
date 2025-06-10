@@ -683,7 +683,7 @@ begin
       PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVSolicitada.LoadFromIni(AInfCobVSolicitada);
       Ok := PIXCDDM.ACBrPixCD1.PSP.epCobV.CriarCobranca(TxId);
 
-      if EstaVazio(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada.pixCopiaECola) then
+      if Ok and EstaVazio(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada.pixCopiaECola) then
         PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada.pixCopiaECola := PIXCDDM.ACBrPixCD1.GerarQRCodeDinamico( PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada.loc.location );
 
       if Ok then

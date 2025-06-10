@@ -58,7 +58,7 @@ uses
   ACBrMDFe,
   ACBrBase,
   ACBrMDFeUtilsFPDF,
-  ACBrMDFeDAMDFEClass,
+  ACBrMDFeDAMDFeClass,
   ACBrImage;
 
 type

@@ -37,7 +37,15 @@ unit pcnReinfR9005;
 interface
 
 uses
-  Classes, Sysutils, Contnrs, pcnLeitor,
+  Classes, Sysutils,
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
+  pcnLeitor,
   pcnCommonReinf, pcnConversaoReinf;
 
 type
@@ -190,7 +198,7 @@ type
 
   { TtotApurMenCollection }
 
-  TtotApurMenCollection = class(TObjectList)
+  TtotApurMenCollection = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TtotApurMenCollectionItem>{$EndIf})
   private
     function GetItem(Index: Integer): TtotApurMenCollectionItem;
     procedure SetItem(Index: Integer; Value: TtotApurMenCollectionItem);
@@ -238,7 +246,7 @@ type
 
   { TtotApurQuiCollection }
 
-  TtotApurQuiCollection = class(TObjectList)
+  TtotApurQuiCollection = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TtotApurQuiCollectionItem>{$EndIf})
   private
     function GetItem(Index: Integer): TtotApurQuiCollectionItem;
     procedure SetItem(Index: Integer; Value: TtotApurQuiCollectionItem);
@@ -288,7 +296,7 @@ type
 
   { TtotApurDecCollection }
 
-  TtotApurDecCollection = class(TObjectList)
+  TtotApurDecCollection = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TtotApurDecCollectionItem>{$EndIf})
   private
     function GetItem(Index: Integer): TtotApurDecCollectionItem;
     procedure SetItem(Index: Integer; Value: TtotApurDecCollectionItem);
@@ -338,7 +346,7 @@ type
 
   { TtotApurDecCollection }
 
-  TtotApurSemCollection = class(TObjectList)
+  TtotApurSemCollection = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TtotApurSemCollectionItem>{$EndIf})
   private
     function GetItem(Index: Integer): TtotApurSemCollectionItem;
     procedure SetItem(Index: Integer; Value: TtotApurSemCollectionItem);
@@ -388,7 +396,7 @@ type
 
   { TtotApurDiaCollection }
 
-  TtotApurDiaCollection = class(TObjectList)
+  TtotApurDiaCollection = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TtotApurDiaCollectionItem>{$EndIf})
   private
     function GetItem(Index: Integer): TtotApurDiaCollectionItem;
     procedure SetItem(Index: Integer; Value: TtotApurDiaCollectionItem);
@@ -905,7 +913,7 @@ end;
 function TtotApurMenCollection.GetItem(
   Index: Integer): TtotApurMenCollectionItem;
 begin
-  Result := TtotApurMenCollectionItem(inherited GetItem(Index));
+  Result := TtotApurMenCollectionItem(inherited Items[Index]);
 end;
 
 function TtotApurMenCollection.New: TtotApurMenCollectionItem;
@@ -917,7 +925,7 @@ end;
 procedure TtotApurMenCollection.SetItem(Index: Integer;
   Value: TtotApurMenCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TtotApurMenCollectionItem }
@@ -944,7 +952,7 @@ end;
 function TtotApurQuiCollection.GetItem(
   Index: Integer): TtotApurQuiCollectionItem;
 begin
-  Result := TtotApurQuiCollectionItem(inherited GetItem(Index));
+  Result := TtotApurQuiCollectionItem(inherited Items[Index]);
 end;
 
 function TtotApurQuiCollection.New: TtotApurQuiCollectionItem;
@@ -956,7 +964,7 @@ end;
 procedure TtotApurQuiCollection.SetItem(Index: Integer;
   Value: TtotApurQuiCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TtotApurQuiCollectionItem }
@@ -983,7 +991,7 @@ end;
 function TtotApurDecCollection.GetItem(
   Index: Integer): TtotApurDecCollectionItem;
 begin
-  Result := TtotApurDecCollectionItem(inherited GetItem(Index));
+  Result := TtotApurDecCollectionItem(inherited Items[Index]);
 end;
 
 function TtotApurDecCollection.New: TtotApurDecCollectionItem;
@@ -995,7 +1003,7 @@ end;
 procedure TtotApurDecCollection.SetItem(Index: Integer;
   Value: TtotApurDecCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TtotApurDecCollectionItem }
@@ -1022,7 +1030,7 @@ end;
 function TtotApurSemCollection.GetItem(
   Index: Integer): TtotApurSemCollectionItem;
 begin
-  Result := TtotApurSemCollectionItem(inherited GetItem(Index));
+  Result := TtotApurSemCollectionItem(inherited Items[Index]);
 end;
 
 function TtotApurSemCollection.New: TtotApurSemCollectionItem;
@@ -1034,7 +1042,7 @@ end;
 procedure TtotApurSemCollection.SetItem(Index: Integer;
   Value: TtotApurSemCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TtotApurSemCollectionItem }
@@ -1061,7 +1069,7 @@ end;
 function TtotApurDiaCollection.GetItem(
   Index: Integer): TtotApurDiaCollectionItem;
 begin
-  Result := TtotApurDiaCollectionItem(inherited GetItem(Index));
+  Result := TtotApurDiaCollectionItem(inherited Items[Index]);
 end;
 
 function TtotApurDiaCollection.New: TtotApurDiaCollectionItem;
@@ -1073,7 +1081,7 @@ end;
 procedure TtotApurDiaCollection.SetItem(Index: Integer;
   Value: TtotApurDiaCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TtotApurDiaCollectionItem }

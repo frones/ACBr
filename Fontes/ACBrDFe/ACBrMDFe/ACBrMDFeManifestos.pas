@@ -37,9 +37,8 @@ unit ACBrMDFeManifestos;
 interface
 
 uses
-  Classes, 
-  SysUtils, 
-  StrUtils,
+  Classes, SysUtils, StrUtils,
+  ACBrBase,
   ACBrMDFeConfiguracoes,
   ACBrMDFe.Classes,
   {$IfDef USE_ACBr_XMLDOCUMENT}

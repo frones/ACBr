@@ -55,8 +55,9 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
-  ACBrBase, pcnConversao, pcnLeitor,
-  pcesCommon, pcesConversaoeSocial, Dialogs;
+  ACBrBase,
+  pcnConversao, pcnLeitor,
+  pcesCommon, pcesConversaoeSocial;
 
 type
   TInfoCRContribCollectionItem = class(TObject)

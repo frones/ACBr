@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils, variants,
+  ACBrBase,
   ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings,
   pcnGerador, pcnLeitor, pcnConversao,
   ACBrDFeConsts,

@@ -37,8 +37,9 @@ unit ISSCampinas.GravarXml;
 interface
 
 uses
-  SysUtils, Classes, StrUtils, synacode,
-  ACBrXmlBase,
+  SysUtils, Classes, StrUtils,
+  synacode,
+  ACBrBase, ACBrXmlBase,
   ACBrXmlDocument,
   ACBrNFSeXGravarXml,
   ACBrNFSeXGravarXml_ABRASFv2;

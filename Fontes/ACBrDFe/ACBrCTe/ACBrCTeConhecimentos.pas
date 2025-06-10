@@ -39,6 +39,7 @@ interface
 
 uses
   Classes, Sysutils, StrUtils,
+  ACBrBase,
   ACBrCTeConfiguracoes,
   ACBrCTe.Classes,
   {$IfDef USE_ACBr_XMLDOCUMENT}

@@ -49,7 +49,7 @@ unit pcesCommon;
 interface
 
 uses
-  SysUtils, Classes, Controls,
+  SysUtils, Classes,
   {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
@@ -318,11 +318,11 @@ type
     FCodCargo: string;
     FCodFuncao: string;
     FCodCarreira: string;
-    FDTIngrCarr: TDate;
+    FDTIngrCarr: TDateTime;
     // A partir da versão veS.01.00.00
     FnmCargo: string;
     FCBOCargo: string;
-    FdtIngrCargo: TDate;
+    FdtIngrCargo: TDateTime;
     FnmFuncao: string;
     FCBOFuncao: string;
     FacumCargo: tpSimNaoFacultativo;
@@ -350,7 +350,7 @@ type
     property CodFuncao: string read FCodFuncao write FCodFuncao;
     property CodCateg: integer read FCodCateg write FCodCateg;
     property codCarreira: string read FCodCarreira write FCodCarreira;
-    property dtIngrCarr: TDate read FDTIngrCarr write FDTIngrCarr;
+    property dtIngrCarr: TDateTime read FDTIngrCarr write FDTIngrCarr;
     property Remuneracao: TRemuneracao read FRemuneracao write FRemuneracao;
     property Duracao: TDuracao read FDuracao write FDuracao;
     property LocalTrabalho: TLocalTrabalho read FLocalTrabalho write FLocalTrabalho;
@@ -361,7 +361,7 @@ type
     property observacoes: TobservacoesCollection read Fobservacoes write Fobservacoes;
     property nmCargo: string read FnmCargo write FnmCargo;
     property CBOCargo: string read FCBOCargo write FCBOCargo;
-    property dtIngrCargo: TDate read FdtIngrCargo write FdtIngrCargo;
+    property dtIngrCargo: TDateTime read FdtIngrCargo write FdtIngrCargo;
     property nmFuncao: string read FnmFuncao write FnmFuncao;
     property CBOFuncao: string read FCBOFuncao write FCBOFuncao;
     property acumCargo: tpSimNaoFacultativo read FacumCargo write FacumCargo;
@@ -1100,7 +1100,7 @@ type
 
   TInfoCeletista = class
   private
-    FDtAdm: TDate;
+    FDtAdm: TDateTime;
     FTpAdmissao: tpTpAdmissao;
     FIndAdmissao: tpTpIndAdmissao;
     FNrProcTrab: String;
@@ -1116,7 +1116,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property DtAdm: TDate read FDtAdm write FDtAdm;
+    property DtAdm: TDateTime read FDtAdm write FDtAdm;
     property TpAdmissao: tpTpAdmissao read FTpAdmissao write FTpAdmissao;
     property IndAdmissao: tpTpIndAdmissao read FIndAdmissao write FIndAdmissao;
     property nrProcTrab: string read FNrProcTrab write FNrProcTrab;
@@ -1141,28 +1141,28 @@ type
   private
     FIndProvim: tpIndProvim;
     FTpProv: tpTpProv;
-    FDtNomeacao: TDate;
-    FDtPosse: TDate;
-    FDtExercicio: TDate;
+    FDtNomeacao: TDateTime;
+    FDtPosse: TDateTime;
+    FDtExercicio: TDateTime;
     FTpPlanRP: tpPlanRP;
     FInfoDecJud: TInfoDecJud;
     FindTetoRGPS: tpSimNaoFacultativo;
     FindAbonoPerm: tpSimNaoFacultativo;
-    FdtIniAbono: TDate;
+    FdtIniAbono: TDateTime;
   public
     constructor Create;
     destructor Destroy; override;
 
     property indProvim: tpIndProvim read FIndProvim write FIndProvim;
     property tpProv: tpTpProv read FTpProv write FTpProv;
-    property dtNomeacao: TDate read FDtNomeacao write FDtNomeacao;
-    property dtPosse: TDate read FDtPosse write FDtPosse;
-    property dtExercicio: TDate read FDtExercicio write FDtExercicio;
+    property dtNomeacao: TDateTime read FDtNomeacao write FDtNomeacao;
+    property dtPosse: TDateTime read FDtPosse write FDtPosse;
+    property dtExercicio: TDateTime read FDtExercicio write FDtExercicio;
     property tpPlanRP: tpPlanRP read FTpPlanRP write FTpPlanRP;
     property infoDecJud: TInfoDecJud read FInfoDecJud write FInfoDecJud;
     property indTetoRGPS: tpSimNaoFacultativo read FindTetoRGPS write FindTetoRGPS;
     property indAbonoPerm: tpSimNaoFacultativo read FindAbonoPerm write FindAbonoPerm;
-    property dtIniAbono: TDate read FdtIniAbono write FdtIniAbono;
+    property dtIniAbono: TDateTime read FdtIniAbono write FdtIniAbono;
   end;
 
   TInfoRegimeTrab = class
@@ -1179,64 +1179,64 @@ type
 
   TInfoASO = class
   private
-    FDtAso: TDate;
+    FDtAso: TDateTime;
     FNrCRM: string;
     FUfCRM: string;
   public
-    property DtAso: TDate read FDtAso write FDtAso;
+    property DtAso: TDateTime read FDtAso write FDtAso;
     property NrCRM: string read FNrCRM write FNrCRM;
     property UfCRM: string read FUfCRM write FUfCRM;
   end;
 
   TAfastamento = class
   private
-    FDtIniAfast: TDate;
+    FDtIniAfast: TDateTime;
     FcodMotAfast: tpMotivosAfastamento;
   public
-    property DtIniAfast: TDate read FDtIniAfast write FDtIniAfast;
+    property DtIniAfast: TDateTime read FDtIniAfast write FDtIniAfast;
     property codMotAfast : tpMotivosAfastamento read FcodMotAfast write FcodMotAfast;
   end;
 
   TDesligamento = class
   private
-    FDtDeslig: TDate;
+    FDtDeslig: TDateTime;
   public
-    property DtDeslig: TDate read FDtDeslig write FDtDeslig;
+    property DtDeslig: TDateTime read FDtDeslig write FDtDeslig;
   end;
 
   TtransfDom = class
   private
     FcpfSubstituido: String;
     FmatricAnt: String;
-    FdtTransf: TDate;
+    FdtTransf: TDateTime;
   public
     property cpfSubstituido: String read FcpfSubstituido write FcpfSubstituido;
     property matricAnt: String read FmatricAnt write FmatricAnt;
-    property dtTransf: TDate read FdtTransf write FdtTransf;
+    property dtTransf: TDateTime read FdtTransf write FdtTransf;
   end;
 
   TMudancaCPF = class
   private
     FcpfAnt: String;
     FmatricAnt: String;
-    FdtAltCPF: TDate;
+    FdtAltCPF: TDateTime;
     Fobservacao: String;
   public
     property cpfAnt: String read FcpfAnt write FcpfAnt;
     property matricAnt: String read FmatricAnt write FmatricAnt;
-    property dtAltCPF: TDate read FdtAltCPF write FdtAltCPF;
+    property dtAltCPF: TDateTime read FdtAltCPF write FdtAltCPF;
     property observacao: String read Fobservacao write Fobservacao;
   end;
 
   TMudancaCPF2 = class
   private
     FcpfAnt: String;
-    FdtAltCPF: TDate;
+    FdtAltCPF: TDateTime;
     Fobservacao: String;
     FmatricAnt: String;
   public
     property cpfAnt: String read FcpfAnt write FcpfAnt;
-    property dtAltCPF: TDate read FdtAltCPF write FdtAltCPF;
+    property dtAltCPF: TDateTime read FdtAltCPF write FdtAltCPF;
     property observacao: String read Fobservacao write Fobservacao;
     property matricAnt: String read FmatricAnt write FmatricAnt;
   end;
@@ -1542,7 +1542,7 @@ type
     FareaAtuacao : String;
     FnrApol : String;
     FvlrBolsa : Double;
-    FdtPrevTerm : TDate;
+    FdtPrevTerm : TDateTime;
     FinstEnsino : TinstEnsino;
     FageIntegracao : TageIntegracao;
     FsupervisorEstagio : TsupervisorEstagio;
@@ -1555,7 +1555,7 @@ type
     property areaAtuacao : String read FareaAtuacao write FareaAtuacao;
     property nrApol : String read FnrApol write FnrApol;
     property vlrBolsa : Double read FvlrBolsa write FvlrBolsa;
-    property dtPrevTerm : TDate read FdtPrevTerm write FdtPrevTerm;
+    property dtPrevTerm : TDateTime read FdtPrevTerm write FdtPrevTerm;
     property instEnsino : TinstEnsino read FinstEnsino write FinstEnsino;
     property ageIntegracao : TageIntegracao read FageIntegracao write FageIntegracao;
     property supervisorEstagio : TsupervisorEstagio read FsupervisorEstagio write FsupervisorEstagio;
@@ -1614,9 +1614,9 @@ type
 
   TQuarentena = class(TObject)
   private
-    FdtFimQuar : TDate;
+    FdtFimQuar : TDateTime;
   public
-    property dtFimQuar: TDate read FdtFimQuar write FdtFimQuar;
+    property dtFimQuar: TDateTime read FdtFimQuar write FdtFimQuar;
   end;
 
   TVerbasResc = class(TObject)
@@ -1744,12 +1744,12 @@ type
   TPensaoAlimCollectionItem = class(TObject)
   private
     FCpfBenef: string;
-    FDtNasctoBenef: TDate;
+    FDtNasctoBenef: TDateTime;
     FNmBenefic: string;
     FVlrPensao: Double;
   public
     property cpfBenef: string read FCpfBenef write FCpfBenef;
-    property dtNasctoBenef: TDate read FDtNasctoBenef write FDtNasctoBenef;
+    property dtNasctoBenef: TDateTime read FDtNasctoBenef write FDtNasctoBenef;
     property nmBenefic: string read FNmBenefic write FNmBenefic;
     property vlrPensao: Double read FVlrPensao write FVlrPensao;
   end;
@@ -1768,13 +1768,13 @@ type
   private
     FTpDep: tpTpDep;
     FCpfDep: string;
-    FDtNascto: TDate;
+    FDtNascto: TDateTime;
     FNmDep: string;
     FVlrPgDep: Double;
   public
     property tpDep: tpTpDep read FTpDep write FTpDep;
     property cpfDep: string read FCpfDep write FCpfDep;
-    property dtNascto: TDate read FDtNascto write FDtNascto;
+    property dtNascto: TDateTime read FDtNascto write FDtNascto;
     property nmDep: string read FNmDep write FNmDep;
     property vlrPgDep: Double read FVlrPgDep write FVlrPgDep;
   end;
@@ -1970,9 +1970,9 @@ type
 
   Tcessao = class(TObject)
   private
-   FdtIniCessao: TDate;
+   FdtIniCessao: TDateTime;
   public
-   property dtIniCessao: TDate read FdtIniCessao write FdtIniCessao;
+   property dtIniCessao: TDateTime read FdtIniCessao write FdtIniCessao;
   end;
 
   TInfoRRA = class(TObject)

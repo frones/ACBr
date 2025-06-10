@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, StrUtils, SysUtils, synacode, synautil,
-  ACBrDFeSSL, ACBrIBGE,
+  ACBrBase, ACBrDFeSSL, ACBrIBGE,
   ACBrDFe;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;

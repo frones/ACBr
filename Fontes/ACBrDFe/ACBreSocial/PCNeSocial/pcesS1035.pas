@@ -50,7 +50,7 @@ unit pcesS1035;
 interface
 
 uses
-  SysUtils, Classes, DateUtils, Controls,
+  SysUtils, Classes, DateUtils,
   {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
@@ -115,11 +115,11 @@ type
   private
     FDSCCarreira: string;
     FLeiCarr: string;
-    FDTLeiCarr: TDate;
+    FDTLeiCarr: TDateTime;
   public
     property dscCarreira: string read FDSCCarreira write FDSCCarreira;
     property leiCarr: string read FLeiCarr write FLeiCarr;
-    property dtLeiCarr: TDate read FDTLeiCarr write FDTLeiCarr;
+    property dtLeiCarr: TDateTime read FDTLeiCarr write FDTLeiCarr;
   end;
 
   TIdeCarreira = class(TObject)

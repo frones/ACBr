@@ -40,6 +40,7 @@ interface
 uses
   Classes, SysUtils, types, IniFiles, blcksock,
   pcnConversao,
+  ACBrBase,
   ACBrUtil.DateTime,
   ACBrDFeSSL;
 

@@ -51,6 +51,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils, variants,
+  ACBrBase,
   pcnGerador, pcnLeitor, pcnConversao,
   ACBrDFeConsts,
   pcesCommon, pcesConversaoeSocial;

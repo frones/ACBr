@@ -37,7 +37,7 @@ unit pcnCommonReinf;
 interface
 
 uses
-  SysUtils, Classes, Controls,
+  SysUtils, Classes,
   {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}

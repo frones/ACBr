@@ -40,6 +40,7 @@ uses
   Classes,
 	SysUtils, 
 	StrUtils,
+  ACBrBase,
   ACBrDCeConfiguracoes,
   ACBrDCe.Classes,
 	ACBrDCe.XmlReader,

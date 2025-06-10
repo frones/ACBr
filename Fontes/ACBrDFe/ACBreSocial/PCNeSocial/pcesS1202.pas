@@ -51,7 +51,6 @@ interface
 uses
   SysUtils, 
 	Classes, 
-	Controls,
   {$IF DEFINED(HAS_SYSTEM_GENERICS)}
 		System.Generics.Collections, 
 		System.Generics.Defaults,

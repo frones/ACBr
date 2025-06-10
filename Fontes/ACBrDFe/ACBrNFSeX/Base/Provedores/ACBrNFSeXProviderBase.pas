@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrDFe,
+  ACBrBase, ACBrDFe,
   ACBrNFSeXParametros, ACBrNFSeXInterface, ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXLerXml, ACBrNFSeXGravarXml, ACBrNFSeXNotasFiscais,
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;

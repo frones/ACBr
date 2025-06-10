@@ -38,6 +38,7 @@ interface
 
 uses
   Classes, SysUtils, StrUtils,
+  ACBrBase,
   ACBrBPeConfiguracoes,
   ACBrBPeClass,
   ACBrBPeXmlReader, ACBrBPeXmlWriter,

@@ -37,8 +37,9 @@ unit ACBrONEWebServices;
 interface
 
 uses
-  Classes, SysUtils, dateutils, blcksock,
-  ACBrDFe, ACBrDFeUtil, ACBrDFeWebService,
+  Classes, SysUtils, dateutils,
+  blcksock,
+  ACBrBase, ACBrDFe, ACBrDFeUtil, ACBrDFeWebService,
   pcnConversao,
   ACBrXmlBase,
   ACBrONE.Conversao,

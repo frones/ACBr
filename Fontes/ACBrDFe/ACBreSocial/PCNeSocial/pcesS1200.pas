@@ -51,7 +51,6 @@ interface
 uses
   SysUtils, 
 	Classes, 
-	Controls,
   {$IF DEFINED(HAS_SYSTEM_GENERICS)}
 		System.Generics.Collections, 
 		System.Generics.Defaults,
@@ -87,7 +86,7 @@ type
   TInfoComplem = class(TObject)
   private
     FNmTrab: string;
-    FDtNascto: TDate;
+    FDtNascto: TDateTime;
     FCodCBO: string;
     FNatAtividade: tpNatAtividade;
     FQtdDiasTrab: integer;
@@ -100,7 +99,7 @@ type
     function sucessaoVincInst: boolean;
 
     property nmTrab: string read FNmTrab write FNmTrab;
-    property dtNascto: TDate read FDtNascto write FDtNascto;
+    property dtNascto: TDateTime read FDtNascto write FDtNascto;
     property codCBO: string read FCodCBO write FCodCBO;
     property natAtividade: tpNatAtividade read FNatAtividade write FNatAtividade;
     property qtdDiasTrab: integer read FQtdDiasTrab write FQtdDiasTrab;
@@ -241,10 +240,10 @@ type
 
   TIdeADCCollectionItem = class(TObject)
   private
-    FDtAcConv: TDate;
+    FDtAcConv: TDateTime;
     FTpAcConv: tpTpAcConv;
     FCompAcConv: String;
-    FDtEfAcConv: TDate;
+    FDtEfAcConv: TDateTime;
     FDSC: string;
     FRemunSuc: tpSimNao;
     FIdePeriodo: TIdePeriodoCollection;
@@ -252,10 +251,10 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property dtAcConv: TDate read FDtAcConv write FDtAcConv;
+    property dtAcConv: TDateTime read FDtAcConv write FDtAcConv;
     property tpAcConv: tpTpAcConv read FTpAcConv write FTpAcConv;
     property compAcConv: String read FCompAcConv write FCompAcConv;
-    property dtEfAcConv: TDate read FDtEfAcConv write FDtEfAcConv;
+    property dtEfAcConv: TDateTime read FDtEfAcConv write FDtEfAcConv;
     property dsc: string read FDSC write FDSC;
     property remunSuc: tpSimNao read FRemunSuc write FRemunSuc;
     property idePeriodo: TIdePeriodoCollection read FIdePeriodo write FIdePeriodo;

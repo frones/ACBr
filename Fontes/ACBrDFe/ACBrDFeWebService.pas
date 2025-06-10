@@ -50,6 +50,7 @@ uses
      {$ENDIF}
    {$ENDIF}
   {$ENDIF}
+  ACBrBase,
   ACBrDFeConfiguracoes, ACBrIntegrador, ACBrDFe,
   pcnGerador, ACBrXmlWriter;
 

@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes, IniFiles, types,
-  ACBrXmlBase, ACBrXmlReader,
+  ACBrBase, ACBrXmlBase, ACBrXmlReader,
   ACBrXmlDocument,
   ACBrNFSeXInterface, ACBrNFSeXClass, ACBrNFSeXConversao;
 

@@ -50,7 +50,7 @@ unit pcesS1030;
 interface
 
 uses
-  SysUtils, Classes, DateUtils, Controls,
+  SysUtils, Classes, DateUtils,
   {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
@@ -170,10 +170,10 @@ type
   TLeiCargo = class(TObject)
   private
     FNrLei: string;
-    FDtLei: TDate;
+    FDtLei: TDateTime;
   public
     property nrLei: string read FNrLei write FNrLei;
-    property dtLei: TDate read FDtLei write FDtLei;
+    property dtLei: TDateTime read FDtLei write FDtLei;
   end;
 
   TCargoPublico = class(TObject)

@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, StrUtils,
-  ACBrXmlBase,
+  ACBrBase, ACBrXmlBase,
   ACBrNFComConfiguracoes, ACBrNFComClass,
   ACBrNFComIniReader, ACBrNFComIniWriter,
   ACBrNFComXmlReader, ACBrNFComXmlWriter;

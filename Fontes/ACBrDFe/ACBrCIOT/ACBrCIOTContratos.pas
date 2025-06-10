@@ -39,6 +39,7 @@ interface
 uses
   Classes, 
   SysUtils,
+  ACBrBase,
   ACBrCIOTConfiguracoes, 
   ACBrDFeUtil,
   pcnCIOT, 

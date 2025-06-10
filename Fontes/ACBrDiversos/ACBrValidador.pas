@@ -438,7 +438,7 @@ begin
      Result := S
   else
   begin
-    if Length(S) = 14 then
+    if Length(S) > 11 then
       Result := FormatarCNPJ(S)
     else
       Result := FormatarCPF(S);

@@ -36,6 +36,8 @@ unit ACBrBoletoWS.Rest.OAuth;
 interface
 
 uses
+  SysUtils,
+  ACBrBase,
   pcnConversao,
   ACBrOpenSSLUtils,
   httpsend,
@@ -43,7 +45,6 @@ uses
   ACBrBoleto,
   ACBrUtil.FilesIO,
   ACBr.Auth.JWT,
-  SysUtils,
   ACBrBoletoWS.URL;
 
 type

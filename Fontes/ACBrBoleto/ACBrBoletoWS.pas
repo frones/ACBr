@@ -36,27 +36,23 @@ unit ACBrBoletoWS;
 interface
 
 uses
-  Classes,
-  SysUtils,
+  Classes, SysUtils, dateutils, strutils,
+  ACBrBase,
   ACBrBoleto,
   pcnGerador,
   pcnLeitor,
-  ACBrUtil.Strings,
   pcnConversao,
-  synacode,
-  synautil,
+  synacode, synautil, httpsend,
   ACBrJSON,
   ACBrBoletoConversao,
   ACBrBoletoRetorno,
   ACBrDFeSSL,
-  dateutils,
-  strutils,
   ACBrUtil.Base,
+  ACBrUtil.Strings,
   ACBrUtil.FilesIO,
   ACBrUtil.XMLHTML,
-  httpsend,
-  ACBrBoletoWS.Rest.OAuth,
   ACBrUtil.DateTime,
+  ACBrBoletoWS.Rest.OAuth,
   ACBrBoletoWS.URL;
 
 type

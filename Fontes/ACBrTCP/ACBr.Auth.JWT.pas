@@ -54,8 +54,9 @@ type
 implementation
 
 uses
-  synacode,
   SysUtils,
+  synacode,
+  ACBrBase,
   ACBrUtil.Strings,
   ACBrOpenSSLUtils;
 

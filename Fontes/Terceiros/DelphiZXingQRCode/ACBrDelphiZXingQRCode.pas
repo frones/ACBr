@@ -2,8 +2,8 @@
 
 unit ACBrDelphiZXingQRCode;
 
-// ZXing QRCode port to Delphi, by Debenu Pty Ltd
-// www.debenu.com
+// ZXing QRCode port to Delphi, by Debenu Pty Ltd (www.debenu.com)
+// https://github.com/foxitsoftware/DelphiZXingQRCode
 
 // Original copyright notice
 (*

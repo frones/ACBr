@@ -42,7 +42,13 @@ uses
      {$IFNDEF NOGUI}
        Graphics,
      {$ENDIF}
-     Contnrs,
+     {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+       System.Generics.Collections, System.Generics.Defaults,
+     {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+       System.Contnrs,
+     {$Else}
+       Contnrs,
+     {$IfEnd}
      IniFiles,
      {$IFDEF FPC}
        LResources,
@@ -1178,7 +1184,7 @@ type
   end;
 
   { TListadeNFes }
-  TACBrListadeNFes = class(TObjectList)
+  TACBrListadeNFes = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrDadosNFe>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrDadosNFe);
     function  GetObject (Index: Integer): TACBrDadosNFe;
@@ -1452,7 +1458,7 @@ type
    end;
 
   { TListadeBoletos }
-  TListadeBoletos = class(TObjectList)
+  TListadeBoletos = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrTitulo>{$EndIf})
   protected
     procedure SetObject (Index: Integer; Item: TACBrTitulo);
     function  GetObject (Index: Integer): TACBrTitulo;
@@ -2367,12 +2373,12 @@ end;
 { TListadeNFes }
 function TACBrListadeNFes.GetObject(Index: Integer): TACBrDadosNFe;
 begin
-   Result := inherited GetItem(Index) as TACBrDadosNFe ;
+   Result := inherited Items[Index] as TACBrDadosNFe ;
 end;
 
 procedure TACBrListadeNFes.SetObject(Index: Integer; Item: TACBrDadosNFe);
 begin
-   inherited SetItem (Index, Item) ;
+   inherited Items[Index] := Item;
 end;
 
 procedure TACBrListadeNFes.Insert(Index: Integer; Obj: TACBrDadosNFe);
@@ -4575,12 +4581,12 @@ end;
 { TListadeBoletos }
 procedure TListadeBoletos.SetObject ( Index: Integer; Item: TACBrTitulo ) ;
 begin
-   inherited SetItem (Index, Item) ;
+   inherited Items[Index] := Item;
 end;
 
 function TListadeBoletos.GetObject ( Index: Integer ) : TACBrTitulo;
 begin
-   Result := inherited GetItem(Index) as TACBrTitulo ;
+   Result := inherited Items[Index] as TACBrTitulo ;
 end;
 
 procedure TListadeBoletos.Insert ( Index: Integer; Obj: TACBrTitulo ) ;

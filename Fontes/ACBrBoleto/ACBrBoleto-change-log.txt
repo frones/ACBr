@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+11/06/2025
+-- ACBrBoletoRet_Itau_API.pas, ACBrBoletoW_Itau_API.pas --
+[*] TK-7092 Ajustes na Tpconsulta bolecode (usar indicadorPIX liquidado bolecode), ajustes no tratamento dos retornos
+	www.projetoacbr.com.br/forum/topic/83348-retorno-do-banco-itau-boleto-pago-via-pix/page/2/
+	Por: Daniel Morais InfoCotidiano
 
 06/06/2025
 -- ACBrBoletoRet_Sicredi_APIV2 --

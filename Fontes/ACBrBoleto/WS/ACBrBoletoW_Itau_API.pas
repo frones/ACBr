@@ -121,7 +121,7 @@ type
   C_URL_SANDBOX = 'https://sandbox.devportal.itau.com.br/itau-ep9-gtw-cash-management-ext-v2/v2';
 
   C_URL_CONSULTA         = 'https://secure.api.cloud.itau.com.br/boletoscash/v2';
-  C_URL_CONSULTA_HOM     = '';
+  C_URL_CONSULTA_HOM     =  C_URL_CONSULTA;
   C_URL_CONSULTA_SANDBOX = 'https://sandbox.devportal.itau.com.br/itau-ep9-gtw-cash-management-ext-v2/v2';
 
 
@@ -363,7 +363,15 @@ begin
                 LConsulta.Add('/'+LId_Beneficiario+'/movimentacoes?'+'data=' + LDataInicio);
                 if NaoEstaVazio(LCarteira) then
                   LConsulta.Add('numero_carteira='+LCarteira);
-                LConsulta.Add('tipo_movimentacao='+'liquidacoes');
+                if Boleto.Cedente.CedenteWS.IndicadorPix then
+                  begin
+                    {recebimento qrCode, volta em Baixas como BL}
+                    LConsulta.Add('tipo_cobranca='+'bolecode');
+                    LConsulta.Add('tipo_movimentacao='+'baixas');
+                  end
+                else
+                  {recebimento linhaDigitavel e Barras volta como liquidacoes}
+                  LConsulta.Add('tipo_movimentacao='+'liquidacoes')
               end;
               isbCancelado:
               begin
@@ -725,7 +733,11 @@ begin
   if Assigned(ATitulo) and Assigned(AJson) then
   begin
     LJsonDados := TACBrJSONObject.Create;
-    LJsonDados.AddPair('etapa_processo_boleto', IfThen(OAuth.Ambiente=tawsProducao,'efetivacao','validacao'));
+    // Validacao, endpoint sem Bolecode, para bolecode usar simulacao
+    if boleto.Cedente.CedenteWS.IndicadorPix then
+      LJsonDados.AddPair('etapa_processo_boleto', IfThen(OAuth.Ambiente=tawsProducao,'efetivacao','simulacao'))
+    else
+      LJsonDados.AddPair('etapa_processo_boleto', IfThen(OAuth.Ambiente=tawsProducao,'efetivacao','validacao'));
     LJsonDados.AddPair('codigo_canal_operacao', 'API');
     GeraIdBeneficiario(LJsonDados);
     GeraDadoBoleto(LJsonDados);

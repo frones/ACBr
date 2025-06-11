@@ -1,17 +1,28 @@
 program ExemploC6;
 
-{$MODE Delphi}
+{$mode objfpc}{$H+}
 
 uses
-  Forms, datetimectrls, Interfaces,
-  uPrincipal in 'uPrincipal.pas' {frmPrincipal},
-  uResposta in 'uResposta.pas' {frmResposta};
+  {$IFDEF UNIX}
+  cthreads,
+  {$ENDIF}
+  {$IFDEF HASAMIGA}
+  athreads,
+  {$ENDIF}
+  Interfaces, // this includes the LCL widgetset
+  Forms, datetimectrls,uPrincipal, uResposta;
 
-//{$R *.res}
+{$R *.res}
 
 begin
-  //ReportMemoryLeaksOnShutdown := true;
+  RequireDerivedFormResource:=True;
+  Application.Scaled:=True;
+  {$PUSH}{$WARN 5044 OFF}
+  Application.MainFormOnTaskbar:=True;
+  {$POP}
   Application.Initialize;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
+  Application.CreateForm(TfrmResposta, frmResposta);
   Application.Run;
 end.
+

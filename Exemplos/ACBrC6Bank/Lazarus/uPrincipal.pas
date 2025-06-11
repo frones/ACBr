@@ -1,37 +1,38 @@
 { ****************************************************************************** }
 { Projeto: Componentes ACBr }
-{ Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil }
+{ Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil }
 { }
 { Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida }
 { }
 { Colaboradores nesse arquivo: Daniel CasaGrande InfoCotidiano }
 { }
-{ Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr }
+{ VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr }
 { }
-{ Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior. }
+{ Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior. }
 { }
-{ Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor }
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT) }
+{ Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor }
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT) }
 { }
-{ Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto }
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc., }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA. }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em: }
+{ VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto }
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc., }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA. }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em: }
 { http://www.opensource.org/licenses/lgpl-license.php }
 { }
-{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br }
-{ Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170 }
+{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br }
+{ Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170 }
 { ****************************************************************************** }
 
 {$I ACBr.inc}
-// descomentar o motor de relat√≥rio que desejar utilizar! removendo o ponto
+
+// descomentar o motor de relatÛrio que desejar utilizar! removendo o ponto
 {$DEFINE GERADOR_FORTES_REPORT}
 { .$DEFINE GERADOR_FAST_REPORT }
 
@@ -65,11 +66,10 @@ uses
   Forms,
   TypInfo,
   IniFiles,
-//  Mask,
   Spin,
   StrUtils,
   synacode,
-  Grids, MaskEdit, DateTimePicker,
+  Grids, MaskEdit,
   //jpeg,
   Classes,
   ACBrPIXCD,
@@ -85,7 +85,12 @@ uses
   ACBrPIXBRCode,
   ACBrPIXSchemasPix,
   ACBrPIXSchemasDevolucao,
-  ACBrPIXSchemasCob;
+  ACBrPIXSchemasCob
+  //ImageList, Mask
+  {$IfDef FPC}
+  , DateTimePicker
+  {$EndIf} ;
+
 
 type
 
@@ -106,6 +111,8 @@ type
   { TfrmPrincipal }
 
   TfrmPrincipal = class(TForm)
+    edtDataEmissao: TDateTimePicker;
+    edtDataVencimento: TDateTimePicker;
     pnpMenu: TPanel;
     pnpPrincipal: TPanel;
     pagPrincipal: TPageControl;
@@ -215,26 +222,21 @@ type
     ckbRemoverAcentuacaoRemessa: TCheckBox;
     chkEMVFicticio: TCheckBox;
     chkIndicadorPix: TCheckBox;
-    ckbEmHomologacao: TCheckBox;
     FACBrBoleto: TACBrBoleto;
     ckbLerCedenteArquivoRetorno: TCheckBox;
     pnpBolAcrescDesconto: TPanel;
     Label12: TLabel;
     edtMoraJuros: TEdit;
     Label13: TLabel;
-    edtDataMora: TMaskEdit;
     Label14: TLabel;
     edtValorDesconto: TEdit;
     Label15: TLabel;
-    edtDataDesconto: TMaskEdit;
     Label16: TLabel;
     edtValorAbatimento: TEdit;
     Label17: TLabel;
-    edtDataAbatimento: TMaskEdit;
     Label18: TLabel;
     edtMulta: TEdit;
     Label19: TLabel;
-    edtDataMulta: TMaskEdit;
     Label20: TLabel;
     pnpMensagem: TPanel;
     Label21: TLabel;
@@ -254,13 +256,11 @@ type
     edtSeuNumero: TEdit;
     Label28: TLabel;
     Label29: TLabel;
-    edtDataProtesto: TMaskEdit;
     Label30: TLabel;
     cbxCodMoraJuros: TComboBox;
     Label31: TLabel;
     cbxTipoMulta: TComboBox;
     Label32: TLabel;
-    edtDataBaixa: TMaskEdit;
     Label34: TLabel;
     pnpCedente: TPanel;
     Label35: TLabel;
@@ -671,7 +671,6 @@ type
     Label1: TLabel;
     btnConfigBoleto: TSpeedButton;
     npFundoprincipalWhite: TPanel;
-    Image1: TImage;
     Label3: TLabel;
     pnFluxoBackground: TPanel;
     pnFluxoPagto: TPanel;
@@ -721,13 +720,21 @@ type
     pnFluxoDiv3: TPanel;
     SpeedButton1: TSpeedButton;
     Label2: TLabel;
-    edtDataDesconto2: TMaskEdit;
     Label100: TLabel;
     edtValorDesconto2: TEdit;
     edtValorDesconto3: TEdit;
     Label102: TLabel;
-    edtDataDesconto3: TMaskEdit;
     Label103: TLabel;
+    cbbAmbiente: TComboBox;
+    Label104: TLabel;
+    edtDataMora: TDateTimePicker;
+    edtDataDesconto: TDateTimePicker;
+    edtDataDesconto2: TDateTimePicker;
+    edtDataDesconto3: TDateTimePicker;
+    edtDataAbatimento: TDateTimePicker;
+    edtDataMulta: TDateTimePicker;
+    edtDataProtesto: TDateTimePicker;
+    edtDataBaixa: TDateTimePicker;
     procedure ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp(const AURL,
       AMethod: string; RespHeaders: TStrings; var AResultCode: Integer;
       var RespostaHttp: AnsiString);
@@ -762,6 +769,7 @@ type
     procedure btnGerarRemessaClick(Sender: TObject);
     procedure btnImprimeBoletoClick(Sender: TObject);
     procedure btnIncluiBoletoClick(Sender: TObject);
+    procedure btnLerParametrosPIXClick(Sender: TObject);
     procedure btnLerRetornoClick(Sender: TObject);
     procedure btnLimparListaTituloClick(Sender: TObject);
     procedure btnPesArqLogWSClick(Sender: TObject);
@@ -882,6 +890,7 @@ type
     procedure EncerraVenda(LFlag: Boolean);
     procedure zoomin(LFlag: Boolean);
     procedure VisualizaReposta(aArquivo: string);
+    procedure CarregarAmbiente;
 
   public
     { Public declarations }
@@ -900,7 +909,7 @@ CONST
   CURL_MCC = 'https://classification.codes/classifications/industry/mcc/';
 
   MOTOR_NAO_SELECIONADO =
-    'MOTOR DE RELAT√ìRIO N√ÉO FOI SELECIONADO, VERIFIQUE!!!';
+    'MOTOR DE RELAT”RIO N√O FOI SELECIONADO, VERIFIQUE!!!';
 
   FILTER_RETORNO = '*.txt|*.txt|*.ret|*.ret|*.*|*.*';
   FILTER_INI = '*.ini|*.ini|*.*|*.*';
@@ -908,6 +917,11 @@ CONST
 implementation
 
 uses
+  {$IfDef FPC}
+   fpjson, jsonparser, jsonscanner,
+  {$Else}
+    {$IFDEF DELPHIXE2_UP}JSON,{$ENDIF}
+  {$EndIf}
   pcnConversao,
   uresposta,
   OpenSSLExt,
@@ -1128,6 +1142,15 @@ begin
   cbxTipoDocumento.ItemIndex := 0;
 end;
 
+procedure TfrmPrincipal.CarregarAmbiente;
+var
+  LAmbiente: TTipoAmbienteWS;
+begin
+  cbbAmbiente.Items.clear;
+	for LAmbiente := Low(TTipoAmbienteWS) to High(TTipoAmbienteWS) do
+    cbbAmbiente.Items.Add( GetEnumName(TypeInfo(TTipoAmbienteWS), integer(LAmbiente) ) );
+end;
+
 procedure TfrmPrincipal.CarregarTipoMulta;
 begin
   cbxTipoMulta.Items.Clear;
@@ -1179,6 +1202,7 @@ begin
   { carregamento Combos }
   // CarregarTipoDistribuicao;
   CarregarTipoDocumento;
+  CarregarAmbiente;
   CarregarCaracTitulo;
   CarregarResponsavelEmissao;
   // CarregarTipoCarteira;
@@ -1190,7 +1214,7 @@ begin
   CarregarLayOutImpressao;
   CarregarTipoDesconto;
   CarregarTipoOcorrenciaBoleto;
-  { carregando informa√ß√µes Salvas }
+  { carregando informaÁıes Salvas }
   LerIniComponente;
   AplicarConfiguracoesComponenteATela;
   InicializarComponentesPixDefault;
@@ -1423,11 +1447,13 @@ begin
   Boleto.Banco.TipoCobranca := cobBancoC6;
 
   Boleto.LayoutRemessa := TACBrLayoutRemessa(0);
-  Boleto.Homologacao := ckbEmHomologacao.Checked;
+//  Boleto.Homologacao := ckbEmHomologacao.Checked;
 
   Boleto.ImprimirMensagemPadrao := ckbImprimirMensagemPadrao.Checked;
   Boleto.LeCedenteRetorno := ckbLerCedenteArquivoRetorno.Checked;
   Boleto.RemoveAcentosArqRemessa := ckbRemoverAcentuacaoRemessa.Checked;
+  Boleto.Configuracoes.WebService.Ambiente := TTipoAmbienteWS(cbbAmbiente.ItemIndex);
+
 
   Beneficiario := Boleto.Cedente;
   BeneficiarioWS := Beneficiario.CedenteWS;
@@ -1481,8 +1507,9 @@ begin
   // Beneficiario.PIX.TipoChavePIX := tchAleatoria;
   // Beneficiario.PIX.Chave := '112';
 
-  WebService.Ambiente := TpcnTipoAmbiente(Ord(ckbEmHomologacao.Checked));
+
   WebService.SSLHttpLib := httpOpenSSL;
+  WebService.Ambiente   := TTipoAmbienteWS(cbbAmbiente.ItemIndex);
 
   Boleto.Configuracoes.Arquivos.LogNivel := TNivelLog(cbxLogNivel.ItemIndex);
   Boleto.Configuracoes.Arquivos.PathGravarRegistro := edtPathLog.Text;
@@ -1515,30 +1542,33 @@ var
   LVencimento: TDate;
 begin
   LVencimento := IncMonth(now, 1);
+  edtDataEmissao.Date := now;
+  edtDataVencimento.Date:=LVencimento;
+
   { desconto acrescimos }
-  edtDataMora.Text := datetostr(LVencimento + 5);
+  edtDataMora.Date := LVencimento + 5;
   edtMoraJuros.Text := '3';
   cbxCodMoraJuros.ItemIndex := 1;
 
-  edtDataDesconto.Text := datetostr(LVencimento - 10);
+  edtDataDesconto.Date := LVencimento - 10;
   edtValorDesconto.Text := '10,00';
   cbxTipoDesconto.ItemIndex := 1;
 
-  edtDataAbatimento.Text := datetostr(LVencimento + 2);
+  edtDataAbatimento.Date := (LVencimento + 2);
   edtValorAbatimento.Text := '1,00';
-  edtDataMulta.Text := datetostr(LVencimento + 5);
+  edtDataMulta.Date := LVencimento + 5;
   edtMulta.Text := '5';
-  edtDataProtesto.Text := datetostr(LVencimento + 10);
-  edtDataBaixa.Text := datetostr(LVencimento + 50);
+  edtDataProtesto.Date := (LVencimento + 10);
+  edtDataBaixa.Date := (LVencimento + 50);
   memMensagem.Lines.Text := 'Teste MSG!';
 
   { informacoes duplicata }
   edtNumeroDoc.Text := '001';
   edtValorDoc.Text := '100,00';
-  edtDataDoc.Text := datetostr(now);
-  edtVencimento.Text := datetostr(IncMonth(now, 1));
+  edtDataEmissao.date := now;
+  edtDataVencimento.date := LVencimento;
   edtSeuNumero.Text := 'MN00001';
-  edtNossoNro.Text := '0001';
+  edtNossoNro.Text := '0';
   { informacoes sacado }
   edtNome.Text := 'Teste de Nome Sacado';
   edtCPFCNPJ.Text := '50146335015';
@@ -1609,7 +1639,7 @@ begin
       xArquivo := dlgFile.FileName
     else
       raise Exception.Create
-        ('√â NECESS√ÅRIO SELECIONAR O ARQUIVO DE CONFIGURA√á√ïES');
+        ('… NECESS¡RIO SELECIONAR O ARQUIVO DE CONFIGURA«’ES');
   end
   else
     xArquivo := ExtractFilePath(ParamStr(0)) +
@@ -1649,7 +1679,8 @@ begin
   Boleto.ListadeBoletos.Clear;
 
   cbxCNAB.ItemIndex := 0;
-  ckbEmHomologacao.Checked := Boleto.Homologacao;
+  cbbAmbiente.ItemIndex    := Ord(Boleto.Configuracoes.WebService.Ambiente);
+//  ckbEmHomologacao.Checked := Boleto.Homologacao;
   ckbImprimirMensagemPadrao.Checked := Boleto.ImprimirMensagemPadrao;
   ckbLerCedenteArquivoRetorno.Checked := Boleto.LeCedenteRetorno;
   ckbRemoverAcentuacaoRemessa.Checked := Boleto.RemoveAcentosArqRemessa;
@@ -1812,45 +1843,45 @@ begin
     4:Titulo.OcorrenciaOriginal.Tipo := toRemessaAlterarJurosMora;
     5:Titulo.OcorrenciaOriginal.Tipo := toRemessaAlterarMulta;
   end;
-  ShowMessage('Ocorr√™ncia Original: ' + sLineBreak +
+  ShowMessage('OcorrÍncia Original: ' + sLineBreak +
     GetEnumName(TypeInfo(TACBrTipoOcorrencia),
     Integer(Titulo.OcorrenciaOriginal.Tipo)));
 
   { Informacoes Duplicata }
   Titulo.NumeroDocumento := edtNumeroDoc.Text;
   Titulo.ValorDocumento := StrToCurr(edtValorDoc.Text);
-  Titulo.DataDocumento := StrToDate(edtDataDoc.Text);
-  Titulo.Vencimento := StrToDate(edtVencimento.Text);
+  Titulo.DataDocumento := edtDataEmissao.Date;
+  Titulo.Vencimento    := edtDataEmissao.Date;
   Titulo.SeuNumero := trim(edtSeuNumero.Text);
   Titulo.NossoNumero := trim(edtNossoNro.Text);
   { Acrescimos e descontos }
-  Titulo.DataMoraJuros := StrToDateDef(edtDataMora.Text, 0);
+  Titulo.DataMoraJuros := edtDataMora.date;
   Titulo.ValorMoraJuros := StrToCurrDef(edtMoraJuros.Text, 0);
   Titulo.CodigoMoraJuros := TACBrCodigoJuros(cbxCodMoraJuros.ItemIndex);
   Titulo.NossoNumeroCorrespondente := edtNossoNumeroCorrespondente.Text;
 
-  Titulo.DataDesconto := StrToDateDef(edtDataDesconto.Text, 0);
+  Titulo.DataDesconto := edtDataDesconto.date;
   Titulo.ValorDesconto := StrToCurrDef(edtValorDesconto.Text, 0);
   Titulo.TipoDesconto := TACBrTipoDesconto(cbxTipoDesconto.ItemIndex);
 
   if (StrToCurrDef(edtValorDesconto2.Text, 0) > 0) then
   begin
-    Titulo.DataDesconto2 := StrToDateDef(edtDataDesconto2.Text, 0);
+    Titulo.DataDesconto2 := edtDataDesconto2.date;
     Titulo.ValorDesconto2 := StrToCurrDef(edtValorDesconto2.Text, 0);
   end;
   if (StrToCurrDef(edtValorDesconto3.Text, 0) > 0) then
   begin
-    Titulo.DataDesconto3 := StrToDateDef(edtDataDesconto3.Text, 0);
+    Titulo.DataDesconto3 := edtDataDesconto3.date;
     Titulo.ValorDesconto3 := StrToCurrDef(edtValorDesconto3.Text, 0);
   end;
 
 
 
 
-  Titulo.DataAbatimento := StrToDateDef(edtDataAbatimento.Text, 0);
+  Titulo.DataAbatimento  := edtDataAbatimento.date;
   Titulo.ValorAbatimento := StrToCurrDef(edtValorAbatimento.Text, 0);
 
-  Titulo.DataMulta := StrToDateDef(edtDataMulta.Text, 0);
+  Titulo.DataMulta := edtDataMulta.date;
   Titulo.PercentualMulta := StrToCurrDef(edtMulta.Text, 0);
 
   case cbxTipoMulta.ItemIndex of
@@ -1859,8 +1890,8 @@ begin
     1:
       Titulo.MultaValorFixo := True;
   end;
-  Titulo.DataProtesto := StrToDateDef(edtDataProtesto.Text, 0);
-  Titulo.DataBaixa := StrToDateDef(edtDataBaixa.Text, 0);
+  Titulo.DataProtesto := edtDataProtesto.date;
+  Titulo.DataBaixa := edtDataBaixa.date;
   Titulo.CodigoNegativacao := cnProtestarUteis;
   Titulo.Mensagem.Text := memMensagem.Text;
 
@@ -1902,13 +1933,13 @@ begin
     begin
       VLinha := '.';
 
-      VQtdeCarcA := Length('Descri√ß√£o Produto/Servi√ßo ' + IntToStr(I));
+      VQtdeCarcA := Length('DescriÁ„o Produto/ServiÁo ' + IntToStr(I));
       VQtdeCarcB := Length('Valor:');
       VQtdeCarcC := 85 - (VQtdeCarcA + VQtdeCarcB);
 
       VLinha := PadLeft(VLinha, VQtdeCarcC, '.');
 
-      Titulo.Detalhamento.Add('Descri√ß√£o Produto/Servi√ßo ' + IntToStr(I) + ' ' +
+      Titulo.Detalhamento.Add('DescriÁ„o Produto/ServiÁo ' + IntToStr(I) + ' ' +
         VLinha + ' Valor:   ' + PadRight(FormatCurr('R$ ###,##0.00',
         StrToCurr(edtValorDoc.Text) * 0.25), 18, ' '));
     end;
@@ -1953,8 +1984,8 @@ begin
     for I := 0 to Pred(Retorno.Count) do
     begin
       RetText.Add('---------------------------');
-      RetText.Add('Nosso N√∫mero         : ' + Retorno[I].NossoNumero);
-      RetText.Add('Seu N√∫mero           : ' + Retorno[I].SeuNumero);
+      RetText.Add('Nosso N˙mero         : ' + Retorno[I].NossoNumero);
+      RetText.Add('Seu N˙mero           : ' + Retorno[I].SeuNumero);
       RetText.Add('Data Vencimento      : ' + datetostr(Retorno[I].Vencimento));
       RetText.Add('ValorDocumento       : ' +
         CurrToStr(Retorno[I].ValorDocumento));
@@ -1978,7 +2009,7 @@ begin
         Integer(Retorno[I].OcorrenciaOriginal.Tipo)));
       RetText.Add('Desc Tipo Ocorrencia : ' + Retorno[I]
         .OcorrenciaOriginal.descricao);
-      RetText.Add('Descri√ß√£oo Comando   : ' + Retorno[I]
+      RetText.Add('DescriÁ„oo Comando   : ' + Retorno[I]
         .DescricaoMotivoRejeicaoComando.Text);
       // [...] demais propriedades do titulo a gosto
     end;
@@ -2189,7 +2220,7 @@ begin
                      'Operacao='         + TipoOperacaoToStr(Boleto.ListaRetornoWeb[i].Header.Operacao) + sLineBreak +
                      'Indice='           + IntToStr(Boleto.ListaRetornoWeb[i].Header.Indice) + sLineBreak +
                      'Sistema_Origem='   + Boleto.ListaRetornoWeb[i].Header.Sistema_Origem + sLineBreak +
-                     'Agencia='          + IntToStr(Boleto.ListaRetornoWeb[i].Header.Agencia) + sLineBreak +
+                     'Agencia='          + Boleto.ListaRetornoWeb[i].Header.Agencia + sLineBreak +
                      'ID_Origem='        + Boleto.ListaRetornoWeb[i].Header.Id_Origem + sLineBreak +
                      'Data_Hora='        +FormatDateTime('dd/mm/yyyy hh:nn:ss',Boleto.ListaRetornoWeb[i].Header.Data_Hora) + sLineBreak +
                      'ID_Processo='      + Boleto.ListaRetornoWeb[i].Header.Id_Processo + sLineBreak +
@@ -2284,7 +2315,7 @@ begin
           ShowMessage('Pagamento Estornado com Sucesso')
         else if (fFluxoDados.StatusDevolucao = stdEM_PROCESSAMENTO) then
           tmConsultarDevolucao.Enabled := True;
-        // Estorno pendente? ...Consultar at√© alterar Status
+        // Estorno pendente? ...Consultar atÈ alterar Status
       end
       else
       begin
@@ -2553,9 +2584,9 @@ begin
   a := AdicionarPathAplicacao(edC6BankCertificado.Text);
   E := 'OK';
   if (a = '') then
-    E := ACBrStr('Arquivo n√£o especificado')
+    E := ACBrStr('Arquivo n„o especificado')
   else if (not FileExists(a)) then
-    E := ACBrStr('Arquivo n√£o encontrado')
+    E := ACBrStr('Arquivo n„o encontrado')
   else
   begin
     try
@@ -2577,9 +2608,9 @@ begin
   a := AdicionarPathAplicacao(edC6BankChavePrivada.Text);
   E := 'OK';
   if (a = '') then
-    E := ACBrStr('Arquivo n√£o especificado')
+    E := ACBrStr('Arquivo n„o especificado')
   else if (not FileExists(a)) then
-    E := ACBrStr('Arquivo n√£o encontrado')
+    E := ACBrStr('Arquivo n„o encontrado')
   else
   begin
     try
@@ -2620,7 +2651,7 @@ begin
     if RevisarCobrancaImediata(edCancelarCobrancaTxID.Text) then
     begin
       mmCancelarCobranca.Lines.Text := FormatarJSON(CobGerada.AsJSON);
-      MostrarCobrancaEmLinhas('  Cobran√ßa', CobGerada,
+      MostrarCobrancaEmLinhas('  CobranÁa', CobGerada,
         mmCancelarCobranca.Lines);
     end
     else
@@ -2680,7 +2711,7 @@ begin
     mmCobVConsultarLista.Lines.Add('');
     mmCobVConsultarLista.Lines.Add('Encontrado: ' +
       IntToStr(ACBrPixCD1.PSP.epCobV.CobsVConsultadas.cobs.Count) +
-      ', Cobran√ßas');
+      ', CobranÁas');
     for I := 0 to ACBrPixCD1.PSP.epCobV.CobsVConsultadas.cobs.Count - 1 do
       mmCobVConsultarLista.Lines.Add('');
   end
@@ -2731,7 +2762,7 @@ begin
     mConsultarCobrancas.Lines.Add('');
     mConsultarCobrancas.Lines.Add('Encontrado: ' +
       IntToStr(ACBrPixCD1.PSP.epCob.CobsConsultadas.cobs.Count) +
-      ', Cobran√ßas');
+      ', CobranÁas');
     for I := 0 to ACBrPixCD1.PSP.epCob.CobsConsultadas.cobs.Count - 1 do
     begin
       mConsultarCobrancas.Lines.Add('');
@@ -2840,7 +2871,7 @@ begin
       s := OnlyNumber(edtCriarCobrancaImediata_CPF_CNPJ.Text);
       if (s = '') then
         raise Exception.Create
-          ('Caso o Nome do Devedor seja Informado, e necess√°rio informar CPF ou CNPJ')
+          ('Caso o Nome do Devedor seja Informado, e necess·rio informar CPF ou CNPJ')
       else if (Length(s) > 11) then
         devedor.cnpj := s
       else
@@ -2907,7 +2938,7 @@ begin
         s := OnlyNumber(edCobVCompradorDoc.Text);
         if EstaVazio(s) then
           raise Exception.Create
-            ('Caso o Nome do Devedor seja Informado, √© necess√°rio informar CPF ou CNPJ')
+            ('Caso o Nome do Devedor seja Informado, È necess·rio informar CPF ou CNPJ')
         else if (Length(s) > 11) then
           cnpj := s
         else
@@ -3026,7 +3057,7 @@ procedure TfrmPrincipal.VerificarConfiguracaoPIXCD;
 begin
   if imgErrNome.Visible or imgErrCEP.Visible then
   begin
-    MessageDlg('Favor revise configura√ß√£o das propriedades Nome/CEP', mtWarning,
+    MessageDlg('Favor revise configuraÁ„o das propriedades Nome/CEP', mtWarning,
       [mbOK], 0);
     Abort;
   end;
@@ -3057,31 +3088,52 @@ begin
 end;
 
 function TfrmPrincipal.FormatarJSON(const AJSON: String): String;
-//{$IFDEF FPC}
-//var
-//  jpar: TJSONParser;
-//  j: TJsonObject;
-//{$ENDIF}
+{$IfDef FPC}
+var
+  jpar: TJSONParser;
+  jdata: TJSONData;
+  ms: TMemoryStream;
+{$ELSE}
+  {$IFDEF DELPHIXE2_UP}
+  var
+    wJsonValue: TJSONValue;
+  {$ENDIF}
+{$ENDIF}
 begin
   Result := AJSON;
-//{$IFDEF FPC}
-//  try
-//    j := TJsonObject.Create();
-//    try
-//      Result := j.Decode(Result);
-//    finally
-//      j.Free;
-//    end;
-//    jpar := TJSONParser.Create(Result, [joUTF8]);
-//    try
-//      Result := jpar.Parse.FormatJSON([], 2);
-//    finally
-//      jpar.Free;
-//    end;
-//  except
-//    Result := AJSON;
-//  end;
-//{$ENDIF}
+  try
+    {$IFDEF FPC}
+    ms := TMemoryStream.Create;
+    try
+      ms.Write(Pointer(AJSON)^, Length(AJSON));
+      ms.Position := 0;
+      jpar := TJSONParser.Create(ms, [joUTF8]);
+      jdata := jpar.Parse;
+      if Assigned(jdata) then
+        Result := jdata.FormatJSON;
+    finally
+      ms.Free;
+      if Assigned(jpar) then
+        jpar.Free;
+      if Assigned(jdata) then
+        jdata.Free;
+    end;
+    {$ELSE}
+      {$IFDEF DELPHIXE2_UP}
+      wJsonValue := TJSONObject.ParseJSONValue(AJSON);
+      try
+        if Assigned(wJsonValue) then
+        begin
+          Result := wJsonValue.Format(2);
+        end;
+      finally
+        wJsonValue.Free;
+      end;
+      {$ENDIF}
+    {$ENDIF}
+  except
+    Result := AJSON;
+  end;
 end;
 
 procedure TfrmPrincipal.AnalisarBRCode(aBRCode: TACBrBRCode);
@@ -3090,7 +3142,7 @@ begin
   if (aBRCode is TACBrPIXQRCodeEstatico) then
     with TACBrPIXQRCodeEstatico(aBRCode) do
     begin
-      AdicionarLinhaLog('----- Analise do QRCode Est√°tico -----');
+      AdicionarLinhaLog('----- Analise do QRCode Est·tico -----');
       AdicionarLinhaLog('ChavePix: ' + PixKey);
       AdicionarLinhaLog('TipoChavePix: ' +
         GetEnumName(TypeInfo(TACBrPIXTipoChave), Integer(PixKeyType)));
@@ -3099,7 +3151,7 @@ begin
     end
   else if (aBRCode is TACBrPIXQRCodeDinamico) then
   begin
-    AdicionarLinhaLog('----- Analise do QRCode Din√¢mico -----');
+    AdicionarLinhaLog('----- Analise do QRCode Din‚mico -----');
     AdicionarLinhaLog('URL: ' + TACBrPIXQRCodeDinamico(aBRCode).URL);
   end;
 
@@ -3272,9 +3324,9 @@ begin
     stdDEVOLVIDO:
       AtualizarPanelPrincipal('PAGAMENTO DEVOLVIDO', $009A9A9A, False);
     stdEM_PROCESSAMENTO:
-      AtualizarPanelPrincipal('DEVOLU√áAO PENDENTE', $00523C30, True);
+      AtualizarPanelPrincipal('DEVOLU«AO PENDENTE', $00523C30, True);
     stdNAO_REALIZADO:
-      AtualizarPanelPrincipal('DEVOLU√á√ÉO N√ÉO REALIZADA', $00523C30, False);
+      AtualizarPanelPrincipal('DEVOLU«√O N√O REALIZADA', $00523C30, False);
   else
     case FluxoDados.StatusCobranca of
       stcATIVA:
@@ -3302,7 +3354,7 @@ begin
     ColWidths[2] := 120;
 
     Cells[0, 0] := 'EAN';
-    Cells[1, 0] := 'Descri√ß√£o';
+    Cells[1, 0] := 'DescriÁ„o';
     Cells[2, 0] := 'Valor';
     AdicionarItemGridFluxo('0123456789012', 'Batata Doce', 3.69);
   end;
@@ -3379,11 +3431,11 @@ begin
     ConsultarCobranca;
     if (fFluxoDados.StatusCobranca = stcCONCLUIDA) then
     begin
-      ShowMessage('Cobran√ßa j√° foi PAGA. Imposs√≠vel cancelar');
+      ShowMessage('CobranÁa j· foi PAGA. ImpossÌvel cancelar');
       Exit;
     end;
 
-    if (MessageDlg('Deseja realmente Cancelar a Cobran√ßa?', mtConfirmation,
+    if (MessageDlg('Deseja realmente Cancelar a CobranÁa?', mtConfirmation,
       mbOKCancel, 0) = mrNo) then
     begin
       tmConsultarPagto.Enabled := True;
@@ -3396,7 +3448,7 @@ begin
     begin
       Sleep(1000);
       ConsultarCobranca;
-      ShowMessage('Cobran√ßa cancelada com sucesso');
+      ShowMessage('CobranÁa cancelada com sucesso');
     end
     else
     begin
@@ -3425,12 +3477,12 @@ begin
 
   if EstaVazio(edFluxoItemDescricao.Text) then
   begin
-    ShowMessage('Informe a Descri√ß√£o do Item');
+    ShowMessage('Informe a DescriÁ„o do Item');
     edFluxoItemDescricao.SetFocus;
   end
   else if EstaVazio(edFluxoItemEAN.Text) then
   begin
-    ShowMessage('Informe o C√≥digo EAN do Item');
+    ShowMessage('Informe o CÛdigo EAN do Item');
     edFluxoItemEAN.SetFocus;
   end
   else
@@ -3502,7 +3554,7 @@ begin
     else
     begin
       fFluxoDados.EmErro := True;
-      ShowMessage('Erro ao criar cobran√ßa: ' + sLineBreak +
+      ShowMessage('Erro ao criar cobranÁa: ' + sLineBreak +
         FormatarJSON(ACBrPixCD1.PSP.epCob.Problema.AsJSON));
     end;
 
@@ -3526,6 +3578,11 @@ end;
 procedure TfrmPrincipal.btnFecharTelaPagamentoClick(Sender: TObject);
 begin
   EncerraVenda(False);
+end;
+
+procedure TfrmPrincipal.btnLerParametrosPIXClick(Sender: TObject);
+begin
+  LerConfiguracaoPix;
 end;
 
 procedure TfrmPrincipal.Button1Click(Sender: TObject);
@@ -3565,7 +3622,7 @@ begin
     then
     begin
       fFluxoDados.EmErro := True;
-      ShowMessage('Erro ao consultar cobran√ßa' + sLineBreak +
+      ShowMessage('Erro ao consultar cobranÁa' + sLineBreak +
         ACBrPixCD1.PSP.epCob.Problema.title + sLineBreak +
         ACBrPixCD1.PSP.epCob.Problema.detail);
     end;
@@ -3626,7 +3683,7 @@ begin
   try
     if EstaVazio(FluxoDados.TxID) then
     begin
-      ShowMessage('Nenhuma cobran√ßa a ser consultada');
+      ShowMessage('Nenhuma cobranÁa a ser consultada');
       Exit;
     end;
 

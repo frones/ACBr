@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/06/2025
+-- pcesRetConsultaLote, pcesRetornoClass --
+[*] #TK-7208: Capturados retornos das rubricas nos retornos dos eventos - https://www.projetoacbr.com.br/forum/topic/83707-coletar-no-retorno-do-xml-sitxml-grupo-rubricas/
+  Por: Hudson G Leite / Renato Rubinho
+
 06/06/2025
 -- pcesS2230 --
 [*] #TK-7148: Configurada leitura do ini para considerar o valor 4 como padrão quando o infoAfastamento.iniAfastamento.tpAcidTransito não estiver preenchido - https://www.projetoacbr.com.br/forum/topic/57214-esocial-valor-default-para-o-evento-s-2230/

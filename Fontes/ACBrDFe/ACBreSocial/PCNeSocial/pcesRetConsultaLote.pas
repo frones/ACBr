@@ -132,6 +132,7 @@ type
     FDadosRecLote: TDadosRecepcaoLote;
     FDadosProcLote: TDadosProcLote;
     FRetEventos: TRetEventosCollection;
+    procedure ExtrairtRubricas(const ARubricas: string; ARecibo: TRecibo);
   public
     constructor Create;
     destructor Destroy; override;
@@ -255,6 +256,77 @@ begin
   inherited;
 end;
 
+procedure TRetConsultaLote.ExtrairtRubricas(const ARubricas: string;
+  ARecibo: TRecibo);
+var
+  itemrubrica: TRubricasNoReciboCollectionItem;
+  FConteudo, lnAtributos: string;
+  IPos, EPos, AttrPos: Integer;
+  vlrAtributos: array[0..9] of string;
+  i: Integer;
+
+const
+  nomeAtributos: array[0..9] of string = ('nrR', 'idE', 'prA', 'idT', 'cdR',
+    'ntR', 'tpR', 'inCP', 'inFGTS', 'inIR');
+
+  function indexAtributo(const ALocalizarNome: string):integer;
+  var
+    i: integer;
+  begin
+    result := -1;
+    for i := 0 to High(nomeAtributos) do
+    begin
+      if nomeAtributos[i] = ALocalizarNome then
+      begin
+        result := i;
+        Break;
+      end;
+    end;
+  end;
+begin
+  FConteudo := ARubricas;
+  IPos := Pos('<rubrica', FConteudo);
+  ARecibo.Rubricas.Clear;
+  while IPos > 0 do
+  begin
+    EPos := Pos('/>', FConteudo);
+    if EPos <= IPos then
+      break
+    else
+    begin
+      // capturar o conteúdo da tag [ rubrica ]
+      lnAtributos := Copy(FConteudo, IPos, EPos - IPos + 2);
+      // capturar dos atributos os valores
+      for i := 0 to High(nomeAtributos) do
+      begin
+        AttrPos := Pos(nomeAtributos[i] + '="', lnAtributos);
+        if AttrPos > 0 then
+        begin
+          AttrPos := AttrPos + Length(nomeAtributos[i]) + 2;
+          vlrAtributos[i] := Copy(lnAtributos, AttrPos, Pos('"', Copy(lnAtributos, AttrPos, Length(lnAtributos))) - 1);
+        end;
+      end;
+
+      itemrubrica := ARecibo.Rubricas.New;
+      itemrubrica.nrR := vlrAtributos[indexAtributo('nrR')];
+      itemrubrica.idE := vlrAtributos[indexAtributo('idE')];
+      itemrubrica.prA := vlrAtributos[indexAtributo('prA')];
+      itemrubrica.idT := vlrAtributos[indexAtributo('idT')];
+      itemrubrica.cdR := vlrAtributos[indexAtributo('cdR')];
+      itemrubrica.ntR := vlrAtributos[indexAtributo('ntR')];
+      itemrubrica.tpR := vlrAtributos[indexAtributo('tpR')];
+      itemrubrica.inCP := vlrAtributos[indexAtributo('inCP')];
+      itemrubrica.inFGTS := vlrAtributos[indexAtributo('inFGTS')];
+      itemrubrica.inIR := vlrAtributos[indexAtributo('inIR')];
+
+      // Remover a tag rubrica continuar a busca
+      Delete(FConteudo, IPos, EPos - IPos + 2);
+    end;
+    // Procurar a próxima ocorrência
+    IPos := Pos('<rubrica', FConteudo);
+  end;
+end;
+
 function TRetConsultaLote.LerXml: boolean;
 var
   ok: boolean;
@@ -366,6 +438,9 @@ begin
               begin
                 RetEventos.Items[i].Recibo.nrRecibo := Leitor.rCampo(tcStr, 'nrRecibo');
                 RetEventos.Items[i].Recibo.Hash := Leitor.rCampo(tcStr, 'hash');
+
+                if Leitor.rExtrai(7, 'rubricas') <> '' then
+                  ExtrairtRubricas(Leitor.rExtrai(7, 'rubricas'), RetEventos.Items[i].Recibo);
 
                 if Leitor.rExtrai(7, 'contrato') <> '' then
                 begin

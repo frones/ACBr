@@ -80,6 +80,8 @@ type
   THorContratualConsulta = class;
   TContrato = class;
   TRecibo = class;
+  TRubricasNoReciboCollectionItem = class;
+  TRubricasNoReciboCollection = class;
 
   TOcorrenciasCollection = class(TACBrObjectList)
   private
@@ -371,6 +373,7 @@ type
     FnrRecibo: String;
     FHash: String;
     FContrato: TContrato;
+    FRubricas: TRubricasNoReciboCollection;
   public
     constructor Create;
     destructor Destroy; override;
@@ -378,6 +381,41 @@ type
     property nrRecibo: string read FnrRecibo write FnrRecibo;
     property Hash: string read FHash write FHash;
     property Contrato: TContrato read FContrato write FContrato;
+    property Rubricas: TRubricasNoReciboCollection read FRubricas write FRubricas;
+  end;
+
+  TRubricasNoReciboCollectionItem = class(TObject)
+  private
+    FInCP: string;
+    FCdR: string;
+    FIdT: string;
+    FTpR: string;
+    FInFGTS: string;
+    FNrR: string;
+    FNtR: string;
+    FPrA: string;
+    FIdE: string;
+    FInIR: string;
+  public
+    property nrR: string read FNrR write FNrR;
+    property idE: string read FIdE write FIdE;
+    property prA: string read FPrA write FPrA;
+    property idT: string read FIdT write FIdT;
+    property cdR: string read FCdR write FCdR;
+    property ntR: string read FNtR write FNtR;
+    property tpR: string read FTpR write FTpR;
+    property inCP: string read FInCP write FInCP;
+    property inFGTS: string read FInFGTS write FInFGTS;
+    property inIR: string read FInIR write FInIR;
+  end;
+
+  TRubricasNoReciboCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TRubricasNoReciboCollectionItem;
+    procedure SetItem(Index: Integer; Value: TRubricasNoReciboCollectionItem);
+  public
+    function New: TRubricasNoReciboCollectionItem;
+    property Items[Index: Integer]: TRubricasNoReciboCollectionItem read GetItem write SetItem; default;
   end;
 
   //////////////////////// Classes a serem checadas
@@ -596,13 +634,34 @@ begin
  inherited;
 
  FContrato := TContrato.Create;
+ FRubricas := TRubricasNoReciboCollection.Create;
 end;
 
 destructor TRecibo.Destroy;
 begin
   FContrato.Free;
-
+  FRubricas.Free;
   inherited;
+end;
+
+{ TRubricasNoReciboCollection }
+
+function TRubricasNoReciboCollection.GetItem(
+  Index: Integer): TRubricasNoReciboCollectionItem;
+begin
+   Result := TRubricasNoReciboCollectionItem(inherited Items[Index]);
+end;
+
+function TRubricasNoReciboCollection.New: TRubricasNoReciboCollectionItem;
+begin
+  Result := TRubricasNoReciboCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TRubricasNoReciboCollection.SetItem(Index: Integer;
+  Value: TRubricasNoReciboCollectionItem);
+begin
+   inherited Items[Index] := Value;
 end;
 
 end.

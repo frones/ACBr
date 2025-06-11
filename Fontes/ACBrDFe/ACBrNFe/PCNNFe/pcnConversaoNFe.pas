@@ -401,18 +401,18 @@ const
 type
   TtpNFDebito = (tdNenhum, tdTransferenciaCreditoCooperativa, tdAnulacao,
                  tdDebitosNaoProcessadas, tdMultaJuros,
-                 tdTransferenciaCreditoSucessao);
+                 tdTransferenciaCreditoSucessao, tdPagamentoAntecipado,
+                 tdPerdaEmEstoque);
 
 const
   TtpNFDebitoArrayStrings: array[TtpNFDebito] of string = ('', '01', '02', '03',
-    '04', '05');
+    '04', '05', '06', '07');
 
 type
-  TtpNFCredito = (tcNenhum, tc01);
+  TtpNFCredito = (tcNenhum, tcMultaJuros, tcApropriacaoCreditoPresumido);
 
 const
-  TtpNFCreditoArrayStrings: array[TtpNFCredito] of string = ('', '01');
-
+  TtpNFCreditoArrayStrings: array[TtpNFCredito] of string = ('', '01', '02');
 
 type
   TCSTIS = (cstisNenhum,
@@ -429,6 +429,14 @@ type
 const
   TcClassTribISArrayStrings: array[TcClassTribIS] of string = ('',
     '000001');
+
+type
+  TTpCredPresIBSZFM = (tcpNenhum, tcpSemCredito, tcpBensConsumoFinal, tcpBensCapital,
+                       tcpBensIntermediarios, tcpBensInformaticaOutros);
+
+const
+  TTpCredPresIBSZFMArrayStrings: array[TTpCredPresIBSZFM] of string = ('', '0',
+    '1', '2', '3', '4');
 
 {
   Declaração das funções de conversão
@@ -523,6 +531,9 @@ function StrToCSTIS(const s: string): TCSTIS;
 
 function cClassTribISToStr(const t: TcClassTribIS): string;
 function StrTocClassTribIS(const s: string): TcClassTribIS;
+
+function TpCredPresIBSZFMToStr(const t: TTpCredPresIBSZFM): string;
+function StrToTpCredPresIBSZFM(const s: string): TTpCredPresIBSZFM;
 
 implementation
 
@@ -1768,6 +1779,26 @@ begin
     end;
   end;
   raise EACBrException.CreateFmt('Valor string inválido para TcClassTribIS: %s', [s]);
+end;
+
+function TpCredPresIBSZFMToStr(const t: TTpCredPresIBSZFM): string;
+begin
+  Result := TTpCredPresIBSZFMArrayStrings[t];
+end;
+
+function StrToTpCredPresIBSZFM(const s: string): TTpCredPresIBSZFM;
+var
+  idx: TTpCredPresIBSZFM;
+begin
+  for idx:= Low(TTpCredPresIBSZFMArrayStrings) to High(TTpCredPresIBSZFMArrayStrings) do
+  begin
+    if(TTpCredPresIBSZFMArrayStrings[idx] = s)then
+    begin
+      Result := idx;
+      exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para TTpCredPresIBSZFM: %s', [s]);
 end;
 
 initialization

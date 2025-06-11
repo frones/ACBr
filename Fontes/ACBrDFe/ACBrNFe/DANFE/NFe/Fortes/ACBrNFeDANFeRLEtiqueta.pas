@@ -110,8 +110,6 @@ uses
 
 
 procedure TfrlDANFeRLEtiqueta.RLNFeBeforePrint(Sender: TObject; var PrintReport: Boolean);
-var
-  nRestItens: Integer;
 begin
   inherited;
 

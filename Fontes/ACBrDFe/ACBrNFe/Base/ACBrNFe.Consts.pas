@@ -408,6 +408,9 @@ resourcestring
   DSC_VCBSMONORETEN = 'Valor total da CBS monofásica sujeita a retenção';
   DSC_VIBSMONORET = 'Valor do IBS monofásico retido anteriormente';
   DSC_VCBSMONORET = 'Valor da CBS monofásica retida anteriormente';
+  DSC_TPCREDPRESIBSZFM = 'Classificação de acordo com o art. 450, § 1º, da LC 214/25 para o cálculo do crédito presumido na ZFM';
+  DSC_VCREDPRESIBSZFM = 'Valor do crédito presumido calculado sobre o saldo devedor apurado';
+  DSC_INDBEMMOVELUSADO = 'Indicador de fornecimento de bem móvel usado';
 
 implementation
 

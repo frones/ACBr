@@ -117,11 +117,14 @@ type
     procedure Ler_GuiaTransito(AINIRec: TMemIniFile; guiaTransito: TguiaTransito);
 
     // Reforma Tributária
+    procedure Ler_gPagAntecipado(AINIRec: TMemIniFile);
+
     procedure Ler_ISel(AINIRec: TMemIniFile; ISel: TgIS; Idx: Integer);
     procedure Ler_IBSCBS(AINIRec: TMemIniFile; IBSCBS: TIBSCBS; Idx: Integer);
     procedure Ler_IBSCBS_gIBSCBS(AINIRec: TMemIniFile; IBSCBS: TgIBSCBS; Idx: Integer);
     procedure Ler_IBSCBS_gIBSCBSMono(AINIRec: TMemIniFile; IBSCBSMono: TgIBSCBSMono; Idx: Integer);
     procedure Ler_IBSCBS_gTransfCred(AINIRec: TMemIniFile; gTransfCred: TgTransfCred; Idx: Integer);
+    procedure Ler_IBSCBS_gCredPresIBSZFM(AINIRec: TMemIniFile; gCredPresIBSZFM: TCredPresIBSZFM; Idx: Integer);
 
     procedure Ler_IBSCBS_gIBSCBS_gIBSUF(AINIRec: TMemIniFile; gIBSUF: TgIBSUF; Idx: Integer);
     procedure Ler_IBSCBS_gIBSCBS_gIBSMun(AINIRec: TMemIniFile; gIBSMun: TgIBSMun; Idx: Integer);
@@ -129,8 +132,10 @@ type
 
     procedure Ler_IBSCBS_gIBSCBS_gTribRegular(AINIRec: TMemIniFile;
       gTribRegular: TgTribRegular; Idx: Integer);
-    procedure Ler_IBSCBSSel_gIBSCBS_gIBSCBSCredPres(AINIRec: TMemIniFile;
+    procedure Ler_IBSCBS_gIBSCBS_gIBSCBSCredPres(AINIRec: TMemIniFile;
       IBSCredPres: TgIBSCBSCredPres; const Grupo: string; Idx: Integer);
+    procedure Ler_IBSCBS_gIBSCBS_gTribCompraGov(AINIRec: TMemIniFile;
+      gTribCompraGov: TgTribCompraGov; Idx: Integer);
 
     procedure Ler_Det_DFeReferenciado(AINIRec: TMemIniFile;
       DFeReferenciado: TDFeReferenciado; Idx: Integer);
@@ -229,7 +234,7 @@ begin
 
   Ide.cNF     := AINIRec.ReadInteger( sSecao,'cNF' ,AINIRec.ReadInteger( sSecao,'Codigo' ,0));
   Ide.natOp   := AINIRec.ReadString(  sSecao,'natOp' ,AINIRec.ReadString(  sSecao,'NaturezaOperacao' ,''));
-  Ide.indPag  := StrToIndpag(OK,AINIRec.ReadString( sSecao,'indPag',AINIRec.ReadString( sSecao,'FormaPag','0')));
+  Ide.indPag  := StrToIndpagEX(AINIRec.ReadString( sSecao,'indPag',AINIRec.ReadString( sSecao,'FormaPag','0')));
   Ide.modelo  := AINIRec.ReadInteger( sSecao,'mod' ,AINIRec.ReadInteger( sSecao,'Modelo' ,65));
   Ide.serie   := AINIRec.ReadInteger( sSecao,'Serie'  ,1);
   Ide.nNF     := AINIRec.ReadInteger( sSecao,'nNF' ,AINIRec.ReadInteger( sSecao,'Numero' ,0));
@@ -260,6 +265,10 @@ begin
 
   if Ide.gCompraGov.pRedutor > 0 then
     Ide.gCompraGov.tpEnteGov := StrTotpEnteGov(AINIRec.ReadString(sSecao, 'tpEnteGov', ''));
+
+  Ide.gCompraGov.tpOperGov := StrTotpOperGov(AINIRec.ReadString(sSecao, 'tpOperGov', ''));
+
+  Ler_gPagAntecipado(AINIRec);
 end;
 
 procedure TNFeIniReader.Ler_NFReferencia(AINIRec: TMemIniFile;
@@ -566,6 +575,8 @@ begin
       Imposto.vTotTrib := StringToFloatDef( AINIRec.ReadString(sSecao,'vTotTrib','') ,0);
 
       // Reforma Tributária
+      Prod.indBemMovelUsado := StrToTIndicadorEx(OK, AINIRec.ReadString(sSecao, 'indBemMovelUsado', ''));
+
       vItem := StringToFloatDef( AINIRec.ReadString(sSecao,'vItem','') ,0);
 
       Ler_ProdutogCred(AINIRec, Prod.CredPresumido, I);
@@ -1482,6 +1493,28 @@ begin
   Fat.vLiq  := StringToFloatDef( AINIRec.ReadString(sSecao,'vLiq' ,AINIRec.ReadString(sSecao,'ValorLiquido' ,'')) ,0);
 end;
 
+procedure TNFeIniReader.Ler_gPagAntecipado(AINIRec: TMemIniFile);
+var
+  I: Integer;
+  sSecao, sFim: string;
+begin
+  I := 1;
+  while true do
+  begin
+    sSecao   := 'gPagAntecipado' + IntToStrZero(I,2);
+    sFim := AINIRec.ReadString(sSecao, 'refNFe', 'FIM');
+    if (sFim = 'FIM') or (Length(sFim) <= 0) then
+      break;
+
+    with NFe.Ide.gPagAntecipado.New do
+    begin
+      refNFe := sFim;
+    end;
+
+    Inc(I);
+  end;
+end;
+
 procedure TNFeIniReader.Ler_Duplicata(AINIRec: TMemIniFile;
   Dup: TDupCollection);
 var
@@ -1536,7 +1569,7 @@ begin
 
       // Se não for informado 0=Pagamento à Vista ou 1=Pagamento à Prazo
       // a tag <indPag> não deve ser gerada.
-      indPag:= StrToIndpag(OK,AINIRec.ReadString(sSecao, 'indPag', ''));
+      indPag:= StrToIndpagEX(AINIRec.ReadString(sSecao, 'indPag', ''));
 
       tpIntegra  := StrTotpIntegra(OK,AINIRec.ReadString(sSecao,'tpIntegra',''));
       CNPJ  := AINIRec.ReadString(sSecao,'CNPJ','');
@@ -1844,6 +1877,7 @@ begin
     Ler_IBSCBS_gIBSCBS(AINIRec, IBSCBS.gIBSCBS, Idx);
     Ler_IBSCBS_gIBSCBSMono(AINIRec, IBSCBS.gIBSCBSMono, Idx);
     Ler_IBSCBS_gTransfCred(AINIRec, IBSCBS.gTransfCred, Idx);
+    Ler_IBSCBS_gCredPresIBSZFM(AINIRec, IBSCBS.gCredPresIBSZFM, Idx);
   end;
 end;
 
@@ -1862,8 +1896,9 @@ begin
     Ler_IBSCBS_gIBSCBS_gIBSMun(AINIRec, IBSCBS.gIBSMun, Idx);
     Ler_IBSCBS_gIBSCBS_gCBS(AINIRec, IBSCBS.gCBS, Idx);
     Ler_IBSCBS_gIBSCBS_gTribRegular(AINIRec, IBSCBS.gTribRegular, Idx);
-    Ler_IBSCBSSel_gIBSCBS_gIBSCBSCredPres(AINIRec, IBSCBS.gIBSCredPres, 'gIBSCredPres', Idx);
-    Ler_IBSCBSSel_gIBSCBS_gIBSCBSCredPres(AINIRec, IBSCBS.gCBSCredPres, 'gCBSCredPres', Idx);
+    Ler_IBSCBS_gIBSCBS_gIBSCBSCredPres(AINIRec, IBSCBS.gIBSCredPres, 'gIBSCredPres', Idx);
+    Ler_IBSCBS_gIBSCBS_gIBSCBSCredPres(AINIRec, IBSCBS.gCBSCredPres, 'gCBSCredPres', Idx);
+    Ler_IBSCBS_gIBSCBS_gTribCompraGov(AINIRec, IBSCBS.gTribCompraGov, Idx);
   end;
 end;
 
@@ -1954,7 +1989,7 @@ begin
   end;
 end;
 
-procedure TNFeIniReader.Ler_IBSCBSSel_gIBSCBS_gIBSCBSCredPres(
+procedure TNFeIniReader.Ler_IBSCBS_gIBSCBS_gIBSCBSCredPres(
   AINIRec: TMemIniFile; IBSCredPres: TgIBSCBSCredPres; const Grupo: string;
   Idx: Integer);
 var
@@ -1968,6 +2003,24 @@ begin
     IBSCredPres.pCredPres := StringToFloatDef(AINIRec.ReadString(sSecao, 'pCredPres', ''), 0);
     IBSCredPres.vCredPres := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPres', ''), 0);
     IBSCredPres.vCredPresCondSus := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPresCondSus', ''), 0);
+  end;
+end;
+
+procedure TNFeIniReader.Ler_IBSCBS_gIBSCBS_gTribCompraGov(AINIRec: TMemIniFile;
+  gTribCompraGov: TgTribCompraGov; Idx: Integer);
+var
+  sSecao: string;
+begin
+  sSecao := 'gTribCompraGov' + IntToStrZero(Idx, 3);
+
+  if AINIRec.SectionExists(sSecao) then
+  begin
+    gTribCompraGov.pAliqIBSUF := StringToFloatDef(AINIRec.ReadString(sSecao, 'pAliqIBSUF', ''), 0);
+    gTribCompraGov.vTribIBSUF := StringToFloatDef(AINIRec.ReadString(sSecao, 'vTribIBSUF', ''), 0);
+    gTribCompraGov.pAliqIBSMun := StringToFloatDef(AINIRec.ReadString(sSecao, 'pAliqIBSMun', ''), 0);
+    gTribCompraGov.vTribIBSMun := StringToFloatDef(AINIRec.ReadString(sSecao, 'vTribIBSMun', ''), 0);
+    gTribCompraGov.pAliqCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'pAliqCBS', ''), 0);
+    gTribCompraGov.vTribCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vTribCBS', ''), 0);
   end;
 end;
 
@@ -2015,6 +2068,20 @@ begin
   begin
     gTransfCred.vIBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBS', ''), 0);
     gTransfCred.vCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCBS', ''), 0);
+  end;
+end;
+
+procedure TNFeIniReader.Ler_IBSCBS_gCredPresIBSZFM(AINIRec: TMemIniFile;
+  gCredPresIBSZFM: TCredPresIBSZFM; Idx: Integer);
+var
+  sSecao: string;
+begin
+  sSecao := 'gCredPresIBSZFM' + IntToStrZero(Idx, 3);
+
+  if AINIRec.SectionExists(sSecao) then
+  begin
+    gCredPresIBSZFM.tpCredPresIBSZFM := StrToTpCredPresIBSZFM(AINIRec.ReadString(sSecao, 'tpCredPresIBSZFM', ''));
+    gCredPresIBSZFM.vCredPresIBSZFM := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPresIBSZFM', ''), 0);
   end;
 end;
 
@@ -2069,6 +2136,7 @@ begin
   begin
     IBS.vIBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBS', ''), 0);
     IBS.vCredPres := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPres', ''), 0);
+    IBS.vCredPresCondSus := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPresCondSus', ''), 0);
 
     Ler_IBSCBSTot_gIBS_gIBSUFTot(AINIRec, IBS.gIBSUFTot);
     Ler_IBSCBSTot_gIBS_gIBSMunTot(AINIRec, IBS.gIBSMunTot);
@@ -2118,6 +2186,7 @@ begin
     gCBS.vDevTrib := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDevTrib', ''), 0);
     gCBS.vCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCBS', ''), 0);
     gCBS.vCredPres := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPres', ''), 0);
+    gCBS.vCredPresCondSus := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPresCondSus', ''), 0);
   end;
 end;
 

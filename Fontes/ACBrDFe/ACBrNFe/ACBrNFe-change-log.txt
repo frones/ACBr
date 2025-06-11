@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/06/2025
+-- Diversos --
+[*] Alterações visando deixar o componente em conformidade com a versão 1.10 da NT
+    referente a Reforma Tributária.
+  Por: Italo Giurizzato Junior
+
 09/06/2025
 -- ACBrNFe.Consts --
 [*] Algumas constantes e suas descrições foram migradas para a unit: ACBrDFeConsts

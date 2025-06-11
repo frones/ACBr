@@ -47,7 +47,7 @@ Símbolo : Significado
 
 11/06/2025
 -- ACBrBPeXmlWriter --
-[*] Correção no nome da constante e inclusão de uma nova contante.
+[*] Correção no nome da constante e inclusão de uma nova constante.
    Por: Italo Giurizzato Junior
 
 09/06/2025

@@ -652,6 +652,7 @@ type
     procedure EhObrigatorioConta; virtual;
     procedure EhObrigatorioContaDV; virtual;
     procedure EhObrigatorioNomeBeneficiario; virtual;
+    procedure NaoPermiteFiltroWSNenhum; virtual;
   public
     Constructor create(AOwner: TACBrBanco);
     Destructor Destroy; override ;
@@ -1571,6 +1572,7 @@ type
     procedure EhObrigatorioConta;
     procedure EhObrigatorioContaDV;
     procedure EhObrigatorioNomeBeneficiario;
+    procedure NaoPermiteFiltroWSNenhum;
 
     function EnviarBoleto: Boolean; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método Enviar' {$ENDIF};
     function Enviar: Boolean;
@@ -3786,6 +3788,11 @@ begin
   fBanco.BancoClass.EhObrigatorioNomeBeneficiario;
 end;
 
+procedure TACBrBoleto.NaoPermiteFiltroWSNenhum;
+begin
+  fBanco.BancoClass.NaoPermiteFiltroWSNenhum;
+end;
+
 function TACBrBoleto.EnviarBoleto: Boolean;
 begin
   Result:= Enviar;
@@ -4329,10 +4336,9 @@ begin
 
       Sessao := 'ConsultaAPI';
       sFim   := IniBoletos.ReadString(Sessao,'IndicadorSituacaoBoleto','0');
-      if (sFim <> '0')  then
-        Configuracoes.WebService.Filtro.indicadorSituacao := TACBrIndicadorSituacaoBoleto(StrToInt64Def(sFim,0))
-      else
-        raise EACBrBoleto.Create('Nenhum Indicador de Situacao definido para consulta!');
+
+      Configuracoes.WebService.Filtro.indicadorSituacao := TACBrIndicadorSituacaoBoleto(StrToInt64Def(sFim,0));
+      NaoPermiteFiltroWSNenhum;
 
       DtMovimento  := Trim(IniBoletos.ReadString(Sessao,'DataInicioMovimento','0'));
       DtVencimento := Trim(IniBoletos.ReadString(Sessao,'DataInicioVencimento','0'));
@@ -5058,6 +5064,12 @@ procedure TACBrBancoClass.EhObrigatorioNomeBeneficiario;
 begin
   if ACBrBanco.ACBrBoleto.Cedente.Nome = '' then
     Raise EACBrBoleto.Create(ACBrStr('Nome do cedente não informado'));
+end;
+
+procedure TACBrBancoClass.NaoPermiteFiltroWSNenhum;
+begin
+  if ACBrBanco.ACBrBoleto.Configuracoes.WebService.Filtro.indicadorSituacao = isbNenhum then
+    Raise EACBrBoleto.Create(ACBrStr('IndicadorSituacao não informado'));
 end;
 
 procedure TACBrBancoClass.GerarRegistroHeader400(NumeroRemessa: Integer; ARemessa: TStringList);

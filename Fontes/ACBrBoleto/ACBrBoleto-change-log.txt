@@ -48,6 +48,17 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+11/06/2025
+-- ACBrBoleto --
+[+] Implementa função o para não permitir  IndicadorSituacao.isbNenhum
+[*] Usa função para validar a propriedade IndicadorSituacao
+    Por: Júlio Cavalcanti, Daniel Morais InfoCotidiano e Victor Gonzales Pandaaa
+
+-- ACBrBancoItau --
+[*] Sobrescreve função para permitir IndicadorSituacao.isbNenhum
+    Por: Júlio Cavalcanti, Daniel Morais InfoCotidiano e Victor Gonzales Pandaaa
+
 11/06/2025
 -- ACBrBoletoRet_Itau_API.pas, ACBrBoletoW_Itau_API.pas --
 [*] TK-7092 Ajustes na Tpconsulta bolecode (usar indicadorPIX liquidado bolecode), ajustes no tratamento dos retornos

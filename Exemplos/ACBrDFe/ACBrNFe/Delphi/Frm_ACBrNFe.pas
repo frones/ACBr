@@ -600,6 +600,7 @@ begin
 
       Ide.gCompraGov.tpEnteGov := tcgEstados;
       Ide.gCompraGov.pRedutor := 5;
+      Ide.gCompraGov.tpOperGov := togFornecimento;
     end;
 
     Emit.CNPJCPF           := edtEmitCNPJ.Text;
@@ -709,6 +710,9 @@ begin
       // Reforma Tributária
       if rgReformaTributaria.ItemIndex = 0 then
       begin
+        // Indicador de fornecimento de bem móvel usado
+        Prod.indBemMovelUsado := tieNenhum;
+
         // Valor total do Item, correspondente à sua participação no total da nota.
         // A soma dos itens deverá corresponder ao total da nota.
         vItem := 100;
@@ -987,6 +991,14 @@ begin
           IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 100;
           IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 100;
 
+          // Tipo Tributação Compra Governamental
+          IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSUF := 5;
+          IBSCBS.gIBSCBS.gTribCompraGov.vTribIBSUF := 50;
+          IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSMun := 5;
+          IBSCBS.gIBSCBS.gTribCompraGov.vTribIBSMun := 50;
+          IBSCBS.gIBSCBS.gTribCompraGov.pAliqCBS := 5;
+          IBSCBS.gIBSCBS.gTribCompraGov.vTribCBS := 50;
+
           //  Informações do tributo: IBS / CBS em operações com imposto monofásico
           IBSCBS.gIBSCBSMono.qBCMono := 1;
           IBSCBS.gIBSCBSMono.adRemIBS := 5;
@@ -1011,10 +1023,6 @@ begin
 
           IBSCBS.gIBSCBSMono.vTotIBSMonoItem := 100;
           IBSCBS.gIBSCBSMono.vTotCBSMonoItem := 100;
-
-          //  Informações da Transferencia de Crédito
-          IBSCBS.gTransfCred.vIBS := 100;
-          IBSCBS.gTransfCred.vCBS := 100;
         end;
       end;
     end;
@@ -1062,6 +1070,7 @@ begin
 
       Total.IBSCBSTot.gIBS.vIBS := 100;
       Total.IBSCBSTot.gIBS.vCredPres := 100;
+      Total.IBSCBSTot.gIBS.vCredPresCondSus := 100;
 
       Total.IBSCBSTot.gIBS.gIBSUFTot.vDif := 100;
       Total.IBSCBSTot.gIBS.gIBSUFTot.vDevTrib := 100;
@@ -1075,6 +1084,7 @@ begin
       Total.IBSCBSTot.gCBS.vDevTrib := 100;
       Total.IBSCBSTot.gCBS.vCBS := 100;
       Total.IBSCBSTot.gCBS.vCredPres := 100;
+      Total.IBSCBSTot.gCBS.vCredPresCondSus := 100;
 
       Total.IBSCBSTot.gMono.vIBSMono := 100;
       Total.IBSCBSTot.gMono.vCBSMono := 100;
@@ -1201,6 +1211,16 @@ begin
 
     NotaF.NFe.Ide.gCompraGov.tpEnteGov := tcgEstados;
     NotaF.NFe.Ide.gCompraGov.pRedutor := 5;
+    NotaF.NFe.Ide.gCompraGov.tpOperGov := togFornecimento;
+
+//    Informado para abater as parcelas de antecipação de pagamento, conforme Art. 10. § 4º
+//    refNFe: Referência uma NF-e (modelo 55) emitida anteriormente, referente a pagamento antecipado
+
+    with NotaF.NFe.Ide.gPagAntecipado.New do
+      refNFe := '12345678901234567890123456789012345678901234';
+
+    with NotaF.NFe.Ide.gPagAntecipado.New do
+      refNFe := '12345678901234567890123456789012345678904567';
   end;
 
   //Para NFe referenciada use os campos abaixo
@@ -1486,6 +1506,9 @@ begin
   // Reforma Tributária
   if rgReformaTributaria.ItemIndex = 0 then
   begin
+    // Indicador de fornecimento de bem móvel usado
+    Produto.Prod.indBemMovelUsado := tieNenhum;
+
     // Valor total do Item, correspondente à sua participação no total da nota.
     // A soma dos itens deverá corresponder ao total da nota.
     Produto.vItem := 100;
@@ -1805,6 +1828,14 @@ begin
       IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 100;
       IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 100;
 
+      // Tipo Tributação Compra Governamental
+      IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSUF := 5;
+      IBSCBS.gIBSCBS.gTribCompraGov.vTribIBSUF := 50;
+      IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSMun := 5;
+      IBSCBS.gIBSCBS.gTribCompraGov.vTribIBSMun := 50;
+      IBSCBS.gIBSCBS.gTribCompraGov.pAliqCBS := 5;
+      IBSCBS.gIBSCBS.gTribCompraGov.vTribCBS := 50;
+
       //  Informações do tributo: IBS / CBS em operações com imposto monofásico
       IBSCBS.gIBSCBSMono.qBCMono := 1;
       IBSCBS.gIBSCBSMono.adRemIBS := 5;
@@ -1833,6 +1864,12 @@ begin
       //  Informações da Transferencia de Crédito
       IBSCBS.gTransfCred.vIBS := 100;
       IBSCBS.gTransfCred.vCBS := 100;
+
+      //  Informações do Crédito Presumido IBS ZFM
+      // tcpNenhum, tcpSemCredito, tcpBensConsumoFinal, tcpBensCapital,
+      // tcpBensIntermediarios, tcpBensInformaticaOutros
+      IBSCBS.gCredPresIBSZFM.tpCredPresIBSZFM := tcpBensInformaticaOutros;
+      IBSCBS.gCredPresIBSZFM.vCredPresIBSZFM := 100;
     end;
   end;
 
@@ -1933,6 +1970,7 @@ begin
 
     NotaF.NFe.Total.IBSCBSTot.gIBS.vIBS := 100;
     NotaF.NFe.Total.IBSCBSTot.gIBS.vCredPres := 100;
+    NotaF.NFe.Total.IBSCBSTot.gIBS.vCredPresCondSus := 100;
 
     NotaF.NFe.Total.IBSCBSTot.gIBS.gIBSUFTot.vDif := 100;
     NotaF.NFe.Total.IBSCBSTot.gIBS.gIBSUFTot.vDevTrib := 100;
@@ -1946,6 +1984,7 @@ begin
     NotaF.NFe.Total.IBSCBSTot.gCBS.vDevTrib := 100;
     NotaF.NFe.Total.IBSCBSTot.gCBS.vCBS := 100;
     NotaF.NFe.Total.IBSCBSTot.gCBS.vCredPres := 100;
+    NotaF.NFe.Total.IBSCBSTot.gCBS.vCredPresCondSus := 100;
 
     NotaF.NFe.Total.IBSCBSTot.gMono.vIBSMono := 100;
     NotaF.NFe.Total.IBSCBSTot.gMono.vCBSMono := 100;
@@ -4686,6 +4725,7 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
     try
+      ACBrNFe1.NotasFiscais.Assinar;
       ACBrNFe1.NotasFiscais.Validar;
 
       if ACBrNFe1.NotasFiscais.Items[0].Alertas <> '' then

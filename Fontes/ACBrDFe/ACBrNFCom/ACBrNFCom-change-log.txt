@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/06/2025
+-- ACBrNFComXmlWriter --
+[*] Correção no nome da constante e inclusão de uma nova constante.
+   Por: Italo Giurizzato Junior
+
 09/06/2025
 -- Diversos --
 [*] Ajustes necessários para deixar em conformidade com a versão 1.05 dos Schemas.

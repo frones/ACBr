@@ -1591,10 +1591,10 @@ begin
     Result := FDocument.CreateElement('gCompraGov');
 
     Result.AppendChild(AddNode(tcStr, 'B32', 'tpEnteGov', 1, 1, 1,
-            tpEnteGovToStr(gCompraGov.tpEnteGov), DSC_TPCOMPRAGOV));
+                          tpEnteGovToStr(gCompraGov.tpEnteGov), DSC_TPENTEGOV));
 
     Result.AppendChild(AddNode(tcDe4, 'B33', 'pRedutor', 1, 7, 1,
-                                    gCompraGov.pRedutor, DSC_PREDUTOR));
+                                            gCompraGov.pRedutor, DSC_PREDUTOR));
   end;
 end;
 

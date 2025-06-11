@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/06/2025
+-- ACBrDFeConsts --
+[*] Correção no nome da constante e inclusão de uma nova contante.
+   Por: Italo Giurizzato Junior
+
 09/06/2025
 -- ACBrDFe.Conversao --
 [+] Criado o tipo TtpOperGov e as funções de conversão.

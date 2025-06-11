@@ -147,8 +147,9 @@ resourcestring
   DSC_NSU = 'NSU específico';
 
   // Reforma Tributária
-  DSC_TPCOMPRAGOV = 'Tipo de compra governamental';
+  DSC_TPENTEGOV = 'Tipo de Ente governamental';
   DSC_PREDUTOR = 'Percentual de redução de aliquota em compra governamental';
+  DSC_TPOPERGOV = 'Tipo de Operação com o ente governamental';
   DSC_CCLASSTRIB = 'Código de Classificação Tributária do IBS e CBS';
   DSC_PIBSUF = 'Alíquota do IBS de competência das UF';
   DSC_VTRIBOP = 'Valor bruto do tributo na operação';

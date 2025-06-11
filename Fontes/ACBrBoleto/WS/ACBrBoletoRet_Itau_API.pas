@@ -472,7 +472,10 @@ begin
               begin
                   ListaRetorno.indicadorContinuidade := LJsonObject.AsJSONObject['page'].AsInteger['total_pages'] - LJsonObject.AsJSONObject['page'].AsInteger['page'] > 0;
                 if ListaRetorno.indicadorContinuidade then
-                  ListaRetorno.proximoIndice         := LJsonObject.AsJSONObject['page'].AsInteger['page'] + 1;
+                  ListaRetorno.proximoIndice         := LJsonObject.AsJSONObject['page'].AsInteger['page'] + 1
+                else
+                  ListaRetorno.proximoIndice         := 0;
+
               end;
               LJsonArray := LJsonObject.AsJSONArray['data'];
               if LJsonArray.Count = 0 then
@@ -636,7 +639,9 @@ begin
               begin
                 ListaRetorno.indicadorContinuidade := (LJsonObject.AsJSONObject['pagination'].AsInteger['total_pages'] - 1) - LJsonObject.AsJSONObject['pagination'].AsInteger['page'] > 0;
                 if ListaRetorno.indicadorContinuidade then
-                  ListaRetorno.proximoIndice       := LJsonObject.AsJSONObject['pagination'].AsInteger['page'] + 1;
+                  ListaRetorno.proximoIndice       := LJsonObject.AsJSONObject['pagination'].AsInteger['page'] + 1
+                else
+                  ListaRetorno.proximoIndice       := 0;
               end;
               LJsonArray := LJsonObject.AsJSONArray['data'];
 

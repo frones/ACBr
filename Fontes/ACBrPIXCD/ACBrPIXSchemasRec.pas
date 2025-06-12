@@ -529,7 +529,7 @@ end;
 
 function TACBrPIXRecCompletaLista.GetItem(Index: Integer): TACBrPIXRecCompleta;
 begin
-  Result := TACBrPIXRecCompleta(inherited GetItem(Index));
+  Result := TACBrPIXRecCompleta(inherited Items[Index]);
 end;
 
 procedure TACBrPIXRecCompletaLista.SetItem(Index: Integer; Value: TACBrPIXRecCompleta);

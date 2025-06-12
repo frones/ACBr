@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/06/2025
+-- ACBrEFDBloco_C_Class --
+[*] #TK-7210 - EFDICMSIPI - C120 - Permitidos os campos PIS_IMP e COFINS IMP nulos - https://www.projetoacbr.com.br/forum/topic/83697-permitir-gerar-o-arquivo-c120-com-o-campo-vazio/
+    por: Renato Rubinho
+
 09/05/2025
 -- ACBrECFBloco_0, ACBrECFBloco_X, ACBrECFBloco_X_Class, ACBrECFBlocos --
 [+] #TK-6472 - ECF - Implementado Leiaute 0011

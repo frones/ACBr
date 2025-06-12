@@ -1749,8 +1749,8 @@ begin
           strLinha := LFill('C120') +
                       LFill( Integer(COD_DOC_IMP), 0 ) +
                       LFill( NUM_DOC__IMP ) +
-                      LFill( PIS_IMP,0,2 ) +
-                      LFill( COFINS_IMP,0,2 ) +
+                      LFill( PIS_IMP, 0, 2, True ) +
+                      LFill( COFINS_IMP, 0, 2, True ) +
                       LFill( NUM_ACDRAW );
           //-- Write
           if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnWriteRegistroC120) then

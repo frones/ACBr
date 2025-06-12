@@ -66,6 +66,15 @@ type
   protected
     procedure Configuracao; override;
 
+    procedure CarregarDadosdeConfiguracoes;
+    function GerarXmlNfse: Boolean;
+    function GerarNfse: TACBrXmlNode;
+    function GerarInfNfse: TACBrXmlNode;
+    function GerarPrestadorServico: TACBrXmlNode;
+    function GerarIdenticacaoPrestador: TACBrXmlNode;
+    function GerarEnderecoPrestador: TACBrXmlNode;
+    function GerarContatoPrestador: TACBrXmlNode;
+    function GerarOrgaoGerador: TACBrXmlNode;
   public
     function GerarXml: Boolean; Override;
 
@@ -75,6 +84,8 @@ implementation
 
 uses
   ACBrNFSeXConversao,
+  ACBrNFSeXConsts,
+  ACBrNFSeX,
   ACBrUtil.Strings;
 
 //==============================================================================
@@ -311,7 +322,179 @@ begin
   if NFSe.OptanteSimplesNacional = snSim then
     NrOcorrAliquota := 1;
 
-  Result := inherited GerarXml;
+  if NFSe.tpXML = txmlNFSe then
+    Result := GerarXmlNFSe
+  else
+    Result := inherited GerarXml;
+end;
+
+procedure TNFSeW_Giap101.CarregarDadosdeConfiguracoes;
+begin
+  // Dados do Prestador
+  NFSe.Prestador.RazaoSocial := TACBrNFSeX(FpAOwner).Configuracoes.Geral.Emitente.RazSocial;
+  NFSe.Prestador.NomeFantasia := TACBrNFSeX(FpAOwner).Configuracoes.Geral.Emitente.DadosEmitente.NomeFantasia;
+  NFSe.Prestador.Endereco.Endereco := TACBrNFSeX(FpAOwner).Configuracoes.Geral.Emitente.DadosEmitente.Endereco;
+  NFSe.Prestador.Endereco.Numero := TACBrNFSeX(FpAOwner).Configuracoes.Geral.Emitente.DadosEmitente.Numero;
+  NFSe.Prestador.Endereco.Complemento := TACBrNFSeX(FpAOwner).Configuracoes.Geral.Emitente.DadosEmitente.Complemento;
+  NFSe.Prestador.Endereco.Bairro := TACBrNFSeX(FpAOwner).Configuracoes.Geral.Emitente.DadosEmitente.Bairro;
+  NFSe.Prestador.Endereco.CodigoMunicipio := TACBrNFSeX(FpAOwner).Configuracoes.Geral.Emitente.DadosEmitente.CodigoMunicipio;
+  NFSe.Prestador.Endereco.UF := TACBrNFSeX(FpAOwner).Configuracoes.Geral.Emitente.DadosEmitente.UF;
+  NFSe.Prestador.Endereco.CEP := TACBrNFSeX(FpAOwner).Configuracoes.Geral.Emitente.DadosEmitente.CEP;
+  NFSe.Prestador.Contato.Telefone := TACBrNFSeX(FpAOwner).Configuracoes.Geral.Emitente.DadosEmitente.Telefone;
+  NFSe.Prestador.Contato.Email := TACBrNFSeX(FpAOwner).Configuracoes.Geral.Emitente.DadosEmitente.Email;
+end;
+
+function TNFSeW_Giap101.GerarXmlNfse: Boolean;
+var
+  NFSeNode, xmlNode: TACBrXmlNode;
+begin
+  ListaDeAlertas.Clear;
+
+  FDocument.Clear();
+
+  NFSeNode := CreateElement('CompNfse');
+
+//  if FpAOwner.ConfigMsgDados.XmlRps.xmlns <> '' then
+//    NFSeNode.SetNamespace(FpAOwner.ConfigMsgDados.XmlRps.xmlns, Self.PrefixoPadrao);
+
+  FDocument.Root := NFSeNode;
+
+//  if FormatoDiscriminacao <> fdNenhum then
+//    ConsolidarVariosItensServicosEmUmSo;
+
+  xmlNode := GerarNfse;
+  NFSeNode.AppendChild(xmlNode);
+
+  Result := True;
+end;
+
+function TNFSeW_Giap101.GerarNfse: TACBrXmlNode;
+begin
+  Result := CreateElement('Nfse');
+
+  Result.AppendChild(GerarInfNfse);
+end;
+
+function TNFSeW_Giap101.GerarInfNfse: TACBrXmlNode;
+begin
+  Result := CreateElement('InfNfse');
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'Numero', 1, 15, 1,
+                                                              NFSe.Numero, ''));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'CodigoVerificacao', 1, 15, 1,
+                                                   NFSe.CodigoVerificacao, ''));
+
+  Result.AppendChild(AddNode(FormatoEmissao, '#4', 'DataEmissao', 19, 19, 1,
+                                                  NFSe.DataEmissao, DSC_DHEMI));
+
+  Result.AppendChild(GerarIdentificacaoRps);
+
+  Result.AppendChild(AddNode(FormatoEmissao, '#4', 'DataEmissaoRps', 19, 19, 1,
+                                                  NFSe.DataEmissao, DSC_DHEMI));
+
+  Result.AppendChild(AddNode(tcStr, '#5', 'NaturezaOperacao', 1, 3, NrOcorrNaturezaOperacao,
+                   NaturezaOperacaoToStr(NFSe.NaturezaOperacao), DSC_INDNATOP));
+
+  Result.AppendChild(AddNode(tcStr, '#7', 'OptanteSimplesNacional', 1, 1, NrOcorrOptanteSN,
+   FpAOwner.SimNaoToStr(NFSe.OptanteSimplesNacional), DSC_INDOPSN));
+
+  Result.AppendChild(AddNode(tcStr, '#8', 'IncentivadorCultural', 1, 1, NrOcorrIncentCult,
+   FpAOwner.SimNaoToStr(NFSe.IncentivadorCultural), DSC_INDINCCULT));
+
+  Result.AppendChild(AddNode(FormatoEmissao, '#4', 'Competencia', 19, 19, 1,
+                                                  NFSe.Competencia, DSC_DHEMI));
+
+  Result.AppendChild(GerarServico);
+  Result.AppendChild(GerarPrestadorServico);
+  Result.AppendChild(GerarTomador);
+  Result.AppendChild(GerarOrgaoGerador);
+  Result.AppendChild(GerarConstrucaoCivil);
+end;
+
+function TNFSeW_Giap101.GerarPrestadorServico: TACBrXmlNode;
+begin
+  Result := CreateElement('PrestadorServico');
+
+  Result.AppendChild(GerarIdenticacaoPrestador);
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'RazaoSocial', 1, 60, 1,
+                                               NFSe.Prestador.RazaoSocial, ''));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'NomeFantasia', 1, 60, 1,
+                                              NFSe.Prestador.NomeFantasia, ''));
+
+  Result.AppendChild(GerarEnderecoPrestador);
+  Result.AppendChild(GerarContatoPrestador);
+end;
+
+function TNFSeW_Giap101.GerarIdenticacaoPrestador: TACBrXmlNode;
+begin
+  Result := CreateElement('IdentificacaoPrestador');
+
+  if NFSe.Prestador.IdentificacaoPrestador.CpfCnpj <> '' then
+    Result.AppendChild(GerarCPFCNPJ(NFSe.Prestador.IdentificacaoPrestador.CpfCnpj));
+
+  Result.AppendChild(AddNode(tcStr, '#37', 'InscricaoMunicipal', 1, 15, NrOcorrInscMunTomador,
+             NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, DSC_IM));
+end;
+
+function TNFSeW_Giap101.GerarEnderecoPrestador: TACBrXmlNode;
+begin
+  Result := CreateElement('Endereco');
+
+  Result.AppendChild(AddNode(tcStr, '#39', 'Endereco', 1, 125, 0,
+                                   NFSe.Prestador.Endereco.Endereco, DSC_XLGR));
+
+  Result.AppendChild(AddNode(tcStr, '#40', 'Numero', 1, 10, 0,
+                                      NFSe.Prestador.Endereco.Numero, DSC_NRO));
+
+  Result.AppendChild(AddNode(tcStr, '#41', 'Complemento', 1, 60, NrOcorrComplTomador,
+                                NFSe.Prestador.Endereco.Complemento, DSC_XCPL));
+
+  Result.AppendChild(AddNode(tcStr, '#42', 'Bairro', 1, 60, 0,
+                                  NFSe.Prestador.Endereco.Bairro, DSC_XBAIRRO));
+
+  Result.AppendChild(AddNode(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0,
+                OnlyNumber(NFSe.Prestador.Endereco.CodigoMunicipio), DSC_CMUN));
+
+  Result.AppendChild(AddNode(tcStr, '#44', 'Uf', 2, 2, 0,
+                                           NFSe.Prestador.Endereco.UF, DSC_UF));
+
+  Result.AppendChild(AddNode(tcStr, '#45', 'Cep', 8, 8, 0,
+                             OnlyNumber(NFSe.Prestador.Endereco.CEP), DSC_CEP));
+end;
+
+function TNFSeW_Giap101.GerarContatoPrestador: TACBrXmlNode;
+begin
+  Result := nil;
+
+  if (NFSe.Prestador.Contato.Telefone <> '') or (NFSe.Prestador.Contato.Email <> '') then
+  begin
+    Result := CreateElement('Contato');
+
+    Result.AppendChild(AddNode(tcStr, '#46', 'Telefone', 1, 11, NrOcorrFoneTomador,
+                        OnlyNumber(NFSe.Prestador.Contato.Telefone), DSC_FONE));
+
+    Result.AppendChild(AddNode(tcStr, '#47', 'Email', 1, 80, NrOcorrEmailTomador,
+                                      NFSe.Prestador.Contato.Email, DSC_EMAIL));
+  end;
+end;
+
+function TNFSeW_Giap101.GerarOrgaoGerador: TACBrXmlNode;
+begin
+  Result := nil;
+
+  if (NFSe.OrgaoGerador.CodigoMunicipio <> '') or (NFSe.OrgaoGerador.Uf <> '') then
+  begin
+    Result := CreateElement('OrgaoGerador');
+
+    Result.AppendChild(AddNode(tcStr, '#46', 'CodigoMunicipio', 7, 7, 1,
+                                  NFSe.OrgaoGerador.CodigoMunicipio, DSC_FONE));
+
+    Result.AppendChild(AddNode(tcStr, '#47', 'Uf', 2, 2, 1,
+                                              NFSe.OrgaoGerador.Uf, DSC_EMAIL));
+  end;
 end;
 
 end.

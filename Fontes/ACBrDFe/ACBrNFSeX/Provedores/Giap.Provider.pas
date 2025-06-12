@@ -385,6 +385,7 @@ begin
              CodigoVerificacao := aCodigoVerificacao;
              Link := aLink;
              IdentificacaoRps.Numero := aNumeroRps;
+             tpXML := txmlNFSe;
              ANota.LerXML(ANota.GerarXML);
           end;
 

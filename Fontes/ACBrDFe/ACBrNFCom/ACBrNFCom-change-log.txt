@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/06/2025
+-- ACBrNFComXmlWriter --
+[*] #TK-7209 - Alteração na geração das tags: codDebAuto ou a codBanco e a 
+    codAgencia para deixar de acordo com os Schemas.
+   Por: Victor Werneck
+
 11/06/2025
 -- ACBrNFComXmlWriter --
 [*] Correção no nome da constante e inclusão de uma nova constante.

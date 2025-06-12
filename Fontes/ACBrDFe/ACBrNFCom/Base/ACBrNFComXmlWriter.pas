@@ -1398,10 +1398,10 @@ begin
     Result.AppendChild(AddNode(tcStr, '#279', 'codBarras', 1, 48, 1,
                                           NFCom.gFat.codBarras, DSC_CODBARRAS));
 
-    if NFCom.gFat.codDebAuto <> '' then
-      Result.AppendChild(AddNode(tcStr, '#280', 'codDebAuto', 1, 20, 1,
-                                         NFCom.gFat.codDebAuto, DSC_CODDEBAUTO))
-    else
+    Result.AppendChild(AddNode(tcStr, '#280', 'codDebAuto', 1, 20, 0,
+                                        NFCom.gFat.codDebAuto, DSC_CODDEBAUTO));
+
+    if (NFCom.gFat.codBanco <> '') or (NFCom.gFat.codAgencia <> '') then
     begin
       Result.AppendChild(AddNode(tcStr, '#281', 'codBanco', 3, 5, 1,
                                             NFCom.gFat.codBanco, DSC_CODBANCO));

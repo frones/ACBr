@@ -49,8 +49,8 @@ uses
   ACBrDFeSSL,
   synautil,
   ACBrBoleto,
-  Jsons,
-  ACBrBoletoWS.Rest;
+  ACBrBoletoWS.Rest,
+  ACBrJSON;
 
 type
 
@@ -75,26 +75,26 @@ type
     procedure RequisicaoBaixa;
     procedure RequisicaoConsulta;
     procedure RequisicaoConsultaDetalhe;
-    procedure GerarPagador(AJson: TJsonObject);
-    procedure GerarBenificiarioFinal(AJson: TJsonObject);
-    procedure GerarJuros(AJson: TJsonObject);
-    procedure GerarMulta(AJson: TJsonObject);
-    procedure GerarDesconto(AJson: TJsonObject);
-    procedure GeraDadosInstrucao(AJson:TJsonObject );
+    procedure GerarPagador(AJson: TACBrJSONObject);
+    procedure GerarBenificiarioFinal(AJson: TACBrJSONObject);
+    procedure GerarJuros(AJson: TACBrJSONObject);
+    procedure GerarMulta(AJson: TACBrJSONObject);
+    procedure GerarDesconto(AJson: TACBrJSONObject);
+    procedure GeraDadosInstrucao(AJson:TACBrJSONObject );
 
-    procedure AlteraDataVencimento( AJson: TJsonObject);
-    procedure AtribuirDesconto(AJson: TJsonObject);
-    procedure AlteracaoDesconto(AJson: TJsonObject);
-    procedure AlteracaoDataDesconto(AJson: TJsonObject);
-    procedure AlterarProtesto(AJson: TJsonObject);
-    procedure AtribuirAbatimento(AJson: TJsonObject);
-    procedure AlteracaoAbatimento(AJson: TJsonObject);
-    procedure AtribuirJuros(AJson: TJsonObject);
-    procedure AtribuirMulta(AJson: TJsonObject);
-    procedure AtribuirNegativacao(AJson: TJsonObject);
-    procedure AlteracaoSeuNumero(AJson: TJsonObject);
-    procedure AlteracaoEnderecoPagador(AJson: TJsonObject);
-    procedure AlteracaoPrazo(AJson: TJsonObject);
+    procedure AlteraDataVencimento( AJson: TACBrJSONObject);
+    procedure AtribuirDesconto(AJson: TACBrJSONObject);
+    procedure AlteracaoDesconto(AJson: TACBrJSONObject);
+    procedure AlteracaoDataDesconto(AJson: TACBrJSONObject);
+    procedure AlterarProtesto(AJson: TACBrJSONObject);
+    procedure AtribuirAbatimento(AJson: TACBrJSONObject);
+    procedure AlteracaoAbatimento(AJson: TACBrJSONObject);
+    procedure AtribuirJuros(AJson: TACBrJSONObject);
+    procedure AtribuirMulta(AJson: TACBrJSONObject);
+    procedure AtribuirNegativacao(AJson: TACBrJSONObject);
+    procedure AlteracaoSeuNumero(AJson: TACBrJSONObject);
+    procedure AlteracaoEnderecoPagador(AJson: TACBrJSONObject);
+    procedure AlteracaoPrazo(AJson: TACBrJSONObject);
 
   public
     constructor Create(ABoletoWS: TBoletoWS); override;
@@ -218,12 +218,11 @@ end;
 
 function TBoletoW_Sicredi_APIECOMM.GerarTokenAutenticacao: string;
 var
-  Data  : string;
-  Json  : TJSONObject;
-  Stream: TMemoryStream;
+  LJson  : TACBrJSONObject;
+  LStream: TMemoryStream;
 begin
-  Json := TJsonObject.Create; 
-  Stream:= TMemoryStream.Create;
+  LJson := TACBrJsonObject.Create;
+  LStream:= TMemoryStream.Create;
   try
       if( not Assigned( FDFeSSL ) ) then
         FDFeSSL := TDFeSSL( Boleto.Configuracoes.WebService);
@@ -235,14 +234,14 @@ begin
           AddHeader('token', Boleto.Cedente.CedenteWS.ClientID);
         end;
 
-      FDFeSSL.SSLHttpClass.DataReq.LoadFromStream(Stream);
+      FDFeSSL.SSLHttpClass.DataReq.LoadFromStream(LStream);
       FDFeSSL.HTTPMethod(MetodoHTTPToStr(htPOST), C_URL_OAUTH_PROD );
-      data :=  UTF8Decode(ReadStrFromStream(FDFeSSL.SSLHttpClass.DataResp, FDFeSSL.SSLHttpClass.DataResp.Size ));
-      Json.Parse( data );
 
-      if( Json.Values['codigo' ].asString = '' ) then // se não veio código de erro
+      LJson.Parse( UTF8Decode(ReadStrFromStream(FDFeSSL.SSLHttpClass.DataResp, FDFeSSL.SSLHttpClass.DataResp.Size )) );
+
+      if( LJson.AsString['codigo' ] = '' ) then // se não veio código de erro
         begin
-          result := Json.Values['chaveTransacao'].asString;
+          result := LJson.AsString['chaveTransacao'];
         end
       else
         begin
@@ -250,16 +249,16 @@ begin
                                                   + Format( S_ERRO_GERAR_TOKEN_AUTENTICACAO,
                                                             [ 'Código: '
                                                               + '-'
-                                                              +Json.Values['codigo'].asString
+                                                              +LJson.AsString['codigo']
                                                               +#13
-                                                              +Json.Values['mensagem'].asString
+                                                              +LJson.AsString['mensagem']
                                                               +#13
                                                               +'Parametro: '
-                                                              +Json.Values['parametro'].asString ] ));
+                                                              +LJson.AsString['parametro'] ] ));
         end;
   finally
-    Stream.Free;
-	Json.Free;
+    LStream.Free;
+	  LJson.Free;
     FDFeSSL.SSLHttpClass.HeaderReq.Clear;
     FDFeSSL.SSLHttpClass.HeaderResp.Clear;
     FDFeSSL.SSLHttpClass.Clear;
@@ -339,213 +338,192 @@ end;
 
 procedure TBoletoW_Sicredi_APIECOMM.RequisicaoJson;
 var
-  Data: string;
-  Json: TJSONObject;
-  aSeuNumero, aNossoNumero:String;
+  LJson: TACBrJSONObject;
+  LSeuNumero, LNossoNumero:String;
 begin
   if Assigned(ATitulo) then
   begin
-    Json := TJsonObject.Create;
+    LJson := TACBrJsonObject.Create;
     try
 
-      aNossoNumero  := OnlyNumber( ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo) );
-      aSeuNumero    := ATitulo.NossoNumero;
-      Json.Add('agencia' ).Value.asString                              := Boleto.Cedente.Agencia;
-      Json.Add('posto' ).Value.asString                                := Boleto.Cedente.AgenciaDigito;
-      Json.Add('cedente' ).Value.asString                              := Boleto.Cedente.CodigoCedente;
-      Json.Add('especieDocumento').Value.AsString                      := codigoTipoTitulo(ATitulo.EspecieDoc);
-      Json.Add('dataVencimento').Value.AsString                        := FormatDateBr(ATitulo.Vencimento, 'DD/MM/YYYY');
-      Json.Add('valor').Value.AsNumber                                 := ATitulo.ValorDocumento;
-      Json.Add('mensagem').Value.AsString                              := UpperCase(Copy(Trim(ATitulo.Instrucao1 +' '+ATitulo.Instrucao2+' '+ATitulo.Instrucao3),0,165));
-      Json.Add('descontoAntecipado').Value.AsNumber                    := ATitulo.ValorAbatimento;
+      LNossoNumero  := OnlyNumber( ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo) );
+      LSeuNumero    := ATitulo.NossoNumero;
+      LJson.AddPair('agencia', Boleto.Cedente.Agencia);
+      LJson.AddPair('posto', Boleto.Cedente.AgenciaDigito);
+      LJson.AddPair('cedente', Boleto.Cedente.CodigoCedente);
+      LJson.AddPair('especieDocumento', codigoTipoTitulo(ATitulo.EspecieDoc));
+      LJson.AddPair('dataVencimento', FormatDateBr(ATitulo.Vencimento, 'DD/MM/YYYY'));
+      LJson.AddPair('valor', ATitulo.ValorDocumento);
+      LJson.AddPair('mensagem', UpperCase(Copy(Trim(ATitulo.Instrucao1 +' '+ATitulo.Instrucao2+' '+ATitulo.Instrucao3),0,165)));
+      LJson.AddPair('descontoAntecipado', ATitulo.ValorAbatimento);
 
+      GerarDesconto(LJson);
+      GerarJuros(LJson);
+      GerarMulta(LJson);
+      GerarPagador(LJson);
+      GerarBenificiarioFinal(LJson);
 
-      GerarDesconto(Json);
-      GerarJuros(Json);
-      GerarMulta(Json);
-      GerarPagador(Json);
-      GerarBenificiarioFinal(Json);
-      
       if (ATitulo.DiasDeNegativacao > 0) then
       begin
-        Json.Add('numDiasNegativacaoAuto').Value.AsInteger              := ATitulo.DiasDeNegativacao;
+        LJson.AddPair('numDiasNegativacaoAuto',  ATitulo.DiasDeNegativacao);
       end;
 
-      Json.Values['seuNumero' ].asString                                := aSeuNumero;
-      Json.Values['nossoNumero' ].asString                              := aNossoNumero;
+      LJson.AddPair('seuNumero', LSeuNumero);
+      LJson.AddPair('nossoNumero', LNossoNumero);
 
-      Data := Json.Stringify;
-
-      FPDadosMsg := Data;
+      FPDadosMsg := LJson.ToJSON;
 
     finally
-      Json.Free;
+      LJson.Free;
     end;
   end;
 end;
 
 procedure TBoletoW_Sicredi_APIECOMM.RequisicaoAltera;
 var
-  Data: string;
-  Json: TJSONObject;
+  LJson: TACBrJSONObject;
 begin
 
   if Assigned(ATitulo) then
   begin
 
-    Json := TJsonObject.Create;
-
-    Json.Add( 'agencia' ).Value.asString                              := Boleto.Cedente.Agencia;
-    Json.Add( 'posto' ).Value.asString                                := Boleto.Cedente.AgenciaDigito;
-    Json.Add( 'cedente' ).Value.asString                              := Boleto.Cedente.CodigoCedente;
-    Json.Add( 'nossoNumero' ).Value.asString                          := OnlyNumber( ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo) );
+    LJson := TACBrJsonObject.Create;
 
     try
+      LJson.AddPair( 'agencia', Boleto.Cedente.Agencia);
+      LJson.AddPair( 'posto', Boleto.Cedente.AgenciaDigito);
+      LJson.AddPair( 'cedente', Boleto.Cedente.CodigoCedente);
+      LJson.AddPair( 'nossoNumero', OnlyNumber( ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo) ));
 
       case Integer(ATitulo.OcorrenciaOriginal.Tipo) of
         3:  // RemessaConcederAbatimento
           begin
-            Json.Add( 'instrucaoComando' ).Value.asString := 'CONCESSAO_ABATIMENTO';
-            Json.Add('complementoInstrucao' ).IsJsonNull( 'null' );
-            AtribuirAbatimento(Json);
+            LJson.AddPair( 'instrucaoComando', 'CONCESSAO_ABATIMENTO');
+            LJson.AddPair('complementoInstrucao', True);
+            AtribuirAbatimento(LJson);
           end;
         4:  // RemessaCancelarAbatimento
           begin
-            Json.Add( 'instrucaoComando' ).Value.asString := 'CANCELAMENTO_ABATIMENTO_CONCEDIDO';
-            Json.Add('complementoInstrucao' ).IsJsonNull( 'null' );
-            AlteracaoAbatimento(Json);
+            LJson.AddPair( 'instrucaoComando', 'CANCELAMENTO_ABATIMENTO_CONCEDIDO');
+            LJson.AddPair('complementoInstrucao', True);
+            AlteracaoAbatimento(LJson);
           end;
         5: //RemessaConcederDesconto
           begin
-            Json.Add( 'instrucaoComando' ).Value.asString := 'ALTERACAO_OUTROS_DADOS';
-            Json.Add( 'complementoInstrucao' ).Value.asString := 'DESCONTO';
-            AtribuirDesconto(Json);
+            LJson.AddPair( 'instrucaoComando', 'ALTERACAO_OUTROS_DADOS');
+            LJson.AddPair( 'complementoInstrucao', 'DESCONTO');
+            AtribuirDesconto(LJson);
           end;
         7: //RemessaAlterarVencimento
           begin
-            Json.Add( 'instrucaoComando' ).Value.asString := 'ALTERACAO_VENCIMENTO';
-            Json.Add('complementoInstrucao' ).IsJsonNull( 'null' );
-            Json.Add('tipoVencimento' ).Value.asString         :=  'DATA_ESPECIFICA';
-            AlteraDataVencimento(Json);
+            LJson.AddPair( 'instrucaoComando', 'ALTERACAO_VENCIMENTO');
+            LJson.AddPair('complementoInstrucao', True);
+            LJson.AddPair('tipoVencimento', 'DATA_ESPECIFICA');
+            AlteraDataVencimento(LJson);
           end;
         9:  //RemessaProtestar
           begin
-            Json.Add( 'instrucaoComando' ).Value.asString := 'PEDIDO_PROTESTO';
-            Json.Add('complementoInstrucao' ).IsJsonNull( 'null' );
-            AlterarProtesto(Json);
+            LJson.AddPair( 'instrucaoComando', 'PEDIDO_PROTESTO');
+            LJson.AddPair('complementoInstrucao', True);
+            AlterarProtesto(LJson);
           end;
         10:  //RemessaSustarProtesto
           begin
-            Json.Add( 'instrucaoComando' ).Value.asString := 'SUSTAR_PROTESTO_MANTER_CARTEIRA';
-            Json.Add('complementoInstrucao' ).IsJsonNull( 'null' );
-            AlterarProtesto(Json);
+            LJson.AddPair( 'instrucaoComando', 'SUSTAR_PROTESTO_MANTER_CARTEIRA');
+            LJson.AddPair('complementoInstrucao', True);
+            AlterarProtesto(LJson);
           end;
         12:  //RemessaCancelarInstrucaoProtesto
           begin
-            Json.Add( 'instrucaoComando' ).Value.asString := 'SUSTAR_PROTESTO_BAIXAR_TITULO';
-            Json.Add('complementoInstrucao' ).IsJsonNull( 'null' );
-            AlterarProtesto(Json);
+            LJson.AddPair( 'instrucaoComando', 'SUSTAR_PROTESTO_BAIXAR_TITULO');
+            LJson.AddPair('complementoInstrucao', True);
+            AlterarProtesto(LJson);
           end;
         13:  //RemessaDispensarJuros
           begin
-            //Json.Add('indicadorDispensarJuros').Value.AsString := 'S';
+            //LJson.AddPair('indicadorDispensarJuros').Value.AsString := 'S';
           end;
         14:  //RemessaAlterarNomeEnderecoSacado
           begin
-            //Json.Add('indicadorAlterarEnderecoPagador').Value.AsString := 'S';
-            AlteracaoEnderecoPagador(Json);
+            //LJson.AddPair('indicadorAlterarEnderecoPagador').Value.AsString := 'S';
+            AlteracaoEnderecoPagador(LJson);
           end;
         18:  //RemessaAlterarSeuNumero
           begin
-            Json.Add( 'instrucaoComando' ).Value.asString := 'ALTERACAO_SEU_NUMERO';
-            Json.Add('complementoInstrucao' ).IsJsonNull('null');
-            AlteracaoSeuNumero(Json);
+            LJson.AddPair( 'instrucaoComando', 'ALTERACAO_SEU_NUMERO');
+            LJson.AddPair('complementoInstrucao', True);
+            AlteracaoSeuNumero(LJson);
           end;
         37: //RemessaCobrarJurosMora
           begin
-            Json.Add( 'instrucaoComando' ).Value.asString := 'ALTERACAO_OUTROS_DADOS';
-            Json.Add('complementoInstrucao' ).Value.asString   := 'JUROS_DIA';
-            AtribuirJuros(Json);
+            LJson.AddPair( 'instrucaoComando', 'ALTERACAO_OUTROS_DADOS');
+            LJson.AddPair('complementoInstrucao', 'JUROS_DIA');
+            AtribuirJuros(LJson);
           end;
         50:  //RemessaAlterarMulta
           begin
-            AtribuirMulta(Json);
+            AtribuirMulta(LJson);
           end;
         51:  //RemessaDispensarMulta
           begin
-            //Json.Add('indicadorDispensarMulta').Value.AsString := 'S';
+            //LJson.AddPair('indicadorDispensarMulta').Value.AsString := 'S';
           end;
         52: //RemessaAlterarDesconto
           begin
-            Json.Add( 'instrucaoComando' ).Value.asString := 'ALTERACAO_OUTROS_DADOS';
-            Json.Add('complementoInstrucao' ).Value.asString   := 'DESCONTO';
-            AlteracaoDesconto(Json);
+            LJson.AddPair( 'instrucaoComando', 'ALTERACAO_OUTROS_DADOS');
+            LJson.AddPair('complementoInstrucao', 'DESCONTO');
+            AlteracaoDesconto(LJson);
           end;
         53: //RemessaAlterarDataDesconto
           begin
-            Json.Add( 'instrucaoComando' ).Value.asString := 'ALTERACAO_OUTROS_DADOS';
-            Json.Add('complementoInstrucao' ).Value.asString   := 'DATA_LIMITE_CONCESSAO_DESCONTO';
-            AlteracaoDataDesconto(Json);
+            LJson.AddPair( 'instrucaoComando', 'ALTERACAO_OUTROS_DADOS');
+            LJson.AddPair('complementoInstrucao', 'DATA_LIMITE_CONCESSAO_DESCONTO');
+            AlteracaoDataDesconto(LJson);
           end;
         55:  //RemessaAlterarPrazoLimiteRecebimento
           begin
-            AlteracaoPrazo(Json);
+            AlteracaoPrazo(LJson);
           end;
         66:  //RemessaNegativacaoSemProtesto
           begin
-            Json.Add('indicadorNegativar').Value.AsString := 'S';
-            AtribuirNegativacao(Json);
+            LJson.AddPair('indicadorNegativar', 'S');
+            AtribuirNegativacao(LJson);
           end;
       end;
-
-      Data := Json.Stringify;
-
-      FPDadosMsg := Data;
-
+      FPDadosMsg := LJson.ToJson;
     finally
-      Json.Free;
+      LJson.Free;
     end;
-
   end;
-
 end;
 
-procedure TBoletoW_Sicredi_APIECOMM.GeraDadosInstrucao(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.GeraDadosInstrucao(AJson: TACBrJSONObject);
 var
-aNossoNumero:String;
+  LNossoNumero:String;
 begin
-    aNossoNumero  := OnlyNumber( ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo) );
-    AJson.Add('agencia' ).Value.asString           := Boleto.Cedente.Agencia;
-    AJson.Add('posto' ).Value.asString             := Boleto.Cedente.AgenciaDigito;
-    AJson.Add('cedente' ).Value.asString           := Boleto.Cedente.CodigoCedente;
-    AJson.Add('nossoNumero' ).Value.asString       := aNossoNumero;
+  LNossoNumero  := OnlyNumber( ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo) );
+  AJson.AddPair('agencia', Boleto.Cedente.Agencia);
+  AJson.AddPair('posto', Boleto.Cedente.AgenciaDigito);
+  AJson.AddPair('cedente', Boleto.Cedente.CodigoCedente);
+  AJson.AddPair('nossoNumero', LNossoNumero);
 end;
-
 
 procedure TBoletoW_Sicredi_APIECOMM.RequisicaoBaixa;
 var
-  Data: string;
-  AJson: TJSONObject;
+  LJson: TACBrJSONObject;
 begin
-
-
   if Assigned(ATitulo) then
   begin
-
-    AJson := TJSONObject.Create;
-
-    if Assigned(AJson) then
-    begin
-      GeraDadosInstrucao(AJson );
-      AJson.Add( 'instrucaoComando' ).Value.asString := 'PEDIDO_BAIXA';
-      AJson.Add('complementoInstrucao' ).IsJsonNull('null');
+    LJson := TACBrJSONObject.Create;
+    try
+      GeraDadosInstrucao( LJson );
+      LJson.AddPair( 'instrucaoComando', 'PEDIDO_BAIXA');
+      LJson.AddPair('complementoInstrucao', True);
+      FPDadosMsg := LJson.ToJSON;
+    finally
+      LJson.Free;
     end;
-
-    Data := AJson.Stringify;
-    FPDadosMsg := Data;
-
   end;
-
 end;
 
 procedure TBoletoW_Sicredi_APIECOMM.RequisicaoConsulta;
@@ -558,252 +536,153 @@ begin
     //Sem Payload - Define Método GET
 end;
 
-procedure TBoletoW_Sicredi_APIECOMM.GerarPagador(AJson: TJsonObject);
-
+procedure TBoletoW_Sicredi_APIECOMM.GerarPagador(AJson: TACBrJSONObject);
 begin
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    if Assigned(AJson) then
-    begin
-        aJson.Add('tipoPessoa').Value.AsInteger      := StrToInt(IfThen(Length( OnlyNumber(ATitulo.Sacado.CNPJCPF)) = 11,'1','2'));
-        aJson.Add('cpfCnpj').Value.asString          := OnlyNumber(ATitulo.Sacado.CNPJCPF);
-        aJson.Add('nome').Value.AsString             := ATitulo.Sacado.NomeSacado;
-        aJson.Add('endereco').Value.AsString         := ATitulo.Sacado.Logradouro + ' ' + ATitulo.Sacado.Numero;
-        aJson.Add('cep').Value.AsString              := OnlyNumber(ATitulo.Sacado.CEP);
-        aJson.Add('cidade').Value.AsString           := ATitulo.Sacado.Cidade;
-        aJson.Add('uf').Value.AsString               := ATitulo.Sacado.UF;
-        aJson.Add('telefone').Value.AsString         := IfThen( ATitulo.Sacado.Fone='' , '0',ATitulo.Sacado.Fone );
-        aJson.Add('email').Value.AsString            := ATitulo.Sacado.Email;
-    end;
-
-  end;
-
-end;
-
-procedure TBoletoW_Sicredi_APIECOMM.GerarBenificiarioFinal(AJson: TJsonObject);
-begin
-  if Assigned(ATitulo) then
-  begin
-      if ATitulo.Sacado.SacadoAvalista.CNPJCPF = EmptyStr then
-        Exit;
-
-      if Assigned(AJson) then
-      begin
-        // No manual não constam dados para informar Avalista
-        AJson.Add( 'codigoSacadorAvalista' ).Value.asString := '000';
-      end;
+    AJson.AddPair('tipoPessoa', StrToInt(IfThen(Length( OnlyNumber(ATitulo.Sacado.CNPJCPF)) = 11,'1','2')));
+    AJson.AddPair('cpfCnpj', OnlyNumber(ATitulo.Sacado.CNPJCPF));
+    AJson.AddPair('nome', ATitulo.Sacado.NomeSacado);
+    AJson.AddPair('endereco', ATitulo.Sacado.Logradouro + ' ' + ATitulo.Sacado.Numero);
+    AJson.AddPair('cep', OnlyNumber(ATitulo.Sacado.CEP));
+    AJson.AddPair('cidade', ATitulo.Sacado.Cidade);
+    AJson.AddPair('uf', ATitulo.Sacado.UF);
+    AJson.AddPair('telefone', IfThen( ATitulo.Sacado.Fone='' , '0',ATitulo.Sacado.Fone ));
+    AJson.AddPair('email', ATitulo.Sacado.Email);
   end;
 end;
 
-procedure TBoletoW_Sicredi_APIECOMM.GerarJuros(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.GerarBenificiarioFinal(AJson: TACBrJSONObject);
 begin
   if Assigned(ATitulo) then
   begin
+    if ATitulo.Sacado.SacadoAvalista.CNPJCPF = EmptyStr then
+      Exit;
 
     if Assigned(AJson) then
     begin
-      AJson.Add( 'tipoJuros' ).Value.asString  := ATitulo.CodigoMora;
-      AJson.Add( 'juros' ).Value.AsNumber      := ATitulo.ValorMoraJuros;
-    end;
-
-  end;
-end;
-
-procedure TBoletoW_Sicredi_APIECOMM.GerarMulta(AJson: TJsonObject);
-begin
-  if Assigned(ATitulo) then
-  begin
-    if Assigned(AJson) then
-    begin
-
-      if ATitulo.PercentualMulta > 0 then
-      begin
-        AJson.Add( 'multas' ).Value.asNumber := ATitulo.PercentualMulta;
-      end;
+      // No manual não constam dados para informar Avalista
+      AJson.AddPair( 'codigoSacadorAvalista', '000');
     end;
   end;
 end;
 
-procedure TBoletoW_Sicredi_APIECOMM.GerarDesconto(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.GerarJuros(AJson: TACBrJSONObject);
 begin
-
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-
-    if Assigned(AJson) then
-    begin
-        AJson.Add('tipoDesconto').Value.AsString         := ifThen( integer(ATitulo.TipoDesconto)=1,'A' , 'B' );
-        if (ATitulo.DataDesconto > 0) then
-        begin
-          AJson.Add('valorDesconto1').Value.AsNumber       := ATitulo.ValorDesconto;
-          AJson.Add('dataDesconto1').Value.AsString        := FormatDateBr(ATitulo.DataDesconto, 'DD/MM/YYYY');
-        end;
-
-        if (ATitulo.DataDesconto2 > 0) then
-        begin
-          AJson.Add('valorDesconto2').Value.AsNumber       := ATitulo.ValorDesconto2;
-          AJson.Add('dataDesconto2').Value.AsString        := FormatDateBr(ATitulo.DataDesconto2, 'DD/MM/YYYY');
-        end;
-
-        if (ATitulo.DataDesconto3 > 0) then
-        begin
-          AJson.Add('valorDesconto3').Value.AsNumber       := ATitulo.ValorDesconto3;
-          AJson.Add('dataDesconto3').Value.AsString        := FormatDateBr(ATitulo.DataDesconto3, 'DD/MM/YYYY');
-        end;
-
-    end;
-
+    AJson.AddPair( 'tipoJuros', ATitulo.CodigoMora);
+    AJson.AddPair( 'juros', ATitulo.ValorMoraJuros);
   end;
-
 end;
 
-procedure TBoletoW_Sicredi_APIECOMM.AlteraDataVencimento(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.GerarMulta(AJson: TACBrJSONObject);
 begin
-
-  if Assigned(ATitulo) then
-  begin
-    if Assigned(AJson) then
-    begin
-      AJson.Add('data1' ).Value.asString                  := FormatDateBr(ATitulo.Vencimento);
-    end;
-  end;
-
+  if Assigned(ATitulo) and Assigned(AJson) and (ATitulo.PercentualMulta > 0) then
+    AJson.AddPair( 'multas', ATitulo.PercentualMulta);
 end;
 
-procedure TBoletoW_Sicredi_APIECOMM.AtribuirDesconto(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.GerarDesconto(AJson: TACBrJSONObject);
 begin
-
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-
-    if Assigned(AJson) then
+    AJson.AddPair('tipoDesconto', ifThen( integer(ATitulo.TipoDesconto)=1,'A' , 'B' ) );
+    if (ATitulo.DataDesconto > 0) then
     begin
-      AJson.Add('valor1' ).Value.asNumber       := ATitulo.ValorDesconto;
+      AJson.AddPair('valorDesconto1', ATitulo.ValorDesconto);
+      AJson.AddPair('dataDesconto1', FormatDateBr(ATitulo.DataDesconto, 'DD/MM/YYYY'));
     end;
 
-  end;
-
-end;
-
-procedure TBoletoW_Sicredi_APIECOMM.AlteracaoDesconto(AJson: TJsonObject);
-begin
-
-  if Assigned(ATitulo) then
-  begin
-    if Assigned(AJson) then
+    if (ATitulo.DataDesconto2 > 0) then
     begin
-      AJson.Add('valor1' ).Value.asNumber       := ATitulo.ValorDesconto;
+      AJson.AddPair('valorDesconto2', ATitulo.ValorDesconto2);
+      AJson.AddPair('dataDesconto2', FormatDateBr(ATitulo.DataDesconto2, 'DD/MM/YYYY'));
     end;
-  end;
 
-end;
-
-procedure TBoletoW_Sicredi_APIECOMM.AlteracaoDataDesconto(AJson: TJsonObject);
-begin
-
-  if Assigned(ATitulo) then
-  begin
-    if Assigned(AJson) then
+    if (ATitulo.DataDesconto3 > 0) then
     begin
-      AJson.Add('data1' ).Value.asString        := FormatDateBr(ATitulo.DataDesconto, 'DD.MM.YYYY');
-    end;
-  end;
-
-end;
-
-
-procedure TBoletoW_Sicredi_APIECOMM.AlterarProtesto(AJson: TJsonObject);
-begin
-
-  if Assigned(ATitulo) then
-  begin
-    if Assigned(AJson) then
-    begin
-      AJson.Add('complementoInstrucao' ).IsJsonNull('null');
+      AJson.AddPair('valorDesconto3', ATitulo.ValorDesconto3);
+      AJson.AddPair('dataDesconto3', FormatDateBr(ATitulo.DataDesconto3, 'DD/MM/YYYY'));
     end;
   end;
 end;
 
-procedure TBoletoW_Sicredi_APIECOMM.AtribuirAbatimento(AJson: TJsonObject);
-
+procedure TBoletoW_Sicredi_APIECOMM.AlteraDataVencimento(AJson: TACBrJSONObject);
 begin
-
-  if Assigned(ATitulo) then
-  begin
-    if Assigned(AJson) then
-    begin
-      AJson.Add('valor1' ).Value.asNumber := ATitulo.ValorAbatimento;
-    end;
-  end;
-
+  if Assigned(ATitulo) and Assigned(AJson) then
+    AJson.AddPair('data1', FormatDateBr(ATitulo.Vencimento));
 end;
 
-procedure TBoletoW_Sicredi_APIECOMM.AlteracaoAbatimento(AJson: TJsonObject);
-
+procedure TBoletoW_Sicredi_APIECOMM.AtribuirDesconto(AJson: TACBrJSONObject);
 begin
-  if Assigned(ATitulo) then
-  begin
-    if Assigned(AJson) then
-    begin
-      AJson.Add('complementoInstrucao' ).IsJsonNull( 'null' );
-    end;
-  end;
-
+  if Assigned(ATitulo) and Assigned(AJson) then
+    AJson.AddPair('valor1', ATitulo.ValorDesconto);
 end;
 
-procedure TBoletoW_Sicredi_APIECOMM.AtribuirJuros(AJson: TJsonObject);
-
+procedure TBoletoW_Sicredi_APIECOMM.AlteracaoDesconto(AJson: TACBrJSONObject);
 begin
-
-  if Assigned(ATitulo) then
-  begin
-    if Assigned(AJson) then
-    begin
-      AJson.Add('valor1' ).Value.asNumber := ATitulo.ValorMoraJuros;
-    end;
-  end;
-
+  if Assigned(ATitulo) and Assigned(AJson) then
+    AJson.AddPair('valor1', ATitulo.ValorDesconto);
 end;
 
-procedure TBoletoW_Sicredi_APIECOMM.AtribuirMulta(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.AlteracaoDataDesconto(AJson: TACBrJSONObject);
+begin
+  if Assigned(ATitulo) and Assigned(AJson) then
+    AJson.AddPair('data1', FormatDateBr(ATitulo.DataDesconto, 'DD.MM.YYYY'));
+end;
+
+procedure TBoletoW_Sicredi_APIECOMM.AlterarProtesto(AJson: TACBrJSONObject);
+begin
+  if Assigned(ATitulo) and Assigned(AJson) then
+    AJson.AddPair('complementoInstrucao', True);
+end;
+
+procedure TBoletoW_Sicredi_APIECOMM.AtribuirAbatimento(AJson: TACBrJSONObject);
+begin
+  if Assigned(ATitulo) and Assigned(AJson) then
+    AJson.AddPair('valor1', ATitulo.ValorAbatimento);
+end;
+
+procedure TBoletoW_Sicredi_APIECOMM.AlteracaoAbatimento(AJson: TACBrJSONObject);
+begin
+  if Assigned(ATitulo) and Assigned(AJson) then
+    AJson.AddPair('complementoInstrucao', True );
+end;
+
+procedure TBoletoW_Sicredi_APIECOMM.AtribuirJuros(AJson: TACBrJSONObject);
+begin
+  if Assigned(ATitulo) and Assigned(AJson) then
+    AJson.AddPair('valor1', ATitulo.ValorMoraJuros);
+end;
+
+procedure TBoletoW_Sicredi_APIECOMM.AtribuirMulta(AJson: TACBrJSONObject);
 begin
   //Sem Payload
 end;
 
-procedure TBoletoW_Sicredi_APIECOMM.AtribuirNegativacao(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.AtribuirNegativacao(AJson: TACBrJSONObject);
 begin
   //Sem Payload
 end;
 
-procedure TBoletoW_Sicredi_APIECOMM.AlteracaoSeuNumero(AJson: TJsonObject);
-
+procedure TBoletoW_Sicredi_APIECOMM.AlteracaoSeuNumero(AJson: TACBrJSONObject);
 begin
-
-  if Assigned(ATitulo) then
-  begin
-    if Assigned(AJson) then
-    begin
-      AJson.Add('seuNumero' ).Value.asString := ATitulo.SeuNumero;
-    end;
-  end;
-
+  if Assigned(ATitulo) and Assigned(AJson) then
+    AJson.AddPair('seuNumero', ATitulo.SeuNumero);
 end;
 
-procedure TBoletoW_Sicredi_APIECOMM.AlteracaoEnderecoPagador(AJson: TJsonObject);
-
+procedure TBoletoW_Sicredi_APIECOMM.AlteracaoEnderecoPagador(AJson: TACBrJSONObject);
 begin
   //Sem Payload
 end;
 
-procedure TBoletoW_Sicredi_APIECOMM.AlteracaoPrazo(AJson: TJsonObject);
-
+procedure TBoletoW_Sicredi_APIECOMM.AlteracaoPrazo(AJson: TACBrJSONObject);
 begin
 // sem Payload
 end;
 
 function TBoletoW_Sicredi_APIECOMM.CodigoTipoTitulo(AEspecieDoc : String): String;
 begin
-
   result := 'A';
   { Pegando o tipo de AEspecieDoc }
   if AEspecieDoc = 'DMI' then
@@ -828,7 +707,6 @@ begin
      result   := 'K'
   else
      result := 'A';
-
 end;
 
 constructor TBoletoW_Sicredi_APIECOMM.Create(ABoletoWS: TBoletoWS);
@@ -840,8 +718,8 @@ begin
   if Assigned(OAuth) then
   begin
     case OAuth.Ambiente of
-      tawsProducao: OAuth.URL.URLProducao := C_URL_OAUTH_PROD;
-      tawsHomologacao: OAuth.URL.URLHomologacao := C_URL_OAUTH_HOM;
+      tawsProducao    : OAuth.URL.URLProducao    := C_URL_OAUTH_PROD;
+      tawsHomologacao : OAuth.URL.URLHomologacao := C_URL_OAUTH_HOM;
     end;
 
     OAuth.Payload := not (OAuth.Ambiente = tawsProducao);
@@ -852,12 +730,11 @@ end;
 function TBoletoW_Sicredi_APIECOMM.GerarRemessa: string;
 begin
   Result := inherited GerarRemessa;
-
 end;
 
 function TBoletoW_Sicredi_APIECOMM.Enviar: boolean;
 begin
   Result := inherited Enviar;
-
 end;
+
 end.

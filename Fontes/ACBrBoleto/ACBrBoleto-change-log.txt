@@ -48,6 +48,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+12/06/2025
+-- ACBrBoleto --
+[+] Implementado o parâmetro  sBCC no método: EnviarEmail.
+    Por: Mateus Brunelli / Júlio Cavalcanti
+
 12/06/2025
 -- ACBrBoletoRet_Itau_API.pas --
 [*] TK-7092 Após reunião com JT, decidido nao alimentar os dados. deixar como esta vindo do banco.

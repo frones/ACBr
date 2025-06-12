@@ -1351,7 +1351,7 @@ type
      function GerarPDF : string; overload;
      procedure GerarPDF(AStream: TStream); overload;
      procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
-      EnviaPDF: Boolean; sCC: TStrings = Nil; Anexos: TStrings = Nil;AReplyTo: TStrings=nil);
+      EnviaPDF: Boolean; sCC: TStrings = Nil; Anexos: TStrings = Nil; AReplyTo: TStrings=nil; sBCC: TStrings = Nil);
 
      property ACBrBoleto        : TACBrBoleto read fACBrBoleto;
      property LocalPagamento    : String      read fLocalPagamento    write fLocalPagamento;
@@ -1557,7 +1557,7 @@ type
     procedure GerarJPG;
 
     procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
-      EnviaPDF: Boolean; sCC: TStrings = Nil; Anexos: TStrings = Nil; AReplyTo: TStrings = Nil);
+      EnviaPDF: Boolean; sCC: TStrings = Nil; Anexos: TStrings = Nil; AReplyTo: TStrings = Nil; sBCC: TStrings = Nil);
 
     procedure AdicionarMensagensPadroes(Titulo : TACBrTitulo; AStringList: TStrings);
 
@@ -3026,7 +3026,8 @@ begin
 end;
 
 procedure TACBrTitulo.EnviarEmail(const sPara, sAssunto: String;
-  sMensagem: TStrings; EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; AReplyTo: TStrings);
+  sMensagem: TStrings; EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings;
+  AReplyTo: TStrings; sBCC: TStrings);
 begin
   if not Assigned(ACBrBoleto.ACBrBoletoFC) then
     raise EACBrBoleto.Create( ACBrStr('Nenhum componente "ACBrBoletoFC" associado' ) );
@@ -3039,7 +3040,7 @@ begin
 
   ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual :=  fACBrBoleto.ListadeBoletos.IndexOf(Self);
   try
-    ACBrBoleto.EnviarEmail(sPara, sAssunto, sMensagem, EnviaPDF, sCC, Anexos, AReplyTo);
+    ACBrBoleto.EnviarEmail(sPara, sAssunto, sMensagem, EnviaPDF, sCC, Anexos, AReplyTo, sBCC);
   finally
     ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual:= -1;
   end;
@@ -3461,7 +3462,8 @@ begin
 end;
 
 procedure TACBrBoleto.EnviarEmail(const sPara, sAssunto: String;
-  sMensagem: TStrings; EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings;AReplyTo: TStrings );
+  sMensagem: TStrings; EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings;
+  AReplyTo: TStrings; sBCC: TStrings);
 var
   i: Integer;
   EMails: TStringList;
@@ -3525,6 +3527,12 @@ begin
   begin
     for i := 0 to Anexos.Count - 1 do
       FMAIL.AddAttachment(Anexos[i],ExtractFileName(Anexos[i]));
+  end;
+
+  if Assigned(sBCC) then
+  begin
+    for i := 0 to sBCC.Count - 1 do
+      FMAIL.AddBCC(sBCC[i]);
   end;
 
   FMAIL.Send;

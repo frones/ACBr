@@ -299,9 +299,6 @@ var
   ANota: TNotaFiscal;
   DocumentXml: TACBrXmlDocument;
 begin
-  Response.ArquivoRetorno := CarregarArquivo('C:\ERP\XML\RetornoBauhaus.json');
-
-
   if Response.ArquivoRetorno = '' then
   begin
     AErro := Response.Erros.New;

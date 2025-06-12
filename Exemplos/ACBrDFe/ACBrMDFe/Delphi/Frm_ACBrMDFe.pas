@@ -1767,7 +1767,7 @@ begin
   MemoDados.Lines.Add('----------------------------');
   MemoDados.Lines.Add('Retorno do Status de Serviço');
   MemoDados.Lines.Add(' ');
-  MemoDados.Lines.Add('tpAmb    : ' + TpAmbToStr(ACBrMDFe1.WebServices.StatusServico.tpAmb));
+  MemoDados.Lines.Add('tpAmb    : ' + TipoAmbienteToStr(ACBrMDFe1.WebServices.StatusServico.tpAmb));
   MemoDados.Lines.Add('verAplic : ' + ACBrMDFe1.WebServices.StatusServico.verAplic);
   MemoDados.Lines.Add('cStat    : ' + IntToStr(ACBrMDFe1.WebServices.StatusServico.cStat));
   MemoDados.Lines.Add('xMotivo  : ' + ACBrMDFe1.WebServices.StatusServico.xMotivo);

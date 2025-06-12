@@ -216,8 +216,6 @@ uses
   ACBrBoletoRet_BancoBrasil,
   ACBrBoletoW_BancoBrasil_API,
   ACBrBoletoRet_BancoBrasil_API,
-  ACBrBoletoW_Itau,
-  ACBrBoletoRet_Itau,
   ACBrBoletoW_Credisis,
   ACBrBoletoRet_Credisis,
   ACBrBoletoW_Sicredi_APIECOMM,
@@ -408,8 +406,7 @@ begin
         end
         else
         begin
-          FBoletoWSClass := TBoletoW_Itau.Create(Self);
-          FRetornoBanco  := TRetornoEnvio_Itau.Create(FBoleto);
+          raise EACBrBoletoWSException.Create(ACBrStr('Versão não implementada ou descontinuada pelo banco, verifique qual utilizar.'));
         end;
 
       end;

@@ -719,14 +719,9 @@ begin
                   ListaRetorno.DadosRet.TituloRet.ValorRecebido        := LJsonBoletoObject.AsCurrency['valor_liquido_lancado'];
                   {
                   BL Bolecode ate esta data nao devolve valor juros, descontos, acrescimos etc.
-                  ele não retorna qdo liquidado (apenas tarja magnetica); bolecode é baixado.
+                  ele não retorna qdo liquidado (apenas tarja magnetica); bolecode é baixado  (cancelado) para que
+                  nao possa ser pago via tarja magnetica (segundo banco).
                   }
-                  if (LStatusBoleto = 'BL') and (ListaRetorno.DadosRet.TituloRet.ValorRecebido = 0) then
-                     ListaRetorno.DadosRet.TituloRet.ValorRecebido := ListaRetorno.DadosRet.TituloRet.ValorDocumento;
-                  if (LStatusBoleto = 'BL') and (ListaRetorno.DadosRet.TituloRet.ValorPago = 0) then
-                     ListaRetorno.DadosRet.TituloRet.ValorPago := ListaRetorno.DadosRet.TituloRet.ValorDocumento;
-
-
 
                   (*
 

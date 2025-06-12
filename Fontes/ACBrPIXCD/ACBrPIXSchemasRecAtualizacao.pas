@@ -158,7 +158,7 @@ end;
 
 function TACBrPIXRecAtualizacaoLista.GetItem(Index: Integer): TACBrPIXRecAtualizacao;
 begin
-  Result := TACBrPIXRecAtualizacao(inherited GetItem(Index);
+  Result := TACBrPIXRecAtualizacao(inherited GetItem(Index));
 end;
 
 procedure TACBrPIXRecAtualizacaoLista.Insert(Index: Integer; aItem: TACBrPIXRecAtualizacao);

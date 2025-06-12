@@ -43,12 +43,21 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/06/2025
+-- ACBrNFSeXServicos --
+[*] #TK-7184: Alterado as URLs do LinkURL da cidade de São Félix do Araguaia/MT.
+   Por: tryideas sistemas
+[*] #TK-7200: Alterado as URLs de produção/homologação da cidade de Nao-Me-Toque/RS.
+   Por: André Lucca
+[+] #TK-7198: Incluída a cidade de Bela Vista de Goias/GO, o provedor é MegaSoft.
+   Por: C4Dev
+[*] #TK-7197: Alterado a URL de produção da cidade de Teixeira de Freitas/BA.
+   Por: Desenvolvimento Objetiva
 -- ACBrNFSeXProviderBase/Bauhaus.Provider --
 [*] Realizado uma alteração visando extrair e salvar o XML da NFS-e que se encontra no 
     json retornado pelo provedor.
   Por: Italo Giurizzato Junior
 -- Giap.GravarXml/Giap.Provider --
-[*] Realizado uma alteração visando gerar o XML da NFS-e, uma vez que o provedor
+[*] R#TK-7194: ealizado uma alteração visando gerar o XML da NFS-e, uma vez que o provedor
     retorna apenas um resumo em vez de retornar o XML da nota.
     Requer testes para saber se vai funcionar conforme o esperado.
   Por: Italo Giurizzato Junior

@@ -21,7 +21,7 @@
     <Description Value="ACBrPIXCD - Package para componentes relacionados a PIX e Carteira Digitais"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="46">
+    <Files Count="51">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXCDReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -184,29 +184,49 @@
         <UnitName Value="ACBrPIXSchemasLotesCobVConsultadas"/>
       </Item40>
       <Item41>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrShipaySchemas.pas"/>
-        <UnitName Value="ACBrShipaySchemas"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasRecAtualizacao.pas"/>
+        <UnitName Value="ACBrPIXSchemasRecAtualizacao"/>
       </Item41>
       <Item42>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrSchemasMatera.pas"/>
-        <UnitName Value="ACBrSchemasMatera"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasRecParticipantes.pas"/>
+        <UnitName Value="ACBrPIXSchemasRecParticipantes"/>
       </Item42>
       <Item43>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrSchemasGate2All.pas"/>
-        <UnitName Value="ACBrSchemasGate2All"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasRecBase.pas"/>
+        <UnitName Value="ACBrPIXSchemasRecBase"/>
       </Item43>
       <Item44>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPC6Bank.pas"/>
-        <UnitName Value="ACBrPIXPSPC6Bank"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasRec.pas"/>
+        <UnitName Value="ACBrPIXSchemasRec"/>
       </Item44>
       <Item45>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPAppLess.pas"/>
-        <UnitName Value="ACBrPIXPSPAppLess"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasSolicRec.pas"/>
+        <UnitName Value="ACBrPIXSchemasSolicRec"/>
       </Item45>
       <Item46>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrShipaySchemas.pas"/>
+        <UnitName Value="ACBrShipaySchemas"/>
+      </Item46>
+      <Item47>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrSchemasMatera.pas"/>
+        <UnitName Value="ACBrSchemasMatera"/>
+      </Item47>
+      <Item48>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrSchemasGate2All.pas"/>
+        <UnitName Value="ACBrSchemasGate2All"/>
+      </Item48>
+      <Item49>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPC6Bank.pas"/>
+        <UnitName Value="ACBrPIXPSPC6Bank"/>
+      </Item49>
+      <Item50>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPAppLess.pas"/>
+        <UnitName Value="ACBrPIXPSPAppLess"/>
+      </Item50>
+      <Item51>
         <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrSchemasAppLess.pas"/>
         <UnitName Value="ACBrSchemasAppLess"/>
-      </Item46>
+      </Item51>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

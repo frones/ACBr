@@ -57,6 +57,8 @@ resourcestring
   sErroPSSForaDaFaixa = 'Código ISPB fora da Faixa, 0-99999999';
   sErroEndToEndIdentification = 'EndToEndIdentification deve ser 32 caracteres alfanuméricos';
   sErroChaveInvalida = 'Chave Inválida: %s';
+  sErroTamanhoCampo = 'Campo %s deve conter %d caracteres';
+  sErroCaractereIncorreto = 'O %s caractere do %s deve ser %s';
 
 function DetectarTipoChave(const AChave: String): TACBrPIXTipoChave;
 function ValidarChave(const AChave: String): String;
@@ -64,6 +66,8 @@ function ValidarChaveAleatoria(const AChave: String): Boolean;
 function CriarTxId: String;
 function FormatarGUID(const AString: String): String;
 function ValidarTxId(const ATxId: String; MaiorTamanho: Integer; MenorTamanho: Integer = 0): String;
+function ValidarIdRec(const AIdRec: String): String;
+function ValidarIdSolicRec(const AIdSolicRec: String): String;
 function ValidarPSS(const AValue: Integer): String;
 function ValidarEndToEndId(const AValue: String): String;
 function FormatarValorPIX(AValor: Double): String;
@@ -188,6 +192,28 @@ begin
   end;
 
   Result := e;
+end;
+
+function ValidarIdRec(const AIdRec: String): String;
+begin
+  Result := EmptyStr;
+  if (Length(AIdRec) <> 29) then
+    Result := Format(sErroTamanhoCampo, ['idRec', 29])
+  else if (AIdRec[1] <> 'R') then
+    Result := Format(sErroCaractereIncorreto, ['primeiro', 'idRec', 'R'])
+  else if not (AIdRec[2] in ['R', 'N']) then
+    Result := Format(sErroCaractereIncorreto, ['segundo', 'idRec', 'R/N']);
+end;
+
+function ValidarIdSolicRec(const AIdSolicRec: String): String;
+begin
+  Result := EmptyStr;
+  if (Length(AIdSolicRec) <> 29) then
+    Result := Format(sErroTamanhoCampo, ['idRec', 29])
+  else if (AIdSolicRec[1] <> 'S') then
+    Result := Format(sErroCaractereIncorreto, ['primeiro', 'idSolicRec', 'S'])
+  else if (AIdSolicRec[2] <> 'C') then
+    Result := Format(sErroCaractereIncorreto, ['segundo', 'idSolicRec', 'C']);
 end;
 
 function ValidarPSS(const AValue: Integer): String;

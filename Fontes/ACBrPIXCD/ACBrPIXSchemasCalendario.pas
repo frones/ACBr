@@ -89,6 +89,45 @@ type
     property expiracao;
   end;
 
+  { TACBrPIXCalendarioRecBase }
+
+  TACBrPIXCalendarioRecBase = class(TACBrPIXSchema)
+  private
+    fdataFinal: TDateTime;
+    fdataInicial: TDateTime;
+    fperiodicidade: TACBrPIXPeriodicidade;
+    fdataExpiracaoSolicitacao: TDateTime;
+  protected
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
+
+    property dataInicial: TDateTime read fdataInicial write fdataInicial;
+    property dataFinal: TDateTime read fdataFinal write fdataFinal;
+    property periodicidade: TACBrPIXPeriodicidade read fperiodicidade write fperiodicidade;
+    property dataExpiracaoSolicitacao: TDateTime read fdataExpiracaoSolicitacao write fdataExpiracaoSolicitacao;
+  public
+    constructor Create(const ObjectName: String); override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(Source: TACBrPIXCalendarioRecBase);
+  end;
+
+  { TACBrPIXCalendarioRec }
+
+  TACBrPIXCalendarioRec = class(TACBrPIXCalendarioRecBase)
+  public
+    property dataInicial;
+    property dataFinal;
+    property periodicidade;
+  end;
+
+  { TACBrPIXCalendarioRecSolic }
+
+  TACBrPIXCalendarioRecSolic = class(TACBrPIXCalendarioRecBase)
+  public
+    property dataExpiracaoSolicitacao;
+  end;
+
 implementation
 
 uses
@@ -160,6 +199,81 @@ begin
     fapresentacao := Iso8601ToDateTime(s2);
     fapresentacao_Bias := TimeZoneToBias(s2);
   end;
+end;
+
+{ TACBrPIXCalendarioRecBase }
+
+constructor TACBrPIXCalendarioRecBase.Create(const ObjectName: String);
+begin
+  inherited Create(ObjectName);
+  Clear;
+end;
+
+procedure TACBrPIXCalendarioRecBase.Clear;
+begin
+  fdataInicial := 0;
+  fdataFinal := 0;
+  fperiodicidade := perNENHUM;
+  fdataExpiracaoSolicitacao := 0;
+end;
+
+function TACBrPIXCalendarioRecBase.IsEmpty: Boolean;
+begin
+  Result := EstaZerado(fdataInicial) and
+            EstaZerado(fdataFinal) and
+            (fperiodicidade = perNENHUM) and
+            EstaZerado(fdataExpiracaoSolicitacao);
+end;
+
+procedure TACBrPIXCalendarioRecBase.Assign(Source: TACBrPIXCalendarioRecBase);
+begin
+  Clear;
+  if not Assigned(Source) then
+    Exit;
+  fdataInicial := Source.dataInicial;
+  fdataFinal := Source.dataFinal;
+  fperiodicidade := Source.periodicidade;
+  fdataExpiracaoSolicitacao := Source.dataExpiracaoSolicitacao;
+end;
+
+procedure TACBrPIXCalendarioRecBase.DoWriteToJSon(AJSon: TACBrJSONObject);
+begin
+  AJSon.AddPair('periodicidade', PIXPeriodicidadeToString(fperiodicidade), False);
+  if NaoEstaZerado(fdataInicial) then
+    AJSon.AddPair('dataInicial', DateTimeToISO8601(fdataInicial));
+  if NaoEstaZerado(fdataFinal) then
+    AJSon.AddPair('dataFinal', DateTimeToISO8601(fdataFinal));
+  if NaoEstaZerado(fdataExpiracaoSolicitacao) then
+    AJSon.AddPair('dataExpiracaoSolicitacao', DateTimeToISO8601(fdataExpiracaoSolicitacao));
+end;
+
+procedure TACBrPIXCalendarioRecBase.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  wDataInicial, wDataFinal, wPeriodicidade, wDataExpiracaoSolicitacao: String;
+begin
+  {$IFDEF FPC}
+  wDataFinal := EmptyStr;
+  wDataInicial := EmptyStr;
+  wPeriodicidade := EmptyStr;
+  wDataExpiracaoSolicitacao := EmptyStr;
+  {$ENDIF}
+  AJSon
+    .Value('dataInicial', wDataInicial)
+    .Value('dataFinal', wDataFinal)
+    .Value('periodicidade', wPeriodicidade)
+    .Value('dataExpiracaoSolicitacao', wDataExpiracaoSolicitacao);
+
+  if NaoEstaVazio(wDataInicial) then
+    fdataInicial := ISO8601ToDateTime(wDataInicial);
+
+  if NaoEstaVazio(wDataFinal) then
+    fdataFinal := ISO8601ToDateTime(wDataFinal);
+
+  if NaoEstaVazio(wPeriodicidade) then
+    fperiodicidade := StringToPIXPeriodicidade(wPeriodicidade);
+
+  if NaoEstaVazio(wDataExpiracaoSolicitacao) then
+    fdataExpiracaoSolicitacao := ISO8601ToDateTime(wDataExpiracaoSolicitacao);
 end;
 
 end.

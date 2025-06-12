@@ -80,6 +80,11 @@ contains
   ACBrPIXPSPBanrisul in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPBanrisul.pas',
   ACBrPIXPSPC6Bank in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPC6Bank.pas',
   ACBrPIXPSPAppLess in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPAppLess.pas',
-  ACBrSchemasAppLess in '..\..\..\Fontes\ACBrPIXCD\ACBrSchemasAppLess.pas';
+  ACBrSchemasAppLess in '..\..\..\Fontes\ACBrPIXCD\ACBrSchemasAppLess.pas',
+  ACBrPIXSchemasRec in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasRec.pas',
+  ACBrPIXSchemasRecAtualizacao in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasRecAtualizacao.pas',
+  ACBrPIXSchemasRecBase in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasRecBase.pas',
+  ACBrPIXSchemasRecParticipantes in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasRecParticipantes.pas',
+  ACBrPIXSchemasSolicRec in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasSolicRec.pas';
 
 end.

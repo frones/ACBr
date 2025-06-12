@@ -1,38 +1,38 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
-{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
+{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
+{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
 {******************************************************************************}
 
 (*
 
-  DocumentaÁ„o:
+  Documenta√ß√£o:
   https://github.com/bacen/pix-api
 
 *)
@@ -47,7 +47,7 @@ uses
   Classes, SysUtils, ACBrJSON, ACBrBase;
 
 resourcestring
-  sErroMetodoNaoImplementado = 'MÈtodo %s n„o implementado para Classe %s';
+  sErroMetodoNaoImplementado = 'M√©todo %s n√£o implementado para Classe %s';
 
 const
   cBRCountryCode = 'BR';
@@ -75,6 +75,13 @@ type
                              stcREMOVIDA_PELO_USUARIO_RECEBEDOR,
                              stcREMOVIDA_PELO_PSP );
 
+  TACBrPIXStatusRecorrencia = ( strNENHUM,
+                             strCRIADA,
+                             strAPROVADA,
+                             strREJEITADA,
+                             strEXPIRADA,
+                             strCANCELADA );
+
   TACBrPIXStatusDevolucao = ( stdNENHUM,
                               stdEM_PROCESSAMENTO,
                               stdDEVOLVIDO,
@@ -85,14 +92,66 @@ type
                                  stlCRIADA,
                                  stlNEGADA );
 
-  TACBrPIXNaturezaDevolucao = ( ndNENHUMA, ndORIGINAL, ndRETIRADA ) ;
+  TACBrPIXNaturezaDevolucao = ( ndNENHUMA, ndORIGINAL, ndRETIRADA );
 
   TACBrPIXModalidadeAgente = ( maNENHUM,
                                maAGTEC,
                                maAGTOT,
                                maAGPSS );
 
-  TACBrPIXTipoCobranca = ( tcoNenhuma, tcoCob, tcoCobV );
+  TACBrPIXTipoCobranca = ( tcoNenhuma, tcoCob, tcoCobV, tcoCobR );
+
+  TACBrPIXPeriodicidade = ( perNENHUM,
+                            perSEMANAL,
+                            perMENSAL,
+                            perTRIMESTRAL,
+                            perSEMESTRAL,
+                            perANUAL );
+
+  TACBrPIXRetentativa = ( rttNENHUM,
+                          rttNAO_PERMITE,
+                          rttPERMITE_3R_7D );
+
+  TACBrPIXCodRejeicao = ( crjNENHUM,
+                          crjAP13,
+                          crjAP14 );
+
+  TACBrPIXCodCancelamento = ( cclNENHUM,
+                              cclACCL,
+                              cclCPCL,
+                              cclDCSD,
+                              cclERSL,
+                              cclFRUD,
+                              cclPCFD,
+                              cclSLCR,
+                              cclSLDB );
+
+  TACBrPIXSolicitante = ( sttNENHUM,
+                          sttPSP_PAGADOR,
+                          sttUSUARIO_PAGADOR,
+                          sttPSP_RECEBEDOR,
+                          sttUSUARIO_RECEBEDOR );
+
+  //- JORNADA_1: Usu√°rio pagador aceitou a recorr√™ncia atrav√©s de notifica√ß√£o externa ao ecossistema
+  //- JORNADA_2: Usu√°rio pagador aceitou a recorr√™ncia atrav√©s de leitura de QR Code de recorr√™ncia
+  //- JORNADA_3: Usu√°rio pagador iniciou a recorr√™ncia atrav√©s de leitura de QR Code composto e pagamento de cobran√ßa imediata. O uso desta jornada torna obrigat√≥rio o preenchimento da informa√ß√£o dadosJornada.txid
+  //- JORNADA_4: Usu√°rio pagador escolheu aderir √† recorr√™ncia atrav√©s de leitura de QR Code composto relacionado √† cobran√ßa com vencimento ou est√°tica relacionada a um contrato vigente
+  //- AGUARDANDO_DEFINICAO: Valor inicial posterior a cria√ß√£o e anterior a ativa√ß√£o da recorr√™ncia
+  TACBrPIXJornada = ( jorNENHUM,
+                      jorJORNADA_1,
+                      jorJORNADA_2,
+                      jorJORNADA_3,
+                      jorJORNADA_4,
+                      jorAGUARDANDO_DEFINICAO );
+
+  TACBrPIXStatusSolicitacaoRecorrencia = ( ssrNENHUM,
+                                           ssrCRIADA,
+                                           ssrENVIADA,
+                                           ssrRECEBIDA,
+                                           ssrREJEITADA,
+                                           ssrACEITA,
+                                           ssrEXPIRADA,
+                                           ssrCANCELADA );
 
   EACBrPixException = class(EACBrException);
 
@@ -162,6 +221,30 @@ type
 
   function PIXStatusLoteCobrancaToString(AStatus: TACBrPIXStatusLoteCobranca): String;
   function StringToPIXStatusLoteCobranca(const AString: String): TACBrPIXStatusLoteCobranca;
+
+  function PIXPeriodicidadeToString(APeriodicidade: TACBrPIXPeriodicidade): String;
+  function StringToPIXPeriodicidade(const AString: String): TACBrPIXPeriodicidade;
+
+  function PIXStatusRecorrenciaToString(AStatus: TACBrPIXStatusRecorrencia): String;
+  function StringToPIXStatusRecorrencia(const AString: String): TACBrPIXStatusRecorrencia;
+
+  function PIXRetentativaToString(ARetentativa: TACBrPIXRetentativa): String;
+  function StringToPIXRetentativa(const AString: String): TACBrPIXRetentativa;
+
+  function PIXCodRejeicaoToString(ACodRejeicao: TACBrPIXCodRejeicao): String;
+  function StringToPIXCodRejeicao(const AString: String): TACBrPIXCodRejeicao;
+
+  function PIXCodCancelamentoToString(ACodCancelamento: TACBrPIXCodCancelamento): String;
+  function StringToPIXCodCancelamento(const AString: String): TACBrPIXCodCancelamento;
+
+  function PIXSolicitanteToString(ASolicitante: TACBrPIXSolicitante): String;
+  function StringToPIXSolicitante(const AString: String): TACBrPIXSolicitante;
+
+  function PIXJornadaToString(AJornada: TACBrPIXJornada): String;
+  function StringToPIXJornada(const AString: String): TACBrPIXJornada;
+
+  function PIXStatusSolicitacaoRecorrenciaToString(AStatus: TACBrPIXStatusSolicitacaoRecorrencia): String;
+  function StringToPIXStatusSolicitacaoRecorrencia(const AString: String): TACBrPIXStatusSolicitacaoRecorrencia;
 
 implementation
 
@@ -276,6 +359,7 @@ function PIXTipoCobrancaToString(ACob: TACBrPIXTipoCobranca): String;
 begin
   case ACob of
     tcoCobV: Result := 'cobv';
+    tcoCobR: Result := 'cobr';
     tcoCob: Result := 'cob';
   else
     Result := '';
@@ -289,6 +373,8 @@ begin
   s := UpperCase(Trim(AString));
   if (s = 'COBV') then
     Result := tcoCobV
+  else if (s = 'COBR') then
+    Result := tcoCobR
   else if (s = 'COB') then
     Result := tcoCob
   else
@@ -319,6 +405,240 @@ begin
     Result := stlNEGADA
   else
     Result := stlNENHUM;
+end;
+
+function PIXPeriodicidadeToString(APeriodicidade: TACBrPIXPeriodicidade): String;
+begin  
+  Result := EmptyStr;
+  case APeriodicidade of
+    perSEMANAL: Result := 'SEMANAL';
+    perMENSAL: Result := 'MENSAL';
+    perTRIMESTRAL: Result := 'TRIMESTRAL';
+    perSEMESTRAL: Result := 'SEMESTRAL';
+    perANUAL: Result := 'ANUAL';
+  end;
+end;
+
+function StringToPIXPeriodicidade(const AString: String): TACBrPIXPeriodicidade;
+var
+  s: String;
+begin 
+  Result := perNENHUM;
+  s := UpperCase(Trim(AString));
+  if (s = 'SEMANAL') then
+    Result := perSEMANAL
+  else if (s = 'MENSAL') then
+    Result := perMENSAL
+  else if (s = 'TRIMESTRAL') then
+    Result := perTRIMESTRAL
+  else if (s = 'SEMESTRAL') then
+    Result := perSEMESTRAL
+  else if (s = 'ANUAL') then
+    Result := perANUAL;
+end;
+
+function PIXStatusRecorrenciaToString(AStatus: TACBrPIXStatusRecorrencia): String;
+begin
+  Result := EmptyStr;
+  case AStatus of
+    strCRIADA: Result := 'CRIADA';
+    strAPROVADA: Result := 'APROVADA';
+    strREJEITADA: Result := 'REJEITADA';
+    strEXPIRADA: Result := 'EXPIRADA';
+    strCANCELADA: Result := 'CANCELADA';
+  end;
+end;
+
+function StringToPIXStatusRecorrencia(const AString: String): TACBrPIXStatusRecorrencia;
+var
+  s: String;
+begin
+  Result := strNENHUM;
+  s := UpperCase(Trim(AString));
+  if (s = 'CRIADA') then
+    Result := strCRIADA
+  else if (s = 'APROVADA') then
+    Result := strAPROVADA
+  else if (s = 'REJEITADA') then
+    Result := strREJEITADA
+  else if (s = 'EXPIRADA') then
+    Result := strEXPIRADA
+  else if (s = 'CANCELADA') then
+    Result := strCANCELADA;
+end;
+
+function PIXRetentativaToString(ARetentativa: TACBrPIXRetentativa): String;
+begin
+  Result := EmptyStr;
+  case ARetentativa of
+    rttNAO_PERMITE: Result := 'NAO_PERMITE';
+    rttPERMITE_3R_7D: Result := 'PERMITE_3R_7D';
+  end;
+end;
+
+function StringToPIXRetentativa(const AString: String): TACBrPIXRetentativa;
+var
+  s: String;
+begin
+  Result := rttNENHUM;
+  s := UpperCase(Trim(AString));
+  if (s = 'NAO_PERMITE') then
+    Result := rttNAO_PERMITE
+  else if (s = 'PERMITE_3R_7D') then
+    Result := rttPERMITE_3R_7D;
+end;
+
+function PIXCodRejeicaoToString(ACodRejeicao: TACBrPIXCodRejeicao): String;
+begin
+  Result := EmptyStr;
+  case ACodRejeicao of
+    crjAP13: Result := 'AP13';
+    crjAP14: Result := 'AP14';
+  end;
+end;
+
+function StringToPIXCodRejeicao(const AString: String): TACBrPIXCodRejeicao;
+var
+  s: String;
+begin
+  Result := crjNENHUM;
+  s := UpperCase(Trim(AString));
+  if (s = 'AP13') then
+    Result := crjAP13
+  else if (s = 'AP14') then
+    Result := crjAP14;
+end;
+
+function PIXCodCancelamentoToString(ACodCancelamento: TACBrPIXCodCancelamento): String;
+begin
+  Result := EmptyStr;
+  case ACodCancelamento of
+    cclACCL: Result := 'ACCL';
+    cclCPCL: Result := 'CPCL';
+    cclDCSD: Result := 'DCSD';
+    cclERSL: Result := 'ERSL';
+    cclFRUD: Result := 'FRUD';
+    cclPCFD: Result := 'PCFD';
+    cclSLCR: Result := 'SLCR';
+    cclSLDB: Result := 'SLDB';
+  end;
+end;
+
+function StringToPIXCodCancelamento(const AString: String): TACBrPIXCodCancelamento;
+var
+  s: String;
+begin
+  Result := cclNENHUM;
+  s := UpperCase(Trim(AString));
+  if (s = 'ACCL') then
+    Result := cclACCL
+  else if (s = 'CPCL') then
+    Result := cclCPCL
+  else if (s = 'DCSD') then
+    Result := cclDCSD
+  else if (s = 'ERSL') then
+    Result := cclERSL
+  else if (s = 'FRUD') then
+    Result := cclFRUD
+  else if (s = 'PCFD') then
+    Result := cclPCFD
+  else if (s = 'SLCR') then
+    Result := cclSLCR
+  else if (s = 'SLDB') then
+    Result := cclSLDB;
+end;
+
+function PIXSolicitanteToString(ASolicitante: TACBrPIXSolicitante): String;
+begin
+  Result := EmptyStr;
+  case ASolicitante of
+    sttPSP_PAGADOR: Result := 'PSP_PAGADOR';
+    sttUSUARIO_PAGADOR: Result := 'USUARIO_PAGADOR';
+    sttPSP_RECEBEDOR: Result := 'PSP_RECEBEDOR';
+    sttUSUARIO_RECEBEDOR: Result := 'USUARIO_RECEBEDOR';
+  end;
+end;
+
+function StringToPIXSolicitante(const AString: String): TACBrPIXSolicitante;
+var
+  s: String;
+begin
+  Result := sttNENHUM;
+  s := UpperCase(Trim(AString));
+  if (s = 'PSP_PAGADOR') then
+    Result := sttPSP_PAGADOR
+  else if (s = 'USUARIO_PAGADOR') then
+    Result := sttUSUARIO_PAGADOR
+  else if (s = 'PSP_RECEBEDOR') then
+    Result := sttPSP_RECEBEDOR
+  else if (s = 'USUARIO_RECEBEDOR') then
+    Result := sttUSUARIO_RECEBEDOR;
+end;
+
+function PIXJornadaToString(AJornada: TACBrPIXJornada): String;
+begin
+  Result := EmptyStr;
+  case AJornada of
+    jorJORNADA_1: Result := 'JORNADA_1';
+    jorJORNADA_2: Result := 'JORNADA_2';
+    jorJORNADA_3: Result := 'JORNADA_3';
+    jorJORNADA_4: Result := 'JORNADA_4';
+    jorAGUARDANDO_DEFINICAO: Result := 'AGUARDANDO_DEFINICAO';
+  end;
+end;
+
+function StringToPIXJornada(const AString: String): TACBrPIXJornada;
+var
+  s: String;
+begin
+  Result := jorNENHUM;
+  s := UpperCase(Trim(AString));
+  if (s = 'JORNADA_1') then
+    Result := jorJORNADA_1
+  else if (s = 'JORNADA_2') then
+    Result := jorJORNADA_2
+  else if (s = 'JORNADA_3') then
+    Result := jorJORNADA_3
+  else if (s = 'JORNADA_4') then
+    Result := jorJORNADA_4
+  else if (s = 'AGUARDANDO_DEFINICAO') then
+    Result := jorAGUARDANDO_DEFINICAO;
+end;
+
+function PIXStatusSolicitacaoRecorrenciaToString(AStatus: TACBrPIXStatusSolicitacaoRecorrencia): String;
+begin
+  Result := EmptyStr;
+  case AStatus of
+    ssrCRIADA: Result := 'CRIADA';
+    ssrENVIADA: Result := 'ENVIADA';
+    ssrRECEBIDA: Result := 'RECEBIDA';
+    ssrREJEITADA: Result := 'REJEITADA';
+    ssrACEITA: Result := 'ACEITA';
+    ssrEXPIRADA: Result := 'EXPIRADA';
+    ssrCANCELADA: Result := 'CANCELADA';
+  end;
+end;
+
+function StringToPIXStatusSolicitacaoRecorrencia(const AString: String): TACBrPIXStatusSolicitacaoRecorrencia;
+var
+  s: String;
+begin
+  Result := ssrNENHUM;
+  s := UpperCase(Trim(AString));
+  if (s = 'CRIADA') then
+    Result := ssrCRIADA
+  else if (s = 'ENVIADA') then
+    Result := ssrENVIADA
+  else if (s = 'RECEBIDA') then
+    Result := ssrRECEBIDA
+  else if (s = 'REJEITADA') then
+    Result := ssrREJEITADA
+  else if (s = 'ACEITA') then
+    Result := ssrACEITA
+  else if (s = 'EXPIRADA') then
+    Result := ssrEXPIRADA
+  else if (s = 'CANCELADA') then
+    Result := ssrCANCELADA;
 end;
 
 { TACBrPIXSchema }

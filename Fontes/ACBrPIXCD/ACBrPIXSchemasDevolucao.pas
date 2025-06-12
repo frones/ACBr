@@ -142,7 +142,7 @@ type
 implementation
 
 uses
-  ACBrPIXUtil, Math, IniFiles,
+  ACBrPIXUtil, IniFiles,
   ACBrUtil.Base,
   ACBrUtil.FilesIO,
   ACBrUtil.Strings,

@@ -48,6 +48,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+12/06/2025
+-- ACBrBoletoRet_Itau_API.pas --
+[*] TK-7092 Ajustes no tratamento Retorno BL Bolecode. Como é baixado até a presente data ,nao vem informacoes pagamentos. ajustado p devolver valor documento.
+	Fizemos um reunião ontem com o Consultor Itau, e por enq não é possivel trazer isso nas fracesinhas.
+	www.projetoacbr.com.br/forum/topic/83348-retorno-do-banco-itau-boleto-pago-via-pix/page/2/
+	Por: Daniel Morais InfoCotidiano
+
 11/06/2025
 -- ACBrBoletoRet_Itau_API.pas --
 [*] TK-7092 Ajustes no tratamento da paginação do retorno da consulta

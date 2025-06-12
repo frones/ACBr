@@ -663,7 +663,7 @@ begin
                     end;
                   isbCancelado:
                     begin
-                      {Consulta cancelado devolve BL Bolecode Liquisado !, por isso esta dentro indicadorPIX}
+                      {Consulta cancelado devolve BL Bolecode Liquidado !, por isso esta dentro indicadorPIX}
                       if ACBrBoleto.Cedente.CedenteWS.IndicadorPix then
                       begin
                         if (LStatusBoleto = 'L') or (LStatusBoleto = 'BL') or
@@ -710,12 +710,23 @@ begin
                   ListaRetorno.DadosRet.TituloRet.DataDocumento        := StringToDateTimeDef(LJsonBoletoObject.AsString['data_inclusao_titulo_cobranca'], 0, 'yyyy-mm-dd');
                   ListaRetorno.DadosRet.TituloRet.DataRegistro         := StringToDateTimeDef(LJsonBoletoObject.AsString['data_inclusao_titulo_cobranca'], 0, 'yyyy-mm-dd');
                   ListaRetorno.DadosRet.TituloRet.UsoBanco             := LJsonBoletoObject.AsString['uso_banco'];
+                  ListaRetorno.DadosRet.TituloRet.ValorDocumento       := LJsonBoletoObject.AsCurrency['valor_titulo'];
                   ListaRetorno.DadosRet.TituloRet.ValorDesconto        := LJsonBoletoObject.AsCurrency['valor_decrescimo'];
                   ListaRetorno.DadosRet.TituloRet.ValorDespesaCobranca := 0;
                   ListaRetorno.DadosRet.TituloRet.ValorMoraJuros       := 0;
                   ListaRetorno.DadosRet.TituloRet.ValorOutrasDespesas  := LJsonBoletoObject.AsCurrency['valor_acrescimo'];
                   ListaRetorno.DadosRet.TituloRet.ValorPago            := LJsonBoletoObject.AsCurrency['valor_liquido_lancado'];
                   ListaRetorno.DadosRet.TituloRet.ValorRecebido        := LJsonBoletoObject.AsCurrency['valor_liquido_lancado'];
+                  {
+                  BL Bolecode ate esta data nao devolve valor juros, descontos, acrescimos etc.
+                  ele não retorna qdo liquidado (apenas tarja magnetica); bolecode é baixado.
+                  }
+                  if (LStatusBoleto = 'BL') and (ListaRetorno.DadosRet.TituloRet.ValorRecebido = 0) then
+                     ListaRetorno.DadosRet.TituloRet.ValorRecebido := ListaRetorno.DadosRet.TituloRet.ValorDocumento;
+                  if (LStatusBoleto = 'BL') and (ListaRetorno.DadosRet.TituloRet.ValorPago = 0) then
+                     ListaRetorno.DadosRet.TituloRet.ValorPago := ListaRetorno.DadosRet.TituloRet.ValorDocumento;
+
+
 
                   (*
 

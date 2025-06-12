@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/06/2025
+-- ACBrNFSeXProviderBase/Bauhaus.Provider --
+[*] Realizado uma alteração visando extrair e salvar o XML da NFS-e que se encontra no 
+    json retornado pelo provedor.
+  Por: Italo Giurizzato Junior
 -- Giap.GravarXml/Giap.Provider --
 [*] Realizado uma alteração visando gerar o XML da NFS-e, uma vez que o provedor
     retorna apenas um resumo em vez de retornar o XML da nota.

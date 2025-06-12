@@ -85,7 +85,8 @@ type
     procedure SetXmlNameSpace(const aNameSpace: string);
     procedure SetNameSpaceURI(const aMetodo: TMetodo);
     procedure SalvarXmlRps(aNota: TNotaFiscal);
-    procedure SalvarXmlNfse(aNota: TNotaFiscal);
+    procedure SalvarXmlNfse(aNota: TNotaFiscal); overload;
+    procedure SalvarXmlNfse(const NumeroNFSe: string; const aXml: AnsiString); overload;
     procedure SalvarPDFNfse(const aNome: string; const aPDF: AnsiString);
     procedure SalvarXmlEvento(const aNome: string; const aEvento: AnsiString);
     procedure SalvarXmlCancelamento(const aNome, aCancelamento: string);
@@ -1068,6 +1069,54 @@ begin
     end
     else
       TACBrNFSeX(FAOwner).Gravar(aNota.NomeArq, aXml, '', ConteudoEhXml);
+  end;
+end;
+
+procedure TACBrNFSeXProvider.SalvarXmlNfse(const NumeroNFSe: string;
+  const aXml: AnsiString);
+var
+  aPath, aNomeArq, Extensao, AuxXml: string;
+  aConfig: TConfiguracoesNFSe;
+  ConteudoEhXml: Boolean;
+begin
+  aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
+
+  aPath := aConfig.Arquivos.GetPathNFSe(0, aConfig.Geral.Emitente.CNPJ,
+                        aConfig.Geral.Emitente.DadosEmitente.InscricaoEstadual);
+
+  aNomeArq := NumeroNFSe + '-nfse.xml';
+  aNomeArq := PathWithDelim(aPath) + aNomeArq;
+
+  if FAOwner.Configuracoes.Arquivos.Salvar then
+  begin
+    case ConfigGeral.FormatoArqNota of
+      tfaJson:
+        Extensao := '.json';
+      tfaTxt:
+        Extensao := '.txt';
+    else
+      Extensao := '.xml';
+    end;
+
+    if ConfigGeral.FormatoArqNota <> tfaXml then
+    begin
+      AuxXml := RemoverDeclaracaoXML(aXml);
+      ConteudoEhXml := False;
+    end
+    else
+    begin
+      AuxXml := RemoverDeclaracaoXML(aXml);
+      ConteudoEhXml := True;
+    end;
+
+    if not ConteudoEhXml then
+    begin
+      aNomeArq := StringReplace(aNomeArq, '.xml', Extensao, [rfReplaceAll]);
+
+      WriteToTXT(aNomeArq, AuxXml, False, False);
+    end
+    else
+      TACBrNFSeX(FAOwner).Gravar(aNomeArq, AuxXml, '', ConteudoEhXml);
   end;
 end;
 

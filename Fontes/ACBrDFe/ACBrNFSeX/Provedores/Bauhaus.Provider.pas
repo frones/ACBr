@@ -99,7 +99,7 @@ implementation
 
 uses
   synacode,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.FilesIO,
   ACBrDFeException,
   ACBrCompress,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
@@ -295,10 +295,13 @@ procedure TACBrNFSeProviderBauhaus.TratarRetornoConsultaNFSeporRps(
 var
   jDocument, jRps, jNfse, jCancel: TACBrJSONObject;
   AErro: TNFSeEventoCollectionItem;
-  NumRps, NFSeXml: string;
+  NumRps, NFSeXml, NomeXml, CNPJ: string;
   ANota: TNotaFiscal;
   DocumentXml: TACBrXmlDocument;
 begin
+  Response.ArquivoRetorno := CarregarArquivo('C:\ERP\XML\RetornoBauhaus.json');
+
+
   if Response.ArquivoRetorno = '' then
   begin
     AErro := Response.Erros.New;
@@ -355,7 +358,19 @@ begin
 
           if NFSeXml <> '' then
           begin
+            CNPJ := ANota.NFSe.Prestador.IdentificacaoPrestador.CpfCnpj;
+
+            if TACBrNFSeX(FAOwner).Configuracoes.Arquivos.NomeLongoNFSe then
+              NomeXml := GerarNomeNFSe(TACBrNFSeX(FAOwner).Configuracoes.WebServices.UFCodigo,
+                                      Response.Data,
+                                      OnlyNumber(CNPJ),
+                                      StrToInt64Def(Response.NumeroNota, 0))
+            else
+              NomeXml := Response.NumeroNota + Response.SerieNota;
+
             NFSeXml := DeCompress(DecodeBase64(NFSeXml));
+            NFSeXml := SepararDados(NFSeXml, 'ComplNfse', True);
+            NFSeXml := RemoverIdentacao(NFSeXml);
 
             DocumentXml := TACBrXmlDocument.Create;
 
@@ -371,12 +386,8 @@ begin
 
                 DocumentXml.LoadFromXml(NFSeXml);
 
-                ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
-
-                ANota := CarregarXmlNfse(ANota, DocumentXml.Root.OuterXml);
-
                 ConfigGeral.FormatoArqNota := tfaXml;
-                SalvarXmlNfse(ANota);
+                SalvarXmlNfse(NomeXml, NFSeXml);
                 ConfigGeral.FormatoArqNota := tfaJson;
               except
                 on E:Exception do
@@ -431,7 +442,7 @@ procedure TACBrNFSeProviderBauhaus.TratarRetornoConsultaNFSeporNumero
 var
   jDocument, jRps, jNfse, jCancel: TACBrJSONObject;
   AErro: TNFSeEventoCollectionItem;
-  NumRps, NFSeXml: string;
+  NumRps, NFSeXml, CNPJ, NomeXml: string;
   ANota: TNotaFiscal;
   DocumentXml: TACBrXmlDocument;
 begin
@@ -493,7 +504,19 @@ begin
 
             if NFSeXml <> '' then
             begin
+              CNPJ := ANota.NFSe.Prestador.IdentificacaoPrestador.CpfCnpj;
+
+              if TACBrNFSeX(FAOwner).Configuracoes.Arquivos.NomeLongoNFSe then
+                NomeXml := GerarNomeNFSe(TACBrNFSeX(FAOwner).Configuracoes.WebServices.UFCodigo,
+                                        Response.Data,
+                                        OnlyNumber(CNPJ),
+                                        StrToInt64Def(Response.NumeroNota, 0))
+              else
+                NomeXml := Response.NumeroNota + Response.SerieNota;
+
               NFSeXml := DeCompress(DecodeBase64(NFSeXml));
+              NFSeXml := SepararDados(NFSeXml, 'ComplNfse', True);
+              NFSeXml := RemoverIdentacao(NFSeXml);
 
               DocumentXml := TACBrXmlDocument.Create;
 
@@ -509,12 +532,8 @@ begin
 
                   DocumentXml.LoadFromXml(NFSeXml);
 
-                  ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
-
-                  ANota := CarregarXmlNfse(ANota, DocumentXml.Root.OuterXml);
-
                   ConfigGeral.FormatoArqNota := tfaXml;
-                  SalvarXmlNfse(ANota);
+                  SalvarXmlNfse(NomeXml, NFSeXml);
                   ConfigGeral.FormatoArqNota := tfaJson;
                 except
                   on E:Exception do

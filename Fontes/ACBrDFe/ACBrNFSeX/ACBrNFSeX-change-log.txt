@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/06/2025
+-- ACBrNFSeXServicos --
+[*] Alterado a URL do LinkURL da cidade de Piracicaba/SP.
+   Por: quartarollo
+
 12/06/2025
 -- ACBrNFSeXServicos --
 [*] #TK-7184: Alterado as URLs do LinkURL da cidade de São Félix do Araguaia/MT.

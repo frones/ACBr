@@ -1581,7 +1581,7 @@ end;
 function TACBrBancoSicredi.CalcularNomeArquivoRemessa: String;
 var
   Sequencia, wMes :Integer;
-  NomeFixo, NomeArq: String;
+  NomeFixo, NomeArq, Extensao: String;
   codMesSicredi : String;
 begin
 
@@ -1606,21 +1606,22 @@ begin
 
          NomeArq := NomeFixo + '.crm';
 
-         Sequencia := 1;
+         Sequencia := 0;
+
          while FilesExists(NomeArq) do
          begin
            Inc(Sequencia);
 
-           if Sequencia > 9 then
-           begin
-             if Sequencia = 10 then
-               NomeArq := NomeFixo +'.rm0'
-             else
-               raise Exception.Create(ACBrStr('Número máximo de 10 arquivos '+
-                                              'de remessa alcançado'));
-           end
-           else
-             NomeArq := NomeFixo +'.rm'+IntToStr(Sequencia);
+           if (Sequencia >= 1) and (Sequencia < 10) then
+            Extensao := '.rm'
+          else if (Sequencia >= 100) then
+            Extensao := '.'
+          else if (Sequencia >= 10) then
+            Extensao := '.m'
+          else
+            Extensao := '.crm';
+
+           NomeArq := NomeFixo +Extensao+IntToStr(Sequencia);
 
          end;
 

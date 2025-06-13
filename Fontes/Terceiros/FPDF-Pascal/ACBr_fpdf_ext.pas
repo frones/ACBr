@@ -44,52 +44,7 @@
 
 unit ACBr_fpdf_ext;
 
-// Define USE_SYNAPSE if you want to force use of Units from synapse
-//   Used from HTTPS downlaod em PDF Protection Script  (password)
-//   http://www.ararat.cz/synapse
-{$DEFINE USE_SYNAPSE}
-
-// If you don't want the AnsiString vs String warnings to bother you
-{$DEFINE REMOVE_CAST_WARN}
-
-// If you have DelphiZXingQRCode Unit on you LibPath
-// https://github.com/foxitsoftware/DelphiZXingQRCode
-{$DEFINE DelphiZXingQRCode}
-
-{$IfDef USE_SYNAPSE}
-  {$DEFINE HAS_PROTECTION}
-{$EndIf}
-
-{$IfNDef FPC}
-  {$IFDEF REMOVE_CAST_WARN}
-   {$IF CompilerVersion >= 20}
-    {$WARN IMPLICIT_STRING_CAST OFF}
-    {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
-   {$IfEnd}
-  {$EndIf}
-{$EndIf}
-
-{$IfDef FPC}
-  {$Mode objfpc}{$H+}
-  {$Define USE_UTF8}
-  {$Define HAS_HTTP}
-{$EndIf}
-
-{$IfDef USE_SYNAPSE}
-  {$Define HAS_HTTP}
-{$EndIf}
-
-{$IfDef POSIX}
-  {$IfDef LINUX}
-    {$Define USE_UTF8}
-  {$EndIf}
-  {$Define FMX}
-{$EndIf}
-
-{$IfDef NEXTGEN}
-  {$ZEROBASEDSTRINGS OFF}
-  {$Define USE_UTF8}
-{$EndIf}
+{$I fpdf.inc}
 
 interface
 
@@ -103,7 +58,9 @@ uses
    {$IFDEF USE_SYNAPSE}
     ,httpsend, ssl_openssl, synacode
    {$ELSE}
-    ,fphttpclient, opensslsockets
+     {$IfDef FPC}
+      ,fphttpclient, opensslsockets
+     {$ENDIF}
    {$ENDIF}
   {$ENDIF};
 

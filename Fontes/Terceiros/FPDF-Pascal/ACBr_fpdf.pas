@@ -35,37 +35,8 @@
 }
 
 unit ACBr_fpdf;
-// If you don't want the AnsiString vs String warnings to bother you
-{$DEFINE REMOVE_CAST_WARN}
 
-{$IfNDef FPC}
-  {$IFDEF REMOVE_CAST_WARN}
-   {$IF CompilerVersion >= 20}
-    {$WARN IMPLICIT_STRING_CAST OFF}
-    {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
-   {$IfEnd}
-  {$EndIf}
-{$EndIf}
-
-{$IfDef FPC}
-  {$Mode objfpc}{$H+}
-  {$Define USE_UTF8}
-{$EndIf}
-
-{$IfDef POSIX}
-  {$IfDef LINUX}
-    {$Define CONVERT_TO_ANSI}
-    {$Define USE_UTF8}
-  {$EndIf}
-  {$Define FMX}
-  {$Define HAS_SYSTEM_GENERICS}
-{$EndIf}
-
-{$IfDef NEXTGEN}
-  {$ZEROBASEDSTRINGS OFF}
-  {$Define HAS_SYSTEM_GENERICS}
-  {$Define USE_UTF8}
-{$EndIf}
+{$I fpdf.inc}
 
 interface
 
@@ -78,7 +49,7 @@ uses
   {$EndIf}
   {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
-  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+  {$ELSEIF DEFINED(HAS_SYSTEM_CONTNRS)}
    System.Contnrs,
   {$Else}
    Contnrs,

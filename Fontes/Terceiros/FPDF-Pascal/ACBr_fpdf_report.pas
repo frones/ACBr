@@ -31,24 +31,22 @@
 
 unit ACBr_fpdf_report;
 
-{$ifdef fpc}
-  {$mode delphi}
-  {$H+}
-{$endif}
-
-// If you have DelphiZXingQRCode Unit on you LibPath
-// https://github.com/foxitsoftware/DelphiZXingQRCode
-{$DEFINE DelphiZXingQRCode}
+{$I fpdf.inc}
 
 interface
 
 uses
   Classes,
   SysUtils,
-  Contnrs,
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(HAS_SYSTEM_CONTNRS)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   Types,
   Math,
-
   ACBr_fpdf,
   ACBr_fpdf_ext
   {$IfDEF DelphiZXingQRCode}
@@ -369,7 +367,7 @@ type
 
   TFPDFPageList = class
   private
-    FInternalList: TObjectList;
+    FInternalList: TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TFPDFPage>{$EndIf};
   protected
     function GetItem(Index: Integer): TFPDFPage;
     procedure SetItem(Index: Integer; Value: TFPDFPage);
@@ -384,7 +382,7 @@ type
 
   TFPDFBandList = class
   private
-    FInternalList: TObjectList;
+    FInternalList: TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TFPDFBand>{$EndIf};
   protected
     function GetItem(Index: Integer): TFPDFBand;
     procedure SetItem(Index: Integer; Value: TFPDFBand);
@@ -1960,7 +1958,7 @@ begin
         end;
     else
       Offset := ReadMWord(AStream);
-      AStream.Seek(Offset - 2, 1);
+      AStream.Seek(LongInt(Offset - 2), 1);
     end;
   end;
 end;
@@ -2002,9 +2000,9 @@ begin
       Result := False;
       Exit;
     end;
-  AStream.Seek(18, 0);
+  AStream.Seek(LongInt(18), 0);
   wWidth := ReadMWord(AStream);
-  AStream.Seek(22, 0);
+  AStream.Seek(LongInt(22), 0);
   wHeight := ReadMWord(AStream);
   Result := True;
 end;
@@ -2166,7 +2164,7 @@ end;
 
 constructor TFPDFPageList.Create(AOwnsObjects: Boolean);
 begin
-  FInternalList := TObjectList.Create(AOwnsObjects);
+  FInternalList := TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TFPDFPage>{$EndIf}.Create(AOwnsObjects);
 end;
 
 destructor TFPDFPageList.Destroy;
@@ -2199,7 +2197,7 @@ end;
 
 constructor TFPDFBandList.Create(AOwnsObjects: Boolean);
 begin
-  FInternalList := TObjectList.Create(AOwnsObjects);
+  FInternalList := TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TFPDFBand>{$EndIf}.Create(AOwnsObjects);
 end;
 
 destructor TFPDFBandList.Destroy;

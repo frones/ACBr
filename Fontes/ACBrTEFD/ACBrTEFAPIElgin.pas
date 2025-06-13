@@ -38,6 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
+  ACBrBase,
   ACBrTEFComum, ACBrTEFAPI, ACBrTEFAPIComum, ACBrTEFAPIElginComum,
   ACBrJSON;
 
@@ -103,7 +104,7 @@ type
 
 //  procedure ResolverTransacaoPendente(AStatus: TACBrTEFStatusTransacao = tefstsSucessoManual); override;
 //  procedure ExibirMensagemPinPad(const MsgPinPad: String); override;
-    property ConfirmaColeta: boolean read fConfirmaColeta;
+    property ConfirmaColeta: boolean read fConfirmaColeta write fConfirmaColeta;
   end;
 
 implementation

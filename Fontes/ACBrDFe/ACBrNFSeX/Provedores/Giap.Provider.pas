@@ -672,6 +672,9 @@ begin
     Autenticacao.RequerChaveAutorizacao := True;
 
     ServicosDisponibilizados.EnviarLoteAssincrono := True;
+    ServicosDisponibilizados.ConsultarSituacao := False;
+    ServicosDisponibilizados.ConsultarLote := False;
+    ServicosDisponibilizados.ConsultarNfse := False;
     ServicosDisponibilizados.ConsultarRps := True;
     ServicosDisponibilizados.CancelarNfse := True;
   end;

@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/06/2025
+-- Giap.Provider --
+[*] Ajustado a procedure Configuracao para a versão 1.01 que é usada por Araraquara/SP
+    para mostrar corretamente os serviços disponibilizados pelo provedor.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Alterado a URL do LinkURL da cidade de Piracicaba/SP.
    Por: quartarollo

@@ -99,9 +99,9 @@ uses
 constructor TACBrBancoAilos.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fDataProtestoNegativacao:=0;
-   fDiasProtestoNegativacao:='';
-   fpDigito                := 1;
+   fDataProtestoNegativacao:= 0;
+   fDiasProtestoNegativacao:= '';
+   fpDigito                := 0;
    fpNome                  := 'AILOS';
    fpNumero                := 085;
    fpTamanhoMaximoNossoNum := 17;
@@ -629,7 +629,7 @@ begin
       'S'                                                                     + // 014 a 014 - Código do segmento do registro detalhe
       ' '                                                                     + // 015 a 015 - Uso exclusivo FEBRABAN/CNAB: Branco
       ATipoOcorrencia                                                         + // 016 a 017 - Codigo ocorrencia
-      '1'                                                                     + // 018 - 018 - Tipo de Impressao / '1' = Frente do Boleto
+      '3'                                                                     + // 018 - 018 - Tipo de Impressao / '3' = Corpo de Instrução de Compensação do Boleto
       PadRight(Copy(LTextoMensagem,  01, 40),40)                              + // 019 - 058 - CONTEÚDO DA LINHA 5
       PadRight(Copy(LTextoMensagem,  41, 40),40)                              + // 059 - 098 - CONTEÚDO DA LINHA 6
       PadRight(Copy(LTextoMensagem,  81, 40),40)                              + // 099 - 138 - CONTEÚDO DA LINHA 7

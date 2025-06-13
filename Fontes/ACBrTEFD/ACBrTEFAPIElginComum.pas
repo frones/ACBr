@@ -38,6 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
+  ACBrBase,
   ACBrTEFAPIComum, ACBrJSON, ACBrTEFComum;
 
 const

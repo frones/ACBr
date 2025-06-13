@@ -37,7 +37,8 @@ unit ACBrTEFPayKitAPI;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils,
+  ACBrBase;
 
 const
   {$IFDEF MSWINDOWS}
@@ -87,7 +88,7 @@ type
   TACBrTEFPayKitQuandoPerguntarMenu = procedure(
     const Titulo: String;
     Opcoes: TStringList;
-    var ItemSelecionado: Integer) of object;  // Retorna o Item Selecionado, iniciando com 0
+    var ItemSelecionado: LongInt) of object;  // Retorna o Item Selecionado, iniciando com 0
                                               // -2 - Volta no Fluxo
                                               // -1 - Cancela o Fluxo
 
@@ -403,7 +404,7 @@ type
 
     procedure ExibirMensagem(const AMsg: String; TipoMensagem: TACBrTEFPayKitTipoMensagem = msgInfo;
       MilissegundosExibicao: Integer = -1);
-    procedure PerguntarMenu(const Titulo: String; Opcoes: TStringList; var ItemSelecionado: Integer);
+    procedure PerguntarMenu(const Titulo: String; Opcoes: TStringList; var ItemSelecionado: LongInt);
     procedure PerguntarCampo(DefinicaoCampo: TACBrTEFPayKitDefinicaoCampo;
       var Resposta: String; var Acao: Integer);
     function VerificarTransacaoEmAndamento(EstadoOperacao: TACBrTEFPayKitEstadoOperacao): Boolean;
@@ -639,7 +640,7 @@ function CallBackSolicitaConfirmacao(pMensagem: PAnsiChar): LongInt; {$IfDef MSW
 var
   s: String;
   sl: TStringList;
-  ItemSelecionado: Integer;
+  ItemSelecionado: LongInt;
 begin
   Result := 1;   // NAO
   with GetTEFPayKitAPI do
@@ -2068,7 +2069,7 @@ begin
 end;
 
 procedure TACBrTEFPayKitAPI.PerguntarMenu(const Titulo: String;
-  Opcoes: TStringList; var ItemSelecionado: Integer);
+  Opcoes: TStringList; var ItemSelecionado: LongInt);
 begin
   if not VerificarSeEstaEmTransacao then
     Exit;

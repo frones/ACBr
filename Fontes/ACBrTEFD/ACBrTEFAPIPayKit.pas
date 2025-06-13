@@ -62,7 +62,7 @@ type
     procedure QuandoExibirMensagemAPI(const Mensagem: String;
       TipoMensagem: TACBrTEFPayKitTipoMensagem; MilissegundosExibicao: Integer);
     procedure QuandoPerguntarMenuAPI(const Titulo: String; Opcoes: TStringList;
-      var ItemSelecionado: Integer);
+      var ItemSelecionado: LongInt);
     procedure QuandoPerguntarCampoAPI(DefinicaoCampo: TACBrTEFPayKitDefinicaoCampo;
       var Resposta: String; var Acao: Integer);
     procedure VerificarTransacaoEmAndamentoAPI(EstadoOperacao: TACBrTEFPayKitEstadoOperacao;
@@ -440,9 +440,13 @@ begin
 end;
 
 procedure TACBrTEFAPIClassPayKit.QuandoPerguntarMenuAPI(const Titulo: String;
-  Opcoes: TStringList; var ItemSelecionado: Integer);
+  Opcoes: TStringList; var ItemSelecionado: LongInt);
+var
+  i: Integer;
 begin
-  TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( Titulo, Opcoes, ItemSelecionado);
+  i := ItemSelecionado;
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( Titulo, Opcoes, i);
+  ItemSelecionado := i;
 end;
 
 procedure TACBrTEFAPIClassPayKit.QuandoPerguntarCampoAPI(

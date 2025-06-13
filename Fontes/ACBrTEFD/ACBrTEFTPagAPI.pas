@@ -37,7 +37,8 @@ unit ACBrTEFTPagAPI;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils,
+  ACBrBase;
 
 const
   {$IFDEF MSWINDOWS}

@@ -37,7 +37,8 @@ unit ACBrTEFScopeAPI;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils,
+  ACBrBase;
 
 {------------------------------------------------------------------------------
   DECLARACAO DE CONSTANTES GLOBAIS

@@ -1825,6 +1825,7 @@ begin
         indUniao           := '';
         dtTransfFinsLucr   := 0;
         dtObito            := 0;
+        indPertIRRF        := '';
 
         Contato.NmCtt    := edContNome.Text;
         Contato.CpfCtt   := edContCPF.Text;

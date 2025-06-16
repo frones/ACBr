@@ -1772,9 +1772,13 @@ begin
           ClassTrib := ct11;
 
         indEscrituracao    := TindEscrituracao(0);
-        indDesoneracao     := TindDesoneracao(1);
+        indDesoneracao     := TindDesoneracao(0);
         indAcordoIsenMulta := TindAcordoIsenMulta(0);
         indSitPJ           := TindSitPJ(0);
+        indUniao           := '';
+        dtTransfFinsLucr   := 0;
+        dtObito            := 0;
+        indPertIRRF        := '';
 
         Contato.NmCtt    := edContNome.Text;
         Contato.CpfCtt   := edContCPF.Text;
@@ -1793,8 +1797,8 @@ begin
         end;
       end;
 
-      infoContribuinte.NovaValidade.IniValid := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
-      infoContribuinte.NovaValidade.FimValid := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
+      //infoContribuinte.NovaValidade.IniValid := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
+      //infoContribuinte.NovaValidade.FimValid := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
     end;
   end;
 end;

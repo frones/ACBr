@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/06/2025
+-- pcnReinfR1000, evtInfoContribuinte-v2_01_02.xsd --
+[*] #TK-7221 - Incluído campo indPertIRRF no R1000 e atualizados schemas do registro - https://www.projetoacbr.com.br/forum/topic/83760-publicada-nota-t%C3%A9cnica-022025-trazendo-ajustes-nos-leiautes-da-vers%C3%A3o-212-do-reinf/
+  Por: Renato Rubinho
+
 06/06/2025
 -- pcnConversaoReinf, evt4010PagtoBeneficiarioPF-v2_01_02.xsd --
 [*] #TK-7070 - Incluído item tpSemProcesso no enumerado tpProcRRA do R4010 - https://www.projetoacbr.com.br/forum/topic/83266-erro-nas-fun%C3%A7%C3%B5es-de-convers%C3%A3o-tpproctostr-e-strtotpproc/

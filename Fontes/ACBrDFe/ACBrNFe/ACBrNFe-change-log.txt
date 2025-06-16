@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/06/2025
+-- ACBrNFeServicos --
+[*] Alterado as URLs de homologação e de produção do QR-Code da NFC-e da SEFAZ-GO. 
+  Por: Italo Giurizzato Junior
+
 11/06/2025
 -- Diversos --
 [*] Alterações visando deixar o componente em conformidade com a versão 1.10 da NT

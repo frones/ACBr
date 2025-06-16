@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+16/06/2025
+-- ACBrBoletoW_Itau_API --
+[-] #TK-7218 Corrigido o metodo toRemessaCancelarDesconto e nao estava enviando um parametro. corrigido tbm enumerados para facilitar a leitura dos fontes.
+	https://www.projetoacbr.com.br/forum/topic/83709-funcionalidade-toremessacancelardesconto-banco-itau/
+    Por: Daniel de Morais
 
 12/06/2025
 -- ACBrBoleto --

@@ -42,6 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/06/2025
+-- ACBrNFSeXServicos --
+[+] #TK-7216: Incluída a cidade de Santo Estevão/BA, o provedor é Fisco.
+   Por: Italo Giurizzato Junior
+[*] #TK-7215: A cidade de Sao Roque/SP mudou de provedor, agora é Pronim versao 2.03
+   Por: Italo Giurizzato Junior
+[*] #TK-7225: Incluído o Params NaoDividir100 para a cidade de Jaguariuna/SP.
+   Por: Quality Automação
+[*] #TK-7178: A cidade de Ivinhema/MS mudou de provedor, agora é Fiorilli.
+   Por: Marcos Pereda
+
 13/06/2025
 -- Giap.Provider --
 [*] Ajustado a procedure Configuracao para a versão 1.01 que é usada por Araraquara/SP

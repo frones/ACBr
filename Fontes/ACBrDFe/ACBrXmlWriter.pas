@@ -496,8 +496,8 @@ begin
   xmlNode.SetAttribute('URI', Signature.URI);
 
   xmlNodeAux := xmlNode.AddChild('Transforms');
-  xmlNodeAux.AddChild('Transform ').SetAttribute('Algorithm', 'http://www.w3.org/2000/09/xmldsig#enveloped-signature');
-  xmlNodeAux.AddChild('Transform ').SetAttribute('Algorithm', 'http://www.w3.org/TR/2001/REC-xml-c14n-20010315');
+  xmlNodeAux.AddChild('Transform').SetAttribute('Algorithm', 'http://www.w3.org/2000/09/xmldsig#enveloped-signature');
+  xmlNodeAux.AddChild('Transform').SetAttribute('Algorithm', 'http://www.w3.org/TR/2001/REC-xml-c14n-20010315');
 
   xmlNode.AddChild('DigestMethod').SetAttribute('Algorithm', 'http://www.w3.org/2000/09/xmldsig#sha1');
   xmlNode.AddChild('DigestValue').Content := Signature.DigestValue;

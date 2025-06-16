@@ -54,6 +54,7 @@ const
   cMPMValueNotInformed = '***';
 
 type
+
   TACBrPIXAPIVersion = ( verNenhuma, verPropria,
                          ver200,
                          ver210, ver211, ver212,
@@ -153,6 +154,11 @@ type
                                            ssrEXPIRADA,
                                            ssrCANCELADA );
 
+  TACBrPIXTipoConta = ( ptcNENHUM,
+                        ptcCORRENTE,
+                        ptcPOUPANCA,
+                        ptcPAGAMENTO );
+
   EACBrPixException = class(EACBrException);
 
   { TACBrPIXSchema }
@@ -245,6 +251,9 @@ type
 
   function PIXStatusSolicitacaoRecorrenciaToString(AStatus: TACBrPIXStatusSolicitacaoRecorrencia): String;
   function StringToPIXStatusSolicitacaoRecorrencia(const AString: String): TACBrPIXStatusSolicitacaoRecorrencia;
+
+  function PIXTipoContaToString(ATipoConta: TACBrPIXTipoConta): String;
+  function StringToPIXTipoConta(const AString: String): TACBrPIXTipoConta;
 
 implementation
 
@@ -639,6 +648,30 @@ begin
     Result := ssrEXPIRADA
   else if (s = 'CANCELADA') then
     Result := ssrCANCELADA;
+end;
+
+function PIXTipoContaToString(ATipoConta: TACBrPIXTipoConta): String;
+begin
+  Result := EmptyStr;
+  case ATipoConta of
+    ptcCORRENTE: Result := 'CORRENTE';
+    ptcPOUPANCA: Result := 'POUPANCA';
+    ptcPAGAMENTO: Result := 'PAGAMENTO';
+  end;
+end;
+
+function StringToPIXTipoConta(const AString: String): TACBrPIXTipoConta;
+var
+  s: String;
+begin
+  Result := ptcNENHUM;
+  s := UpperCase(Trim(AString));
+  if (s = 'CORRENTE') then
+    Result := ptcCORRENTE
+  else if (s = 'POUPANCA') then
+    Result := ptcPOUPANCA
+  else if (s = 'PAGAMENTO') then
+    Result := ptcPAGAMENTO;
 end;
 
 { TACBrPIXSchema }

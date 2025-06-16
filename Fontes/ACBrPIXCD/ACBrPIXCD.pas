@@ -162,7 +162,8 @@ type
   TACBrPSPScope =
     (scCobWrite, scCobRead, scCobVWrite, scCobVRead, scLoteCobVWrite,
      scLoteCobVRead, scPixWrite, scPixRead, scWebhookWrite, scWebhookRead,
-     scPayloadLocationWrite, scPayloadLocationRead);
+     scPayloadLocationWrite, scPayloadLocationRead, scRecWrite, scRecRead,
+     scSolicRecWrite, scSolicRecRead);
 
   TACBrPSPScopes = set of TACBrPSPScope;
 
@@ -384,8 +385,10 @@ type
     fTipoChave: TACBrPIXTipoChave;
 
     fepPix: TACBrPixEndPointPix;
+    fepRec: TACBrPixEndPointRec;
     fepCob: TACBrPixEndPointCob;
     fepCobV: TACBrPixEndPointCobV;
+    fepSolicRec: TACBrPixEndPointSolicRec;
     fPixCD: TACBrPixCD;
     fHttpSend: THTTPSend;
     fHttpRespStream: TMemoryStream;
@@ -471,8 +474,10 @@ type
     property ValidadeToken: TDateTime read fpValidadeToken;
 
     property epPix: TACBrPixEndPointPix read fepPix;
+    property epRec: TACBrPixEndPointRec read fepRec;
     property epCob: TACBrPixEndPointCob read fepCob;
     property epCobV: TACBrPixEndPointCobV read fepCobV;
+    property epSolicRec: TACBrPixEndPointSolicRec read fepSolicRec;
 
     property Http: THTTPSend read fHttpSend;
     property IsBacen: Boolean read fpIsBacen;
@@ -1141,7 +1146,7 @@ begin
   Result := (ResultCode = HTTP_OK);
 
   if Result then
-    fRecorrenciasConsultadas.AsJSON := String(RespostaHttp)
+    RecorrenciasConsultadas.AsJSON := String(RespostaHttp)
   else
     fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;
@@ -1263,7 +1268,7 @@ begin
   WriteStrToStream(fPSP.Http.Document, wBody);
   fPSP.Http.MimeType := CContentTypeApplicationJSon;
   fPSP.AcessarEndPoint(ChttpMethodPATCH, EndPoint, ResultCode, RespostaHttp);
-  Result := (ResultCode = HTTP_OK);
+  Result := (ResultCode = HTTP_CREATED);
 
   if Result then
     SolicitacaoGerada.AsJSON := String(RespostaHttp)
@@ -1910,8 +1915,10 @@ begin
   fHttpSend.OutputStream := fHttpRespStream;
 
   fepPix := TACBrPixEndPointPix.Create(Self);
+  fepRec := TACBrPixEndPointRec.Create(Self);
   fepCob := TACBrPixEndPointCob.Create(Self);
   fepCobV := TACBrPixEndPointCobV.Create(Self);
+  fepSolicRec := TACBrPixEndPointSolicRec.Create(Self);
   fURLQueryParams := TACBrQueryParams.Create;
   fURLPathParams := TStringList.Create;
   fScopes := [scCobWrite, scCobRead, scPixWrite, scPixRead];
@@ -1929,8 +1936,10 @@ begin
   fHttpSend.Free;
   fHttpRespStream.Free;
   fepPix.Free;
+  fepRec.Free;
   fepCob.Free;
   fepCobV.Free;
+  fepSolicRec.Free;
   fURLQueryParams.Free;
   fURLPathParams.Free;
 
@@ -1942,7 +1951,9 @@ begin
   fHttpSend.Clear;
   fURLQueryParams.Clear;
   fepPix.Clear;
+  fepRec.Clear;
   fepCob.Clear;
+  fepCobV.Clear;
   fepCobV.Clear;
 end;
 
@@ -2241,6 +2252,10 @@ begin
     scWebhookRead: Result := 'webhook.read';
     scPayloadLocationWrite: Result := 'payloadlocation.write';
     scPayloadLocationRead: Result := 'payloadlocation.read';
+    scRecWrite: Result := 'rec.write';
+    scRecRead: Result := 'rec.read';
+    scSolicRecWrite: Result := 'solicrec.write';
+    scSolicRecRead: Result := 'rec.read';
   end;
 end;
 

@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/06/2025
+-- ACBrPIXCD --
+[+] Inclusão dos scopes referentes aos novos endpoints /rec e /solicrec;
+[+] Inclusão das propriedades responsáveis pelos novos endpoints;
+
+-- ACBrPIXSchemasCalendario --
+[-] Correçao no formato das datas esperadas no body do /rec
+
+-- ACBrPIXSchemasRecBase --
+[-] Ajuste no envio dos valores no body do /rec
+    por: Elias Cesar
+
 12/06/2025
 -- ACBrPIXSchemasRecAtualizacao --
 [+] Correção de erro , sobrando um parenteses, quebra de compilacao

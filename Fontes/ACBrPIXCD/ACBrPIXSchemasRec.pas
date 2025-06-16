@@ -154,6 +154,7 @@ type
   TACBrPIXRecRevisada = class(TACBrPIXRecSolicitadaBase)
   public
     property loc;
+    property status;
     property vinculo;
     property ativacao;
     property calendario;

@@ -61,6 +61,7 @@ type
     fcpf: String;
     fispbParticipante: String;
     fnome: String;
+    ftipoConta: TACBrPIXTipoConta;
     procedure SetAgencia(AValue: String);
     procedure SetCnpj(aValue: String);
     procedure SetCodMun(AValue: String);
@@ -80,6 +81,7 @@ type
     property codMun: String read fcodMun write SetCodMun;
     property agencia: String read fagencia write SetAgencia;
     property convenio: String read fconvenio write SetConvenio;
+    property tipoConta: TACBrPIXTipoConta read ftipoConta write ftipoConta;
     property ispbParticipante: String read fispbParticipante write SetIspbParticipante;
   public
     constructor Create(const ObjectName: String); override;

@@ -385,9 +385,10 @@ end;
 
 procedure TACBrPIXRecValor.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  AJSon
-    .AddPair('valorRec', fvalorRec, False)
-    .AddPair('valorMinimoRecebedor', fvalorMinimoRecebedor, False);
+  if NaoEstaZerado(fvalorRec) then
+    AJSon.AddPair('valorRec', FormatarValorPIX(fvalorRec));
+  if NaoEstaZerado(fvalorMinimoRecebedor) then
+    AJSon.AddPair('valorMinimoRecebedor', FormatarValorPIX(fvalorMinimoRecebedor));
 end;
 
 procedure TACBrPIXRecValor.DoReadFromJSon(AJSon: TACBrJSONObject);

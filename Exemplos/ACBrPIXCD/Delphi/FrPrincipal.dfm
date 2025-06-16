@@ -2372,6 +2372,1065 @@ object Form1: TForm1
                 end
               end
             end
+            object tsEndPointRec: TTabSheet
+              Caption = '/rec'
+              object pgTestesEndPointRec: TPageControl
+                Left = 0
+                Top = 0
+                Width = 616
+                Height = 529
+                ActivePage = tsCriarRecorrencia
+                Align = alClient
+                TabOrder = 0
+                object tsCriarRecorrencia: TTabSheet
+                  Caption = 'Criar Recorrencia'
+                  object Splitter3: TSplitter
+                    Left = 603
+                    Top = 208
+                    Width = 5
+                    Height = 264
+                    Align = alRight
+                  end
+                  object pnRecCriarRecorrencia: TPanel
+                    Left = 0
+                    Top = 0
+                    Width = 608
+                    Height = 208
+                    Align = alTop
+                    BevelOuter = bvNone
+                    TabOrder = 0
+                    DesignSize = (
+                      608
+                      208)
+                    object lbCriarRecorrenciaValor: TLabel
+                      Left = 370
+                      Top = 10
+                      Width = 24
+                      Height = 13
+                      Caption = 'Valor'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbCriarRecorrenciaNomeDevedor: TLabel
+                      Left = 16
+                      Top = 10
+                      Width = 72
+                      Height = 13
+                      Caption = 'Nome Devedor'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbCriarRecorrenciaCPFCNPJ: TLabel
+                      Left = 254
+                      Top = 10
+                      Width = 58
+                      Height = 13
+                      Caption = 'CPF / CNPJ'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbCriarRecorrenciaObjeto: TLabel
+                      Left = 16
+                      Top = 58
+                      Width = 31
+                      Height = 13
+                      Caption = 'Objeto'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbCriarRecorrenciaContrato: TLabel
+                      Left = 254
+                      Top = 58
+                      Width = 40
+                      Height = 13
+                      Caption = 'Contrato'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbCriarRecorrenciaDataInicial: TLabel
+                      Left = 370
+                      Top = 109
+                      Width = 53
+                      Height = 13
+                      Caption = 'Data Inicial'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbCriarRecorrenciaDataFinal: TLabel
+                      Left = 488
+                      Top = 109
+                      Width = 48
+                      Height = 13
+                      Caption = 'Data Final'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbCriarRecorrenciaPeriodicidade: TLabel
+                      Left = 254
+                      Top = 109
+                      Width = 64
+                      Height = 13
+                      Caption = 'Periodicidade'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbCriarRecorrenciaPoliticaRetentativa: TLabel
+                      Left = 488
+                      Top = 10
+                      Width = 92
+                      Height = 13
+                      Caption = 'Politica Retentativa'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbCriarRecorrenciaTxID: TLabel
+                      Left = 16
+                      Top = 109
+                      Width = 114
+                      Height = 13
+                      Caption = 'txID (Apenas Jornada 3)'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbCriarRecorrenciaLoc: TLabel
+                      Left = 488
+                      Top = 58
+                      Width = 18
+                      Height = 13
+                      Hint = 
+                        'Quantidade de dias corridos ap'#195#179's a data de vencimento, em que a' +
+                        ' cobran'#195#167'a poder'#195#161' ser paga'
+                      Caption = 'Loc'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object btCriarRecorrencia: TBitBtn
+                      Left = 254
+                      Top = 164
+                      Width = 102
+                      Height = 26
+                      Anchors = [akTop, akRight]
+                      Caption = 'Criar'
+                      TabOrder = 11
+                      OnClick = btCriarRecorrenciaClick
+                    end
+                    object edCriarRecorrenciaNomeDevedor: TEdit
+                      Left = 16
+                      Top = 25
+                      Width = 224
+                      Height = 21
+                      Anchors = [akLeft, akTop, akRight]
+                      TabOrder = 0
+                      OnChange = edCriarRecorrenciaNomeDevedorChange
+                    end
+                    object edCriarRecorrenciaCPFCNPJDevedor: TEdit
+                      Left = 254
+                      Top = 25
+                      Width = 102
+                      Height = 21
+                      Enabled = False
+                      TabOrder = 1
+                      OnChange = edtCriarCobrancaImediata_CPF_CNPJChange
+                      OnKeyPress = edOnlyNumbersKeyPress
+                    end
+                    object edCriarRecorrenciaObjeto: TEdit
+                      Left = 16
+                      Top = 73
+                      Width = 224
+                      Height = 21
+                      TabOrder = 4
+                    end
+                    object edCriarRecorrenciaValor: TEdit
+                      Left = 370
+                      Top = 25
+                      Width = 102
+                      Height = 21
+                      TabOrder = 2
+                      Text = '1,00'
+                    end
+                    object edCriarRecorrenciaContrato: TEdit
+                      Left = 254
+                      Top = 73
+                      Width = 218
+                      Height = 21
+                      TabOrder = 5
+                      OnChange = edtCriarCobrancaImediata_CPF_CNPJChange
+                      OnKeyPress = edOnlyNumbersKeyPress
+                    end
+                    object edCriarRecorrenciaDataInicial: TDateTimePicker
+                      Left = 370
+                      Top = 124
+                      Width = 102
+                      Height = 23
+                      BiDiMode = bdLeftToRight
+                      Date = 44713.393125636580000000
+                      Time = 44713.393125636580000000
+                      MaxDate = 2958465.999988426000000000
+                      MinDate = -53780.000000000000000000
+                      ParentBiDiMode = False
+                      TabOrder = 9
+                    end
+                    object edCriarRecorrenciaDataFinal: TDateTimePicker
+                      Left = 488
+                      Top = 124
+                      Width = 102
+                      Height = 23
+                      BiDiMode = bdLeftToRight
+                      Date = 44713.393125636580000000
+                      Time = 44713.393125636580000000
+                      MaxDate = 2958465.999988426000000000
+                      MinDate = -53780.000000000000000000
+                      ParentBiDiMode = False
+                      TabOrder = 10
+                    end
+                    object cbCriarRecorrenciaPeriodicidade: TComboBox
+                      Left = 254
+                      Top = 124
+                      Width = 102
+                      Height = 21
+                      Style = csDropDownList
+                      ItemHeight = 13
+                      TabOrder = 8
+                    end
+                    object cbCriarRecorrenciaPoliticaRetentativa: TComboBox
+                      Left = 488
+                      Top = 25
+                      Width = 102
+                      Height = 21
+                      Style = csDropDownList
+                      ItemHeight = 13
+                      TabOrder = 3
+                    end
+                    object edCriarRecorrenciaTxID: TEdit
+                      Left = 16
+                      Top = 124
+                      Width = 224
+                      Height = 21
+                      TabOrder = 7
+                    end
+                    object edCriarRecorrenciaLoc: TSpinEdit
+                      Left = 488
+                      Top = 73
+                      Width = 102
+                      Height = 22
+                      MaxValue = 0
+                      MinValue = 0
+                      TabOrder = 6
+                      Value = 0
+                    end
+                    object btCriarRecorrenciaPreencher: TBitBtn
+                      Left = 16
+                      Top = 164
+                      Width = 224
+                      Height = 26
+                      Anchors = [akTop, akRight]
+                      Caption = 'Preencher Dados Ficticios'
+                      TabOrder = 12
+                      OnClick = btCriarRecorrenciaPreencherClick
+                    end
+                  end
+                  object pnCriarRecorrenciaRodape: TPanel
+                    Left = 0
+                    Top = 472
+                    Width = 608
+                    Height = 29
+                    Align = alBottom
+                    TabOrder = 1
+                    DesignSize = (
+                      608
+                      29)
+                    object btCriarRecorrenciaLimpar: TBitBtn
+                      Left = 506
+                      Top = 1
+                      Width = 83
+                      Height = 26
+                      Anchors = [akTop]
+                      Caption = 'Limpar'
+                      TabOrder = 0
+                    end
+                  end
+                  object mmCriarRecorrencia: TMemo
+                    Left = 0
+                    Top = 208
+                    Width = 603
+                    Height = 264
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 2
+                  end
+                end
+                object tsConsultarRecorrencia: TTabSheet
+                  Caption = 'Consultar Recorrencia'
+                  object pnConsultarRecorrencia: TPanel
+                    Left = 0
+                    Top = 0
+                    Width = 608
+                    Height = 112
+                    Align = alTop
+                    BevelOuter = bvNone
+                    TabOrder = 0
+                    DesignSize = (
+                      608
+                      112)
+                    object lbConsultarRecorrenciaIdRec: TLabel
+                      Left = 16
+                      Top = 16
+                      Width = 28
+                      Height = 13
+                      Caption = 'idRec'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object edConsultarRecorrenciaIdRec: TEdit
+                      Left = 16
+                      Top = 36
+                      Width = 576
+                      Height = 21
+                      Anchors = [akLeft, akTop, akRight]
+                      TabOrder = 0
+                    end
+                    object btConsultarRecorrenciaIdRec: TBitBtn
+                      Left = 495
+                      Top = 72
+                      Width = 97
+                      Height = 26
+                      Anchors = [akTop, akRight]
+                      Caption = 'Consultar'
+                      TabOrder = 1
+                      OnClick = btConsultarRecorrenciaIdRecClick
+                    end
+                  end
+                  object mmConsultarRecorrencia: TMemo
+                    Left = 0
+                    Top = 112
+                    Width = 608
+                    Height = 360
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 1
+                  end
+                  object pnConsultarRecorrenciaRodape: TPanel
+                    Left = 0
+                    Top = 472
+                    Width = 608
+                    Height = 29
+                    Align = alBottom
+                    TabOrder = 2
+                    DesignSize = (
+                      608
+                      29)
+                    object btConsultarRecorrenciaLimpar: TBitBtn
+                      Left = 495
+                      Top = 1
+                      Width = 97
+                      Height = 26
+                      Anchors = [akTop]
+                      Caption = 'Limpar'
+                      TabOrder = 0
+                      OnClick = btConsultarRecorrenciaLimparClick
+                    end
+                  end
+                end
+                object tsConsultarRecorrencias: TTabSheet
+                  Caption = 'Consultar Recorrencias'
+                  object pnConsultarRecorrencias: TPanel
+                    Left = 0
+                    Top = 0
+                    Width = 608
+                    Height = 144
+                    Align = alTop
+                    BevelOuter = bvNone
+                    TabOrder = 0
+                    object lbConsultarRecorrenciasInicio: TLabel
+                      Left = 10
+                      Top = 10
+                      Width = 33
+                      Height = 13
+                      Caption = 'In'#195#173'cio'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbConsultarRecorrenciasFim: TLabel
+                      Left = 128
+                      Top = 10
+                      Width = 16
+                      Height = 13
+                      Caption = 'Fim'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbConsultarRecorrenciasDoc: TLabel
+                      Left = 244
+                      Top = 10
+                      Width = 58
+                      Height = 13
+                      Caption = 'CPF / CNPJ'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbConsultarRecorrenciasPagina: TLabel
+                      Left = 10
+                      Top = 60
+                      Width = 37
+                      Height = 13
+                      Caption = 'P'#195#161'gina'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbConsultarRecorrenciasItensPorPagina: TLabel
+                      Left = 128
+                      Top = 60
+                      Width = 67
+                      Height = 13
+                      Caption = 'Itens por P'#195#161'g'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbConsultarRecorrenciasStatus: TLabel
+                      Left = 244
+                      Top = 60
+                      Width = 30
+                      Height = 13
+                      Caption = 'Status'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbConsultarRecorrenciasConvenio: TLabel
+                      Left = 429
+                      Top = 10
+                      Width = 45
+                      Height = 13
+                      Caption = 'Convenio'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object btConsultarRecorrencias: TBitBtn
+                      Left = 429
+                      Top = 72
+                      Width = 163
+                      Height = 26
+                      Caption = 'Consultar'
+                      TabOrder = 7
+                      OnClick = btConsultarRecorrenciasClick
+                    end
+                    object edConsultarRecorrenciasInicio: TDateTimePicker
+                      Left = 10
+                      Top = 25
+                      Width = 100
+                      Height = 23
+                      Date = 44568.565578831020000000
+                      Time = 44568.565578831020000000
+                      MaxDate = 2958465.999988426000000000
+                      MinDate = -53780.000000000000000000
+                      TabOrder = 0
+                    end
+                    object edConsultarRecorrenciasFim: TDateTimePicker
+                      Left = 128
+                      Top = 25
+                      Width = 100
+                      Height = 23
+                      Date = 44568.565578831020000000
+                      Time = 44568.565578831020000000
+                      MaxDate = 2958465.999988426000000000
+                      MinDate = -53780.000000000000000000
+                      TabOrder = 1
+                    end
+                    object edConsultarRecorrenciasDoc: TEdit
+                      Left = 244
+                      Top = 25
+                      Width = 170
+                      Height = 21
+                      TabOrder = 2
+                      OnChange = edtConsultarPixRecebidosCPFCNPJChange
+                      OnKeyPress = edOnlyNumbersKeyPress
+                    end
+                    object edConsultarRecorrenciasPagina: TSpinEdit
+                      Left = 10
+                      Top = 75
+                      Width = 100
+                      Height = 22
+                      MaxValue = 9999
+                      MinValue = 0
+                      TabOrder = 6
+                      Value = 1
+                    end
+                    object edConsultarRecorrenciasItensPorPagina: TSpinEdit
+                      Left = 128
+                      Top = 75
+                      Width = 100
+                      Height = 22
+                      MaxValue = 100
+                      MinValue = 0
+                      TabOrder = 5
+                      Value = 10
+                    end
+                    object cbConsultarRecorrenciasComLocation: TCheckBox
+                      Left = 10
+                      Top = 102
+                      Width = 93
+                      Height = 19
+                      Caption = 'Com Location'
+                      TabOrder = 4
+                    end
+                    object cbConsultarRecorrenciasStatus: TComboBox
+                      Left = 244
+                      Top = 75
+                      Width = 170
+                      Height = 21
+                      Style = csDropDownList
+                      ItemHeight = 0
+                      TabOrder = 3
+                    end
+                    object edConsultarRecorrenciasConvenio: TEdit
+                      Left = 429
+                      Top = 25
+                      Width = 163
+                      Height = 21
+                      TabOrder = 8
+                      OnChange = edtConsultarPixRecebidosCPFCNPJChange
+                      OnKeyPress = edOnlyNumbersKeyPress
+                    end
+                  end
+                  object mmConsultarRecorrencias: TMemo
+                    Left = 0
+                    Top = 144
+                    Width = 608
+                    Height = 328
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 1
+                  end
+                  object pnConsultarRecorrenciasRodape: TPanel
+                    Left = 0
+                    Top = 472
+                    Width = 608
+                    Height = 29
+                    Align = alBottom
+                    TabOrder = 2
+                    DesignSize = (
+                      608
+                      29)
+                    object btConsultarRecorrenciasLimpar: TBitBtn
+                      Left = 509
+                      Top = 0
+                      Width = 83
+                      Height = 26
+                      Anchors = [akTop]
+                      Caption = 'Limpar'
+                      TabOrder = 0
+                      OnClick = btConsultarRecorrenciasLimparClick
+                    end
+                  end
+                end
+                object tsRevisarRecorrencia: TTabSheet
+                  Caption = 'Revisar Recorrencia'
+                  object pnRevisarRecorrencia: TPanel
+                    Left = 0
+                    Top = 0
+                    Width = 608
+                    Height = 160
+                    Align = alTop
+                    BevelOuter = bvNone
+                    TabOrder = 0
+                    DesignSize = (
+                      608
+                      160)
+                    object lbRevisarRecorrenciaNomeDevedor: TLabel
+                      Left = 275
+                      Top = 10
+                      Width = 72
+                      Height = 13
+                      Caption = 'Nome Devedor'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbRevisarRecorrenciaDocDevedor: TLabel
+                      Left = 472
+                      Top = 10
+                      Width = 58
+                      Height = 13
+                      Caption = 'CPF / CNPJ'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbRevisarRecorrenciaDataInicial: TLabel
+                      Left = 275
+                      Top = 56
+                      Width = 53
+                      Height = 13
+                      Caption = 'Data Inicial'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbRevisarRecorrenciaLoc: TLabel
+                      Left = 472
+                      Top = 56
+                      Width = 18
+                      Height = 13
+                      Hint = 
+                        'Quantidade de dias corridos ap'#195#179's a data de vencimento, em que a' +
+                        ' cobran'#195#167'a poder'#195#161' ser paga'
+                      Caption = 'Loc'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbRevisarRecorrenciaTxID: TLabel
+                      Left = 16
+                      Top = 56
+                      Width = 114
+                      Height = 13
+                      Caption = 'txID (Apenas Jornada 3)'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbRevisarRecorrenciaIdRec: TLabel
+                      Left = 16
+                      Top = 10
+                      Width = 28
+                      Height = 13
+                      Caption = 'idRec'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object edRevisarRecorrenciaNomeDevedor: TEdit
+                      Left = 275
+                      Top = 25
+                      Width = 177
+                      Height = 21
+                      Anchors = [akLeft, akTop, akRight]
+                      TabOrder = 0
+                      OnChange = edRevisarRecorrenciaNomeDevedorChange
+                    end
+                    object edRevisarRecorrenciaDocDevedor: TEdit
+                      Left = 472
+                      Top = 25
+                      Width = 120
+                      Height = 21
+                      Enabled = False
+                      TabOrder = 1
+                      OnChange = edtCriarCobrancaImediata_CPF_CNPJChange
+                      OnKeyPress = edOnlyNumbersKeyPress
+                    end
+                    object edRevisarRecorrenciaDataInicial: TDateTimePicker
+                      Left = 275
+                      Top = 71
+                      Width = 177
+                      Height = 23
+                      BiDiMode = bdLeftToRight
+                      Date = 44713.393125636580000000
+                      Time = 44713.393125636580000000
+                      MaxDate = 2958465.999988426000000000
+                      MinDate = -53780.000000000000000000
+                      ParentBiDiMode = False
+                      TabOrder = 2
+                    end
+                    object edRevisarRecorrenciaLoc: TSpinEdit
+                      Left = 472
+                      Top = 71
+                      Width = 120
+                      Height = 22
+                      MaxValue = 0
+                      MinValue = 0
+                      TabOrder = 3
+                      Value = 0
+                    end
+                    object edRevisarRecorrenciatxId: TEdit
+                      Left = 16
+                      Top = 71
+                      Width = 240
+                      Height = 21
+                      TabOrder = 4
+                    end
+                    object btCancelarRecorrencia: TBitBtn
+                      Left = 144
+                      Top = 110
+                      Width = 112
+                      Height = 26
+                      Anchors = [akTop, akRight]
+                      Caption = 'Cancelar'
+                      TabOrder = 5
+                      OnClick = btCancelarRecorrenciaClick
+                    end
+                    object btRevisarRecorrencia: TBitBtn
+                      Left = 16
+                      Top = 110
+                      Width = 112
+                      Height = 26
+                      Anchors = [akTop, akRight]
+                      Caption = 'Revisar'
+                      TabOrder = 6
+                      OnClick = btRevisarRecorrenciaClick
+                    end
+                    object edRevisarRecorrenciaIdRec: TEdit
+                      Left = 16
+                      Top = 25
+                      Width = 240
+                      Height = 21
+                      Anchors = [akLeft, akTop, akRight]
+                      TabOrder = 7
+                      OnChange = edRevisarRecorrenciaNomeDevedorChange
+                    end
+                  end
+                  object mmRevisarRecorrencia: TMemo
+                    Left = 0
+                    Top = 160
+                    Width = 608
+                    Height = 312
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 1
+                  end
+                  object pnRevisarRecorrenciaRodape: TPanel
+                    Left = 0
+                    Top = 472
+                    Width = 608
+                    Height = 29
+                    Align = alBottom
+                    TabOrder = 2
+                    DesignSize = (
+                      608
+                      29)
+                    object btRevisarRecorrenciaLimpar: TBitBtn
+                      Left = 496
+                      Top = 0
+                      Width = 96
+                      Height = 26
+                      Anchors = [akTop]
+                      Caption = 'Limpar'
+                      TabOrder = 0
+                      OnClick = btRevisarRecorrenciaLimparClick
+                    end
+                  end
+                end
+              end
+            end
+            object tsEndPointSolicRec: TTabSheet
+              Caption = '/solicrec'
+              object pgTestesEndPointSolicRec: TPageControl
+                Left = 0
+                Top = 0
+                Width = 616
+                Height = 529
+                ActivePage = tsCriarSolicitacaoRec
+                Align = alClient
+                TabOrder = 0
+                object tsCriarSolicitacaoRec: TTabSheet
+                  Caption = 'Criar Solicitacao de Confirmacao'
+                  object Splitter4: TSplitter
+                    Left = 603
+                    Top = 152
+                    Width = 5
+                    Height = 320
+                    Align = alRight
+                  end
+                  object pnCriarSolicitacaoRec: TPanel
+                    Left = 0
+                    Top = 0
+                    Width = 608
+                    Height = 152
+                    Align = alTop
+                    BevelOuter = bvNone
+                    TabOrder = 0
+                    DesignSize = (
+                      608
+                      152)
+                    object lbCriarSolicitacaoRecDoc: TLabel
+                      Left = 273
+                      Top = 10
+                      Width = 58
+                      Height = 13
+                      Caption = 'CPF / CNPJ'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbCriarSolicitacaoRecConta: TLabel
+                      Left = 16
+                      Top = 58
+                      Width = 28
+                      Height = 13
+                      Caption = 'Conta'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbCriarSolicitacaoRecAgencia: TLabel
+                      Left = 273
+                      Top = 58
+                      Width = 39
+                      Height = 13
+                      Caption = 'Agencia'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbCriarSolicitacaoRecExpiracao: TLabel
+                      Left = 439
+                      Top = 10
+                      Width = 128
+                      Height = 13
+                      Caption = 'Data Expiracao Solicitacao'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbCriarSolicitacaoRecISPBParticipante: TLabel
+                      Left = 439
+                      Top = 58
+                      Width = 83
+                      Height = 13
+                      Caption = 'ISPB Participante'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbCriarSolicitacaoRecIdRec: TLabel
+                      Left = 16
+                      Top = 10
+                      Width = 28
+                      Height = 13
+                      Caption = 'idRec'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object btCriarSolicitacaoRec: TBitBtn
+                      Left = 16
+                      Top = 112
+                      Width = 102
+                      Height = 26
+                      Anchors = [akTop, akRight]
+                      Caption = 'Criar'
+                      TabOrder = 6
+                      OnClick = btCriarSolicitacaoRecClick
+                    end
+                    object edCriarSolicitacaoRecDoc: TEdit
+                      Left = 273
+                      Top = 25
+                      Width = 150
+                      Height = 21
+                      TabOrder = 1
+                      OnChange = edtCriarCobrancaImediata_CPF_CNPJChange
+                      OnKeyPress = edOnlyNumbersKeyPress
+                    end
+                    object edCriarSolicitacaoRecConta: TEdit
+                      Left = 16
+                      Top = 73
+                      Width = 240
+                      Height = 21
+                      TabOrder = 3
+                    end
+                    object edCriarSolicitacaoRecAgencia: TEdit
+                      Left = 273
+                      Top = 73
+                      Width = 150
+                      Height = 21
+                      TabOrder = 4
+                      OnChange = edtCriarCobrancaImediata_CPF_CNPJChange
+                      OnKeyPress = edOnlyNumbersKeyPress
+                    end
+                    object edCriarSolicitacaoRecExpiracao: TDateTimePicker
+                      Left = 439
+                      Top = 25
+                      Width = 150
+                      Height = 23
+                      BiDiMode = bdLeftToRight
+                      Date = 44713.393125636580000000
+                      Time = 44713.393125636580000000
+                      MaxDate = 2958465.999988426000000000
+                      MinDate = -53780.000000000000000000
+                      ParentBiDiMode = False
+                      TabOrder = 2
+                    end
+                    object edCriarSolicitacaoRecISPBParticipante: TEdit
+                      Left = 439
+                      Top = 73
+                      Width = 150
+                      Height = 21
+                      TabOrder = 5
+                    end
+                    object edCriarSolicitacaoRecIdRec: TEdit
+                      Left = 16
+                      Top = 25
+                      Width = 240
+                      Height = 21
+                      Anchors = [akLeft, akTop, akRight]
+                      TabOrder = 0
+                      OnChange = edRevisarRecorrenciaNomeDevedorChange
+                    end
+                  end
+                  object pnCriarSolicitacaoRecRodape: TPanel
+                    Left = 0
+                    Top = 472
+                    Width = 608
+                    Height = 29
+                    Align = alBottom
+                    TabOrder = 1
+                    DesignSize = (
+                      608
+                      29)
+                    object btCriarSolicitacaoRecLimpar: TBitBtn
+                      Left = 506
+                      Top = 1
+                      Width = 83
+                      Height = 26
+                      Anchors = [akTop]
+                      Caption = 'Limpar'
+                      TabOrder = 0
+                      OnClick = btCriarSolicitacaoRecLimparClick
+                    end
+                  end
+                  object mmCriarSolicitacaoRec: TMemo
+                    Left = 0
+                    Top = 152
+                    Width = 603
+                    Height = 320
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 2
+                  end
+                end
+                object tsConsultarSolicitacaoRec: TTabSheet
+                  Caption = 'Consultar Solicitacao'
+                  object pnConsultarSolicitacaoRec: TPanel
+                    Left = 0
+                    Top = 0
+                    Width = 608
+                    Height = 112
+                    Align = alTop
+                    BevelOuter = bvNone
+                    TabOrder = 0
+                    DesignSize = (
+                      608
+                      112)
+                    object lbConsultarSolicitacaoRecIdSolicRec: TLabel
+                      Left = 16
+                      Top = 16
+                      Width = 51
+                      Height = 13
+                      Caption = 'idSolicRec'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object edConsultarSolicitacaoRecIdSolicRec: TEdit
+                      Left = 16
+                      Top = 36
+                      Width = 576
+                      Height = 21
+                      Anchors = [akLeft, akTop, akRight]
+                      TabOrder = 0
+                    end
+                    object btConsultarSolicitacaoRec: TBitBtn
+                      Left = 495
+                      Top = 72
+                      Width = 97
+                      Height = 26
+                      Anchors = [akTop, akRight]
+                      Caption = 'Consultar'
+                      TabOrder = 1
+                      OnClick = btConsultarSolicitacaoRecClick
+                    end
+                  end
+                  object mmConsultarSolicitacaoRec: TMemo
+                    Left = 0
+                    Top = 112
+                    Width = 608
+                    Height = 360
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 1
+                  end
+                  object pnConsultarSolicitacaoRecRodape: TPanel
+                    Left = 0
+                    Top = 472
+                    Width = 608
+                    Height = 29
+                    Align = alBottom
+                    TabOrder = 2
+                    DesignSize = (
+                      608
+                      29)
+                    object btConsultarSolicitacaoRecLimpar: TBitBtn
+                      Left = 495
+                      Top = 1
+                      Width = 97
+                      Height = 26
+                      Anchors = [akTop]
+                      Caption = 'Limpar'
+                      TabOrder = 0
+                      OnClick = btConsultarRecorrenciaLimparClick
+                    end
+                  end
+                end
+                object tsCancelarSolicitacaoRec: TTabSheet
+                  Caption = 'Cancelar Solicitacao'
+                  object pnCancelarSolicitacaoRec: TPanel
+                    Left = 0
+                    Top = 0
+                    Width = 608
+                    Height = 80
+                    Align = alTop
+                    BevelOuter = bvNone
+                    TabOrder = 0
+                    DesignSize = (
+                      608
+                      80)
+                    object lbCancelarSolicitacaoRecIdSolicRec: TLabel
+                      Left = 15
+                      Top = 10
+                      Width = 51
+                      Height = 13
+                      Caption = 'idSolicRec'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object edCancelarSolicitacaoRecIdSolicRec: TEdit
+                      Left = 15
+                      Top = 25
+                      Width = 449
+                      Height = 21
+                      Anchors = [akLeft, akTop, akRight]
+                      TabOrder = 0
+                      OnChange = edRevisarRecorrenciaNomeDevedorChange
+                    end
+                    object btCancelarSolicitacaoRec: TBitBtn
+                      Left = 480
+                      Top = 22
+                      Width = 112
+                      Height = 26
+                      Anchors = [akTop, akRight]
+                      Caption = 'Cancelar'
+                      TabOrder = 1
+                      OnClick = btCancelarSolicitacaoRecClick
+                    end
+                  end
+                  object mmCancelarSolicitacaoRec: TMemo
+                    Left = 0
+                    Top = 80
+                    Width = 608
+                    Height = 392
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 1
+                  end
+                  object pnCancelarSolicitacaoRecRodape: TPanel
+                    Left = 0
+                    Top = 472
+                    Width = 608
+                    Height = 29
+                    Align = alBottom
+                    TabOrder = 2
+                    DesignSize = (
+                      608
+                      29)
+                    object btCancelarSolicitacaoRecLimpar: TBitBtn
+                      Left = 509
+                      Top = 0
+                      Width = 83
+                      Height = 26
+                      Anchors = [akTop]
+                      Caption = 'Limpar'
+                      TabOrder = 0
+                      OnClick = btConsultarRecorrenciasLimparClick
+                    end
+                  end
+                end
+              end
+            end
             object tsSimularPagamento: TTabSheet
               Caption = 'Simular Pagamento'
               object pcSimularPagamento: TPageControl

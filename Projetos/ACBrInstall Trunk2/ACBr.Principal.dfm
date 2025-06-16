@@ -13165,158 +13165,469 @@ object frmPrincipal: TfrmPrincipal
         inherited ScrollBox1: TScrollBox
           Width = 568
           Height = 470
+          VertScrollBar.Position = 909
           inherited Label1: TLabel
+            Top = -891
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label2: TLabel
+            Top = -819
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label3: TLabel
+            Top = -802
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label4: TLabel
+            Top = -435
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label8: TLabel
+            Top = -501
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label9: TLabel
+            Top = 235
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label5: TLabel
+            Top = 249
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label6: TLabel
+            Top = 266
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label7: TLabel
+            Top = 283
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label10: TLabel
+            Top = 317
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label11: TLabel
+            Top = 334
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label12: TLabel
+            Top = 369
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label13: TLabel
+            Top = 456
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label14: TLabel
+            Top = 505
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label15: TLabel
+            Top = 471
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label16: TLabel
+            Top = 522
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label17: TLabel
+            Top = 539
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label18: TLabel
+            Top = 573
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label19: TLabel
+            Top = 556
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label20: TLabel
+            Top = 424
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label21: TLabel
+            Top = -683
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label22: TLabel
+            Top = -734
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label23: TLabel
+            Top = -484
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label24: TLabel
+            Top = -700
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label25: TLabel
+            Top = -636
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label26: TLabel
+            Top = -567
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label27: TLabel
+            Top = 437
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label28: TLabel
+            Top = 351
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited lbl1: TLabel
+            Top = -384
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited lbl2: TLabel
+            Top = -368
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited lbl3: TLabel
+            Top = 300
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label29: TLabel
+            Top = 488
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited lblacb: TLabel
+            Top = -11
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited lblSubTituloFPDF: TLabel
+            Top = 120
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited lblFPDF_BoletoDPK: TLabel
+            Top = 133
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label30: TLabel
+            Top = -452
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label31: TLabel
+            Top = 149
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label32: TLabel
+            Top = 166
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited lblNFCom: TLabel
+            Top = -352
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label33: TLabel
+            Top = 183
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label34: TLabel
+            Top = 589
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label35: TLabel
+            Top = 606
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label36: TLabel
+            Top = -551
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label37: TLabel
+            Top = 24
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label38: TLabel
+            Top = 91
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label39: TLabel
+            Top = 57
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label40: TLabel
+            Top = 74
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label41: TLabel
+            Top = 41
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label42: TLabel
+            Top = 387
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label43: TLabel
+            Top = 623
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Label44: TLabel
+            Top = 200
             StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label45: TLabel
+            Top = 217
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited ACBr_synapse_dpk: TCheckBox
+            Top = -909
+          end
+          inherited ACBr_Comum_dpk: TCheckBox
+            Top = -892
+          end
+          inherited ACBr_Diversos_dpk: TCheckBox
+            Top = -857
+          end
+          inherited ACBr_Serial_dpk: TCheckBox
+            Top = -823
+          end
+          inherited ACBr_TCP_dpk: TCheckBox
+            Top = -584
+          end
+          inherited ACBr_BPe_dpk: TCheckBox
+            Top = -183
+          end
+          inherited ACBr_TEFD_dpk: TCheckBox
+            Top = -62
+          end
+          inherited ACBr_Boleto_dpk: TCheckBox
+            Top = -484
+          end
+          inherited ACBr_Sintegra_dpk: TCheckBox
+            Top = -704
+          end
+          inherited ACBr_SPED_dpk: TCheckBox
+            Top = -687
+          end
+          inherited ACBr_PAF_dpk: TCheckBox
+            Top = -738
+          end
+          inherited ACBr_OpenSSL_dpk: TCheckBox
+            Top = -875
+          end
+          inherited ACBr_PCNComum_dpk: TCheckBox
+            Top = -840
+          end
+          inherited ACBr_NFe_dpk: TCheckBox
+            Top = -435
+          end
+          inherited ACBr_CTe_dpk: TCheckBox
+            Top = -401
+          end
+          inherited ACBr_NFSe_dpk: TCheckBox
+            Top = -384
+          end
+          inherited ACBr_MDFe_dpk: TCheckBox
+            Top = -335
+          end
+          inherited ACBr_GNRE_dpk: TCheckBox
+            Top = -318
+          end
+          inherited ACBr_Convenio115_dpk: TCheckBox
+            Top = -789
+          end
+          inherited ACBr_SEF2_dpk: TCheckBox
+            Top = -721
+          end
+          inherited ACBr_SAT_dpk: TCheckBox
+            Top = -267
+          end
+          inherited ACBr_NFeDanfeESCPOS_dpk: TCheckBox
+            Top = 40
+          end
+          inherited ACBr_SATExtratoESCPOS_dpk: TCheckBox
+            Top = 57
+          end
+          inherited ACBr_LFD_dpk: TCheckBox
+            Top = -772
+          end
+          inherited ACBr_SPEDImportar_dpk: TCheckBox
+            Top = -670
+          end
+          inherited ACBr_DFeComum_dpk: TCheckBox
+            Top = -501
+          end
+          inherited ACBr_NFCeECFVirtual_dpk: TCheckBox
+            Top = -418
+          end
+          inherited ACBr_SATECFVirtual_dpk: TCheckBox
+            Top = -250
+          end
+          inherited ACBr_TXTComum_dpk: TCheckBox
+            Top = -806
+          end
+          inherited ACBr_NFeDanfeFR_dpk: TCheckBox
+            Top = 249
+          end
+          inherited ACBr_CTeDacteFR_dpk: TCheckBox
+            Top = 266
+          end
+          inherited ACBr_NFSeDanfseFR_dpk: TCheckBox
+            Top = 283
+          end
+          inherited ACBr_BoletoFR_dpk: TCheckBox
+            Top = 317
+          end
+          inherited ACBr_MDFeDamdfeFR_dpk: TCheckBox
+            Top = 334
+          end
+          inherited ACBr_GNREGuiaFR_dpk: TCheckBox
+            Top = 369
+          end
+          inherited ACBr_NFeDanfeRL_dpk: TCheckBox
+            Top = 456
+          end
+          inherited ACBr_CTeDacteRL_dpk: TCheckBox
+            Top = 505
+          end
+          inherited ACBr_NFSeDanfseRL_dpk: TCheckBox
+            Top = 471
+          end
+          inherited ACBr_BoletoRL_dpk: TCheckBox
+            Top = 522
+          end
+          inherited ACBr_MDFeDamdfeRL_dpk: TCheckBox
+            Top = 539
+          end
+          inherited ACBr_SATExtratoRL_dpk: TCheckBox
+            Top = 556
+          end
+          inherited ACBr_GNREGuiaRL_dpk: TCheckBox
+            Top = 573
+          end
+          inherited ACBr_BlocoX_dpk: TCheckBox
+            Top = -216
+          end
+          inherited ACBr_DeSTDA_dpk: TCheckBox
+            Top = -653
+          end
+          inherited ACBr_Ponto_dpk: TCheckBox
+            Top = -636
+          end
+          inherited ACBr_MTER_dpk: TCheckBox
+            Top = -567
+          end
+          inherited ACBr_SATWS_dpk: TCheckBox
+            Top = -233
+          end
+          inherited ACBr_ANe_dpk: TCheckBox
+            Top = -149
+          end
+          inherited ACBr_Integrador_dpk: TCheckBox
+            Top = -518
+          end
+          inherited ACBre_Social_dpk: TCheckBox
+            Top = -301
+          end
+          inherited ACBr_Reinf_dpk: TCheckBox
+            Top = -284
+          end
+          inherited ACBr_BPeDabpeESCPOS_dpk: TCheckBox
+            Top = 73
+          end
+          inherited ACBr_DFeReportRL_dpk: TCheckBox
+            Top = 437
+          end
+          inherited ACBr_CIOT_dpk: TCheckBox
+            Top = -132
+          end
+          inherited ACBr_LCDPR_dpk: TCheckBox
+            Top = -617
+          end
+          inherited ACBr_ONE_dpk: TCheckBox
+            Top = -115
+          end
+          inherited ACBr_EDI_dpk: TCheckBox
+            Top = -755
+          end
+          inherited ACBr_NF3e_dpk: TCheckBox
+            Top = -98
+          end
+          inherited ACBr_NF3eDANF3eESCPOS_dpk: TCheckBox
+            Top = 90
+          end
+          inherited ACBr_ADRCST_dpk: TCheckBox
+            Top = -600
+          end
+          inherited ACBr_SATExtratoFR_dpk: TCheckBox
+            Top = 351
+          end
+          inherited ACBr_PagFor_dpk: TCheckBox
+            Top = -467
+          end
+          inherited ACBr_NFSeX_dpk: TCheckBox
+            Top = -368
+          end
+          inherited ACBr_NFSeXDanfseRL_dpk: TCheckBox
+            Top = 488
+          end
+          inherited ACBr_NFSeXDanfseFR_dpk: TCheckBox
+            Top = 300
+          end
+          inherited ACBr_OFX_dpk: TCheckBox
+            Top = -45
+          end
+          inherited ACBr_GTIN_dpk: TCheckBox
+            Top = -81
+          end
+          inherited ACBr_OpenDelivery_dpk: TCheckBox
+            Top = -28
+          end
+          inherited ACBr_PAFNFCe_dpk: TCheckBox
+            Top = -200
+          end
+          inherited ACBr_PIXCD_dpk: TCheckBox
+            Top = -535
+          end
+          inherited ACBr_Android_dpk: TCheckBox
+            Top = -11
+          end
+          inherited ACBr_BoletoFPDF_dpk: TCheckBox
+            Top = 133
+          end
+          inherited ACBr_DebitoAutomatico_dpk: TCheckBox
+            Top = -452
+          end
+          inherited ACBr_NFeDanfeFPDF_dpk: TCheckBox
+            Top = 149
+          end
+          inherited ACBr_NFSeXDanfseFPDF_dpk: TCheckBox
+            Top = 166
+          end
+          inherited ACBr_NFCom_dpk: TCheckBox
+            Top = -352
+          end
+          inherited ACBr_SATExtratoFPDF_dpk: TCheckBox
+            Top = 183
+          end
+          inherited ACBr_NF3eDANF3eRL_dpk: TCheckBox
+            Top = 589
+          end
+          inherited ACBr_DCe_dpk: TCheckBox
+            Top = -166
+          end
+          inherited ACBr_DCeDACERL_dpk: TCheckBox
+            Top = 606
+          end
+          inherited ACBrBaas_dpk: TCheckBox
+            Top = -550
+          end
+          inherited CheckBox1: TCheckBox
+            Top = 386
+          end
+          inherited CheckBox2: TCheckBox
+            Top = 623
+          end
+          inherited ACBr_MDFeDAMDFEFPDF_dpk: TCheckBox
+            Top = 200
+          end
+          inherited CheckBox3: TCheckBox
+            Top = 217
           end
         end
       end
@@ -13750,7 +14061,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 85
+        FrameIndex = 23
         Image.Data = {
           9A470500474946383961F401F401E64100FFCC80FFB2403FCF10F3FCF0D9F6D0
           59D5307FDF60B3ECA04CD2208CE27099E680E6F9E066D940CCF3C0BFEFB0A6E9
@@ -24781,7 +25092,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 3
+        FrameIndex = 8
         Image.Data = {
           E02E00004749463839613F012800F70300CECFD1A3A8AD727882FFFFFFE9EBEB
           414C5C8C9099D8D8DAB9BBC0E0E2E3535C6AC4C5C8636A76AFB1B7989CA38084
@@ -25176,7 +25487,7 @@ object frmPrincipal: TfrmPrincipal
       object imgLogomarca: TImage
         Left = 0
         Top = 0
-        Width = 114
+        Width = 128
         Height = 114
         Align = alClient
         AutoSize = True

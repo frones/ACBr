@@ -33,7 +33,6 @@
 
 package ACBr_CTeDacteFPDF;
 
-{$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
@@ -58,7 +57,7 @@ package ACBr_CTeDacteFPDF;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - DANFe / DANFCe em FPDF Report - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - DACTe em FPDF Report - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 

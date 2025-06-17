@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/06/2025
+-- SigISSWeb.LerXml --
+[*] #TK-7222: Alteração a leitura da tag regime.
+   Por: Soma Soluções em TI
 -- ACBrNFSeXDANFSeClass/ACBrNFSeXDANFSeRL/ACBrNFSeXDANFSeRLClass --
 -- ACBrNFSeXDANFSeRLISSNet/ACBrNFSeXDANFSeRLRetrato/ACBrNFSeXDANFSeRLSimplISS --
 [-] #TK-7224: Alteração visando imprimir corretamente os DANFSE quando é carregado

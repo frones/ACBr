@@ -109,6 +109,7 @@ end;
 function TNFSeR_SigISSWeb.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
 var
   aValor: string;
+  LRegimeEmpresa: string;
 begin
   Result := True;
 
@@ -249,8 +250,20 @@ begin
 
     ValoresNfse.ValorLiquidoNfse := Servico.Valores.ValorServicos;
 
-//    <regime>V</regime>
-//    <cancelada>N</cancelada>
+    OptanteSimplesNacional := snNao;
+
+    // tag regime: S - Simples, V - Variável, M - Mei ou L - Especial
+
+    LRegimeEmpresa := ObterConteudo(ANode.Childrens.FindAnyNs('regime'), tcStr);
+    if LRegimeEmpresa = 'S' then
+      OptanteSimplesNacional := snSim;
+
+    SituacaoNfse := snNormal;
+
+    aValor := ObterConteudo(ANode.Childrens.FindAnyNs('cancelada'), tcStr);
+    if aValor = 'S' then
+      SituacaoNfse := snCancelado;
+
 //    <nf_avulsa>N</nf_avulsa>
 
     verAplic := ObterConteudo(ANode.Childrens.FindAnyNs('sistema_gerador'), tcStr);

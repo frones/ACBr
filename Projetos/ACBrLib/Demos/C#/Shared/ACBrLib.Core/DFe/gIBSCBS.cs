@@ -1,4 +1,5 @@
 ﻿using ACBrLib.Core.DFe;
+using ACBrLib.DFe;
 
 namespace ACBrLib.NFe
 {
@@ -17,6 +18,7 @@ namespace ACBrLib.NFe
             gTribRegular = new gTribRegular();
             gIBSCredPres = new gCredPres();
             gCBSCredPres = new gCredPres();
+            gTribCompraGov = new gTribCompraGov();
         }
 
         #endregion Constructors
@@ -44,6 +46,8 @@ namespace ACBrLib.NFe
         public gCredPres gIBSCredPres { get; }
 
         public gCredPres gCBSCredPres { get; }
+
+        public gTribCompraGov gTribCompraGov { get; }
 
 
         #endregion Properties

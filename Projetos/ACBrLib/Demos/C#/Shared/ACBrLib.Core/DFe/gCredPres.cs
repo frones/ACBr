@@ -27,7 +27,7 @@ namespace ACBrLib.NFe
         /// <summary>
         /// Valor do Crédito Presumido em condição suspensiva
         /// </summary>
-        //public decimal vCredPresCondSus { get; set; } 
+        public decimal vCredPresCondSus { get; set; } 
 
         #endregion Properties
     }

@@ -198,6 +198,8 @@ type
     FCodVerificacao: string;
     FCancelamento: TNFSeCancelamento;
     FNumNotaSubstituidora: string;
+    FNumeroNota: string;
+    FData: TDateTime;
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
@@ -212,7 +214,9 @@ type
     property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
     property Cancelamento: TNFSeCancelamento read FCancelamento write FCancelamento;
     property NumNotaSubstituidora: string read FNumNotaSubstituidora write FNumNotaSubstituidora;
-  end;
+    property NumeroNota: string read FNumeroNota write FNumeroNota;
+    property Data: TDateTime read FData write FData;
+ end;
 
   { TSubstituirNFSeResposta }
   TSubstituirNFSeResposta = class(TLibNFSeServiceResposta)
@@ -795,6 +799,8 @@ begin
   CodVerificacao:= Response.CodigoVerificacao;
   Cancelamento:= Response.Cancelamento;
   NumNotaSubstituidora:= Response.NumNotaSubstituidora;
+  NumeroNota := Response.NumeroNota;
+  Data := Response.Data;
 end;
 
  { TSubstituirNFSeResposta }

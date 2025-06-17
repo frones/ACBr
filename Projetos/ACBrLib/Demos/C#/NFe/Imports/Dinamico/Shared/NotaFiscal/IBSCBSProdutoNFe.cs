@@ -13,6 +13,8 @@ namespace ACBrLib.NFe
             gIBSCBS = new gIBSCBS();
             gIBSCBSMono = new gIBSCBSMono();
             gTransfCred = new gTransfCred();
+            gCredPresIBSZFM = new gCredPresIBSZFM();
+
         }
         #endregion Constructors
         #region Properties
@@ -34,7 +36,9 @@ namespace ACBrLib.NFe
 
         public gIBSCBSMono gIBSCBSMono { get; }
 
-        public gTransfCred gTransfCred { get; }        
+        public gTransfCred gTransfCred { get; }      
+        
+        public gCredPresIBSZFM gCredPresIBSZFM { get; }
 
         #endregion Properties
     }

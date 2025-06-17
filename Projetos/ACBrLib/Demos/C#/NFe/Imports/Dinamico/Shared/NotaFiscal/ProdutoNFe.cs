@@ -46,8 +46,6 @@ namespace ACBrLib.NFe
         /// </summary>
         public int? nItem { get; set; }
 
-
-
         /// <summary>
         /// Código do produto ou serviço
         /// <para>Preencher com CFOP, caso se trate de itens não
@@ -282,7 +280,7 @@ namespace ACBrLib.NFe
         public COFINSSTProdutoNFe COFINSST { get; }
 
         public ISSQNNFe ISSQN { get; }
-        
+
         /// <summary>
         /// Informações do Imposto Seletivo
         /// </summary>
@@ -302,6 +300,8 @@ namespace ACBrLib.NFe
         /// Valor Total do Item da NF-e
         /// </summary>
         public decimal vItem { get; set; }
+
+        public IndBemMovelUsado IndBemMovelUsado { get; set; }
 
         #endregion Properties
     }

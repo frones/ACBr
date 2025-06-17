@@ -127,6 +127,7 @@ namespace ACBrLib.NFe.Demo
             //notaFiscal.Identificacao.tpNFDebito = TipoNFeDebito.tdAnulacao;
             //notaFiscal.Identificacao.tpEnteGov = TipoEnteGov.tcgEstados;
             //notaFiscal.Identificacao.pRedutor = 2.5m;
+            //notaFiscal.Identificacao.tpOperGov = TipoOperGov.togFornecimento;
             //--
 
             // Emitente
@@ -195,6 +196,7 @@ namespace ACBrLib.NFe.Demo
             produto.vProd = totalProdutos;
 
             //Reforma tributária
+            //produto.IndBemMovelUsado = IndBemMovelUsado.tieNenhum;
             //produto.vItem = 100;
             //--
             //Reforma tributária
@@ -223,8 +225,8 @@ namespace ACBrLib.NFe.Demo
             produto.infAdProd = "Informação adicional do produto";
 
             //Reforma tributária
-            //produto.IS.CSTIS = 200;
-            //produto.IS.cClassTribIS = 200010;
+            //produto.IS.CSTIS = CSTIS.cstis000;
+            //produto.IS.cClassTribIS = TipoClassTribIS.ctis000001;
             //produto.IS.vBCIS = 100;
             //produto.IS.pIS = 5;
             //produto.IS.pISEspec = 5;
@@ -270,15 +272,22 @@ namespace ACBrLib.NFe.Demo
             //produto.IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegCBS = 5;
             //produto.IBSCBS.gIBSCBS.gTribRegular.vTribRegCBS = 100;
 
-            //produto.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres = 1;
+            //produto.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres = TcCredPres.cp00;
             //produto.IBSCBS.gIBSCBS.gIBSCredPres.pCredPres = 5;
             //produto.IBSCBS.gIBSCBS.gIBSCredPres.vCredPres = 100;
-            ////produto.IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus = 100;
+            //produto.IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus = 100;
 
-            //produto.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres = 1;
+            //produto.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres = TcCredPres.cp00;
             //produto.IBSCBS.gIBSCBS.gCBSCredPres.pCredPres = 5;
             //produto.IBSCBS.gIBSCBS.gCBSCredPres.vCredPres = 100;
-            ////produto.IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus = 100;
+            //produto.IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus = 100;
+
+            //produto.IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSUF = 5;
+            //produto.IBSCBS.gIBSCBS.gTribCompraGov.vTribIBSUF = 50;
+            //produto.IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSMun = 5;
+            //produto.IBSCBS.gIBSCBS.gTribCompraGov.vTribIBSMun = 50;
+            //produto.IBSCBS.gIBSCBS.gTribCompraGov.pAliqCBS = 5;
+            //produto.IBSCBS.gIBSCBS.gTribCompraGov.vTribCBS = 50;
 
             //produto.IBSCBS.gIBSCBSMono.qBCMono = 1;
             //produto.IBSCBS.gIBSCBSMono.adRemIBS = 5;
@@ -304,8 +313,11 @@ namespace ACBrLib.NFe.Demo
             //produto.IBSCBS.gIBSCBSMono.vTotIBSMonoItem = 100;
             //produto.IBSCBS.gIBSCBSMono.vTotCBSMonoItem = 100;
 
-            //produto.IBSCBS.gTransfCred.vCBS = 100;
             //produto.IBSCBS.gTransfCred.vIBS = 100;
+            //produto.IBSCBS.gTransfCred.vCBS = 100;
+
+            //produto.IBSCBS.gCredPresIBSZFM.tpCredPresIBSZFM = TipoCredPresIBSZFM.tcpBensInformaticaOutros;
+            //produto.IBSCBS.gCredPresIBSZFM.vCredPresIBSZFM = 100;
             //--
 
             notaFiscal.Produtos.Add(produto);
@@ -1277,7 +1289,6 @@ namespace ACBrLib.NFe.Demo
 
             ACBrNFe.LimparLista();
             ACBrNFe.CarregarINI(nfe);
-
             try
             {
                 var aLote = 1;

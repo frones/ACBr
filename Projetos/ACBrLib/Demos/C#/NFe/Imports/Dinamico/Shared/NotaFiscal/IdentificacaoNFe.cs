@@ -206,7 +206,12 @@ namespace ACBrLib.NFe
         /// </summary>
         public decimal pRedutor { get; set; }
 
+        /// <summary>
+        /// Tipo Operação Governamental
+        /// </summary>
+        public TipoOperGov tpOperGov { get; set; }
 
+        public List<gPagAntecipado> gPagAntecipado { get; } = new List<gPagAntecipado>();
 
         #endregion Properties
     }

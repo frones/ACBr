@@ -68,7 +68,8 @@
     <Compile Include="..\Shared\NotaFiscal\CondicaoVeiculo.cs" Link="NotaFiscal\CondicaoVeiculo.cs" />
     <Compile Include="..\Shared\NotaFiscal\ConsumidorFinal.cs" Link="NotaFiscal\ConsumidorFinal.cs" />
     <Compile Include="..\Shared\NotaFiscal\CSTIPI.cs" Link="NotaFiscal\CSTIPI.cs" />
-	<Compile Include="..\Shared\NotaFiscal\CSTIS.cs" Link="NotaFiscal\CSTIS.cs" />	  
+	<Compile Include="..\Shared\NotaFiscal\CSTIS.cs" Link="NotaFiscal\CSTIS.cs" />
+	<Compile Include="..\Shared\NotaFiscal\TipoClassTribIS.cs" Link="NotaFiscal\TipoClassTribIS.cs" />	  
     <Compile Include="..\Shared\NotaFiscal\DadosAdicionaisNFe.cs" Link="NotaFiscal\DadosAdicionaisNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\DeducNFe.cs" Link="NotaFiscal\DeducNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\DestinatarioNFe.cs" Link="NotaFiscal\DestinatarioNFe.cs" />
@@ -106,6 +107,7 @@
 	<Compile Include="..\Shared\NotaFiscal\IIProdutoNFe.cs" Link="NotaFiscal\IIProdutoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\ImpostoDevolNFe.cs" Link="NotaFiscal\ImpostoDevolNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\IndEscala.cs" Link="NotaFiscal\IndEscala.cs" />
+	<Compile Include="..\Shared\NotaFiscal\IndBemMovelUsado.cs" Link="NotaFiscal\IndBemMovelUsado.cs" /> 
     <Compile Include="..\Shared\NotaFiscal\IndicadorPagamento.cs" Link="NotaFiscal\IndicadorPagamento.cs" />
     <Compile Include="..\Shared\NotaFiscal\IndicadorProcesso.cs" Link="NotaFiscal\IndicadorProcesso.cs" />
     <Compile Include="..\Shared\NotaFiscal\IndicadorTotal.cs" Link="NotaFiscal\IndicadorTotal.cs" />

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2025
+-- ACBrNFComWebServices --
+[*] #TK-7205: Melhorias no Consultar visando salvar o XML do evento retornado 
+    levando em consideração da data/hora de emissão do evento.
+  Por: Luiz Alberto da Silva Lope
+
 12/06/2025
 -- ACBrNFComXmlWriter --
 [*] #TK-7209 - Alteração na geração das tags: codDebAuto ou a codBanco e a 

@@ -142,7 +142,6 @@ type
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     function GetSeparadorPathPDF(const aInitialPath: String): String; override;
     procedure SetDadosPrestador;
-    procedure SetDadosTomador;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -151,6 +150,8 @@ type
     procedure ImprimirDANFSe(NFSe: TNFSe = nil); virtual;
     procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); overload; virtual;
     procedure ImprimirDANFSePDF(AStream: TStream; NFSe: TNFSe = nil); overload; virtual;
+    procedure SetDadosTomador(Idx: Integer = 0); overload;
+    procedure SetDadosTomador(NFSe: TNFSe = nil); overload;
 
     property Prestador: TPrestadorConfig read FPrestador;
   published
@@ -359,11 +360,9 @@ begin
   end;
 end;
 
-procedure TACBrNFSeXDANFSeClass.SetDadosTomador;
+procedure TACBrNFSeXDANFSeClass.SetDadosTomador(NFSe: TNFSe);
 begin
-  // Usar a configuração do ACBrNFSeX se no XML não conter os dados do tomador
-
-  with TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[0].NFSe do
+  with NFSe do
   begin
     FTomador.InscricaoEstadual := IfThen(Tomador.IdentificacaoTomador.InscricaoEstadual <> '',
       Tomador.IdentificacaoTomador.InscricaoEstadual, FTomador.InscricaoEstadual);
@@ -383,6 +382,35 @@ begin
     FTomador.EMail := IfThen(Tomador.Contato.EMail <> '',
                                          Tomador.Contato.EMail, FTomador.EMail);
   end;
+end;
+
+procedure TACBrNFSeXDANFSeClass.SetDadosTomador(Idx: Integer);
+begin
+  // Usar a configuração do ACBrNFSeX se no XML não conter os dados do tomador
+
+  SetDadosTomador(TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[Idx].NFSe);
+  {
+  with TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[Idx].NFSe do
+  begin
+    FTomador.InscricaoEstadual := IfThen(Tomador.IdentificacaoTomador.InscricaoEstadual <> '',
+      Tomador.IdentificacaoTomador.InscricaoEstadual, FTomador.InscricaoEstadual);
+
+    FTomador.InscricaoMunicipal := IfThen(Tomador.IdentificacaoTomador.InscricaoMunicipal <> '',
+      Tomador.IdentificacaoTomador.InscricaoMunicipal, FTomador.InscricaoMunicipal);
+
+    FTomador.Endereco := IfThen(Tomador.Endereco.Endereco <> '',
+                                  Tomador.Endereco.Endereco, FTomador.Endereco);
+
+    FTomador.Complemento := IfThen(Tomador.Endereco.Complemento <> '',
+                            Tomador.Endereco.Complemento, FTomador.Complemento);
+
+    FTomador.Fone := IfThen(Tomador.Contato.Telefone <> '',
+                                       Tomador.Contato.Telefone, FTomador.Fone);
+
+    FTomador.EMail := IfThen(Tomador.Contato.EMail <> '',
+                                         Tomador.Contato.EMail, FTomador.EMail);
+  end;
+  }
 end;
 
 function TACBrNFSeXDANFSeClass.GetSeparadorPathPDF(const aInitialPath: String): String;

@@ -638,6 +638,8 @@ procedure TfrlXDANFSeRLRetrato.rlbTomadorBeforePrint(Sender: TObject;
 begin
   inherited;
 
+  fpDANFSe.SetDadosTomador(fpNFSe);
+
   with fpNFSe.Tomador do
   begin
     rllTomaNome.Caption := RazaoSocial;

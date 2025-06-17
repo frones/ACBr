@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2025
+-- ACBrNFSeXDANFSeClass/ACBrNFSeXDANFSeRL/ACBrNFSeXDANFSeRLClass --
+-- ACBrNFSeXDANFSeRLISSNet/ACBrNFSeXDANFSeRLRetrato/ACBrNFSeXDANFSeRLSimplISS --
+[-] #TK-7224: Alteração visando imprimir corretamente os DANFSE quando é carregado
+    diversos XML de NFS-e.
+   Por: Italo Giurizzato Junior
+
 16/06/2025
 -- ACBrNFSeXServicos --
 [+] #TK-7216: Incluída a cidade de Santo Estevão/BA, o provedor é Fisco.

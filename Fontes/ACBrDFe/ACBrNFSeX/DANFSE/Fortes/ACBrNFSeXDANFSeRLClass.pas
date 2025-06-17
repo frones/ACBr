@@ -94,7 +94,6 @@ var
   fqrXDANFSeRLRetrato: TfrlXDANFSeRL;
 begin
   SetDadosPrestador;
-  SetDadosTomador;
   Provedor := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor;
 
   case Provedor of
@@ -113,10 +112,14 @@ begin
     SetLength(Notas, TACBrNFSeX(ACBrNFSe).NotasFiscais.Count);
 
     for i := 0 to (TACBrNFSeX(ACBrNFSe).NotasFiscais.Count - 1) do
+    begin
+//      SetDadosTomador(i);
       Notas[i] := TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[i].NFSe;
+    end;
   end
   else
   begin
+    SetDadosTomador(0);
     SetLength(Notas, 1);
     Notas[0] := NFSe;
   end;
@@ -132,7 +135,6 @@ var
   fqrXDANFSeRLRetrato: TfrlXDANFSeRL;
 begin
   SetDadosPrestador;
-  SetDadosTomador;
   Provedor := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor;
 
   case Provedor of
@@ -150,6 +152,7 @@ begin
   begin
     for i := 0 to TACBrNFSeX(ACBrNFSe).NotasFiscais.Count - 1 do
     begin
+      SetDadosTomador(i);
       FPArquivoPDF := DefinirNomeArquivo(Self.PathPDF,
        TACBrNFSeX(ACBrNFSe).NumID[TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[i].NFSe] + '-nfse.pdf',
        self.NomeDocumento);
@@ -159,6 +162,7 @@ begin
   end
   else
   begin
+    SetDadosTomador(0);
     FPArquivoPDF := DefinirNomeArquivo(Self.PathPDF,
      TACBrNFSeX(ACBrNFSe).NumID[NFSe] + '-nfse.pdf', self.NomeDocumento);
 
@@ -174,7 +178,6 @@ var
   fqrXDANFSeRLRetrato: TfrlXDANFSeRL;
 begin
   SetDadosPrestador;
-  SetDadosTomador;
   Provedor := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor;
 
   case Provedor of
@@ -191,10 +194,14 @@ begin
   if NFSe = nil then
   begin
     for i := 0 to TACBrNFSeX(ACBrNFSe).NotasFiscais.Count - 1 do
+    begin
+      SetDadosTomador(i);
       fqrXDANFSeRLRetrato.SalvarPDF(Self, TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[i].NFSe, AStream);
+    end;
   end
   else
   begin
+    SetDadosTomador(0);
     fqrXDANFSeRLRetrato.SalvarPDF(Self, NFSe, AStream);
   end;
 

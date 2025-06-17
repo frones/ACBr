@@ -50,7 +50,8 @@ uses
   {$ENDIF}
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF}
-  ACBrNFSeXClass, ACBrNFSeX, ACBrNFSeXDANFSeRLClass, ACBrDFeReportFortes;
+  ACBrNFSeXClass, ACBrNFSeX, ACBrNFSeXDANFSeClass, ACBrNFSeXDANFSeRLClass,
+  ACBrDFeReportFortes;
 
 type
 
@@ -143,6 +144,7 @@ begin
       DANFSeReport := Create(nil);
       DANFSeReport.fpNFSe := ANotas[i];
       DANFSeReport.fpDANFSe := ADANFSe;
+
       if ADANFSe.AlterarEscalaPadrao then
       begin
         DANFSeReport.Scaled := False;
@@ -154,6 +156,7 @@ begin
     end;
 
     Report := ReportArray[0].RLNFSe;
+
     for i := 1 to High(ReportArray) do
     begin
       if (Report.NextReport = nil) then

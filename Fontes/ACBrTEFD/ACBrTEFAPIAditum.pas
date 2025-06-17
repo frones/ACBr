@@ -207,8 +207,7 @@ begin
       DataHoraTransacaoHost := jsCharge.AsISODateTime['captureDateTime'];
       DataHoraTransacaoLocal := jsCharge.AsISODateTime['creationDateTime'];
       NFCeSAT.DonoCartao := jsCharge.AsString['cardHolderName'];
-      BIN := jsCharge.AsString['cardNumber'];
-
+      PAN := jsCharge.AsString['cardNumber'];
       jsReceipt := jsCharge.AsJSONArray['cardholderReceipt'];
       ImagemComprovante1aVia.Clear;
       for i := 0 to jsReceipt.Count-1 do

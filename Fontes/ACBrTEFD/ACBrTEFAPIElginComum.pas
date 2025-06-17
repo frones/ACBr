@@ -396,9 +396,10 @@ begin
   with AACBrTEFResp.NFCeSAT do
   begin
     DonoCartao := '';
-    CNPJCredenciadora := JsonKey('tef.panMascarado');
     Bandeira := JsonKey('tef.nomeBandeira');
   end;
+
+  AACBrTEFResp.PAN := JsonKey('tef.panMascarado');
   AACBrTEFResp.Rede := JsonKey('tef.nomeProvedor');
   AACBrTEFResp.NumeroLoteTransacao := JsonKeyint('tef.transacao_codigo_vespague');
   AACBrTEFREsp.ModalidadePagto := JsonKey('tef.transacao_codigo_vespague');

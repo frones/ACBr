@@ -345,7 +345,7 @@ begin
         133: NSU_TEF := LinStr;
         134: NSU := LinStr;
         135: CodigoAutorizacaoTransacao := LinStr;
-        136: Bin := LinStr;
+        136: BIN := LinStr;
         139: ValorEntradaCDC := Linha.Informacao.AsFloat;
         140: DataEntradaCDC := Linha.Informacao.AsDate;
         156: Rede := LinStr;
@@ -411,6 +411,7 @@ begin
         1002: NFCeSAT.DataExpiracao := LinStr;
         1003: NFCeSAT.DonoCartao := LinStr;
         1190: NFCeSAT.UltimosQuatroDigitos := LinStr;
+        2021: PAN := LinStr;
         4029:
         begin
           Desconto := Linha.Informacao.AsFloat;

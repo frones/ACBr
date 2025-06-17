@@ -1570,11 +1570,10 @@ end;
 
 procedure TACBrTEFAPIComum.FinalizarVenda;
 begin
-  GravarLog('FinalizarVenda');
   if (RespostasTEF.Count > 0) then
   begin
+    GravarLog('FinalizarVenda');
     fpTEFAPIClass.FinalizarVenda;
-    LimparRespostasTEF;
   end;
 end;
 

@@ -193,7 +193,7 @@ begin
       end;
 
       QtdParcelas := jsreceipt.AsInteger['totalNumberOfPayments'];
-      BIN := Trim(jsreceipt.AsString['maskedPrimaryAccountNumber']);
+      PAN := Trim(jsreceipt.AsString['maskedPrimaryAccountNumber']);
       //SerialPOS := jsreceipt.AsString['systemSpecifications'];    // estranho ?
       DataHoraTransacaoHost := jsreceipt.AsISODateTime['transactionDateTime'];
       i := jsreceipt.AsInteger['transactionType'];
@@ -236,7 +236,6 @@ begin
       NFCeSAT.CodCredenciadora := '999';  // ??
       NFCeSAT.CNPJCredenciadora := '16.501.555/0001-57';  // Stone
       NFCeSAT.Autorizacao := NSU;
-      NFCeSAT.UltimosQuatroDigitos := BIN;
       NFCeSAT.Bandeira := CodigoBandeiraPadrao;
     end;
 

@@ -193,6 +193,10 @@ begin
     ADir := PathWithDelim(fpACBrTEFAPI.DiretorioTrabalho) + CSUBDIRETORIO_PAYGOWEB
   else
     ADir := fDiretorioTrabalho;
+  fTEFPayGoAPI.DiretorioTrabalho := ADir;
+
+  fTEFPayGoAPI.CNPJEstabelecimento := fpACBrTEFAPI.DadosEstabelecimento.CNPJ;
+  fTEFPayGoAPI.NomeEstabelecimento := fpACBrTEFAPI.DadosEstabelecimento.RazaoSocial;
 
   IpStr := fpACBrTEFAPI.DadosTerminal.EnderecoServidor;
   PortaStr := '';
@@ -203,13 +207,15 @@ begin
     IpStr := copy(IpStr, 1, p-1);
   end;
 
-  fTEFPayGoAPI.DiretorioTrabalho := ADir;
   fTEFPayGoAPI.EnderecoIP := IpStr;
   fTEFPayGoAPI.PortaTCP := PortaStr;
+
+  fTEFPayGoAPI.PontoCaptura := fpACBrTEFAPI.DadosTerminal.CodTerminal;
+  fTEFPayGoAPI.PortaPinPad := StrToIntDef(OnlyNumber(fpACBrTEFAPI.DadosTerminal.PortaPinPad), 0);
+
   fTEFPayGoAPI.NomeAplicacao := fpACBrTEFAPI.DadosAutomacao.NomeAplicacao;
   fTEFPayGoAPI.VersaoAplicacao := fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
   fTEFPayGoAPI.SoftwareHouse := fpACBrTEFAPI.DadosAutomacao.NomeSoftwareHouse;
-  fTEFPayGoAPI.NomeEstabelecimento := fpACBrTEFAPI.DadosEstabelecimento.RazaoSocial;
   fTEFPayGoAPI.SuportaSaque := fpACBrTEFAPI.DadosAutomacao.SuportaSaque;
   fTEFPayGoAPI.SuportaDesconto := fpACBrTEFAPI.DadosAutomacao.SuportaDesconto;
   fTEFPayGoAPI.SuportaViasDiferenciadas := fpACBrTEFAPI.DadosAutomacao.SuportaViasDiferenciadas;

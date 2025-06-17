@@ -714,7 +714,7 @@ begin
       if Interromper or (not Digitado) or (Voltar and (fUltimoRetornoAPI = 10000)) then
         TefAPI.QuandoExibirMensagem('', telaTodas, -1);
 
-      StrPCopy(Buffer, Resposta);
+      Move(Resposta[1], Buffer[0], Length(Resposta));
     until (fUltimoRetornoAPI <> 10000);
   finally
     fIniciouRequisicao := False;

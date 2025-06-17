@@ -176,7 +176,7 @@ procedure TACBrTEFRespScope.ConteudoToProperty;
     //MASK1_Saldo_Disponivel
 
     if IDCampo = MASK1_Numero_Conta_PAN then
-      NFCeSAT.UltimosQuatroDigitos := RightStr(Linha.Informacao.AsString, 4)
+      PAN := Linha.Informacao.AsString
     else if IDCampo = MASK1_Valor_transacao then
       ValorTotal := Linha.Informacao.AsFloat
     else if IDCampo = MASK1_NSU_transacao then

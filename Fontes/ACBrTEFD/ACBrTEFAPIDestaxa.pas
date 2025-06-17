@@ -204,7 +204,6 @@ begin
   Rede := DestaxaResposta.transacao_rede;
   NSU := DestaxaResposta.transacao_nsu;
   TextoEspecialOperador := DestaxaResposta.mensagem;
-  BIN := DestaxaResposta.transacao_cartao_numero;
   ValorTotal := DestaxaResposta.transacao_valor;
   NSU_TEF := DestaxaResposta.transacao_nsu_rede;
   DataHoraTransacaoLocal := DestaxaResposta.transacao_data;
@@ -215,9 +214,7 @@ begin
   NFCeSAT.Bandeira := DestaxaResposta.transacao_administradora;
   NFCeSAT.Autorizacao := DestaxaResposta.transacao_autorizacao;
   NFCeSAT.CNPJCredenciadora := DestaxaResposta.transacao_rede_cnpj;
-  if NaoEstaVazio(DestaxaResposta.transacao_cartao_numero) and (Length(DestaxaResposta.transacao_cartao_numero) >= 4) then
-    NFCeSAT.UltimosQuatroDigitos := RightStr(DestaxaResposta.transacao_cartao_numero, 4);
-
+  PAN := DestaxaResposta.transacao_cartao_numero;
   CodigoBandeiraPadrao := DestaxaResposta.codigo_bandeira;
   NomeAdministradora := DestaxaResposta.transacao_administradora;
   CodigoAutorizacaoTransacao := DestaxaResposta.transacao_autorizacao;

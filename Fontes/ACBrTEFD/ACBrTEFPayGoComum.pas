@@ -505,24 +505,6 @@ begin
           Digitado := (AInt = 1) or (AInt = 256);
         end;
 
-        PWINFO_CARDFULLPAN:
-        begin
-          BIN := LinStr;
-          NFCeSAT.UltimosQuatroDigitos := RightStr(LinStr,4);
-        end;
-
-        PWINFO_CARDPARCPAN:
-        begin
-          if (NFCeSAT.UltimosQuatroDigitos = '') then
-            NFCeSAT.UltimosQuatroDigitos := RightStr(LinStr,4);
-        end;
-
-        PWINFO_DEFAULTCARDPARCPAN:
-        begin
-          BIN := LinStr;
-          NFCeSAT.UltimosQuatroDigitos := RightStr(LinStr,4);
-        end;
-
         PWINFO_CARDEXPDATE:
           NFCeSAT.DataExpiracao := LinStr;
 
@@ -658,6 +640,13 @@ begin
         ProcessarTipoInterno(Linha);
       end;
     end;
+
+    // Calculando PAN, BIN, Embosso
+    PAN := LeInformacao(PWINFO_CARDFULLPAN, 0).AsString;
+    if (PAN = '') then
+      PAN := LeInformacao(PWINFO_DEFAULTCARDPARCPAN, 0).AsString;
+    if (PAN = '') then
+      PAN := LeInformacao(PWINFO_CARDPARCPAN, 0).AsString;
 
     ConteudoToComprovantes;
     ConteudoToParcelas;

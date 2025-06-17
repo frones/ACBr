@@ -45,6 +45,26 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2025
+-- ACBrTEFComum --
+[+] Adicionada a propriedade TACBrTEFResp.PAN
+[*] Quando atribui algum valor a PAN, calcula o BIN e NFCeSAT.UltimosQuatroDigitos,
+    caso essas propriedades sejam vazias
+
+-- ACBrTEFAPIComum --
+[-] Removida Limpeza de Backup de Transações em 'TACBrTEFAPIComum.FinalizarVenda'
+    Isso limpava as Transações, quando a Confirmação automática, estava ligada
+
+-- ACBrTEFAPIAditum, ACBrTEFAPICliSiTef, ACBrTEFAPIDestaxa, ACBrTEFAPIElginComum,
+   ACBrTEFAPIPayKit, ACBrTEFAPIScope, ACBrTEFAPIStoneAutoTEF, ACBrTEFAPITPag,
+   ACBrTEFCliSiTefComum, ACBrTEFPayGoComum --
+[*] Modificado para atribuição correta da informação do PAN
+
+-- ACBrTEFAPIPayGoWeb --
+[*] Atribuindo na inicialização as propriedades:
+  TEFPayGoAPI.PontoCaptura, TEFPayGoAPI.PortaPinPad, TEFPayGoAPI.CNPJEstabelecimento
+  (por: DSA)
+
 06/06/2025
 -- ACBrTEFAPI, ACBrTEFAPIAditum, ACBrTEFAPICliSiTef, ACBrTEFCliSiTefComum,
   ACBrTEFAPIPayGoWeb, ACBrTEFAPIPayKit, ACBrTEFAPIScope, --

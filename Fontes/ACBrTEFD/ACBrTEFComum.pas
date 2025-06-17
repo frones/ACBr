@@ -295,6 +295,8 @@ type
   { TACBrTEFResp }
 
   TACBrTEFResp = class
+  private
+    procedure SetPAN(AValue: String);
   protected
     fpAgencia: String;
     fpAgenciaDC: String;
@@ -339,7 +341,8 @@ type
     fpTipoPessoa: AnsiChar;
     fpTipoTransacao: Integer;
     fpTrailer: String;
-    fpBin: String;
+    fpBIN: String;
+    fpPAN: String;
     fpValorTotal: Double;     // Valor Total da Transação, já considerando Descontos/ Acréscimos e Saque
     fpValorOriginal: Double;
     fpValorRecargaCelular: Double;
@@ -384,6 +387,8 @@ type
     procedure SetArqBackup(const AValue: String);
 
     function GetTransacaoAprovada: Boolean; virtual;
+    procedure ExtrairBINdePAN;
+    procedure ExtrairEmbossodePAN;
   public
     constructor Create;
     destructor Destroy; override;
@@ -440,7 +445,8 @@ type
     property NomeAdministradora: String read fpNomeAdministradora write fpNomeAdministradora;
     property DataHoraTransacaoComprovante: TDateTime read fpDataHoraTransacaoComprovante write fpDataHoraTransacaoComprovante;
     property Trailer: String read fpTrailer write fpTrailer;
-    property BIN: String read fpBin write fpBin;
+    property BIN: String read fpBIN write fpBIN;
+    property PAN: String read fpPAN write SetPAN;
     property CodigoBandeiraPadrao: String read fpCodigoBandeiraPadrao write fpCodigoBandeiraPadrao;
 
     property CorrespBancarios: TACBrTEFRespListaCB read fpCorrespBancarios;
@@ -526,6 +532,7 @@ implementation
 uses
   Math,
   StrUtils,
+  ACBrUtil.Strings,
   ACBrUtil.Base,
   ACBrUtil.FilesIO,
   ACBrConsts;
@@ -1028,6 +1035,7 @@ begin
   fpTipoTransacao := Source.TipoTransacao;
   fpTrailer := Source.Trailer;
   fpBin := Source.BIN;
+  fpPAN := Source.PAN;
   fpValorTotal := Source.ValorTotal;
   fpValorOriginal := Source.ValorOriginal;
   fpValorRecargaCelular := Source.ValorRecargaCelular;
@@ -1044,6 +1052,7 @@ begin
   fpCodigoRedeAutorizada := Source.CodigoRedeAutorizada;
   fpDebito := Source.Debito;
   fpCredito := Source.Credito;
+  fpVoucher := Source.Voucher;
   fpDigitado := Source.Digitado;
   fpParceladoPor := Source.ParceladoPor;
   fpValorEntradaCDC := Source.ValorEntradaCDC;
@@ -1060,6 +1069,7 @@ begin
   fpNomeCarteiraDigital := Source.NomeCarteiraDigital;
   fpCodigoPSP := Source.CodigoPSP;
   fpNSU_TEF := Source.NSU_TEF;
+  fpEndToEndID := Source.EndToEndID;
   fpSucesso := Source.Sucesso;
 
   fpImagemComprovante1aVia.Text := Source.ImagemComprovante1aVia.Text;
@@ -1120,7 +1130,8 @@ begin
   fpTipoPessoa := ' ';
   fpTipoTransacao := 0;
   fpTrailer := '';
-  fpBin := '';
+  fpBIN := '';
+  fpPAN := '';
   fpValorTotal := 0;
   fpValorOriginal := 0;
   fpSaque := 0;
@@ -1142,6 +1153,7 @@ begin
   fpTipoOperacao := opOutras;
 
   fpCredito := False;
+  fpVoucher := False;
   fpDebito := False;
   fpDigitado := False;
 
@@ -1162,6 +1174,7 @@ begin
   fpNomeCarteiraDigital := '';
   fpCodigoPSP :=  '';
   fpNSU_TEF :=  '';
+  fpEndToEndID := '';
   fpDataVencimento := 0;
   fpInstituicao := '';
   fpModalidadePagto := '';
@@ -1177,6 +1190,21 @@ begin
   Conteudo.LeArquivo(NomeArquivo);
 
   ConteudoToProperty;
+end;
+
+procedure TACBrTEFResp.SetPAN(AValue: String);
+begin
+  if fpPAN = AValue then
+    Exit;
+
+  fpPAN := Trim(AValue);
+  if (fpPAN <> '') then
+  begin
+    if (fpBIN = '') then
+      ExtrairBINdePAN;
+    if (fpNFCeSAT.UltimosQuatroDigitos = '') then
+      ExtrairEmbossodePAN;
+  end;
 end;
 
 procedure TACBrTEFResp.SetCNFEnviado(const AValue: Boolean);
@@ -1218,6 +1246,45 @@ end;
 function TACBrTEFResp.LeInformacao(const Identificacao: Integer; const Sequencia: Integer): TACBrInformacao;
 begin
   Result := Conteudo.LeInformacao(Identificacao, Sequencia);
+end;
+
+// PAN - (Primary Account Number) - Número do Cartão, mascarado Ex.: 543211****9876
+// BIN - (Bank Identification Number) - 6 primeiros dígitos do Número do Cartão
+procedure TACBrTEFResp.ExtrairBINdePAN;
+var
+  i: Integer;
+  s: String;
+begin
+  i := 1;
+  s := '';
+  while (i <= Length(fpPAN)) and CharIsNum(fpPAN[i]) and (Length(s) < 6) do
+  begin
+    s := s + fpPAN[i];
+    Inc(i);
+  end;
+
+  if (Length(s) < 6) and (pos('*', fpPAN) = 0) then
+    s := '';  // não é um BIN válido
+
+  fpBIN := s;
+end;
+
+// PAN - (Primary Account Number) - Número do Cartão, mascarado Ex.: 543211****9876
+// Embosso - 4 últimos dígitos do Número do Cartão
+procedure TACBrTEFResp.ExtrairEmbossodePAN;
+var
+  i: Integer;
+  s: String;
+begin
+  i := Length(fpPAN);
+  s := '';
+  while (i >= 1) and CharIsNum(fpPAN[i]) and (Length(s) < 4) do
+  begin
+    s := fpPAN[i] + s;
+    Dec(i);
+  end;
+
+  fpNFCeSAT.UltimosQuatroDigitos := s;
 end;
 
 { TACBrTEFRespostas }

@@ -201,10 +201,7 @@ begin
     else if (LinChave = 'authAcquirer') then
       CodigoAutorizacaoTransacao := Linha.Informacao.AsString
     else if (LinChave = 'panMasked') then
-    begin
-      BIN := Linha.Informacao.AsString;
-      NFCeSAT.UltimosQuatroDigitos := RightStr(BIN, 4);
-    end
+      PAN := Linha.Informacao.AsString
     else
       ProcessarTipoInterno(Linha);
   end;

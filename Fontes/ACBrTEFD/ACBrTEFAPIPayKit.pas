@@ -166,13 +166,7 @@ begin
     NFCeSAT.CNPJCredenciadora := jsLog.AsString['CNPJRedeAdquirente'];
     NFCeSAT.DataExpiracao := jsLog.AsString['VencimentoCartao'];
     NFCeSAT.DonoCartao := jsLog.AsString['NomePortador'];
-    s := jsLog.AsString['NumeroCartao'];
-    while (RightStr(s, 1) = '*') do
-      Delete(s, Length(s), 1);
-
-    BIN := s;
-    NFCeSAT.UltimosQuatroDigitos := RightStr(s, 4);
-
+    PAN := jsLog.AsString['NumeroCartao'];
     s := UpperCase(jsLog.AsString['TipoRegistro']);
     Debito := (s = 'CDB');
     Credito := (s = 'CCR');

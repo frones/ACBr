@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2025
+-- ACBrNFeWebServices --
+[*] #TK-7205: Melhorias no Consultar visando salvar o XML do evento retornado 
+    levando em consideração da data/hora de emissão do evento.
+  Por: Luiz Alberto da Silva Lope
+
 16/06/2025
 -- ACBrNFeServicos --
 [*] Alterado as URLs de homologação e de produção do QR-Code da NFC-e da SEFAZ-GO. 

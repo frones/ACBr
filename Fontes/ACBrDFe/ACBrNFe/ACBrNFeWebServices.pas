@@ -2183,7 +2183,8 @@ function TNFeConsulta.TratarResposta: Boolean;
 
 procedure SalvarEventos(Retorno: string);
 var
-  aEvento, aProcEvento, aIDEvento, sPathEvento, sCNPJ: string;
+  aEvento, aProcEvento, aIDEvento, sPathEvento, sCNPJCPF: string;
+  DhEvt: TDateTime;
   Inicio, Fim: Integer;
   TipoEvento: TpcnTpEvento;
   Ok: Boolean;
@@ -2210,8 +2211,13 @@ begin
       aIDEvento := Copy(aProcEvento, Inicio, Fim);
 
     TipoEvento  := StrToTpEventoNFe(Ok, SeparaDados(aEvento, 'tpEvento'));
-    sCNPJ       := SeparaDados(aEvento, 'CNPJ');
-    sPathEvento := PathWithDelim(FPConfiguracoesNFe.Arquivos.GetPathEvento(TipoEvento, sCNPJ));
+    DhEvt       := EncodeDataHora(SeparaDados(aEvento, 'dhEvento'), 'YYYY-MM-DD');
+    sCNPJCPF    := SeparaDados(aEvento, 'CNPJ');
+
+    if EstaVazio(sCNPJCPF) then
+      sCNPJCPF := SeparaDados(aEvento, 'CPF');
+
+    sPathEvento := PathWithDelim(FPConfiguracoesNFe.Arquivos.GetPathEvento(TipoEvento, sCNPJCPF, '', DhEvt));
 
     if FPConfiguracoesNFe.Arquivos.SalvarEvento and (aProcEvento <> '') then
       FPDFeOwner.Gravar( aIDEvento + '-procEventoNFe.xml', aProcEvento, sPathEvento);

@@ -969,7 +969,8 @@ function TBPeConsulta.TratarResposta: Boolean;
 
 procedure SalvarEventos(Retorno: string);
 var
-  aEvento, aProcEvento, aIDEvento, sPathEvento, sCNPJ: string;
+  aEvento, aProcEvento, aIDEvento, sPathEvento, sCNPJCPF: string;
+  DhEvt: TDateTime;
   Inicio, Fim: Integer;
   TipoEvento: TpcnTpEvento;
   Ok: Boolean;
@@ -995,9 +996,14 @@ begin
     else
       aIDEvento := Copy(aProcEvento, Inicio, Fim);
 
-    TipoEvento  := StrToTpEventoBPe(Ok, SeparaDados(aEvento, 'tpEvento'));
-    sCNPJ       := SeparaDados(aEvento, 'CNPJ');
-    sPathEvento := PathWithDelim(FPConfiguracoesBPe.Arquivos.GetPathEvento(TipoEvento, sCNPJ));
+    TipoEvento := StrToTpEventoBPe(Ok, SeparaDados(aEvento, 'tpEvento'));
+    DhEvt      := EncodeDataHora(SeparaDados(aEvento, 'dhEvento'), 'YYYY-MM-DD');
+    sCNPJCPF   := SeparaDados(aEvento, 'CNPJ');
+
+    if EstaVazio(sCNPJCPF) then
+      sCNPJCPF := SeparaDados(aEvento, 'CPF');
+
+    sPathEvento := PathWithDelim(FPConfiguracoesBPe.Arquivos.GetPathEvento(TipoEvento, sCNPJCPF, '', DhEvt));
 
     if FPConfiguracoesBPe.Arquivos.SalvarEvento and (aProcEvento <> '') then
       FPDFeOwner.Gravar( aIDEvento + '-procEventoBPe.xml', aProcEvento, sPathEvento);
@@ -1592,7 +1598,7 @@ begin
                    Texto +
                  '</procEventoBPe>';
 
-        if FPConfiguracoesBPe.Arquivos.Salvar then
+        if FPConfiguracoesBPe.Arquivos.SalvarEvento then
         begin
           NomeArq := OnlyNumber(FEvento.Evento[0].infEvento.Id) + '-procEventoBPe.xml';
           PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento[0].infEvento.CNPJ));

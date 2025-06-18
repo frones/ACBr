@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/06/2025
+-- ACBrNFSeXProviderBase --
+[*] #TK-7236: Alteração visando salvar o XML da nota na pasta com base na data de
+    emissão da mesma.
+   Por: Italo Giurizzato Junior
+
 17/06/2025
 -- SigISSWeb.LerXml --
 [*] #TK-7222: Alteração a leitura da tag regime.

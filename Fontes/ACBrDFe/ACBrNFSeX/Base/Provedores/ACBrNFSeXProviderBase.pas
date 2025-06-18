@@ -1024,10 +1024,16 @@ var
   aPath, aNomeArq, Extensao, aXML: string;
   aConfig: TConfiguracoesNFSe;
   ConteudoEhXml: Boolean;
+  Data: TDateTime;
 begin
   aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
 
-  aPath := aConfig.Arquivos.GetPathNFSe(0, aConfig.Geral.Emitente.CNPJ,
+  if aConfig.Arquivos.EmissaoPathNFSe then
+    Data := aNota.NFSe.DataEmissao
+  else
+    Data := Now;
+
+  aPath := aConfig.Arquivos.GetPathNFSe(Data, aConfig.Geral.Emitente.CNPJ,
                         aConfig.Geral.Emitente.DadosEmitente.InscricaoEstadual);
 
   aNomeArq := TACBrNFSeX(FAOwner).GetNumID(aNota.NFSe) + '-nfse.xml';

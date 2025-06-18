@@ -3,6 +3,7 @@ package br.com.acbr.lib.nfe.notafiscal;
 import br.com.acbr.lib.comum.dfe.CSTIBSCBS;
 import br.com.acbr.lib.comum.dfe.cClassTribIBSCBS;
 import br.com.acbr.lib.comum.dfe.gIBSCBS;
+import br.com.acbr.lib.nfe.gCredPresIBSZFM;
 import br.com.acbr.lib.nfe.gIBSCBSMono;
 import br.com.acbr.lib.nfe.gTransfCred;
 
@@ -12,6 +13,7 @@ public class IBSCBSProdutoNFe {
         gIBSCBS = new gIBSCBS();
         gIBSCBSMono = new gIBSCBSMono();
         gTransfCred = new gTransfCred();
+        gCredPresIBSZFM = new gCredPresIBSZFM();
     }
 
     private CSTIBSCBS CST;
@@ -19,6 +21,7 @@ public class IBSCBSProdutoNFe {
     private gIBSCBS gIBSCBS;
     private gIBSCBSMono gIBSCBSMono;
     private gTransfCred gTransfCred;
+    private gCredPresIBSZFM gCredPresIBSZFM;
 
     public CSTIBSCBS getCST() {
         return CST;
@@ -58,5 +61,13 @@ public class IBSCBSProdutoNFe {
 
     public void setgTransfCred(gTransfCred gTransfCred) {
         this.gTransfCred = gTransfCred;
+    }
+
+    public gCredPresIBSZFM getgCredPresIBSZFM() {
+        return gCredPresIBSZFM;
+    }
+
+    public void setgCredPresIBSZFM(gCredPresIBSZFM gCredPresIBSZFM) {
+        this.gCredPresIBSZFM = gCredPresIBSZFM;
     }
 }

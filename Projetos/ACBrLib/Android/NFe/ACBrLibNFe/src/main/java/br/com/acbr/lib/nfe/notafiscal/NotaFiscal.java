@@ -23,11 +23,17 @@ import br.com.acbr.lib.comum.dfe.gIBSMun;
 import br.com.acbr.lib.comum.dfe.gIBSMunTot;
 import br.com.acbr.lib.comum.dfe.gIBSUF;
 import br.com.acbr.lib.comum.dfe.gIBSUFTot;
+import br.com.acbr.lib.comum.dfe.gPagAntecipado;
+import br.com.acbr.lib.comum.dfe.gTribCompraGov;
 import br.com.acbr.lib.comum.dfe.gTribRegular;
 import br.com.acbr.lib.comum.ini.ACBrIniFile;
 import br.com.acbr.lib.comum.ini.IniUtil;
+import br.com.acbr.lib.nfe.ModeloDF;
+import br.com.acbr.lib.nfe.TipoCredPresIBSZFM;
+import br.com.acbr.lib.nfe.gCredPresIBSZFM;
 import br.com.acbr.lib.nfe.gIBSCBSMono;
 import br.com.acbr.lib.nfe.gIBSCBSMonoTot;
+import br.com.acbr.lib.nfe.gTransfCred;
 
 public final class NotaFiscal {
 
@@ -114,6 +120,12 @@ public final class NotaFiscal {
         IdentificacaoNFe identificacao = IniUtil.readFromIni(iniData, IdentificacaoNFe.class, "Identificacao");
 
         int i = 0;
+        gPagAntecipado gPagAntecipado;
+        while ((gPagAntecipado = IniUtil.readFromIni(iniData, gPagAntecipado.class, String.format("gPagAntecipado%03d", ++i))) != null) {
+            identificacao.getgPagAntecipado().add(gPagAntecipado);
+        }
+
+        i = 0;
         NFRef nfRef;
         while ((nfRef = IniUtil.readFromIni(iniData, NFRef.class, String.format("NFRef%03d", ++i))) != null) {
             identificacao.getNFref().add(nfRef);
@@ -387,6 +399,27 @@ public final class NotaFiscal {
             }
             IniUtil.readFromIni(iniData, gIBSCBSMono.class, String.format("gIBSCBSMono%03d", i));
 
+            gTransfCred gTransfCred = produto.getIBSCBS().getgTransfCred();
+            if(gTransfCred == null){
+                gTransfCred = new gTransfCred();
+                produto.getIBSCBS().setgTransfCred(gTransfCred);
+            }
+            IniUtil.readFromIni(iniData, gTransfCred.class, String.format("gTransfCred%03d", i));
+
+            gCredPresIBSZFM gCredPresIBSZFM = produto.getIBSCBS().getgCredPresIBSZFM();
+            if(gCredPresIBSZFM == null){
+                gCredPresIBSZFM = new gCredPresIBSZFM();
+                produto.getIBSCBS().setgCredPresIBSZFM(gCredPresIBSZFM);
+            }
+            IniUtil.readFromIni(iniData, gCredPresIBSZFM.class, String.format("gCredPresIBSZFM%03d", i));
+
+            gTribCompraGov gTribCompraGov = produto.getIBSCBS().getgIBSCBS().getgTribCompraGov();
+            if(gTribCompraGov == null){
+                gTribCompraGov = new gTribCompraGov();
+                produto.getIBSCBS().getgIBSCBS().setgTribCompraGov(gTribCompraGov);
+            }
+            IniUtil.readFromIni(iniData, gTribCompraGov.class, String.format("gTribCompraGov%03d", i));
+
             TotalNFe total = IniUtil.readFromIni(iniData, TotalNFe.class, "Total");
             ISSQNtotNFe issqnTot = IniUtil.readFromIni(iniData, ISSQNtotNFe.class, "ISSQNtot");
             ISTotNFe ISTot = IniUtil.readFromIni(iniData, ISTotNFe.class, "ISTot");
@@ -535,6 +568,10 @@ public final class NotaFiscal {
         IniUtil.writeToIni(iniData, InfNFe, "infNFe");
         IniUtil.writeToIni(iniData, Identificacao, "Identificacao");
 
+        for (int i = 0; i < Identificacao.getgPagAntecipado().size(); i++) {
+            IniUtil.writeToIni(iniData, Identificacao.getgPagAntecipado().get(i), String.format("gPagAntecipado%03d", i + 1));
+        }
+
         for (int i = 0; i < Identificacao.getNFref().size(); i++) {
             IniUtil.writeToIni(iniData, Identificacao.getNFref().get(i), String.format("NFRef%03d", i + 1));
         }
@@ -660,7 +697,7 @@ public final class NotaFiscal {
                 IniUtil.writeToIni(iniData, produto.getIS(), String.format("IS%03d", i + 1));
             }
 
-            if (produto.getIBSCBS().getCST() != CSTIBSCBS.cstVazio){
+            if (produto.getIBSCBS().getCST() != CSTIBSCBS.cstNenhum){
                 IniUtil.writeToIni(iniData, produto.getIBSCBS(), String.format("IBSCBS%03d", i + 1));
 
                 if (produto.getIBSCBS().getgIBSCBS().getvBC().compareTo(BigDecimal.ZERO) > 0){
@@ -669,7 +706,7 @@ public final class NotaFiscal {
                     IniUtil.writeToIni(iniData, produto.getIBSCBS().getgIBSCBS().getgIBSMun(), String.format("gIBSMun%03d", i + 1));
                     IniUtil.writeToIni(iniData, produto.getIBSCBS().getgIBSCBS().getgCBS(), String.format("gCBS%03d", i + 1));
 
-                    if (produto.getIBSCBS().getgIBSCBS().getgTribRegular().getCSTReg() != CSTIBSCBS.cstVazio){
+                    if (produto.getIBSCBS().getgIBSCBS().getgTribRegular().getCSTReg() != CSTIBSCBS.cstNenhum){
                         IniUtil.writeToIni(iniData, produto.getIBSCBS().getgIBSCBS().getgTribRegular(), String.format("gTribRegular%03d", i + 1));
                     }
 
@@ -686,9 +723,18 @@ public final class NotaFiscal {
                     IniUtil.writeToIni(iniData, produto.getIBSCBS().getgIBSCBSMono(), String.format("gIBSCBSMono%03d", i + 1));
                 }
                 else{
-                    if(produto.getIBSCBS().getCST() == CSTIBSCBS.cst800){
+                    if(Identificacao.getModelo() == ModeloDF.moNFe && produto.getIBSCBS().getCST() == CSTIBSCBS.cst800){
                         IniUtil.writeToIni(iniData, produto.getIBSCBS().getgTransfCred(), String.format("gTransfCred%03d", i + 1));
                     }
+                }
+
+                if (Identificacao.getModelo() == ModeloDF.moNFe && produto.getIBSCBS().getgCredPresIBSZFM().getTpCredPresIBSZFM() != TipoCredPresIBSZFM.tcpNenhum){
+                    IniUtil.writeToIni(iniData, produto.getIBSCBS().getgCredPresIBSZFM(), String.format("gCredPresIBSZFM%03d", i + 1));
+                }
+
+                if (produto.getIBSCBS().getgIBSCBS().getgTribCompraGov().getpAliqIBSUF().compareTo(BigDecimal.ZERO) > 0)
+                {
+                    IniUtil.writeToIni(iniData, produto.getIBSCBS().getgIBSCBS().getgTribCompraGov(), String.format("gTribCompraGov%03d", i + 1));
                 }
             }
         }

@@ -10,6 +10,8 @@ import java.util.List;
 
 import br.com.acbr.lib.comum.dfe.TipoAmbiente;
 import br.com.acbr.lib.comum.dfe.TipoEnteGov;
+import br.com.acbr.lib.comum.dfe.TipoOperGov;
+import br.com.acbr.lib.comum.dfe.gPagAntecipado;
 import br.com.acbr.lib.nfe.ModeloDF;
 import br.com.acbr.lib.nfe.TipoDANFE;
 import br.com.acbr.lib.nfe.TipoEmissao;
@@ -48,6 +50,8 @@ public class IdentificacaoNFe {
     private TipoNFeCredito tpNFCredito;
     private TipoEnteGov tpEnteGov;
     private BigDecimal pRedutor;
+    private TipoOperGov tpOperGov;
+    private List<gPagAntecipado> gPagAntecipado = new ArrayList<>();
 
     public IdentificacaoNFe() {}
 
@@ -332,5 +336,21 @@ public class IdentificacaoNFe {
 
     public void setpRedutor(BigDecimal pRedutor) {
         this.pRedutor = pRedutor;
+    }
+
+    public TipoOperGov getTpOperGov() {
+        return tpOperGov;
+    }
+
+    public void setTpOperGov(TipoOperGov tpOperGov) {
+        this.tpOperGov = tpOperGov;
+    }
+
+    public List<gPagAntecipado> getgPagAntecipado() {
+        return gPagAntecipado;
+    }
+
+    public void setgPagAntecipado(List<gPagAntecipado> gPagAntecipado) {
+        this.gPagAntecipado = gPagAntecipado;
     }
 }

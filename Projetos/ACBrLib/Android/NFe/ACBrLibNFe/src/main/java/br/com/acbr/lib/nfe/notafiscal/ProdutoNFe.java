@@ -31,7 +31,6 @@ public class ProdutoNFe {
         IS = new ISProdutoNFe();
         IBSCBS = new IBSCBSProdutoNFe();
         DFeReferenciado = new DFeReferenciado();
-
     }
 
     private int nItem;
@@ -91,6 +90,7 @@ public class ProdutoNFe {
     private IBSCBSProdutoNFe IBSCBS;
     private DFeReferenciado DFeReferenciado;
     private BigDecimal vItem;
+    private IndBemMovelUsado IndBemMovelUsado;
 
 
     public int getnItem() { return nItem; }
@@ -289,5 +289,13 @@ public class ProdutoNFe {
 
     public void setvItem(BigDecimal vItem) {
         this.vItem = vItem;
+    }
+
+    public IndBemMovelUsado getIndBemMovelUsado() {
+        return IndBemMovelUsado;
+    }
+
+    public void setIndBemMovelUsado(IndBemMovelUsado indBemMovelUsado) {
+        IndBemMovelUsado = indBemMovelUsado;
     }
 }

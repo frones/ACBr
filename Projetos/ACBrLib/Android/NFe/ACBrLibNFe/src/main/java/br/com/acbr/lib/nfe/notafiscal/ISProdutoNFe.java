@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class ISProdutoNFe {
 
     private CSTIS CSTIS;
-    private int cClassTribIS;
+    private TipoClassTribIS cClassTribIS;
     private BigDecimal vBCIS;
     private BigDecimal pIS;
     private BigDecimal pISEspec;
@@ -25,11 +25,11 @@ public class ISProdutoNFe {
         this.CSTIS = CSTIS;
     }
 
-    public int getcClassTribIS() {
+    public TipoClassTribIS getcClassTribIS() {
         return cClassTribIS;
     }
 
-    public void setcClassTribIS(int cClassTribIS) {
+    public void setcClassTribIS(TipoClassTribIS cClassTribIS) {
         this.cClassTribIS = cClassTribIS;
     }
 

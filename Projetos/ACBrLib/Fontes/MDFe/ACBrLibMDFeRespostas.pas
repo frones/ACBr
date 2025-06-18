@@ -329,7 +329,7 @@ begin
   with Item do
   begin
     Self.Id := Id;
-    Self.tpAmb := TpAmbToStr(tpAmb);
+    Self.tpAmb := TipoAmbienteToStr(tpAmb);
     Self.verAplic := verAplic;
     Self.cOrgao := cOrgao;
     Self.cStat := cStat;
@@ -371,7 +371,7 @@ begin
   with ACBrMDFe.WebServices.EnvEvento.EventoRetorno do
   begin
     Self.VerAplic := VerAplic;
-    Self.tpAmb := TpAmbToStr(tpAmb);
+    Self.tpAmb := TipoAmbienteToStr(tpAmb);
     Self.CStat := cStat;
     Self.XMotivo := XMotivo;
     Self.idLote := IdLote;
@@ -491,7 +491,7 @@ begin
   with ACBrMDFe.WebServices.ConsMDFeNaoEnc do
   begin
     Self.Versao := verAplic;
-    Self.TpAmb := TpAmbToStr(TpAmb);
+    Self.TpAmb := TipoAmbienteToStr(TpAmb);
     Self.VerAplic := VerAplic;
     Self.CStat := cStat;
     Self.XMotivo := XMotivo;
@@ -518,7 +518,7 @@ begin
   with ACBrMDFe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
   begin
     Self.Versao := verAplic;
-    Self.TpAmb := TpAmbToStr(TpAmb);
+    Self.TpAmb := TipoAmbienteToStr(TpAmb);
     Self.VerAplic := VerAplic;
     Self.CStat := cStat;
     Self.XMotivo := XMotivo;
@@ -549,7 +549,7 @@ begin
     with ACBrMDFe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
     begin
       Self.Versao := verAplic;
-      Self.TpAmb := TpAmbToStr(TpAmb);
+      Self.TpAmb := TipoAmbienteToStr(TpAmb);
       Self.VerAplic := VerAplic;
       Self.CStat := cStat;
       Self.XMotivo := XMotivo;
@@ -603,7 +603,7 @@ begin
   with ACBrMDFe.WebServices.StatusServico do
   begin
     Self.Versao := versao;
-    Self.TpAmb := TpAmbToStr(TpAmb);
+    Self.TpAmb := TipoAmbienteToStr(TpAmb);
     Self.VerAplic := VerAplic;
     Self.CStat := cStat;
     Self.XMotivo := XMotivo;

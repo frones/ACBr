@@ -115,7 +115,7 @@ uses
   ACBrLibMDFeConfig, ACBrLibMDFeRespostas, ACBrMDFe, ACBrMail,
   ACBrLibConsReciDFe, ACBrLibDistribuicaoDFe, ACBrDFeUtil, ACBrLibCertUtils,
   pcnConversao, pcnAuxiliar, pMDFeConversaoMDFe, blcksock,
-  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings;
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrXmlBase;
 
 { TACBrLibMDFe }
 
@@ -1021,7 +1021,7 @@ begin
         end;
 
         Infevento.nSeqEvento := 1;
-        InfEvento.tpAmb := MDFeDM.ACBrMDFe1.Configuracoes.WebServices.Ambiente;
+        InfEvento.tpAmb := TACBrTipoAmbiente(MDFeDM.ACBrMDFe1.Configuracoes.WebServices.Ambiente);
         Infevento.cOrgao := StrToIntDef(copy(OnlyNumber(MDFeDM.ACBrMDFe1.WebServices.Consulta.MDFeChave), 1, 2), 0);
         Infevento.dhEvento := now;
         Infevento.tpEvento := teCancelamento;
@@ -1088,7 +1088,7 @@ begin
           if EventoMDFe.Evento.Items[i].InfEvento.nSeqEvento = 0 then
             EventoMDFe.Evento.Items[i].infEvento.nSeqEvento := 1;
 
-          EventoMDFe.Evento.Items[i].InfEvento.tpAmb := Configuracoes.WebServices.Ambiente;
+          EventoMDFe.Evento.Items[i].InfEvento.tpAmb := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
 
           if Manifestos.Count > 0 then
           begin
@@ -1215,7 +1215,7 @@ begin
           infEvento.CNPJCPF := CNPJ;
           infEvento.nSeqEvento := 1;
           infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(ChaveOuMDFe), 1, 2), 0);
-          infEvento.tpAmb := Configuracoes.WebServices.Ambiente;
+          infEvento.tpAmb := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
           infEvento.dhEvento := now;
           infEvento.tpEvento := teEncerramento;
           infEvento.chMDFe := ChaveOuMDFe;

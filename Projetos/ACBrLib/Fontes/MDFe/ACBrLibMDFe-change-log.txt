@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/06/2025
+-- ACBrLibMDFeBase, ACBrLibMDFeResposta --
+[-] Ajustes necessários para compilação da Lib depois de mudança da propriedade do Tipo de Ambiente.
+   Por: Diego Folieni \ Antônio Carlos \ Italo Giurizzato Junior
+
 09/06/2025
 -- ACBrLibNFSeConsoleMT.lpi, ACBrLibNFSeConsoleMTDemo.lpi --
 [+] Adicionado novo Projeto, 100% CONSOLE e MT versão Pro e Demonstração.

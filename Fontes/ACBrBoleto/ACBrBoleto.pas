@@ -3662,79 +3662,88 @@ end;
 
 procedure TACBrBoleto.LerRetorno(AStream: TStream);
 var
-  SlRetorno: TStringList;
-  NomeArq  , BancoRetorno: String;
+  LListaRetorno: TStringList;
+  LNomeArquivo: String;
+  LCodigoBanco: String;
+  LTamanhoLayout : Cardinal;
 begin
-   SlRetorno:= TStringList.Create;
-   try
-     Self.ListadeBoletos.Clear;
+  LListaRetorno := TStringList.Create;
+  try
+    Self.ListadeBoletos.Clear;
 
-     if not Assigned(AStream) then
-     begin
-       if NomeArqRetorno = '' then
-         raise EACBrBoleto.Create(ACBrStr('NomeArqRetorno deve ser informado.'));
+    if not Assigned(AStream) then
+    begin
+      if NomeArqRetorno = '' then
+        Raise EACBrBoleto.Create(ACBrStr('NomeArqRetorno deve ser informado.'));
 
-       if not FileExists(NomeArqRetorno) then
-         NomeArq := IncludeTrailingPathDelimiter(fDirArqRetorno) + NomeArqRetorno
-       else
-         NomeArq := NomeArqRetorno;
+      if not FileExists(NomeArqRetorno) then
+        LNomeArquivo := IncludeTrailingPathDelimiter(fDirArqRetorno) + NomeArqRetorno
+      else
+        LNomeArquivo := NomeArqRetorno;
 
-       if not FilesExists( NomeArq ) then
-         raise EACBrBoleto.Create(ACBrStr('Arquivo não encontrado:'+sLineBreak+NomeArq));
+      if not FileExists(LNomeArquivo) then
+        Raise EACBrBoleto.Create(ACBrStr('Arquivo não encontrado:' + sLineBreak + LNomeArquivo));
 
-       SlRetorno.LoadFromFile( NomeArq );
-     end
-     else
-     begin
-       AStream.Position := 0;
-       SlRetorno.LoadFromStream(AStream);
-     end;
-     if SlRetorno.Count < 1 then
-        raise EACBrBoleto.Create(ACBrStr('O Arquivo de Retorno:'+sLineBreak+
-                                       NomeArq + sLineBreak+
-                                       'está vazio.'+sLineBreak+
+      LListaRetorno.LoadFromFile(LNomeArquivo);
+    end else
+    begin
+      LNomeArquivo := 'Stream de Retorno';
+      AStream.Position  := 0;
+      LListaRetorno.LoadFromStream(AStream);
+    end;
+
+    if LListaRetorno.Count < 1 then
+      Raise EACBrBoleto.Create(ACBrStr('O Arquivo de Retorno (' + LNomeArquivo + ')' + sLineBreak +
+                                       'está vazio.' + sLineBreak +
                                        ' Não há dados para processar'));
 
-     case Length(SlRetorno.Strings[0]) of
-        240 :
+    LTamanhoLayout := Length(LListaRetorno.Strings[0]);
+
+    if not ((LTamanhoLayout = 240) or (LTamanhoLayout = 400)) then
+    begin
+      LListaRetorno.Text := ACBrUTF8ToAnsi(LListaRetorno.Text);
+      LTamanhoLayout     := Length(LListaRetorno.Strings[0]);
+    end;
+
+    case Length(LListaRetorno.Strings[0]) of
+      240:
+        begin
+          if (Length(LListaRetorno.Strings[0]) = 240) and (Copy(LListaRetorno.Strings[0], 7, 1) = '0') then
           begin
-            if Copy(SlRetorno.Strings[0],143,1) <> '2' then
-              Raise EACBrBoleto.Create( ACBrStr( NomeArq + sLineBreak +
-                'Não é um arquivo de Retorno de cobrança com layout CNAB240') );
+            LCodigoBanco := Copy(LListaRetorno.Strings[0], 1, 3);
+            LayoutRemessa := c240;
+          end else
+            Raise EACBrBoleto.Create(ACBrStr(LNomeArquivo + sLineBreak + 'Não é um arquivo de Retorno de cobrança com layout CNAB240 válido.'));
+        end;
+      400:
+        begin
+          if (Copy(LListaRetorno.Strings[0], 1, 9) <> '02RETORNO') then
+            Raise EACBrBoleto.Create(ACBrStr(LNomeArquivo + sLineBreak + 'Não é um arquivo de Retorno de cobrança com layout CNAB400 válido.'));
+          LCodigoBanco  := Copy(LListaRetorno.Strings[0], 77, 3);
+          LayoutRemessa := c400;
+        end;
+      else
+        Raise EACBrBoleto.Create(ACBrStr(LNomeArquivo + sLineBreak +
+                                         'Não é um arquivo de Retorno de cobrança CNAB240 ou CNAB400. Tamanho da linha inesperado.'));
+    end;
 
-            BancoRetorno  := Copy(SlRetorno.Strings[0],0,3);
-            LayoutRemessa := c240 ;
-          end;
+    if (IntToStrZero(Banco.Numero, 3) <> LCodigoBanco) and
+    (IntToStrZero(Banco.NumeroCorrespondente, 3) <> LCodigoBanco) then
+    begin
+      if LeCedenteRetorno then
+        Banco.TipoCobranca := GetTipoCobranca(StrToIntDef(LCodigoBanco, 0))
+      else
+        raise EACBrBoleto.Create(ACBrStr('Arquivo de retorno de banco diferente do Cedente'));
+    end;
 
-        400 :
-          begin
-             if (Copy(SlRetorno.Strings[0],1,9) <> '02RETORNO')   then
-               Raise EACBrBoleto.Create( ACBrStr( NomeArq + sLineBreak +
-                 'Não é um arquivo de Retorno de cobrança com layout CNAB400'));
+    if LayoutRemessa = c240 then
+      Banco.LerRetorno240(LListaRetorno)
+    else
+      Banco.LerRetorno400(LListaRetorno);
 
-             BancoRetorno  := Copy(SlRetorno.Strings[0],77,3);
-             LayoutRemessa := c400 ;
-          end;
-        else
-          raise EACBrBoleto.Create( ACBrStr( NomeArq + sLineBreak+
-            'Não é um arquivo de  Retorno de cobrança CNAB240 ou CNAB400'));
-     end;
-
-     if ( IntToStrZero(Banco.Numero, 3) <> BancoRetorno )
-        and ( IntToStrZero(Banco.NumeroCorrespondente, 3) <> BancoRetorno )  then
-       if LeCedenteRetorno then
-         Banco.TipoCobranca := GetTipoCobranca( StrToIntDef(BancoRetorno, 0))
-       else
-         raise EACBrBoleto.Create( ACBrStr( 'Arquivo de retorno de banco diferente do Cedente'));
-
-     if LayoutRemessa = c240 then
-        Banco.LerRetorno240(SlRetorno)
-     else
-        Banco.LerRetorno400(SlRetorno);
-
-   finally
-     SlRetorno.Free;
-   end;
+  finally
+    LListaRetorno.Free;
+  end;
 end;
 
 function TACBrBoleto.CalcularPercentualValor(AValorPercentual, AValorDocumento: Double): Double;

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/06/2025
+-- ACBrDFe.Conversao --
+[*] Incluído novos CST, cClassTrib e os cCredPres com base nas tabelas 
+    disponibilizadas no portal da SEFAZ-Virtual do RS.
+   Por: Italo Giurizzato Junior
+
 16/06/2025
 -- ACBrXmlWriter --
 [*] Estava gerando a tag Transform com espaço em branco no final.

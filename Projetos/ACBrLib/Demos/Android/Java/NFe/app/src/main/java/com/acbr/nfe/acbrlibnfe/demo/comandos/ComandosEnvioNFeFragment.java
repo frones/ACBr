@@ -48,11 +48,13 @@ import br.com.acbr.lib.comum.dfe.OrigemMercadoria;
 import br.com.acbr.lib.comum.dfe.TcCredPres;
 import br.com.acbr.lib.comum.dfe.TipoAmbiente;
 import br.com.acbr.lib.comum.dfe.TipoEnteGov;
+import br.com.acbr.lib.comum.dfe.TipoOperGov;
 import br.com.acbr.lib.comum.dfe.cClassTribIBSCBS;
 import br.com.acbr.lib.nfe.ACBrLibNFe;
 import br.com.acbr.lib.nfe.Ambiente;
 import br.com.acbr.lib.nfe.CRT;
 import br.com.acbr.lib.nfe.ModeloDF;
+import br.com.acbr.lib.nfe.TipoCredPresIBSZFM;
 import br.com.acbr.lib.nfe.TipoDANFE;
 import br.com.acbr.lib.nfe.TipoEmissao;
 import br.com.acbr.lib.nfe.TipoNFe;
@@ -65,6 +67,7 @@ import br.com.acbr.lib.nfe.notafiscal.DeterminacaoBaseIcms;
 import br.com.acbr.lib.nfe.notafiscal.FinalidadeNFe;
 import br.com.acbr.lib.nfe.notafiscal.FormaPagamento;
 import br.com.acbr.lib.nfe.notafiscal.IdentificacaoNFe;
+import br.com.acbr.lib.nfe.notafiscal.IndBemMovelUsado;
 import br.com.acbr.lib.nfe.notafiscal.IndIntermed;
 import br.com.acbr.lib.nfe.notafiscal.IndicadorPagamento;
 import br.com.acbr.lib.nfe.notafiscal.IndicadorTotal;
@@ -73,6 +76,7 @@ import br.com.acbr.lib.nfe.notafiscal.PagamentoNFe;
 import br.com.acbr.lib.nfe.notafiscal.PresencaComprador;
 import br.com.acbr.lib.nfe.notafiscal.ProcessoEmissao;
 import br.com.acbr.lib.nfe.notafiscal.ProdutoNFe;
+import br.com.acbr.lib.nfe.notafiscal.TipoClassTribIS;
 import br.com.acbr.lib.nfe.notafiscal.TpIntegra;
 
 public class ComandosEnvioNFeFragment extends Fragment {
@@ -310,6 +314,9 @@ public class ComandosEnvioNFeFragment extends Fragment {
 //        notaFiscal.Identificacao.setTpEnteGov(tipoEnteGov);
 //
 //        notaFiscal.Identificacao.setpRedutor(BigDecimal.valueOf(2.5));
+//
+//        TipoOperGov tipoOperGov = TipoOperGov.togFornecimento;
+//        notaFiscal.Identificacao.setTpOperGov(tipoOperGov);
         //--------------
 
         //Emitente
@@ -383,6 +390,8 @@ public class ComandosEnvioNFeFragment extends Fragment {
         produto.setvProd(totalProdutos.doubleValue());
 
         //Reforma Tributária
+//        IndBemMovelUsado indBemMovelUsado = IndBemMovelUsado.tieNenhum;
+//        produto.setIndBemMovelUsado(indBemMovelUsado);
 //        produto.setvItem(BigDecimal.valueOf(100));
         //--------------
 
@@ -426,10 +435,11 @@ public class ComandosEnvioNFeFragment extends Fragment {
         produto.setInfAdProd("Informação adicional do produto");
 
         //Reforma Tributária
-//        CSTIS cstis = CSTIS.cstisNenhum;
+//        CSTIS cstis = CSTIS.cstis000;
 //        produto.getIS().setCSTIS(cstis);
 //
-//        produto.getIS().setcClassTribIS(000001);
+//        TipoClassTribIS tipoClassTribIS = TipoClassTribIS.ctis000001;
+//        produto.getIS().setcClassTribIS(tipoClassTribIS);
 //
 //        produto.getIS().setvBCIS(BigDecimal.valueOf(100));
 //        produto.getIS().setpIS(BigDecimal.valueOf(5));
@@ -483,19 +493,31 @@ public class ComandosEnvioNFeFragment extends Fragment {
 //        produto.getIBSCBS().getgIBSCBS().getgTribRegular().setpAliqEfetRegCBS(BigDecimal.valueOf(5));
 //        produto.getIBSCBS().getgIBSCBS().getgTribRegular().setvTribRegCBS(BigDecimal.valueOf(100));
 //
-//        TcCredPres ibstcCredPres = TcCredPres.cp00;
+//        TcCredPres tcCredPres = TcCredPres.cp01;
+//        produto.getIBSCBS().getgIBSCBS().getgIBSCredPres().setcCredPres(tcCredPres);
+//
+//        produto.getIBSCBS().getgIBSCBS().getgIBSCredPres().setvCredPresCondSus(BigDecimal.valueOf(100));
+//
+//        TcCredPres ibstcCredPres = TcCredPres.cp01;
 //        produto.getIBSCBS().getgIBSCBS().getgIBSCredPres().setcCredPres(ibstcCredPres);
 //
 //        produto.getIBSCBS().getgIBSCBS().getgIBSCredPres().setpCredPres(BigDecimal.valueOf(5));
 //        produto.getIBSCBS().getgIBSCBS().getgIBSCredPres().setvCredPres(BigDecimal.valueOf(100));
 //        //produto.getIBSCBS().getgIBSCBS().getgIBSCredPres().setvCredPresCondSus(BigDecimal.valueOf(100));
 //
-//        TcCredPres cbstcCredPres = TcCredPres.cp00;
+//        TcCredPres cbstcCredPres = TcCredPres.cp01;
 //        produto.getIBSCBS().getgIBSCBS().getgCBSCredPres().setcCredPres(cbstcCredPres);
 //
 //        produto.getIBSCBS().getgIBSCBS().getgCBSCredPres().setpCredPres(BigDecimal.valueOf(5));
 //        produto.getIBSCBS().getgIBSCBS().getgCBSCredPres().setvCredPres(BigDecimal.valueOf(100));
-//        //produto.getIBSCBS().getgIBSCBS().getgCBSCredPres().setvCredPresCondSus(BigDecimal.valueOf(100));
+//        produto.getIBSCBS().getgIBSCBS().getgCBSCredPres().setvCredPresCondSus(BigDecimal.valueOf(100));
+//
+//        produto.getIBSCBS().getgIBSCBS().getgTribCompraGov().setpAliqIBSUF(BigDecimal.valueOf(5));
+//        produto.getIBSCBS().getgIBSCBS().getgTribCompraGov().setvTribIBSUF(BigDecimal.valueOf(50));
+//        produto.getIBSCBS().getgIBSCBS().getgTribCompraGov().setpAliqIBSMun(BigDecimal.valueOf(5));
+//        produto.getIBSCBS().getgIBSCBS().getgTribCompraGov().setvTribIBSMun(BigDecimal.valueOf(50));
+//        produto.getIBSCBS().getgIBSCBS().getgTribCompraGov().setpAliqCBS(BigDecimal.valueOf(5));
+//        produto.getIBSCBS().getgIBSCBS().getgTribCompraGov().setvTribCBS(BigDecimal.valueOf(50));
 //
 //        produto.getIBSCBS().getgIBSCBSMono().setqBCMono(BigDecimal.valueOf(1));
 //        produto.getIBSCBS().getgIBSCBSMono().setAdRemIBS(BigDecimal.valueOf(5));
@@ -521,8 +543,13 @@ public class ComandosEnvioNFeFragment extends Fragment {
 //        produto.getIBSCBS().getgIBSCBSMono().setvTotIBSMonoItem(BigDecimal.valueOf(100));
 //        produto.getIBSCBS().getgIBSCBSMono().setvTotCBSMonoItem(BigDecimal.valueOf(100));
 //
-//        produto.getIBSCBS().getgTransfCred().setvCBS(BigDecimal.valueOf(100));
 //        produto.getIBSCBS().getgTransfCred().setvIBS(BigDecimal.valueOf(100));
+//        produto.getIBSCBS().getgTransfCred().setvCBS(BigDecimal.valueOf(100));
+//
+//        TipoCredPresIBSZFM tpCredPresIBSZFM = TipoCredPresIBSZFM.tcpBensInformaticaOutros;
+//        produto.getIBSCBS().getgCredPresIBSZFM().setTpCredPresIBSZFM(tpCredPresIBSZFM);
+//
+//        produto.getIBSCBS().getgCredPresIBSZFM().setvCredPresIBSZFM(BigDecimal.valueOf(100));
         //--------------
 
         notaFiscal.Produtos.add(produto);

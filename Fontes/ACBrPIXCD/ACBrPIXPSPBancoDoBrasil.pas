@@ -214,13 +214,9 @@ begin
     finally
       js.Free;
     end;
-
-    if (code <> 0) then
-      DispararExcecao(EACBrPixHttpException.Create('Code: '+
-        IntToStr(code) +' - '+ UTF8ToNativeString(texto)));
   end
   else
-    DispararExcecao(EACBrPixHttpException.CreateFmt( sErroHttp,
+    DispararExcecao(EACBrPixHttpException.CreateFmt(sErroHttp,
        [Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 

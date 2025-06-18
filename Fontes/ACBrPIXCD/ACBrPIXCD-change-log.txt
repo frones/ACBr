@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/06/2025
+-- ACBrPIXPSPBancoDoBrasil --
+[-] Removida exceção de '(code <> 0)' na resposta da procedure "SimularPagamento".
+    por: Júlio Cavalcanti e Elias César
+
 13/06/2025
 -- ACBrPIXCD --
 [+] Inclusão dos scopes referentes aos novos endpoints /rec e /solicrec;

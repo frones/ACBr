@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/06/2025
+-- ACBrNFSeXConversao/ACBrNFSeXLerXml/Conam.LerXml --
+[+] #TK-6995: Implementado a leitura dos arquivos INI do RPS e NFS-e.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXProviderBase --
+[*] #TK-7236: Alteração visando salvar o XML da nota na pasta com base na data de
+    emissão da mesma.
+   Por: Italo Giurizzato Junior
+
 -- ACBrNFSeXProviderBase --
 [*] #TK-7236: Alteração visando salvar o XML da nota na pasta com base na data de
     emissão da mesma.
@@ -93,7 +101,7 @@ Símbolo : Significado
     json retornado pelo provedor.
   Por: Italo Giurizzato Junior
 -- Giap.GravarXml/Giap.Provider --
-[*] R#TK-7194: ealizado uma alteração visando gerar o XML da NFS-e, uma vez que o provedor
+[*] R#TK-7194: Realizado uma alteração visando gerar o XML da NFS-e, uma vez que o provedor
     retorna apenas um resumo em vez de retornar o XML da nota.
     Requer testes para saber se vai funcionar conforme o esperado.
   Por: Italo Giurizzato Junior

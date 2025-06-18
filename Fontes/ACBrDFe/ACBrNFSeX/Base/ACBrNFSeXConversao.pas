@@ -157,8 +157,6 @@ type
                         ttTribnoMunSuspensa, ttTribforaMunSuspensa, ttExpServicos,
                         ttSimplesNacional, ttRetidonoMun);
 
-  TLogradouroLocalPrestacaoServico = (llpTomador, llpPrestador);
-
   TTributacao = (ttIsentaISS, ttNaoIncidencianoMunic, ttImune, ttExigibilidadeSusp,
                  ttNaoTributavel, ttTributavel, ttTributavelFixo, ttTributavelSN,
                  ttMEI);
@@ -613,6 +611,13 @@ type
 const
   TLocalPrestacaoArrayStrings: array[TLocalPrestacao] of string = ('1', '2');
 
+type
+  TLogradouroLocalPrestacaoServico = (llpTomador, llpPrestador);
+
+const
+  TLogradouroLocalPrestacaoServicoArrayStrings: array[TLogradouroLocalPrestacaoServico] of string =
+    ('1', '2');
+
 // Reforma Tributária
 type
   TindCompGov  = (icgNenhum, icgSim, icgNao);
@@ -625,8 +630,6 @@ type
 
 const
   TmodoPrestServArrayStrings: array[TmodoPrestServ] of string = ('1', '2');
-
-
 
 {
   Declaração das funções de conversão
@@ -805,6 +808,9 @@ function CodISOPaisToCodIBGE(t: Integer): Integer;
 
 function LocalPrestacaoToStr(t: TLocalPrestacao): string;
 function StrToLocalPrestacao(out ok: boolean; const s: string): TLocalPrestacao;
+
+function LogradouroLocalPrestacaoServicoToStr(t: TLogradouroLocalPrestacaoServico): string;
+function StrToLogradouroLocalPrestacaoServico(const s: string): TLogradouroLocalPrestacaoServico;
 
 // Reforma Tributária
 function indCompGovToStr(const t: TindCompGov): string;
@@ -13334,6 +13340,26 @@ begin
                            [lpMunicipio, lpForaMunicipio]);
 end;
 
+function LogradouroLocalPrestacaoServicoToStr(t: TLogradouroLocalPrestacaoServico): string;
+begin
+  Result := TLogradouroLocalPrestacaoServicoArrayStrings[t];
+end;
+
+function StrToLogradouroLocalPrestacaoServico(const s: string): TLogradouroLocalPrestacaoServico;
+var
+  idx: TLogradouroLocalPrestacaoServico;
+begin
+  for idx:= Low(TLogradouroLocalPrestacaoServicoArrayStrings) to High(TLogradouroLocalPrestacaoServicoArrayStrings) do
+  begin
+    if (TLogradouroLocalPrestacaoServicoArrayStrings[idx] = s) then
+    begin
+      Result := idx;
+      exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para TLogradouroLocalPrestacaoServico: %s', [s]);
+end;
+
 // Reforma Tributária
 function indCompGovToStr(const t: TindCompGov): string;
 begin
@@ -13346,7 +13372,7 @@ var
 begin
   for idx:= Low(TindCompGovArrayStrings) to High(TindCompGovArrayStrings) do
   begin
-    if(TindCompGovArrayStrings[idx] = s)then
+    if (TindCompGovArrayStrings[idx] = s) then
     begin
       Result := idx;
       exit;
@@ -13366,7 +13392,7 @@ var
 begin
   for idx:= Low(TmodoPrestServArrayStrings) to High(TmodoPrestServArrayStrings) do
   begin
-    if(TmodoPrestServArrayStrings[idx] = s)then
+    if (TmodoPrestServArrayStrings[idx] = s) then
     begin
       Result := idx;
       exit;

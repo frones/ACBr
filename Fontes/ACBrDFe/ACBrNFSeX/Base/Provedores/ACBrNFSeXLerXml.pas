@@ -1028,22 +1028,6 @@ begin
       Inc(i);
     end;
 
-    //Conam
-    i := 1;
-    while true do
-    begin
-      sSecao := 'Email' + IntToStrZero(I + 1, 1);
-      sFim := AINIRec.ReadString(sSecao, 'emailCC', 'FIM');
-
-      if (Length(sFim) <= 0) or (sFim = 'FIM') then
-        break;
-
-      with email.New do
-        emailCC := sFim;
-
-      Inc(i);
-    end;
-
     i := 1;
     while true do
     begin

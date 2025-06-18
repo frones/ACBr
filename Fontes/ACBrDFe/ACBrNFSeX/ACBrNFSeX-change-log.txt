@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/06/2025
+-- ACBrNFSeXServicos --
+[*] #TK-7226: A cidade de Campos de Julio/MT mudou a URL de produção, o provedor continua o mesmo.
+   Por: Diego Reckziegel
+[*] #TK-7229: A cidade de Itaqui/RS mudou a versão para 2.04, o provedor continua o mesmo.
+   Por: Anderson Grolli
+[*] #TK-7232: A cidade de Alvorada/RS mudou a versão e as URLs, o provedor continua o mesmo.
+   Por: Juliano D. Rosa
+[*] #TK-7233: A cidade de Santa Tereza do Oeste/PR mudou de provedor, agora é EloTech versao 2.03
+   Por: Arthur Haupt Pacheco
 -- ACBrNFSeXConversao/ACBrNFSeXLerXml/Conam.LerXml --
 [+] #TK-6995: Implementado a leitura dos arquivos INI do RPS e NFS-e.
    Por: Italo Giurizzato Junior
@@ -50,7 +59,6 @@ Símbolo : Significado
 [*] #TK-7236: Alteração visando salvar o XML da nota na pasta com base na data de
     emissão da mesma.
    Por: Italo Giurizzato Junior
-
 -- ACBrNFSeXProviderBase --
 [*] #TK-7236: Alteração visando salvar o XML da nota na pasta com base na data de
     emissão da mesma.

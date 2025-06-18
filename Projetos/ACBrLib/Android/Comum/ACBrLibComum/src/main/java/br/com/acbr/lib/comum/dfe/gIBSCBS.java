@@ -11,6 +11,7 @@ public class gIBSCBS {
         gTribRegular = new gTribRegular();
         gIBSCredPres = new gCredPres();
         gCBSCredPres = new gCredPres();
+        gTribCompraGov = new gTribCompraGov();
     }
 
     private BigDecimal vBC;
@@ -20,6 +21,7 @@ public class gIBSCBS {
     private gTribRegular gTribRegular;
     private gCredPres gIBSCredPres;
     private gCredPres gCBSCredPres;
+    private gTribCompraGov gTribCompraGov;
 
     public BigDecimal getvBC() {
         return vBC;
@@ -75,5 +77,13 @@ public class gIBSCBS {
 
     public void setgCBSCredPres(gCredPres gCBSCredPres) {
         this.gCBSCredPres = gCBSCredPres;
+    }
+
+    public gTribCompraGov getgTribCompraGov() {
+        return gTribCompraGov;
+    }
+
+    public void setgTribCompraGov(gTribCompraGov gTribCompraGov) {
+        this.gTribCompraGov = gTribCompraGov;
     }
 }

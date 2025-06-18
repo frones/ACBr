@@ -7,10 +7,10 @@ public class gCredPres {
     private TcCredPres cCredPres;
     private BigDecimal pCredPres;
     private BigDecimal vCredPres;
+    private BigDecimal vCredPresCondSus;
 
     public gCredPres() {
     }
-
 
     public TcCredPres getcCredPres() {
         return cCredPres;
@@ -34,5 +34,13 @@ public class gCredPres {
 
     public void setvCredPres(BigDecimal vCredPres) {
         this.vCredPres = vCredPres;
+    }
+
+    public BigDecimal getvCredPresCondSus() {
+        return vCredPresCondSus;
+    }
+
+    public void setvCredPresCondSus(BigDecimal vCredPresCondSus) {
+        this.vCredPresCondSus = vCredPresCondSus;
     }
 }

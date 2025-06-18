@@ -7,7 +7,7 @@ public class cClassTribIBSCBS {
 
     private static final Map<String, cClassTribIBSCBS> lookup = new HashMap<>();
 
-    public static final cClassTribIBSCBS cctVazio = new cClassTribIBSCBS("", "Vazio");
+    public static final cClassTribIBSCBS cctNenhum = new cClassTribIBSCBS("", "Nenhum");
     public static final cClassTribIBSCBS cct000001 = new cClassTribIBSCBS("000001", "Situações tributadas integralmente pelo IBS e CBS");
     public static final cClassTribIBSCBS cct000002 = new cClassTribIBSCBS("000002", "Exploração de via, observado o art. 11 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct000003 = new cClassTribIBSCBS("000003", "Regime automotivo - projetos incentivados, observado o art. 311 da Lei Complementar nº 214, de 2025.");
@@ -29,6 +29,7 @@ public class cClassTribIBSCBS {
     public static final cClassTribIBSCBS cct200009 = new cClassTribIBSCBS("200009", "Fornecimento dos medicamentos relacionados no Anexo XIV da Lei Complementar nº 214, de 2025, com a especificação das respectivas classificações da NCM/SH, observado o art. 146 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct200010 = new cClassTribIBSCBS("200010", "Fornecimento dos medicamentos registrados na Anvisa, quando adquiridos por órgãos da administração pública direta, autarquias, fundações públicas e entidades imunes, observado o art. 146 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct200011 = new cClassTribIBSCBS("200011", "Fornecimento das composições para nutrição enteral e parenteral, composições especiais e fórmulas nutricionais destinadas às pessoas com erros inatos do metabolismo relacionadas no Anexo VI da Lei Complementar nº 214, de 2025, com a especificação das respectivas classificações da NCM/SH, quando adquiridas por órgãos da administração pública direta, autarquias e fundações públicas, observado o art. 146 da Lei Complementar nº 214, de 2025.");
+    public static final cClassTribIBSCBS cct200012 = new cClassTribIBSCBS("200012", "Situação de emergência de saúde pública reconhecida pelo Poder público (Anexo XIV)");
     public static final cClassTribIBSCBS cct200013 = new cClassTribIBSCBS("200013", "Fornecimento de tampões higiênicos, absorventes higiênicos internos ou externos, descartáveis ou reutilizáveis, calcinhas absorventes e coletores menstruais, observado o art. 147 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct200014 = new cClassTribIBSCBS("200014", "Fornecimento dos produtos hortícolas, frutas e ovos, relacionados no Anexo XV da Lei Complementar nº 214 , de 2025, com a especificação das respectivas classificações da NCM/SH e desde que não cozidos, observado o art. 148 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct200015 = new cClassTribIBSCBS("200015", "Venda de automóveis de passageiros de fabricação nacional de, no mínimo, 4 (quatro) portas, inclusive a de acesso ao bagageiro, quando adquiridos por motoristas profissionais que exerçam, comprovadamente, em automóvel de sua propriedade, atividade de condutor autônomo de passageiros, na condição de titular de autorização, permissão ou concessão do poder público, e que destinem o automóvel à utilização na categoria de aluguel (táxi), ou por pessoas com deficiência física, visual, auditiva, deficiência mental severa ou profunda, transtorno do espectro autista, com prejuízos na \\r\\n comunicação social e em padrões restritos ou repetitivos de comportamento de nível moderado ou grave, nos termos da legislação relativa à matéria, observado o disposto no art. 149 da Lei Complementar nº 214, de 2025.");
@@ -66,9 +67,9 @@ public class cClassTribIBSCBS {
     public static final cClassTribIBSCBS cct200047 = new cClassTribIBSCBS("200047", "Bares e Restaurantes, observado o art. 275 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct200048 = new cClassTribIBSCBS("200048", "Hotelaria, Parques de Diversão e Parques Temáticos, observado o art. 281 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct200049 = new cClassTribIBSCBS("200049", "Transporte coletivo de passageiros rodoviário, ferroviário e hidroviário intermunicipais e interestaduais, observado o art. 286 da Lei Complementar nº 214, de 2025.");
-    public static final cClassTribIBSCBS cct200450 = new cClassTribIBSCBS("200450", "Serviços de transporte aéreo regional coletivo de passageiros ou de carga, observado o art. 287 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct200051 = new cClassTribIBSCBS("200051", "Agências de Turismo, observado o art. 289 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct200052 = new cClassTribIBSCBS("200052", "Prestação de serviços das seguintes profissões intelectuais de natureza científica, literária ou artística, submetidas à fiscalização por conselho profissional: administradores, advogados, arquitetos e urbanistas, assistentes sociais, bibliotecários, biólogos, contabilistas, economistas, economistas domésticos, profissionais de educação física, engenheiros e agrônomos, estatísticos, médicos veterinários e zootecnistas, museólogos, químicos, profissionais de relações públicas, técnicos industriais e técnicos agrícolas, observado o art. 127 da Lei Complementar nº 214, de 2025.");
+    public static final cClassTribIBSCBS cct200450 = new cClassTribIBSCBS("200450", "Serviços de transporte aéreo regional coletivo de passageiros ou de carga, observado o art. 287 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct210001 = new cClassTribIBSCBS("210001", "Redutor social aplicado uma única vez na alienação de bem imóvel residencial novo, observado o art. 259 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct210002 = new cClassTribIBSCBS("210002", "Redutor social aplicado uma única vez na alienação de lote residencial, observado o art. 259 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct210003 = new cClassTribIBSCBS("210003", "Redutor social em operações de locação, cessão onerosa e arrendamento de bens imóveis de uso residencial, observado o art. 260 da Lei Complementar nº 214, de 2025.");
@@ -76,6 +77,7 @@ public class cClassTribIBSCBS {
     public static final cClassTribIBSCBS cct220002 = new cClassTribIBSCBS("220002", "Incorporação imobiliária submetida ao regime especial de tributação, observado o art. 485 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct220003 = new cClassTribIBSCBS("220003", "Alienação de imóvel decorrente de parcelamento do solo, observado o art. 486 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct221001 = new cClassTribIBSCBS("221001", "Locação, cessão onerosa ou arrendamento de bem imóvel com alíquota sobre a receita bruta, observado o art. 487 da Lei Complementar nº 214, de 2025.");
+    public static final cClassTribIBSCBS cct222001 = new cClassTribIBSCBS("222001", "Transporte internacional de passageiros, caso os trechos de ida e volta sejam vendidos em conjunto");
     public static final cClassTribIBSCBS cct400001 = new cClassTribIBSCBS("400001", "Fornecimento de serviços de transporte público coletivo de passageiros rodoviário e metroviário de caráter urbano, semiurbano e metropolitano, sob regime de autorização, permissão ou concessão pública, observado o art. 157 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct410001 = new cClassTribIBSCBS("410001", "Fornecimento de bonificações quando constem do respectivo documento fiscal e que não dependam de evento posterior, observado o art. 5º da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct410002 = new cClassTribIBSCBS("410002", "Transferências entre estabelecimentos pertencentes ao mesmo contribuinte, observado o art. 6º da Lei Complementar nº 214, de 2025.");
@@ -97,6 +99,8 @@ public class cClassTribIBSCBS {
     public static final cClassTribIBSCBS cct410018 = new cClassTribIBSCBS("410018", "Operações relacionadas aos fundos garantidores e executores de políticas públicas, inclusive de habitação, previstos em lei, assim entendidas os serviços prestados ao fundo pelo seu agente operador e por entidade encarregada da sua administração, observado o art. 213 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct410019 = new cClassTribIBSCBS("410019", "Exclusão da gorjeta na base de cálculo no fornecimento de alimentação, observado o art. 274 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct410020 = new cClassTribIBSCBS("410020", "Exclusão do valor de intermediação na base de cálculo no fornecimento de alimentação, observado o art. 274 da Lei Complementar nº 214, de 2025.");
+    public static final cClassTribIBSCBS cct410021 = new cClassTribIBSCBS("410021", "Contribuição de que trata o art. 149-A da Constituição Federal");
+    public static final cClassTribIBSCBS cct410099 = new cClassTribIBSCBS("410099", "Operações não onerosas sem previsão de tributação, não especificadas anteriormente");
     public static final cClassTribIBSCBS cct510001 = new cClassTribIBSCBS("510001", "Operações, sujeitas a diferimento, com energia elétrica ou com direitos a ela relacionados, relativas à geração, comercialização, distribuição e transmissão, observado o art. 28 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct510002 = new cClassTribIBSCBS("510002", "Operações, sujeitas a diferimento, com insumos agropecuários e aquícolas destinados a produtor rural contribuinte, observado o art. 138 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct550001 = new cClassTribIBSCBS("550001", "Exportações de bens materiais, observado o art. 82 da Lei Complementar nº 214, de 2025.");
@@ -124,6 +128,7 @@ public class cClassTribIBSCBS {
     public static final cClassTribIBSCBS cct620003 = new cClassTribIBSCBS("620003", "Tributação monofásica com tributos retidos por responsabilidade sobre combustíveis, observado o art. 178 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct620004 = new cClassTribIBSCBS("620004", "Tributação monofásica sobre mistura de EAC com gasolina A em percentual superior ou inferior ao obrigatório, observado o art. 179 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct620005 = new cClassTribIBSCBS("620005", "Tributação monofásica sobre combustíveis cobrada anteriormente, observador o art. 180 da Lei Complementar nº 214, de 2025.");
+    public static final cClassTribIBSCBS cct620006 = new cClassTribIBSCBS("620006", "Tributação monofásica sobre combustíveis cobrada anteriormente");
     public static final cClassTribIBSCBS cct800001 = new cClassTribIBSCBS("800001", "Fusão, cisão ou incorporação, observado o art. 55 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct800002 = new cClassTribIBSCBS("800002", "Transferência de crédito do associado, inclusive as cooperativas singulares, para cooperativa de que participa das operações antecedentes às operações em que fornece bens e serviços e os créditos presumidos, observado o art. 272 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct810001 = new cClassTribIBSCBS("810001", "Crédito presumido sobre o valor apurado nos fornecimentos a partir da Zona Franca de Manaus, observado o art. 450 da Lei Complementar nº 214, de 2025.");
@@ -132,12 +137,13 @@ public class cClassTribIBSCBS {
     public static final cClassTribIBSCBS cct820003 = new cClassTribIBSCBS("820003", "Documento com informações de fornecimento de serviços de planos de assinstência à saúde de animais domésticos, mas com tributação realizada por outro meio, observado o art. 243 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct820004 = new cClassTribIBSCBS("820004", "Documento com informações de prestação de serviços de consursos de prognósticos, mas com tributação realizada por outro meio, observado o art. 248 da Lei Complementar nº 214, de 2025.");
     public static final cClassTribIBSCBS cct820005 = new cClassTribIBSCBS("820005", "Documento com informações de alienação de bens imóveis, mas com tributação realizada por outro meio,, observado o art. 254 da Lei Complementar nº 214, de 2025.");
+    public static final cClassTribIBSCBS cct830001 = new cClassTribIBSCBS("830001", "Documento com exclusão da BC da CBS e do IBS de energia elétrica fornecida pela distribuidora à UC");
 
     private final String value;
     private final String description;
 
     static {
-        addToLookup(cctVazio);
+        addToLookup(cctNenhum);
         addToLookup(cct000001);
         addToLookup(cct000002);
         addToLookup(cct000003);
@@ -159,6 +165,7 @@ public class cClassTribIBSCBS {
         addToLookup(cct200009);
         addToLookup(cct200010);
         addToLookup(cct200011);
+        addToLookup(cct200012);
         addToLookup(cct200013);
         addToLookup(cct200014);
         addToLookup(cct200015);
@@ -196,9 +203,9 @@ public class cClassTribIBSCBS {
         addToLookup(cct200047);
         addToLookup(cct200048);
         addToLookup(cct200049);
-        addToLookup(cct200450);
         addToLookup(cct200051);
         addToLookup(cct200052);
+        addToLookup(cct200450);
         addToLookup(cct210001);
         addToLookup(cct210002);
         addToLookup(cct210003);
@@ -206,6 +213,7 @@ public class cClassTribIBSCBS {
         addToLookup(cct220002);
         addToLookup(cct220003);
         addToLookup(cct221001);
+        addToLookup(cct222001);
         addToLookup(cct400001);
         addToLookup(cct410001);
         addToLookup(cct410002);
@@ -227,6 +235,8 @@ public class cClassTribIBSCBS {
         addToLookup(cct410018);
         addToLookup(cct410019);
         addToLookup(cct410020);
+        addToLookup(cct410021);
+        addToLookup(cct410099);
         addToLookup(cct510001);
         addToLookup(cct510002);
         addToLookup(cct550001);
@@ -254,6 +264,7 @@ public class cClassTribIBSCBS {
         addToLookup(cct620003);
         addToLookup(cct620004);
         addToLookup(cct620005);
+        addToLookup(cct620006);
         addToLookup(cct800001);
         addToLookup(cct800002);
         addToLookup(cct810001);
@@ -262,6 +273,7 @@ public class cClassTribIBSCBS {
         addToLookup(cct820003);
         addToLookup(cct820004);
         addToLookup(cct820005);
+        addToLookup(cct830001);
     }
 
     private cClassTribIBSCBS(String value, String description) {

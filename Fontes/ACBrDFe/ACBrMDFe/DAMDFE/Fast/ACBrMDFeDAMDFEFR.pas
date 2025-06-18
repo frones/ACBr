@@ -37,7 +37,7 @@ unit ACBrMDFeDAMDFEFR;
 interface
 
 uses
-  SysUtils, Classes, DB, DBClient, ACBrBase, ACBrMDFeDAMDFeClass, pcnConversao,
+  SysUtils, Classes, DB, DBClient, ACBrXmlBase, ACBrBase, ACBrMDFeDAMDFeClass, pcnConversao,
   ACBrMDFe.Classes, frxClass, ACBrDFeUtil,
   ACBrMDFe.EnvEvento,
   frxDBSet,
@@ -1829,9 +1829,9 @@ begin
         FieldByName('cOrgao').AsInteger := InfEvento.cOrgao;
 
         case InfEvento.tpAmb of
-          taProducao:
+          TACBrTipoAmbiente.taProducao:
             FieldByName('tpAmb').AsString := 'PRODUÇÃO';
-          taHomologacao:
+          TACBrTipoAmbiente.taHomologacao:
             begin
               FieldByName('tpAmb').AsString      := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
               frxReport.Variables['HOMOLOGACAO'] := True;

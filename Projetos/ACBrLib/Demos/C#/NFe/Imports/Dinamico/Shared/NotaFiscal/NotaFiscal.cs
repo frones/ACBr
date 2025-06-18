@@ -230,7 +230,7 @@ namespace ACBrLib.NFe
                     iniData.WriteToIni(produto.IS, $"IS{i + 1:000}");
                 }
 
-                if (produto.IBSCBS.CST != CSTIBSCBS.cstVazio)
+                if (produto.IBSCBS.CST != CSTIBSCBS.cstNenhum)
                 {
                     iniData.WriteToIni(produto.IBSCBS, $"IBSCBS{i + 1:000}");
                     if (produto.IBSCBS.gIBSCBS.vBC > 0)
@@ -240,7 +240,7 @@ namespace ACBrLib.NFe
                         iniData.WriteToIni(produto.IBSCBS.gIBSCBS.gIBSMun, $"gIBSMun{i + 1:000}");
                         iniData.WriteToIni(produto.IBSCBS.gIBSCBS.gCBS, $"gCBS{i + 1:000}");
 
-                        if (produto.IBSCBS.gIBSCBS.gTribRegular.CSTReg != CSTIBSCBS.cstVazio)
+                        if (produto.IBSCBS.gIBSCBS.gTribRegular.CSTReg != CSTIBSCBS.cstNenhum)
                         {
                             iniData.WriteToIni(produto.IBSCBS.gIBSCBS.gTribRegular, $"gTribRegular{i + 1:000}");
                         }

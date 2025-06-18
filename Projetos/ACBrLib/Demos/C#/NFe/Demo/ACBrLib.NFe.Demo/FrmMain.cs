@@ -272,12 +272,12 @@ namespace ACBrLib.NFe.Demo
             //produto.IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegCBS = 5;
             //produto.IBSCBS.gIBSCBS.gTribRegular.vTribRegCBS = 100;
 
-            //produto.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres = TcCredPres.cp00;
+            //produto.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres = TcCredPres.cp01;
             //produto.IBSCBS.gIBSCBS.gIBSCredPres.pCredPres = 5;
             //produto.IBSCBS.gIBSCBS.gIBSCredPres.vCredPres = 100;
             //produto.IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus = 100;
 
-            //produto.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres = TcCredPres.cp00;
+            //produto.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres = TcCredPres.cp01;
             //produto.IBSCBS.gIBSCBS.gCBSCredPres.pCredPres = 5;
             //produto.IBSCBS.gIBSCBS.gCBSCredPres.vCredPres = 100;
             //produto.IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus = 100;

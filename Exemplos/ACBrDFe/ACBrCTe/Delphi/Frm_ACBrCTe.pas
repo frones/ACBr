@@ -685,12 +685,12 @@ begin
       Imp.IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegCBS := 5;
       Imp.IBSCBS.gIBSCBS.gTribRegular.vTribRegCBS := 50;
 
-      Imp.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := cp00;
+      Imp.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := cp01;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.pCredPres := 5;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPres := 50;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus := 50;
 
-      Imp.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := cp00;
+      Imp.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := cp01;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;
@@ -1199,12 +1199,12 @@ begin
       Imp.IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegCBS := 5;
       Imp.IBSCBS.gIBSCBS.gTribRegular.vTribRegCBS := 50;
 
-      Imp.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := cp00;
+      Imp.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := cp01;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.pCredPres := 5;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPres := 50;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus := 50;
 
-      Imp.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := cp00;
+      Imp.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := cp01;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;
@@ -1573,12 +1573,12 @@ begin
       Imp.IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegCBS := 5;
       Imp.IBSCBS.gIBSCBS.gTribRegular.vTribRegCBS := 50;
 
-      Imp.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := cp00;
+      Imp.IBSCBS.gIBSCBS.gIBSCredPres.cCredPres := cp01;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.pCredPres := 5;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPres := 50;
       Imp.IBSCBS.gIBSCBS.gIBSCredPres.vCredPresCondSus := 50;
 
-      Imp.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := cp00;
+      Imp.IBSCBS.gIBSCBS.gCBSCredPres.cCredPres := cp01;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.pCredPres := 5;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPres := 50;
       Imp.IBSCBS.gIBSCBS.gCBSCredPres.vCredPresCondSus := 50;

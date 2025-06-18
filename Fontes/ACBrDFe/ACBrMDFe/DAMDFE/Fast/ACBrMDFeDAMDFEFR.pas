@@ -1829,9 +1829,9 @@ begin
         FieldByName('cOrgao').AsInteger := InfEvento.cOrgao;
 
         case InfEvento.tpAmb of
-          TACBrTipoAmbiente.taProducao:
+          TACBrTipoAmbiente(taProducao):
             FieldByName('tpAmb').AsString := 'PRODUÇÃO';
-          TACBrTipoAmbiente.taHomologacao:
+          TACBrTipoAmbiente(taHomologacao):
             begin
               FieldByName('tpAmb').AsString      := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
               frxReport.Variables['HOMOLOGACAO'] := True;

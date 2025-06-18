@@ -44,7 +44,7 @@ uses
   ACBrXmlBase,
   ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
   ACBrMDFeConfiguracoes, ACBrMDFeWebServices, ACBrMDFeManifestos,
-  ACBrMDFeDAMDFEClass,
+  ACBrMDFeDAMDFeClass,
   ACBrMDFe.Classes, pcnConversao, pmdfeConversaoMDFe,
   ACBrMDFe.EnvEvento;
 

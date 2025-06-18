@@ -99,6 +99,6 @@ contains
   ACBrMDFe.EnvEvento in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.EnvEvento.pas',
   ACBrMDFe.RetEnvEvento in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.RetEnvEvento.pas',
 
-  ACBrMDFeDAMDFEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\ACBrMDFeDAMDFEClass.pas';
+  ACBrMDFeDAMDFeClass in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\ACBrMDFeDAMDFeClass.pas';
 
 end.

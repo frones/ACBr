@@ -43,6 +43,7 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
+  ACBrXmlBase,
   pcnConversao,
   ACBrBase,
   ACBrMDFe.Classes;
@@ -127,7 +128,8 @@ type
   TInfEvento = class(TObject)
   private
     FId: string;
-    FtpAmbiente: TpcnTipoAmbiente;
+//    FtpAmbiente: TpcnTipoAmbiente;
+    FtpAmbiente: TACBrTipoAmbiente;
     FCNPJCPF: string;
     FcOrgao: Integer;
     FChave: string;
@@ -147,7 +149,8 @@ type
 
     property Id: string              read FId             write FId;
     property cOrgao: Integer         read getcOrgao       write FcOrgao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmbiente     write FtpAmbiente;
+//    property tpAmb: TpcnTipoAmbiente read FtpAmbiente     write FtpAmbiente;
+    property tpAmb: TACBrTipoAmbiente read FtpAmbiente     write FtpAmbiente;
     property CNPJCPF: string         read FCNPJCPF        write FCNPJCPF;
     property chMDFe: string          read FChave          write FChave;
     property dhEvento: TDateTime     read FDataEvento     write FDataEvento;
@@ -164,7 +167,8 @@ type
   TRetInfEvento = class(TObject)
   private
     FId: string;
-    FtpAmb: TpcnTipoAmbiente;
+//    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FverAplic: string;
     FcOrgao: Integer;
     FcStat: Integer;
@@ -181,7 +185,8 @@ type
     FNomeArquivo: string;
   public
     property Id: string              read FId          write FId;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb       write FtpAmb;
+//    property tpAmb: TpcnTipoAmbiente read FtpAmb       write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb       write FtpAmb;
     property verAplic: string        read FverAplic    write FverAplic;
     property cOrgao: Integer         read FcOrgao      write FcOrgao;
     property cStat: Integer          read FcStat       write FcStat;

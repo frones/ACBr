@@ -41,6 +41,7 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.Base,
   ACBrUtil.FilesIO,
+  ACBrXmlBase,
   ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
   ACBrMDFeConfiguracoes, ACBrMDFeWebServices, ACBrMDFeManifestos,
   ACBrMDFeDAMDFEClass,
@@ -656,7 +657,7 @@ begin
     if EventoMDFe.Evento.Items[i].InfEvento.nSeqEvento = 0 then
       EventoMDFe.Evento.Items[i].infEvento.nSeqEvento := 1;
 
-    FEventoMDFe.Evento.Items[i].InfEvento.tpAmb := Configuracoes.WebServices.Ambiente;
+    FEventoMDFe.Evento.Items[i].InfEvento.tpAmb := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
 
     if Manifestos.Count > 0 then
     begin

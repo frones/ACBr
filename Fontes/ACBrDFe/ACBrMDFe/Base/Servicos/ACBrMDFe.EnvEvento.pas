@@ -241,7 +241,7 @@ begin
                                                 Evento[Idx].FInfEvento.cOrgao));
 
   Result.AppendChild(AddNode(tcStr, 'HP09', 'tpAmb', 1, 1, 1,
-                           TpAmbToStr(Evento[Idx].InfEvento.tpAmb), DSC_TPAMB));
+                    TipoAmbienteToStr(Evento[Idx].InfEvento.tpAmb), DSC_TPAMB));
 
   sDoc := OnlyNumber(Evento[Idx].InfEvento.CNPJCPF);
 

@@ -84,7 +84,7 @@ type
   TMDFeStatusServico = class(TMDFeWebService)
   private
     Fversao: String;
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
     FxMotivo: String;
@@ -104,7 +104,7 @@ type
     procedure Clear; override;
 
     property versao: String read Fversao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb;
     property verAplic: String read FverAplic;
     property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
@@ -333,7 +333,8 @@ type
     FEvento: TEventoMDFe;
     FcStat: Integer;
     FxMotivo: String;
-    FTpAmb: TpcnTipoAmbiente;
+//    FTpAmb: TpcnTipoAmbiente;
+    FTpAmb: TACBrTipoAmbiente;
     FCNPJ: String;
 
     FEventoRetorno: TRetEventoMDFe;
@@ -356,7 +357,8 @@ type
     property idLote: Int64 read FidLote write FidLote;
     property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
-    property TpAmb: TpcnTipoAmbiente read FTpAmb;
+//    property TpAmb: TpcnTipoAmbiente read FTpAmb;
+    property TpAmb: TACBrTipoAmbiente read FTpAmb;
 
     property EventoRetorno: TRetEventoMDFe read FEventoRetorno;
   end;
@@ -368,7 +370,7 @@ type
     FOwner: TACBrDFe;
     FCNPJCPF: String;
     Fversao: String;
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
     FxMotivo: String;
@@ -391,7 +393,7 @@ type
 
     property CNPJCPF: String                read FCNPJCPF write FCNPJCPF;
     property versao: String                 read Fversao;
-    property tpAmb: TpcnTipoAmbiente        read FtpAmb;
+    property tpAmb: TACBrTipoAmbiente       read FtpAmb;
     property verAplic: String               read FverAplic;
     property cStat: Integer                 read FcStat;
     property xMotivo: String                read FxMotivo;
@@ -604,7 +606,7 @@ begin
 
   if Assigned(FPConfiguracoesMDFe) then
   begin
-    FtpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    FtpAmb := TACBrTipoAmbiente(FPConfiguracoesMDFe.WebServices.Ambiente);
     FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
   end
 end;
@@ -642,7 +644,7 @@ begin
     MDFeRetorno.LerXml;
 
     Fversao := MDFeRetorno.versao;
-    FtpAmb := TpcnTipoAmbiente(MDFeRetorno.tpAmb);
+    FtpAmb := MDFeRetorno.tpAmb;
     FverAplic := MDFeRetorno.verAplic;
     FcStat := MDFeRetorno.cStat;
     FxMotivo := MDFeRetorno.xMotivo;
@@ -675,7 +677,7 @@ begin
                            'Tempo Médio: %s' + LineBreak +
                            'Retorno: %s' + LineBreak +
                            'Observação: %s' + LineBreak),
-                   [Fversao, TpAmbToStr(FtpAmb), FverAplic, IntToStr(FcStat),
+                   [Fversao, TipoAmbienteToStr(FtpAmb), FverAplic, IntToStr(FcStat),
                     FxMotivo, CodigoUFparaUF(FcUF),
                     IfThen(FdhRecbto = 0, '', FormatDateTimeBr(FdhRecbto)),
                     IntToStr(FTMed),
@@ -2086,7 +2088,8 @@ begin
   FCNPJ := '';
 
   if Assigned(FPConfiguracoesMDFe) then
-    FtpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    FTpAmb := TACBrTipoAmbiente(FPConfiguracoesMDFe.WebServices.Ambiente);
+//    FtpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
 
   if Assigned(FEventoRetorno) then
     FEventoRetorno.Free;
@@ -2123,7 +2126,8 @@ begin
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(
     Modelo,
     UF,
-    FTpAmb,
+    TpcnTipoAmbiente(FTpAmb),
+//    FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
     FPURL
@@ -2516,7 +2520,7 @@ begin
                          'Versão Aplicativo: %s ' + LineBreak +
                          'Status Código: %s ' + LineBreak +
                          'Status Descrição: %s ' + LineBreak),
-                 [FEventoRetorno.versao, TpAmbToStr(FEventoRetorno.tpAmb),
+                 [FEventoRetorno.versao, TipoAmbienteToStr(FEventoRetorno.tpAmb),
                   FEventoRetorno.verAplic, IntToStr(FEventoRetorno.cStat),
                   FEventoRetorno.xMotivo]);
 
@@ -2562,7 +2566,7 @@ begin
 
   if Assigned(FPConfiguracoesMDFe) then
   begin
-    FtpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    FtpAmb := TACBrTipoAmbiente(FPConfiguracoesMDFe.WebServices.Ambiente);
     FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
   end;
 
@@ -2654,7 +2658,7 @@ begin
                            'Status Código: %s ' + LineBreak +
                            'Status Descrição: %s ' + LineBreak +
                            'UF: %s ' + LineBreak),
-                   [FRetConsMDFeNaoEnc.versao, TpAmbToStr(FRetConsMDFeNaoEnc.tpAmb),
+                   [FRetConsMDFeNaoEnc.versao, TipoAmbienteToStr(FRetConsMDFeNaoEnc.tpAmb),
                     FRetConsMDFeNaoEnc.verAplic, IntToStr(FRetConsMDFeNaoEnc.cStat),
                     FRetConsMDFeNaoEnc.xMotivo,
                     CodigoUFparaUF(FRetConsMDFeNaoEnc.cUF)]);

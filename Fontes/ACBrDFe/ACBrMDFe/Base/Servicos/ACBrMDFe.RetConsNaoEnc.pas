@@ -70,7 +70,7 @@ type
   TRetConsMDFeNaoEnc = class(TObject)
   private
     Fversao: String;
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
     FxMotivo: String;
@@ -85,7 +85,7 @@ type
     function LerXml: Boolean;
 
     property versao: String                 read Fversao   write Fversao;
-    property tpAmb: TpcnTipoAmbiente        read FtpAmb    write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente       read FtpAmb    write FtpAmb;
     property verAplic: String               read FverAplic write FverAplic;
     property cStat: Integer                 read FcStat    write FcStat;
     property xMotivo: String                read FxMotivo  write FxMotivo;
@@ -141,7 +141,7 @@ begin
       begin
         versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
         verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
-        tpAmb := StrToTpAmb(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+        tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
         cUF := ObterConteudoTag(ANode.Childrens.FindAnyNs('cUF'), tcInt);
         cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
         xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);

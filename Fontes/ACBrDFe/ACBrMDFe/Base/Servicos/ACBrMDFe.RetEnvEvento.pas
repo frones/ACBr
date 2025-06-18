@@ -74,7 +74,8 @@ type
   private
     FidLote: Int64;
     Fversao: string;
-    FtpAmb: TpcnTipoAmbiente;
+//    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FverAplic: string;
     FcStat: Integer;
     FcOrgao: Integer;
@@ -105,7 +106,8 @@ type
 
     property idLote: Int64                      read FidLote    write FidLote;
     property versao: string                     read Fversao    write Fversao;
-    property tpAmb: TpcnTipoAmbiente            read FtpAmb     write FtpAmb;
+//    property tpAmb: TpcnTipoAmbiente            read FtpAmb     write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente           read FtpAmb     write FtpAmb;
     property verAplic: string                   read FverAplic  write FverAplic;
     property cOrgao: Integer                    read FcOrgao    write FcOrgao;
     property cStat: Integer                     read FcStat     write FcStat;
@@ -376,7 +378,7 @@ begin
 
   infEvento.Id := ObterConteudoTag(ANode.Attributes.Items['Id']);
   infEvento.cOrgao := ObterConteudoTag(ANode.Childrens.FindAnyNs('cOrgao'), tcInt);
-  infEvento.tpAmb := StrToTpAmb(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+  infEvento.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
   infEvento.CNPJCPF := ObterConteudoTagCNPJCPF(ANode);
   infEvento.chMDFe := ObterConteudoTag(ANode.Childrens.FindAnyNs('chMDFe'), tcStr);
   infEvento.dhEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhEvento'), tcDatHor);
@@ -399,7 +401,7 @@ begin
   Item.RetInfEvento.XML := ANode.OuterXml;
 
   Item.RetInfEvento.Id := ObterConteudoTag(ANode.Attributes.Items['Id']);
-  Item.RetInfEvento.tpAmb := StrToTpAmb(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+  Item.RetInfEvento.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
   Item.RetInfEvento.verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
   Item.RetInfEvento.cOrgao := ObterConteudoTag(ANode.Childrens.FindAnyNs('cOrgao'), tcInt);
   Item.RetInfEvento.cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);

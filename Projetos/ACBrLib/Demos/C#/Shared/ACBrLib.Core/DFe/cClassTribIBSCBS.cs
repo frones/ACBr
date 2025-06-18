@@ -5,7 +5,8 @@ namespace ACBrLib.Core.DFe
     public enum cClassTribIBSCBS
     {
         [EnumValue("")]
-        cctVazio,
+        [Description("Nenhum")]
+        cctNenhum,
 
         [EnumValue("000001")]
         [Description("Situações tributadas integralmente pelo IBS e CBS")]
@@ -90,6 +91,10 @@ namespace ACBrLib.Core.DFe
         [EnumValue("200011")]
         [Description("Fornecimento das composições para nutrição enteral e parenteral, composições especiais e fórmulas nutricionais destinadas às pessoas com erros inatos do metabolismo relacionadas no Anexo VI da Lei Complementar nº 214, de 2025, com a especificação das respectivas classificações da NCM/SH, quando adquiridas por órgãos da administração pública direta, autarquias e fundações públicas, observado o art. 146 da Lei Complementar nº 214, de 2025.")]
         cct200011,
+
+        [EnumValue("200012")]
+        [Description("Situação de emergência de saúde pública reconhecida pelo Poder público (Anexo XIV)")]
+        cct200012,
 
         [EnumValue("200013")]
         [Description("Fornecimento de tampões higiênicos, absorventes higiênicos internos ou externos, descartáveis ou reutilizáveis, calcinhas absorventes e coletores menstruais, observado o art. 147 da Lei Complementar nº 214, de 2025.")]
@@ -239,10 +244,6 @@ namespace ACBrLib.Core.DFe
         [Description("Transporte coletivo de passageiros rodoviário, ferroviário e hidroviário intermunicipais e interestaduais, observado o art. 286 da Lei Complementar nº 214, de 2025.")]
         cct200049,
 
-        [EnumValue("200450")]
-        [Description("Serviços de transporte aéreo regional coletivo de passageiros ou de carga, observado o art. 287 da Lei Complementar nº 214, de 2025.")]
-        cct200450,
-
         [EnumValue("200051")]
         [Description("Agências de Turismo, , observado o art. 289 da Lei Complementar nº 214, de 2025.")]
         cct200051,
@@ -250,6 +251,10 @@ namespace ACBrLib.Core.DFe
         [EnumValue("200052")]
         [Description("Prestação de serviços das seguintes profissões intelectuais de natureza científica, literária ou artística, submetidas à fiscalização por conselho profissional: administradores, advogados, arquitetos e urbanistas, assistentes sociais, bibliotecários, biólogos, contabilistas, economistas, economistas domésticos, profissionais de educação física, engenheiros e agrônomos, estatísticos, médicos veterinários e zootecnistas, museólogos, químicos, profissionais de relações públicas, técnicos industriais e técnicos agrícolas, observado o art. 127 da Lei Complementar nº 214, de 2025.")]
         cct200052,
+
+        [EnumValue("200450")]
+        [Description("Serviços de transporte aéreo regional coletivo de passageiros ou de carga, observado o art. 287 da Lei Complementar nº 214, de 2025.")]
+        cct200450,
 
         [EnumValue("210001")]
         [Description("Redutor social aplicado uma única vez na alienação de bem imóvel residencial novo, observado o art. 259 da Lei Complementar nº 214, de 2025.")]
@@ -278,6 +283,10 @@ namespace ACBrLib.Core.DFe
         [EnumValue("221001")]
         [Description("Locação, cessão onerosa ou arrendamento de bem imóvel com alíquota sobre a receita bruta, observado o art. 487 da Lei Complementar nº 214, de 2025.")]
         cct221001,
+
+        [EnumValue("222001")]
+        [Description("Transporte internacional de passageiros, caso os trechos de ida e volta sejam vendidos em conjunto")]
+        cct222001,
 
         [EnumValue("400001")]
         [Description("Fornecimento de serviços de transporte público coletivo de passageiros rodoviário e metroviário de caráter urbano, semiurbano e metropolitano, sob regime de autorização, permissão ou concessão pública, observado o art. 157 da Lei Complementar nº 214, de 2025.")]
@@ -362,6 +371,14 @@ namespace ACBrLib.Core.DFe
         [EnumValue("410020")]
         [Description("Exclusão do valor de intermediação na base de cálculo no fornecimento de alimentação, observado o art. 274 da Lei Complementar nº 214, de 2025.")]
         cct410020,
+
+        [EnumValue("410021")]
+        [Description("Contribuição de que trata o art. 149-A da Constituição Federal")]
+        cct410021,
+
+        [EnumValue("410099")]
+        [Description("Operações não onerosas sem previsão de tributação, não especificadas anteriormente")]
+        cct410099,
 
         [EnumValue("510001")]
         [Description("Operações, sujeitas a diferimento, com energia elétrica ou com direitos a ela relacionados, relativas à geração, comercialização, distribuição e transmissão, observado o art. 28 da Lei Complementar nº 214, de 2025.")]
@@ -471,6 +488,10 @@ namespace ACBrLib.Core.DFe
         [Description("Tributação monofásica sobre combustíveis cobrada anteriormente, observador o art. 180 da Lei Complementar nº 214, de 2025.")]
         cct620005,
 
+        [EnumValue("620006")]
+        [Description("Tributação monofásica sobre combustíveis cobrada anteriormente")]
+        cct620006,
+
         [EnumValue("800001")]
         [Description("Fusão, cisão ou incorporação, observado o art. 55 da Lei Complementar nº 214, de 2025.")]
         cct800001,
@@ -501,6 +522,10 @@ namespace ACBrLib.Core.DFe
 
         [EnumValue("820005")]
         [Description("Documento com informações de alienação de bens imóveis, mas com tributação realizada por outro meio,, observado o art. 254 da Lei Complementar nº 214, de 2025.")]
-        cct820005
+        cct820005,
+
+        [EnumValue("830001")]
+        [Description("Documento com exclusão da BC da CBS e do IBS de energia elétrica fornecida pela distribuidora à UC")]
+        cct830001
     }
 }

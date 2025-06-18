@@ -4,19 +4,19 @@ namespace ACBrLib.Core.DFe
 {
     public enum CSTIBSCBS
     {
-        [EnumValue("")]       
-        cstVazio,
+        [EnumValue("")]
+        cstNenhum,
 
-        [EnumValue("000")]       
+        [EnumValue("000")]
         cst000,
 
-        [EnumValue("010")]       
+        [EnumValue("010")]
         cst010,
 
-        [EnumValue("011")]       
+        [EnumValue("011")]
         cst011,
 
-        [EnumValue("200")]        
+        [EnumValue("200")]
         cst200,
 
         [EnumValue("210")]
@@ -27,6 +27,9 @@ namespace ACBrLib.Core.DFe
 
         [EnumValue("221")]
         cst221,
+
+        [EnumValue("222")]
+        cst222,
 
         [EnumValue("400")]
         cst400,
@@ -50,6 +53,9 @@ namespace ACBrLib.Core.DFe
         cst810,
 
         [EnumValue("820")]
-        cst820
+        cst820,
+
+        [EnumValue("830")]
+        cst830
     }
 }

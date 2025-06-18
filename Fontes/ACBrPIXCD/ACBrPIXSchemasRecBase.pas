@@ -232,9 +232,9 @@ type
     fAtivacao: TACBrPIXRecAtivacao;
     fCalendario: TACBrPIXCalendarioRec;
     fEncerramento: TACBrPIXRecEncerramento;
-    fAtualizacao: TACBrPIXRecAtualizacaoLista;
+    fAtualizacao: TACBrPIXRecHistoricoAtualizacao;
     function GetAtivacao: TACBrPIXRecAtivacao;
-    function GetAtualizacao: TACBrPIXRecAtualizacaoLista;
+    function GetAtualizacao: TACBrPIXRecHistoricoAtualizacao;
     function GetCalendario: TACBrPIXCalendarioRec;
     function GetdadosQR: TACBrPIXRecDadosQR;
     function GetEncerramento: TACBrPIXRecEncerramento;
@@ -260,7 +260,7 @@ type
     property ativacao: TACBrPIXRecAtivacao read GetAtivacao;
     property calendario: TACBrPIXCalendarioRec read GetCalendario;
     property encerramento: TACBrPIXRecEncerramento read GetEncerramento;
-    property atualizacao: TACBrPIXRecAtualizacaoLista read GetAtualizacao;
+    property atualizacao: TACBrPIXRecHistoricoAtualizacao read GetAtualizacao;
   public
     constructor Create(const ObjectName: String = ''); override;
     destructor Destroy; override;
@@ -734,10 +734,10 @@ begin
   Result := fAtivacao;
 end;
 
-function TACBrPIXRecBase.GetAtualizacao: TACBrPIXRecAtualizacaoLista;
+function TACBrPIXRecBase.GetAtualizacao: TACBrPIXRecHistoricoAtualizacao;
 begin
   if not Assigned(fAtualizacao) then
-    fAtualizacao := TACBrPIXRecAtualizacaoLista.Create('atualizacao');
+    fAtualizacao := TACBrPIXRecHistoricoAtualizacao.Create('atualizacao');
   Result := fAtualizacao;
 end;
 

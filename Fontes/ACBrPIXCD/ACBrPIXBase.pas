@@ -88,10 +88,35 @@ type
                               stdDEVOLVIDO,
                               stdNAO_REALIZADO );
 
+  TACBrPIXStatusSolicitacaoRecorrencia = ( ssrNENHUM,
+                                           ssrCRIADA,
+                                           ssrENVIADA,
+                                           ssrRECEBIDA,
+                                           ssrREJEITADA,
+                                           ssrACEITA,
+                                           ssrEXPIRADA,
+                                           ssrCANCELADA );
+
+  TACBrPIXStatusRegistroCobranca = ( srcNENHUM,
+                                     srcCRIADA,
+                                     srcATIVA,
+                                     srcCONCLUIDA,
+                                     srcEXPIRADA,
+                                     srcREJEITADA,
+                                     srcCANCELADA );
+
   TACBrPIXStatusLoteCobranca = ( stlNENHUM,
                                  stlEM_PROCESSAMENTO,
                                  stlCRIADA,
                                  stlNEGADA );
+
+  TACBrPIXStatusTentativaCobranca = ( steNENHUM,
+                                      steSOLICITADA,
+                                      steAGENDADA,
+                                      stePAGA,
+                                      steCANCELADA,
+                                      steREJEITADA,
+                                      steEXPIRADA );
 
   TACBrPIXNaturezaDevolucao = ( ndNENHUMA, ndORIGINAL, ndRETIRADA );
 
@@ -127,6 +152,11 @@ type
                               cclSLCR,
                               cclSLDB );
 
+  TACBrPIXTipoTentativaCobranca = ( ttcNENHUM,
+                                    ttcAGND,
+                                    ttcNTAG,
+                                    ttcRIFL );
+
   TACBrPIXSolicitante = ( sttNENHUM,
                           sttPSP_PAGADOR,
                           sttUSUARIO_PAGADOR,
@@ -144,15 +174,6 @@ type
                       jorJORNADA_3,
                       jorJORNADA_4,
                       jorAGUARDANDO_DEFINICAO );
-
-  TACBrPIXStatusSolicitacaoRecorrencia = ( ssrNENHUM,
-                                           ssrCRIADA,
-                                           ssrENVIADA,
-                                           ssrRECEBIDA,
-                                           ssrREJEITADA,
-                                           ssrACEITA,
-                                           ssrEXPIRADA,
-                                           ssrCANCELADA );
 
   TACBrPIXTipoConta = ( ptcNENHUM,
                         ptcCORRENTE,
@@ -243,6 +264,9 @@ type
   function PIXCodCancelamentoToString(ACodCancelamento: TACBrPIXCodCancelamento): String;
   function StringToPIXCodCancelamento(const AString: String): TACBrPIXCodCancelamento;
 
+  function PIXTipoTentativaCobrancaToString(ATipo: TACBrPIXTipoTentativaCobranca): String;
+  function StringToPIXTipoTentativaCobranca(const AString: String): TACBrPIXTipoTentativaCobranca;
+
   function PIXSolicitanteToString(ASolicitante: TACBrPIXSolicitante): String;
   function StringToPIXSolicitante(const AString: String): TACBrPIXSolicitante;
 
@@ -252,8 +276,14 @@ type
   function PIXStatusSolicitacaoRecorrenciaToString(AStatus: TACBrPIXStatusSolicitacaoRecorrencia): String;
   function StringToPIXStatusSolicitacaoRecorrencia(const AString: String): TACBrPIXStatusSolicitacaoRecorrencia;
 
+  function PIXStatusRegistroCobrancaToString(AStatus: TACBrPIXStatusRegistroCobranca): String;
+  function StringToPIXStatusRegistroCobranca(const AString: String): TACBrPIXStatusRegistroCobranca;
+
   function PIXTipoContaToString(ATipoConta: TACBrPIXTipoConta): String;
   function StringToPIXTipoConta(const AString: String): TACBrPIXTipoConta;
+
+  function PIXStatusTentativaCobrancaToString(AStatus: TACBrPIXStatusTentativaCobranca): String;
+  function StringToPIXStatusTentativaCobranca(const AString: String): TACBrPIXStatusTentativaCobranca;
 
 implementation
 
@@ -557,6 +587,30 @@ begin
     Result := cclSLDB;
 end;
 
+function PIXTipoTentativaCobrancaToString(ATipo: TACBrPIXTipoTentativaCobranca): String;
+begin
+  Result := EmptyStr;
+  case ATipo of
+    ttcAGND: Result := 'AGND';
+    ttcNTAG: Result := 'NTAG';
+    ttcRIFL: Result := 'RIFL';
+  end;
+end;
+
+function StringToPIXTipoTentativaCobranca(const AString: String): TACBrPIXTipoTentativaCobranca;
+var
+  s: String;
+begin
+  Result := ttcNENHUM;
+  s := UpperCase(Trim(AString));
+  if (s = 'AGND') then
+    Result := ttcAGND
+  else if (s = 'NTAG') then
+    Result := ttcNTAG
+  else if (s = 'RIFL') then
+    Result := ttcRIFL;
+end;
+
 function PIXSolicitanteToString(ASolicitante: TACBrPIXSolicitante): String;
 begin
   Result := EmptyStr;
@@ -650,6 +704,39 @@ begin
     Result := ssrCANCELADA;
 end;
 
+function PIXStatusRegistroCobrancaToString(AStatus: TACBrPIXStatusRegistroCobranca): String;
+begin
+  Result := EmptyStr;
+  case AStatus of
+    srcCRIADA: Result := 'CRIADA';
+    srcATIVA: Result := 'ATIVA';
+    srcCONCLUIDA: Result := 'CONCLUIDA';
+    srcEXPIRADA: Result := 'EXPIRADA';
+    srcREJEITADA: Result := 'REJEITADA';
+    srcCANCELADA: Result := 'CANCELADA';
+  end;
+end;
+
+function StringToPIXStatusRegistroCobranca(const AString: String): TACBrPIXStatusRegistroCobranca;
+var
+  s: String;
+begin
+  Result := srcNENHUM;
+  s := UpperCase(Trim(AString));
+  if (s = 'CRIADA') then
+    Result := srcCRIADA
+  else if (s = 'ATIVA') then
+    Result := srcATIVA
+  else if (s = 'CONCLUIDA') then
+    Result := srcCONCLUIDA
+  else if (s = 'EXPIRADA') then
+    Result := srcEXPIRADA
+  else if (s = 'REJEITADA') then
+    Result := srcREJEITADA
+  else if (s = 'CANCELADA') then
+    Result := srcCANCELADA;
+end;
+
 function PIXTipoContaToString(ATipoConta: TACBrPIXTipoConta): String;
 begin
   Result := EmptyStr;
@@ -672,6 +759,39 @@ begin
     Result := ptcPOUPANCA
   else if (s = 'PAGAMENTO') then
     Result := ptcPAGAMENTO;
+end;
+
+function PIXStatusTentativaCobrancaToString(AStatus: TACBrPIXStatusTentativaCobranca): String;
+begin
+  Result := EmptyStr;
+  case AStatus of
+    steSOLICITADA: Result := 'SOLICITADA';
+    steAGENDADA: Result := 'AGENDADA';
+    stePAGA: Result := 'PAGA';
+    steCANCELADA: Result := 'CANCELADA';
+    steREJEITADA: Result := 'REJEITADA';
+    steEXPIRADA: Result := 'EXPIRADA';
+  end;
+end;
+
+function StringToPIXStatusTentativaCobranca(const AString: String): TACBrPIXStatusTentativaCobranca;
+var
+  s: String;
+begin
+  Result := steNENHUM;
+  s := UpperCase(Trim(AString));
+  if (s = 'SOLICITADA') then
+    Result := steSOLICITADA
+  else if (s = 'AGENDADA') then
+    Result := steAGENDADA
+  else if (s = 'PAGA') then
+    Result := stePAGA
+  else if (s = 'CANCELADA') then
+    Result := steCANCELADA
+  else if (s = 'REJEITADA') then
+    Result := steREJEITADA
+  else if (s = 'EXPIRADA') then
+    Result := steEXPIRADA;
 end;
 
 { TACBrPIXSchema }

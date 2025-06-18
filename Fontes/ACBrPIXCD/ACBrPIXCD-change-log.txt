@@ -47,6 +47,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/06/2024
+-- ACBrPIXCD --
+[+] Adicionando endpoints /cobr, /webhook, /webhookrec, /webhookcobr;
+
+-- ACBrPIXBase --
+[+] Inclusão dos enumerados referentes aos novos endpoints;
+
+-- ACBrPIXSchemasCobR, ACBrPIXSchemasCalendario... --
+[+] Inclusão das classes referentes ao endpoint /cobr;
+
+-- ACBrPIXSchemasWebhook --
+[+] Inclusão das classes referentes ao novo endpoint webhook.
+    por: Elias César
+
 18/06/2025
 -- ACBrPIXPSPBancoDoBrasil --
 [-] Removida exceção de '(code <> 0)' na resposta da procedure "SimularPagamento".

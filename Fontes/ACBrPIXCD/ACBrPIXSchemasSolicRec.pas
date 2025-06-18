@@ -73,11 +73,11 @@ type
     fidRec: String;
     fidSolicRec: String;
     fstatus: TACBrPIXStatusSolicitacaoRecorrencia;
-    fatualizacao: TACBrPIXRecAtualizacaoLista;
+    fatualizacao: TACBrPIXRecHistoricoAtualizacao;
     fcalendario: TACBrPIXCalendarioRecSolic;
     fdestinatario: TACBrPIXRecDestinatario;
     frecPayload: TACBrPIXRecPayload;
-    function GetAtualizacao: TACBrPIXRecAtualizacaoLista;
+    function GetAtualizacao: TACBrPIXRecHistoricoAtualizacao;
     function GetCalendario: TACBrPIXCalendarioRecSolic;
     function GetDestinatario: TACBrPIXRecDestinatario;
     function GetRecPayload: TACBrPIXRecPayload;
@@ -92,7 +92,7 @@ type
     property status: TACBrPIXStatusSolicitacaoRecorrencia read fstatus write fstatus;
     property recPayload: TACBrPIXRecPayload read GetRecPayload;
     property destinatario: TACBrPIXRecDestinatario read GetDestinatario;
-    property atualizacao: TACBrPIXRecAtualizacaoLista read GetAtualizacao;
+    property atualizacao: TACBrPIXRecHistoricoAtualizacao read GetAtualizacao;
     property calendario: TACBrPIXCalendarioRecSolic read GetCalendario;
   public
     constructor Create(const ObjectName: String = ''); override;
@@ -141,10 +141,10 @@ uses
 
 { TACBrPIXSolicitacaoRecBase }
 
-function TACBrPIXSolicitacaoRecBase.GetAtualizacao: TACBrPIXRecAtualizacaoLista;
+function TACBrPIXSolicitacaoRecBase.GetAtualizacao: TACBrPIXRecHistoricoAtualizacao;
 begin
   if not Assigned(fatualizacao) then
-    fatualizacao := TACBrPIXRecAtualizacaoLista.Create('atualizacoes');
+    fatualizacao := TACBrPIXRecHistoricoAtualizacao.Create('atualizacoes');
   Result := fatualizacao;
 end;
 

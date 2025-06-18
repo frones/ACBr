@@ -56,6 +56,7 @@ type
     fapresentacao_Bias: Integer;
     fcriacao: TDateTime;
     fcriacao_Bias: Integer;
+    fdataDeVencimento: TDateTime;
     fexpiracao: Integer;
   protected
     property criacao: TDateTime read fcriacao write fcriacao;
@@ -63,6 +64,7 @@ type
     property apresentacao: TDateTime read fapresentacao write fapresentacao;
     property apresentacao_Bias: Integer read fapresentacao_Bias write fapresentacao_Bias;
     property expiracao: Integer read fexpiracao write fexpiracao;
+    property dataDeVencimento: TDateTime read fdataDeVencimento write fdataDeVencimento;
 
     procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
@@ -87,6 +89,15 @@ type
     property criacao;
     property criacao_Bias;
     property expiracao;
+  end;
+
+  { TACBrPIXCalendarioCobR }
+
+  TACBrPIXCalendarioCobR = class(TACBrPIXCalendarioCobBase)
+  public
+    property criacao;
+    property criacao_Bias;
+    property dataDeVencimento;
   end;
 
   { TACBrPIXCalendarioRecBase }
@@ -148,12 +159,17 @@ begin
   fcriacao := 0;
   fcriacao_Bias := 0;
   fexpiracao := 0;
+  fdataDeVencimento := 0;
 end;
 
 function TACBrPIXCalendarioCobBase.IsEmpty: Boolean;
 begin
-  Result := (fcriacao = 0) and (fcriacao_Bias = 0) and (fapresentacao = 0) and
-            (fapresentacao_Bias = 0) and (fexpiracao = 0);
+  Result := EstaZerado(fcriacao) and
+            EstaZerado(fcriacao_Bias) and
+            EstaZerado(fapresentacao) and
+            EstaZerado(fapresentacao_Bias) and
+            EstaZerado(fexpiracao) and
+            EstaZerado(fdataDeVencimento);
 end;
 
 procedure TACBrPIXCalendarioCobBase.Assign(Source: TACBrPIXCalendarioCobBase);
@@ -163,29 +179,34 @@ begin
   fapresentacao := Source.apresentacao;
   fapresentacao_Bias := Source.apresentacao_Bias;
   fexpiracao := Source.expiracao;
+  fdataDeVencimento := Source.dataDeVencimento;
 end;
 
 procedure TACBrPIXCalendarioCobBase.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  if (fcriacao <> 0) then
+  if NaoEstaZerado(fcriacao) then
     AJSon.AddPair('criacao', DateTimeToIso8601(fcriacao, BiasToTimeZone(fcriacao_Bias)));
-  if (fapresentacao <> 0) then
+  if NaoEstaZerado(fapresentacao) then
     AJSon.AddPair('apresentacao', DateTimeToIso8601(fapresentacao, BiasToTimeZone(fapresentacao_Bias)));
+  if NaoEstaZerado(fdataDeVencimento) then
+    AJSon.AddPair('dataDeVencimento', Copy(DateTimeToIso8601(fdataDeVencimento), 1, 10));
   AJSon.AddPair('expiracao', fexpiracao, False);
 end;
 
 procedure TACBrPIXCalendarioCobBase.DoReadFromJSon(AJSon: TACBrJSONObject);
 var
-  s1, s2: String;
+  s1, s2, s3: String;
 begin
   {$IfDef FPC}
   s1 := EmptyStr;
   s2 := EmptyStr;
+  s3 := EmptyStr;
   {$EndIf}
 
   AJSon
     .Value('criacao', s1)
     .Value('apresentacao', s2)
+    .Value('dataDeVencimento', s3)
     .Value('expiracao', fexpiracao);
 
   if NaoEstaVazio(s1) then
@@ -199,6 +220,9 @@ begin
     fapresentacao := Iso8601ToDateTime(s2);
     fapresentacao_Bias := TimeZoneToBias(s2);
   end;
+
+  if NaoEstaVazio(s3) then
+    fdataDeVencimento := Iso8601ToDateTime(s3);
 end;
 
 { TACBrPIXCalendarioRecBase }

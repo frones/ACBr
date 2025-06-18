@@ -138,6 +138,15 @@ type
     property ispbParticipante;
   end;
 
+  { TACBrPIXCobRRecebedor }
+
+  TACBrPIXCobRRecebedor = class(TACBrPIXRecParticipante)
+  public
+    property conta;
+    property agencia;
+    property tipoConta;
+  end;
+
 implementation
 
 uses
@@ -210,11 +219,17 @@ begin
     .AddPair('codMun', fcodMun, False)
     .AddPair('ispbParticipante', fispbParticipante, False)
     .AddPair('agencia', fagencia, False)
-    .AddPair('conta', fconta, False);
+    .AddPair('conta', fconta, False)
+    .AddPair('tipoConta', PIXTipoContaToString(ftipoConta), False);
 end;
 
 procedure TACBrPIXRecParticipante.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  wTipoConta: String;
 begin
+  {$IFDEF FPC}
+  wTipoConta := EmptyStr;
+  {$ENDIF}
   AJSon
     .Value('cpf', fcpf)
     .Value('cnpj', fcnpj)
@@ -223,7 +238,11 @@ begin
     .Value('codMun', fcodMun)
     .Value('ispbParticipante', fispbParticipante)
     .Value('agencia', fagencia)
-    .Value('conta', fconta);
+    .Value('conta', fconta)
+    .Value('tipoConta', wTipoConta);
+
+  if NaoEstaVazio(wTipoConta) then
+    ftipoConta := StringToPIXTipoConta(wTipoConta);
 end;
 
 constructor TACBrPIXRecParticipante.Create(const ObjectName: String);
@@ -242,6 +261,7 @@ begin
   fispbParticipante := EmptyStr;
   fagencia := EmptyStr;
   fconta := EmptyStr;
+  ftipoConta := ptcNENHUM;
 end;
 
 function TACBrPIXRecParticipante.IsEmpty: Boolean;
@@ -253,7 +273,8 @@ begin
             EstaVazio(fcodMun) and
             EstaVazio(fispbParticipante) and
             EstaVazio(fagencia) and
-            EstaVazio(fconta);
+            EstaVazio(fconta) and
+            (ftipoConta = ptcNENHUM);
 end;
 
 procedure TACBrPIXRecParticipante.Assign(Source: TACBrPIXRecParticipante);
@@ -269,6 +290,7 @@ begin
   fispbParticipante := Source.fispbParticipante;
   fagencia := Source.fagencia;
   fconta := Source.fconta;
+  ftipoConta := Source.ftipoConta;
 end;
 
 end.

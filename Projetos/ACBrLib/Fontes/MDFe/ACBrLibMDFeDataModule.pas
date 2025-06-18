@@ -75,7 +75,7 @@ implementation
 
 uses
   ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, FileUtil,
-{$IFDEF Demo}ACBrMDFeManifestos, ACBrMDFe.EnvEvento, pcnConversao,{$ENDIF}
+{$IFDEF Demo}ACBrMDFeManifestos, ACBrMDFe.EnvEvento, pcnConversao, ACBrXmlBase,{$ENDIF}
   ACBrLibMDFeConfig, ACBrLibMDFeBase;
 
 {$R *.lfm}
@@ -104,7 +104,7 @@ begin
 
 {$IFDEF Demo}
   GravarLog('Modo DEMO - Forçando ambiente para Homologação', logNormal);
-  ACBrMDFe1.Configuracoes.WebServices.Ambiente := taHomologacao;
+  ACBrMDFe1.Configuracoes.WebServices.Ambiente := TpcnTipoAmbiente.taHomologacao;
 {$ENDIF}
 
   AplicarConfigMail;
@@ -165,13 +165,13 @@ begin
     for I:= 0 to ACBrMDFe1.Manifestos.Count -1 do
     begin
       AItem := ACBrMDFe1.Manifestos.Items[I];
-      AItem.MDFe.Ide.tpAmb := taHomologacao;
+      AItem.MDFe.Ide.tpAmb := TpcnTipoAmbiente.taHomologacao;
     end;
 
     for I:= 0 to ACBrMDFe1.EventoMDFe.Evento.Count -1 do
     begin
       AEvento := ACBrMDFe1.EventoMDFe.Evento.Items[I];
-      AEvento.InfEvento.tpAmb := taHomologacao;
+      AEvento.InfEvento.tpAmb := TACBrTipoAmbiente.taHomologacao;
     end;
 {$ENDIF}
 

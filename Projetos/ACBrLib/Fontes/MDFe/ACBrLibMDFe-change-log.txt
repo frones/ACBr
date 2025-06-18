@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/06/2025
+-- ACBrLibMDFeDataModule --
+[-] Ajuste necessário para compilação da Lib depois de mudança da propriedade do Tipo de Ambiente.
+  Por: Diego Folieni \ Italo Giurizzato Junior \ Alexandre de Paula
 -- ACBrLibMDFeBase, ACBrLibMDFeResposta --
 [-] Ajustes necessários para compilação da Lib depois de mudança da propriedade do Tipo de Ambiente.
    Por: Diego Folieni \ Antônio Carlos \ Italo Giurizzato Junior

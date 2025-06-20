@@ -373,12 +373,12 @@ begin
       qrCode := '<![CDATA[' + qrCode + ']]>';
 
     xmlNode := nfeNode.AddChild('infNFeSupl');
-    xmlNode.AppendChild(AddNode(tcStr, 'ZX02', 'qrCode', 100, 600,
-                                1, qrCode, DSC_INFQRCODE, False));
+    xmlNode.AppendChild(AddNode(tcStr, 'ZX02', 'qrCode', 60, 1000, 1,
+                                                 qrCode, DSC_INFQRCODE, False));
 
     if NFe.infNFe.Versao >= 4 then
-      xmlNode.AppendChild(AddNode(tcStr, 'ZX03', 'urlChave', 21,
-                                  85, 1, NFe.infNFeSupl.urlChave, DSC_URLCHAVE, False));
+      xmlNode.AppendChild(AddNode(tcStr, 'ZX03', 'urlChave', 21, 85, 1,
+                                 NFe.infNFeSupl.urlChave, DSC_URLCHAVE, False));
   end;
 
   Gerar := (Opcoes.GerarTagAssinatura = pcnConversao.taSempre) or

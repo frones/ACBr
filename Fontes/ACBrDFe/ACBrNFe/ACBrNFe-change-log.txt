@@ -45,6 +45,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/06/2025
+-- ACBrNFe.XmlWriter --
+[-] #TK-7244: Correção no tamanho mínimo e máximo da tag qrCode para atender
+    a versão 3 do QR-Code.
+  Por: Italo Giurizzato Junior
 -- ACBrNFe.IniWriter --
 [-] #TK-7237: Correção na nomenclatura do campo refCTe no arquivo INI.
   Por: ProgenBR

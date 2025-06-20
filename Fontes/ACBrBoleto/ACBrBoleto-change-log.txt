@@ -48,7 +48,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-16/06/2025
+
+20/06/2025
+-- ACBrBoletoRet_Sicoob_V3 --
+[-] #TK-7248 Mapeado a data da baixa , devido a isso o cliente nao estava encontrando o boleto baixado na consulta movimento
+	https://www.projetoacbr.com.br/forum/topic/83360-resultado-da-consulta-movimenta%C3%A7%C3%A3o-diferente-da-consulta-detalhe-sicoob-api/#comment-544172
+    Por: Daniel de Morais
+	
 -- ACBrBoletoW_Itau_API --
 [-] #TK-7218 Corrigido o metodo toRemessaCancelarDesconto e nao estava enviando um parametro. corrigido tbm enumerados para facilitar a leitura dos fontes.
 	https://www.projetoacbr.com.br/forum/topic/83709-funcionalidade-toremessacancelardesconto-banco-itau/

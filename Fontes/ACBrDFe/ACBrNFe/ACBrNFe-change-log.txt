@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/06/2025
+-- ACBrNFe.IniWriter --
+[-] #TK-7237: Correção na nomenclatura do campo refCTe no arquivo INI.
+  Por: ProgenBR
 -- ACBrNFe.XmlWriter --
 [-] #TK-7239: Correção na geração dos grupos obsFisco e obsCont dos Itens.
   Por: Francisco IBS

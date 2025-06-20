@@ -330,7 +330,7 @@ begin
       else if trim(refCTe) <> '' then
       begin
         AINIRec.WriteString(sSecao, 'Tipo', 'CTe');
-        AINIRec.WriteString(sSecao, 'reCTe', refCTe);
+        AINIRec.WriteString(sSecao, 'refCTe', refCTe);
       end
       else if trim(RefECF.nCOO) <> '' then
       begin

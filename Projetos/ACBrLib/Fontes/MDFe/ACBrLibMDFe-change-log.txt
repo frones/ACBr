@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/06/2025
+-- ACBrLibMDFeConsoleMT.lpi, ACBrLibMDFeConsoleMTDemo.lpi --
+[*] Remoção das configurações debug.
+   Por: Antonio Carlos Junior
+
+20/06/2025
 --- ACBrLibMDFe.lpi, ACBrLibMDFeDemo.lpi ---
 [*] Ajustes paths compilação.
    Por: Antonio Carlos Junior

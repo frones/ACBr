@@ -49,20 +49,8 @@
             <OtherUnitFiles Value="..\Comum;$(ACBrDir)\Fontes\ACBrComum;$(ACBrDir)\Fontes\ACBrDFe;$(ACBrDir)\Fontes\ACBrDFe\Comum;$(ACBrDir)\Fontes\ACBrDFe\ACBrMDFe;$(ACBrDir)\Fontes\ACBrDFe\ACBrMDFe\DAMDFE;$(ACBrDir)\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\FPDF;$(ACBrDir)\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos;$(ACBrDir)\Fontes\ACBrDFe\ACBrMDFe\Base;$(ACBrDir)\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe;$(ACBrDir)\Fontes\PCNComum;$(ACBrDir)\Fontes\ACBrDiversos;$(ACBrDir)\Fontes\ACBrSerial;$(ACBrDir)\Fontes\ACBrOpenSSL;$(ACBrDir)\Fontes\ACBrTCP;$(ACBrDir)\Fontes\ACBrIntegrador;$(ACBrDir)\Fontes\ACBrIntegrador\pcnVFPe;$(ACBrDir)\Fontes\Terceiros\synalist;$(ACBrDir)\Fontes\Terceiros\FPDF-Pascal;$(ACBrDir)\Fontes\Terceiros\GZIPUtils;$(ACBrDir)\Fontes\Terceiros\FastStringReplace;$(ACBrDir)\Fontes\Terceiros\CodeGear;$(ACBrDir)\Fontes\Terceiros\Ole;$(ACBrDir)\Fontes\Terceiros\DelphiZXingQRCode"/>
             <UnitOutputDirectory Value="lib\CONSOLE-$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
-          <Parsing>
-            <SyntaxOptions>
-              <IncludeAssertionCode Value="True"/>
-            </SyntaxOptions>
-          </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
-            <Checks>
-              <IOChecks Value="True"/>
-              <RangeChecks Value="True"/>
-              <OverflowChecks Value="True"/>
-              <StackChecks Value="True"/>
-            </Checks>
-            <VerifyObjMethodCallValidity Value="True"/>
             <TargetCPU Value="x86_64"/>
             <TargetOS Value="linux"/>
             <Optimizations>
@@ -71,7 +59,7 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
-              <UseHeaptrc Value="True"/>
+              <GenerateDebugInfo Value="False"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -100,20 +88,8 @@
             <OtherUnitFiles Value="..\Comum;$(ACBrDir)\Fontes\ACBrComum;$(ACBrDir)\Fontes\ACBrDFe;$(ACBrDir)\Fontes\ACBrDFe\Comum;$(ACBrDir)\Fontes\ACBrDFe\ACBrMDFe;$(ACBrDir)\Fontes\ACBrDFe\ACBrMDFe\DAMDFE;$(ACBrDir)\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\FPDF;$(ACBrDir)\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos;$(ACBrDir)\Fontes\ACBrDFe\ACBrMDFe\Base;$(ACBrDir)\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe;$(ACBrDir)\Fontes\PCNComum;$(ACBrDir)\Fontes\ACBrDiversos;$(ACBrDir)\Fontes\ACBrSerial;$(ACBrDir)\Fontes\ACBrOpenSSL;$(ACBrDir)\Fontes\ACBrTCP;$(ACBrDir)\Fontes\ACBrIntegrador;$(ACBrDir)\Fontes\ACBrIntegrador\pcnVFPe;$(ACBrDir)\Fontes\Terceiros\synalist;$(ACBrDir)\Fontes\Terceiros\FPDF-Pascal;$(ACBrDir)\Fontes\Terceiros\GZIPUtils;$(ACBrDir)\Fontes\Terceiros\FastStringReplace;$(ACBrDir)\Fontes\Terceiros\CodeGear;$(ACBrDir)\Fontes\Terceiros\Ole;$(ACBrDir)\Fontes\Terceiros\DelphiZXingQRCode"/>
             <UnitOutputDirectory Value="lib\CONSOLE-$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
-          <Parsing>
-            <SyntaxOptions>
-              <IncludeAssertionCode Value="True"/>
-            </SyntaxOptions>
-          </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
-            <Checks>
-              <IOChecks Value="True"/>
-              <RangeChecks Value="True"/>
-              <OverflowChecks Value="True"/>
-              <StackChecks Value="True"/>
-            </Checks>
-            <VerifyObjMethodCallValidity Value="True"/>
             <TargetCPU Value="i386"/>
             <TargetOS Value="linux"/>
             <Optimizations>
@@ -122,7 +98,7 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
-              <UseHeaptrc Value="True"/>
+              <GenerateDebugInfo Value="False"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>

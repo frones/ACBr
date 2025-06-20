@@ -1681,7 +1681,7 @@ begin
   for i := 0 to Length(AuxNodeArr)-1 do
   begin
     rodo.lacRodo.New;
-    rodo.lacRodo[i].nLacre := ObterConteudo(AuxNode.Childrens.FindAnyNs('nLacre'), tcStr);
+    rodo.lacRodo[i].nLacre := ObterConteudo(AuxNodeArr.Childrens.FindAnyNs('nLacre'), tcStr);
   end;
 
   AuxNodeArr := ANode.Childrens.FindAllAnyNs('moto');

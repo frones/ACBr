@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/06/2025
+-- ACBrDFe.Conversao --
+[*] TK-7238: Incluído os enumerados: tcgNenhum ao tipo TtpEnteGov e 
+    togNenhum ao tipo TtpOperGov para a situação de não existir compra governamental.
+   Por: bnobre/Italo Giurizzato Junior
+
 18/06/2025
 -- ACBrDFe.Conversao --
 [*] Incluído novos CST, cClassTrib e os cCredPres com base nas tabelas 

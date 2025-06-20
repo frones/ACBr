@@ -40,16 +40,17 @@ uses
   SysUtils, StrUtils, Classes;
 
 type
-  TtpEnteGov = (tcgUniao, tcgEstados, tcgDistritoFederal, tcgMunicipios);
+  TtpEnteGov = (tcgNenhum, tcgUniao, tcgEstados, tcgDistritoFederal,
+                tcgMunicipios);
 
 const
-  TtpEnteGovArrayStrings: array[TtpEnteGov] of string = ('1', '2', '3', '4');
+  TtpEnteGovArrayStrings: array[TtpEnteGov] of string = ('', '1', '2', '3', '4');
 
 type
-  TtpOperGov = (togFornecimento, togRecebimentoPag);
+  TtpOperGov = (togNenhum, togFornecimento, togRecebimentoPag);
 
 const
-  TtpOperGovArrayStrings: array[TtpOperGov] of string = ('1', '2');
+  TtpOperGovArrayStrings: array[TtpOperGov] of string = ('', '1', '2');
 
 type
   TCSTIBSCBS = (cstNenhum,

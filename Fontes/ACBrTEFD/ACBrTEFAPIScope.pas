@@ -441,7 +441,7 @@ end;
 procedure TACBrTEFAPIClassScope.Inicializar;
 var
   P: Integer;
-  ADir, IpStr, PortaStr: String;
+  ADir, IpStr, PortaStr, s: String;
 begin
   if Inicializado then
     Exit;
@@ -468,9 +468,13 @@ begin
   fTEFScopeAPI.Empresa := fpACBrTEFAPI.DadosTerminal.CodEmpresa;
   fTEFScopeAPI.Filial := fpACBrTEFAPI.DadosTerminal.CodFilial;
   fTEFScopeAPI.PDV := fpACBrTEFAPI.DadosTerminal.CodTerminal;
-  fTEFScopeAPI.MsgPinPad := fpACBrTEFAPI.DadosAutomacao.NomeSoftwareHouse + '|' +
-                            fpACBrTEFAPI.DadosAutomacao.NomeAplicacao + ' ' +
-                            fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
+
+  s := fpACBrTEFAPI.DadosAutomacao.MensagemPinPad;
+  if (s = '') then
+    s := fpACBrTEFAPI.DadosAutomacao.NomeSoftwareHouse + '|' +
+         fpACBrTEFAPI.DadosAutomacao.NomeAplicacao + ' ' +
+         fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
+  fTEFScopeAPI.MsgPinPad := s;
   fTEFScopeAPI.PortaPinPad := fpACBrTEFAPI.DadosTerminal.PortaPinPad;
   fTEFScopeAPI.GravarLogScope := (fpACBrTEFAPI.ArqLOG <> '');
 

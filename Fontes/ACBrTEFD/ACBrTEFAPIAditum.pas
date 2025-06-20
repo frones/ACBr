@@ -576,7 +576,7 @@ end;
 procedure TACBrTEFAPIClassAditum.Autenticar;
 var
   js, jspinpadMessages, jsMerchantInfo, jsHostInfo: TACBrJSONObject;
-  sBody, cnpjTEF: String;
+  sBody, cnpjTEF, s: String;
   jsa: TACBrJSONArray;
   i: Integer;
 begin
@@ -594,7 +594,12 @@ begin
     js.AddPair('applicationVersion', fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao );
     js.AddPair('activationCode', fpACBrTEFAPI.DadosTerminal.CodTerminal );
     if not jspinpadMessages.ValueExists('mainMessage') then
-      jspinpadMessages.AddPair('mainMessage', fpACBrTEFAPI.DadosEstabelecimento.RazaoSocial);
+    begin
+      s := fpACBrTEFAPI.DadosAutomacao.MensagemPinPad;
+      if (s = '') then
+        s := fpACBrTEFAPI.DadosEstabelecimento.RazaoSocial;
+      jspinpadMessages.AddPair('mainMessage', s);
+    end;
 
     js.AddPair('pinpadMessages', jspinpadMessages);
     sBody := js.ToJSON;

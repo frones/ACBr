@@ -239,7 +239,8 @@ type
     procedure ExibirMensagemPinPad(const MsgPinPad: String);
     function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
       TimeOut: Integer = 30000; MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String;
-    function MenuPinPad(const Titulo: String; Opcoes: TStrings; TimeOut: Integer = 30000): Integer;
+    function MenuPinPad(const Titulo: String; Opcoes: TStrings;
+      TimeOut: Integer = 30000): Integer;  // Retorna Opção selecionada, iniciando com 1
     function VerificarPresencaPinPad: Byte;
 
     procedure ObterListaImagensPinPad(ALista: TStrings);

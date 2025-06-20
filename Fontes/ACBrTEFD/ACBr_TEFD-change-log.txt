@@ -45,6 +45,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/06/2025
+-- ACBrTEFAPIComum --
+[+] Adicionada a propriedade:
+    'TACBrTEFAPIDadosAutomacao.MensagemPinPad: String'
+    Permite que a Automação defina qual a mensagem que deve ficar no PinPad
+    após o termino de cada transação
+
+-- ACBrTEFAPIAditum, ACBrTEFAPIElgin, ACBrTEFAPIScope --
+[+] Adicionado suporte a propriedade 'DadosAutomacao.MensagemPinPad'
+
+-- ACBrTEFAPIPayGoWeb, ACBrTEFPayGoWebComum --
+[+] Implementado novos métodos disponíveis na biblioteca PGWebLib 4.1.44.0
+    CarregarImagemPinPad, ExibirImagemPinPad, ObterListaImagensPinPad,
+    ApagarImagemPinPad, MenuPinPad
+[+] Adicionado suporte a propriedade 'DadosAutomacao.MensagemPinPad'
+    (por: DSA)
+
 17/06/2025
 -- ACBrTEFComum --
 [+] Adicionada a propriedade TACBrTEFResp.PAN

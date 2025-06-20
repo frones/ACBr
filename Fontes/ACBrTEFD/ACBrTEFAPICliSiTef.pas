@@ -48,7 +48,7 @@ uses
 const
   CSUBDIRETORIO_PAYGOWEB = 'PGWeb';
 
-// https://dev.softwareexpress.com.br/en/docs/clisitef/clisitef_documento_principal/
+// https://dev.softwareexpress.com.br/docs/clisitef/clisitef_documento_principal/
 
 type
 

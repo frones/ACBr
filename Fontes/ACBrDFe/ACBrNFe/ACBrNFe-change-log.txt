@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/06/2025
+-- ACBrNFe.XmlWriter --
+[-] #TK-7239: Correção na geração dos grupos obsFisco e obsCont dos Itens.
+  Por: Francisco IBS
+
 17/06/2025
 -- ACBrNFeWebServices --
 [*] #TK-7205: Melhorias no Consultar visando salvar o XML do evento retornado 

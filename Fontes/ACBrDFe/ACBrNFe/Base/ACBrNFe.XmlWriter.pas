@@ -3087,40 +3087,42 @@ begin
 end;
 
 function TNFeXmlWriter.GerarDetObsItem(const i: Integer): TACBrXmlNode;
+  function GerarObsItem: TACBrXmlNode;
+  begin
+    Result := FDocument.CreateElement('obsCont');
+    Result.SetAttribute('xCampo', NFe.Det[i].obsCont.xCampo);
+    if Length(Trim(NFe.Det[i].obsCont.xCampo)) > 20 then
+      wAlerta('VA03', 'xCampo', DSC_XCAMPO, ERR_MSG_MAIOR);
+
+    if Length(Trim(NFe.Det[i].obsCont.xCampo)) = 0 then
+      wAlerta('VA03', 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
+
+    Result.AppendChild(AddNode(tcStr, 'VA04', 'xTexto', 01, 60, 1, NFe.Det[i].obsCont.xTexto, DSC_XTEXTO));
+  end;
+
+  function GerarObsFisco: TACBrXmlNode;
+  begin
+    Result := FDocument.CreateElement('obsFisco');
+    Result.SetAttribute('xCampo', NFe.Det[i].obsFisco.xCampo);
+    if Length(Trim(NFe.Det[i].obsFisco.xCampo)) > 20 then
+      wAlerta('VA06', 'xCampo', DSC_XCAMPO, ERR_MSG_MAIOR);
+
+    if Length(Trim(NFe.Det[i].obsFisco.xCampo)) = 0 then
+      wAlerta('VA06', 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
+
+    Result.AppendChild(AddNode(tcStr, 'VA07', 'xTexto', 01, 60, 1, NFe.Det[i].obsFisco.xTexto, DSC_XTEXTO));
+  end;
 begin
   Result := nil;
 
   if (NFe.Det[i].obsCont.xTexto <> '') or (NFe.Det[i].obsFisco.xTexto <> '') then
   begin
     Result := FDocument.CreateElement('obsItem');
-
     if (NFe.Det[i].obsCont.xTexto <> '') then
-    begin
-      Result := FDocument.CreateElement('obsCont');
-      Result.SetAttribute('xCampo', NFe.Det[i].obsCont.xCampo);
-
-      if length(trim(NFe.Det[i].obsCont.xCampo)) > 20 then
-        wAlerta('VA03', 'xCampo', DSC_XCAMPO, ERR_MSG_MAIOR);
-
-      if length(trim(NFe.Det[i].obsCont.xCampo)) = 0 then
-        wAlerta('VA03', 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
-
-      Result.AppendChild(AddNode(tcStr, 'VA04', 'xTexto', 01, 60, 1, NFe.Det[i].obsCont.xTexto, DSC_XTEXTO));
-    end;
+      Result.AppendChild(GerarObsItem);
 
     if (NFe.Det[i].obsFisco.xTexto <> '') then
-    begin
-      Result := FDocument.CreateElement('obsFisco');
-      Result.SetAttribute('xCampo', NFe.Det[i].obsFisco.xCampo);
-
-      if length(trim(NFe.Det[i].obsFisco.xCampo)) > 20 then
-        wAlerta('VA06', 'xCampo', DSC_XCAMPO, ERR_MSG_MAIOR);
-
-      if length(trim(NFe.Det[i].obsFisco.xCampo)) = 0 then
-        wAlerta('VA06', 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
-
-      Result.AppendChild(AddNode(tcStr, 'VA07', 'xTexto', 01, 60, 1, NFe.Det[i].obsFisco.xTexto, DSC_XTEXTO));
-    end;
+      Result.AppendChild(GerarObsFisco);
   end;
 end;
 
@@ -4090,7 +4092,9 @@ function TNFeXmlWriter.Gerar_Ide_CompraGov: TACBrXmlNode;
 begin
   Result := nil;
 
-  if NFe.ide.gCompraGov.pRedutor > 0 then
+  if (NFe.ide.gCompraGov.pRedutor > 0) and
+     (NFe.ide.gCompraGov.tpEnteGov <> tcgNenhum) and
+     (NFe.ide.gCompraGov.tpOperGov <> togNenhum) then
   begin
     Result := FDocument.CreateElement('gCompraGov');
 

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/06/2025
+--- ACBrLibMDFe.lpi, ACBrLibMDFeDemo.lpi ---
+[*] Ajustes paths compilação.
+   Por: Antonio Carlos Junior
+
 18/06/2025
 -- ACBrLibMDFeDataModule --
 [-] Ajuste necessário para compilação da Lib depois de mudança da propriedade do Tipo de Ambiente.

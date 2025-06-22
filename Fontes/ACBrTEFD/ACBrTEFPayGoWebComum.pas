@@ -781,7 +781,7 @@ type
     procedure ApagarImagemPinPad(const NomeImagem: String);
     procedure ExibirImagemPinPad(const NomeImagem: String; TimeOutSec: SmallInt = 0;
       AguardaTecla: Boolean = False);
-    procedure DefinirMensagemPinPad(const ImagemOuMensagem: String);
+    procedure DefinirMensagemPinPad(const AMensagem, NomeImagem: String);
     function MenuPinPad(const Titulo: String; Opcoes: TStrings; TimeOut: Integer = 30000): Integer;
 
     function GetVarPathPGWebLib: String;
@@ -1216,7 +1216,7 @@ end;
 procedure TACBrTEFPGWebAPI.Inicializar;
 var
   iRet: SmallInt;
-  MsgError, ver: String;
+  MsgError, ver, msg, img: String;
 begin
   if fInicializada then
     Exit;
@@ -1279,8 +1279,19 @@ begin
   if (MsgError <> '') then
     DoException(ACBrStr(MsgError));
 
-  if (Trim(MensagemPinPad) <> '') then
-    DefinirMensagemPinPad(MensagemPinPad);
+  img := '';
+  msg := Trim(MensagemPinPad);
+  if (Length(msg) = 8) then
+  begin
+    img := msg;
+    msg := '';
+  end;
+
+  if (msg = '') then
+    msg := PadRight(SoftwareHouse, 16) +
+         PadRight(NomeAplicacao + ' ' + VersaoAplicacao, 16);
+
+  DefinirMensagemPinPad(msg, img);
 
   fInicializada := True;
   SetEmTransacao(False);
@@ -2161,27 +2172,21 @@ begin
     DoException(ACBrStr(MsgError));
 end;
 
-procedure TACBrTEFPGWebAPI.DefinirMensagemPinPad(const ImagemOuMensagem: String);
+procedure TACBrTEFPGWebAPI.DefinirMensagemPinPad(const AMensagem,
+  NomeImagem: String);
 var
   iRetPP: SmallInt;
   MsgError: String;
   IdleMesage, IdleImage: AnsiString;
 begin
-  GravarLog('TACBrTEFPGWebAPI.DefinirMensagemPinPad( '+ImagemOuMensagem+' )');
+  GravarLog('TACBrTEFPGWebAPI.DefinirMensagemPinPad( '+AMensagem+', '+NomeImagem+' )');
 
   VerificarCarregada;
   if not Assigned(xPW_iPPSetIdleImage) then
     DoException(Format(sErrBibliotecaNaoTemMetodo, ['PW_iPPSetIdleImage']));
 
-  IdleMesage := Trim(ImagemOuMensagem);
-  if ( Length(IdleMesage) = 8) then
-  begin
-    IdleImage := IdleMesage;
-    IdleMesage := '';
-  end
-  else
-    IdleImage := '';
-
+  IdleMesage := Trim(AMensagem);
+  IdleImage := Trim(NomeImagem);
   GravarLog('PW_iPPSetIdleImage( '+IdleMesage+', '+IdleImage+' )');
   iRetPP := xPW_iPPSetIdleImage( PAnsiChar(IdleMesage), PAnsiChar(IdleImage) );
   GravarLog('  '+PWRETToString(iRetPP));

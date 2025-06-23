@@ -2,10 +2,13 @@
 {
     public enum TipoOperGov
     {
+        [EnumValue("")]
+        togNenhum,
+
         [EnumValue("1")]
-        togFornecimento = 1,
+        togFornecimento,
 
         [EnumValue("2")]
-        togRecebimentoPag = 2,
+        togRecebimentoPag,
     }
 }

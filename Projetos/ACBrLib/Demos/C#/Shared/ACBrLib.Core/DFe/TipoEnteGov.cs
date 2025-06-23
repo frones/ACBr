@@ -2,16 +2,19 @@
 {
     public enum TipoEnteGov
     {
+        [EnumValue("")]
+        tcgNenhum,
+
         [EnumValue("1")]
-        tcgUniao = 1,
+        tcgUniao,
 
         [EnumValue("2")]
-        tcgEstados = 2,
+        tcgEstados,
 
         [EnumValue("3")]
-        tcgDistritoFederal = 3,
+        tcgDistritoFederal,
 
         [EnumValue("4")]
-        tcgMunicipios = 4
+        tcgMunicipios
     }
 }

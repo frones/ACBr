@@ -949,7 +949,7 @@ begin
 
     wLinha:= wLinha + PadRight( Nome, 30)     + // Nome da Empresa
              IntToStrZero( Numero, 3)         + // Código do Banco
-             PadRight(UpperCase(fpNome), 15)  + // Nome do Banco(BANCO DO BRASIL)
+             PadRight(UpperCase( RemoveString(' ',fpNome)), 15)  + // Nome do Banco(BANCO DO BRASIL)
              FormatDateTime('ddmmyy',Now)     + // Data de geração do arquivo
              IntToStrZero(NumeroRemessa,7);     // Numero Remessa
 

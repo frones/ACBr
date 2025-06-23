@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/06/2025
+-- ACBrBancoBrasil.pas --
+[*] TK-7235 Ajuste conforme manual header posição 077 a 094 header CNAB 400
+	https://www.projetoacbr.com.br/forum/topic/83764-acbrli-boleto-remessa-banco-do-brasil-cnab-400-header-posi%C3%A7%C3%B5es%C2%A0077-a-094/
+    Por: Daniel de Morais
+
 20/06/2025
 -- ACBrBoletoRet_Sicoob_V3 --
 [-] #TK-7248 Mapeado a data da baixa , devido a isso o cliente nao estava encontrando o boleto baixado na consulta movimento

@@ -1291,7 +1291,8 @@ begin
     msg := PadRight(SoftwareHouse, 16) +
          PadRight(NomeAplicacao + ' ' + VersaoAplicacao, 16);
 
-  DefinirMensagemPinPad(msg, img);
+  if Assigned(xPW_iPPSetIdleImage) then
+    DefinirMensagemPinPad(msg, img);
 
   fInicializada := True;
   SetEmTransacao(False);

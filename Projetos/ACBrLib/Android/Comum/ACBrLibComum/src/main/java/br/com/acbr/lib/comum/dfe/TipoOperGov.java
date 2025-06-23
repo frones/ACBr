@@ -7,6 +7,7 @@ public class TipoOperGov {
 
     private static final Map<String, TipoOperGov> lookup = new HashMap<>();
 
+    public static final TipoOperGov togNenhum = new TipoOperGov("", "Nenhum");
     public static final TipoOperGov togFornecimento = new TipoOperGov("1", "Fornecimento");
     public static final TipoOperGov togRecebimentoPag = new TipoOperGov("2", "RecebimentoPag");
 
@@ -14,6 +15,7 @@ public class TipoOperGov {
     private final String description;
 
     static {
+        addToLookup(togNenhum);
         addToLookup(togFornecimento);
         addToLookup(togRecebimentoPag);
     }

@@ -7,6 +7,7 @@ public class TipoEnteGov {
 
     private static final Map<String, TipoEnteGov> lookup = new HashMap<>();
 
+    public static final TipoEnteGov tcgNenhum = new TipoEnteGov("", "Nenhum");
     public static final TipoEnteGov tcgUniao = new TipoEnteGov("1", "União");
     public static final TipoEnteGov tcgEstados = new TipoEnteGov("2", "Estados");
     public static final TipoEnteGov tcgDistritoFederal = new TipoEnteGov("3", "Distrito Federal");
@@ -16,6 +17,7 @@ public class TipoEnteGov {
     private final String description;
 
     static {
+        addToLookup(tcgNenhum);
         addToLookup(tcgUniao);
         addToLookup(tcgEstados);
         addToLookup(tcgDistritoFederal);

@@ -481,7 +481,7 @@ end;
 
 procedure TACBrPIXCobRValor.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  AJSon.AddPair('original', foriginal);
+  AJSon.AddPair('original', FormatarValorPIX(foriginal));
 end;
 
 procedure TACBrPIXCobRValor.DoReadFromJSon(AJSon: TACBrJSONObject);
@@ -621,9 +621,8 @@ begin
     .AddPair('txid', ftxId, False)
     .AddPair('politicaRetentativa', PIXRetentativaToString(fpoliticaRetentativa), False)
     .AddPair('status', PIXStatusRegistroCobrancaToString(fstatus), False)
-    .AddPair('infoAdicional', finfoAdicional, False);
-  if fajusteDiaUtil then
-    AJSon.AddPair('ajusteDataUtil', fajusteDiaUtil);
+    .AddPair('infoAdicional', finfoAdicional, False)
+    .AddPair('ajusteDiaUtil', fajusteDiaUtil);
 
   devedor.WriteToJSon(AJSon);
   recebedor.WriteToJSon(AJSon);
@@ -648,7 +647,7 @@ begin
   AJSon
     .Value('idRec', fidRec)
     .Value('txid', ftxId)
-    .Value('ajusteDataUtil', fajusteDiaUtil)
+    .Value('ajusteDiaUtil', fajusteDiaUtil)
     .Value('politicaRetentativa', wPolitica)
     .Value('status', wStatus)
     .Value('infoAdicional', finfoAdicional);
@@ -700,7 +699,7 @@ begin
   fidRec := EmptyStr;
   ftxId := EmptyStr;
   finfoAdicional := EmptyStr;
-  fajusteDiaUtil := False;
+  fajusteDiaUtil := True;
   fpoliticaRetentativa := rttNENHUM;
   fstatus := srcNENHUM;
 
@@ -719,7 +718,7 @@ begin
   Result := EstaVazio(fidRec) and
             EstaVazio(ftxId) and
             EstaVazio(finfoAdicional) and
-            (not fajusteDiaUtil) and
+            (fajusteDiaUtil) and
             (fpoliticaRetentativa = rttNENHUM) and
             (fstatus = srcNENHUM) and
             ((not Assigned(fPix)) or fPix.IsEmpty) and

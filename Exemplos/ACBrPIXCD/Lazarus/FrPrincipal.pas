@@ -95,14 +95,25 @@ type
     ACBrPSPSicredi1: TACBrPSPSicredi;
     btC6BankAcharCertificado: TSpeedButton;
     btC6BankAcharChavePrivada: TSpeedButton;
+    btCancelarCobR: TBitBtn;
+    btSolicitarRetentativaCobR: TBitBtn;
+    btCancelarCobRLimpar: TBitBtn;
+    btSolicitarRetentativaLimpar: TBitBtn;
     btCancelarSolicitacaoRec: TBitBtn;
+    btConsultarCobR: TBitBtn;
+    btConsultarCobRLimpar: TBitBtn;
+    btConsultarCobsR: TBitBtn;
+    btConsultarCobsRLimpar: TBitBtn;
     btConsultarSolicitacaoRec: TBitBtn;
     btConsultarSolicitacaoRecLimpar: TBitBtn;
     btCancelarSolicitacaoRecLimpar: TBitBtn;
+    btCriarCobR: TBitBtn;
+    btCriarCobRLimpar: TBitBtn;
+    btCriarCobRPreencher: TBitBtn;
     btCriarSolicitacaoRec: TBitBtn;
     btCriarSolicitacaoRecLimpar: TBitBtn;
     btRevisarRecorrenciaLimpar: TBitBtn;
-    btConsultarRecorrenciaIdRec: TBitBtn;
+    btConsultarRecorrencia: TBitBtn;
     btConsultarRecorrencias: TBitBtn;
     btCriarRecorrencia: TBitBtn;
     btCancelarRecorrencia: TBitBtn;
@@ -180,8 +191,10 @@ type
     cbAilosTipoChave: TComboBox;
     cbBanrisulTipoChave: TComboBox;
     cbC6BankTipoChave: TComboBox;
+    cbConsultarCobsRStatus: TComboBox;
     cbCriarRecorrenciaPeriodicidade: TComboBox;
     cbCriarRecorrenciaPoliticaRetentativa: TComboBox;
+    cbCriarCobRTipoConta: TComboBox;
     cbMercadoPagoTipoChave: TComboBox;
     cbCobVConsultarLocation: TCheckBox;
     cbCobVConsultarStatus: TComboBox;
@@ -212,6 +225,17 @@ type
     cbAutenticacaoManual: TCheckBox;
     CobVConsultarRodapeLista: TPanel;
     dtConsultarCobrancas_Fim: TDateTimePicker;
+    edCancelarCobRTxID: TEdit;
+    edSolicitarRetentativaTxID: TEdit;
+    edConsultarCobRTxID: TEdit;
+    edConsultarCobsRIdRec: TEdit;
+    edCriarCobRIdRec: TEdit;
+    edConsultarCobsRConvenio: TEdit;
+    edConsultarCobsRDoc: TEdit;
+    edConsultarCobsRFim: TDateTimePicker;
+    edConsultarCobsRInicio: TDateTimePicker;
+    edConsultarCobsRItensPorPagina: TSpinEdit;
+    edConsultarCobsRPagina: TSpinEdit;
     edConsultarSolicitacaoRecIdSolicRec: TEdit;
     edConsultarRecorrenciasConvenio: TEdit;
     edConsultarRecorrenciasFim: TDateTimePicker;
@@ -237,6 +261,17 @@ type
     edC6BankClientSecret: TEdit;
     edAppLessClientId: TEdit;
     edAppLessClientSecret: TEdit;
+    edCriarCobRConta: TEdit;
+    edCriarCobRAgencia: TEdit;
+    edCriarCobREmail: TEdit;
+    edCriarCobRCEP: TEdit;
+    edCriarCobRCidade: TEdit;
+    edCriarCobRUF: TEdit;
+    edCriarCobRVencimento: TDateTimePicker;
+    edCriarCobRLogradouro: TEdit;
+    edCriarCobRInfoAdicional: TEdit;
+    edCriarCobRValor: TEdit;
+    edSolicitarRetentativaLiquidacao: TDateTimePicker;
     edCriarSolicitacaoRecAgencia: TEdit;
     edCriarSolicitacaoRecDoc: TEdit;
     edCriarSolicitacaoRecExpiracao: TDateTimePicker;
@@ -355,6 +390,7 @@ type
     edCriarRecorrenciaNomeDevedor: TEdit;
     edCriarRecorrenciaObjeto: TEdit;
     edCriarRecorrenciaTxID: TEdit;
+    edCriarCobRTxID: TEdit;
     edtProxyHost: TEdit;
     edtProxySenha: TEdit;
     edtProxyUser: TEdit;
@@ -470,8 +506,32 @@ type
     Label16: TLabel;
     Label17: TLabel;
     Label18: TLabel;
+    lbCancelarCobRTxID: TLabel;
+    lbSolicitarRetentativaTxID: TLabel;
+    lbConsultarCobRTxID: TLabel;
+    lbConsultarCobsRIdRec: TLabel;
+    lbCriarCobRIdRec: TLabel;
+    lbConsultarCobsRConvenio: TLabel;
+    lbConsultarCobsRDoc: TLabel;
+    lbConsultarCobsRFim: TLabel;
+    lbConsultarCobsRInicio: TLabel;
+    lbConsultarCobsRItensPorPagina: TLabel;
+    lbConsultarCobsRPagina: TLabel;
+    lbConsultarCobsRStatus: TLabel;
     lbConsultarSolicitacaoRecIdSolicRec: TLabel;
     lbConsultarRecorrenciasConvenio: TLabel;
+    lbCriarCobRConta: TLabel;
+    lbCriarCobRAgencia: TLabel;
+    lbCriarCobREmail: TLabel;
+    lbCriarCobRCEP: TLabel;
+    lbCriarCobRCidade: TLabel;
+    lbCriarCobRUF: TLabel;
+    lbCriarCobRVencimento: TLabel;
+    lbCriarCobRLogradouro: TLabel;
+    lbCriarCobRInfoAdicional: TLabel;
+    lbCriarCobRTipoConta: TLabel;
+    lbCriarCobRValor: TLabel;
+    lbSolicitarRetentativaLiquidacao: TLabel;
     lbCriarSolicitacaoRecAgencia: TLabel;
     lbCriarSolicitacaoRecDoc: TLabel;
     lbCriarSolicitacaoRecExpiracao: TLabel;
@@ -682,6 +742,7 @@ type
     lbCriarRecorrenciaCPFCNPJ: TLabel;
     lbConsultarRecorrenciasDoc: TLabel;
     lbCriarRecorrenciaContrato: TLabel;
+    lbCriarCobRTxID: TLabel;
     lFim1: TLabel;
     lbConsultarRecorrenciasFim: TLabel;
     lInicio1: TLabel;
@@ -722,11 +783,16 @@ type
     lbConsultarRecorrenciasPagina: TLabel;
     lbConsultarRecorrenciasItensPorPagina: TLabel;
     lTokenTemporario: TLabel;
+    mmCancelarCobR: TMemo;
+    mmSolicitarRetentativa: TMemo;
     mmConsultarRecorrencia: TMemo;
+    mmConsultarCobR: TMemo;
+    mmConsultarCobsR: TMemo;
     mmConsultarSolicitacaoRec: TMemo;
     mmConsultarRecorrencias: TMemo;
     mmCancelarSolicitacaoRec: TMemo;
     mmCriarRecorrencia: TMemo;
+    mmCriarCobR: TMemo;
     mmCriarSolicitacaoRec: TMemo;
     mmRevisarRecorrencia: TMemo;
     mmPagSeguroResp: TMemo;
@@ -752,7 +818,16 @@ type
     mConsultarDevolucaoPix: TMemo;
     mCriarCobrancaImediata: TMemo;
     OpenDialog1: TOpenDialog;
+    pgTestesEndPointCobR: TPageControl;
     pgTestesEndPointSolicRec: TPageControl;
+    pnCancelarCobR: TPanel;
+    pnSolicitarRetentativa: TPanel;
+    pnCancelarCobRRodape: TPanel;
+    pnSolicitarRetentativaRodape: TPanel;
+    pnConsultarCobR: TPanel;
+    pnConsultarCobRRodape: TPanel;
+    pnConsultarCobsR: TPanel;
+    pnConsultarCobsRRodape: TPanel;
     pnConsultarSolicitacaoRec: TPanel;
     pnConsultarSolicitacaoRecRodape: TPanel;
     pnCancelarSolicitacaoRec: TPanel;
@@ -762,10 +837,12 @@ type
     pnConsultarRecorrenciasRodape: TPanel;
     pnConsultarRecorrencia: TPanel;
     pnConsultarRecorrencias: TPanel;
+    pnCriarCobRRodape: TPanel;
     pnCriarSolicitacaoRecRodape: TPanel;
     pnRecCriarRecorrencia: TPanel;
     pgTestesEndPointRec: TPageControl;
     pnCriarSolicitacaoRec: TPanel;
+    pnCobRCriar: TPanel;
     pnRevisarRecorrencia: TPanel;
     pnRevisarRecorrenciaRodape: TPanel;
     pcBradescoCertificados: TPageControl;
@@ -902,6 +979,7 @@ type
     sbBradescoVerSenhaPFX: TSpeedButton;
     sbConsultaCEP: TSpeedButton;
     sbCriarCobrancaImediata_GerarTxId: TSpeedButton;
+    btCriarCobRGerarTxID: TSpeedButton;
     sbGerenciaNetAcharPFX: TSpeedButton;
     sbItauAcharArqCertificado: TSpeedButton;
     sbItauAcharArqChavePrivada: TSpeedButton;
@@ -953,8 +1031,14 @@ type
     Splitter2: TSplitter;
     Splitter3: TSplitter;
     Splitter4: TSplitter;
+    spCriarCobR: TSplitter;
+    tsSolicitarRetentativa: TTabSheet;
+    tsEndPointCobR: TTabSheet;
+    tsConsultarCobR: TTabSheet;
+    tsConsultarCobsR: TTabSheet;
     tsConsultarSolicitacaoRec: TTabSheet;
     tsCancelarSolicitacaoRec: TTabSheet;
+    tsCobRCriar: TTabSheet;
     tsCriarSolicitacaoRec: TTabSheet;
     tsEndPointSolicRec: TTabSheet;
     tsEndPointRec: TTabSheet;
@@ -981,6 +1065,7 @@ type
     tsBradesco: TTabSheet;
     tsPagSeguro: TTabSheet;
     tsPagSeguroSimularPagamento: TTabSheet;
+    tsCancelarCobR: TTabSheet;
     tsSicoobCredenciais: TTabSheet;
     tsSantanderCredenciais: TTabSheet;
     tsSantanderExtrairCertificado: TTabSheet;
@@ -1041,13 +1126,19 @@ type
     procedure btBBVerSenhaPFXClick(Sender: TObject);
     procedure btC6BankAcharCertificadoClick(Sender: TObject);
     procedure btC6BankAcharChavePrivadaClick(Sender: TObject);
+    procedure btCancelarCobRClick(Sender: TObject);
     procedure btCancelarRecorrenciaClick(Sender: TObject);
     procedure btCancelarSolicitacaoRecClick(Sender: TObject);
-    procedure btConsultarRecorrenciaIdRecClick(Sender: TObject);
+    procedure btConsultarCobRClick(Sender: TObject);
+    procedure btConsultarCobsRClick(Sender: TObject);
+    procedure btConsultarRecorrenciaClick(Sender: TObject);
     procedure btConsultarRecorrenciaLimparClick(Sender: TObject);
     procedure btConsultarRecorrenciasClick(Sender: TObject);
     procedure btConsultarRecorrenciasLimparClick(Sender: TObject);
     procedure btConsultarSolicitacaoRecClick(Sender: TObject);
+    procedure btCriarCobRClick(Sender: TObject);
+    procedure btCriarCobRGerarTxIDClick(Sender: TObject);
+    procedure btCriarCobRPreencherClick(Sender: TObject);
     procedure btCriarRecorrenciaClick(Sender: TObject);
     procedure btCriarRecorrenciaPreencherClick(Sender: TObject);
     procedure btCriarSolicitacaoRecClick(Sender: TObject);
@@ -1117,6 +1208,7 @@ type
     procedure btSicrediGerarChavePrivadaClick(Sender: TObject);
     procedure btSicrediGerarCSRClick(Sender: TObject);
     procedure btSolicitarDevolucaoPixClick(Sender: TObject);
+    procedure btSolicitarRetentativaCobRClick(Sender: TObject);
     procedure cbBBVersaoAPIChange(Sender: TObject);
     procedure cbxAmbienteChange(Sender: TObject);
     procedure cbxPSPAtualChange(Sender: TObject);
@@ -1357,7 +1449,7 @@ uses
   {$EndIf}
   TypInfo, Clipbrd, IniFiles, DateUtils, synacode, synautil, pcnConversao,
   ACBrDelphiZXingQRCode, ACBrImage, ACBrValidador, ACBrPIXUtil, ACBrConsts,
-  ACBrPIXSchemasCobV, OpenSSLExt,
+  ACBrPIXSchemasCobV, ACBrPIXSchemasCobR, OpenSSLExt,
   ACBrJSON,
   ACBrUtil.Base,
   ACBrUtil.FilesIO,
@@ -1871,6 +1963,23 @@ begin
   ValidarChavePSPC6Bank;
 end;
 
+procedure TForm1.btCancelarCobRClick(Sender: TObject);
+begin
+  VerificarConfiguracao;
+  mmCancelarCobR.Lines.Clear;
+
+  with ACBrPixCD1.PSP.epCobR do
+  begin
+    CobRRevisada.Clear;
+    CobRRevisada.status := srcCANCELADA;
+
+    if RevisarCobranca(edCancelarCobRTxID.Text) then
+      mmCancelarCobR.Lines.Text := FormatarJSON(CobRGerada.AsJSON)
+    else
+      mmCancelarCobR.Lines.Text := FormatarJSON(Problema.AsJSON);
+  end;
+end;
+
 procedure TForm1.btCancelarRecorrenciaClick(Sender: TObject);
 begin
   VerificarConfiguracao;
@@ -1899,7 +2008,46 @@ begin
     mmCancelarSolicitacaoRec.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epSolicRec.Problema.AsJSON);
 end;
 
-procedure TForm1.btConsultarRecorrenciaIdRecClick(Sender: TObject);
+procedure TForm1.btConsultarCobRClick(Sender: TObject);
+begin
+  VerificarConfiguracao;
+  mmConsultarCobR.Lines.Clear;
+  if ACBrPixCD1.PSP.epCobR.ConsultarCobranca(edConsultarCobRTxID.Text) then
+    mmConsultarCobR.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epCobR.CobRCompleta.AsJSON)
+  else
+    mmConsultarCobR.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epCobR.Problema.AsJSON);
+end;
+
+procedure TForm1.btConsultarCobsRClick(Sender: TObject);
+var
+  Ok: Boolean;
+begin
+  VerificarConfiguracao;
+  mmConsultarCobsR.Lines.Clear;
+
+  Ok := ACBrPixCD1.PSP.epCobR.ConsultarCobrancas(
+          StartOfTheDay(edConsultarCobsRInicio.DateTime),
+          EndOfTheDay(edConsultarCobsRFim.DateTime),
+          Trim(edConsultarCobsRIdRec.Text),
+          OnlyNumber(edConsultarCobsRDoc.Text),
+          TACBrPIXStatusRegistroCobranca(cbConsultarCobsRStatus.ItemIndex),
+          edConsultarCobsRConvenio.Text,
+          edConsultarCobsRPagina.Value,
+          edConsultarCobsRItensPorPagina.Value);
+
+  if Ok then
+  begin
+    mmConsultarCobsR.Lines.Text :=
+      FormatarJSON(ACBrPixCD1.PSP.epCobR.CobsRConsultadas.AsJSON);
+    mmConsultarCobsR.Lines.Add('');
+    mmConsultarCobsR.Lines.Add('Encontradas: ' + IntToStr(
+      ACBrPixCD1.PSP.epCobR.CobsRConsultadas.cobsr.Count)+' Cobranças');
+  end
+  else
+    mmConsultarCobsR.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epCobR.Problema.AsJSON);
+end;
+
+procedure TForm1.btConsultarRecorrenciaClick(Sender: TObject);
 begin
   VerificarConfiguracao;
   mmConsultarRecorrencia.Lines.Clear;
@@ -1917,7 +2065,6 @@ end;
 procedure TForm1.btConsultarRecorrenciasClick(Sender: TObject);
 var
   Ok: Boolean;
-  i: Integer;
 begin
   VerificarConfiguracao;
   mmConsultarRecorrencias.Lines.Clear;
@@ -1957,6 +2104,83 @@ begin
     mmConsultarSolicitacaoRec.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epSolicRec.SolicitacaoCompleta.AsJSON)
   else
     mmConsultarSolicitacaoRec.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epSolicRec.Problema.AsJSON);
+end;
+
+procedure TForm1.btCriarCobRClick(Sender: TObject);
+var
+  wValor: Double;
+  wErros: TStringList;
+  wConta, wIdRec, wTxId: String;
+  wTipoConta: TACBrPIXTipoConta;
+begin
+  VerificarConfiguracao;
+  mmCriarCobR.Lines.Clear;
+
+  wErros := TStringList.Create;
+  try
+    wTxId := Trim(edCriarCobRTxID.Text);
+    wIdRec := Trim(edCriarCobRIdRec.Text);
+    wConta := Trim(edCriarCobRConta.Text);
+    wValor := StrToFloatDef(edCriarCobRValor.Text, 0);
+    wTipoConta := TACBrPIXTipoConta(cbCriarCobRTipoConta.ItemIndex);
+    if EstaVazio(wIdRec) then
+      wErros.Add('idRec deve ser informado');
+    if EstaZerado(wValor) then
+      wErros.Add('Valor deve ser informado');
+    if (wTipoConta = ptcNENHUM) then
+      wErros.Add('Tipo Conta deve ser informado');
+    if EstaVazio(wConta) then
+      wErros.Add('Conta deve ser informada');
+    if (edCriarCobRVencimento.DateTime < Now) then
+      wErros.Add('Vencimento inválido');
+
+    if NaoEstaZerado(wErros.Count) then
+      raise Exception.Create('Erro ao criar Cobrança:' + sLineBreak + wErros.Text);
+  finally
+    wErros.Free;
+  end;
+
+  with ACBrPixCD1.PSP.epCobR.CobRSolicitada do
+  begin
+    Clear;
+    idRec := wIdRec;
+    infoAdicional := Trim(edCriarCobRInfoAdicional.Text);
+    calendario.dataDeVencimento := edCriarCobRVencimento.DateTime;
+    valor.original := wValor;
+    recebedor.conta := wConta;
+    recebedor.tipoConta := wTipoConta;
+    recebedor.agencia := Trim(edCriarCobRAgencia.Text);
+    devedor.email := Trim(edCriarCobREmail.Text);
+    devedor.logradouro := Trim(edCriarCobRLogradouro.Text);
+    devedor.cidade := Trim(edCriarCobRCidade.Text);
+    devedor.uf := Trim(edCriarCobRUF.Text);
+    devedor.cep := Trim(edCriarCobRCEP.Text);
+  end;
+
+  if ACBrPixCD1.PSP.epCobR.CriarCobranca(wTxId) then
+    mmCriarCobR.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epCobR.CobRSolicitada.AsJSON)
+  else
+    mmCriarCobR.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epCobR.Problema.AsJSON);
+end;
+
+procedure TForm1.btCriarCobRGerarTxIDClick(Sender: TObject);
+begin
+  edCriarCobRTxID.Text := CriarTxId;
+end;
+
+procedure TForm1.btCriarCobRPreencherClick(Sender: TObject);
+begin
+  edCriarCobRInfoAdicional.Text := 'Streaming de Musica';
+  edCriarCobRVencimento.DateTime := IncDay(Now, 1);
+  edCriarCobRValor.Text := '9,99';
+  cbCriarCobRTipoConta.ItemIndex := 1;
+  edCriarCobRAgencia.Text := '9708';
+  edCriarCobRConta.Text := '012682';
+  edCriarCobRCEP.Text := '89256-140';
+  edCriarCobRCidade.Text := 'Uberlandia';
+  edCriarCobRUF.Text := 'MG';
+  edCriarCobRLogradouro.Text := 'Alameda Franco 1056';
+  edCriarCobREmail.Text := 'sebastiao.tavares@mail.com';
 end;
 
 procedure TForm1.btCriarRecorrenciaClick(Sender: TObject);
@@ -3197,6 +3421,35 @@ begin
   end
   else
     mSolicitarDevolucaoPix.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
+end;
+
+procedure TForm1.btSolicitarRetentativaCobRClick(Sender: TObject);
+var
+  wTxId: String;
+begin
+  VerificarConfiguracao;
+  mmSolicitarRetentativa.Lines.Clear;
+
+  wTxId := Trim(edSolicitarRetentativaTxID.Text);
+  if EstaVazio(wTxId) then
+  begin
+    MessageDlg('Informe o txId', mtError, [mbOK], 0);
+    Exit;
+  end;
+
+  if (edSolicitarRetentativaLiquidacao.DateTime < Now) then
+  begin
+    MessageDlg('Data de Liquidação precisa ser maior que data atual', mtError, [mbOK], 0);
+    Exit;
+  end;
+
+  with ACBrPixCD1.PSP.epCobR do
+  begin
+    if SolicitarRetentativa(wTxId, edSolicitarRetentativaLiquidacao.DateTime) then
+      mmSolicitarRetentativa.Lines.Text := FormatarJSON(CobRCompleta.AsJSON)
+    else
+      mmSolicitarRetentativa.Lines.Text := FormatarJSON(Problema.AsJSON);
+  end;
 end;
 
 procedure TForm1.cbBBVersaoAPIChange(Sender: TObject);
@@ -4921,18 +5174,43 @@ begin
   ImageList1.GetBitmap(13, btFluxoCopiaECola.Glyph);
   ImageList1.GetBitmap(13, btCobVCopiaECola.Glyph);
 
-  ImageList1.GetBitmap(4, btConsultarPix.Glyph);
-  ImageList1.GetBitmap(4, btConsultarPixRecebidos.Glyph);
+  ImageList1.GetBitmap(8, btConsultarPix.Glyph);
+  ImageList1.GetBitmap(8, btConsultarPixRecebidos.Glyph);
   ImageList1.GetBitmap(4, btSolicitarDevolucaoPix.Glyph);
-  ImageList1.GetBitmap(4, btConsultarDevolucaoPix.Glyph);
-  ImageList1.GetBitmap(4, btCriarCobrancaImediata.Glyph);
-  ImageList1.GetBitmap(4, btConsultarCobrancaImediata.Glyph);
-  ImageList1.GetBitmap(4, btConsultarCobrancas.Glyph);
-  ImageList1.GetBitmap(4, btCriarCobV.Glyph);
-  ImageList1.GetBitmap(4, btCobVConsultar.Glyph);
-  ImageList1.GetBitmap(4, btCobVConsultarLista.Glyph);
-  ImageList1.GetBitmap(4, btCobVCancelar.Glyph);
-  ImageList1.GetBitmap(4, btBBSimulaPagamento_Executar.Glyph);
+  ImageList1.GetBitmap(8, btConsultarDevolucaoPix.Glyph);
+  ImageList1.GetBitmap(33, btCriarCobrancaImediata.Glyph);
+  ImageList1.GetBitmap(8, btConsultarCobrancaImediata.Glyph);
+  ImageList1.GetBitmap(8, btConsultarCobrancas.Glyph);
+  ImageList1.GetBitmap(33, btCriarCobV.Glyph);
+  ImageList1.GetBitmap(8, btCobVConsultar.Glyph);
+  ImageList1.GetBitmap(8, btCobVConsultarLista.Glyph);
+  ImageList1.GetBitmap(17, btCobVCancelar.Glyph);
+  ImageList1.GetBitmap(33, btBBSimulaPagamento_Executar.Glyph);
+
+  ImageList1.GetBitmap(33, btCriarCobR.Glyph);
+  ImageList1.GetBitmap(18, btCriarCobRLimpar.Glyph);
+  ImageList1.GetBitmap(8, btConsultarCobR.Glyph);
+  ImageList1.GetBitmap(8, btConsultarCobsR.Glyph);
+  ImageList1.GetBitmap(17, btCancelarCobR.Glyph);
+  ImageList1.GetBitmap(29, btCriarCobRPreencher.Glyph);
+  ImageList1.GetBitmap(30, btCriarCobRGerarTxID.Glyph);
+  ImageList1.GetBitmap(11, btSolicitarRetentativaCobR.Glyph);
+
+  ImageList1.GetBitmap(33, btCriarRecorrencia.Glyph);
+  ImageList1.GetBitmap(18, btCriarRecorrenciaLimpar.Glyph);
+  ImageList1.GetBitmap(8, btConsultarRecorrencia.Glyph);
+  ImageList1.GetBitmap(8, btConsultarRecorrencias.Glyph);
+  ImageList1.GetBitmap(27, btRevisarRecorrencia.Glyph);
+  ImageList1.GetBitmap(17, btCancelarRecorrencia.Glyph);
+  ImageList1.GetBitmap(29, btCriarRecorrenciaPreencher.Glyph);
+
+  ImageList1.GetBitmap(16, btCriarSolicitacaoRec.Glyph);
+  ImageList1.GetBitmap(8, btConsultarSolicitacaoRec.Glyph);
+  ImageList1.GetBitmap(18, btConsultarSolicitacaoRecLimpar.Glyph);
+  ImageList1.GetBitmap(18, btConsultarSolicitacaoRecLimpar.Glyph);
+  ImageList1.GetBitmap(18, btCancelarSolicitacaoRecLimpar.Glyph);
+  ImageList1.GetBitmap(17, btCancelarSolicitacaoRec.Glyph);
+
   ImageList1.GetBitmap(18, btLimparConsultarPix.Glyph);
   ImageList1.GetBitmap(18, btLimparConsultarPixRecebidos.Glyph);
   ImageList1.GetBitmap(18, btLimparSolicitarDevolucaoPix.Glyph);
@@ -5034,6 +5312,8 @@ var
   r: TACBrPIXRetentativa;
   s: TACBrPIXPeriodicidade;
   t: TACBrPIXStatusRecorrencia;
+  u: TACBrPIXTipoConta;
+  v: TACBrPIXStatusRegistroCobranca;
 begin
   cbxPSPAtual.Items.Clear;
   for i := 0 to pgPSPs.PageCount-1 do
@@ -5121,13 +5401,27 @@ begin
     cbConsultarRecorrenciasStatus.Items.Add(PIXStatusRecorrenciaToString(t));
   cbConsultarRecorrenciasStatus.ItemIndex := 0;
 
+  cbCriarCobRTipoConta.Items.Clear;
+  for u := Low(TACBrPIXTipoConta) to High(TACBrPIXTipoConta) do
+    cbCriarCobRTipoConta.Items.Add(PIXTipoContaToString(u));
+  cbCriarCobRTipoConta.ItemIndex := 0;
+
+  cbConsultarCobsRStatus.Items.Clear;
+  for v := Low(TACBrPIXStatusRegistroCobranca) to High(TACBrPIXStatusRegistroCobranca) do
+    cbConsultarCobsRStatus.Items.Add(PIXStatusRegistroCobrancaToString(v));
+  cbConsultarCobsRStatus.ItemIndex := 0;
+
   edCobVVencimento.DateTime := IncDay(Now, 7);
   edCriarRecorrenciaDataInicial.DateTime := IncMonth(Now, 1);
   edCriarRecorrenciaDataFinal.DateTime := IncMonth(Now, 4);
   edRevisarRecorrenciaDataInicial.DateTime := IncMonth(Now, 1);
   edCriarSolicitacaoRecExpiracao.DateTime := IncDay(Now, 1);
+  edCriarCobRVencimento.DateTime := IncDay(Now, 1);
   edConsultarRecorrenciasInicio.DateTime := StartOfTheMonth(IncMonth(Now, -1));
   edConsultarRecorrenciasFim.DateTime := EndOfTheMonth(IncMonth(Now, -1));
+  edConsultarCobsRInicio.DateTime := StartOfTheMonth(IncMonth(Now, -1));
+  edConsultarCobsRFim.DateTime := EndOfTheMonth(IncMonth(Now, -1));
+  edSolicitarRetentativaLiquidacao.DateTime := IncDay(Now, 2);
   pnBBPFX.Parent := pnBBCertificados;
   pnBBChaveECert.Parent := pnBBCertificados;
   pnBradescoPFX.Parent := pnBradescoCertificados;

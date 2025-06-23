@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/06/2025
+-- ACBrPIXCD --
+[+] Criação do método 'SolicitarRetentativa()'
+
+-- ACBrPIXSchemasCobR --
+[-] Ajuste na escrita das propriedades ajusteDiaUtil e valor.original.
+    por: Elias César
+
 18/06/2024
 -- ACBrPIXCD --
 [+] Adicionando endpoints /cobr, /webhook, /webhookrec, /webhookcobr;

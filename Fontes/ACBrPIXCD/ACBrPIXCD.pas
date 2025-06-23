@@ -361,9 +361,11 @@ type
     destructor Destroy; override;
     procedure Clear;
 
-    function CriarCobranca(const TxId: String): Boolean;
+    function CriarCobranca(const TxId: String = ''): Boolean;
     function RevisarCobranca(const TxId: String): Boolean;
     function ConsultarCobranca(const TxId: String): Boolean;
+    function SolicitarRetentativa(const TxId: String;
+      const aDataLiquidacao: TDateTime): Boolean;
     function ConsultarCobrancas(aInicio: TDateTime; aFim: TDateTime;
       const idRec: String = ''; const aCpfCnpj: String = '';
       const aStatus: TACBrPIXStatusRegistroCobranca = srcNENHUM;
@@ -1568,6 +1570,32 @@ begin
 
   fPSP.AcessarEndPoint(ChttpMethodGET, EndPoint, ResultCode, RespostaHttp);
   Result := (ResultCode = HTTP_OK);
+
+  if Result then
+    CobRCompleta.AsJSON := String(RespostaHttp)
+  else
+    fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
+end;
+
+function TACBrPixEndPointCobR.SolicitarRetentativa(const TxId: String; const aDataLiquidacao: TDateTime): Boolean;
+var
+  RespostaHttp: AnsiString;
+  ResultCode: Integer;
+begin
+  RegistrarLog(Format('SolicitarRetentativa(txId: %s; data: %s)', [TxId, FormatDateBr(aDataLiquidacao)]), 2);
+  if EstaVazio(Trim(TxId)) then
+    raise EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['txid']);
+  if EstaZerado(aDataLiquidacao) then
+    raise EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['DataLiquidacao']);
+
+  Clear;
+  fPSP.PrepararHTTP;
+  fPSP.URLPathParams.Add(TxId);
+  fPSP.URLPathParams.Add('retentativa');
+  fPSP.URLPathParams.Add(FormatDateBr(aDataLiquidacao, 'YYYY-MM-DD'));
+
+  fPSP.AcessarEndPoint(ChttpMethodPOST, EndPoint, ResultCode, RespostaHttp);
+  Result := (ResultCode = HTTP_CREATED);
 
   if Result then
     CobRCompleta.AsJSON := String(RespostaHttp)

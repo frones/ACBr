@@ -94,11 +94,11 @@ object Form1: TForm1
     Height = 621
     Top = 0
     Width = 1008
-    ActivePage = tsConfiguracao
+    ActivePage = tsTestes
     Align = alClient
     Images = ImageList1
     TabHeight = 30
-    TabIndex = 2
+    TabIndex = 1
     TabOrder = 0
     TabWidth = 335
     OnChange = pgPrincipalChange
@@ -745,7 +745,7 @@ object Form1: TForm1
                       AutoSize = True
                       Caption = 'Consultar'
                       Images = ImageList1
-                      ImageIndex = 4
+                      ImageIndex = 8
                       OnClick = btConsultarPixClick
                       TabOrder = 1
                     end
@@ -821,7 +821,7 @@ object Form1: TForm1
                       AutoSize = True
                       Caption = 'Consultar'
                       Images = ImageList1
-                      ImageIndex = 4
+                      ImageIndex = 8
                       OnClick = btConsultarPixRecebidosClick
                       TabOrder = 6
                     end
@@ -1017,7 +1017,7 @@ object Form1: TForm1
                       AutoSize = True
                       Caption = 'Solicitar'
                       Images = ImageList1
-                      ImageIndex = 4
+                      ImageIndex = 27
                       OnClick = btSolicitarDevolucaoPixClick
                       TabOrder = 4
                     end
@@ -1160,7 +1160,7 @@ object Form1: TForm1
                       AutoSize = True
                       Caption = 'Consultar'
                       Images = ImageList1
-                      ImageIndex = 4
+                      ImageIndex = 8
                       OnClick = btConsultarDevolucaoPixClick
                       TabOrder = 2
                     end
@@ -1252,7 +1252,7 @@ object Form1: TForm1
                       AutoSize = True
                       Caption = 'Criar'
                       Images = ImageList1
-                      ImageIndex = 4
+                      ImageIndex = 33
                       OnClick = btCriarCobrancaImediataClick
                       TabOrder = 5
                     end
@@ -1449,7 +1449,7 @@ object Form1: TForm1
                       AutoSize = True
                       Caption = 'Consultar'
                       Images = ImageList1
-                      ImageIndex = 4
+                      ImageIndex = 8
                       OnClick = btConsultarCobrancaImediataClick
                       TabOrder = 1
                     end
@@ -1527,7 +1527,7 @@ object Form1: TForm1
                       AutoSize = True
                       Caption = 'Consultar'
                       Images = ImageList1
-                      ImageIndex = 4
+                      ImageIndex = 8
                       OnClick = btConsultarCobrancasClick
                       TabOrder = 7
                     end
@@ -1838,7 +1838,7 @@ object Form1: TForm1
                     Width = 170
                     Caption = 'Criar'
                     Images = ImageList1
-                    ImageIndex = 4
+                    ImageIndex = 33
                     OnClick = btCriarCobVClick
                     TabOrder = 1
                   end
@@ -2178,7 +2178,7 @@ object Form1: TForm1
                       AutoSize = True
                       Caption = 'Consultar'
                       Images = ImageList1
-                      ImageIndex = 4
+                      ImageIndex = 8
                       OnClick = btCobVConsultarClick
                       TabOrder = 1
                     end
@@ -2287,7 +2287,7 @@ object Form1: TForm1
                       AutoSize = True
                       Caption = 'Consultar'
                       Images = ImageList1
-                      ImageIndex = 4
+                      ImageIndex = 8
                       OnClick = btCobVConsultarListaClick
                       TabOrder = 7
                     end
@@ -2514,6 +2514,814 @@ object Form1: TForm1
                 end
               end
             end
+            object tsEndPointCobR: TTabSheet
+              Caption = '/cobr'
+              ClientHeight = 522
+              ClientWidth = 616
+              object pgTestesEndPointCobR: TPageControl
+                Left = 0
+                Height = 522
+                Top = 0
+                Width = 616
+                ActivePage = tsCobRCriar
+                Align = alClient
+                TabIndex = 0
+                TabOrder = 0
+                object tsCobRCriar: TTabSheet
+                  Caption = 'Criar Cobranca Recorrente'
+                  ClientHeight = 494
+                  ClientWidth = 608
+                  object pnCobRCriar: TPanel
+                    Left = 0
+                    Height = 208
+                    Top = 0
+                    Width = 608
+                    Align = alTop
+                    BevelOuter = bvNone
+                    ClientHeight = 208
+                    ClientWidth = 608
+                    TabOrder = 0
+                    object btCriarCobR: TBitBtn
+                      Left = 254
+                      Height = 26
+                      Top = 162
+                      Width = 105
+                      Anchors = [akTop, akRight]
+                      Caption = 'Criar'
+                      Images = ImageList1
+                      ImageIndex = 33
+                      OnClick = btCriarCobRClick
+                      TabOrder = 5
+                    end
+                    object lbCriarCobRValor: TLabel
+                      Left = 492
+                      Height = 15
+                      Top = 10
+                      Width = 26
+                      Caption = 'Valor'
+                      ParentColor = False
+                    end
+                    object lbCriarCobRLogradouro: TLabel
+                      Left = 254
+                      Height = 15
+                      Top = 109
+                      Width = 109
+                      Caption = 'Logradouro Devedor'
+                      ParentColor = False
+                    end
+                    object edCriarCobRLogradouro: TEdit
+                      Left = 254
+                      Height = 23
+                      Top = 124
+                      Width = 160
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 0
+                      OnChange = edCriarRecorrenciaNomeDevedorChange
+                    end
+                    object lbCriarCobRInfoAdicional: TLabel
+                      Left = 254
+                      Height = 15
+                      Top = 10
+                      Width = 91
+                      Caption = 'Informação Adic.'
+                      ParentColor = False
+                    end
+                    object edCriarCobRInfoAdicional: TEdit
+                      Left = 254
+                      Height = 23
+                      Top = 25
+                      Width = 105
+                      TabOrder = 3
+                    end
+                    object edCriarCobRValor: TEdit
+                      Left = 492
+                      Height = 23
+                      Top = 25
+                      Width = 98
+                      Alignment = taRightJustify
+                      TabOrder = 1
+                      Text = '1,00'
+                    end
+                    object edCriarCobRVencimento: TDateTimePicker
+                      Left = 373
+                      Height = 23
+                      Top = 25
+                      Width = 105
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      AutoSize = False
+                      TabOrder = 4
+                      TrailingSeparator = False
+                      TextForNullDate = 'NULL'
+                      LeadingZeros = True
+                      Kind = dtkDate
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 45809
+                      Time = 0.39312563657586
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      ParentBiDiMode = False
+                      MonthNames = 'Long'
+                    end
+                    object lbCriarCobRVencimento: TLabel
+                      Left = 373
+                      Height = 15
+                      Top = 10
+                      Width = 63
+                      Caption = 'Vencimento'
+                      ParentColor = False
+                    end
+                    object cbCriarCobRTipoConta: TComboBox
+                      Left = 254
+                      Height = 23
+                      Top = 73
+                      Width = 105
+                      ItemHeight = 15
+                      Style = csDropDownList
+                      TabOrder = 2
+                    end
+                    object lbCriarCobRTipoConta: TLabel
+                      Left = 254
+                      Height = 15
+                      Top = 58
+                      Width = 59
+                      Caption = 'Tipo Conta'
+                      ParentColor = False
+                    end
+                    object btCriarCobRPreencher: TBitBtn
+                      Left = 16
+                      Height = 26
+                      Top = 162
+                      Width = 224
+                      Anchors = [akTop, akRight]
+                      Caption = 'Preencher Dados Ficticios'
+                      Images = ImageList1
+                      ImageIndex = 29
+                      OnClick = btCriarCobRPreencherClick
+                      TabOrder = 6
+                    end
+                    object lbCriarCobRIdRec: TLabel
+                      Left = 16
+                      Height = 15
+                      Top = 10
+                      Width = 29
+                      Caption = 'idRec'
+                      ParentColor = False
+                    end
+                    object edCriarCobRIdRec: TEdit
+                      Left = 16
+                      Height = 23
+                      Top = 25
+                      Width = 224
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 7
+                    end
+                    object lbCriarCobRConta: TLabel
+                      Left = 492
+                      Height = 15
+                      Top = 58
+                      Width = 32
+                      Caption = 'Conta'
+                      ParentColor = False
+                    end
+                    object edCriarCobRConta: TEdit
+                      Left = 492
+                      Height = 23
+                      Top = 73
+                      Width = 98
+                      TabOrder = 8
+                      OnChange = edtCriarCobrancaImediata_CPF_CNPJChange
+                    end
+                    object edCriarCobRAgencia: TEdit
+                      Left = 373
+                      Height = 23
+                      Top = 73
+                      Width = 105
+                      TabOrder = 9
+                      OnChange = edtCriarCobrancaImediata_CPF_CNPJChange
+                    end
+                    object lbCriarCobRAgencia: TLabel
+                      Left = 373
+                      Height = 15
+                      Top = 58
+                      Width = 43
+                      Caption = 'Agência'
+                      ParentColor = False
+                    end
+                    object lbCriarCobRTxID: TLabel
+                      Left = 16
+                      Height = 15
+                      Top = 58
+                      Width = 81
+                      Caption = 'TxID (Opcional)'
+                      ParentColor = False
+                    end
+                    object edCriarCobRTxID: TEdit
+                      Left = 16
+                      Height = 23
+                      Top = 73
+                      Width = 200
+                      TabOrder = 10
+                    end
+                    object btCriarCobRGerarTxID: TSpeedButton
+                      Left = 216
+                      Height = 23
+                      Top = 73
+                      Width = 24
+                      Flat = True
+                      Images = ImageList1
+                      ImageIndex = 30
+                      OnClick = btCriarCobRGerarTxIDClick
+                    end
+                    object edCriarCobREmail: TEdit
+                      Left = 430
+                      Height = 23
+                      Top = 124
+                      Width = 160
+                      TabOrder = 11
+                      OnChange = edtCriarCobrancaImediata_CPF_CNPJChange
+                    end
+                    object lbCriarCobREmail: TLabel
+                      Left = 430
+                      Height = 15
+                      Top = 109
+                      Width = 81
+                      Caption = 'E-mail Devedor'
+                      ParentColor = False
+                    end
+                    object edCriarCobRCEP: TEdit
+                      Left = 16
+                      Height = 23
+                      Top = 124
+                      Width = 74
+                      TabOrder = 12
+                      OnChange = edtCriarCobrancaImediata_CPF_CNPJChange
+                    end
+                    object lbCriarCobRCEP: TLabel
+                      Left = 16
+                      Height = 15
+                      Top = 109
+                      Width = 68
+                      Caption = 'CEP Devedor'
+                      ParentColor = False
+                    end
+                    object edCriarCobRCidade: TEdit
+                      Left = 104
+                      Height = 23
+                      Top = 124
+                      Width = 90
+                      TabOrder = 13
+                      OnChange = edtCriarCobrancaImediata_CPF_CNPJChange
+                    end
+                    object lbCriarCobRCidade: TLabel
+                      Left = 104
+                      Height = 15
+                      Top = 109
+                      Width = 84
+                      Caption = 'Cidade Devedor'
+                      ParentColor = False
+                    end
+                    object edCriarCobRUF: TEdit
+                      Left = 198
+                      Height = 23
+                      Top = 124
+                      Width = 42
+                      TabOrder = 14
+                      OnChange = edtCriarCobrancaImediata_CPF_CNPJChange
+                    end
+                    object lbCriarCobRUF: TLabel
+                      Left = 198
+                      Height = 15
+                      Top = 109
+                      Width = 14
+                      Caption = 'UF'
+                      ParentColor = False
+                    end
+                  end
+                  object pnCriarCobRRodape: TPanel
+                    Left = 0
+                    Height = 29
+                    Top = 465
+                    Width = 608
+                    Align = alBottom
+                    ClientHeight = 29
+                    ClientWidth = 608
+                    TabOrder = 1
+                    object btCriarCobRLimpar: TBitBtn
+                      Left = 507
+                      Height = 26
+                      Top = 1
+                      Width = 83
+                      Anchors = [akTop]
+                      AutoSize = True
+                      Caption = 'Limpar'
+                      Images = ImageList1
+                      ImageIndex = 18
+                      TabOrder = 0
+                    end
+                  end
+                  object spCriarCobR: TSplitter
+                    Left = 603
+                    Height = 257
+                    Top = 208
+                    Width = 5
+                    Align = alRight
+                    ResizeAnchor = akRight
+                  end
+                  object mmCriarCobR: TMemo
+                    Left = 0
+                    Height = 257
+                    Top = 208
+                    Width = 603
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 3
+                  end
+                end
+                object tsConsultarCobR: TTabSheet
+                  Caption = 'Consultar Cobrança'
+                  ClientHeight = 494
+                  ClientWidth = 608
+                  object pnConsultarCobR: TPanel
+                    Left = 0
+                    Height = 112
+                    Top = 0
+                    Width = 608
+                    Align = alTop
+                    BevelOuter = bvNone
+                    ClientHeight = 112
+                    ClientWidth = 608
+                    TabOrder = 0
+                    object lbConsultarCobRTxID: TLabel
+                      Left = 16
+                      Height = 15
+                      Top = 16
+                      Width = 20
+                      Caption = 'txID'
+                      ParentColor = False
+                    end
+                    object edConsultarCobRTxID: TEdit
+                      Left = 16
+                      Height = 23
+                      Top = 36
+                      Width = 576
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 0
+                    end
+                    object btConsultarCobR: TBitBtn
+                      Left = 495
+                      Height = 26
+                      Top = 72
+                      Width = 97
+                      Anchors = [akTop, akRight]
+                      AutoSize = True
+                      Caption = 'Consultar'
+                      Images = ImageList1
+                      ImageIndex = 4
+                      OnClick = btConsultarCobRClick
+                      TabOrder = 1
+                    end
+                  end
+                  object mmConsultarCobR: TMemo
+                    Left = 0
+                    Height = 353
+                    Top = 112
+                    Width = 608
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 1
+                  end
+                  object pnConsultarCobRRodape: TPanel
+                    Left = 0
+                    Height = 29
+                    Top = 465
+                    Width = 608
+                    Align = alBottom
+                    ClientHeight = 29
+                    ClientWidth = 608
+                    TabOrder = 2
+                    object btConsultarCobRLimpar: TBitBtn
+                      Left = 495
+                      Height = 26
+                      Top = 1
+                      Width = 97
+                      Anchors = [akTop]
+                      Caption = 'Limpar'
+                      Images = ImageList1
+                      ImageIndex = 18
+                      OnClick = btConsultarRecorrenciaLimparClick
+                      TabOrder = 0
+                    end
+                  end
+                end
+                object tsConsultarCobsR: TTabSheet
+                  Caption = 'Consultar Cobranças'
+                  ClientHeight = 494
+                  ClientWidth = 608
+                  object pnConsultarCobsR: TPanel
+                    Left = 0
+                    Height = 128
+                    Top = 0
+                    Width = 608
+                    Align = alTop
+                    BevelOuter = bvNone
+                    ClientHeight = 128
+                    ClientWidth = 608
+                    TabOrder = 0
+                    object btConsultarCobsR: TBitBtn
+                      Left = 365
+                      Height = 26
+                      Top = 72
+                      Width = 106
+                      Caption = 'Consultar'
+                      Images = ImageList1
+                      ImageIndex = 8
+                      OnClick = btConsultarCobsRClick
+                      TabOrder = 8
+                    end
+                    object lbConsultarCobsRInicio: TLabel
+                      Left = 10
+                      Height = 15
+                      Top = 10
+                      Width = 29
+                      Caption = 'Início'
+                      ParentColor = False
+                    end
+                    object edConsultarCobsRInicio: TDateTimePicker
+                      Left = 10
+                      Height = 23
+                      Top = 25
+                      Width = 100
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      AutoSize = False
+                      TabOrder = 0
+                      TrailingSeparator = False
+                      TextForNullDate = 'NULL'
+                      LeadingZeros = True
+                      Kind = dtkDate
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 44568
+                      Time = 0.565578831017774
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      MonthNames = 'Long'
+                    end
+                    object lbConsultarCobsRFim: TLabel
+                      Left = 128
+                      Height = 15
+                      Top = 10
+                      Width = 20
+                      Caption = 'Fim'
+                      ParentColor = False
+                    end
+                    object edConsultarCobsRFim: TDateTimePicker
+                      Left = 128
+                      Height = 23
+                      Top = 25
+                      Width = 100
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      AutoSize = False
+                      TabOrder = 1
+                      TrailingSeparator = False
+                      TextForNullDate = 'NULL'
+                      LeadingZeros = True
+                      Kind = dtkDate
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 44568
+                      Time = 0.565578831017774
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      MonthNames = 'Long'
+                    end
+                    object lbConsultarCobsRDoc: TLabel
+                      Left = 244
+                      Height = 15
+                      Top = 10
+                      Width = 59
+                      Caption = 'CPF / CNPJ'
+                      ParentColor = False
+                    end
+                    object edConsultarCobsRDoc: TEdit
+                      Left = 244
+                      Height = 23
+                      Top = 25
+                      Width = 106
+                      TabOrder = 2
+                      OnChange = edtConsultarPixRecebidosCPFCNPJChange
+                      OnKeyPress = edOnlyNumbersKeyPress
+                    end
+                    object edConsultarCobsRPagina: TSpinEdit
+                      Left = 10
+                      Height = 23
+                      Top = 75
+                      Width = 100
+                      MaxValue = 9999
+                      TabOrder = 5
+                      Value = 1
+                    end
+                    object lbConsultarCobsRPagina: TLabel
+                      Left = 10
+                      Height = 15
+                      Top = 60
+                      Width = 36
+                      Caption = 'Página'
+                      ParentColor = False
+                    end
+                    object lbConsultarCobsRItensPorPagina: TLabel
+                      Left = 128
+                      Height = 15
+                      Top = 60
+                      Width = 69
+                      Caption = 'Itens por Pág'
+                      ParentColor = False
+                    end
+                    object edConsultarCobsRItensPorPagina: TSpinEdit
+                      Left = 128
+                      Height = 23
+                      Top = 75
+                      Width = 100
+                      MaxValue = 100
+                      TabOrder = 6
+                      Value = 10
+                    end
+                    object lbConsultarCobsRStatus: TLabel
+                      Left = 244
+                      Height = 15
+                      Top = 60
+                      Width = 32
+                      Caption = 'Status'
+                      ParentColor = False
+                    end
+                    object cbConsultarCobsRStatus: TComboBox
+                      Left = 244
+                      Height = 23
+                      Top = 75
+                      Width = 106
+                      ItemHeight = 15
+                      Style = csDropDownList
+                      TabOrder = 7
+                    end
+                    object edConsultarCobsRConvenio: TEdit
+                      Left = 486
+                      Height = 23
+                      Top = 25
+                      Width = 106
+                      TabOrder = 4
+                      OnChange = edtConsultarPixRecebidosCPFCNPJChange
+                    end
+                    object lbConsultarCobsRConvenio: TLabel
+                      Left = 486
+                      Height = 15
+                      Top = 10
+                      Width = 51
+                      Caption = 'Convenio'
+                      ParentColor = False
+                    end
+                    object edConsultarCobsRIdRec: TEdit
+                      Left = 365
+                      Height = 23
+                      Top = 25
+                      Width = 106
+                      TabOrder = 3
+                      OnChange = edtConsultarPixRecebidosCPFCNPJChange
+                    end
+                    object lbConsultarCobsRIdRec: TLabel
+                      Left = 365
+                      Height = 15
+                      Top = 10
+                      Width = 29
+                      Caption = 'idRec'
+                      ParentColor = False
+                    end
+                  end
+                  object mmConsultarCobsR: TMemo
+                    Left = 0
+                    Height = 337
+                    Top = 128
+                    Width = 608
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 1
+                  end
+                  object pnConsultarCobsRRodape: TPanel
+                    Left = 0
+                    Height = 29
+                    Top = 465
+                    Width = 608
+                    Align = alBottom
+                    ClientHeight = 29
+                    ClientWidth = 608
+                    TabOrder = 2
+                    object btConsultarCobsRLimpar: TBitBtn
+                      Left = 509
+                      Height = 26
+                      Top = 0
+                      Width = 83
+                      Anchors = [akTop]
+                      AutoSize = True
+                      Caption = 'Limpar'
+                      Images = ImageList1
+                      ImageIndex = 18
+                      OnClick = btConsultarRecorrenciasLimparClick
+                      TabOrder = 0
+                    end
+                  end
+                end
+                object tsCancelarCobR: TTabSheet
+                  Caption = 'Cancelar Cobrança'
+                  ClientHeight = 494
+                  ClientWidth = 608
+                  object pnCancelarCobR: TPanel
+                    Left = 0
+                    Height = 88
+                    Top = 0
+                    Width = 608
+                    Align = alTop
+                    BevelOuter = bvNone
+                    ClientHeight = 88
+                    ClientWidth = 608
+                    TabOrder = 0
+                    object lbCancelarCobRTxID: TLabel
+                      Left = 16
+                      Height = 15
+                      Top = 19
+                      Width = 21
+                      Caption = 'TxId'
+                      ParentColor = False
+                    end
+                    object edCancelarCobRTxID: TEdit
+                      Left = 16
+                      Height = 23
+                      Top = 36
+                      Width = 466
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 0
+                    end
+                    object btCancelarCobR: TBitBtn
+                      Left = 496
+                      Height = 26
+                      Top = 33
+                      Width = 96
+                      Anchors = [akTop, akRight]
+                      Caption = 'Cancelar'
+                      Images = ImageList1
+                      ImageIndex = 17
+                      OnClick = btCancelarCobRClick
+                      TabOrder = 1
+                    end
+                  end
+                  object mmCancelarCobR: TMemo
+                    Left = 0
+                    Height = 377
+                    Top = 88
+                    Width = 608
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 1
+                  end
+                  object pnCancelarCobRRodape: TPanel
+                    Left = 0
+                    Height = 29
+                    Top = 465
+                    Width = 608
+                    Align = alBottom
+                    ClientHeight = 29
+                    ClientWidth = 608
+                    TabOrder = 2
+                    object btCancelarCobRLimpar: TBitBtn
+                      Left = 496
+                      Height = 26
+                      Top = 0
+                      Width = 96
+                      Anchors = [akTop]
+                      Caption = 'Limpar'
+                      Images = ImageList1
+                      ImageIndex = 18
+                      OnClick = btCancelarCobrancaLimparMemoClick
+                      TabOrder = 0
+                    end
+                  end
+                end
+                object tsSolicitarRetentativa: TTabSheet
+                  Caption = 'Solicitar Retentativa'
+                  ClientHeight = 494
+                  ClientWidth = 608
+                  object pnSolicitarRetentativa: TPanel
+                    Left = 0
+                    Height = 88
+                    Top = 0
+                    Width = 608
+                    Align = alTop
+                    BevelOuter = bvNone
+                    ClientHeight = 88
+                    ClientWidth = 608
+                    TabOrder = 0
+                    object lbSolicitarRetentativaTxID: TLabel
+                      Left = 16
+                      Height = 15
+                      Top = 21
+                      Width = 21
+                      Caption = 'TxId'
+                      ParentColor = False
+                    end
+                    object edSolicitarRetentativaTxID: TEdit
+                      Left = 16
+                      Height = 23
+                      Top = 36
+                      Width = 344
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 0
+                    end
+                    object btSolicitarRetentativaCobR: TBitBtn
+                      Left = 496
+                      Height = 26
+                      Top = 33
+                      Width = 96
+                      Anchors = [akTop, akRight]
+                      Caption = 'Solicitar'
+                      Images = ImageList1
+                      ImageIndex = 11
+                      OnClick = btSolicitarRetentativaCobRClick
+                      TabOrder = 1
+                    end
+                    object edSolicitarRetentativaLiquidacao: TDateTimePicker
+                      Left = 376
+                      Height = 23
+                      Top = 36
+                      Width = 107
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      AutoSize = False
+                      TabOrder = 2
+                      TrailingSeparator = False
+                      TextForNullDate = 'NULL'
+                      LeadingZeros = True
+                      Kind = dtkDate
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 45809
+                      Time = 0.39312563657586
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      ParentBiDiMode = False
+                      MonthNames = 'Long'
+                    end
+                    object lbSolicitarRetentativaLiquidacao: TLabel
+                      Left = 376
+                      Height = 15
+                      Top = 21
+                      Width = 85
+                      Caption = 'Data Liquidacao'
+                      ParentColor = False
+                    end
+                  end
+                  object mmSolicitarRetentativa: TMemo
+                    Left = 0
+                    Height = 377
+                    Top = 88
+                    Width = 608
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 1
+                  end
+                  object pnSolicitarRetentativaRodape: TPanel
+                    Left = 0
+                    Height = 29
+                    Top = 465
+                    Width = 608
+                    Align = alBottom
+                    ClientHeight = 29
+                    ClientWidth = 608
+                    TabOrder = 2
+                    object btSolicitarRetentativaLimpar: TBitBtn
+                      Left = 496
+                      Height = 26
+                      Top = 0
+                      Width = 96
+                      Anchors = [akTop]
+                      Caption = 'Limpar'
+                      Images = ImageList1
+                      ImageIndex = 18
+                      OnClick = btCancelarCobrancaLimparMemoClick
+                      TabOrder = 0
+                    end
+                  end
+                end
+              end
+            end
             object tsEndPointRec: TTabSheet
               Caption = '/rec'
               ClientHeight = 522
@@ -2523,9 +3331,9 @@ object Form1: TForm1
                 Height = 522
                 Top = 0
                 Width = 616
-                ActivePage = tsRevisarRecorrencia
+                ActivePage = tsCriarRecorrencia
                 Align = alClient
-                TabIndex = 3
+                TabIndex = 0
                 TabOrder = 0
                 object tsCriarRecorrencia: TTabSheet
                   Caption = 'Criar Recorrencia'
@@ -2549,7 +3357,7 @@ object Form1: TForm1
                       Anchors = [akTop, akRight]
                       Caption = 'Criar'
                       Images = ImageList1
-                      ImageIndex = 4
+                      ImageIndex = 33
                       OnClick = btCriarRecorrenciaClick
                       TabOrder = 11
                     end
@@ -2849,7 +3657,7 @@ object Form1: TForm1
                       Anchors = [akTop, akLeft, akRight]
                       TabOrder = 0
                     end
-                    object btConsultarRecorrenciaIdRec: TBitBtn
+                    object btConsultarRecorrencia: TBitBtn
                       Left = 495
                       Height = 26
                       Top = 72
@@ -2858,8 +3666,8 @@ object Form1: TForm1
                       AutoSize = True
                       Caption = 'Consultar'
                       Images = ImageList1
-                      ImageIndex = 4
-                      OnClick = btConsultarRecorrenciaIdRecClick
+                      ImageIndex = 8
+                      OnClick = btConsultarRecorrenciaClick
                       TabOrder = 1
                     end
                   end
@@ -3332,7 +4140,7 @@ object Form1: TForm1
                       Anchors = [akTop, akRight]
                       Caption = 'Criar'
                       Images = ImageList1
-                      ImageIndex = 4
+                      ImageIndex = 16
                       OnClick = btCriarSolicitacaoRecClick
                       TabOrder = 6
                     end
@@ -3530,7 +4338,7 @@ object Form1: TForm1
                       AutoSize = True
                       Caption = 'Consultar'
                       Images = ImageList1
-                      ImageIndex = 4
+                      ImageIndex = 8
                       OnClick = btConsultarSolicitacaoRecClick
                       TabOrder = 1
                     end
@@ -3729,7 +4537,7 @@ object Form1: TForm1
                       Anchors = [akTop, akRight]
                       Caption = 'Pagar'
                       Images = ImageList1
-                      ImageIndex = 4
+                      ImageIndex = 33
                       OnClick = btBBSimulaPagamento_ExecutarClick
                       TabOrder = 1
                     end
@@ -3804,7 +4612,7 @@ object Form1: TForm1
                       Anchors = [akTop, akRight]
                       Caption = 'Pagar'
                       Images = ImageList1
-                      ImageIndex = 4
+                      ImageIndex = 33
                       OnClick = btPagSeguroPagarClick
                       TabOrder = 1
                     end
@@ -3863,7 +4671,8 @@ object Form1: TForm1
                       Width = 88
                       Anchors = [akTop, akRight]
                       Caption = 'Pagar'
-                      ImageIndex = 4
+                      Images = ImageList1
+                      ImageIndex = 33
                       OnClick = btPixPDVSimularPagtoClick
                       TabOrder = 1
                     end

@@ -99,7 +99,7 @@ type
     procedure Ler_VeicNovos(veicArr: TACBrXmlNodeArray);
     procedure Ler_Cobr(ANode: TACBrXmlNode);
     procedure Ler_InfGTVe(infGTVeArr: TACBrXmlNodeArray);
-    procedure Ler_InfCTeSub(infCteSubNd: TACBrXmlNode);
+    procedure Ler_InfCTeSub(infCteSubNd: TACBrXmlNode; infCTeSub: TInfCteSub);
     procedure Ler_Signature(SignatureNd: TACBrXmlNode);
     procedure Ler_InfCTeSupl(infCTeSuplNd: TACBrXmlNode);
     procedure Ler_AutXML(ANode: TACBrXmlNode);
@@ -1167,7 +1167,7 @@ begin
   Ler_VeicNovos(ANode.Childrens.FindAllAnyNs('veicNovos'));
   Ler_Cobr(ANode.Childrens.FindAnyNs('cobr'));
   Ler_InfGTVe(ANode.Childrens.FindAllAnyNs('infGTVe'));
-  Ler_InfCTeSub(ANode.Childrens.FindAnyNs('infCteSub'));
+  Ler_InfCTeSub(ANode.Childrens.FindAnyNs('infCteSub'), FCTe.infCTeNorm.infCTeSub);
 
   infGlobalizadoNd := ANode.Childrens.FindAnyNs('infGlobalizado');
   if Assigned(infGlobalizadoNd) then
@@ -1222,7 +1222,7 @@ begin
   FCTe.InfCTeAnu.dEmi := ObterConteudo(ANode.Childrens.FindAnyNs('dEmi'), tcDat);
 end;
 
-procedure TCTeXmlReader.Ler_InfCTeSub(infCteSubNd: TACBrXmlNode);
+procedure TCTeXmlReader.Ler_InfCTeSub(infCteSubNd: TACBrXmlNode; infCTeSub: TInfCteSub);
 var
   indAlteraToma: string;
   Ok: Boolean;
@@ -1230,38 +1230,38 @@ var
 begin
   if not Assigned(infCTeSubNd) then exit;
 
-  FCTe.infCTeNorm.infCTeSub.chCte := ObterConteudo(infCTeSubNd.Childrens.FindAnyNs('chCte'), tcStr);
-  FCTe.infCTeNorm.infCTeSub.refCteAnu := ObterConteudo(infCTeSubNd.Childrens.FindAnyNs('refCteAnu'), tcStr);
+  infCTeSub.chCte := ObterConteudo(infCTeSubNd.Childrens.FindAnyNs('chCte'), tcStr);
+  infCTeSub.refCteAnu := ObterConteudo(infCTeSubNd.Childrens.FindAnyNs('refCteAnu'), tcStr);
 
   indAlteratoma := ObterConteudo(infCTeSubNd.Childrens.FindAnyNs('indAlteraToma'), tcStr);
 
   if indAlteratoma <> '' then
-    FCTe.infCTeNorm.infCTeSub.indAlteraToma := StrToTIndicador(Ok, indAlteraToma);
+    infCTeSub.indAlteraToma := StrToTIndicador(Ok, indAlteraToma);
 
   tomaICMSNd := infCTeSubNd.Childrens.FindAnyNs('tomaICMS');
 
   if Assigned(tomaICMSNd) then
   begin
-    FCTe.infCTeNorm.infCTeSub.tomaICMS.refNFe := ObterConteudo(tomaICMSNd.Childrens.FindAnyNs('refNFe'), tcStr);
-    FCTe.infCTeNorm.infCTeSub.tomaICMS.refCte := ObterConteudo(tomaICMSNd.Childrens.FindAnyNs('refCte'), tcStr);
+    infCTeSub.tomaICMS.refNFe := ObterConteudo(tomaICMSNd.Childrens.FindAnyNs('refNFe'), tcStr);
+    infCTeSub.tomaICMS.refCte := ObterConteudo(tomaICMSNd.Childrens.FindAnyNs('refCte'), tcStr);
 
     refNFNd := tomaICMSNd.Childrens.FindAnyNs('refNF');
 
     if Assigned(refNFNd) then
     begin
-      FCTe.infCTeNorm.infCTeSub.tomaICMS.refNF.CNPJCPF := ObterCNPJCPF(refNFNd);
-      FCTe.infCTeNorm.infCTeSub.tomaICMS.refNF.modelo := ObterConteudo(refNFNd.Childrens.FindAnyNs('mod'), tcStr);
-      FCTe.infCTeNorm.infCTeSub.tomaICMS.refNF.serie := ObterConteudo(refNFNd.Childrens.FindAnyNs('serie'), tcInt);
-      FCTe.infCTeNorm.infCTeSub.tomaICMS.refNF.subserie := ObterConteudo(refNFNd.Childrens.FindAnyNs('subserie'), tcInt);
-      FCTe.infCTeNorm.infCTeSub.tomaICMS.refNF.nro := ObterConteudo(refNFNd.Childrens.FindAnyNs('nro'), tcInt);
-      FCTe.infCTeNorm.infCTeSub.tomaICMS.refNF.valor := ObterConteudo(refNFNd.Childrens.FindAnyNs('valor'), tcDe2);
-      FCTe.infCTeNorm.infCTeSub.tomaICMS.refNF.dEmi := ObterConteudo(refNFNd.Childrens.FindAnyNs('dEmi'), tcDat);
+      infCTeSub.tomaICMS.refNF.CNPJCPF := ObterCNPJCPF(refNFNd);
+      infCTeSub.tomaICMS.refNF.modelo := ObterConteudo(refNFNd.Childrens.FindAnyNs('mod'), tcStr);
+      infCTeSub.tomaICMS.refNF.serie := ObterConteudo(refNFNd.Childrens.FindAnyNs('serie'), tcInt);
+      infCTeSub.tomaICMS.refNF.subserie := ObterConteudo(refNFNd.Childrens.FindAnyNs('subserie'), tcInt);
+      infCTeSub.tomaICMS.refNF.nro := ObterConteudo(refNFNd.Childrens.FindAnyNs('nro'), tcInt);
+      infCTeSub.tomaICMS.refNF.valor := ObterConteudo(refNFNd.Childrens.FindAnyNs('valor'), tcDe2);
+      infCTeSub.tomaICMS.refNF.dEmi := ObterConteudo(refNFNd.Childrens.FindAnyNs('dEmi'), tcDat);
     end;
   end;
 
   tomaNaoICMSNd := infCTeSubNd.Childrens.FindAnyNs('tomaNaoICMS');
   if Assigned(tomaNaoICMSNd) then
-    FCTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu := ObterConteudo(tomaNaoICMSNd.Childrens.FindAnyNs('refCteAnu'), tcStr);
+    infCTeSub.tomaNaoICMS.refCteAnu := ObterConteudo(tomaNaoICMSNd.Childrens.FindAnyNs('refCteAnu'), tcStr);
 end;
 
 procedure TCTeXmlReader.Ler_InfCTeSupl(infCTeSuplNd: TACBrXmlNode);
@@ -2022,7 +2022,7 @@ begin
   Ler_Det(ANode);
   Ler_InfModal(ANode.Childrens.FindAnyNs('infModal'));
   Ler_Cobr(ANode.Childrens.FindAnyNs('cobr'));
-  Ler_InfCTeSub(ANode.Childrens.FindAnyNs('infCteSub'));
+  Ler_InfCTeSub(ANode.Childrens.FindAnyNs('infCteSub'), FCTe.infCTeSub);
   Ler_Imp(ANode.Childrens.FindAnyNs('imp'));
   Ler_Total(ANode.Childrens.FindAnyNs('total'));
   Ler_AutXML(ANode);

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/06/2025
+-- ACBrCTe.XmlReader --
+[-] #TK-7249: Correção para realizar a leitura correta do grupo infCTeSub
+  Por: Italo Giurizzato Junior
+
 17/06/2025
 -- ACBrCTeWebServices --
 [*] #TK-7205: Melhorias no Consultar visando salvar o XML do evento retornado 

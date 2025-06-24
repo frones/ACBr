@@ -258,9 +258,6 @@ type
     fstatus: TACBrPIXStatusRegistroCobranca;
     function GetPaginacao: TACBrPIXPaginacao;
     function GetRecebedor: TACBrPIXRecSolicRecebedor;
-    procedure SetCnpj(AValue: String);
-    procedure SetCpf(AValue: String);
-    procedure SetIdRec(AValue: String);
   protected
     procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
@@ -274,9 +271,9 @@ type
 
     property inicio: TDateTime read finicio write finicio;
     property fim: TDateTime read ffim write ffim;
-    property idRec: String read fidRec write SetIdRec;
-    property cpf: String read fcpf write SetCpf;
-    property cnpj: String read fcnpj write SetCnpj;
+    property idRec: String read fidRec write fIdRec;
+    property cpf: String read fcpf write fCpf;
+    property cnpj: String read fcnpj write fCnpj;
     property status: TACBrPIXStatusRegistroCobranca read fstatus write fstatus;
     property recebedor: TACBrPIXRecSolicRecebedor read GetRecebedor;
     property paginacao: TACBrPIXPaginacao read GetPaginacao;
@@ -800,24 +797,6 @@ begin
   if not Assigned(fRecebedor) then
     fRecebedor := TACBrPIXRecSolicRecebedor.Create('recebedor');
   Result := fRecebedor;
-end;
-
-procedure TACBrPIXCobRConsultaParametros.SetCnpj(AValue: String);
-begin
-  if fcnpj = AValue then Exit;
-  fcnpj := AValue;
-end;
-
-procedure TACBrPIXCobRConsultaParametros.SetCpf(AValue: String);
-begin
-  if fcpf = AValue then Exit;
-  fcpf := AValue;
-end;
-
-procedure TACBrPIXCobRConsultaParametros.SetIdRec(AValue: String);
-begin
-  if fidRec = AValue then Exit;
-  fidRec := AValue;
 end;
 
 procedure TACBrPIXCobRConsultaParametros.DoWriteToJSon(AJSon: TACBrJSONObject);

@@ -94,11 +94,11 @@ object Form1: TForm1
     Height = 621
     Top = 0
     Width = 1008
-    ActivePage = tsTestes
+    ActivePage = tsFluxoPagto
     Align = alClient
     Images = ImageList1
     TabHeight = 30
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     TabWidth = 335
     OnChange = pgPrincipalChange
@@ -2820,6 +2820,7 @@ object Form1: TForm1
                       Caption = 'Limpar'
                       Images = ImageList1
                       ImageIndex = 18
+                      OnClick = btCriarCobRLimparClick
                       TabOrder = 0
                     end
                   end
@@ -2912,7 +2913,7 @@ object Form1: TForm1
                       Caption = 'Limpar'
                       Images = ImageList1
                       ImageIndex = 18
-                      OnClick = btConsultarRecorrenciaLimparClick
+                      OnClick = btConsultarCobRLimparClick
                       TabOrder = 0
                     end
                   end
@@ -3133,7 +3134,7 @@ object Form1: TForm1
                       Caption = 'Limpar'
                       Images = ImageList1
                       ImageIndex = 18
-                      OnClick = btConsultarRecorrenciasLimparClick
+                      OnClick = btConsultarCobsRLimparClick
                       TabOrder = 0
                     end
                   end
@@ -3208,7 +3209,7 @@ object Form1: TForm1
                       Caption = 'Limpar'
                       Images = ImageList1
                       ImageIndex = 18
-                      OnClick = btCancelarCobrancaLimparMemoClick
+                      OnClick = btCancelarCobRLimparClick
                       TabOrder = 0
                     end
                   end
@@ -3315,7 +3316,7 @@ object Form1: TForm1
                       Caption = 'Limpar'
                       Images = ImageList1
                       ImageIndex = 18
-                      OnClick = btCancelarCobrancaLimparMemoClick
+                      OnClick = btSolicitarRetentativaLimparClick
                       TabOrder = 0
                     end
                   end
@@ -3733,7 +3734,7 @@ object Form1: TForm1
                       Height = 15
                       Top = 10
                       Width = 29
-                      Caption = 'Início'
+                      Caption = 'Inicio'
                       ParentColor = False
                     end
                     object edConsultarRecorrenciasInicio: TDateTimePicker
@@ -3821,7 +3822,7 @@ object Form1: TForm1
                       Height = 15
                       Top = 60
                       Width = 36
-                      Caption = 'Página'
+                      Caption = 'Pagina'
                       ParentColor = False
                     end
                     object lbConsultarRecorrenciasItensPorPagina: TLabel
@@ -3829,7 +3830,7 @@ object Form1: TForm1
                       Height = 15
                       Top = 60
                       Width = 69
-                      Caption = 'Itens por Pág'
+                      Caption = 'Itens por Pag'
                       ParentColor = False
                     end
                     object edConsultarRecorrenciasItensPorPagina: TSpinEdit
@@ -4438,6 +4439,421 @@ object Form1: TForm1
                     ClientWidth = 608
                     TabOrder = 2
                     object btCancelarSolicitacaoRecLimpar: TBitBtn
+                      Left = 509
+                      Height = 26
+                      Top = 0
+                      Width = 83
+                      Anchors = [akTop]
+                      AutoSize = True
+                      Caption = 'Limpar'
+                      Images = ImageList1
+                      ImageIndex = 18
+                      OnClick = btConsultarRecorrenciasLimparClick
+                      TabOrder = 0
+                    end
+                  end
+                end
+              end
+            end
+            object tsEndPointLocRec: TTabSheet
+              Caption = '/locrec'
+              ClientHeight = 522
+              ClientWidth = 616
+              object pgTestesEndPointLocRec: TPageControl
+                Left = 0
+                Height = 522
+                Top = 0
+                Width = 616
+                ActivePage = tsConsultarLocationsRec
+                Align = alClient
+                TabIndex = 2
+                TabOrder = 0
+                object tsCriarLocationRec: TTabSheet
+                  Caption = 'Criar Location'
+                  ClientHeight = 494
+                  ClientWidth = 608
+                  object pnCriarLocationRec: TPanel
+                    Left = 0
+                    Height = 72
+                    Top = 0
+                    Width = 608
+                    Align = alTop
+                    BevelOuter = bvNone
+                    ClientHeight = 72
+                    ClientWidth = 608
+                    TabOrder = 0
+                    object btCriarLocationRec: TBitBtn
+                      Left = 16
+                      Height = 26
+                      Top = 24
+                      Width = 102
+                      Anchors = [akTop, akRight]
+                      Caption = 'Criar'
+                      Images = ImageList1
+                      ImageIndex = 16
+                      OnClick = btCriarLocationRecClick
+                      TabOrder = 0
+                    end
+                  end
+                  object pnLocationRecRodape: TPanel
+                    Left = 0
+                    Height = 29
+                    Top = 465
+                    Width = 608
+                    Align = alBottom
+                    ClientHeight = 29
+                    ClientWidth = 608
+                    TabOrder = 1
+                    object btLocationRecLimpar: TBitBtn
+                      Left = 506
+                      Height = 26
+                      Top = 1
+                      Width = 83
+                      Anchors = [akTop]
+                      AutoSize = True
+                      Caption = 'Limpar'
+                      Images = ImageList1
+                      ImageIndex = 18
+                      TabOrder = 0
+                    end
+                  end
+                  object spLocationRec: TSplitter
+                    Left = 603
+                    Height = 393
+                    Top = 72
+                    Width = 5
+                    Align = alRight
+                    ResizeAnchor = akRight
+                  end
+                  object mmCriarLocationRec: TMemo
+                    Left = 0
+                    Height = 393
+                    Top = 72
+                    Width = 603
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 3
+                  end
+                end
+                object tsConsultarLocationRec: TTabSheet
+                  Caption = 'Consultar Location'
+                  ClientHeight = 494
+                  ClientWidth = 608
+                  object pnConsultarLocationRec: TPanel
+                    Left = 0
+                    Height = 112
+                    Top = 0
+                    Width = 608
+                    Align = alTop
+                    BevelOuter = bvNone
+                    ClientHeight = 112
+                    ClientWidth = 608
+                    TabOrder = 0
+                    object lbConsultarLocationRecId: TLabel
+                      Left = 16
+                      Height = 15
+                      Top = 19
+                      Width = 10
+                      Caption = 'Id'
+                      ParentColor = False
+                    end
+                    object edConsultarLocationRecId: TEdit
+                      Left = 16
+                      Height = 23
+                      Top = 36
+                      Width = 576
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 0
+                    end
+                    object btConsultarLocationRec: TBitBtn
+                      Left = 495
+                      Height = 26
+                      Top = 72
+                      Width = 97
+                      Anchors = [akTop, akRight]
+                      AutoSize = True
+                      Caption = 'Consultar'
+                      Images = ImageList1
+                      ImageIndex = 8
+                      OnClick = btConsultarLocationRecClick
+                      TabOrder = 1
+                    end
+                  end
+                  object mmConsultarLocationRec: TMemo
+                    Left = 0
+                    Height = 353
+                    Top = 112
+                    Width = 608
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 1
+                  end
+                  object pnConsultarLocationRecRodape: TPanel
+                    Left = 0
+                    Height = 29
+                    Top = 465
+                    Width = 608
+                    Align = alBottom
+                    ClientHeight = 29
+                    ClientWidth = 608
+                    TabOrder = 2
+                    object btConsultarLocationRecLimpar: TBitBtn
+                      Left = 495
+                      Height = 26
+                      Top = 1
+                      Width = 97
+                      Anchors = [akTop]
+                      Caption = 'Limpar'
+                      Images = ImageList1
+                      ImageIndex = 18
+                      OnClick = btConsultarRecorrenciaLimparClick
+                      TabOrder = 0
+                    end
+                  end
+                end
+                object tsConsultarLocationsRec: TTabSheet
+                  Caption = 'Consultar Locations'
+                  ClientHeight = 494
+                  ClientWidth = 608
+                  object pnConsultarLocationsRec: TPanel
+                    Left = 0
+                    Height = 112
+                    Top = 0
+                    Width = 608
+                    Align = alTop
+                    BevelOuter = bvNone
+                    ClientHeight = 112
+                    ClientWidth = 608
+                    TabOrder = 0
+                    object btConsultarLocationsRec: TBitBtn
+                      Left = 416
+                      Height = 26
+                      Top = 64
+                      Width = 176
+                      Caption = 'Consultar'
+                      Images = ImageList1
+                      ImageIndex = 8
+                      OnClick = btConsultarLocationsRecClick
+                      TabOrder = 5
+                    end
+                    object lbConsultarLocationsRecInicio: TLabel
+                      Left = 10
+                      Height = 15
+                      Top = 10
+                      Width = 29
+                      Caption = 'Início'
+                      ParentColor = False
+                    end
+                    object edConsultarLocationsRecInicio: TDateTimePicker
+                      Left = 10
+                      Height = 23
+                      Top = 25
+                      Width = 100
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      AutoSize = False
+                      TabOrder = 0
+                      TrailingSeparator = False
+                      TextForNullDate = 'NULL'
+                      LeadingZeros = True
+                      Kind = dtkDate
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 45831
+                      Time = 0.565578831017774
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      MonthNames = 'Long'
+                    end
+                    object lbConsultarLocationsRecFim: TLabel
+                      Left = 124
+                      Height = 15
+                      Top = 10
+                      Width = 20
+                      Caption = 'Fim'
+                      ParentColor = False
+                    end
+                    object edConsultarLocationsRecFim: TDateTimePicker
+                      Left = 124
+                      Height = 23
+                      Top = 25
+                      Width = 100
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      AutoSize = False
+                      TabOrder = 1
+                      TrailingSeparator = False
+                      TextForNullDate = 'NULL'
+                      LeadingZeros = True
+                      Kind = dtkDate
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 45831
+                      Time = 0.565578831017774
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      MonthNames = 'Long'
+                    end
+                    object edConsultarLocationsRecPagina: TSpinEdit
+                      Left = 416
+                      Height = 23
+                      Top = 25
+                      Width = 80
+                      MaxValue = 9999
+                      TabOrder = 4
+                      Value = 1
+                    end
+                    object lbConsultarLocationsRecPagina: TLabel
+                      Left = 416
+                      Height = 15
+                      Top = 10
+                      Width = 36
+                      Caption = 'Pagina'
+                      ParentColor = False
+                    end
+                    object lbConsultarLocationsRecItensPorPagina: TLabel
+                      Left = 512
+                      Height = 15
+                      Top = 10
+                      Width = 69
+                      Caption = 'Itens por Pag'
+                      ParentColor = False
+                    end
+                    object edConsultarLocationsRecItensPorPagina: TSpinEdit
+                      Left = 512
+                      Height = 23
+                      Top = 25
+                      Width = 80
+                      MaxValue = 100
+                      TabOrder = 3
+                      Value = 10
+                    end
+                    object cbConsultarLocationsRecComIdLocRed: TCheckBox
+                      Left = 10
+                      Height = 19
+                      Top = 56
+                      Width = 76
+                      Caption = 'Com idRec'
+                      TabOrder = 2
+                    end
+                    object edConsultarLocationsRecConvenio: TEdit
+                      Left = 239
+                      Height = 23
+                      Top = 25
+                      Width = 163
+                      TabOrder = 6
+                      OnChange = edtConsultarPixRecebidosCPFCNPJChange
+                      OnKeyPress = edOnlyNumbersKeyPress
+                    end
+                    object lbConsultarLocationsRecConvenio: TLabel
+                      Left = 239
+                      Height = 15
+                      Top = 10
+                      Width = 51
+                      Caption = 'Convenio'
+                      ParentColor = False
+                    end
+                  end
+                  object mmConsultarLocationsRec: TMemo
+                    Left = 0
+                    Height = 353
+                    Top = 112
+                    Width = 608
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 1
+                  end
+                  object pnConsultarLocationsRecRodape: TPanel
+                    Left = 0
+                    Height = 29
+                    Top = 465
+                    Width = 608
+                    Align = alBottom
+                    ClientHeight = 29
+                    ClientWidth = 608
+                    TabOrder = 2
+                    object btConsultarLocationsRecLimpar: TBitBtn
+                      Left = 509
+                      Height = 26
+                      Top = 0
+                      Width = 83
+                      Anchors = [akTop]
+                      AutoSize = True
+                      Caption = 'Limpar'
+                      Images = ImageList1
+                      ImageIndex = 18
+                      OnClick = btConsultarRecorrenciasLimparClick
+                      TabOrder = 0
+                    end
+                  end
+                end
+                object tsDesvincularLocRec: TTabSheet
+                  Caption = 'Desvincular Location'
+                  ClientHeight = 494
+                  ClientWidth = 608
+                  object pnDesvincularLocRec: TPanel
+                    Left = 0
+                    Height = 80
+                    Top = 0
+                    Width = 608
+                    Align = alTop
+                    BevelOuter = bvNone
+                    ClientHeight = 80
+                    ClientWidth = 608
+                    TabOrder = 0
+                    object lbDesvincularLocRecId: TLabel
+                      Left = 15
+                      Height = 15
+                      Top = 10
+                      Width = 10
+                      Caption = 'Id'
+                      ParentColor = False
+                    end
+                    object edDesvincularLocRecId: TEdit
+                      Left = 15
+                      Height = 23
+                      Top = 25
+                      Width = 449
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 0
+                      OnChange = edRevisarRecorrenciaNomeDevedorChange
+                    end
+                    object btDesvincularLocRec: TBitBtn
+                      Left = 480
+                      Height = 26
+                      Top = 22
+                      Width = 112
+                      Anchors = [akTop, akRight]
+                      Caption = 'Desvincular'
+                      Images = ImageList1
+                      ImageIndex = 17
+                      OnClick = btDesvincularLocRecClick
+                      TabOrder = 1
+                    end
+                  end
+                  object mmDesvincularLocRec: TMemo
+                    Left = 0
+                    Height = 385
+                    Top = 80
+                    Width = 608
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 1
+                  end
+                  object pnDesvincularLocRecRodape: TPanel
+                    Left = 0
+                    Height = 29
+                    Top = 465
+                    Width = 608
+                    Align = alBottom
+                    ClientHeight = 29
+                    ClientWidth = 608
+                    TabOrder = 2
+                    object btDesvincularLocRecLimpar: TBitBtn
                       Left = 509
                       Height = 26
                       Top = 0

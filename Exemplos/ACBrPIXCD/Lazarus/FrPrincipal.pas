@@ -96,6 +96,14 @@ type
     btC6BankAcharCertificado: TSpeedButton;
     btC6BankAcharChavePrivada: TSpeedButton;
     btCancelarCobR: TBitBtn;
+    btDesvincularLocRec: TBitBtn;
+    btDesvincularLocRecLimpar: TBitBtn;
+    btConsultarLocationsRec: TBitBtn;
+    btConsultarLocationsRecLimpar: TBitBtn;
+    btConsultarLocationRec: TBitBtn;
+    btConsultarLocationRecLimpar: TBitBtn;
+    btCriarLocationRec: TBitBtn;
+    btLocationRecLimpar: TBitBtn;
     btSolicitarRetentativaCobR: TBitBtn;
     btCancelarCobRLimpar: TBitBtn;
     btSolicitarRetentativaLimpar: TBitBtn;
@@ -192,6 +200,7 @@ type
     cbBanrisulTipoChave: TComboBox;
     cbC6BankTipoChave: TComboBox;
     cbConsultarCobsRStatus: TComboBox;
+    cbConsultarLocationsRecComIdLocRed: TCheckBox;
     cbCriarRecorrenciaPeriodicidade: TComboBox;
     cbCriarRecorrenciaPoliticaRetentativa: TComboBox;
     cbCriarCobRTipoConta: TComboBox;
@@ -226,6 +235,13 @@ type
     CobVConsultarRodapeLista: TPanel;
     dtConsultarCobrancas_Fim: TDateTimePicker;
     edCancelarCobRTxID: TEdit;
+    edDesvincularLocRecId: TEdit;
+    edConsultarLocationsRecConvenio: TEdit;
+    edConsultarLocationsRecFim: TDateTimePicker;
+    edConsultarLocationsRecInicio: TDateTimePicker;
+    edConsultarLocationsRecItensPorPagina: TSpinEdit;
+    edConsultarLocationsRecPagina: TSpinEdit;
+    edConsultarLocationRecId: TEdit;
     edSolicitarRetentativaTxID: TEdit;
     edConsultarCobRTxID: TEdit;
     edConsultarCobsRIdRec: TEdit;
@@ -507,6 +523,13 @@ type
     Label17: TLabel;
     Label18: TLabel;
     lbCancelarCobRTxID: TLabel;
+    lbDesvincularLocRecId: TLabel;
+    lbConsultarLocationsRecConvenio: TLabel;
+    lbConsultarLocationsRecFim: TLabel;
+    lbConsultarLocationsRecInicio: TLabel;
+    lbConsultarLocationsRecItensPorPagina: TLabel;
+    lbConsultarLocationsRecPagina: TLabel;
+    lbConsultarLocationRecId: TLabel;
     lbSolicitarRetentativaTxID: TLabel;
     lbConsultarCobRTxID: TLabel;
     lbConsultarCobsRIdRec: TLabel;
@@ -784,6 +807,10 @@ type
     lbConsultarRecorrenciasItensPorPagina: TLabel;
     lTokenTemporario: TLabel;
     mmCancelarCobR: TMemo;
+    mmDesvincularLocRec: TMemo;
+    mmConsultarLocationsRec: TMemo;
+    mmConsultarLocationRec: TMemo;
+    mmCriarLocationRec: TMemo;
     mmSolicitarRetentativa: TMemo;
     mmConsultarRecorrencia: TMemo;
     mmConsultarCobR: TMemo;
@@ -820,7 +847,16 @@ type
     OpenDialog1: TOpenDialog;
     pgTestesEndPointCobR: TPageControl;
     pgTestesEndPointSolicRec: TPageControl;
+    pgTestesEndPointLocRec: TPageControl;
     pnCancelarCobR: TPanel;
+    pnDesvincularLocRec: TPanel;
+    pnDesvincularLocRecRodape: TPanel;
+    pnConsultarLocationsRec: TPanel;
+    pnConsultarLocationsRecRodape: TPanel;
+    pnConsultarLocationRec: TPanel;
+    pnConsultarLocationRecRodape: TPanel;
+    pnCriarLocationRec: TPanel;
+    pnLocationRecRodape: TPanel;
     pnSolicitarRetentativa: TPanel;
     pnCancelarCobRRodape: TPanel;
     pnSolicitarRetentativaRodape: TPanel;
@@ -1032,6 +1068,12 @@ type
     Splitter3: TSplitter;
     Splitter4: TSplitter;
     spCriarCobR: TSplitter;
+    spLocationRec: TSplitter;
+    tsEndPointLocRec: TTabSheet;
+    tsConsultarLocationsRec: TTabSheet;
+    tsDesvincularLocRec: TTabSheet;
+    tsConsultarLocationRec: TTabSheet;
+    tsCriarLocationRec: TTabSheet;
     tsSolicitarRetentativa: TTabSheet;
     tsEndPointCobR: TTabSheet;
     tsConsultarCobR: TTabSheet;
@@ -1127,10 +1169,14 @@ type
     procedure btC6BankAcharCertificadoClick(Sender: TObject);
     procedure btC6BankAcharChavePrivadaClick(Sender: TObject);
     procedure btCancelarCobRClick(Sender: TObject);
+    procedure btCancelarCobRLimparClick(Sender: TObject);
     procedure btCancelarRecorrenciaClick(Sender: TObject);
     procedure btCancelarSolicitacaoRecClick(Sender: TObject);
     procedure btConsultarCobRClick(Sender: TObject);
+    procedure btConsultarCobRLimparClick(Sender: TObject);
     procedure btConsultarCobsRClick(Sender: TObject);
+    procedure btConsultarCobsRLimparClick(Sender: TObject);
+    procedure btConsultarLocationsRecClick(Sender: TObject);
     procedure btConsultarRecorrenciaClick(Sender: TObject);
     procedure btConsultarRecorrenciaLimparClick(Sender: TObject);
     procedure btConsultarRecorrenciasClick(Sender: TObject);
@@ -1138,13 +1184,17 @@ type
     procedure btConsultarSolicitacaoRecClick(Sender: TObject);
     procedure btCriarCobRClick(Sender: TObject);
     procedure btCriarCobRGerarTxIDClick(Sender: TObject);
+    procedure btCriarCobRLimparClick(Sender: TObject);
     procedure btCriarCobRPreencherClick(Sender: TObject);
+    procedure btCriarLocationRecClick(Sender: TObject);
     procedure btCriarRecorrenciaClick(Sender: TObject);
     procedure btCriarRecorrenciaPreencherClick(Sender: TObject);
     procedure btCriarSolicitacaoRecClick(Sender: TObject);
     procedure btCriarSolicitacaoRecLimparClick(Sender: TObject);
+    procedure btDesvincularLocRecClick(Sender: TObject);
     procedure btInterAcharCertificadoClick(Sender: TObject);
     procedure btInterAcharChavePrivadaClick(Sender: TObject);
+    procedure btConsultarLocationRecClick(Sender: TObject);
     procedure btMateraAcharArqCertificadoClick(Sender: TObject);
     procedure btMateraAcharChavePrivadaClick(Sender: TObject);
     procedure btPagSeguroLimparClick(Sender: TObject);
@@ -1209,6 +1259,7 @@ type
     procedure btSicrediGerarCSRClick(Sender: TObject);
     procedure btSolicitarDevolucaoPixClick(Sender: TObject);
     procedure btSolicitarRetentativaCobRClick(Sender: TObject);
+    procedure btSolicitarRetentativaLimparClick(Sender: TObject);
     procedure cbBBVersaoAPIChange(Sender: TObject);
     procedure cbxAmbienteChange(Sender: TObject);
     procedure cbxPSPAtualChange(Sender: TObject);
@@ -1980,6 +2031,11 @@ begin
   end;
 end;
 
+procedure TForm1.btCancelarCobRLimparClick(Sender: TObject);
+begin
+  mmCancelarCobR.Lines.Clear;
+end;
+
 procedure TForm1.btCancelarRecorrenciaClick(Sender: TObject);
 begin
   VerificarConfiguracao;
@@ -2018,6 +2074,11 @@ begin
     mmConsultarCobR.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epCobR.Problema.AsJSON);
 end;
 
+procedure TForm1.btConsultarCobRLimparClick(Sender: TObject);
+begin
+  mmConsultarCobR.Lines.Clear;
+end;
+
 procedure TForm1.btConsultarCobsRClick(Sender: TObject);
 var
   Ok: Boolean;
@@ -2045,6 +2106,38 @@ begin
   end
   else
     mmConsultarCobsR.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epCobR.Problema.AsJSON);
+end;
+
+procedure TForm1.btConsultarCobsRLimparClick(Sender: TObject);
+begin
+  mmConsultarCobsR.Lines.Clear;
+end;
+
+procedure TForm1.btConsultarLocationsRecClick(Sender: TObject);
+var
+  Ok: Boolean;
+begin
+  VerificarConfiguracao;
+  mmConsultarLocationsRec.Lines.Clear;
+
+  Ok := ACBrPixCD1.PSP.epLocRec.ConsultarLocations(
+          StartOfTheDay(edConsultarRecorrenciasInicio.DateTime),
+          EndOfTheDay(edConsultarRecorrenciasFim.DateTime),
+          cbConsultarLocationsRecComIdLocRed.Checked,
+          edConsultarRecorrenciasConvenio.Text,
+          edConsultarRecorrenciasPagina.Value,
+          edConsultarRecorrenciasItensPorPagina.Value);
+
+  if Ok then
+  begin
+    mmConsultarLocationsRec.Lines.Text :=
+      FormatarJSON(ACBrPixCD1.PSP.epLocRec.LocationsConsultadas.AsJSON);
+    mmConsultarLocationsRec.Lines.Add('');
+    mmConsultarLocationsRec.Lines.Add('Encontradas: ' + IntToStr(
+      ACBrPixCD1.PSP.epLocRec.LocationsConsultadas.loc.Count)+' Locations');
+  end
+  else
+    mmConsultarLocationsRec.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epLocRec.Problema.AsJSON);
 end;
 
 procedure TForm1.btConsultarRecorrenciaClick(Sender: TObject);
@@ -2168,6 +2261,11 @@ begin
   edCriarCobRTxID.Text := CriarTxId;
 end;
 
+procedure TForm1.btCriarCobRLimparClick(Sender: TObject);
+begin
+  mmCriarCobR.Lines.Clear;
+end;
+
 procedure TForm1.btCriarCobRPreencherClick(Sender: TObject);
 begin
   edCriarCobRInfoAdicional.Text := 'Streaming de Musica';
@@ -2181,6 +2279,17 @@ begin
   edCriarCobRUF.Text := 'MG';
   edCriarCobRLogradouro.Text := 'Alameda Franco 1056';
   edCriarCobREmail.Text := 'sebastiao.tavares@mail.com';
+end;
+
+procedure TForm1.btCriarLocationRecClick(Sender: TObject);
+begin
+  VerificarConfiguracao;
+  mmCriarLocationRec.Lines.Clear;
+
+  if ACBrPixCD1.PSP.epLocRec.CriarLocation then
+    mmCriarLocationRec.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epLocRec.LocationGerada.AsJSON)
+  else
+    mmCriarLocationRec.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epLocRec.Problema.AsJSON);
 end;
 
 procedure TForm1.btCriarRecorrenciaClick(Sender: TObject);
@@ -2292,6 +2401,17 @@ begin
   mmCriarSolicitacaoRec.Lines.Clear;
 end;
 
+procedure TForm1.btDesvincularLocRecClick(Sender: TObject);
+begin
+  VerificarConfiguracao;
+  mmDesvincularLocRec.Lines.Clear;
+
+  if ACBrPixCD1.PSP.epLocRec.DesvincularLocation(StrToIntDef(edDesvincularLocRecId.Text, 0)) then
+    mmDesvincularLocRec.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epLocRec.LocationCompleta.AsJSON)
+  else
+    mmDesvincularLocRec.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epLocRec.Problema.AsJSON);
+end;
+
 procedure TForm1.btInterAcharCertificadoClick(Sender: TObject);
 begin
   OpenDialog1.FileName := edInterCertificado.Text;
@@ -2306,6 +2426,16 @@ begin
   if OpenDialog1.Execute then
     edInterChavePrivada.Text := RemoverPathAplicacao(OpenDialog1.FileName);
   ValidarChavePSPInter;
+end;
+
+procedure TForm1.btConsultarLocationRecClick(Sender: TObject);
+begin
+  VerificarConfiguracao;
+  mmConsultarLocationRec.Lines.Clear;
+  if ACBrPixCD1.PSP.epLocRec.ConsultarLocation(StrToIntDef(edConsultarLocationRecId.Text, 0)) then
+    mmConsultarLocationRec.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epLocRec.LocationCompleta.AsJSON)
+  else
+    mmConsultarLocationRec.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epLocRec.Problema.AsJSON);
 end;
 
 procedure TForm1.btMateraAcharArqCertificadoClick(Sender: TObject);
@@ -3450,6 +3580,11 @@ begin
     else
       mmSolicitarRetentativa.Lines.Text := FormatarJSON(Problema.AsJSON);
   end;
+end;
+
+procedure TForm1.btSolicitarRetentativaLimparClick(Sender: TObject);
+begin
+  mmSolicitarRetentativa.Lines.Clear;
 end;
 
 procedure TForm1.cbBBVersaoAPIChange(Sender: TObject);
@@ -5211,6 +5346,14 @@ begin
   ImageList1.GetBitmap(18, btCancelarSolicitacaoRecLimpar.Glyph);
   ImageList1.GetBitmap(17, btCancelarSolicitacaoRec.Glyph);
 
+  ImageList1.GetBitmap(16, btCriarLocationRec.Glyph);
+  ImageList1.GetBitmap(8, btConsultarLocationRec.Glyph);
+  ImageList1.GetBitmap(8, btConsultarLocationsRec.Glyph);
+  ImageList1.GetBitmap(18, btConsultarLocationRecLimpar.Glyph);
+  ImageList1.GetBitmap(18, btConsultarLocationsRecLimpar.Glyph);
+  ImageList1.GetBitmap(18, btDesvincularLocRecLimpar.Glyph);
+  ImageList1.GetBitmap(17, btDesvincularLocRec.Glyph);
+
   ImageList1.GetBitmap(18, btLimparConsultarPix.Glyph);
   ImageList1.GetBitmap(18, btLimparConsultarPixRecebidos.Glyph);
   ImageList1.GetBitmap(18, btLimparSolicitarDevolucaoPix.Glyph);
@@ -5421,6 +5564,8 @@ begin
   edConsultarRecorrenciasFim.DateTime := EndOfTheMonth(IncMonth(Now, -1));
   edConsultarCobsRInicio.DateTime := StartOfTheMonth(IncMonth(Now, -1));
   edConsultarCobsRFim.DateTime := EndOfTheMonth(IncMonth(Now, -1));
+  edConsultarLocationsRecInicio.DateTime := StartOfTheMonth(Now);
+  edConsultarLocationsRecFim.DateTime := Now;
   edSolicitarRetentativaLiquidacao.DateTime := IncDay(Now, 2);
   pnBBPFX.Parent := pnBBCertificados;
   pnBBChaveECert.Parent := pnBBCertificados;

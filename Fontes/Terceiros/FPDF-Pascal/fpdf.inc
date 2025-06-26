@@ -96,3 +96,7 @@
   {$EndIf}
 {$EndIf}
 
+{$Q-}  // OVERFLOWCHECKS OFF
+{$R-}  // RANGECHECKS OFF
+{$H+}  // String represents a long string.
+

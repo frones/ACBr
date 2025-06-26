@@ -425,6 +425,7 @@ function SwapBytes(Value: Cardinal): Cardinal; overload;
 function SwapBytes(Value: Word): Word; overload;
 function Split(const AString: string; const ADelimiter: string = ' '; ATrimLeft: boolean = True): TStringArray;
 function CountStr(const AString, SubStr : String ) : Integer ;
+function ReplaceString(Value, Search, Replace: AnsiString): AnsiString;  // From synautil.pas
 
 var
   FPDFFormatSetings: TFormatSettings;
@@ -2460,16 +2461,16 @@ begin
   //Add \ before \, ( and )
   Result := sText;
   if (pos('\', sText) > 0) then
-    Result := StringReplace(Result,  '\', '\\', [rfReplaceAll]);
+    Result := ReplaceString(Result,  '\', '\\');
 
   if (pos(')', sText) > 0) then
-    Result := StringReplace( Result, ')', '\)', [rfReplaceAll]);
+    Result := ReplaceString( Result, ')', '\)');
 
   if (pos('(', sText) > 0) then
-    Result := StringReplace( Result, '(', '\(', [rfReplaceAll]);
+    Result := ReplaceString( Result, '(', '\(');
 
   if (pos(CR, sText) > 0) then
-    Result := StringReplace( Result, CR, '\r', [rfReplaceAll]);
+    Result := ReplaceString( Result, CR, '\r');
 end;
 
 function TFPDF._textstring(const AString: String): String;
@@ -3692,6 +3693,34 @@ begin
      Inc(Result);
      i := PosEx(SubStr, AString, i+1);
   end;
+end;
+
+// From synautil.pas
+function ReplaceString(Value, Search, Replace: AnsiString): AnsiString;
+var
+  x, l, ls, lr: Integer;
+begin
+  if (Value = '') or (Search = '') then
+  begin
+    Result := Value;
+    Exit;
+  end;
+  ls := Length(Search);
+  lr := Length(Replace);
+  Result := '';
+  x := Pos(Search, Value);
+  while x > 0 do
+  begin
+    l := Length(Result);
+    SetLength(Result, l + x - 1);
+    Move(Pointer(Value)^, Pointer(@Result[l + 1])^, x - 1);
+    l := Length(Result);
+    SetLength(Result, l + lr);
+    Move(Pointer(Replace)^, Pointer(@Result[l + 1])^, lr);
+    Delete(Value, 1, x - 1 + ls);
+    x := Pos(Search, Value);
+  end;
+  Result := Result + Value;
 end;
 
 initialization

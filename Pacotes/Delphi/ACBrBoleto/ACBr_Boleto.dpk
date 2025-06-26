@@ -143,6 +143,7 @@ contains
   ACBrBoletoW_BTGPactual in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_BTGPactual.pas',
   ACBrBoletoRet_BTGPactual in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_BTGPactual.pas',
   ACBrBancoCredisan in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCredisan.pas',
-  ACBrBoletoWS.URL in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.URL.pas';
+  ACBrBoletoWS.URL in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.URL.pas',
+  ACBrBancoSofisa in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSofisa.pas';
 
 end.

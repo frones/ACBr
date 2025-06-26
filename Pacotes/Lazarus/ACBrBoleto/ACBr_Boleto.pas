@@ -28,9 +28,9 @@ uses
   ACBrBancoSofisaSantander, ACBrBancoUnicredES, ACBrBancoUnicredRS, 
   ACBrBancoUnicredSC, ACBrBoletoWS.Rest.OAuth, ACBrBoletoWS.Rest, 
   ACBrBoletoWS.SOAP, ACBrBancoUniprime, ACBrBancoSisprime, 
-  ACBrBoletoRet_Credisis, ACBrBoletoRet_Inter_API,  
+  ACBrBoletoRet_Credisis, ACBrBoletoRet_Inter_API, ACBrBancoCredisan, 
   ACBrBoletoRet_Sicredi_APIECOMM, ACBrBoletoW_Credisis, ACBrBoletoW_Inter_API, 
-  ACBrBoletoW_Sicredi_APIECOMM, ACBrBancoVotorantim, 
+  ACBrBoletoWS.URL, ACBrBoletoW_Sicredi_APIECOMM, ACBrBancoVotorantim, 
   ACBrBoletoRet_Sicredi_APIV2, ACBrBoletoW_Sicredi_APIV2, 
   ACBrBoletoRet_Sicoob, ACBrBoletoW_Sicoob, ACBrBancoPefisa, ACBrBancoFibra, 
   ACBrBancoSofisaItau, ACBrBoletoRet_Santander_API, ACBrBoletoW_Santander_API, 
@@ -39,7 +39,7 @@ uses
   ACBrBoletoRet_Cresol, ACBrBoletoW_Cresol, ACBrBancoCora, ACBrBoletoW_Cora, 
   ACBrBoletoRet_Cora, ACBrBoletoW_Kobana, ACBrBoletoRet_Kobana, 
   ACBrBoletoKobana.Classes, ACBrBancoSulcredi, ACBrBoletoW_BTGPactual, 
-  ACBrBoletoRet_BTGPactual, ACBrBancoCredisan, ACBrBoletoWS.URL, LazarusPackageIntf;
+  ACBrBoletoRet_BTGPactual, ACBrBancoSofisa, LazarusPackageIntf;
 
 implementation
 

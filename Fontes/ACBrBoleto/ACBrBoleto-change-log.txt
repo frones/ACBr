@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/06/2025
+-- ACBrBancoSofisa, ACBrBoleto, ACBr_Boleto, ACBr_Boleto.dpk, ACBr_Boleto.lpk --
+[+] #TK-6590/TK-6973 Implementado banco Sofisa
+    Por: Giovanne Fontenele Trevia / Renato Rubinho
+
 23/06/2025
 -- ACBrBancoBrasil.pas --
 [*] TK-7235 Ajuste conforme manual header posição 077 a 094 header CNAB 400

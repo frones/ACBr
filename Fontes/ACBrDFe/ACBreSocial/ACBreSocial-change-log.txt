@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/06/2025
+-- pcesConversaoeSocial --
+[+] #TK-7262: Novos itens no enumerado tpCodIncIRRF - https://www.projetoacbr.com.br/forum/topic/83931-novo-codincirrf/
+  Por: Renato Rubinho
+
 11/06/2025
 -- pcesRetConsultaLote, pcesRetornoClass --
 [*] #TK-7208: Capturados retornos das rubricas nos retornos dos eventos - https://www.projetoacbr.com.br/forum/topic/83707-coletar-no-retorno-do-xml-sitxml-grupo-rubricas/

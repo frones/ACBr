@@ -271,6 +271,9 @@ type
                              ciiIncidenciasuspensajudicialBCIRRFRRA,                             {95}    { Item válido até a versão 2.5 }
                              ciiRendimentoIsentoAuxilioMoradia,                                  {700}   { Item válido a partir da versão simplificada }
                              ciiRendimentoParteNaoTributavelDoValorDeServicoDeTransporte,        {701}   { Item válido a partir da versão simplificada }
+                             ciiRendimentoBolsaMedicoResidenteRemuneracaoMensal,                 {702}
+                             ciiRendimentoBolsaMedicoResidenteDecimoTerceiro,                    {703}
+                             ciiRendimentoJurosMoraRecebidosPeloAtrasoNoPagto,                   {704}
                              ciiRendimentoTributavelExigibilidadeSuspensaRemuneracaoMensal,      {9011}  { Item válido a partir da versão simplificada }
                              ciiRendimentoTributavelExigibilidadeSuspensaDecimoTerceiro,         {9012}  { Item válido a partir da versão simplificada }
                              ciiRendimentoTributavelExigibilidadeSuspensaFerias,                 {9013}  { Item válido a partir da versão simplificada }
@@ -307,7 +310,8 @@ type
                                                               '34',   '35',   '41',   '42',   '43',   '44',   '46',   '47',   '48',   '51',   '52',
                                                               '53',   '54',   '55',   '61',   '62',   '63',   '64',   '65',   '66',   '67',   '68',
                                                               '70',   '71',   '72',   '73',   '74',   '75',   '76',   '77',   '78',   '79',   '81',
-                                                              '82',   '83',   '91',   '92',   '93',   '94',   '95',   '700',  '701',  '9011', '9012',
+                                                              '82',   '83',   '91',   '92',   '93',   '94',   '95',   '700',  '701',  '702',  '703',
+                                                              '704',  '9011', '9012',
                                                               '9013', '9014', '9031', '9032', '9033', '9034', '9831', '9832', '9833', '9834', '9041',
                                                               '9042', '9043', '9046', '9047', '9048', '9051', '9052', '9053', '9054', '9061', '9062',
                                                               '9063', '9064', '9065', '9066', '9067', '9082', '9083'  );

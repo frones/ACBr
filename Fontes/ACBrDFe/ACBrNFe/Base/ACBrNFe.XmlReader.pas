@@ -1936,8 +1936,8 @@ procedure TNFeXmlReader.Ler_IBSCBSTot_gIBS(gIBS: TgIBSTot;
 begin
   if not Assigned(ANode) then Exit;
 
-  Ler_IBSCBSTot_gIBS_gIBSUFTot(gIBS.gIBSUFTot, ANode.Childrens.Find('gIBSUFTot'));
-  Ler_IBSCBSTot_gIBS_gIBSMunTot(gIBS.gIBSMunTot, ANode.Childrens.Find('gIBSMunTot'));
+  Ler_IBSCBSTot_gIBS_gIBSUFTot(gIBS.gIBSUFTot, ANode.Childrens.Find('gIBSUF'));
+  Ler_IBSCBSTot_gIBS_gIBSMunTot(gIBS.gIBSMunTot, ANode.Childrens.Find('gIBSMun'));
 
   gIBS.vIBS := ObterConteudo(ANode.Childrens.Find('vIBS'), tcDe2);
   gIBS.vCredPres := ObterConteudo(ANode.Childrens.Find('vCredPres'), tcDe2);

@@ -991,6 +991,10 @@ begin
             proAgili:
               // código com 9 digitos
               CodigoCnae := '452000200';
+
+            proSoftPlan:
+              // código com 4 digitos
+              CodigoCnae := '4520';
           else
             // código com 7 digitos
             CodigoCnae := '6203100';

@@ -42,6 +42,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2025
+-- ACBrNFSeXServicos --
+[*] #TK-7264: A cidade de Maua/SP, voltou a usar o provedor Ginfes.
+   Por: Dino Rodrigo S. Moreira
+[*] #TK-7261: Alterado a versão e URLs da cidade de Santa Helena/PR, o provedor
+    continua o mesmo.
+   Por: Arthur Haupt Pacheco
+[*] #TK-7266: Incluido a URL do Link da cidade de Indaiatuba/SP.
+   Por: Adilson Pazzini
+-- DeiSS.Provider --
+[*] #TK-7266: Alterado o TratarXmlRetornado, pois não estava retornando em UTF-8.
+   Por: Italo Giurizzato Junior
+
 20/06/2025
 -- ACBrNFSeXServicos --
 [*] #TK-7242: A cidade de Campos de Guajara-Mirim/RO mudou a URL de produção, o provedor continua o mesmo.

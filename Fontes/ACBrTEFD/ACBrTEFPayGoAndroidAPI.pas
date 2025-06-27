@@ -1267,15 +1267,15 @@ begin
 end;
 
 procedure TACBrTEFPGWebAndroid.IniciarIntent(AIntent: JIntent);
-var
-  ResolveInfo: JResolveInfo;
+//var
+//  ResolveInfo: JResolveInfo;
 begin
-  ResolveInfo := TAndroidHelper.Activity.getPackageManager.resolveActivity(AIntent, 0);
-  if (ResolveInfo = nil) then
-  begin
-    DoException(Format(ACBrStr(sErrINTENTNOTFOUND), [JStringToString(AIntent.getAction)] ));
-    Exit;
-  end;
+//  ResolveInfo := TAndroidHelper.Activity.getPackageManager.resolveActivity(AIntent, 0);
+//  if (ResolveInfo = nil) then
+//  begin
+//    DoException(Format(ACBrStr(sErrINTENTNOTFOUND), [JStringToString(AIntent.getAction)] ));
+//    Exit;
+//  end;
 
   if Assigned(fOnAntesIniciarTransacao) then
     fOnAntesIniciarTransacao(AIntent);

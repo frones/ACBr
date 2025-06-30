@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+30/06/2025
+-- ACBrBoletoRet_Sicredi_APIV2.pas --
+[+] #TK-7243 Mapeado campo nossonumero sicredi no NossoNumeroCorrespondente tratar a concatenação e deixar somente nossonumero. (LerNossoNumeroCompleto=true devolve com DV)
+	https://www.projetoacbr.com.br/forum/topic/83614-mapear-o-campo-nossonumero-sicredi/
+    Por: Daniel de Morais InfoCotidiano
 
 25/06/2025
 -- ACBrBancoSofisa, ACBrBoleto, ACBr_Boleto, ACBr_Boleto.dpk, ACBr_Boleto.lpk --

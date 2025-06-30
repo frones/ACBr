@@ -53,6 +53,7 @@ type
    function TimeSicreditoDateTime(Const AValue : String) : String;
    function RetornaCodigoOcorrencia(pSituacaoGeralBoleto: string): String;
    function RetornaDescricaoStatusTitulo(AStatus: string): String;
+    function TrataNossoNumero(const ANossoNumero: string): string;
  public
    constructor Create(ABoletoWS: TACBrBoleto); override;
    destructor  Destroy; Override;
@@ -66,7 +67,9 @@ implementation
 
 uses
   ACBrBoletoConversao,
-  ACBrJSON;
+  ACBrJSON,
+  ACBrUtil.Base,
+  ACBrUtil.Strings;
 
 { TRetornoEnvio }
 
@@ -153,6 +156,7 @@ begin
               ARetornoWS.DadosRet.IDBoleto.CodBarras       := ARetornoWS.DadosRet.TituloRet.CodBarras;
               ARetornoWS.DadosRet.IDBoleto.LinhaDig        := ARetornoWS.DadosRet.TituloRet.LinhaDig;
               ARetornoWS.DadosRet.IDBoleto.NossoNum        := ARetornoWS.DadosRet.TituloRet.NossoNumero;
+              ARetornoWS.DadosRet.TituloRet.NossoNumeroCorrespondente  := TrataNossoNumero(ARetornoWS.DadosRet.TituloRet.NossoNumero);
 
               //Pagador
               //ARetornoWS.DadosRet.TituloRet.Sacado.codigo         := LJsonObject.AsJSONObject['pagador'].AsString['codigo'];
@@ -243,6 +247,8 @@ begin
             ARetornoWS.DadosRet.TituloRet.CodBarras     := ARetornoWS.DadosRet.IDBoleto.CodBarras;
             ARetornoWS.DadosRet.TituloRet.LinhaDig      := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
             ARetornoWS.DadosRet.TituloRet.NossoNumero   := ARetornoWS.DadosRet.IDBoleto.NossoNum;
+            ARetornoWS.DadosRet.TituloRet.NossoNumeroCorrespondente  := TrataNossoNumero(ARetornoWS.DadosRet.TituloRet.NossoNumero);
+
           end else
           if (LTipoOperacao = tpBaixa) then
           begin
@@ -349,6 +355,8 @@ begin
 
 
             LListaRetorno.DadosRet.TituloRet.NossoNumero                := LListaRetorno.DadosRet.IDBoleto.NossoNum;
+            LListaRetorno.DadosRet.TituloRet.NossoNumeroCorrespondente  := TrataNossoNumero(LListaRetorno.DadosRet.TituloRet.NossoNumero);
+
             LListaRetorno.DadosRet.TituloRet.DataBaixa                  := DateSicreditoDateTime(LItemObject.AsString['dataPagamento']);
             LListaRetorno.DadosRet.TituloRet.HoraBaixa                  := TimeSicreditoDateTime(LItemObject.AsString['dataPagamento']);
             LListaRetorno.DadosRet.TituloRet.SeuNumero                  := LItemObject.AsString['seuNumero'];
@@ -445,6 +453,23 @@ begin
   LSegundos := Copy( AValue, 18,2 );
   Result   := Format( '%s:%s:%s' , [LHora,LMinuto,LSegundos]);
 end;
+
+function TRetornoEnvio_Sicredi_APIV2.TrataNossoNumero(
+  const ANossoNumero: string): string;
+var
+  LTamanhoNossoNumero : integer;
+begin
+  LTamanhoNossoNumero := 5;
+  if Assigned(ACBrBoleto) then
+  begin
+    if ACBrBoleto.LerNossoNumeroCompleto then
+       LTamanhoNossoNumero := 6;
+  end;
+
+  if NaoEstaVazio(ANossoNumero) and TamanhoIgual(ANossoNumero,9) then
+    Result := RemoveZerosEsquerda(Copy(ANossoNumero,4,LTamanhoNossoNumero));
+end;
+
 
 end.
 

@@ -145,7 +145,8 @@ uses
   StrUtils,
   DateUtils,
   ACBrUtil.Strings,
-  ACBrUtil.DateTime;
+  ACBrUtil.DateTime,
+  Math;
 
 { TBoletoW_Itau_API }
 
@@ -608,44 +609,103 @@ begin
 end;
 
 procedure TBoletoW_Itau_API.GerarInstruCaoCobranca(AJson: TACBrJSONObject);
+
+  procedure MontarInstrucaoCobranca(const ACodigoInstrucao : Cardinal; 
+    const ADias : Cardinal; out AJson : TACBrJSONObject);
+  var LDias : Cardinal;
+  begin
+    case ACodigoInstrucao of
+    1:
+      begin // 1-Protestar
+        LDias := IfThen(ADias > 0, ADias, trunc(ATitulo.DataProtesto - ATitulo.Vencimento));
+        if (LDias > 0) then
+        begin
+          AJson.AddPair('quantidade_dias_instrucao_cobranca', LDias);
+          AJson.AddPair('dia_util', StrToBool(IfThen(ATitulo.TipoDiasProtesto = diUteis,'True','False')));
+        end;
+      end;
+    2:
+      begin // 2-Negativar
+        LDias := IfThen(ADias > 0, ADias, trunc(ATitulo.DataNegativacao - ATitulo.Vencimento));
+        if (LDias > 0) then
+        begin
+          AJson.AddPair('quantidade_dias_instrucao_cobranca', LDias);
+          AJson.AddPair('dia_util', StrToBool(IfThen(ATitulo.TipoDiasNegativacao = diUteis,'True','False')));
+        end;
+      end;
+    7:
+      begin // Não receber após XX de vencimento
+        LDias := IfThen(ADias > 0, ADias, trunc(ATitulo.DataLimitePagto - ATitulo.Vencimento));
+        if (LDias > 0) then
+        begin
+          AJson.AddPair('quantidade_dias_instrucao_cobranca', LDias);
+          AJson.AddPair('dia_util', StrToBool(IfThen(ATitulo.TipoDiasProtesto = diUteis,'True','False')));
+        end;
+      end;
+    8:
+      begin //Cancelar (Baixar/Devolver) após XX de vencimento
+        LDias := IfThen(ADias > 0, ADias, trunc(ATitulo.DataBaixa - ATitulo.Vencimento));
+        if (LDias > 0) then
+        begin
+          AJson.AddPair('quantidade_dias_instrucao_cobranca', LDias);
+        end;
+      end;
+     end;    
+  end;
 var
   LJsonDados, LJsonDados2, LJsonDados3 : TACBrJSONObject;
   LJsonArray : TACBrJSONArray;
+  LInstrucao, LDias, I : integer;
 begin
-  if Assigned(ATitulo) and Assigned(AJson) then
+  if Assigned(ATitulo) and Assigned(AJson) and
+   (NaoEstaVazio(ATitulo.Instrucao1) or NaoEstaVazio(ATitulo.Instrucao2) or
+    NaoEstaVazio(ATitulo.Instrucao3)) then
   begin
-    LJsonDados := TACBrJSONObject.Create;
+
     LJsonArray := TACBrJSONArray.Create;
-    if (ATitulo.Instrucao1) <> '' then
+
+    if NaoEstaVazio(ATitulo.Instrucao1) then
     begin
-      LJsonDados.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao1)), 1, 1));
-      //if Boleto.Cedente.CedenteWS.IndicadorPix then
-      LJsonDados.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao1)), 3, 2));
-      //else
-      //  LJsonDados.AddPair('quantidade_dias_instrucao_cobranca', Copy(trim((ATitulo.Instrucao1)), 3, 2));
-      LJsonDados.AddPair('dia_util', StrToBool(IfThen(ATitulo.TipoDiasProtesto = diUteis,'True','False')));
+      LJsonDados := TACBrJSONObject.Create;
+      
+      LInstrucao := StrToIntDef(Copy(trim(ATitulo.Instrucao1), 1, 2),0);
+      LDias      := StrToIntDef(Copy(trim(ATitulo.Instrucao1), 3, 2),0);
+      LJsonDados.AddPair('codigo_instrucao_cobranca',Copy(trim(ATitulo.Instrucao1), 1, 2));
+
+      MontarInstrucaoCobranca(LInstrucao,
+                              LDias,
+                              LJsonDados);
+
       LJsonArray.AddElementJSON(LJsonDados);
     end;
-    if ATitulo.Instrucao2 <> '' then
+
+    if NaoEstaVazio(ATitulo.Instrucao2) then
     begin
       LJsonDados2 := TACBrJSONObject.Create;
-      LJsonDados2.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao2)), 1, 1));
-      //if Boleto.Cedente.CedenteWS.IndicadorPix then
-      LJsonDados.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao2)), 3, 2));
-      //else
-      //LJsonDados.AddPair('quantidade_dias_instrucao_cobranca', Copy(trim((ATitulo.Instrucao2)), 3, 2));
-      LJsonDados2.AddPair('dia_util', StrToBool(IfThen(ATitulo.TipoDiasProtesto = diUteis,'True','False')));
+      
+      LInstrucao := StrToIntDef(Copy(trim(ATitulo.Instrucao2), 1, 2),0);
+      LDias      := StrToIntDef(Copy(trim(ATitulo.Instrucao2), 3, 2),0);
+      LJsonDados2.AddPair('codigo_instrucao_cobranca',Copy(trim(ATitulo.Instrucao2), 1, 2));
+
+      MontarInstrucaoCobranca(LInstrucao,
+                              LDias,
+                              LJsonDados2);
+
       LJsonArray.AddElementJSON(LJsonDados2);
     end;
-    if ATitulo.Instrucao3 <> '' then
+
+    if NaoEstaVazio(ATitulo.Instrucao3) then
     begin
       LJsonDados3 := TACBrJSONObject.Create;
-      LJsonDados3.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao3)), 1,1));
-      //if Boleto.Cedente.CedenteWS.IndicadorPix then
-      LJsonDados.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao3)), 3, 2));
-      //else
-      //LJsonDados.AddPair('quantidade_dias_instrucao_cobranca', Copy(trim((ATitulo.Instrucao3)), 3, 2));
-      LJsonDados3.AddPair('dia_util', StrToBool(IfThen(ATitulo.TipoDiasProtesto = diUteis,'True','False')));
+
+      LInstrucao := StrToIntDef(Copy(trim(ATitulo.Instrucao3), 1, 2),0);
+      LDias      := StrToIntDef(Copy(trim(ATitulo.Instrucao3), 3, 2),0);
+      LJsonDados3.AddPair('codigo_instrucao_cobranca',Copy(trim(ATitulo.Instrucao3), 1, 2));
+
+      MontarInstrucaoCobranca(LInstrucao,
+                              LDias,
+                              LJsonDados3);
+
       LJsonArray.AddElementJSON(LJsonDados3);
     end;
 
@@ -1455,4 +1515,6 @@ begin
   else
     Result := '';
 end;
+
+
 end.

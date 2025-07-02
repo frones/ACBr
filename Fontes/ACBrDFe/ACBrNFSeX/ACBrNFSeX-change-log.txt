@@ -42,6 +42,25 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/07/2025
+-- ACBrNFSeXServicos --
+[*] #TK-7277: A cidade de Coromandel/MG aderiu a emissão da NFS-e Padrão Nacional.
+   Por: DanielF
+[*] #TK-7276: A cidade de Colorado do Oeste/RO alterou de http para https, o provedor
+    continua o mesmo.
+   Por: Claudio Visky
+[*] #TK-7275: A cidade de Viana/ES alterou para versão 2.04 bem como as URLs, o provedor
+    continua o mesmo.
+   Por: Caio0203
+[+] #TK-7273: Inclusão da cidade de Ciriaco/RS, o provedor é DataSmart.
+   Por: Doglas Stumpf
+[+] #TK-7268: Inclusão da cidade de Mampituba/RS, o provedor é Betha.
+   Por: Mario Inacio
+[*] #TK-7267: A cidade de Confresa/MT alterou as URLs, o provedor continua o mesmo.
+   Por: Luiz Eduardo Bodo
+[*] #TK-7256: Alterado a URL de homologação do provedor SigISSWeb.
+   Por: ActioSistemas
+
 27/06/2025
 -- ACBrNFSeXServicos --
 [*] #TK-7264: A cidade de Maua/SP, voltou a usar o provedor Ginfes.

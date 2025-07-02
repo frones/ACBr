@@ -923,10 +923,10 @@ begin
         NumRps := LerChaveRPS(ANode);
         NumNFSe := LerChaveNFe(ANode);
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
         if ANota = nil then
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
         ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
         SalvarXmlNfse(ANota);
@@ -1058,10 +1058,10 @@ begin
         NumRps := LerChaveRPS(ANode);
         NumNFSe := LerChaveNFe(ANode);
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
         if ANota = nil then
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
         ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
         SalvarXmlNfse(ANota);
@@ -1202,12 +1202,10 @@ begin
         NumRps := LerChaveRPS(ANode);
         NumNFSe := LerChaveNFe(ANode);
 
-        ANota := nil;
-        if (NumRPS <> '') then
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
         if ANota = nil then
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
         ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
         SalvarXmlNfse(ANota);
@@ -1359,12 +1357,10 @@ begin
         NumRps := LerChaveRPS(ANode);
         NumNFSe := LerChaveNFe(ANode);
 
-        ANota := nil;
-        if (NumRPS <> '') then
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
         if ANota = nil then
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
         ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
         SalvarXmlNfse(ANota);
@@ -1516,12 +1512,10 @@ begin
         NumRps := LerChaveRPS(ANode);
         NumNFSe := LerChaveNFe(ANode);
 
-        ANota := nil;
-        if (NumRPS <> '') then
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
         if ANota = nil then
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
         ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
         SalvarXmlNfse(ANota);

@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/07/2025
+-- ISSSaoPaulo.Provider --
+[*] #TK-7231: Invertida a ordem de pesquisa na lista interna do componente para:
+    primeiro procurar pelo numero da NFS-e e depois pelo numero do RPS.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-7277: A cidade de Coromandel/MG aderiu a emissão da NFS-e Padrão Nacional.
    Por: DanielF

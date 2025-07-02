@@ -193,52 +193,55 @@ begin
         dhRecbto := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
         chNFe := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFe'), tcStr);
 
-        case cStat of
-          100, 101, 104, 150, 151, 155:
+        if cStat in [100, 101, 104, 150, 151, 155] then
+        begin
+          ANodeAux := ANode.Childrens.FindAnyNs('protNFe');
+
+          if ANodeAux <> nil then
+          begin
+            // A propriedade XMLprotNFe contem o XML que traz o resultado do
+            // processamento da NF-e.
+            XMLprotNFe := ANodeAux.OuterXml;
+
+            ANodeAux := ANodeAux.Childrens.FindAnyNs('infProt');
+
+            if ANodeAux <> nil then
             begin
-              ANodeAux := ANode.Childrens.FindAnyNs('protNFe');
-
-              if ANodeAux <> nil then
-              begin
-                // A propriedade XMLprotNFe contem o XML que traz o resultado do
-                // processamento da NF-e.
-                XMLprotNFe := ANodeAux.OuterXml;
-
-                ANodeAux := ANodeAux.Childrens.FindAnyNs('infProt');
-
-                if ANodeAux <> nil then
-                begin
-                  protNFe.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
-                  protNFe.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
-                  protNFe.chDFe := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNFe'), tcStr);
-                  protNFe.dhRecbto := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
-                  protNFe.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
-                  protNFe.digVal := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('digVal'), tcStr);
-                  protNFe.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
-                  protNFe.xMotivo := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr);
-                  protNFe.cMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cMsg'), tcInt);
-                  protNFe.xMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMsg'), tcStr);
-                end;
-              end;
+              protNFe.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
+              protNFe.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
+              protNFe.chDFe := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNFe'), tcStr);
+              protNFe.dhRecbto := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+              protNFe.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
+              protNFe.digVal := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('digVal'), tcStr);
+              protNFe.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
+              protNFe.xMotivo := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr);
+              protNFe.cMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cMsg'), tcInt);
+              protNFe.xMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMsg'), tcStr);
             end;
+          end;
         end;
 
         retCancNFe.cStat := 0;
 
         if cStat in [101, 151, 155] then
         begin
-          ANodeAux := ANode.Childrens.FindAnyNs('infCanc');
+          ANodeAux := ANode.Childrens.FindAnyNs('retCancNFe ');
 
           if ANodeAux <> nil then
           begin
-            retCancNFe.tpAmb := StrToTpAmb(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
-            retCancNFe.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
-            retCancNFe.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
-            retCancNFe.xMotivo := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr);
-            retCancNFe.cUF := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cUF'), tcInt);
-            retCancNFe.chNFe := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNFe'), tcStr);
-            retCancNFe.dhRecbto := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
-            retCancNFe.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
+            ANodeAux := ANodeAux.Childrens.FindAnyNs('infCanc');
+
+            if ANodeAux <> nil then
+            begin
+              retCancNFe.tpAmb := StrToTpAmb(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
+              retCancNFe.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
+              retCancNFe.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
+              retCancNFe.xMotivo := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr);
+              retCancNFe.cUF := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cUF'), tcInt);
+              retCancNFe.chNFe := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNFe'), tcStr);
+              retCancNFe.dhRecbto := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+              retCancNFe.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
+            end;
           end;
         end;
 
@@ -267,8 +270,6 @@ begin
           Result := True;
         end;
       end;
-
-//      Result := True;
     except
       Result := False;
     end;

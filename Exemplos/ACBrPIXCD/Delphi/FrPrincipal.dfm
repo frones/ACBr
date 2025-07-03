@@ -8515,13 +8515,22 @@ object Form1: TForm1
                   Color = clBtnFace
                   ParentColor = False
                 end
+                object lbPIXPDVVersaoAPI: TLabel
+                  Left = 750
+                  Top = 50
+                  Width = 53
+                  Height = 13
+                  Caption = 'Vers'#227'o API'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
                 object edPixPDVCNPJ: TEdit
                   Left = 24
                   Top = 65
-                  Width = 884
-                  Height = 23
+                  Width = 713
+                  Height = 21
                   Anchors = [akLeft, akTop, akRight]
-                  TabOrder = 0
+                  TabOrder = 3
                 end
                 object edPixPDVToken: TEdit
                   Left = 24
@@ -8538,6 +8547,16 @@ object Form1: TForm1
                   Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 2
+                end
+                object cbPIXPDVVersaoAPI: TComboBox
+                  Left = 750
+                  Top = 64
+                  Width = 158
+                  Height = 21
+                  Style = csDropDownList
+                  ItemHeight = 13
+                  TabOrder = 0
+                  TabStop = False
                 end
               end
             end

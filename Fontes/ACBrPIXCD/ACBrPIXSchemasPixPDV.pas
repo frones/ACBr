@@ -112,6 +112,8 @@ type
 
   TPixPDVQrDinamico = class(TACBrPIXSchema)
   private
+    ftarifaPercentual: Double;
+    ftarifaValor: Double;
     fValor: Currency;
     fMinutos: Integer;
     fMensagem: string;
@@ -126,6 +128,8 @@ type
     procedure Assign(aSource: TPixPDVQrDinamico);
 
     property Valor: Currency read fValor write fValor;
+    property tarifaValor: Double read ftarifaValor write ftarifaValor;
+    property tarifaPercentual : Double read ftarifaPercentual write ftarifaPercentual;
     property Minutos: Integer read fMinutos write fMinutos;
     property Mensagem: string read fMensagem write fMensagem;
     property Imagem: Boolean read fImagem write fImagem;
@@ -212,6 +216,8 @@ type
 
   TPixPDVQrCobranca = class(TACBrPIXSchema)
   private
+    ftarifaPercentual: Double;
+    ftarifaValor: Double;
     fValor: Currency;
     fVencimento: TDateTime;
     fExpira: Integer;
@@ -233,6 +239,8 @@ type
     procedure Assign(aSource: TPixPDVQrCobranca);
 
     property Valor: Currency read fValor write fValor;
+    property tarifaValor: Double read ftarifaValor write ftarifaValor;
+    property tarifaPercentual : Double read ftarifaPercentual write ftarifaPercentual;
     property Vencimento: TDateTime read fVencimento write fVencimento;
     property Expira: Integer read fExpira write fExpira;
     property Mensagem: string read fMensagem write fMensagem;
@@ -295,10 +303,16 @@ type
 
   TPixPDVQrStatus = class(TACBrPIXSchema)
   private
+    fe2eId: String;
+    femissao: TDateTime;
     fStatus: TPixPDVQrStatusTipo;
     fEndToEndId: string;
     fIdentificadorId: string;
     fSender: TPixPDVQrStatusSender;
+    ftaxa: Double;
+    ftipo: String;
+    fvalidade: TDateTime;
+    fvalor: Double;
   protected
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
@@ -309,9 +323,15 @@ type
     function IsEmpty: Boolean; override;
     procedure Assign(aSource: TPixPDVQrStatus);
 
+    property emissao: TDateTime read femissao;
+    property valor: Double read fvalor;
+    property taxa: Double read ftaxa;
+    property validade: TDateTime read fvalidade;
+    property tipo: String read ftipo;
     property Status: TPixPDVQrStatusTipo read fStatus;
-    property EndToEndId: string read fEndToEndId;
-    property IdentificadorId: string read fIdentificadorId;
+    property e2eId: String read fe2eId;
+    property EndToEndId: String read fEndToEndId;
+    property IdentificadorId: String read fIdentificadorId;
     property Sender: TPixPDVQrStatusSender read fSender;
   end;
 
@@ -613,11 +633,12 @@ end;
 
 procedure TPixPDVQrDinamico.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
-  aJSon.AddPair('valor', fValor);
-  if (fMinutos > 0) then
-    aJSon.AddPair('minutos', fMinutos);
-  if NaoEstaVazio(fMensagem) then
-    aJSon.AddPair('mensagem', fMensagem);
+  aJSon
+    .AddPair('valor', fValor)
+    .AddPair('tarifaValor', ftarifaValor, False)
+    .AddPair('tarifaPercentual', ftarifaPercentual, False)
+    .AddPair('minutos', fMinutos, False)
+    .AddPair('mensagem', fMensagem, False);
   if fImagem then
     aJSon.AddPair('imagem', fImagem);
 end;
@@ -626,6 +647,8 @@ procedure TPixPDVQrDinamico.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
     .Value('valor', fValor)
+    .Value('tarifaValor', ftarifaValor)
+    .Value('tarifaPercentual', ftarifaPercentual)
     .Value('minutos', fMinutos)
     .Value('mensagem', fMensagem)
     .Value('imagem', fImagem);
@@ -641,6 +664,8 @@ procedure TPixPDVQrDinamico.Clear;
 begin
   fValor := 0;
   fMinutos := 0;
+  ftarifaValor := 0;
+  ftarifaPercentual := 0;
   fMensagem := EmptyStr;
   fImagem := False;
 end;
@@ -648,6 +673,8 @@ end;
 function TPixPDVQrDinamico.IsEmpty: Boolean;
 begin
   Result := (fValor = 0) and
+            (ftarifaValor = 0) and
+            (ftarifaPercentual = 0) and
             (fMinutos = 0) and
             (fMensagem = EmptyStr) and
             (not fImagem);
@@ -656,6 +683,8 @@ end;
 procedure TPixPDVQrDinamico.Assign(aSource: TPixPDVQrDinamico);
 begin
   fValor := aSource.Valor;
+  ftarifaValor := aSource.tarifaValor;
+  ftarifaPercentual := aSource.tarifaPercentual;
   fMinutos := aSource.Minutos;
   fMensagem := aSource.Mensagem;
   fImagem := aSource.Imagem;
@@ -902,18 +931,18 @@ end;
 
 procedure TPixPDVQrCobranca.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
-  if NaoEstaVazio(documento) then
-    aJSon.AddPair('documento', documento);
-  if (expira > 0) then
-    aJSon.AddPair('expira', expira);
+  aJSon
+    .AddPair('documento', fdocumento, False)
+    .AddPair('expira', fexpira, False)
+    .AddPair('mensagem', fmensagem, False)
+    .AddPair('valor', fvalor, False)
+    .AddPair('tarifaValor', ftarifaValor, False)
+    .AddPair('tarifaPercentual', ftarifaPercentual, False);
+
   if imagem then
-    aJSon.AddPair('imagem', imagem);
-  if NaoEstaVazio(mensagem) then
-    aJSon.AddPair('mensagem', mensagem);
-  if (valor > 0) then
-    aJSon.AddPair('valor', valor);
-  if (vencimento > 0) then
-    aJSon.AddPair('vencimento', FormatDateBr(vencimento));
+    aJSon.AddPair('imagem', fimagem);
+  if NaoEstaZerado(vencimento) then
+    aJSon.AddPair('vencimento', FormatDateBr(fVencimento));
 
   Pagador.WriteToJSon(aJSon);
   Juros.WriteToJSon(aJSon);
@@ -925,6 +954,8 @@ procedure TPixPDVQrCobranca.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
     .Value('valor', fValor)
+    .Value('tarifaValor', ftarifaValor)
+    .Value('tarifaPercentual', ftarifaPercentual)
     .ValueISODate('vencimento', fVencimento)
     .Value('expira', fExpira)
     .Value('mensagem', fMensagem)
@@ -937,7 +968,7 @@ begin
   Desconto.ReadFromJSon(aJSon);
 end;
 
-constructor TPixPDVQrCobranca.Create(const aObjectName: String);
+constructor TPixPDVQrCobranca.Create(const aObjectName: string);
 begin
   inherited Create(aObjectName);
   fPagador := TPixPDVPagador.Create('pagador');
@@ -959,6 +990,8 @@ end;
 procedure TPixPDVQrCobranca.Clear;
 begin
   fValor := 0;
+  ftarifaValor := 0;
+  ftarifaPercentual := 0;
   fVencimento := 0;
   fExpira := 0;
   fMensagem := EmptyStr;
@@ -973,6 +1006,8 @@ end;
 function TPixPDVQrCobranca.IsEmpty: Boolean;
 begin
   Result := (fValor = 0) and
+            (ftarifaValor = 0) and
+            (ftarifaPercentual = 0) and
             (fExpira = 0) and
             (fVencimento = 0) and
             (not fImagem) and
@@ -987,6 +1022,8 @@ end;
 procedure TPixPDVQrCobranca.Assign(aSource: TPixPDVQrCobranca);
 begin
   fValor := aSource.Valor;
+  ftarifaValor := aSource.tarifaValor;
+  ftarifaPercentual := aSource.tarifaPercentual;
   fVencimento := aSource.Vencimento;
   fExpira := aSource.Expira;
   fMensagem := aSource.Mensagem;
@@ -1108,31 +1145,56 @@ end;
 
 procedure TPixPDVQrStatus.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
+  aJSon
+    .AddPair('endToEndId', fEndToEndId, False)
+    .AddPair('identificadorId', fIdentificadorId, False)
+    .AddPair('valor', fvalor, False)
+    .AddPair('taxa', ftaxa, False)
+    .AddPair('tipo', ftipo, False)
+    .AddPair('e2eId', fe2eId, False);
+
   if (fStatus <> pqsNone) then
     aJSon.AddPair('status', PixPDVQrStatusToString(fStatus));
-  if NaoEstaVazio(fEndToEndId) then
-    aJSon.AddPair('endToEndId', fEndToEndId);
-  if NaoEstaVazio(fIdentificadorId) then
-    aJSon.AddPair('identificadorId', fIdentificadorId);
+
+  if NaoEstaZerado(femissao) then
+    aJson.AddPair('emissao', DateTimeToIso8601(femissao));
+
+  if NaoEstaZerado(fvalidade) then
+    aJson.AddPair('validade', DateTimeToIso8601(fvalidade));
 
   fSender.WriteToJSon(aJSon);
 end;
 
 procedure TPixPDVQrStatus.DoReadFromJSon(aJSon: TACBrJSONObject);
 var
-  s: string;
+  s, s1, s2: string;
 begin
-  {$IFDEF FPC}s := EmptyStr;{$ENDIF}
+  {$IFDEF FPC}
+  s := EmptyStr;
+  s1 := EmptyStr;
+  s2 := EmptyStr;
+  {$ENDIF}
   aJSon
     .Value('status', s)
+    .Value('emissao', s1)
+    .Value('validade', s2)
+    .Value('tipo', ftipo)
+    .Value('taxa', ftaxa)
+    .Value('valor', fvalor)
+    .Value('e2eId', fe2eId)
     .Value('endToEndId', fEndToEndId)
     .Value('identificadorId', fIdentificadorId);
+  
+  if NaoEstaVazio(s1) then
+    femissao := Iso8601ToDateTime(s1);
+  if NaoEstaVazio(s2) then
+    fvalidade := Iso8601ToDateTime(s2);
 
   fStatus := StringToPixPDVQrStatus(s);
   fSender.ReadFromJSon(aJSon);
 end;
 
-constructor TPixPDVQrStatus.Create(const aObjectName: String);
+constructor TPixPDVQrStatus.Create(const aObjectName: string);
 begin
   inherited Create(aObjectName);
   fSender := TPixPDVQrStatusSender.Create('sender');
@@ -1147,7 +1209,13 @@ end;
 
 procedure TPixPDVQrStatus.Clear;
 begin
+  ftaxa := 0;
+  fvalor := 0;
+  femissao := 0;
+  fvalidade := 0;
   fStatus := pqsNone;
+  ftipo := EmptyStr;
+  fe2eId := EmptyStr;
   fEndToEndId := EmptyStr;
   fIdentificadorId := EmptyStr;
   fSender.Clear;
@@ -1156,13 +1224,25 @@ end;
 function TPixPDVQrStatus.IsEmpty: Boolean;
 begin
   Result := (fStatus = pqsNone) and
+            EstaVazio(fe2eId) and
+            EstaVazio(ftipo) and
             EstaVazio(fEndToEndId) and
             EstaVazio(fIdentificadorId) and
+            EstaZerado(ftaxa) and
+            EstaZerado(fvalor) and
+            EstaZerado(femissao) and
+            EstaZerado(fvalidade) and
             (fSender.IsEmpty);
 end;
 
 procedure TPixPDVQrStatus.Assign(aSource: TPixPDVQrStatus);
 begin
+  ftaxa := aSource.taxa;
+  ftipo := aSource.tipo;
+  fvalor := aSource.valor;
+  fe2eId := aSource.e2eId;
+  femissao := aSource.emissao;
+  fvalidade := aSource.validade;
   fStatus := aSource.Status;
   fEndToEndId := aSource.EndToEndId;
   fIdentificadorId := aSource.IdentificadorId;

@@ -8838,10 +8838,10 @@ object Form1: TForm1
                 object edPixPDVCNPJ: TEdit
                   Left = 24
                   Height = 23
-                  Top = 65
-                  Width = 884
+                  Top = 64
+                  Width = 704
                   Anchors = [akTop, akLeft, akRight]
-                  TabOrder = 0
+                  TabOrder = 1
                 end
                 object edPixPDVToken: TEdit
                   Left = 24
@@ -8849,7 +8849,7 @@ object Form1: TForm1
                   Top = 115
                   Width = 884
                   Anchors = [akTop, akLeft, akRight]
-                  TabOrder = 1
+                  TabOrder = 2
                 end
                 object edPixPDVSecretKey: TEdit
                   Left = 24
@@ -8857,7 +8857,26 @@ object Form1: TForm1
                   Top = 171
                   Width = 884
                   Anchors = [akTop, akLeft, akRight]
-                  TabOrder = 2
+                  TabOrder = 3
+                end
+                object cbPIXPDVVersaoAPI: TComboBox
+                  Left = 750
+                  Height = 23
+                  Top = 64
+                  Width = 158
+                  ItemHeight = 15
+                  ReadOnly = True
+                  Style = csDropDownList
+                  TabOrder = 0
+                  TabStop = False
+                end
+                object lbPIXPDVVersaoAPI: TLabel
+                  Left = 750
+                  Height = 15
+                  Top = 50
+                  Width = 55
+                  Caption = 'Versão API'
+                  ParentColor = False
                 end
               end
             end
@@ -10610,6 +10629,7 @@ object Form1: TForm1
   end
   object ACBrPSPPixPDV1: TACBrPSPPixPDV
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    APIVersao = apiVersao1
     Left = 411
     Top = 416
   end
@@ -10656,7 +10676,7 @@ object Form1: TForm1
   end
   object ACBrPSPAppLess1: TACBrPSPAppLess
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
-    Left = 120
-    Top = 312
+    Left = 696
+    Top = 416
   end
 end

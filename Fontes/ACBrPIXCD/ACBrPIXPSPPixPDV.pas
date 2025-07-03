@@ -52,6 +52,8 @@ const
 
   cPixPDVURLSandbox = 'https://pixpdv.com.br/api-h/v1';
   cPixPDVURLProducao = 'https://pixpdv.com.br/api/v1';
+  cPixPDVURLMediatorSandbox = 'https://pixnopdv.com.br/api-h/v1';
+  cPixPDVURLMediatorProducao = 'https://pixnopdv.com.br/api/v1';
   cPixPDVHeaderPoweredBy = 'X-PoweredBy: Projeto ACBr';
 
   cPIXPDVEndPointStatusToken = '/statustoken';
@@ -68,6 +70,7 @@ const
 type
 
   TACBrPSPPIXPDVTipoData = (tpdtEmissao, tpdtRecebimento, tpdtVencimento);
+  TACBrPIXPDVAPIVersao = (apiVersao1, apiVersaoMediator);
 
   { TACBrPSPPixPDV }
 
@@ -76,6 +79,7 @@ type
   {$ENDIF RTL230_UP}
   TACBrPSPPixPDV = class(TACBrPSP)
   private
+    fAPIVersao: TACBrPIXPDVAPIVersao;
     fCNPJ: String;
     fError: TPixPDVError;
     fToken: String;
@@ -104,7 +108,7 @@ type
     procedure PostQrCobranca;
     procedure PostQrRefund(const aQrCodeId: string);
     procedure PostQrSimulaPagar(const aQrCodeId: string);
-    procedure PostRetirada(aValor: Currency);
+    procedure PostRetirada(aValor: Currency; aTarifaValor: Double = 0);
 
     procedure GetQrStatus(const aQRCodeId: string);
     procedure GetQrResumo(inicio, fim: TDateTime; tipo: TACBrPSPPIXPDVTipoData = tpdtEmissao);
@@ -124,6 +128,7 @@ type
     property Retirada: TPixPDVRetirada read fRetirada;
     property Extrato: TPixPDVExtrato read fExtrato;
   published
+    property APIVersao: TACBrPIXPDVAPIVersao read fAPIVersao write fAPIVersao default apiVersaoMediator;
     property CNPJ: String read fCNPJ write fCNPJ;
     property Token: String read fToken write fToken;
     property ClientSecret;
@@ -368,7 +373,7 @@ begin
   end;
 end;
 
-procedure TACBrPSPPixPDV.PostRetirada(aValor: Currency);
+procedure TACBrPSPPixPDV.PostRetirada(aValor: Currency; aTarifaValor: Double);
 var
   wBody, wURL: String;
   wRespostaHttp: AnsiString;
@@ -382,6 +387,8 @@ begin
   wJs := TACBrJSONObject.Create;
   try
     wJs.AddPair('valor', aValor);
+    if NaoEstaZerado(aTarifaValor) then
+      wJs.AddPair('tarifaValor', aTarifaValor);
     wBody := wJs.ToJSON;
   finally
     wJs.Free;
@@ -573,10 +580,20 @@ end;
 
 function TACBrPSPPixPDV.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
 begin
-  if (Ambiente = ambProducao) then
-    Result := cPixPDVURLProducao
+  if (fAPIVersao = apiVersao1) then
+  begin
+    if (Ambiente = ambProducao) then
+      Result := cPixPDVURLProducao
+    else
+      Result := cPixPDVURLSandbox;
+  end
   else
-    Result := cPixPDVURLSandbox;
+  begin
+    if (Ambiente = ambProducao) then
+      Result := cPixPDVURLMediatorProducao
+    else
+      Result := cPixPDVURLMediatorSandbox;
+  end;
 end;
 
 end.

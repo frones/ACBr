@@ -198,6 +198,7 @@ type
     btCriarCobrancaImediata: TBitBtn;
     cbAilosTipoChave: TComboBox;
     cbBanrisulTipoChave: TComboBox;
+    cbPIXPDVVersaoAPI: TComboBox;
     cbC6BankTipoChave: TComboBox;
     cbConsultarCobsRStatus: TComboBox;
     cbConsultarLocationsRecComIdLocRed: TCheckBox;
@@ -522,6 +523,7 @@ type
     Label16: TLabel;
     Label17: TLabel;
     Label18: TLabel;
+    lbPIXPDVVersaoAPI: TLabel;
     lbCancelarCobRTxID: TLabel;
     lbDesvincularLocRecId: TLabel;
     lbConsultarLocationsRecConvenio: TLabel;
@@ -5045,6 +5047,7 @@ begin
     edPixPDVCNPJ.Text := Ini.ReadString('PixPDV', 'CNPJ', '');
     edPixPDVToken.Text := Ini.ReadString('PixPDV', 'Token', '');
     edPixPDVSecretKey.Text := Ini.ReadString('PixPDV', 'SecretKey', '');
+    cbPIXPDVVersaoAPI.ItemIndex := Ini.ReadInteger('PixPDV', 'VersaoAPI', cbPIXPDVVersaoAPI.ItemIndex);
 
     edAilosChavePIX.Text := Ini.ReadString('Ailos', 'ChavePIX', '');
     edAilosClientID.Text := Ini.ReadString('Ailos', 'ClientID', '');
@@ -5199,6 +5202,7 @@ begin
     Ini.WriteString('PixPDV', 'CNPJ', edPixPDVCNPJ.Text);
     Ini.WriteString('PixPDV', 'Token', edPixPDVToken.Text);
     Ini.WriteString('PixPDV', 'SecretKey', edPixPDVSecretKey.Text);
+    Ini.WriteInteger('PixPDV', 'VersaoAPI', cbPIXPDVVersaoAPI.ItemIndex);
 
     Ini.WriteString('Ailos', 'ChavePIX', edAilosChavePIX.Text);
     Ini.WriteString('Ailos', 'ClientID', edAilosClientID.Text);
@@ -5457,6 +5461,7 @@ var
   t: TACBrPIXStatusRecorrencia;
   u: TACBrPIXTipoConta;
   v: TACBrPIXStatusRegistroCobranca;
+  w: TACBrPIXPDVAPIVersao;
 begin
   cbxPSPAtual.Items.Clear;
   for i := 0 to pgPSPs.PageCount-1 do
@@ -5553,6 +5558,11 @@ begin
   for v := Low(TACBrPIXStatusRegistroCobranca) to High(TACBrPIXStatusRegistroCobranca) do
     cbConsultarCobsRStatus.Items.Add(PIXStatusRegistroCobrancaToString(v));
   cbConsultarCobsRStatus.ItemIndex := 0;
+
+  cbPIXPDVVersaoAPI.Items.Clear;
+  for w := Low(TACBrPIXPDVAPIVersao) to High(TACBrPIXPDVAPIVersao) do
+    cbPIXPDVVersaoAPI.Items.Add(GetEnumName(TypeInfo(TACBrPIXPDVAPIVersao), Integer(w)));
+  cbPIXPDVVersaoAPI.ItemIndex := 0;
 
   edCobVVencimento.DateTime := IncDay(Now, 7);
   edCriarRecorrenciaDataInicial.DateTime := IncMonth(Now, 1);

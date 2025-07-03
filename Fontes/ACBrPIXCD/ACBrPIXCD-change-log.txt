@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/07/2025
+-- ACBrPIXPSPPixPDV, ACBrPixSchemasPixPDV --
+[*] Ajustes referentes à migração do PSP Matera para PixNoPDV.
+    por: Elias César
+
+23/06/2025
+-- ACBrPIXCD, ACBrPIXSchemasLocation --
+[+] Adicionado endpoint /locrec para possibilitar a Jornada 2 do Pix Automático
+    por: Elias César
+
 23/06/2025
 -- ACBrPIXCD --
 [+] Criação do método 'SolicitarRetentativa()'

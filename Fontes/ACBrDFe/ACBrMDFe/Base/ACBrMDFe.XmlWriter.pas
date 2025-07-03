@@ -1156,7 +1156,7 @@ begin
     Result[i].AppendChild(AddNode(tcInt, '#07', 'tara', 1, 6, 1,
                                       MDFe.Rodo.veicReboque[i].tara, DSC_TARA));
 
-    Result[i].AppendChild(AddNode(tcInt, '#08', 'capKG', 1, 6, 0,
+    Result[i].AppendChild(AddNode(tcInt, '#08', 'capKG', 1, 6, 1,
                                     MDFe.Rodo.veicReboque[i].capKG, DSC_CAPKG));
 
     Result[i].AppendChild(AddNode(tcInt, '#09', 'capM3', 1, 6, 0,

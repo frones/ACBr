@@ -48,6 +48,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/07/2025
+[*]Sem TK ACBrOFX - Tratamento quando não houverem quebras de linha entre as tags. 
+  por Renato Rubinho
 
 10/07/2024
 [*]TK-5713 ACBrOFX - Alteração pois não esta tratando a tag <TRNTYPE> adequadamente,

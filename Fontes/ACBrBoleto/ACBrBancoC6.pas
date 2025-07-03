@@ -296,7 +296,7 @@ begin
            FormatDateTime('ddmmyy', LTitulo.Vencimento)                                                                  +  // 121 a 126 - Data Vencimento
            IntToStrZero(Round(LTitulo.ValorDocumento * 100 ), 13)                                                        +  // 127 a 139 - Valo Titulo
            Space(8)                                                                                                      +  // 140 a 147 - Uso do Banco
-           LEspecie                                                                                                      +  // 148 a 149 - Espécie do Título
+           PadLeft(LEspecie,2)                                                                                           +  // 148 a 149 - Espécie do Título
            'N'                                                                                                           +  // 150 a 150 - Aceite
            FormatDateTime('ddmmyy', LTitulo.DataDocumento)                                                               +  // 151 a 156 - Data Emissão Título
            LProtesto                                                                                                     +  // 157 a 160 - Intrução 1 e 2

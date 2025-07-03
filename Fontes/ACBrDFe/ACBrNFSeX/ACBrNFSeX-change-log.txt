@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/07/2025
+-- Centi.LerXml --
+[*] #TK-7184: Ajuste para pegar o ID da NFS-e para ser usado na montagem da
+    strig do QR-Code
+   Por: Italo Giurizzato Junior
+
 02/07/2025
 -- ISSSaoPaulo.Provider --
 [*] #TK-7231: Invertida a ordem de pesquisa na lista interna do componente para:

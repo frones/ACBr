@@ -52,6 +52,7 @@ type
  public
    constructor Create(ABoletoWS: TACBrBoleto); override;
    destructor  Destroy; Override;
+   function LerListaRetorno: Boolean; override;
    function LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean; override;
    function RetornoEnvio(const AIndex: Integer): Boolean; override;
    function TrataNossoNumero(const ANossoNumero: string):string;
@@ -61,6 +62,8 @@ type
 implementation
 
 uses
+
+  StrUtils,
   ACBrBoletoConversao,
   ACBrUtil.Strings,
   ACBrUtil.Base,
@@ -83,6 +86,209 @@ end;
 destructor TRetornoEnvio_Banrisul.Destroy;
 begin
   inherited Destroy;
+end;
+
+function TRetornoEnvio_Banrisul.LerListaRetorno: Boolean;
+var
+  LJsonObject, LItemObject: TACBrJSONObject;
+  LJsonArray: TACBrJSONArray;
+  LListaRetorno: TACBrBoletoRetornoWS;
+  LMensagemRejeicao: TACBrBoletoRejeicao;
+  I: Integer;
+begin
+  Result := True;
+
+  LListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
+  LListaRetorno.HTTPResultCode := HTTPResultCode;
+  LListaRetorno.JSONEnvio      := EnvWs;
+  If Assigned(ACBrTitulo) then
+    LListaRetorno.DadosRet.IDBoleto.NossoNum := ACBrTitulo.NossoNumero;
+  if RetWS <> '' then
+  begin
+    try
+      LJsonObject := TACBrJSONObject.Parse(RetWS);
+      try
+        LListaRetorno.JSON           := LJsonObject.ToJSON;
+
+        if LJsonObject.IsJSONArray('ocorrencias') then
+        begin
+          LJsonArray := LJsonObject.AsJSONArray['ocorrencias'];
+          for I := 0 to Pred(LJsonArray.Count) do
+          begin
+            LItemObject                  := LJsonArray.ItemAsJSONObject[I];
+            LMensagemRejeicao            := LListaRetorno.CriarRejeicaoLista;
+            LMensagemRejeicao.Codigo     := LItemObject.AsString['codigo'];
+            LMensagemRejeicao.Mensagem   := LItemObject.AsString['mensagem'];
+            LMensagemRejeicao.Ocorrencia := LItemObject.AsString['complemento'];
+          end;
+        end;
+
+
+        if LJsonObject.IsJSONArray('erros') then
+        begin
+          LJsonArray := LJsonObject.AsJSONArray['erros'];
+          for I := 0 to Pred(LJsonArray.Count) do
+          begin
+            LItemObject                  := LJsonArray.ItemAsJSONObject[I];
+            LMensagemRejeicao            := LListaRetorno.CriarRejeicaoLista;
+            LMensagemRejeicao.Codigo     := LItemObject.AsString['codigo'];
+            //LMensagemRejeicao.Versao     := LItemObject.AsString['versao'];
+            LMensagemRejeicao.Mensagem   := LItemObject.AsString['mensagem'];
+            LMensagemRejeicao.Ocorrencia := LItemObject.AsString['complemento'];
+          end;
+        end;
+
+        if NaoEstaVazio(LJsonObject.AsString['error']) then
+        begin
+          LMensagemRejeicao            := LListaRetorno.CriarRejeicaoLista;
+          LMensagemRejeicao.Codigo     := LJsonObject.AsString['statusCode'];
+          LMensagemRejeicao.Versao     := LJsonObject.AsString['error'];
+          LMensagemRejeicao.Mensagem   := LJsonObject.AsString['message'];
+        end;
+
+        //retorna quando tiver sucesso
+        if (LListaRetorno.ListaRejeicao.Count = 0) then
+        begin
+          LJsonArray := LJsonObject.AsJSONArray['boletos'];
+          for I := 0 to Pred(LJsonArray.Count) do
+          begin
+            if I > 0 then
+              LListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
+
+            LItemObject  := LJsonArray.ItemAsJSONObject[I];
+
+            //LListaRetorno.indicadorContinuidade := LJsonObject.AsString['indicadorContinuidade'] = 'S';
+            //LListaRetorno.proximoIndice         := LJsonObject.AsInteger['proximoIndice'];
+
+            LListaRetorno.DadosRet.IDBoleto.CodBarras      := LItemObject.AsString['codigo_barras'];
+            LListaRetorno.DadosRet.IDBoleto.LinhaDig       := LItemObject.AsString['linha_digitavel'];
+            LListaRetorno.DadosRet.IDBoleto.NossoNum       := LItemObject.AsString['nosso_numero'];
+
+            if LListaRetorno.DadosRet.IDBoleto.NossoNum = '' then
+              LListaRetorno.DadosRet.IDBoleto.NossoNum := ACBrTitulo.NossoNumero;
+
+            LListaRetorno.DadosRet.TituloRet.CodBarras      := LListaRetorno.DadosRet.IDBoleto.CodBarras;
+            LListaRetorno.DadosRet.TituloRet.LinhaDig       := LListaRetorno.DadosRet.IDBoleto.LinhaDig;
+
+
+            LListaRetorno.DadosRet.TituloRet.NossoNumero                := LListaRetorno.DadosRet.IDBoleto.NossoNum;
+            LListaRetorno.DadosRet.TituloRet.NossoNumeroCorrespondente  := TrataNossoNumero(LListaRetorno.DadosRet.IDBoleto.NossoNum);
+
+            LListaRetorno.DadosRet.TituloRet.SeuNumero                  := LItemObject.AsString['seu_numero'];
+
+            LListaRetorno.DadosRet.TituloRet.Vencimento                 := DateBBtoDateTime(LItemObject.AsString['data_vencimento']);
+            LListaRetorno.DadosRet.TituloRet.ValorDocumento             := LItemObject.AsFloat['valor_nominal'];
+            LListaRetorno.DadosRet.TituloRet.Carteira                   := LItemObject.AsString['carteira'];
+            LListaRetorno.DadosRet.TituloRet.DataRegistro               := DateBBtoDateTime(LItemObject.AsString['data_registro']);
+
+
+            LListaRetorno.DadosRet.TituloRet.codigoEstadoTituloCobranca := LItemObject.AsString['situacao_banrisul'];
+
+            // situacao_banrisul
+            if LItemObject.AsString['situacao_banrisul'] = 'A' then
+                  LListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca := 'ATIVO'
+            else if LItemObject.AsString['situacao_banrisul'] = 'B' then
+                  LListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca := 'BAIXADO POR PAGAMENTO'
+            else if LItemObject.AsString['situacao_banrisul'] = 'D' then
+                  LListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca := 'BAIXADO POR DEVOLUÇÃO'
+            else if LItemObject.AsString['situacao_banrisul'] = 'L' then
+                  LListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca := 'LIQUIDADO'
+            else if LItemObject.AsString['situacao_banrisul'] = 'R' then
+                  LListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca := 'REEMBOLSADO'
+            else if LItemObject.AsString['situacao_banrisul'] = 'T' then
+                  LListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca := 'TRANSFERIDO PARA CL'
+            else if LItemObject.AsString['situacao_banrisul'] = 'P' then
+                  LListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca := 'PROTESTADO';
+
+
+
+            if (LListaRetorno.DadosRet.TituloRet.codigoEstadoTituloCobranca = 'B') or     //Baixa Pagto
+               (LListaRetorno.DadosRet.TituloRet.codigoEstadoTituloCobranca = 'L') then   //Liquidado
+            begin
+
+               If LListaRetorno.DadosRet.TituloRet.codigoEstadoTituloCobranca = 'B' then
+               begin
+                  LListaRetorno.DadosRet.TituloRet.DataMovimento          	:=	DateBBtoDateTime(LItemObject.AsJSONObject['operacoes'].AsString['data_baixa']);
+                  LListaRetorno.DadosRet.TituloRet.DataBaixa               := DateBBtoDateTime(LItemObject.AsJSONObject['operacoes'].AsString['data_baixa']);
+               end
+               else
+               begin
+                  LListaRetorno.DadosRet.TituloRet.DataMovimento          	:=	DateBBtoDateTime(LItemObject.AsJSONObject['operacoes'].AsString['data_pagamento']);
+                  LListaRetorno.DadosRet.TituloRet.DataBaixa               := DateBBtoDateTime(LItemObject.AsJSONObject['operacoes'].AsString['data_pagamento']);
+               end;
+
+               LListaRetorno.DadosRet.TituloRet.DataCredito                := DateBBtoDateTime(LItemObject.AsJSONObject['operacoes'].AsString['data_credito']);
+
+               LListaRetorno.DadosRet.TituloRet.ValorPago                  := LItemObject.AsJSONObject['operacoes'].AsFloat['valor_pagamento'];
+               if LListaRetorno.DadosRet.TituloRet.ValorPago <= 0 then
+                  LListaRetorno.DadosRet.TituloRet.ValorPago               := LListaRetorno.DadosRet.TituloRet.ValorDocumento;
+
+
+              // Na documentação não tem informações de retorno com desconto
+              if (LListaRetorno.DadosRet.TituloRet.ValorPago < LListaRetorno.DadosRet.TituloRet.ValorDocumento) and
+                 (LListaRetorno.DadosRet.TituloRet.ValorDesconto <= 0) then
+                 LListaRetorno.DadosRet.TituloRet.ValorDesconto              := LListaRetorno.DadosRet.TituloRet.ValorDocumento -  LListaRetorno.DadosRet.TituloRet.ValorPago;
+
+              // Na documentação não tem informações de retorno com Juros
+              if (LListaRetorno.DadosRet.TituloRet.ValorPago > LListaRetorno.DadosRet.TituloRet.ValorDocumento) and
+                 (LListaRetorno.DadosRet.TituloRet.ValorMoraJuros <= 0) then
+                 LListaRetorno.DadosRet.TituloRet.ValorMoraJuros             :=  LListaRetorno.DadosRet.TituloRet.ValorPago - LListaRetorno.DadosRet.TituloRet.ValorDocumento;
+
+
+            end
+            else
+            if LListaRetorno.DadosRet.TituloRet.codigoEstadoTituloCobranca = 'D' then  //Baixa Devolução
+            begin
+               LListaRetorno.DadosRet.TituloRet.DataMovimento              := DateBBtoDateTime(LItemObject.AsJSONObject['operacoes'].AsString['data_baixa']);
+               LListaRetorno.DadosRet.TituloRet.DataCredito                := DateBBtoDateTime(LItemObject.AsJSONObject['operacoes'].AsString['data_credito']);
+               LListaRetorno.DadosRet.TituloRet.DataBaixa                  := DateBBtoDateTime(LItemObject.AsJSONObject['operacoes'].AsString['data_baixa']);
+
+
+               LListaRetorno.DadosRet.TituloRet.ValorPago                  := LItemObject.AsJSONObject['operacoes'].AsFloat['valor_pagamento'];
+               if LListaRetorno.DadosRet.TituloRet.ValorPago <= 0 then
+                  LListaRetorno.DadosRet.TituloRet.ValorPago               := LListaRetorno.DadosRet.TituloRet.ValorDocumento;
+
+            end
+            else
+            if (LListaRetorno.DadosRet.TituloRet.codigoEstadoTituloCobranca = 'R') or     //Reembolsado
+               (LListaRetorno.DadosRet.TituloRet.codigoEstadoTituloCobranca = 'T') or     //Transferido CL
+               (LListaRetorno.DadosRet.TituloRet.codigoEstadoTituloCobranca = 'P') then   //Protestado
+            begin
+               LListaRetorno.DadosRet.TituloRet.DataMovimento              := Date;
+            end;
+
+            LListaRetorno.DadosRet.TituloRet.Sacado.CNPJCPF    :=  LItemObject.AsJSONObject['pagador'].AsString['cpf_cnpj'];
+            LListaRetorno.DadosRet.TituloRet.Sacado.NomeSacado :=  LItemObject.AsJSONObject['pagador'].AsString['nome'];
+
+
+          end;
+        end;
+      except
+        Result := False;
+      end;
+    finally
+      LJsonObject.free;
+    end;
+  end else
+  begin
+    case HTTPResultCode of
+      404 :
+        begin
+          LMensagemRejeicao            := LListaRetorno.CriarRejeicaoLista;
+          LMensagemRejeicao.Codigo     := '404';
+          LMensagemRejeicao.Mensagem   := 'NÃO ENCONTRADO. O servidor não conseguiu encontrar o recurso solicitado.';
+        end;
+      503 :
+        begin
+          LMensagemRejeicao            := LListaRetorno.CriarRejeicaoLista;
+          LMensagemRejeicao.Codigo     := '503';
+          LMensagemRejeicao.Versao     := 'ERRO INTERNO BB';
+          LMensagemRejeicao.Mensagem   := 'SERVIÇO INDISPONÍVEL. O servidor está impossibilitado de lidar com a requisição no momento. Tente mais tarde.';
+          LMensagemRejeicao.Ocorrencia := 'ERRO INTERNO nos servidores do Banco do Brasil.';
+        end;
+    end;
+  end;
+
 end;
 
 function TRetornoEnvio_Banrisul.LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;

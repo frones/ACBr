@@ -51,7 +51,8 @@ type
   TBoletoW_Banrisul = class(TBoletoWSREST)
   private
     function CodigoTipoTitulo(AEspecieDoc: String): Integer;
-    protected
+  protected
+    function DefinirParametros:string;
     procedure DefinirURL; override;
     procedure DefinirParamOAuth; override;
     procedure DefinirContentType; override;
@@ -128,7 +129,8 @@ begin
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui:
       FPURL.SetPathURI( '/boletos' );
-    // tpConsulta         : FPURL := FPURL + '/boletos'+ '&' + DefinirParametros; //' + DevAPP + '&' + DefinirParametros;
+    tpConsulta:
+      FPURL.SetPathURI('/boletos?' + DefinirParametros);
     tpConsultaDetalhe:
       FPURL.SetPathURI( '/boletos/' + ID );
     tpBaixa:
@@ -161,11 +163,11 @@ begin
            FMetodoHTTP := htPOST; // Define Método POST para Baixa
            RequisicaoBaixa;
         end;
-      // tpConsulta :
-      // begin
-      // FMetodoHTTP:= htGET;   //Define Método GET Consulta
-      // RequisicaoConsulta;
-      // end;
+      tpConsulta :
+        begin
+          FMetodoHTTP:= htGET;   //Define Método GET Consulta
+          RequisicaoConsulta;
+        end;
       tpConsultaDetalhe:
         begin
            FMetodoHTTP := htGET; // Define Método GET Consulta Detalhe
@@ -200,6 +202,63 @@ begin
   begin
     if Boleto.Configuracoes.WebService.Operacao = tpBaixa then
       AddHeaderParam('bergs-ambiente', ValidaAmbiente);
+  end;
+end;
+
+function TBoletoW_Banrisul.DefinirParametros: string;
+var
+  LConsulta : TStringList;
+  LDocumento : String;
+begin
+  if Assigned(Boleto.Configuracoes.WebService.Filtro) then
+  begin
+    if Boleto.Configuracoes.WebService.Filtro.indicadorSituacao = isbNenhum then
+     raise EACBrBoletoWSException.Create(ClassName + ' Obrigatório informar o indicadorSituacao diferente de isbNenhum. ');
+
+    LDocumento := OnlyNumber(Boleto.Configuracoes.WebService.Filtro.cnpjCpfPagador);
+
+    LConsulta := TStringList.Create;
+
+    try
+      LConsulta.Delimiter := '&';
+      LConsulta.Add('situacao_titulo='+IfThen(Boleto.Configuracoes.WebService.Filtro.indicadorSituacao = isbBaixado,'B','A'));
+
+      //Utilizado para parâmetro --> situacao_pagamento
+      //1 = Apto para pagamento;
+      //2 = Pago no dia;
+      //3 = Crédito retido;
+      //4 = Baixado no dia;
+      //5 = Em processo de devolução automática;
+      //6 = Em cartório;
+
+      If (Boleto.Configuracoes.WebService.Filtro.codigoEstadoTituloCobranca > 0) then
+      LConsulta.Add('situacao_pagamento='+IntToStr(Boleto.Configuracoes.WebService.Filtro.codigoEstadoTituloCobranca));
+
+      if LDocumento <> '' then
+      LConsulta.Add('pagador.cpf_cnpj='+LDocumento);
+
+
+      if Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio > 0 then
+        LConsulta.Add('data_baixa_inicial='+FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio, 'DD.MM.YYYY'));
+      if Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataFinal > 0 then
+        LConsulta.Add('data_baixa_final='+FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataFinal, 'DD.MM.YYYY'));
+      if Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataInicio > 0 then
+        LConsulta.Add('data_vencimento_inicial='+FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataInicio, 'DD.MM.YYYY'));
+      if Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataFinal > 0 then
+        LConsulta.Add('data_vencimento_final='+FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataFinal, 'DD.MM.YYYY'));
+
+      if Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio > 0 then
+        LConsulta.Add('data_registro_inicial='+FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio, 'DD.MM.YYYY'));
+      if Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataFinal > 0 then
+        LConsulta.Add('data_registro_final='+FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataFinal, 'DD.MM.YYYY'));
+
+      if not (Boleto.Configuracoes.WebService.Filtro.indiceContinuidade > 0) then
+      LConsulta.Add('paginacao.pagina_atual='+IntToStr(Trunc(Boleto.Configuracoes.WebService.Filtro.indiceContinuidade)));
+
+    finally
+      Result := LConsulta.DelimitedText;
+      LConsulta.Free;
+    end;
   end;
 end;
 

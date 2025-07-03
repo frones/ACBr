@@ -43,6 +43,32 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/07/2025
+-- ACBrNFSeXServicos --
+[+] #TK-7278: Cidades incluídas: Acrelandia/AC, Assis Brasil/AC, Brasileia/AC,
+              Bujari/AC, Capixaba/AC, Feijo/AC, Jordao/AC, Manoel Urbano/AC, 
+              Marechal Thaumaturgo/AC, Placido de Castro/AC, Porto Walter/AC, 
+              Santa Rosa do Purus/AC, Sena Madureira/AC, Porto Acre/AC o provedor é Betha.
+[+] #TK-7283: Cidades incluídas: Cerejeiras/RO, Corumbiara/RO, Novo Horizonte do Oeste/RO,
+              Cacaulandia/RO, Campo Novo de Rondonia/RO, Chupinguaia/RO,
+              Governador Jorge Teixeira/RO, Nova Uniao/RO, Pimenteiras do Oeste/RO, 
+              Theobroma/RO, Vale do Paraiso/RO o provedor é Fiorilli.
+              Rio Crespo/RO, Sao Miguel do Guapore/RO, Castanheiras/RO, Seringueiras/RO
+              o provedor é EloTech.
+              Santa Luzia D Oeste/RO, Ministro Andreazza/RO o provedor é Agili.
+[+] #TK-7284: Cidades incluídas: Apui/AM, Manaquiri/AM, Presidente Figueiredo/AM, 
+              Rio Preto da Eva/AM o provedor é Fiorilli.
+              Autazes/AM, Manicore/AM o provedor é Betha.
+              Novo Airao/AM o provedor é Betha versão 2.02
+[*] #TK-7284: A Cidade de Tefe/AM trocou de provedor, agora é Fiorilli.
+[+] #TK-7286: Cidades incluídas: Alto Alegre/RR, Caroebe/RR, Pacaraima/RR, 
+              Sao Joao da Baliza/RR, Sao Luiz/RR, Uiramuta/RR o provedor é Saatri 2.03
+   Por: Anderson Grolli
+[+] #TK-7285: Inclusão da cidade de Cantagalo/RJ, o provedor é EL versão 2.04
+   Por: João Antônio
+[+] #TK-7282: Inclusão das cidades de Seritinga/MG e Rio Pomba/MG, o provedor é 
+              Futurize versão 2.02
+[*] #TK-7282: A cidade de Guarani/MG mudou as URLs, o provedor continua o mesmo.
+   Por: ASL Software LTDA
 -- Centi.LerXml --
 [*] #TK-7184: Ajuste para pegar o ID da NFS-e para ser usado na montagem da
     strig do QR-Code

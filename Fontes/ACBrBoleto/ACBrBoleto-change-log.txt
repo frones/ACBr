@@ -48,6 +48,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+04/07/2025
+-- ACBrBancoVortx, ACBrBoleto, ACBr_Boleto, ACBr_Boleto.dpk, ACBr_Boleto.lpk --
+[+] #TK-5773 Implementado banco Vortx
+    Por: tiago.istuque / Roberto rrrFerminoRrrrrerw / Renato Rubinho
+
 30/06/2025
 -- ACBrBoletoW_Itau_API --
 [*] TK-7263 Refatorado as instrções de cobrança conforme documentação da API.

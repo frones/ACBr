@@ -53,6 +53,7 @@ const
 
   CExpiracaoPIXPadrao = 600;
   CEsperaConsultaPIX = 5000;
+  CStoneAutoTEFTimeOut = 90000;
 
 resourcestring
   sACBrStoneAutoTEFSemStoneCode = 'StoneCode deve ser informado em "DadosTerminal.CodTerminal"';
@@ -89,6 +90,7 @@ type
     FHTTPResponse: AnsiString;
     FHTTPResultCode: Integer;
     FStarted: TDateTime;
+    fTimeOut: Integer;
 
     procedure GravarLog(const AString: AnsiString);
     procedure DoException(const AErrorMsg: String);
@@ -152,6 +154,8 @@ type
     property Started: TDateTime read FStarted;
     property HTTPResultCode: Integer read FHTTPResultCode;
     property HTTPResponse: AnsiString read FHTTPResponse;
+
+    property TimeOut: Integer read fTimeOut write fTimeOut default CStoneAutoTEFTimeOut;
   end;
 
 
@@ -319,6 +323,7 @@ end;
 constructor TACBrTEFAPIClassStoneAutoTEF.Create(AACBrTEFAPI: TACBrTEFAPIComum);
 begin
   inherited;
+  fTimeOut := CStoneAutoTEFTimeOut;
   FHTTP := THTTPSend.Create;
   FStarted := 0;
   FExpiracaoPIX := CExpiracaoPIXPadrao;
@@ -365,7 +370,7 @@ begin
   end;
 
   try
-    FHTTP.Timeout := 10000;
+    FHTTP.Timeout := fTimeOut;
     FHTTP.HTTPMethod(AMethod, url);
   finally
     FHTTPResultCode := FHTTP.ResultCode;

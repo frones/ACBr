@@ -355,7 +355,7 @@ begin
     IntToStrZero(aRemessa.Count + 1, 6); // 395 a 400 Número sequencial de registro
 
   aRemessa.Text := aRemessa.Text + UpperCase(LLinha);
-  aRemessa.TrailingLineBreak := False;
+  // aRemessa.TrailingLineBreak := False;
 end;
 
 procedure TACBrBancoVortx.LerRetorno240(ARetorno: TStringList);

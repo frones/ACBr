@@ -1521,29 +1521,32 @@ begin
       tagPag := 'pag';
   end;
 
-  ANodes := AuxNode.Childrens.FindAllAnyNs(tagPag);
-  for i := 0 to Length(ANodes) - 1 do
+  if Assigned(AuxNode) then
   begin
-    NFe.pag.New;
-    NFe.pag[i].indPag := StrToIndpagEX(ObterConteudo(ANodes[i].Childrens.Find('indPag'), tcStr));
-    NFe.pag[i].tPag := StrToFormaPagamento(ok, ObterConteudo(ANodes[i].Childrens.Find('tPag'), tcStr));
-    NFe.pag[i].xPag := ObterConteudo(ANodes[i].Childrens.Find('xPag'), tcStr);
-    NFe.pag[i].vPag := ObterConteudo(ANodes[i].Childrens.Find('vPag'), tcDe2);
-    NFe.pag[i].dPag := ObterConteudo(ANodes[i].Childrens.Find('dPag'), tcDat);
-
-    NFe.pag[i].CNPJPag := ObterConteudo(ANodes[i].Childrens.Find('CNPJPag'), tcStr);
-    NFe.pag[i].UFPag := ObterConteudo(ANodes[i].Childrens.Find('UFPag'), tcStr);
-
-    AuxNode := ANodes[i].Childrens.Find('card');
-    if (AuxNode <> nil) then
+    ANodes := AuxNode.Childrens.FindAllAnyNs(tagPag);
+    for i := 0 to Length(ANodes) - 1 do
     begin
-      NFe.pag[i].tpIntegra := StrTotpIntegra(ok, ObterConteudo(AuxNode.Childrens.Find('tpIntegra'), tcStr));
-      NFe.pag[i].CNPJ  := ObterConteudo(AuxNode.Childrens.Find('CNPJ'), tcStr);
-      NFe.pag[i].tBand := StrToBandeiraCartao(ok, ObterConteudo(AuxNode.Childrens.Find('tBand'), tcStr));
-      NFe.pag[i].cAut  := ObterConteudo(AuxNode.Childrens.Find('cAut'), tcStr);
+      NFe.pag.New;
+      NFe.pag[i].indPag := StrToIndpagEX(ObterConteudo(ANodes[i].Childrens.Find('indPag'), tcStr));
+      NFe.pag[i].tPag := StrToFormaPagamento(ok, ObterConteudo(ANodes[i].Childrens.Find('tPag'), tcStr));
+      NFe.pag[i].xPag := ObterConteudo(ANodes[i].Childrens.Find('xPag'), tcStr);
+      NFe.pag[i].vPag := ObterConteudo(ANodes[i].Childrens.Find('vPag'), tcDe2);
+      NFe.pag[i].dPag := ObterConteudo(ANodes[i].Childrens.Find('dPag'), tcDat);
 
-      NFe.pag[i].CNPJReceb := ObterConteudo(AuxNode.Childrens.Find('CNPJReceb'), tcStr);
-      NFe.pag[i].idTermPag := ObterConteudo(AuxNode.Childrens.Find('idTermPag'), tcStr);
+      NFe.pag[i].CNPJPag := ObterConteudo(ANodes[i].Childrens.Find('CNPJPag'), tcStr);
+      NFe.pag[i].UFPag := ObterConteudo(ANodes[i].Childrens.Find('UFPag'), tcStr);
+
+      AuxNode := ANodes[i].Childrens.Find('card');
+      if (AuxNode <> nil) then
+      begin
+        NFe.pag[i].tpIntegra := StrTotpIntegra(ok, ObterConteudo(AuxNode.Childrens.Find('tpIntegra'), tcStr));
+        NFe.pag[i].CNPJ  := ObterConteudo(AuxNode.Childrens.Find('CNPJ'), tcStr);
+        NFe.pag[i].tBand := StrToBandeiraCartao(ok, ObterConteudo(AuxNode.Childrens.Find('tBand'), tcStr));
+        NFe.pag[i].cAut  := ObterConteudo(AuxNode.Childrens.Find('cAut'), tcStr);
+
+        NFe.pag[i].CNPJReceb := ObterConteudo(AuxNode.Childrens.Find('CNPJReceb'), tcStr);
+        NFe.pag[i].idTermPag := ObterConteudo(AuxNode.Childrens.Find('idTermPag'), tcStr);
+      end;
     end;
   end;
 end;

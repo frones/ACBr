@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/07/2025
+-- ACBrNFe.XmlReader --
+[-] #TK-7299: Correção visando ler corretamente o grupo detPag.
+  Por: Bochnia
+
 02/07/2025
 -- ACBrNFe.RetConsSit --
 [-] #TK-7260: Correção visando ler corretamente o grupo infCanc.

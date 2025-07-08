@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/07/2025
+-- ISSNet.GravarXml --
+[*] #TK-7294: Ajuste para emissão de nota para Estrangeiro.
+   Por: nenelvida
 -- DSF.Provider --
 [-] #TK-7296: Possível solução para a leitura correta dos retornos do provedor na
               versão 2.03

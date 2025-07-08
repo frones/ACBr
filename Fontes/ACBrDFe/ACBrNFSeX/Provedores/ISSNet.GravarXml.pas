@@ -158,7 +158,8 @@ function TNFSeW_ISSNet204.GerarXml: Boolean;
 begin
   if ((NFSe.Tomador.Endereco.CodigoMunicipio = '9999999') or
       (NFSe.Tomador.Endereco.UF = 'EX')) and
-     (NFSe.Servico.ExigibilidadeISS = exiExportacao)  then
+     ((NFSe.Servico.ExigibilidadeISS = exiExportacao) or
+     (NFSe.Servico.ExigibilidadeISS = exiExigivel)) then
     NrOcorrCodigoPaisServico := 1;
 
   if (NFSe.OptanteSimplesNacional = snSim) or

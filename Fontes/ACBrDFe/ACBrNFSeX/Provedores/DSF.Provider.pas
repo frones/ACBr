@@ -45,7 +45,6 @@ uses
 
 type
   TACBrNFSeXWebserviceDSF = class(TACBrNFSeXWebserviceSoap11)
-
   public
     function Recepcionar(const ACabecalho, AMSG: String): string; override;
     function ConsultarLote(const ACabecalho, AMSG: String): string; override;
@@ -95,10 +94,16 @@ type
     procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
   end;
 
+  TACBrNFSeXWebserviceDSF203 = class(TACBrNFSeXWebserviceDSF200)
+  public
+    function TratarXmlRetornado(const aXML: string): string; override;
+  end;
+
   TACBrNFSeProviderDSF203 = class (TACBrNFSeProviderDSF200)
   protected
     procedure Configuracao; override;
 
+    function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
   end;
 
 implementation
@@ -222,7 +227,6 @@ begin
   Result := inherited TratarXmlRetornado(Xml);
 
   Result := ParseText(Result);
-//  Result := RemoverDeclaracaoXML(Result);
 end;
 
 { TACBrNFSeProviderDSF }
@@ -438,12 +442,7 @@ end;
 
 function TACBrNFSeXWebserviceDSF200.TratarXmlRetornado(
   const aXML: string): string;
-//var
-//  Xml: string;
 begin
-  //Xml := ConverteANSItoUTF8(aXML);
-  //Xml := RemoverDeclaracaoXML(Xml);
-
   Result := inherited TratarXmlRetornado(aXml);
 
   Result := ParseText(Result);
@@ -535,6 +534,40 @@ begin
   end;
 
   SetXmlNameSpace('');
+end;
+
+function TACBrNFSeProviderDSF203.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
+begin
+  URL := GetWebServiceURL(AMetodo);
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceDSF203.Create(FAOwner, AMetodo, URL)
+  else
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
+end;
+
+{ TACBrNFSeXWebserviceDSF203 }
+
+function TACBrNFSeXWebserviceDSF203.TratarXmlRetornado(const aXML: string): string;
+var
+  Xml: string;
+begin
+  Xml := ConverteANSItoUTF8(aXML);
+  Xml := RemoverDeclaracaoXML(Xml);
+
+  Result := inherited TratarXmlRetornado(Xml);
+//
+//  Result := ParseText(Result);
+//  Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
+//  Result := RemoverIdentacao(Result);
+//  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 end.

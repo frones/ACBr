@@ -414,7 +414,10 @@ begin
 
     rllCodVerificacao.Caption := ACBrStr(CodigoVerificacao);
 
-    rllCompetencia.Caption := IfThen(Competencia > 0, FormatDateTime('mm/yyyy', Competencia), '');
+    if fpDANFSe.DataCompetenciaCompleta then
+      rllCompetencia.Caption := IfThen(Competencia > 0, FormatDateTime('dd/mm/yyyy', Competencia), '')
+    else
+      rllCompetencia.Caption := IfThen(Competencia > 0, FormatDateTime('mm/yyyy', Competencia), '');
 
     rllNumeroRps.Caption := IdentificacaoRps.Numero;
 

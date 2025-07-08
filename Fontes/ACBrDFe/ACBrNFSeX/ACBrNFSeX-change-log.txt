@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 08/07/2025
+-- ACBrNFSeXDANFSeClass/ACBrNFSeXDANFSeRLRetrato/ACBrNFSeXDANFSeRLSimplISS --
+[+] #TK-7246: Criada a propriedade de configuração DataCompletenciaCompleta do
+              tipo Boolean cujo valor padrão é False.
+              Se False imprime Mês/Ano, se True imprime Dia/Mês/Ano.
+   Por: Italo Giurizzato Junior
 -- ISSNet.GravarXml --
 [*] #TK-7294: Ajuste para emissão de nota para Estrangeiro.
    Por: nenelvida

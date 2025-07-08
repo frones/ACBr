@@ -138,6 +138,7 @@ type
     FTamanhoFonte: Integer;
     FPrestador: TPrestadorConfig;
     FTomador: TTomadorConfig;
+    FDataCompetenciaCompleta: Boolean;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     function GetSeparadorPathPDF(const aInitialPath: String): String; override;
@@ -167,6 +168,7 @@ type
     property FormatarNumeroDocumentoNFSe: Boolean read FFormatarNumeroDocumentoNFSe write FFormatarNumeroDocumentoNFSe;
     property Provedor: TNFSeProvedor read FProvedor write FProvedor;
     property Producao: TnfseSimNao read FProducao write FProducao;
+    property DataCompetenciaCompleta: Boolean read FDataCompetenciaCompleta write FDataCompetenciaCompleta default False;
   end;
 
 implementation

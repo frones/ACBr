@@ -417,7 +417,10 @@ begin
     rllEmissao.Caption := FormatDateTime('dd/mm/yyyy hh:nn', DataEmissao);
     rllCodVerificacao.Caption := CodigoVerificacao;
 
-    rllCompetencia.Caption := IfThen(Competencia > 0, FormatDateTime('mm/yyyy', Competencia), '');
+    if fpDANFSe.DataCompetenciaCompleta then
+      rllCompetencia.Caption := IfThen(Competencia > 0, FormatDateTime('dd/mm/yyyy', Competencia), '')
+    else
+      rllCompetencia.Caption := IfThen(Competencia > 0, FormatDateTime('mm/yyyy', Competencia), '');
 
     rllNumeroRPS.Caption := IdentificacaoRps.Numero;
     rllNumNFSeSubstituida.Caption := NfseSubstituida;

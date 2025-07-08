@@ -1256,7 +1256,7 @@ begin
 
   FRetorno.numeroRecibo := FEnviar.numero;
 
-  if not FRetorno.Executar then
+  if (FRetorno.numeroRecibo <> '') and (not FRetorno.Executar) then
     FRetorno.GerarException(FRetorno.Msg);
 
   Result := True;

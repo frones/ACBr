@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/07/2025
+-- ACBrGNREWebServices --
+[*] #TK-7245: Incluído a condição para só consultar após o envio se o numero do recibo
+    for diferente de vazio.
+Por: Italo Giurizzato Junior
+
 19/12/2024
 -- ACBrGNReGuiaRLClass --
 [*] #TK-6366: Alteração visando usar o caminho/nome definido na propriedade ArquivoPDF como

@@ -70,6 +70,11 @@ Private Declare Function NFSE_ObterXml _
                 Lib "ACBrNFSe32.dll" (ByVal AIndex As Long, _
                                       ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
+                                      
+Private Declare Function NFSE_ObterXmlRps _
+                Lib "ACBrNFSe32.dll" (ByVal AIndex As Long, _
+                                      ByVal buffer As String, _
+                                      ByRef bufferLen As Long) As Long
                                      
 Private Declare Function NFSE_GravarXml _
                 Lib "ACBrNFSe32.dll" (ByVal AIndex As Long, _
@@ -477,6 +482,21 @@ Public Function ObterXml(ByVal AIndex As Long) As String
     CheckResult retorno
     
     ObterXml = processResult(buffer, bufferLen)
+End Function
+
+Public Function ObterXmlRps(ByVal AIndex As Long) As String
+
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFSE_ObterXmlRps(AIndex, buffer, bufferLen)
+    CheckResult retorno
+    
+    ObterXmlRps = processResult(buffer, bufferLen)
 End Function
 
 Public Sub GravarXml(ByVal AIndex As Long, _

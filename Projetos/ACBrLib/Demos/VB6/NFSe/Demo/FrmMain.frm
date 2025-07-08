@@ -8,7 +8,7 @@ Begin VB.Form FrmMain
    ClientHeight    =   9735
    ClientLeft      =   45
    ClientTop       =   390
-   ClientWidth     =   12600
+   ClientWidth     =   13785
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -21,15 +21,15 @@ Begin VB.Form FrmMain
    LinkTopic       =   "FrmMain"
    MaxButton       =   0   'False
    ScaleHeight     =   9735
-   ScaleWidth      =   12600
+   ScaleWidth      =   13785
    StartUpPosition =   2  'CenterScreen
    Begin TabDlg.SSTab SSTab3 
       Height          =   4935
       Left            =   5640
       TabIndex        =   150
       Top             =   120
-      Width           =   6855
-      _ExtentX        =   12091
+      Width           =   7935
+      _ExtentX        =   13996
       _ExtentY        =   8705
       _Version        =   393216
       Style           =   1
@@ -114,8 +114,8 @@ Begin VB.Form FrmMain
          Left            =   120
          TabIndex        =   151
          Top             =   360
-         Width           =   6615
-         _ExtentX        =   11668
+         Width           =   7695
+         _ExtentX        =   13573
          _ExtentY        =   7858
          _Version        =   393216
          Style           =   1
@@ -157,17 +157,19 @@ Begin VB.Form FrmMain
          Tab(0).Control(14).Enabled=   0   'False
          Tab(0).Control(15)=   "btnSalvarPDF"
          Tab(0).Control(15).Enabled=   0   'False
-         Tab(0).ControlCount=   16
+         Tab(0).Control(16)=   "btnObterXMLRps"
+         Tab(0).Control(16).Enabled=   0   'False
+         Tab(0).ControlCount=   17
          TabCaption(1)   =   "Consultas"
          TabPicture(1)   =   "FrmMain.frx":0054
          Tab(1).ControlEnabled=   0   'False
-         Tab(1).Control(0)=   "btnConsultarNFSePorFaixa"
-         Tab(1).Control(1)=   "btnConsultarNFSePorRPS"
-         Tab(1).Control(2)=   "btnConsultarNFSePorPeriodo"
+         Tab(1).Control(0)=   "btnConsultarSituacaoLote"
+         Tab(1).Control(1)=   "btnConsultarNFSePorNumero"
+         Tab(1).Control(2)=   "btnConsultarNFSeGenerico"
          Tab(1).Control(3)=   "btnConsultarLoteRPS"
-         Tab(1).Control(4)=   "btnConsultarNFSeGenerico"
-         Tab(1).Control(5)=   "btnConsultarNFSePorNumero"
-         Tab(1).Control(6)=   "btnConsultarSituacaoLote"
+         Tab(1).Control(4)=   "btnConsultarNFSePorPeriodo"
+         Tab(1).Control(5)=   "btnConsultarNFSePorRPS"
+         Tab(1).Control(6)=   "btnConsultarNFSePorFaixa"
          Tab(1).ControlCount=   7
          TabCaption(2)   =   "Cons. Serv. Prestados"
          TabPicture(2)   =   "FrmMain.frx":0070
@@ -191,12 +193,20 @@ Begin VB.Form FrmMain
          Tab(4).ControlEnabled=   0   'False
          Tab(4).Control(0)=   "btnCancelarNFSe"
          Tab(4).ControlCount=   1
+         Begin VB.CommandButton btnObterXMLRps 
+            Caption         =   "Obter XML RPS"
+            Height          =   375
+            Left            =   2640
+            TabIndex        =   196
+            Top             =   3840
+            Width           =   2415
+         End
          Begin VB.CommandButton btnSalvarPDF 
             Caption         =   "Salvar PDF (Stream)"
             Height          =   375
-            Left            =   2640
+            Left            =   5160
             TabIndex        =   191
-            Top             =   3840
+            Top             =   480
             Width           =   2415
          End
          Begin VB.CommandButton btnCancelarNFSe 
@@ -487,7 +497,7 @@ Begin VB.Form FrmMain
       Left            =   5640
       TabIndex        =   1
       Top             =   5160
-      Width           =   6855
+      Width           =   7935
       Begin VB.TextBox rtbRespostas 
          Height          =   3495
          Left            =   120
@@ -496,7 +506,7 @@ Begin VB.Form FrmMain
          ScrollBars      =   3  'Both
          TabIndex        =   2
          Top             =   240
-         Width           =   6615
+         Width           =   7695
       End
    End
    Begin VB.CommandButton cmdSalvar 
@@ -958,21 +968,13 @@ Begin VB.Form FrmMain
          TabPicture(2)   =   "FrmMain.frx":0134
          Tab(2).ControlEnabled=   0   'False
          Tab(2).Control(0)=   "lblCryptLib"
-         Tab(2).Control(0).Enabled=   0   'False
          Tab(2).Control(1)=   "lblHttpLib"
-         Tab(2).Control(1).Enabled=   0   'False
          Tab(2).Control(2)=   "lblXMLSignLib"
-         Tab(2).Control(2).Enabled=   0   'False
          Tab(2).Control(3)=   "cmbCrypt"
-         Tab(2).Control(3).Enabled=   0   'False
          Tab(2).Control(4)=   "cmbHttp"
-         Tab(2).Control(4).Enabled=   0   'False
          Tab(2).Control(5)=   "cmbXmlSign"
-         Tab(2).Control(5).Enabled=   0   'False
          Tab(2).Control(6)=   "frmCertificados"
-         Tab(2).Control(6).Enabled=   0   'False
          Tab(2).Control(7)=   "btnObterCertificados"
-         Tab(2).Control(7).Enabled=   0   'False
          Tab(2).ControlCount=   8
          TabCaption(3)   =   "Emitente"
          TabPicture(3)   =   "FrmMain.frx":0150
@@ -1483,7 +1485,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtProxyPorta"
-               BuddyDispid     =   196725
+               BuddyDispid     =   196726
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -1633,7 +1635,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtAguardar"
-               BuddyDispid     =   196735
+               BuddyDispid     =   196736
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -1654,7 +1656,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtTentativas"
-               BuddyDispid     =   196736
+               BuddyDispid     =   196737
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -1675,7 +1677,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtIntervalo"
-               BuddyDispid     =   196737
+               BuddyDispid     =   196738
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -1940,7 +1942,7 @@ Begin VB.Form FrmMain
             _Version        =   393216
             Value           =   5000
             BuddyControl    =   "txtTimeOut"
-            BuddyDispid     =   196708
+            BuddyDispid     =   196709
             OrigLeft        =   3960
             OrigTop         =   720
             OrigRight       =   4215
@@ -3111,6 +3113,20 @@ Private Sub btnObterXMLNFSe_Click()
     Dim ret As String
     
     ret = nfse.ObterXml(0)
+    rtbRespostas.Text = ret
+
+Erro:
+    MsgBox Err.Description
+
+End Sub
+
+Private Sub btnObterXMLRps_Click()
+
+    On Error GoTo Erro:
+    
+    Dim ret As String
+    
+    ret = nfse.ObterXmlRps(0)
     rtbRespostas.Text = ret
 
 Erro:

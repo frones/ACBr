@@ -42,6 +42,78 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/07/2025
+-- ACBrNFSeXServicos --
+[+] #TK-7305: Cidades incluídas: Alenquer/PA, Anapu/PA, Augusto Correa/PA, 
+              Aveiro/PA, Baiao/PA, Bannach/PA, Brasil Novo/PA, 
+              Brejo Grande do Araguaia/PA, Cachoeira do Arari/PA, 
+              Canaa Dos Carajas/PA, Capanema/PA, Capitao Poco/PA, 
+              Cumaru do Norte/PA, Curionopolis/PA, Curua/PA, Curuca/PA, 
+              Igarape-Miri/PA, Inhangapi/PA, Ipixuna do Para/PA, 
+              Itupiranga/PA, Jacareacanga/PA, Mae do Rio/PA, 
+              Medicilandia/PA, Melgaco/PA, Mocajuba/PA, Moju/PA, 
+              Mojui dos Campos/PA, Monte Alegre/PA, Muana/PA, 
+              Nova Ipixuna/PA, Obidos/PA, Ourilandia do Norte/PA, 
+              Pau D Arco/PA, Placas/PA, Ponta de Pedras/PA, 
+              Porto de Moz/PA, Ruropolis/PA, Salinopolis/PA, 
+              Santa Luzia do Para/PA, Santa Maria das Barreiras/PA, 
+              Sao Domingos do Araguaia/PA, Sao Domingos do Capim/PA, 
+              Sao Geraldo do Araguaia/PA, Sao Joao da Ponta/PA, 
+              Sao Joao de Pirabas/PA, Sao Miguel do Guama/PA, 
+              Sapucaia/PA, Senador Jose Porfirio/PA, Soure/PA, 
+              Terra Santa/PA, Tome-Acu/PA, Trairao/PA, Ulianopolis/PA, 
+              Uruara/PA, Viseu/PA, Vitoria do Xingu/PA
+[+] #TK-7304: Cidades incluídas: Abreulandia/TO, Almas/TO, 
+              Aparecida do Rio Negro/TO, Aragominas/TO, Arraias/TO, 
+              Augustinopolis/TO, Axixa do Tocantins/TO, Barra do Ouro/TO, 
+              Barrolandia/TO, Bom Jesus do Tocantins/TO, Brejinho de Nazare/TO, 
+              Cariri do Tocantins/TO, Caseara/TO, Combinado/TO, 
+              Conceicao do Tocantins/TO, Couto Magalhaes/TO, Cristalandia/TO, 
+              Divinopolis do Tocantins/TO, Dois Irmaos do Tocantins/TO, 
+              Fatima/TO, Filadelfia/TO, Formoso do Araguaia/TO, 
+              Fortaleza do Tabocao/TO, Goianorte/TO, Ipueiras/TO, Itaguatins/TO, 
+              Itapora do Tocantins/TO, Juarina/TO, Lajeado/TO, Lavandeira/TO, 
+              Lizarda/TO, Marianopolis do Tocantins/TO, Mateiros/TO, 
+              Maurilandia do Tocantins/TO, Monte do Carmo/TO, 
+              Monte Santo do Tocantins/TO, Palmeiras do Tocantins/TO, 
+              Muricilandia/TO, Natividade/TO, Novo Acordo/TO, Novo Jardim/TO, 
+              Palmeiropolis/TO, Peixe/TO, Pequizeiro/TO, Pindorama do Tocantins/TO, 
+              Ponte Alta do Tocantins/TO, Porto Alegre do Tocantins/TO, 
+              Praia Norte/TO, Presidente Kennedy/TO, Recursolandia/TO, Riachinho/TO, 
+              Santa Maria do Tocantins/TO, Santa Rita do Tocantins/TO, 
+              Santa Terezinha do Tocantins/TO, Sao Felix do Tocantins/TO, 
+              Sao Salvador do Tocantins/TO, Sao Sebastiao do Tocantins/TO, 
+              Sao Valerio da Natividade/TO, Silvanopolis/TO, Taguatinga/TO, 
+              Taipas do Tocantins/TO, Talisma/TO, Tocantinia/TO, Tupiratins/TO, 
+              Wanderlandia/TO
+[+] #TK-7297: Cidades incluídas: Pedra Branca do Amapari/AP, Cutias/AP, 
+              Mazagao/AP, Santana/AP, Tartarugalzinho/AP, Vitoria do Jari/AP
+[+] #TK-7300: Cidades incluídas: Alcantara/MA, Aldeias Altas/MA, 
+              Alto Alegre do Maranhao/MA, Amarante do Maranhao/MA, Anajatuba/MA, 
+              Arame/MA, Barra do Corda/MA, Bela Vista do Maranhao/MA, Bom Lugar/MA, 
+              Buriti Bravo/MA, Buritirana/MA, Cajapio/MA, Campestre do Maranhao/MA, 
+              Capinzal do Norte/MA, Carolina/MA, Cidelandia/MA, Coelho Neto/MA, 
+              Cururupu/MA, Dom Pedro/MA, Esperantinopolis/MA, Formosa da Serra Negra/MA, 
+              Governador Edison Lobao/MA, Governador Newton Bello/MA, 
+              Humberto de Campos/MA, Igarape do Meio/MA, Itinga do Maranhao/MA, 
+              Matinha/MA, Matoes/MA, Matoes do Norte/MA, Mirador/MA, Montes Altos/MA, 
+              Morros/MA, Olho D Agua das Cunhas/MA, Paco do Lumiar/MA, Parnarama/MA, 
+              Pastos Bons/MA, Penalva/MA, Peritoro/MA, Pio Xii/MA, Pocao de Pedras/MA, 
+              Presidente Dutra/MA, Presidente Juscelino/MA, Presidente Vargas/MA, 
+              Primeira Cruz/MA, Raposa/MA, Rosario/MA, Santa Helena/MA, 
+              Santa Luzia do Parua/MA, Santo Amaro do Maranhao/MA, Sao Bento/MA, 
+              Sao Domingos do Azeitao/MA, Sao Felix de Balsas/MA, Sao Joao do Caru/MA, 
+              Sao Joao do Soter/MA, Sao Joao Dos Patos/MA, Sao Jose de Ribamar/MA, 
+              Sao Luis Gonzaga do Maranhao/MA, Sao Mateus do Maranhao/MA, 
+              Sao Pedro Dos Crentes/MA, Sao Raimundo das Mangabeiras/MA, Sitio Novo/MA, 
+              Tasso Fragoso/MA, Timbiras/MA, Trizidela do Vale/MA, Turiacu/MA, Tutoia/MA, 
+              Viana/MA, Vitoria do Mearim/MA, Ze Doca/MA
+   Por: Anderson Grolli
+[*] #TK-7303: A cidade de Ouro/SC mudou as URLs e a versão, o provedor continua o mesmo.
+   Por: Willian Delan
+[*] #TK-7302: A cidade de Cristalina/Go mudou de provedor, agora é o Centi versão 2.02
+   Por: Flavio Realtec
+
 03/07/2025
 -- ACBrNFSeXServicos --
 [+] #TK-7278: Cidades incluídas: Acrelandia/AC, Assis Brasil/AC, Brasileia/AC,

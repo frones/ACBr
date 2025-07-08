@@ -13,6 +13,14 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
+Public Enum ModoEnvio
+    meAutomatico = 0
+    meLoteAssincrono = 1
+    meLoteSincrono = 2
+    meUnitario = 3
+    meTeste = 4
+End Enum
+
 Const BUFFER_LENGTH As Long = 1024
                                
 Private Declare Function NFSE_Inicializar _
@@ -550,7 +558,7 @@ Public Function ObterCertificados() As String()
     ObterCertificados = Split(processResult(buffer, bufferLen), vbCrLf)
 End Function
 
-Public Function Emitir(ByVal aLote As String, ByVal aModoEnvio As Long, ByVal aImprimir As Boolean) As String
+Public Function Emitir(ByVal aLote As String, ByVal aModoEnvio As ModoEnvio, ByVal aImprimir As Boolean) As String
 
     Dim retorno   As Long
     Dim buffer    As String
@@ -615,7 +623,7 @@ Public Function LinkNFSE(ByVal aNumeroNFSe As String, ByVal aCodigoVerificacao A
     
 End Function
 
-Public Function GerarLote(ByVal aLote As String, ByVal aQtdMaximaRps As Long, ByVal aModoEnvio As Long) As String
+Public Function GerarLote(ByVal aLote As String, ByVal aQtdMaximaRps As Long, ByVal aModoEnvio As ModoEnvio) As String
 
     Dim retorno   As Long
     Dim buffer    As String

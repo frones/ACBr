@@ -45,13 +45,13 @@ Begin VB.Form FrmMain
       TabCaption(1)   =   "Provedor Padrão Nacional"
       TabPicture(1)   =   "FrmMain.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "btnConsultarParametros"
-      Tab(1).Control(1)=   "btnObterDANFSe"
-      Tab(1).Control(2)=   "btnConsultarDFe"
+      Tab(1).Control(0)=   "btnEnviarEvento"
+      Tab(1).Control(1)=   "btnConsultarDPSPorChave"
+      Tab(1).Control(2)=   "btnConsultarNFSePorChave"
       Tab(1).Control(3)=   "btnConsultarEvento"
-      Tab(1).Control(4)=   "btnConsultarNFSePorChave"
-      Tab(1).Control(5)=   "btnConsultarDPSPorChave"
-      Tab(1).Control(6)=   "btnEnviarEvento"
+      Tab(1).Control(4)=   "btnConsultarDFe"
+      Tab(1).Control(5)=   "btnObterDANFSe"
+      Tab(1).Control(6)=   "btnConsultarParametros"
       Tab(1).ControlCount=   7
       Begin VB.CommandButton btnConsultarParametros 
          Caption         =   "Consultar Parametros"
@@ -163,30 +163,30 @@ Begin VB.Form FrmMain
          TabCaption(1)   =   "Consultas"
          TabPicture(1)   =   "FrmMain.frx":0054
          Tab(1).ControlEnabled=   0   'False
-         Tab(1).Control(0)=   "btnConsultarSituacaoLote"
-         Tab(1).Control(1)=   "btnConsultarNFSePorNumero"
-         Tab(1).Control(2)=   "btnConsultarNFSeGenerico"
+         Tab(1).Control(0)=   "btnConsultarNFSePorFaixa"
+         Tab(1).Control(1)=   "btnConsultarNFSePorRPS"
+         Tab(1).Control(2)=   "btnConsultarNFSePorPeriodo"
          Tab(1).Control(3)=   "btnConsultarLoteRPS"
-         Tab(1).Control(4)=   "btnConsultarNFSePorPeriodo"
-         Tab(1).Control(5)=   "btnConsultarNFSePorRPS"
-         Tab(1).Control(6)=   "btnConsultarNFSePorFaixa"
+         Tab(1).Control(4)=   "btnConsultarNFSeGenerico"
+         Tab(1).Control(5)=   "btnConsultarNFSePorNumero"
+         Tab(1).Control(6)=   "btnConsultarSituacaoLote"
          Tab(1).ControlCount=   7
          TabCaption(2)   =   "Cons. Serv. Prestados"
          TabPicture(2)   =   "FrmMain.frx":0070
          Tab(2).ControlEnabled=   0   'False
-         Tab(2).Control(0)=   "btnConsultarNFSeServicoPrestadoPorNumero"
-         Tab(2).Control(1)=   "btnConsultarNFSeSevicoPrestadoPorTomador"
-         Tab(2).Control(2)=   "btnConsultarNFSeServicoPrestadoPorPeriodo"
-         Tab(2).Control(3)=   "btnConsultarNFSeServicoPrestadoPorIntermediario"
+         Tab(2).Control(0)=   "btnConsultarNFSeServicoPrestadoPorIntermediario"
+         Tab(2).Control(1)=   "btnConsultarNFSeServicoPrestadoPorPeriodo"
+         Tab(2).Control(2)=   "btnConsultarNFSeSevicoPrestadoPorTomador"
+         Tab(2).Control(3)=   "btnConsultarNFSeServicoPrestadoPorNumero"
          Tab(2).ControlCount=   4
          TabCaption(3)   =   "Cons. Serv. Tomados"
          TabPicture(3)   =   "FrmMain.frx":008C
          Tab(3).ControlEnabled=   0   'False
-         Tab(3).Control(0)=   "btnConsultarNFSeServicoTomadoPorIntermediario"
-         Tab(3).Control(1)=   "btnConsultarNFSeServicoTomadoPorPeriodo"
+         Tab(3).Control(0)=   "btnConsultarNFSeServicoTomadoPorNumero"
+         Tab(3).Control(1)=   "btnConsultarNFSeServicoTomadoPorPrestador"
          Tab(3).Control(2)=   "btnConsultarNFSeServicoTomadoPorTomador"
-         Tab(3).Control(3)=   "btnConsultarNFSeServicoTomadoPorPrestador"
-         Tab(3).Control(4)=   "btnConsultarNFSeServicoTomadoPorNumero"
+         Tab(3).Control(3)=   "btnConsultarNFSeServicoTomadoPorPeriodo"
+         Tab(3).Control(4)=   "btnConsultarNFSeServicoTomadoPorIntermediario"
          Tab(3).ControlCount=   5
          TabCaption(4)   =   "Cancelamento"
          TabPicture(4)   =   "FrmMain.frx":00A8
@@ -556,25 +556,25 @@ Begin VB.Form FrmMain
       TabCaption(1)   =   "Documento Auxiliar"
       TabPicture(1)   =   "FrmMain.frx":00E0
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "lblLogomarca"
-      Tab(1).Control(1)=   "Label28"
-      Tab(1).Control(2)=   "Label29"
-      Tab(1).Control(3)=   "Label30"
-      Tab(1).Control(4)=   "txtLogomarcaPrefeitura"
+      Tab(1).Control(0)=   "txtPastaPDF"
+      Tab(1).Control(1)=   "btnPastaPDF"
+      Tab(1).Control(2)=   "txtNomePrefeitura"
+      Tab(1).Control(3)=   "txtLogoMarcaPrestadorServico"
+      Tab(1).Control(4)=   "btnLogoMarcaPrestadorServico"
       Tab(1).Control(5)=   "btnLogomarcaPrefeitura"
-      Tab(1).Control(6)=   "btnLogoMarcaPrestadorServico"
-      Tab(1).Control(7)=   "txtLogoMarcaPrestadorServico"
-      Tab(1).Control(8)=   "txtNomePrefeitura"
-      Tab(1).Control(9)=   "btnPastaPDF"
-      Tab(1).Control(10)=   "txtPastaPDF"
+      Tab(1).Control(6)=   "txtLogomarcaPrefeitura"
+      Tab(1).Control(7)=   "Label30"
+      Tab(1).Control(8)=   "Label29"
+      Tab(1).Control(9)=   "Label28"
+      Tab(1).Control(10)=   "lblLogomarca"
       Tab(1).ControlCount=   11
       TabCaption(2)   =   "Email"
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "Label13"
-      Tab(2).Control(1)=   "Label22"
+      Tab(2).Control(0)=   "txtMensagemEmail"
+      Tab(2).Control(1)=   "txtAssuntoEmail"
       Tab(2).Control(2)=   "Frame2"
-      Tab(2).Control(3)=   "txtAssuntoEmail"
-      Tab(2).Control(4)=   "txtMensagemEmail"
+      Tab(2).Control(3)=   "Label22"
+      Tab(2).Control(4)=   "Label13"
       Tab(2).ControlCount=   5
       Begin VB.TextBox txtPastaPDF 
          Height          =   285
@@ -752,7 +752,7 @@ Begin VB.Form FrmMain
             _Version        =   393216
             Value           =   5000
             BuddyControl    =   "txtPortaEmail"
-            BuddyDispid     =   196663
+            BuddyDispid     =   196664
             OrigLeft        =   840
             OrigTop         =   2280
             OrigRight       =   1095
@@ -941,82 +941,82 @@ Begin VB.Form FrmMain
          TabCaption(1)   =   "WebServices"
          TabPicture(1)   =   "FrmMain.frx":0118
          Tab(1).ControlEnabled=   0   'False
-         Tab(1).Control(0)=   "lblTimeOut(1)"
-         Tab(1).Control(1)=   "lblSSLType"
-         Tab(1).Control(2)=   "lblUFDestino"
-         Tab(1).Control(3)=   "Label2"
-         Tab(1).Control(4)=   "Label3"
-         Tab(1).Control(5)=   "Label4"
-         Tab(1).Control(6)=   "Label5"
-         Tab(1).Control(7)=   "Label6"
-         Tab(1).Control(8)=   "nudTimeOut"
-         Tab(1).Control(9)=   "chkSalvarSOAP"
-         Tab(1).Control(10)=   "chkVisualizarMensagem"
-         Tab(1).Control(11)=   "frmRetEnvio"
-         Tab(1).Control(12)=   "frmProxy"
-         Tab(1).Control(13)=   "cmbSSlType"
-         Tab(1).Control(14)=   "cmbUFDestino"
-         Tab(1).Control(15)=   "frmAmbiente"
-         Tab(1).Control(16)=   "txtTimeOut"
-         Tab(1).Control(17)=   "txtEmitenteUsuário"
-         Tab(1).Control(18)=   "txtEmitenteSenha"
-         Tab(1).Control(19)=   "txtEmitenteFraseSecreta"
-         Tab(1).Control(20)=   "txtEmitenteChaveAcesso"
-         Tab(1).Control(21)=   "txtEmitenteChaveAutorizacao"
+         Tab(1).Control(0)=   "txtEmitenteChaveAutorizacao"
+         Tab(1).Control(1)=   "txtEmitenteChaveAcesso"
+         Tab(1).Control(2)=   "txtEmitenteFraseSecreta"
+         Tab(1).Control(3)=   "txtEmitenteSenha"
+         Tab(1).Control(4)=   "txtEmitenteUsuário"
+         Tab(1).Control(5)=   "txtTimeOut"
+         Tab(1).Control(6)=   "frmAmbiente"
+         Tab(1).Control(7)=   "cmbUFDestino"
+         Tab(1).Control(8)=   "cmbSSlType"
+         Tab(1).Control(9)=   "frmProxy"
+         Tab(1).Control(10)=   "frmRetEnvio"
+         Tab(1).Control(11)=   "chkVisualizarMensagem"
+         Tab(1).Control(12)=   "chkSalvarSOAP"
+         Tab(1).Control(13)=   "nudTimeOut"
+         Tab(1).Control(14)=   "Label6"
+         Tab(1).Control(15)=   "Label5"
+         Tab(1).Control(16)=   "Label4"
+         Tab(1).Control(17)=   "Label3"
+         Tab(1).Control(18)=   "Label2"
+         Tab(1).Control(19)=   "lblUFDestino"
+         Tab(1).Control(20)=   "lblSSLType"
+         Tab(1).Control(21)=   "lblTimeOut(1)"
          Tab(1).ControlCount=   22
          TabCaption(2)   =   "Certificados"
          TabPicture(2)   =   "FrmMain.frx":0134
          Tab(2).ControlEnabled=   0   'False
-         Tab(2).Control(0)=   "lblCryptLib"
-         Tab(2).Control(1)=   "lblHttpLib"
-         Tab(2).Control(2)=   "lblXMLSignLib"
-         Tab(2).Control(3)=   "cmbCrypt"
-         Tab(2).Control(4)=   "cmbHttp"
-         Tab(2).Control(5)=   "cmbXmlSign"
-         Tab(2).Control(6)=   "frmCertificados"
-         Tab(2).Control(7)=   "btnObterCertificados"
+         Tab(2).Control(0)=   "btnObterCertificados"
+         Tab(2).Control(1)=   "frmCertificados"
+         Tab(2).Control(2)=   "cmbXmlSign"
+         Tab(2).Control(3)=   "cmbHttp"
+         Tab(2).Control(4)=   "cmbCrypt"
+         Tab(2).Control(5)=   "lblXMLSignLib"
+         Tab(2).Control(6)=   "lblHttpLib"
+         Tab(2).Control(7)=   "lblCryptLib"
          Tab(2).ControlCount=   8
          TabCaption(3)   =   "Emitente"
          TabPicture(3)   =   "FrmMain.frx":0150
          Tab(3).ControlEnabled=   0   'False
-         Tab(3).Control(0)=   "Label14"
-         Tab(3).Control(1)=   "Label15"
-         Tab(3).Control(2)=   "Label16"
-         Tab(3).Control(3)=   "Label17"
-         Tab(3).Control(4)=   "Label18"
-         Tab(3).Control(5)=   "Label19"
-         Tab(3).Control(6)=   "Label20"
-         Tab(3).Control(7)=   "Label21"
-         Tab(3).Control(8)=   "Label23"
-         Tab(3).Control(9)=   "Label24"
-         Tab(3).Control(10)=   "Label25"
-         Tab(3).Control(11)=   "Label26"
-         Tab(3).Control(12)=   "Label27"
-         Tab(3).Control(13)=   "txtCNPJEmitente"
-         Tab(3).Control(14)=   "txtInscMunicipalEmitente"
-         Tab(3).Control(15)=   "txtRazaoSocialEmitente"
-         Tab(3).Control(16)=   "txtFantasiaEmitente"
-         Tab(3).Control(17)=   "txtFoneEmitente"
-         Tab(3).Control(18)=   "txtCEPEmitente"
-         Tab(3).Control(19)=   "txtLogradouroEmitente"
-         Tab(3).Control(20)=   "txtNumeroEmitente"
-         Tab(3).Control(21)=   "txtCodCidadeEmitente"
-         Tab(3).Control(22)=   "txtCNPJPrefeituraEmitente"
-         Tab(3).Control(23)=   "cmbCidadeEmitente"
-         Tab(3).Control(24)=   "txtComplementoEmitente"
-         Tab(3).Control(25)=   "txtBairroEmitente"
+         Tab(3).Control(0)=   "txtBairroEmitente"
+         Tab(3).Control(1)=   "txtComplementoEmitente"
+         Tab(3).Control(2)=   "cmbCidadeEmitente"
+         Tab(3).Control(3)=   "txtCNPJPrefeituraEmitente"
+         Tab(3).Control(4)=   "txtCodCidadeEmitente"
+         Tab(3).Control(5)=   "txtNumeroEmitente"
+         Tab(3).Control(6)=   "txtLogradouroEmitente"
+         Tab(3).Control(7)=   "txtCEPEmitente"
+         Tab(3).Control(8)=   "txtFoneEmitente"
+         Tab(3).Control(9)=   "txtFantasiaEmitente"
+         Tab(3).Control(10)=   "txtRazaoSocialEmitente"
+         Tab(3).Control(11)=   "txtInscMunicipalEmitente"
+         Tab(3).Control(12)=   "txtCNPJEmitente"
+         Tab(3).Control(13)=   "Label27"
+         Tab(3).Control(14)=   "Label26"
+         Tab(3).Control(15)=   "Label25"
+         Tab(3).Control(16)=   "Label24"
+         Tab(3).Control(17)=   "Label23"
+         Tab(3).Control(18)=   "Label21"
+         Tab(3).Control(19)=   "Label20"
+         Tab(3).Control(20)=   "Label19"
+         Tab(3).Control(21)=   "Label18"
+         Tab(3).Control(22)=   "Label17"
+         Tab(3).Control(23)=   "Label16"
+         Tab(3).Control(24)=   "Label15"
+         Tab(3).Control(25)=   "Label14"
          Tab(3).ControlCount=   26
          TabCaption(4)   =   "Arquivos"
          TabPicture(4)   =   "FrmMain.frx":016C
          Tab(4).ControlEnabled=   0   'False
-         Tab(4).Control(0)=   "lblPastaArqNFSe"
-         Tab(4).Control(1)=   "btnArqNFSe"
-         Tab(4).Control(2)=   "txtArqNFSe"
-         Tab(4).Control(3)=   "chkSepararPorCNPJ"
-         Tab(4).Control(4)=   "chkEmissaoPathNFSe"
-         Tab(4).Control(5)=   "chkAdicionaLiteral"
-         Tab(4).Control(6)=   "chkPastaMensal"
-         Tab(4).Control(7)=   "chkSalvarArqs"
+         Tab(4).Control(0)=   "chkSalvarArqs"
+         Tab(4).Control(1)=   "chkPastaMensal"
+         Tab(4).Control(2)=   "chkAdicionaLiteral"
+         Tab(4).Control(3)=   "chkEmissaoPathNFSe"
+         Tab(4).Control(4)=   "chkSepararPorCNPJ"
+         Tab(4).Control(5)=   "txtArqNFSe"
+         Tab(4).Control(6)=   "btnArqNFSe"
+         Tab(4).Control(7)=   "lblPastaArqNFSe"
          Tab(4).ControlCount=   8
          Begin VB.CommandButton btnInformacoesProvedor 
             Caption         =   "Informações sobre o Provedor"
@@ -1485,7 +1485,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtProxyPorta"
-               BuddyDispid     =   196726
+               BuddyDispid     =   196727
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -1635,7 +1635,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtAguardar"
-               BuddyDispid     =   196736
+               BuddyDispid     =   196737
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -1656,7 +1656,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtTentativas"
-               BuddyDispid     =   196737
+               BuddyDispid     =   196738
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -1677,7 +1677,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtIntervalo"
-               BuddyDispid     =   196738
+               BuddyDispid     =   196739
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -1942,7 +1942,7 @@ Begin VB.Form FrmMain
             _Version        =   393216
             Value           =   5000
             BuddyControl    =   "txtTimeOut"
-            BuddyDispid     =   196709
+            BuddyDispid     =   196710
             OrigLeft        =   3960
             OrigTop         =   720
             OrigRight       =   4215
@@ -2878,7 +2878,7 @@ Private Sub btnEmitirNota_Click()
     CheckNFSeLista
     
     aLote = InputBox("Número do Lote", "Emitir", "1")
-    ret = nfse.Emitir(aLote, 0, False)
+    ret = nfse.Emitir(aLote, ModoEnvio.meAutomatico, False)
     rtbRespostas.Text = ret
     
 Erro:
@@ -2895,7 +2895,7 @@ Private Sub btnGerarEnviarLoteAssincrono_Click()
     CheckNFSeLista
     
     aLote = InputBox("Número do Lote", "Enviar Assíncrono", "1")
-    ret = nfse.Emitir(aLote, 2, False)
+    ret = nfse.Emitir(aLote, ModoEnvio.meLoteAssincrono, False)
     rtbRespostas.Text = ret
     
 Erro:
@@ -2912,7 +2912,7 @@ Private Sub btnGerarEnviarLoteSincrono_Click()
     CheckNFSeLista
     
     aLote = InputBox("Número do Lote", "Enviar Síncrono", "1")
-    ret = nfse.Emitir(aLote, 3, False)
+    ret = nfse.Emitir(aLote, ModoEnvio.meLoteSincrono, False)
     rtbRespostas.Text = ret
     
 Erro:
@@ -2929,7 +2929,7 @@ Private Sub btnEnviarRPS_Click()
     CheckNFSeLista
     
     aLote = InputBox("Número do Lote", "Enviar um RPS", "1")
-    ret = nfse.Emitir(aLote, 4, False)
+    ret = nfse.Emitir(aLote, ModoEnvio.meTeste, False)
     rtbRespostas.Text = ret
     
 Erro:
@@ -3076,7 +3076,7 @@ Private Sub btnGerarLoteRPS_Click()
     aLote = InputBox("Número do Lote", "Gerar Lote RPS", "1")
     qtdMaximaRPS = InputBox("Quantidade Máxima RPS", "Gerar Lote RPS", 1)
     
-    ret = nfse.GerarLote(aLote, qtdMaximaRPS, 0)
+    ret = nfse.GerarLote(aLote, qtdMaximaRPS, ModoEnvio.meAutomatico)
     rtbRespostas.Text = ret
     
 Erro:

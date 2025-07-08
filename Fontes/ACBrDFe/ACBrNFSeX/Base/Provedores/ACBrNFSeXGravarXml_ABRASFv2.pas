@@ -549,7 +549,7 @@ begin
 
   Result.AppendChild(GerarListaServicos);
 
-  Result.AppendChild(AddNode(FormatoCompetencia, '#4', 'Competencia', 19, 19, NrOcorrCompetencia,
+  Result.AppendChild(AddNode(FormatoCompetencia, '#4', 'Competencia', 10, 10, NrOcorrCompetencia,
                                                   NFSe.Competencia, DSC_DHEMI));
 
   Result.AppendChild(GerarServico);
@@ -656,7 +656,7 @@ begin
   if NFSe.DataEmissaoRps = 0 then
     NFSe.DataEmissaoRps := NFSe.DataEmissao;
 
-  Result.AppendChild(AddNode(FormatoEmissao, '#4', 'DataEmissao', 19, 19, 1,
+  Result.AppendChild(AddNode(FormatoEmissao, '#4', 'DataEmissao', 10, 10, 1,
     AjustarDataHoraParaUf(NFse.DataEmissaoRps, CodMunEmit div 100000), DSC_DHEMI));
 
   Result.AppendChild(GerarStatus);

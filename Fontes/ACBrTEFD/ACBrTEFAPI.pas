@@ -66,7 +66,7 @@ type
                       tefScopeAPI,
                       tefDestaxaAPI,
                       tefTPag,
-                      tefPayKit);
+                      tefEquals);
 
   TACBrTEFAPIExibicaoQRCode = ( qrapiNaoSuportado,
                                 qrapiAuto,
@@ -675,7 +675,7 @@ begin
     tefScopeAPI    : fpTEFAPIClass := TACBrTEFAPIClassScope.Create( Self );
     tefDestaxaAPI  : fpTEFAPIClass := TACBrTEFAPIClassDestaxa.Create( Self );
     tefTPag        : fpTEFAPIClass := TACBrTEFAPIClassTPag.Create( Self );
-    tefPayKit      : fpTEFAPIClass := TACBrTEFAPIClassPayKit.Create( Self );
+    tefEquals      : fpTEFAPIClass := TACBrTEFAPIClassPayKit.Create( Self );
   else
     fpTEFAPIClass := TACBrTEFAPIClass.Create( Self );
   end;

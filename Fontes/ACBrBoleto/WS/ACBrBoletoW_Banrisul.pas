@@ -252,8 +252,8 @@ begin
       if Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataFinal > 0 then
         LConsulta.Add('data_registro_final='+FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataFinal, 'DD.MM.YYYY'));
 
-      if not (Boleto.Configuracoes.WebService.Filtro.indiceContinuidade > 0) then
-      LConsulta.Add('paginacao.pagina_atual='+IntToStr(Trunc(Boleto.Configuracoes.WebService.Filtro.indiceContinuidade)));
+      if (Boleto.Configuracoes.WebService.Filtro.indiceContinuidade > 0) then
+        LConsulta.Add('paginacao.pagina_atual='+IntToStr(Trunc(Boleto.Configuracoes.WebService.Filtro.indiceContinuidade)));
 
     finally
       Result := LConsulta.DelimitedText;

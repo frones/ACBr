@@ -48,6 +48,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/07/2025
+[*]Sem TK ACBrOFX - Alterado para utilizar a constante no tratamento quando não houverem quebras de linha entre as tags. 
+  por Renato Rubinho
+  
 03/07/2025
 [*]Sem TK ACBrOFX - Tratamento quando não houverem quebras de linha entre as tags. 
   por Renato Rubinho

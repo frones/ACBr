@@ -229,7 +229,7 @@ begin
       oFile.Text := UTF8ToNativeString(oFile.Text);
 
     if Pos('><', oFile.Text) > 0 then
-      oFile.Text := StringReplace(oFile.Text,'><','>' + #13#10 + '<',[rfReplaceAll]);
+      oFile.Text := StringReplace(oFile.Text,'><','>' + sLineBreak + '<',[rfReplaceAll]);
 
     while i < oFile.Count do
     begin

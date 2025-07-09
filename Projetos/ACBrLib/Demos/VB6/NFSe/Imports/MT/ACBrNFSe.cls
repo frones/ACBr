@@ -1121,7 +1121,6 @@ Public Function ConsultarParametros(ByVal aTipoParametroMunicipio As Long, ByVal
 
 End Function
 
-
 Public Function ObterInformacoesProvedor() As String
     
     Dim retorno   As Long
@@ -1136,6 +1135,18 @@ Public Function ObterInformacoesProvedor() As String
     
     ObterInformacoesProvedor = processResult(buffer, bufferLen)
 
+End Function
+
+Public Function ObterUltimoRetorno() As String
+
+    Dim buffer As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    NFSE_UltimoRetorno libHandler, buffer, bufferLen
+    
+    ObterUltimoRetorno = processResult(buffer, bufferLen)
 End Function
 
 Private Sub CheckResult(ByVal Resultado As Long)

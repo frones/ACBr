@@ -1083,6 +1083,18 @@ Public Function ObterInformacoesProvedor() As String
 
 End Function
 
+Public Function ObterUltimoRetorno() As String
+
+    Dim buffer As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    NFSE_UltimoRetorno buffer, bufferLen
+    
+    ObterUltimoRetorno = processResult(buffer, bufferLen)
+End Function
+
 Private Sub CheckResult(ByVal Resultado As Long)
     
     If Resultado >= 0 Then Exit Sub

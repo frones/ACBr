@@ -294,6 +294,15 @@
             this.label97 = new System.Windows.Forms.Label();
             this.txtAccessTokenMercadoPago = new System.Windows.Forms.TextBox();
             this.label96 = new System.Windows.Forms.Label();
+            this.tabPage35 = new System.Windows.Forms.TabPage();
+            this.txtSecretKeyHMACAppLess = new System.Windows.Forms.TextBox();
+            this.label146 = new System.Windows.Forms.Label();
+            this.txtScopesAppLess = new System.Windows.Forms.TextBox();
+            this.label143 = new System.Windows.Forms.Label();
+            this.txtClientSecretAppLess = new System.Windows.Forms.TextBox();
+            this.label144 = new System.Windows.Forms.Label();
+            this.txtClientIDAppLess = new System.Windows.Forms.TextBox();
+            this.label145 = new System.Windows.Forms.Label();
             this.btnCarregarConfiguracoes = new System.Windows.Forms.Button();
             this.btnSalvarConfiguracoes = new System.Windows.Forms.Button();
             this.tabControl4 = new System.Windows.Forms.TabControl();
@@ -421,15 +430,8 @@
             this.label138 = new System.Windows.Forms.Label();
             this.btnCancelarCobranca = new System.Windows.Forms.Button();
             this.btnLimparRespostas = new System.Windows.Forms.Button();
-            this.tabPage35 = new System.Windows.Forms.TabPage();
-            this.txtScopesAppLess = new System.Windows.Forms.TextBox();
-            this.label143 = new System.Windows.Forms.Label();
-            this.txtClientSecretAppLess = new System.Windows.Forms.TextBox();
-            this.label144 = new System.Windows.Forms.Label();
-            this.txtClientIDAppLess = new System.Windows.Forms.TextBox();
-            this.label145 = new System.Windows.Forms.Label();
-            this.txtSecretKeyHMACAppLess = new System.Windows.Forms.TextBox();
-            this.label146 = new System.Windows.Forms.Label();
+            this.cmbPixPDVAPIVersao = new System.Windows.Forms.ComboBox();
+            this.label147 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
@@ -458,6 +460,7 @@
             this.tabPage15.SuspendLayout();
             this.tabPage16.SuspendLayout();
             this.tabPage17.SuspendLayout();
+            this.tabPage35.SuspendLayout();
             this.tabControl4.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl3.SuspendLayout();
@@ -494,7 +497,6 @@
             this.tabPage33.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.tabPage34.SuspendLayout();
-            this.tabPage35.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
@@ -1812,6 +1814,8 @@
             // 
             // tabPage8
             // 
+            this.tabPage8.Controls.Add(this.cmbPixPDVAPIVersao);
+            this.tabPage8.Controls.Add(this.label147);
             this.tabPage8.Controls.Add(this.txtScopesPixPDV);
             this.tabPage8.Controls.Add(this.label66);
             this.tabPage8.Controls.Add(this.txtSecretKeyPixPDV);
@@ -1895,7 +1899,7 @@
             this.txtCNPJPixPDV.Location = new System.Drawing.Point(8, 30);
             this.txtCNPJPixPDV.Margin = new System.Windows.Forms.Padding(4);
             this.txtCNPJPixPDV.Name = "txtCNPJPixPDV";
-            this.txtCNPJPixPDV.Size = new System.Drawing.Size(517, 20);
+            this.txtCNPJPixPDV.Size = new System.Drawing.Size(341, 20);
             this.txtCNPJPixPDV.TabIndex = 59;
             // 
             // label43
@@ -3489,6 +3493,104 @@
             this.label96.TabIndex = 114;
             this.label96.Text = "Access Token";
             // 
+            // tabPage35
+            // 
+            this.tabPage35.Controls.Add(this.txtSecretKeyHMACAppLess);
+            this.tabPage35.Controls.Add(this.label146);
+            this.tabPage35.Controls.Add(this.txtScopesAppLess);
+            this.tabPage35.Controls.Add(this.label143);
+            this.tabPage35.Controls.Add(this.txtClientSecretAppLess);
+            this.tabPage35.Controls.Add(this.label144);
+            this.tabPage35.Controls.Add(this.txtClientIDAppLess);
+            this.tabPage35.Controls.Add(this.label145);
+            this.tabPage35.Location = new System.Drawing.Point(4, 25);
+            this.tabPage35.Name = "tabPage35";
+            this.tabPage35.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage35.Size = new System.Drawing.Size(543, 549);
+            this.tabPage35.TabIndex = 15;
+            this.tabPage35.Text = "AppLess";
+            this.tabPage35.UseVisualStyleBackColor = true;
+            // 
+            // txtSecretKeyHMACAppLess
+            // 
+            this.txtSecretKeyHMACAppLess.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSecretKeyHMACAppLess.Location = new System.Drawing.Point(7, 157);
+            this.txtSecretKeyHMACAppLess.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSecretKeyHMACAppLess.Name = "txtSecretKeyHMACAppLess";
+            this.txtSecretKeyHMACAppLess.Size = new System.Drawing.Size(517, 20);
+            this.txtSecretKeyHMACAppLess.TabIndex = 139;
+            // 
+            // label146
+            // 
+            this.label146.AutoSize = true;
+            this.label146.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label146.Location = new System.Drawing.Point(3, 137);
+            this.label146.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label146.Name = "label146";
+            this.label146.Size = new System.Drawing.Size(108, 13);
+            this.label146.TabIndex = 138;
+            this.label146.Text = "Secret Key HMAC";
+            // 
+            // txtScopesAppLess
+            // 
+            this.txtScopesAppLess.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtScopesAppLess.Location = new System.Drawing.Point(7, 213);
+            this.txtScopesAppLess.Margin = new System.Windows.Forms.Padding(4);
+            this.txtScopesAppLess.Name = "txtScopesAppLess";
+            this.txtScopesAppLess.Size = new System.Drawing.Size(517, 20);
+            this.txtScopesAppLess.TabIndex = 137;
+            // 
+            // label143
+            // 
+            this.label143.AutoSize = true;
+            this.label143.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label143.Location = new System.Drawing.Point(4, 192);
+            this.label143.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label143.Name = "label143";
+            this.label143.Size = new System.Drawing.Size(49, 13);
+            this.label143.TabIndex = 136;
+            this.label143.Text = "Scopes";
+            // 
+            // txtClientSecretAppLess
+            // 
+            this.txtClientSecretAppLess.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtClientSecretAppLess.Location = new System.Drawing.Point(7, 98);
+            this.txtClientSecretAppLess.Margin = new System.Windows.Forms.Padding(4);
+            this.txtClientSecretAppLess.Name = "txtClientSecretAppLess";
+            this.txtClientSecretAppLess.Size = new System.Drawing.Size(517, 20);
+            this.txtClientSecretAppLess.TabIndex = 135;
+            // 
+            // label144
+            // 
+            this.label144.AutoSize = true;
+            this.label144.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label144.Location = new System.Drawing.Point(3, 78);
+            this.label144.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label144.Name = "label144";
+            this.label144.Size = new System.Drawing.Size(80, 13);
+            this.label144.TabIndex = 134;
+            this.label144.Text = "Client Secret";
+            // 
+            // txtClientIDAppLess
+            // 
+            this.txtClientIDAppLess.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtClientIDAppLess.Location = new System.Drawing.Point(7, 39);
+            this.txtClientIDAppLess.Margin = new System.Windows.Forms.Padding(4);
+            this.txtClientIDAppLess.Name = "txtClientIDAppLess";
+            this.txtClientIDAppLess.Size = new System.Drawing.Size(517, 20);
+            this.txtClientIDAppLess.TabIndex = 133;
+            // 
+            // label145
+            // 
+            this.label145.AutoSize = true;
+            this.label145.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label145.Location = new System.Drawing.Point(3, 19);
+            this.label145.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label145.Name = "label145";
+            this.label145.Size = new System.Drawing.Size(56, 13);
+            this.label145.TabIndex = 132;
+            this.label145.Text = "Client ID";
+            // 
             // btnCarregarConfiguracoes
             // 
             this.btnCarregarConfiguracoes.Location = new System.Drawing.Point(21, 674);
@@ -5030,103 +5132,26 @@
             this.btnLimparRespostas.UseVisualStyleBackColor = true;
             this.btnLimparRespostas.Click += new System.EventHandler(this.btnLimparRespostas_Click);
             // 
-            // tabPage35
+            // cmbPixPDVAPIVersao
             // 
-            this.tabPage35.Controls.Add(this.txtSecretKeyHMACAppLess);
-            this.tabPage35.Controls.Add(this.label146);
-            this.tabPage35.Controls.Add(this.txtScopesAppLess);
-            this.tabPage35.Controls.Add(this.label143);
-            this.tabPage35.Controls.Add(this.txtClientSecretAppLess);
-            this.tabPage35.Controls.Add(this.label144);
-            this.tabPage35.Controls.Add(this.txtClientIDAppLess);
-            this.tabPage35.Controls.Add(this.label145);
-            this.tabPage35.Location = new System.Drawing.Point(4, 25);
-            this.tabPage35.Name = "tabPage35";
-            this.tabPage35.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage35.Size = new System.Drawing.Size(543, 549);
-            this.tabPage35.TabIndex = 15;
-            this.tabPage35.Text = "AppLess";
-            this.tabPage35.UseVisualStyleBackColor = true;
+            this.cmbPixPDVAPIVersao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbPixPDVAPIVersao.FormattingEnabled = true;
+            this.cmbPixPDVAPIVersao.Location = new System.Drawing.Point(357, 28);
+            this.cmbPixPDVAPIVersao.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbPixPDVAPIVersao.Name = "cmbPixPDVAPIVersao";
+            this.cmbPixPDVAPIVersao.Size = new System.Drawing.Size(168, 24);
+            this.cmbPixPDVAPIVersao.TabIndex = 133;
             // 
-            // txtScopesAppLess
+            // label147
             // 
-            this.txtScopesAppLess.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesAppLess.Location = new System.Drawing.Point(7, 213);
-            this.txtScopesAppLess.Margin = new System.Windows.Forms.Padding(4);
-            this.txtScopesAppLess.Name = "txtScopesAppLess";
-            this.txtScopesAppLess.Size = new System.Drawing.Size(517, 20);
-            this.txtScopesAppLess.TabIndex = 137;
-            // 
-            // label143
-            // 
-            this.label143.AutoSize = true;
-            this.label143.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label143.Location = new System.Drawing.Point(4, 192);
-            this.label143.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label143.Name = "label143";
-            this.label143.Size = new System.Drawing.Size(49, 13);
-            this.label143.TabIndex = 136;
-            this.label143.Text = "Scopes";
-            // 
-            // txtClientSecretAppLess
-            // 
-            this.txtClientSecretAppLess.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtClientSecretAppLess.Location = new System.Drawing.Point(7, 98);
-            this.txtClientSecretAppLess.Margin = new System.Windows.Forms.Padding(4);
-            this.txtClientSecretAppLess.Name = "txtClientSecretAppLess";
-            this.txtClientSecretAppLess.Size = new System.Drawing.Size(517, 20);
-            this.txtClientSecretAppLess.TabIndex = 135;
-            // 
-            // label144
-            // 
-            this.label144.AutoSize = true;
-            this.label144.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label144.Location = new System.Drawing.Point(3, 78);
-            this.label144.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label144.Name = "label144";
-            this.label144.Size = new System.Drawing.Size(80, 13);
-            this.label144.TabIndex = 134;
-            this.label144.Text = "Client Secret";
-            // 
-            // txtClientIDAppLess
-            // 
-            this.txtClientIDAppLess.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtClientIDAppLess.Location = new System.Drawing.Point(7, 39);
-            this.txtClientIDAppLess.Margin = new System.Windows.Forms.Padding(4);
-            this.txtClientIDAppLess.Name = "txtClientIDAppLess";
-            this.txtClientIDAppLess.Size = new System.Drawing.Size(517, 20);
-            this.txtClientIDAppLess.TabIndex = 133;
-            // 
-            // label145
-            // 
-            this.label145.AutoSize = true;
-            this.label145.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label145.Location = new System.Drawing.Point(3, 19);
-            this.label145.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label145.Name = "label145";
-            this.label145.Size = new System.Drawing.Size(56, 13);
-            this.label145.TabIndex = 132;
-            this.label145.Text = "Client ID";
-            // 
-            // txtSecretKeyHMACAppLess
-            // 
-            this.txtSecretKeyHMACAppLess.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSecretKeyHMACAppLess.Location = new System.Drawing.Point(7, 157);
-            this.txtSecretKeyHMACAppLess.Margin = new System.Windows.Forms.Padding(4);
-            this.txtSecretKeyHMACAppLess.Name = "txtSecretKeyHMACAppLess";
-            this.txtSecretKeyHMACAppLess.Size = new System.Drawing.Size(517, 20);
-            this.txtSecretKeyHMACAppLess.TabIndex = 139;
-            // 
-            // label146
-            // 
-            this.label146.AutoSize = true;
-            this.label146.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label146.Location = new System.Drawing.Point(3, 137);
-            this.label146.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label146.Name = "label146";
-            this.label146.Size = new System.Drawing.Size(108, 13);
-            this.label146.TabIndex = 138;
-            this.label146.Text = "Secret Key HMAC";
+            this.label147.AutoSize = true;
+            this.label147.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label147.Location = new System.Drawing.Point(353, 8);
+            this.label147.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label147.Name = "label147";
+            this.label147.Size = new System.Drawing.Size(116, 13);
+            this.label147.TabIndex = 132;
+            this.label147.Text = "PixPDV API Versão";
             // 
             // FrmMain
             // 
@@ -5195,6 +5220,8 @@
             this.tabPage16.PerformLayout();
             this.tabPage17.ResumeLayout(false);
             this.tabPage17.PerformLayout();
+            this.tabPage35.ResumeLayout(false);
+            this.tabPage35.PerformLayout();
             this.tabControl4.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabControl3.ResumeLayout(false);
@@ -5246,8 +5273,6 @@
             this.groupBox10.ResumeLayout(false);
             this.tabPage34.ResumeLayout(false);
             this.tabPage34.PerformLayout();
-            this.tabPage35.ResumeLayout(false);
-            this.tabPage35.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -5655,6 +5680,8 @@
         private System.Windows.Forms.Label label144;
         private System.Windows.Forms.TextBox txtClientIDAppLess;
         private System.Windows.Forms.Label label145;
+        private System.Windows.Forms.ComboBox cmbPixPDVAPIVersao;
+        private System.Windows.Forms.Label label147;
     }
 }
 

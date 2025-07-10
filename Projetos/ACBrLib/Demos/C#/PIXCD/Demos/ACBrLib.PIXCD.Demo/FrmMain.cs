@@ -46,6 +46,7 @@ namespace ACBrLibPIXCD.Demo
                 cmbPSP.EnumDataSource(PSP.pspBradesco);
                 cmbAmbiente.EnumDataSource(Ambiente.ambTeste);
                 cmbBBAPIVersao.EnumDataSource(BBAPIVersao.apiVersao1);
+                cmbPixPDVAPIVersao.EnumDataSource(PixPDVAPIVersao.apiVersao1);
                 cmbNivelLogPSP.EnumDataSource(NivelLogPSP.logPSPNenhum);
                 cmbTipoChave.EnumDataSource(TipoChave.tchNenhuma);
                 ACBrPIXCD.Config.ProxyPort = 0;
@@ -157,6 +158,7 @@ namespace ACBrLibPIXCD.Demo
                 ACBrPIXCD.Config.PixPDV.CNPJ = txtCNPJPixPDV.Text;
                 ACBrPIXCD.Config.PixPDV.Token = txtPixPDVToken.Text;
                 ACBrPIXCD.Config.PixPDV.SecretKey = txtSecretKeyPixPDV.Text;
+                ACBrPIXCD.Config.PixPDV.PixPDVAPIVersao = cmbPixPDVAPIVersao.GetSelectedValue<PixPDVAPIVersao>();
                 ACBrPIXCD.Config.PixPDV.Scopes = txtScopesPixPDV.Text;
 
                 //PagSeguro
@@ -323,6 +325,7 @@ namespace ACBrLibPIXCD.Demo
             txtCNPJPixPDV.Text = ACBrPIXCD.Config.PixPDV.CNPJ;
             txtPixPDVToken.Text = ACBrPIXCD.Config.PixPDV.Token;
             txtSecretKeyPixPDV.Text = ACBrPIXCD.Config.PixPDV.SecretKey;
+            cmbPixPDVAPIVersao.SetSelectedValue(ACBrPIXCD.Config.PixPDV.PixPDVAPIVersao);
             txtScopesPixPDV.Text = ACBrPIXCD.Config.PixPDV.Scopes;
 
             //PagSeguro

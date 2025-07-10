@@ -269,14 +269,14 @@ begin
 
     with ACBrPSPBradesco1 do
     begin
-      ChavePIX     := pLibPIXCDConfig.PIXCDBradesco.ChavePIX;
-      ClientID     := pLibPIXCDConfig.PIXCDBradesco.ClientID;
-      ClientSecret := pLibPIXCDConfig.PIXCDBradesco.ClientSecret;
-      ArquivoPFX   := pLibPIXCDConfig.PIXCDBradesco.ArqPFX;
-      SenhaPFX     := pLibPIXCDConfig.PIXCDBradesco.SenhaPFX;
+      ChavePIX            := pLibPIXCDConfig.PIXCDBradesco.ChavePIX;
+      ClientID            := pLibPIXCDConfig.PIXCDBradesco.ClientID;
+      ClientSecret        := pLibPIXCDConfig.PIXCDBradesco.ClientSecret;
+      ArquivoPFX          := pLibPIXCDConfig.PIXCDBradesco.ArqPFX;
+      SenhaPFX            := pLibPIXCDConfig.PIXCDBradesco.SenhaPFX;
       ArquivoChavePrivada := pLibPIXCDConfig.PIXCDBradesco.ArqChavePrivada;
-      ArquivoCertificado := pLibPIXCDConfig.PIXCDBradesco.ArqCertificado;
-      Scopes       := pLibPIXCDConfig.PIXCDBradesco.Scopes;
+      ArquivoCertificado  := pLibPIXCDConfig.PIXCDBradesco.ArqCertificado;
+      Scopes              := pLibPIXCDConfig.PIXCDBradesco.Scopes;
     end;
 
     with ACBrPSPSicredi1 do
@@ -322,9 +322,11 @@ begin
 
     with ACBrPSPPixPDV1 do
     begin
-      CNPJ  := pLibPIXCDConfig.PIXCDPixPDV.CNPJ;
-      Token := pLibPIXCDConfig.PIXCDPixPDV.Token;
-      Scopes:= pLibPIXCDConfig.PIXCDPixPDV.Scopes;
+      CNPJ         := pLibPIXCDConfig.PIXCDPixPDV.CNPJ;
+      Token        := pLibPIXCDConfig.PIXCDPixPDV.Token;
+      APIVersao    := pLibPIXCDConfig.PIXCDPixPDV.PixPDVAPIVersao;
+      ClientSecret := pLibPIXCDConfig.PIXCDPixPDV.SecretKey;
+      Scopes       := pLibPIXCDConfig.PIXCDPixPDV.Scopes;
     end;
 
     with ACBrPSPPagSeguro1 do

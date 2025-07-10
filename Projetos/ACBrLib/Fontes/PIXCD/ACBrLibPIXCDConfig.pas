@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles, synachar,
-  ACBrBase, ACBrLibConfig, ACBrPIXCD, ACBrPIXPSPBancoDoBrasil, ACBrPIXBase, ACBrLibPIXCDDataModule;
+  ACBrBase, ACBrLibConfig, ACBrPIXCD, ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPPixPDV, ACBrPIXBase, ACBrLibPIXCDDataModule;
 
 type
 
@@ -338,6 +338,7 @@ type
     FCNPJ: String;
     FToken: String;
     FSecretKey: String;
+    FPixPDVAPIVersao: TACBrPIXPDVAPIVersao;
 
     public
     constructor Create;
@@ -348,6 +349,7 @@ type
     property CNPJ: String read FCNPJ write FCNPJ;
     property Token: String read FToken write FToken;
     property SecretKey: String read FSecretKey write FSecretKey;
+    property PixPDVAPIVersao: TACBrPIXPDVAPIVersao read FPixPDVAPIVersao write FPixPDVAPIVersao;
   end;
 
   { TPIXCDSantanderConfig }
@@ -972,6 +974,7 @@ begin
   FCNPJ := EmptyStr;
   FToken := EmptyStr;
   FSecretKey := EmptyStr;
+  FPixPDVAPIVersao := TACBrPIXPDVAPIVersao.apiVersao1;
   FSessaoPSP := CSessaoPIXCDPixPDVConfig;
 end;
 
@@ -981,6 +984,7 @@ begin
   CNPJ := AIni.ReadString(CSessaoPIXCDPixPDVConfig, CChaveCNPJPixPDV, CNPJ);
   Token := AIni.ReadString(CSessaoPIXCDPixPDVConfig, CChaveToken, Token);
   SecretKey := AIni.ReadString(CSessaoPIXCDPixPDVConfig, CChaveSecretKeyPixPDV, SecretKey);
+  PixPDVAPIVersao := TACBrPIXPDVAPIVersao(AIni.ReadInteger(CSessaoPIXCDPixPDVConfig, CChaveAPIVersaoPixPDV, Integer(PixPDVAPIVersao)));
 end;
 
 procedure TPIXCDPixPDVConfig.GravarIni(const AIni: TCustomIniFile);
@@ -989,6 +993,7 @@ begin
   AIni.WriteString(CSessaoPIXCDPixPDVConfig, CChaveCNPJPixPDV, CNPJ);
   AIni.WriteString(CSessaoPIXCDPixPDVConfig, CChaveToken, Token);
   AIni.WriteString(CSessaoPIXCDPixPDVConfig, CChaveSecretKeyPixPDV, SecretKey);
+  AIni.WriteInteger(CSessaoPIXCDPixPDVConfig, CChaveAPIVersaoPixPDV, Integer(PixPDVAPIVersao));
 end;
 
 { TPIXCDPagSeguroConfig }
@@ -1131,7 +1136,7 @@ begin
   FArqCertificado := EmptyStr;
   FArqPFX := EmptyStr;
   FSenhaPFX := EmptyStr;
-  FBBAPIVersao := apiVersao1;
+  FBBAPIVersao := TACBrBBAPIVersao.apiVersao1;
   FAPIVersion := ver262;
   FSessaoPSP := CSessaoPIXCDBancoBrasilConfig;
 end;

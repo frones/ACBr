@@ -249,6 +249,7 @@ const
   CChaveCNPJPixPDV = 'CNPJ';
   CChaveToken = 'Token';
   CChaveSecretKeyPixPDV = 'SecretKey';
+  CChaveAPIVersaoPixPDV = 'PixPDVAPIVersao';
 
   CSessaoPIXCDPagSeguroConfig = 'PagSeguro';
   CChavePIXPagSeguro = 'ChavePIX';

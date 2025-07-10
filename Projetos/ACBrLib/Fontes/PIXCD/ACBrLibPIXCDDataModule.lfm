@@ -59,6 +59,7 @@ inherited LibPIXCDDM: TLibPIXCDDM
   end
   object ACBrPSPPixPDV1: TACBrPSPPixPDV[10]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    APIVersao = apiVersao1
     Left = 288
     Top = 160
   end

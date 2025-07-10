@@ -48,6 +48,7 @@ type
     FNFSeDM: TLibNFSeDM;
 
     function SetRetornoNFSeRPSCarregadas(const Count: integer): Integer;
+    function SetRetornoNFSeCarregadas(const Count: Integer): Integer;
 
   protected
     procedure Inicializar; override;
@@ -151,7 +152,13 @@ begin
   FNFSeDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibNFSe.SetRetornoNFSeRPSCarregadas(const Count: integer): integer;
+function TACBrLibNFSe.SetRetornoNFSeRPSCarregadas(const Count: integer
+  ): Integer;
+begin
+  Result := SetRetorno(0, Format(SInfNFSeRPSCarregadas, [Count]));
+end;
+
+function TACBrLibNFSe.SetRetornoNFSeCarregadas(const Count: Integer): Integer;
 begin
   Result := SetRetorno(0, Format(SInfNFSeCarregadas, [Count]));
 end;
@@ -210,7 +217,7 @@ begin
     try
       NFSeDM.ACBrNFSeX1.NotasFiscais.LoadFromLoteNfse(ArquivoOuXml);
 
-      Result := SetRetornoNFSeRPSCarregadas(NFSeDM.ACBrNFSeX1.NotasFiscais.Count);
+      Result := SetRetornoNFSeCarregadas(NFSeDM.ACBrNFSeX1.NotasFiscais.Count);
     finally
       NFSeDM.Destravar;
     end;

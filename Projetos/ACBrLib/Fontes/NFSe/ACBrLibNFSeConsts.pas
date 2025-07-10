@@ -105,7 +105,8 @@ const
   ErrEnvioEvento = -18;
 
 Resourcestring
-  SInfNFSeCarregadas = '%d NFSe(s)/RPS(s) Carregada(s)';
+  SInfNFSeRPSCarregadas = '%d NFSe(s)/RPS(s) Carregada(s)';
+  SInfNFSeCarregadas = '%d NFSe(s) Carregada(s)';
 
 
 implementation

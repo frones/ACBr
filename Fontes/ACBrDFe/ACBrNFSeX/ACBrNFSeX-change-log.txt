@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+10/07/2025
+-- ACBrNFSeXServicos --
+[*] #TK-7316: A cidade Itabirito/MG mudou de provedor, agora é IPM versão 2.04
+   Por: DeveloperATS
+[*] #TK-7325: A cidade Garuva/SC mudou as URLs, o provedo continua o mesmo.
+   Por: forbostec
+[+] #TK-7325: Incluída a cidade São João/PE, o provedor é Tributus.
+   Por: João Antônio
+
 08/07/2025
 -- ACBrNFSeXGravarXml_ABRASFv2 --
 [*] #TK-7246: Alterado o tamanho mínimo e máximo dos campos DataEmissao e Competencia

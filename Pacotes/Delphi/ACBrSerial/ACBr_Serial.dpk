@@ -27,7 +27,7 @@ package ACBr_Serial;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - ECF, Balanças, Cheques, Displays, Etiquetas, Gavetas, Terminais, SMS, RFD, Leitores - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - ECF, Balanï¿½as, Cheques, Displays, Etiquetas, Gavetas, Terminais, SMS, RFD, Leitores - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 
@@ -132,6 +132,7 @@ contains
   ACBrETQEpl2 in '..\..\..\Fontes\ACBrSerial\ACBrETQEpl2.pas',
   ACBrETQZplII in '..\..\..\Fontes\ACBrSerial\ACBrETQZplII.pas',
   ACBrETQEscLabel in '..\..\..\Fontes\ACBrSerial\ACBrETQEscLabel.pas',
+  ACBrETQTspl in '..\..\..\Fontes\ACBrSerial\ACBrETQTspl.pas',
   ACBrGAV in '..\..\..\Fontes\ACBrSerial\ACBrGAV.pas',
   ACBrGAVClass in '..\..\..\Fontes\ACBrSerial\ACBrGAVClass.pas',
   ACBrGAVImpressoraComum in '..\..\..\Fontes\ACBrSerial\ACBrGAVImpressoraComum.pas',

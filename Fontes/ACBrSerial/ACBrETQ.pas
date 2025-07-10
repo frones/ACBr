@@ -42,7 +42,7 @@ uses
 
 type
 
-  TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2, etqEscLabel);
+  TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2, etqEscLabel, etqTSPL);
 
   { TACBrETQCmdList }
 
@@ -203,7 +203,7 @@ implementation
 uses
   math, typinfo,
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF},
-  ACBrETQPpla, ACBrETQZplII, ACBrETQEpl2, ACBrETQEscLabel,
+  ACBrETQPpla, ACBrETQZplII, ACBrETQEpl2, ACBrETQEscLabel, ACBrETQTspl,
   {$IfDef MSWINDOWS}
   ACBrWinUSBDevice,
   {$EndIf}
@@ -483,6 +483,7 @@ begin
     etqPplb, etqEpl2: fsETQ := TACBrETQEpl2.Create(Self);  // EPL2 = PPLB
     etqZPLII:         fsETQ := TACBrETQZplII.Create(Self);
     etqEscLabel:      fsETQ := TACBrETQEscLabel.Create(Self);
+    etqTSPL:          fsETQ := TACBrETQTspl.Create(Self);
   else
     fsETQ := TACBrETQClass.Create(Self);
   end;

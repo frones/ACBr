@@ -501,7 +501,6 @@ Begin VB.Form FrmMain
       Begin VB.TextBox rtbRespostas 
          Height          =   3495
          Left            =   120
-         Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   3  'Both
          TabIndex        =   2
@@ -941,28 +940,50 @@ Begin VB.Form FrmMain
          TabCaption(1)   =   "WebServices"
          TabPicture(1)   =   "FrmMain.frx":0118
          Tab(1).ControlEnabled=   0   'False
-         Tab(1).Control(0)=   "txtEmitenteChaveAutorizacao"
-         Tab(1).Control(1)=   "txtEmitenteChaveAcesso"
-         Tab(1).Control(2)=   "txtEmitenteFraseSecreta"
-         Tab(1).Control(3)=   "txtEmitenteSenha"
-         Tab(1).Control(4)=   "txtEmitenteUsuário"
-         Tab(1).Control(5)=   "txtTimeOut"
-         Tab(1).Control(6)=   "frmAmbiente"
-         Tab(1).Control(7)=   "cmbUFDestino"
-         Tab(1).Control(8)=   "cmbSSlType"
-         Tab(1).Control(9)=   "frmProxy"
-         Tab(1).Control(10)=   "frmRetEnvio"
-         Tab(1).Control(11)=   "chkVisualizarMensagem"
-         Tab(1).Control(12)=   "chkSalvarSOAP"
-         Tab(1).Control(13)=   "nudTimeOut"
-         Tab(1).Control(14)=   "Label6"
-         Tab(1).Control(15)=   "Label5"
-         Tab(1).Control(16)=   "Label4"
-         Tab(1).Control(17)=   "Label3"
-         Tab(1).Control(18)=   "Label2"
-         Tab(1).Control(19)=   "lblUFDestino"
-         Tab(1).Control(20)=   "lblSSLType"
-         Tab(1).Control(21)=   "lblTimeOut(1)"
+         Tab(1).Control(0)=   "lblTimeOut(1)"
+         Tab(1).Control(0).Enabled=   0   'False
+         Tab(1).Control(1)=   "lblSSLType"
+         Tab(1).Control(1).Enabled=   0   'False
+         Tab(1).Control(2)=   "lblUFDestino"
+         Tab(1).Control(2).Enabled=   0   'False
+         Tab(1).Control(3)=   "Label2"
+         Tab(1).Control(3).Enabled=   0   'False
+         Tab(1).Control(4)=   "Label3"
+         Tab(1).Control(4).Enabled=   0   'False
+         Tab(1).Control(5)=   "Label4"
+         Tab(1).Control(5).Enabled=   0   'False
+         Tab(1).Control(6)=   "Label5"
+         Tab(1).Control(6).Enabled=   0   'False
+         Tab(1).Control(7)=   "Label6"
+         Tab(1).Control(7).Enabled=   0   'False
+         Tab(1).Control(8)=   "nudTimeOut"
+         Tab(1).Control(8).Enabled=   0   'False
+         Tab(1).Control(9)=   "chkSalvarSOAP"
+         Tab(1).Control(9).Enabled=   0   'False
+         Tab(1).Control(10)=   "chkVisualizarMensagem"
+         Tab(1).Control(10).Enabled=   0   'False
+         Tab(1).Control(11)=   "frmRetEnvio"
+         Tab(1).Control(11).Enabled=   0   'False
+         Tab(1).Control(12)=   "frmProxy"
+         Tab(1).Control(12).Enabled=   0   'False
+         Tab(1).Control(13)=   "cmbSSlType"
+         Tab(1).Control(13).Enabled=   0   'False
+         Tab(1).Control(14)=   "cmbUFDestino"
+         Tab(1).Control(14).Enabled=   0   'False
+         Tab(1).Control(15)=   "frmAmbiente"
+         Tab(1).Control(15).Enabled=   0   'False
+         Tab(1).Control(16)=   "txtTimeOut"
+         Tab(1).Control(16).Enabled=   0   'False
+         Tab(1).Control(17)=   "txtEmitenteUsuário"
+         Tab(1).Control(17).Enabled=   0   'False
+         Tab(1).Control(18)=   "txtEmitenteSenha"
+         Tab(1).Control(18).Enabled=   0   'False
+         Tab(1).Control(19)=   "txtEmitenteFraseSecreta"
+         Tab(1).Control(19).Enabled=   0   'False
+         Tab(1).Control(20)=   "txtEmitenteChaveAcesso"
+         Tab(1).Control(20).Enabled=   0   'False
+         Tab(1).Control(21)=   "txtEmitenteChaveAutorizacao"
+         Tab(1).Control(21).Enabled=   0   'False
          Tab(1).ControlCount=   22
          TabCaption(2)   =   "Certificados"
          TabPicture(2)   =   "FrmMain.frx":0134
@@ -979,32 +1000,58 @@ Begin VB.Form FrmMain
          TabCaption(3)   =   "Emitente"
          TabPicture(3)   =   "FrmMain.frx":0150
          Tab(3).ControlEnabled=   0   'False
-         Tab(3).Control(0)=   "txtBairroEmitente"
-         Tab(3).Control(1)=   "txtComplementoEmitente"
-         Tab(3).Control(2)=   "cmbCidadeEmitente"
-         Tab(3).Control(3)=   "txtCNPJPrefeituraEmitente"
-         Tab(3).Control(4)=   "txtCodCidadeEmitente"
-         Tab(3).Control(5)=   "txtNumeroEmitente"
-         Tab(3).Control(6)=   "txtLogradouroEmitente"
-         Tab(3).Control(7)=   "txtCEPEmitente"
-         Tab(3).Control(8)=   "txtFoneEmitente"
-         Tab(3).Control(9)=   "txtFantasiaEmitente"
-         Tab(3).Control(10)=   "txtRazaoSocialEmitente"
-         Tab(3).Control(11)=   "txtInscMunicipalEmitente"
-         Tab(3).Control(12)=   "txtCNPJEmitente"
-         Tab(3).Control(13)=   "Label27"
-         Tab(3).Control(14)=   "Label26"
-         Tab(3).Control(15)=   "Label25"
-         Tab(3).Control(16)=   "Label24"
-         Tab(3).Control(17)=   "Label23"
-         Tab(3).Control(18)=   "Label21"
-         Tab(3).Control(19)=   "Label20"
-         Tab(3).Control(20)=   "Label19"
-         Tab(3).Control(21)=   "Label18"
-         Tab(3).Control(22)=   "Label17"
-         Tab(3).Control(23)=   "Label16"
-         Tab(3).Control(24)=   "Label15"
-         Tab(3).Control(25)=   "Label14"
+         Tab(3).Control(0)=   "Label14"
+         Tab(3).Control(0).Enabled=   0   'False
+         Tab(3).Control(1)=   "Label15"
+         Tab(3).Control(1).Enabled=   0   'False
+         Tab(3).Control(2)=   "Label16"
+         Tab(3).Control(2).Enabled=   0   'False
+         Tab(3).Control(3)=   "Label17"
+         Tab(3).Control(3).Enabled=   0   'False
+         Tab(3).Control(4)=   "Label18"
+         Tab(3).Control(4).Enabled=   0   'False
+         Tab(3).Control(5)=   "Label19"
+         Tab(3).Control(5).Enabled=   0   'False
+         Tab(3).Control(6)=   "Label20"
+         Tab(3).Control(6).Enabled=   0   'False
+         Tab(3).Control(7)=   "Label21"
+         Tab(3).Control(7).Enabled=   0   'False
+         Tab(3).Control(8)=   "Label23"
+         Tab(3).Control(8).Enabled=   0   'False
+         Tab(3).Control(9)=   "Label24"
+         Tab(3).Control(9).Enabled=   0   'False
+         Tab(3).Control(10)=   "Label25"
+         Tab(3).Control(10).Enabled=   0   'False
+         Tab(3).Control(11)=   "Label26"
+         Tab(3).Control(11).Enabled=   0   'False
+         Tab(3).Control(12)=   "Label27"
+         Tab(3).Control(12).Enabled=   0   'False
+         Tab(3).Control(13)=   "txtCNPJEmitente"
+         Tab(3).Control(13).Enabled=   0   'False
+         Tab(3).Control(14)=   "txtInscMunicipalEmitente"
+         Tab(3).Control(14).Enabled=   0   'False
+         Tab(3).Control(15)=   "txtRazaoSocialEmitente"
+         Tab(3).Control(15).Enabled=   0   'False
+         Tab(3).Control(16)=   "txtFantasiaEmitente"
+         Tab(3).Control(16).Enabled=   0   'False
+         Tab(3).Control(17)=   "txtFoneEmitente"
+         Tab(3).Control(17).Enabled=   0   'False
+         Tab(3).Control(18)=   "txtCEPEmitente"
+         Tab(3).Control(18).Enabled=   0   'False
+         Tab(3).Control(19)=   "txtLogradouroEmitente"
+         Tab(3).Control(19).Enabled=   0   'False
+         Tab(3).Control(20)=   "txtNumeroEmitente"
+         Tab(3).Control(20).Enabled=   0   'False
+         Tab(3).Control(21)=   "txtCodCidadeEmitente"
+         Tab(3).Control(21).Enabled=   0   'False
+         Tab(3).Control(22)=   "txtCNPJPrefeituraEmitente"
+         Tab(3).Control(22).Enabled=   0   'False
+         Tab(3).Control(23)=   "cmbCidadeEmitente"
+         Tab(3).Control(23).Enabled=   0   'False
+         Tab(3).Control(24)=   "txtComplementoEmitente"
+         Tab(3).Control(24).Enabled=   0   'False
+         Tab(3).Control(25)=   "txtBairroEmitente"
+         Tab(3).Control(25).Enabled=   0   'False
          Tab(3).ControlCount=   26
          TabCaption(4)   =   "Arquivos"
          TabPicture(4)   =   "FrmMain.frx":016C
@@ -2652,39 +2699,117 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Dim nfse As ACBrNFSe
 
+Private Sub cmbCidadeEmitente_Click()
+If cmbCidadeEmitente.Text <> "" Then
+   txtCodCidadeEmitente.Text = cmbCidadeEmitente.ItemData(cmbCidadeEmitente.ListIndex)
+End If
+End Sub
+
+Private Sub cmbUFEmitente_Click()
+    
+    '1. Limpa o combo de cidades
+    cmbCidadeEmitente.Clear
+    
+    Dim CodigoMunicipio As ACBrCodigoMunicipioNFSe
+    
+    Set CodigoMunicipio = New ACBrCodigoMunicipioNFSe
+
+    
+    CodigoMunicipio.NenhumCidade cmbCidadeEmitente  ' (sem sigla)
+
+ Select Case Trim$(cmbUFEmitente.Text)
+        Case "AC"
+            CodigoMunicipio.Acre cmbCidadeEmitente
+        Case "AL"
+            CodigoMunicipio.Alagoas cmbCidadeEmitente
+        Case "AM"
+            CodigoMunicipio.Amazonas cmbCidadeEmitente
+        Case "AP"
+            ' Se tiver: CodigoMunicipio.Amapa cmbCidadeEmitente
+        Case "BA"
+            CodigoMunicipio.Bahia cmbCidadeEmitente
+        Case "CE"
+            CodigoMunicipio.Ceara cmbCidadeEmitente
+        Case "DF"
+            CodigoMunicipio.Brasilia cmbCidadeEmitente
+        Case "ES"
+            CodigoMunicipio.EspiritoSanto cmbCidadeEmitente
+        Case "GO"
+            CodigoMunicipio.Goias cmbCidadeEmitente
+        Case "MA"
+            CodigoMunicipio.Maranhao cmbCidadeEmitente
+        Case "MG"
+            CodigoMunicipio.MinasGerais cmbCidadeEmitente
+        Case "MS"
+            CodigoMunicipio.MatoGrossodoSul cmbCidadeEmitente
+        Case "MT"
+            CodigoMunicipio.MatoGrosso cmbCidadeEmitente
+        Case "PA"
+            CodigoMunicipio.Para cmbCidadeEmitente
+        Case "PB"
+            CodigoMunicipio.Paraiba cmbCidadeEmitente
+        Case "PE"
+            CodigoMunicipio.Pernambuco cmbCidadeEmitente
+        Case "PI"
+            CodigoMunicipio.Piaui cmbCidadeEmitente
+        Case "PR"
+            CodigoMunicipio.Parana cmbCidadeEmitente
+        Case "RJ"
+            CodigoMunicipio.RiodeJaneiro cmbCidadeEmitente
+        Case "RN"
+            CodigoMunicipio.RioGrandedoNorte cmbCidadeEmitente
+        Case "RO"
+            CodigoMunicipio.Rondonia cmbCidadeEmitente
+        Case "RR"
+            CodigoMunicipio.Roraima cmbCidadeEmitente
+        Case "RS"
+            CodigoMunicipio.RioGrandedoSul cmbCidadeEmitente
+        Case "SC"
+            CodigoMunicipio.SantaCatarina cmbCidadeEmitente
+        Case "SE"
+            CodigoMunicipio.Sergipe cmbCidadeEmitente
+        Case "SP"
+            CodigoMunicipio.SaoPaulo cmbCidadeEmitente
+        Case "TO"
+            CodigoMunicipio.Tocantins cmbCidadeEmitente
+        Case Else
+            CodigoMunicipio.NenhumCidade cmbCidadeEmitente
+    End Select
+End Sub
+
 Private Sub Form_Load()
     
     Dim CodigoMunicipio As ACBrCodigoMunicipioNFSe
     
     Set CodigoMunicipio = New ACBrCodigoMunicipioNFSe
         
-    CodigoMunicipio.NenhumCidade cmbCidadeEmitente
-    CodigoMunicipio.Rondonia cmbCidadeEmitente
-    CodigoMunicipio.Acre cmbCidadeEmitente
-    CodigoMunicipio.Amazonas cmbCidadeEmitente
-    CodigoMunicipio.Roraima cmbCidadeEmitente
-    CodigoMunicipio.Para cmbCidadeEmitente
-    CodigoMunicipio.Tocantins cmbCidadeEmitente
-    CodigoMunicipio.Maranhao cmbCidadeEmitente
-    CodigoMunicipio.Piaui cmbCidadeEmitente
-    CodigoMunicipio.Ceara cmbCidadeEmitente
-    CodigoMunicipio.RioGrandedoNorte cmbCidadeEmitente
-    CodigoMunicipio.Paraiba cmbCidadeEmitente
-    CodigoMunicipio.Pernambuco cmbCidadeEmitente
-    CodigoMunicipio.Alagoas cmbCidadeEmitente
-    CodigoMunicipio.Sergipe cmbCidadeEmitente
-    CodigoMunicipio.Bahia cmbCidadeEmitente
-    CodigoMunicipio.MinasGerais cmbCidadeEmitente
-    CodigoMunicipio.EspiritoSanto cmbCidadeEmitente
-    CodigoMunicipio.RiodeJaneiro cmbCidadeEmitente
-    CodigoMunicipio.SaoPaulo cmbCidadeEmitente
-    CodigoMunicipio.Parana cmbCidadeEmitente
-    CodigoMunicipio.SantaCatarina cmbCidadeEmitente
-    CodigoMunicipio.RioGrandedoSul cmbCidadeEmitente
-    CodigoMunicipio.MatoGrossodoSul cmbCidadeEmitente
-    CodigoMunicipio.MatoGrosso cmbCidadeEmitente
-    CodigoMunicipio.Goias cmbCidadeEmitente
-    CodigoMunicipio.Brasilia cmbCidadeEmitente
+    CodigoMunicipio.NenhumCidade cmbCidadeEmitente  ' (sem sigla)
+    CodigoMunicipio.Brasilia cmbCidadeEmitente      ' DF
+    CodigoMunicipio.Acre cmbCidadeEmitente          ' AC
+    CodigoMunicipio.Alagoas cmbCidadeEmitente       ' AL
+    CodigoMunicipio.Amazonas cmbCidadeEmitente      ' AM
+    CodigoMunicipio.Bahia cmbCidadeEmitente         ' BA
+    CodigoMunicipio.Ceara cmbCidadeEmitente         ' CE
+    CodigoMunicipio.EspiritoSanto cmbCidadeEmitente ' ES
+    CodigoMunicipio.Goias cmbCidadeEmitente         ' GO
+    CodigoMunicipio.Maranhao cmbCidadeEmitente      ' MA
+    CodigoMunicipio.MinasGerais cmbCidadeEmitente   ' MG
+    CodigoMunicipio.MatoGrossodoSul cmbCidadeEmitente ' MS
+    CodigoMunicipio.MatoGrosso cmbCidadeEmitente    ' MT
+    CodigoMunicipio.Para cmbCidadeEmitente          ' PA
+    CodigoMunicipio.Paraiba cmbCidadeEmitente       ' PB
+    CodigoMunicipio.Pernambuco cmbCidadeEmitente    ' PE
+    CodigoMunicipio.Piaui cmbCidadeEmitente         ' PI
+    CodigoMunicipio.Parana cmbCidadeEmitente        ' PR
+    CodigoMunicipio.RiodeJaneiro cmbCidadeEmitente  ' RJ
+    CodigoMunicipio.RioGrandedoNorte cmbCidadeEmitente ' RN
+    CodigoMunicipio.Rondonia cmbCidadeEmitente      ' RO
+    CodigoMunicipio.Roraima cmbCidadeEmitente       ' RR
+    CodigoMunicipio.RioGrandedoSul cmbCidadeEmitente ' RS
+    CodigoMunicipio.SantaCatarina cmbCidadeEmitente ' SC
+    CodigoMunicipio.Sergipe cmbCidadeEmitente       ' SE
+    CodigoMunicipio.SaoPaulo cmbCidadeEmitente      ' SP
+    CodigoMunicipio.Tocantins cmbCidadeEmitente     ' TO
          
     cmbUFDestino.Text = "SP"
     cmbSSlType.ListIndex = 0
@@ -3665,6 +3790,9 @@ Private Sub SetResposta(ByRef resposta As String)
 End Sub
 
 Private Sub LoadConfig()
+
+On Error Resume Next
+
     Dim buffer As String
     Dim bufferLen As Long
     
@@ -3842,8 +3970,11 @@ Private Sub SalvarConfig()
     nfse.ConfigGravarValor SESSAO_NFSe, "Emitente.Dados.Numero", txtNumeroEmitente.Text
     nfse.ConfigGravarValor SESSAO_NFSe, "Emitente.Dados.Complemento", txtComplementoEmitente.Text
     nfse.ConfigGravarValor SESSAO_NFSe, "Emitente.Dados.Bairro", txtBairroEmitente.Text
-    nfse.ConfigGravarValor SESSAO_NFSe, "CodigoMunicipio", cmbCidadeEmitente.ItemData(cmbCidadeEmitente.ListIndex)
-    txtCodCidadeEmitente.Text = nfse.ConfigLerValor(SESSAO_NFSe, "CodigoMunicipio")
+    
+    If cmbCidadeEmitente.Text <> "" Then
+        nfse.ConfigGravarValor SESSAO_NFSe, "CodigoMunicipio", cmbCidadeEmitente.ItemData(cmbCidadeEmitente.ListIndex)
+        txtCodCidadeEmitente.Text = nfse.ConfigLerValor(SESSAO_NFSe, "CodigoMunicipio")
+    End If
     
     nfse.ConfigGravar
 

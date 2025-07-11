@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/07/2025
+-- ACBrNFe.XmlWriter --
+[*] #TK-7311: Correção visando gerar o grupo Monofasia corretamente.
+  Por: Uillian Chagas Prates
 -- ACBrNFe.EnvEvento --
 [-] #TK-7307: Correção visando ler corretamente o evento ECONF.
   Por: Desenvolvimento Farol Soft

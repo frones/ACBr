@@ -4168,7 +4168,8 @@ begin
   Result := nil;
 
   if (IBSCBS.gIBSCBS.vBC > 0) or (IBSCBS.gIBSCBSMono.adRemIBS > 0) or
-     (IBSCBS.gTransfCred.vIBS > 0) or (IBSCBS.gTransfCred.vCBS > 0) then
+     (IBSCBS.gIBSCBSMono.adRemIBSRet > 0) or (IBSCBS.gTransfCred.vIBS > 0) or
+     (IBSCBS.gTransfCred.vCBS > 0) then
   begin
     Result := FDocument.CreateElement('IBSCBS');
 
@@ -4183,6 +4184,10 @@ begin
     else
     if IBSCBS.gIBSCBSMono.adRemIBS > 0 then
       Result.AppendChild(Gerar_IBSCBS_gIBSCBSMono(IBSCBS.gIBSCBSMono))
+    else
+    if IBSCBS.gIBSCBSMono.adRemIBSRet > 0 then
+      Result.AppendChild(Gerar_IBSCBS_gIBSCBSMono(IBSCBS.gIBSCBSMono))
+
     else
     if (NFe.Ide.modelo = 55) and (IBSCBS.CST = cst800) then
       Result.AppendChild(Gerar_IBSCBS_gTransfCred(IBSCBS.gTransfCred));

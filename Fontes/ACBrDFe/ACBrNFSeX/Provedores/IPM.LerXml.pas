@@ -38,7 +38,8 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument,
+  ACBrXmlBase,
+  ACBrXmlDocument,
   ACBrNFSeXConversao, ACBrNFSeXLerXml, ACBrNFSeXLerXml_ABRASFv2;
 
 type
@@ -55,6 +56,8 @@ type
     procedure LerTomador(const ANode: TACBrXmlNode);
     procedure LerItens(const ANode: TACBrXmlNode);
     procedure LerFormaPagamento(const ANode: TACBrXmlNode);
+    procedure LerParcelas(const ANode: TACBrXmlNode);
+    procedure LerParcela(const ANode: TACBrXmlNode);
   public
     function LerXml: Boolean; override;
     function LerXmlRps(const ANode: TACBrXmlNode): Boolean;
@@ -81,7 +84,8 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
+  ACBrNFSeXClass;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -110,7 +114,12 @@ begin
   AuxNode := ANode.Childrens.FindAnyNs('forma_pagamento');
 
   if AuxNode <> nil then
+  begin
     NFSe.CondicaoPagamento.Condicao := FpAOwner.StrToCondicaoPag(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('tipo_pagamento'), tcStr));
+
+    LerParcelas(AuxNode);
+    NFSe.CondicaoPagamento.QtdParcela := NFSe.CondicaoPagamento.Parcelas.Count;
+  end;
 end;
 
 procedure TNFSeR_IPM.LerItens(const ANode: TACBrXmlNode);
@@ -146,8 +155,11 @@ begin
         ItemServico[i].CodMunPrestacao := CodTOMToCodIBGE(ObterConteudo(ANodes[i].Childrens.FindAnyNs('codigo_local_prestacao_servico'), tcStr));
 
         aValor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('codigo_item_lista_servico'), tcStr);
+        {
         ItemServico[i].ItemListaServico := PadLeft(aValor, 4, '0');
         ItemServico[i].ItemListaServico := NormatizarItemListaServico(ItemServico[i].ItemListaServico);
+        }
+        ItemServico[i].ItemListaServico := PadLeft(aValor, 5, '0');
 
         ItemServico[i].xItemListaServico := ItemListaServicoDescricao(ItemServico[i].ItemListaServico);
 
@@ -303,6 +315,34 @@ begin
         Servico.Valores.DescontoIncondicionado;
     end;
   end;
+end;
+
+procedure TNFSeR_IPM.LerParcela(const ANode: TACBrXmlNode);
+var
+  ANodes: TACBrXmlNodeArray;
+  i: Integer;
+  Parcela : TParcelasCollectionItem;
+begin
+  ANodes := ANode.Childrens.FindAllAnyNs('parcela');
+  if not Assigned(ANodes) then Exit;
+
+  for i := 0 to Length(ANodes) - 1 do
+  begin
+    Parcela := NFSe.CondicaoPagamento.Parcelas.New;
+    Parcela.Parcela := ObterConteudo(ANodes[i].Childrens.FindAnyNs('numero'), tcStr);
+    Parcela.Valor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor'), tcDe2);
+    Parcela.DataVencimento := ObterConteudo(ANodes[i].Childrens.FindAnyNs('data_vencimento'), tcDatVcto);
+  end;
+end;
+
+procedure TNFSeR_IPM.LerParcelas(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+begin
+  AuxNode := ANode.Childrens.FindAnyNs('parcelas');
+  if not Assigned(AuxNode) then Exit;
+
+  LerParcela(AuxNode);
 end;
 
 procedure TNFSeR_IPM.LerPrestador(const ANode: TACBrXmlNode);

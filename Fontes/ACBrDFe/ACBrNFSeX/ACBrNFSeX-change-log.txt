@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 11/07/2025
+-- IPM.LerXml --
+[+] #TK-7330: Incluído a leitura das tags referente as parcelas.
+   Por: Alex Leiva
 -- Infisc.LerXml --
 [*] #TK-7334: Alteração visando a leitura do XML do RPS para não alterar as
     tags localTributacao e infAdicLT.

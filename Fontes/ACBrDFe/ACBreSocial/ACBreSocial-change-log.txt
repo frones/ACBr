@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/07/2025
+-- pcesS2200 --
+[-] #TK-7331: Revertido a remoção indevida das informações da tag sucessaovinc.
+  Por: IMATECH
+
 26/06/2025
 -- pcesConversaoeSocial --
 [+] #TK-7262: Novos itens no enumerado tpCodIncIRRF - https://www.projetoacbr.com.br/forum/topic/83931-novo-codincirrf/

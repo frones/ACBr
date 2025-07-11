@@ -641,6 +641,27 @@ begin
         Inc(I);
       end;
 
+      sSecao := 'sucessaoVinc';
+      if (INIRec.ReadString(sSecao, 'cnpjEmpregAnt', '') <> '' ) then
+      begin
+        vinculo.sucessaoVinc.tpInsc        := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+        vinculo.sucessaoVinc.nrInsc        := INIRec.ReadString(sSecao, 'nrInsc', '');
+        vinculo.sucessaoVinc.tpInscAnt     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInscAnt', '1'));
+        vinculo.sucessaoVinc.cnpjEmpregAnt := INIRec.ReadString(sSecao, 'cnpjEmpregAnt', '');
+        vinculo.sucessaoVinc.MatricAnt     := INIRec.ReadString(sSecao, 'matricAnt', '');
+        vinculo.sucessaoVinc.dtTransf      := StringToDateTime(INIRec.ReadString(sSecao, 'dtTransf', '0'));
+        vinculo.sucessaoVinc.Observacao    := INIRec.ReadString(sSecao, 'observacao', '');
+      end;
+
+      if (INIRec.ReadString(sSecao, 'tpInsc', '') <> '') then
+      begin
+        vinculo.sucessaoVinc.tpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+        vinculo.sucessaoVinc.nrInsc       := INIRec.ReadString(sSecao, 'nrInsc', '');
+        vinculo.sucessaoVinc.MatricAnt    := INIRec.ReadString(sSecao, 'matricAnt', '');
+        vinculo.sucessaoVinc.dtTransf     := StringToDateTime(INIRec.ReadString(sSecao, 'dtTransf', '0'));
+        vinculo.sucessaoVinc.Observacao   := INIRec.ReadString(sSecao, 'observacao', '');
+      end;
+
       sSecao := 'transfDom';
       if INIRec.ReadString(sSecao, 'cpfSubstituido', '') <> '' then
       begin
@@ -960,6 +981,17 @@ begin
             end;
             Inc(i);
           end;
+        end;
+
+        if (Leitor.rExtrai(3, 'sucessaoVinc') <> '') then
+        begin
+          vinculo.sucessaoVinc.tpInsc        := eSStrToTpInscricao(bOk, Leitor.rCampo(tcStr, 'tpInsc'));
+          vinculo.sucessaoVinc.nrInsc        := Leitor.rCampo(tcStr, 'nrInsc');
+          vinculo.sucessaoVinc.tpInscAnt     := eSStrToTpInscricao(bOk, Leitor.rCampo(tcStr, 'tpInscAnt'));
+          vinculo.sucessaoVinc.cnpjEmpregAnt := Leitor.rCampo(tcStr, 'cnpjEmpregAnt');
+          vinculo.sucessaoVinc.MatricAnt     := Leitor.rCampo(tcStr, 'matricAnt');
+          vinculo.sucessaoVinc.dtTransf      := StringToDateTime(Leitor.rCampo(tcDat, 'dtTransf'));
+          vinculo.sucessaoVinc.Observacao    := Leitor.rCampo(tcStr, 'observacao');
         end;
 
         if Leitor.rExtrai(3, 'transfDom') <> '' then

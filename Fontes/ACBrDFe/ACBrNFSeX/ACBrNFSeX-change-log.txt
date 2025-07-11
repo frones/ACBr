@@ -45,6 +45,9 @@ Símbolo : Significado
 
 11/07/2025
 -- IPM.LerXml --
+[-] #TK-7319: Correção na grafia da tag data do fato gerador.
+   Por: Microsys Sistemas
+-- IPM.LerXml --
 [+] #TK-7330: Incluído a leitura das tags referente as parcelas.
    Por: Alex Leiva
 -- Infisc.LerXml --

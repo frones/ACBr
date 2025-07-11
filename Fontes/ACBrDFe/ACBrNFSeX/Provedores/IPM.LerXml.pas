@@ -259,7 +259,7 @@ begin
       Link := ObterConteudo(AuxNode.Childrens.FindAnyNs('link_nfse'), tcStr);
       Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
 
-      Competencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('data_fato'), tcDatVcto);
+      Competencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('data_fato_gerador'), tcDatVcto);
 
       // campos presentes ao baixar do site da prefeitura
       if Numero = '' then

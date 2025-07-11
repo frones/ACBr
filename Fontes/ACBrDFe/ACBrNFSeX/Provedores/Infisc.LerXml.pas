@@ -38,7 +38,8 @@ interface
 
 uses
   SysUtils, Classes, StrUtils, DateUtils,
-  ACBrXmlBase, ACBrXmlDocument,
+  ACBrXmlBase,
+  ACBrXmlDocument,
   ACBrNFSeXConversao, ACBrNFSeXLerXml,
   ACBrNFSeXLerXml_ABRASFv2;
 
@@ -416,7 +417,7 @@ begin
     if NFSe.Servico.Valores.ValorIssRetido > 0 then
     begin
       NFSe.Servico.Valores.IssRetido := stRetencao;
-      NFSe.Servico.MunicipioIncidencia := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
+//      NFSe.Servico.MunicipioIncidencia := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
     end;
   end;
 end;

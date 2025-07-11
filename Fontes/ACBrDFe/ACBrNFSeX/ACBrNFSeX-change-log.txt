@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 11/07/2025
+-- Infisc.LerXml --
+[*] #TK-7334: Alteração visando a leitura do XML do RPS para não alterar as
+    tags localTributacao e infAdicLT.
+   Por: Tiago Tecchio
 -- ACBrNFSeXServicos --
 [*] #TK-7335: A cidade Barra do Garças/MT mudou as URLs de homologação, o provedor
     continua o mesmo.

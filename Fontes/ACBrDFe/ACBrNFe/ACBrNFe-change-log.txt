@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/07/2025
+-- ACBrNFe.EnvEvento --
+[-] #TK-7307: Correção visando ler corretamente o evento ECONF.
+  Por: Desenvolvimento Farol Soft
+
 08/07/2025
 -- ACBrNFe.XmlReader --
 [-] #TK-7299: Correção visando ler corretamente o grupo detPag.

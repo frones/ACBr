@@ -2208,7 +2208,11 @@ begin
              '</procEventoCTe>';
 
       Inicio := Pos('Id=', XML) + 6;
-      Fim    := 52;
+
+      if StrToVersaoCTe(Ok, FVersao) >= ve400 then
+        Fim    := 53
+      else
+        Fim    := 52;
 
       if Inicio = 6 then
         aIDEvento := FormatDateTime('yyyymmddhhnnss', Now)

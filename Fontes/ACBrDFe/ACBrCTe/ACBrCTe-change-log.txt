@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/07/2025
+-- ACBrCTeWebServices --
+[-] #TK-7306: Correção para leitura do ID do evento para versão 3 e 4 do CT-e.
+  Por: Italo Giurizzato Junior
+
 23/06/2025
 -- ACBrCTe.XmlReader --
 [-] #TK-7249: Correção para realizar a leitura correta do grupo infCTeSub

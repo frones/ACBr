@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+11/07/2025
+-- ACBrNFSeXServicos --
+[*] #TK-7335: A cidade Barra do Garças/MT mudou as URLs de homologação, o provedor
+    continua o mesmo.
+   Por: Márcio Baroni
+
 10/07/2025
 -- ACBrNFSeXServicos --
 [*] #TK-7316: A cidade Itabirito/MG mudou de provedor, agora é IPM versão 2.04

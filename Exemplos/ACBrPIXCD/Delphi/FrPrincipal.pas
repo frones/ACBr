@@ -5724,6 +5724,7 @@ begin
   ACBrPSPPixPDV1.CNPJ := edPixPDVCNPJ.Text;
   ACBrPSPPixPDV1.Token := edPixPDVToken.Text;
   ACBrPSPPixPDV1.ClientSecret := edPixPDVSecretKey.Text;
+  ACBrPSPPixPDV1.APIVersao := TACBrPIXPDVAPIVersao(cbPIXPDVVersaoAPI.ItemIndex);
 
   ACBrPSPInter1.ChavePIX := edInterChavePIX.Text;
   ACBrPSPInter1.ClientID := edInterClientID.Text;

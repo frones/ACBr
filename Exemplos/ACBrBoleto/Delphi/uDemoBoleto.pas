@@ -750,6 +750,7 @@ var
   VQtdeCarcA, VQtdeCarcB, VQtdeCarcC :Integer;
   VLinha, logo : string;
   i: Integer;
+  LNFe : TACBrDadosNFe;
 begin
 
   //Aplicar configuração ao componente antes de incluir e gravar o INI
@@ -867,6 +868,13 @@ begin
 
   Titulo.ArquivoLogoEmp := 'c:\LogoACBr\LogoMono.bmp';  // logo da empresa
   Titulo.Verso := ((cbxImprimirVersoFatura.Checked) and ( cbxImprimirVersoFatura.Enabled = true ));
+
+  //somente se for usar NFe.. CNAB444 por exemplo
+  {LNFe := Titulo.CriarNFeNaLista;
+  LNFe.NumNFe     := '999631';
+  LNFe.ValorNFe   := 100.99;
+  LNFe.EmissaoNFe := Now;
+  LNFe.ChaveNFe   := '12345678901345678901324567890134567901234';}
 end;
 
 procedure TfrmDemoBoleto.BtnIncluirVariosBoletosClick(Sender: TObject);

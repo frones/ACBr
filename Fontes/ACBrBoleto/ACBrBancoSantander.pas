@@ -194,6 +194,12 @@ begin
         Result := '17'
       else if Trim(EspecieDoc) = 'AP' then {AP – APOLICE DE SEGURO}
         Result := '20'
+      else if Trim(EspecieDoc) = 'BCC' then {BCC - BOLETO DE CARTÃO DE CRÉDITO}
+        Result := '31'
+      else if Trim(EspecieDoc) = 'BDP' then {BPD - BOLETO DE PROPOSTA}
+        Result := '32'
+      else if Trim(EspecieDoc) = 'BDA' then {BDA - BOLETO DE DEPOSITO DE APORTE}
+        Result := '33'
       else if Trim(EspecieDoc) = 'CH' then {CH - CHEQUE}
         Result := '97'
       else if Trim(EspecieDoc) = 'ND' then {ND - NOTA PROMISSORIA DIRETA}
@@ -678,7 +684,7 @@ begin
                 Space(1)                                                                                     + // 061 - 061 / Reservado (uso Banco)
                 Space(1)                                                                                     + // 062 - 062 / Reservado (uso Banco)
                 PadRight(Copy(NumeroDocumento, 1, 15), 15, ' ')                                              + // 063 - 077 / Nº do documento
-                FormatDateTime('ddmmyyyy',Vencimento)                                                        + // 078 - 085 / Data de vencimento do título
+                ifThen(sEspecie = '31',  '00000000', FormatDateTime('ddmmyyyy',Vencimento))                  + // 078 - 085 / Data de vencimento do título
                 IntToStrZero(round(ValorDocumento * 100), 15)                                                + // 086 - 100 / Valor nominal do título
                 PadLeft('0', 4, '0')                                                                         + // 101 - 104 / Agência encarregada da cobrança
                 '0'                                                                                          + // 105 - 105 / Dígito da Agência encarregada da cobrança

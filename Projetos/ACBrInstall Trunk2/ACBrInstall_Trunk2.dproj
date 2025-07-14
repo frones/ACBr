@@ -68,14 +68,17 @@
         <UWP_DelphiLogo44>$(ProjectName).Artwork\Windows\Uwp_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(ProjectName).Artwork\Windows\Uwp_150.png</UWP_DelphiLogo150>
         <Manifest_File>ACBrInstall_Trunk2.manifest</Manifest_File>
-        <VerInfo_Build>1</VerInfo_Build>
+        <VerInfo_Build>4</VerInfo_Build>
         <DCC_Namespace>Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileVersion=1.0.0.1;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.1;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Projeto ACBr;FileVersion=3.2.1.4;InternalName=ACBrInstall;LegalCopyright=Projeto ACBr;LegalTrademarks=Projeto ACBr;OriginalFilename=ACBrInstall;ProductVersion=3.2;Comments=Instalador do componentes do Projeto ACBr para Delphi;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=ACBrInstall;ProductName=ACBrInstall</VerInfo_Keys>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <Icon_MainIcon>$(ProjectName).Artwork\Windows\AppIcon.ico</Icon_MainIcon>
         <Icns_MainIcns>$(ProjectName).Artwork\Windows\AppIcon.icns</Icns_MainIcns>
         <AppDPIAwarenessMode>none</AppDPIAwarenessMode>
+        <VerInfo_MajorVer>3</VerInfo_MajorVer>
+        <VerInfo_MinorVer>2</VerInfo_MinorVer>
+        <VerInfo_Release>1</VerInfo_Release>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <UWP_DelphiLogo44>$(ProjectName).Artwork\Windows\Uwp_44.png</UWP_DelphiLogo44>
@@ -93,11 +96,11 @@
         <Manifest_File>ACBrInstall_Trunk2.manifest</Manifest_File>
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=Projeto ACBr;FileVersion=3.2.1.3;InternalName=ACBrInstall;LegalCopyright=Projeto ACBr;LegalTrademarks=Projeto ACBr;OriginalFilename=ACBrInstall;ProductVersion=3.2;Comments=Instalador do componentes do Projeto ACBr para Delphi;ProgramID=ACBrInstall;FileDescription=ACBrInstall;ProductName=ACBrInstall</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Projeto ACBr;FileVersion=3.2.1.4;InternalName=ACBrInstall;LegalCopyright=Projeto ACBr;LegalTrademarks=Projeto ACBr;OriginalFilename=ACBrInstall;ProductVersion=3.2;Comments=Instalador do componentes do Projeto ACBr para Delphi;ProgramID=ACBrInstall;FileDescription=ACBrInstall;ProductName=ACBrInstall</VerInfo_Keys>
         <DCC_DebugInformation>0</DCC_DebugInformation>
         <VerInfo_MajorVer>3</VerInfo_MajorVer>
         <VerInfo_MinorVer>2</VerInfo_MinorVer>
-        <VerInfo_Build>3</VerInfo_Build>
+        <VerInfo_Build>4</VerInfo_Build>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Release>1</VerInfo_Release>
         <Icon_MainIcon>$(ProjectName).Artwork\Windows\AppIcon.ico</Icon_MainIcon>
@@ -113,9 +116,12 @@
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=;FileVersion=1.0.0.1;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Projeto ACBr;FileVersion=3.2.1.4;InternalName=ACBrInstall;LegalCopyright=Projeto ACBr;LegalTrademarks=Projeto ACBr;OriginalFilename=ACBrInstall;ProductVersion=3.2;Comments=Instalador do componentes do Projeto ACBr para Delphi;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=ACBrInstall;ProductName=ACBrInstall</VerInfo_Keys>
         <Manifest_File>ACBrInstall_Trunk2.manifest</Manifest_File>
-        <VerInfo_Build>1</VerInfo_Build>
+        <VerInfo_Build>4</VerInfo_Build>
+        <VerInfo_MajorVer>3</VerInfo_MajorVer>
+        <VerInfo_MinorVer>2</VerInfo_MinorVer>
+        <VerInfo_Release>1</VerInfo_Release>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">

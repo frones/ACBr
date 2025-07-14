@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = Panel1
+  ActiveControl = edtDirDestino
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Assistente de Instala'#231#227'o de Componente Projeto ACBr - Delphi'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 740
     Height = 630
-    ActivePage = wizPgInicio
+    ActivePage = wizPgConfiguracao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -12897,7 +12897,7 @@ object frmPrincipal: TfrmPrincipal
           TabOrder = 2
         end
         object ckbRemoveCapicom: TCheckBox
-          Left = 302
+          Left = 262
           Top = 37
           Width = 227
           Height = 17
@@ -12910,7 +12910,7 @@ object frmPrincipal: TfrmPrincipal
           TabOrder = 3
         end
         object ckbRemoveXMLSec: TCheckBox
-          Left = 302
+          Left = 262
           Top = 16
           Width = 227
           Height = 17
@@ -12923,7 +12923,7 @@ object frmPrincipal: TfrmPrincipal
         object ckbCargaDllTardia: TCheckBox
           Left = 6
           Top = 16
-          Width = 267
+          Width = 243
           Height = 17
           Hint = 
             '*Recomendado A Carga de DLL ser'#225' executada quando necess'#225'rio, e ' +
@@ -12960,11 +12960,14 @@ object frmPrincipal: TfrmPrincipal
           TabOrder = 4
         end
         object ckbUsarACBrXmlDocument: TCheckBox
-          Left = 302
+          Left = 262
           Top = 58
-          Width = 227
+          Width = 280
           Height = 17
-          Caption = 'Usar ACBrXmlDocument'
+          Hint = 
+            'Instala'#231#227'o Obrigat'#243'ria para Reforma Tribut'#225'ria - PCN foi descont' +
+            'inuada.'
+          Caption = 'Usar ACBrXmlDocument (Obrigat'#243'rio Refor. Tribut'#225'ria)'
           ParentShowHint = False
           ShowHint = True
           TabOrder = 5
@@ -14061,7 +14064,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 23
+        FrameIndex = 46
         Image.Data = {
           9A470500474946383961F401F401E64100FFCC80FFB2403FCF10F3FCF0D9F6D0
           59D5307FDF60B3ECA04CD2208CE27099E680E6F9E066D940CCF3C0BFEFB0A6E9

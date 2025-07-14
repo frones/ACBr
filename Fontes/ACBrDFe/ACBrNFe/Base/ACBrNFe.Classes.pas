@@ -1427,6 +1427,7 @@ type
     FpDif: Double;
     FvDif: Double;
   public
+    procedure Assign(Source: TgDif);
     property pDif: Double read FpDif write FpDif;
     property vDif: Double read FvDif write FvDif;
   end;
@@ -1437,6 +1438,7 @@ type
   private
     FvDevTrib: Double;
   public
+    procedure Assign(Source: TgDevTrib);
     property vDevTrib: Double read FvDevTrib write FvDevTrib;
   end;
 
@@ -1447,6 +1449,7 @@ type
     FpRedAliq: Double;
     FpAliqEfet: Double;
   public
+    procedure Assign(Source: TgRed);
     property pRedAliq: Double read FpRedAliq write FpRedAliq;
     property pAliqEfet: Double read FpAliqEfet write FpAliqEfet;
   end;
@@ -1504,6 +1507,7 @@ type
     FvCredPres: Double;
     FvCredPresCondSus: Double;
   public
+    procedure Assign(Source: TgIBSCBSCredPres);
     property cCredPres: TcCredPres read FcCredPres write FcCredPres;
     property pCredPres: Double read FpCredPres write FpCredPres;
     property vCredPres: Double read FvCredPres write FvCredPres;
@@ -1545,6 +1549,7 @@ type
     FpAliqEfetRegCBS: Double;
     FvTribRegCBS: Double;
   public
+    procedure Assign(Source: TgTribRegular);
     property CSTReg: TCSTIBSCBS read FCSTReg write FCSTReg;
     property cClassTribReg: TcClassTrib read FcClassTribReg write FcClassTribReg;
     property pAliqEfetRegIBSUF: Double read FpAliqEfetRegIBSUF write FpAliqEfetRegIBSUF;
@@ -1566,6 +1571,7 @@ type
     FpAliqCBS: Double;
     FvTribCBS: Double;
   public
+    procedure Assign(Source: TgTribCompraGov);
     property pAliqIBSUF: Double read FpAliqIBSUF write FpAliqIBSUF;
     property vTribIBSUF: Double read FvTribIBSUF write FvTribIBSUF;
     property pAliqIBSMun: Double read FpAliqIBSMun write FpAliqIBSMun;
@@ -1703,6 +1709,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    procedure Assign(Source: TIBSCBS);
 
     property CST: TCSTIBSCBS read FCST write FCST;
     property cClassTrib: TcClassTrib read FcClassTrib write FcClassTrib;
@@ -1770,6 +1777,7 @@ type
     FchaveAcesso: string;
     FnItem: Integer;
   public
+    procedure Assign(Source: TDFeReferenciado);
     property chaveAcesso: string read FchaveAcesso write FchaveAcesso;
     property nItem: Integer read FnItem write FnItem;
   end;
@@ -1978,6 +1986,7 @@ type
     FvDevTrib: Double;
     FvIBSUF: Double;
   public
+    procedure Assign(Source: TgIBSUFTot);
     property vDif: Double read FvDif write FvDif;
     property vDevTrib: Double read FvDevTrib write FvDevTrib;
     property vIBSUF: Double read FvIBSUF write FvIBSUF;
@@ -1991,6 +2000,7 @@ type
     FvDevTrib: Double;
     FvIBSMun: Double;
   public
+    procedure Assign(Source: TgIBSMunTot);
     property vDif: Double read FvDif write FvDif;
     property vDevTrib: Double read FvDevTrib write FvDevTrib;
     property vIBSMun: Double read FvIBSMun write FvIBSMun;
@@ -2028,6 +2038,7 @@ type
     FvCredPres: Double;
     FvCredPresCondSus: Double;
   public
+    procedure Assign(Source: TgCBSTot);
     property vDif: Double read FvDif write FvDif;
     property vDevTrib: Double read FvDevTrib write FvDevTrib;
     property vCBS: Double read FvCBS write FvCBS;
@@ -2046,6 +2057,7 @@ type
     FvIBSMonoRet: Double;
     FvCBSMonoRet: Double;
   public
+    procedure Assign(Source: TgMono);
     property vIBSMono: Double read FvIBSMono write FvIBSMono;
     property vCBSMono: Double read FvCBSMono write FvCBSMono;
     property vIBSMonoReten: Double read FvIBSMonoReten write FvIBSMonoReten;
@@ -2706,6 +2718,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    procedure Assign(Source: TguiaTransito);
     property UFGuia: string read FUFGuia write FUFGuia;
     property tpGuia: TtpGuia read FtpGuia write FtpGuia;
     property serieGuia: string read FserieGuia write FserieGuia;
@@ -2723,6 +2736,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    procedure Assign(Source: Tagropecuario);
 
     property defensivo: TdefensivoCollection read Fdefensivo write Setdefensivo;
     property guiaTransito: TguiaTransito read FguiaTransito write FguiaTransito;
@@ -2826,6 +2840,7 @@ begin
   signature.Assign(Source.signature);
   procNFe.Assign(Source.procNFe);
   infRespTec.Assign(Source.infRespTec);
+  agropecuario.Assign(Source.agropecuario);
 end;
 
 constructor TNFe.Create;
@@ -2951,7 +2966,7 @@ begin
   vIPIDevol := Source.vIPIDevol;
   infAdProd := Source.infAdProd;
   vItem := Source.vItem;
-  DFeReferenciado := Source.DFeReferenciado;
+  DFeReferenciado.Assign(Source.DFeReferenciado);
 
   obsCont.Assign(Source.obsCont);
   obsFisco.Assign(Source.obsFisco);
@@ -3009,8 +3024,11 @@ begin
   verProc  := Source.verProc;
   dhCont   := Source.dhCont;
   xJust    := Source.xJust;
+  cMunFGIBS := Source.cMunFGIBS;
   tpNFDebito := Source.tpNFDebito;
   tpNFCredito := Source.tpNFCredito;
+  gCompraGov.Assign(Source.gCompraGov);
+  gPagAntecipado.Assign(Source.gPagAntecipado);
 end;
 
 constructor TIde.Create;
@@ -3484,8 +3502,8 @@ begin
   COFINSST.Assign(Source.COFINSST);
   ISSQN.Assign(Source.ISSQN);
   ICMSUFDest.Assign(Source.ICMSUFDest);
-  ISel := Source.ISel;
-  IBSCBS := Source.IBSCBS;
+  ISel.Assign(Source.ISel);
+  IBSCBS.Assign(Source.IBSCBS);
 end;
 
 constructor TImposto.Create();
@@ -4905,6 +4923,14 @@ end;
 
 { TguiaTransito }
 
+procedure TguiaTransito.Assign(Source: TguiaTransito);
+begin
+  FUFGuia := Source.UFGuia;
+  FtpGuia := Source.tpGuia;
+  FserieGuia := Source.serieGuia;
+  FnGuia := Source.nGuia;
+end;
+
 constructor TguiaTransito.Create;
 begin
   inherited Create;
@@ -4917,6 +4943,12 @@ begin
 end;
 
 { Tagropecuario }
+
+procedure Tagropecuario.Assign(Source: Tagropecuario);
+begin
+  Fdefensivo.Assign(Source.defensivo);
+  FguiaTransito.Assign(Source.guiaTransito);
+end;
 
 constructor Tagropecuario.Create;
 begin
@@ -4981,6 +5013,16 @@ end;
 
 { TIBSCBS }
 
+procedure TIBSCBS.Assign(Source: TIBSCBS);
+begin
+  CST := Source.CST;
+  cClassTrib := Source.cClassTrib;
+  gIBSCBS.Assign(Source.gIBSCBS);
+  gIBSCBSMono.Assign(Source.gIBSCBSMono);
+  gTransfCred.Assign(Source.gTransfCred);
+  gCredPresIBSZFM.Assign(Source.gCredPresIBSZFM);
+end;
+
 constructor TIBSCBS.Create;
 begin
   inherited Create;
@@ -5020,13 +5062,13 @@ end;
 procedure TgIBSCBS.Assign(Source: TgIBSCBS);
 begin
   vBC := Source.vBC;
-  gIBSUF := Source.gIBSUF;
-  gIBSMun := Source.gIBSMun;
-  gCBS := Source.gCBS;
-  gTribRegular := Source.gTribRegular;
-  gIBSCredPres := Source.gIBSCredPres;
-  gCBSCredPres := Source.gCBSCredPres;
-  gTribCompraGov := Source.gTribCompraGov;
+  gIBSUF.Assign(Source.gIBSUF);
+  gIBSMun.Assign(Source.gIBSMun);
+  gCBS.Assign(Source.gCBS);
+  gTribRegular.Assign(Source.gTribRegular);
+  gIBSCredPres.Assign(Source.gIBSCredPres);
+  gCBSCredPres.Assign(Source.gCBSCredPres);
+  gTribCompraGov.Assign(Source.gTribCompraGov);
 end;
 
 constructor TgIBSCBS.Create;
@@ -5060,9 +5102,9 @@ end;
 procedure TgIBSUF.Assign(Source: TgIBSUF);
 begin
   pIBSUF := Source.pIBSUF;
-  gDif := Source.gDif;
-  gDevTrib := Source.gDevTrib;
-  gRed := Source.gRed;
+  gDif.Assign(Source.gDif);
+  gDevTrib.Assign(Source.gDevTrib);
+  gRed.Assign(Source.gRed);
   vIBSUF := Source.vIBSUF;
 end;
 
@@ -5089,9 +5131,9 @@ end;
 procedure TgIBSMun.Assign(Source: TgIBSMun);
 begin
   pIBSMun := Source.pIBSMun;
-  gDif := Source.gDif;
-  gDevTrib := Source.gDevTrib;
-  gRed := Source.gRed;
+  gDif.Assign(Source.gDif);
+  gDevTrib.Assign(Source.gDevTrib);
+  gRed.Assign(Source.gRed);
   vIBSMun := Source.vIBSMun;
 end;
 
@@ -5118,9 +5160,9 @@ end;
 procedure TgCBS.Assign(Source: TgCBS);
 begin
   pCBS := Source.pCBS;
-  gDif := Source.gDif;
-  gDevTrib := Source.gDevTrib;
-  gRed := Source.gRed;
+  gDif.Assign(Source.gDif);
+  gDevTrib.Assign(Source.gDevTrib);
+  gRed.Assign(Source.gRed);
   vCBS := Source.vCBS;
 end;
 
@@ -5178,9 +5220,9 @@ end;
 procedure TIBSCBSTot.Assign(Source: TIBSCBSTot);
 begin
   vBCIBSCBS := Source.vBCIBSCBS;
-  gIBS := Source.gIBS;
-  gCBS := Source.gCBS;
-  gMono := Source.gMono;
+  gIBS.Assign(Source.gIBS);
+  gCBS.Assign(Source.gCBS);
+  gMono.Assign(Source.gMono);
 end;
 
 constructor TIBSCBSTot.Create;
@@ -5205,8 +5247,8 @@ end;
 
 procedure TgIBSTot.Assign(Source: TgIBSTot);
 begin
-  gIBSUFTot := Source.gIBSUFTot;
-  gIBSMunTot := Source.gIBSMunTot;
+  gIBSUFTot.Assign(Source.gIBSUFTot);
+  gIBSMunTot.Assign(Source.gIBSMunTot);
   vIBS := Source.vIBS;
   vCredPres := Source.vCredPres;
   vCredPresCondSus := Source.vCredPresCondSus;
@@ -5282,6 +5324,114 @@ procedure TgPagAntecipadoCollection.SetItem(Index: Integer;
   Value: TgPagAntecipadoCollectionItem);
 begin
   inherited Items[Index] := Value;
+end;
+
+{ TgDif }
+
+procedure TgDif.Assign(Source: TgDif);
+begin
+  FpDif := Source.pDif;
+  FvDif := Source.vDif;
+end;
+
+{ TgDevTrib }
+
+procedure TgDevTrib.Assign(Source: TgDevTrib);
+begin
+  FvDevTrib := Source.vDevTrib; 
+end;
+
+{ TgRed }
+
+procedure TgRed.Assign(Source: TgRed);
+begin
+  FpRedAliq := Source.pRedAliq;
+  FpAliqEfet := Source.pAliqEfet;
+end;
+
+{ TgIBSCBSCredPres }
+
+procedure TgIBSCBSCredPres.Assign(Source: TgIBSCBSCredPres);
+begin
+  FcCredPres := Source.cCredPres;
+  FpCredPres := Source.pCredPres;
+  FvCredPres := Source.vCredPres;
+  FvCredPresCondSus := Source.vCredPresCondSus;
+end;
+
+{ TgTribRegular }
+
+procedure TgTribRegular.Assign(Source: TgTribRegular);
+begin
+  CSTReg := Source.CSTReg;
+  cClassTribReg := Source.cClassTribReg;
+  pAliqEfetRegIBSUF := Source.pAliqEfetRegIBSUF;
+  vTribRegIBSUF := Source.vTribRegIBSUF;
+  pAliqEfetRegIBSMun := Source.pAliqEfetRegIBSMun;
+  vTribRegIBSMun := Source.vTribRegIBSMun;
+  pAliqEfetRegCBS := Source.pAliqEfetRegCBS;
+  vTribRegCBS := Source.vTribRegCBS;
+end;
+
+{ TgTribCompraGov }
+
+procedure TgTribCompraGov.Assign(Source: TgTribCompraGov);
+begin
+  pAliqIBSUF := Source.pAliqIBSUF;
+  vTribIBSUF := Source.vTribIBSUF;
+  pAliqIBSMun := Source.pAliqIBSMun;
+  vTribIBSMun := Source.vTribIBSMun;
+  pAliqCBS := Source.pAliqCBS;
+  vTribCBS := Source.vTribCBS;
+end;
+
+{ TDFeReferenciado }
+
+procedure TDFeReferenciado.Assign(Source: TDFeReferenciado);
+begin
+  FchaveAcesso := Source.chaveAcesso;
+  FnItem := Source.nItem;
+end;
+
+{ TgIBSUFTot }
+
+procedure TgIBSUFTot.Assign(Source: TgIBSUFTot);
+begin
+  FvDif := Source.vDif;
+  FvDevTrib := Source.vDevTrib;
+  FvIBSUF := Source.vIBSUF;
+end;
+
+{ TgIBSMunTot }
+
+procedure TgIBSMunTot.Assign(Source: TgIBSMunTot);
+begin
+  FvDif := Source.vDif;
+  FvDevTrib := Source.vDevTrib;
+  FvIBSMun := Source.vIBSMun;
+end;
+
+{ TgCBSTot }
+
+procedure TgCBSTot.Assign(Source: TgCBSTot);
+begin
+  FvDif := Source.vDif;
+  FvDevTrib := Source.vDevTrib;
+  FvCBS := Source.vCBS;
+  FvCredPres := Source.vCredPres;
+  FvCredPresCondSus := Source.vCredPresCondSus;
+end;
+
+{ TgMono }
+
+procedure TgMono.Assign(Source: TgMono);
+begin
+  FvIBSMono := Source.vIBSMono;
+  FvCBSMono := Source.vCBSMono;
+  FvIBSMonoReten := Source.vIBSMonoReten;
+  FvCBSMonoReten := Source.vCBSMonoReten;
+  FvIBSMonoRet := Source.vIBSMonoRet;
+  FvCBSMonoRet := Source.vCBSMonoRet;
 end;
 
 end.

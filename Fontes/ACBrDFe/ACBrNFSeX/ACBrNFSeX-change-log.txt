@@ -45,6 +45,8 @@ Símbolo : Significado
 
 14/07/2025
 -- ACBrNFSeXServicos --
+[*] #TK-7309: A cidade Rio Fortuna/SC mudou de provedor, agora é Betha versão 1.00
+   Por: João Carlos Gielow
 [+] #TK-7342: Incluída a cidade Virmond/PR, o provedor é Equiplano.
    Por: Desenvolvimento GDL Sistemas
 

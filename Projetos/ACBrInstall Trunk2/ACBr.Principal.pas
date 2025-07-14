@@ -554,7 +554,7 @@ begin
   ckbRemoverCastWarnings.Checked    := OpcoesCompilacao.RemoverStringCastWarnings;
   chkExportadorFastSVG.Checked      := OpcoesCompilacao.UsarExportadorFRSVG;
   chkExportadorFastPNG.Checked      := OpcoesCompilacao.UsarExportadorFRPNG;
-  ckbUsarACBrXmlDocument.Checked    := OpcoesCompilacao.UsarACBrXmlDocument;
+  ckbUsarACBrXmlDocument.Checked    := True;//OpcoesCompilacao.UsarACBrXmlDocument;
 end;
 
 procedure TfrmPrincipal.btnDesmarcarTodasClick(Sender: TObject);

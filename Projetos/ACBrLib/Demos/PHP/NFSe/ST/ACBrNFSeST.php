@@ -181,7 +181,7 @@ function Emitir($ffi, $ALote, $AModoEnvio, &$retornoGeral)
     $esTamanho = FFI::new("long");
     $esTamanho->cdata = 9048;
     $sMensagem = FFI::new("char[535]");
-    $retorno = $ffi->NFSE_Emitir($ALote, $AModoEnvio, "0", $sMensagem, FFI::addr($esTamanho));
+    $retorno = $ffi->NFSE_Emitir($ALote, $AModoEnvio, 0, $sMensagem, FFI::addr($esTamanho));
 
     if ($retorno !== 0) {
         if (UltimoRetorno($ffi, $retorno, $sMensagem, "Erro ao emitir NFSe", 1) != 0)

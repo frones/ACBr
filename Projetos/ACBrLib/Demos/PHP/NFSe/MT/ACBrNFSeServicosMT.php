@@ -489,6 +489,36 @@ try {
         }
     }
 
+    if ($metodo == "ImprimirPDF") {
+        $processo = "NFSE_CarregarIniOuXml";
+        $resultado = CarregaIniOuXml($handle, $ffi, $_POST['AeArquivoXml']);
+
+        if ($resultado === "ok") {
+            $processo = "ImprimirPDF";
+
+            if (ImprimirPDF($handle, $ffi) != 0) {
+                exit;
+            }
+
+            $resultado = "ok";
+        }
+    }
+
+    if ($metodo == "Imprimir") {
+        $processo = "NFSE_CarregarIniOuXml";
+        $resultado = CarregaIniOuXml($handle, $ffi, $_POST['AeArquivoXml']);
+
+        if ($resultado === "ok") {
+            $processo = "Imprimir";
+
+            if (Imprimir($handle, $ffi, $_POST['nNumCopias'], $_POST['cCancelada']) != 0) {
+                exit;
+            }
+
+            $resultado = "ok";
+        }
+    }
+
     if ($metodo == "SubstituirNFSe") {
         $processo = "NFSE_CarregarIniOuXml";
         $resultado = CarregaIniOuXml($handle, $ffi, $_POST['AeArquivoXmlOuIni']);

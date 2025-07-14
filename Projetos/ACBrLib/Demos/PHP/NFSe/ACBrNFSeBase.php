@@ -703,6 +703,7 @@
                             <input type="button" id="LinkNFSe" value="Link NFSe">
                             <input type="button" id="GerarToken" value="Gerar Token">
                             <input type="button" id="SalvarPDF" value="Salvar DANFSe (Stream)">
+                            <input type="button" id="ImprimirPDF" value="Imprimir DANFSe PDF">
                             <input type="button" id="LimparRepostas" value="Limpar Respostas">
                         </div>
                     </div>
@@ -1128,6 +1129,15 @@
             selecionarArquivo(".xml", function(AeArquivoXml) {
                 chamaAjaxEnviar({
                     metodo: "SalvarPDF",
+                    AeArquivoXml: AeArquivoXml
+                });
+            });
+        });
+
+        $('#ImprimirPDF').on('click', function() {
+            selecionarArquivo(".xml", function(AeArquivoXml) {
+                chamaAjaxEnviar({
+                    metodo: "ImprimirPDF",
                     AeArquivoXml: AeArquivoXml
                 });
             });

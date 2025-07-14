@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/07/2025
+-- ACBrNFSeBase.php,ACBrNFSeMT.h,ACBrNFSeMT.php,ACBrNFSeServicosMT.php,ACBrNFSeST.h,ACBrNFSeST.php --
+[*] #TK-7345 - Corrigida assinatura do método NFSE_Emitir alterando o parâmetro aImprimir de char para long.
+    Por: Renato Rubinho
+
 10/07/2025
 -- ACBrLibNFSeBase, ACBrLibNFSeConsts --
 [*] #TK-7323 - Não carrega as RPS - função NFSE_CarregarLoteXML

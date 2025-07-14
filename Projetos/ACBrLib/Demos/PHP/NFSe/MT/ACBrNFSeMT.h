@@ -52,7 +52,7 @@ int NFSE_ObterIni(const uintptr_t libHandle, long AIndex, char* sResposta, long*
 int NFSE_GravarIni(const uintptr_t libHandle, long AIndex, const char* eNomeArquivo, const char* ePathArquivo);
 int NFSE_LimparLista(const uintptr_t libHandle);
 int NFSE_ObterCertificados(const uintptr_t libHandle, char* sResposta, long* esTamanho);
-int NFSE_Emitir(const uintptr_t libHandle, const char* aLote, long aModoEnvio, char* aImprimir, char* sResposta, long* esTamanho);
+int NFSE_Emitir(const uintptr_t libHandle, const char* aLote, long aModoEnvio, long aImprimir, char* sResposta, long* esTamanho);
 int NFSE_Cancelar(const uintptr_t libHandle, const char* aInfCancelamentoNFSe, char* sResposta, long* esTamanho);
 int NFSE_SubstituirNFSe(const uintptr_t libHandle, const char* aNumeroNFSe, const char* aSerieNFSe, const char* aCodigoCancelamento, const char* aMotivoCancelamento, const char* aNumeroLote, const char* aCodigoVerificacao, const char* sResposta, long* esTamanho);
 int NFSE_LinkNFSe(const uintptr_t libHandle, const char* aNumeroNFSe, const char* aCodigoVerificacao, const char* aChaveAcesso, const char* aValorServico, const char* sResposta, long* esTamanho);
@@ -66,7 +66,7 @@ int NFSE_ConsultarNFSePorPeriodo(const uintptr_t libHandle, double aDataInicial,
 int NFSE_ConsultarNFSePorFaixa(const uintptr_t libHandle, const char* aNumeroInicial, const char* aNumeroFinal, long aPagina, char* sResposta, long* esTamanho);
 int NFSE_ConsultarNFSeGenerico(const uintptr_t libHandle, const char* aInfConsultaNFSe, char* sResposta, long* esTamanho);
 int NFSE_ConsultarLinkNFSe(const uintptr_t libHandle, const char* aInfConsultaLinkNFSe, char* sResposta, long* esTamanho);
-int NFSE_EnviarEmail(const uintptr_t libHandle, const char* ePara, const char* eXmlNFSe, char* AEnviaPDF, const char* eAssunto, const char* eCC, const char* eAnexos, const char* eMensagem);
+int NFSE_EnviarEmail(const uintptr_t libHandle, const char* ePara, const char* eXmlNFSe, long AEnviaPDF, const char* eAssunto, const char* eCC, const char* eAnexos, const char* eMensagem);
 int NFSE_Imprimir(const uintptr_t libHandle, const char* cImpressora, long nNumCopias, const char* bGerarPDF, const char* bMostrarPreview, const char* cCancelada);
 int NFSE_ImprimirPDF(const uintptr_t libHandle);
 int NFSE_SalvarPDF(const uintptr_t libHandle, char* sResposta, long* esTamanho);

@@ -181,7 +181,7 @@ function Emitir($handle, $ffi, $ALote, $AModoEnvio, &$retornoGeral)
     $esTamanho = FFI::new("long");
     $esTamanho->cdata = 9048;
     $sMensagem = FFI::new("char[535]");
-    $retorno = $ffi->NFSE_Emitir($handle->cdata, $ALote, $AModoEnvio, "0", $sMensagem, FFI::addr($esTamanho));
+    $retorno = $ffi->NFSE_Emitir($handle->cdata, $ALote, $AModoEnvio, 0, $sMensagem, FFI::addr($esTamanho));
 
     if ($retorno !== 0) {
         if (UltimoRetorno($handle, $ffi, $retorno, $sMensagem, "Erro ao emitir NFSe", 1) != 0)
@@ -382,7 +382,7 @@ function SalvarPDF($handle, $ffi, &$retornoGeral)
 {
     $esTamanho = FFI::new("long");
     $esTamanho->cdata = 144768;
-    $sMensagem = FFI::new("char[535]");
+    $sMensagem = FFI::new("char[144768]");
     $retorno = $ffi->NFSE_SalvarPDF($handle->cdata, $sMensagem, FFI::addr($esTamanho));
 
     if ($retorno !== 0) {
@@ -391,6 +391,36 @@ function SalvarPDF($handle, $ffi, &$retornoGeral)
     }
 
     $retornoGeral = FFI::string($sMensagem);
+
+    return 0;
+}
+
+function ImprimirPDF($handle, $ffi)
+{
+    $retorno = $ffi->NFSE_ImprimirPDF($handle->cdata);
+    $sMensagem = FFI::new("char[144768]");
+
+    if ($retorno !== 0) {
+        if (UltimoRetorno($handle, $ffi, $retorno, $sMensagem, "Erro ao imprimir o pdf", 1) != 0)
+            return -10;
+    }
+
+    return 0;
+}
+
+function Imprimir($handle, $ffi, $nNumCopias, $cCancelada)
+{
+    $cImpressora = "";
+    $bGerarPDF = "1";
+    $bMostrarPreview = "0";
+    
+    $retorno = $ffi->NFSE_Imprimir($handle->cdata, $cImpressora, $nNumCopias, $bGerarPDF, $bMostrarPreview, $cCancelada);
+    $sMensagem = FFI::new("char[144768]");
+
+    if ($retorno !== 0) {
+        if (UltimoRetorno($handle, $ffi, $retorno, $sMensagem, "Erro ao imprimir o pdf", 1) != 0)
+            return -10;
+    }
 
     return 0;
 }

@@ -52,7 +52,7 @@ int NFSE_ObterIni(long AIndex, char* sResposta, long* esTamanho);
 int NFSE_GravarIni(long AIndex, const char* eNomeArquivo, const char* ePathArquivo);
 int NFSE_LimparLista();
 int NFSE_ObterCertificados(char* sResposta, long* esTamanho);
-int NFSE_Emitir(const char* aLote, long aModoEnvio, char* aImprimir, char* sResposta, long* esTamanho);
+int NFSE_Emitir(const char* aLote, long aModoEnvio, long aImprimir, char* sResposta, long* esTamanho);
 int NFSE_Cancelar(const char* aInfCancelamentoNFSe, char* sResposta, long* esTamanho);
 int NFSE_SubstituirNFSe(const char* aNumeroNFSe, const char* aSerieNFSe, const char* aCodigoCancelamento, const char* aMotivoCancelamento, const char* aNumeroLote, const char* aCodigoVerificacao, const char* sResposta, long* esTamanho);
 int NFSE_LinkNFSe(const char* aNumeroNFSe, const char* aCodigoVerificacao, const char* aChaveAcesso, const char* aValorServico, const char* sResposta, long* esTamanho);
@@ -66,7 +66,7 @@ int NFSE_ConsultarNFSePorPeriodo(double aDataInicial, double aDataFinal, long aP
 int NFSE_ConsultarNFSePorFaixa(const char* aNumeroInicial, const char* aNumeroFinal, long aPagina, char* sResposta, long* esTamanho);
 int NFSE_ConsultarNFSeGenerico(const char* aInfConsultaNFSe, char* sResposta, long* esTamanho);
 int NFSE_ConsultarLinkNFSe(const char* aInfConsultaLinkNFSe, char* sResposta, long* esTamanho);
-int NFSE_EnviarEmail(const char* ePara, const char* eXmlNFSe, char* AEnviaPDF, const char* eAssunto, const char* eCC, const char* eAnexos, const char* eMensagem);
+int NFSE_EnviarEmail(const char* ePara, const char* eXmlNFSe, long AEnviaPDF, const char* eAssunto, const char* eCC, const char* eAnexos, const char* eMensagem);
 int NFSE_Imprimir(const char* cImpressora, long nNumCopias, const char* bGerarPDF, const char* bMostrarPreview, const char* cCancelada);
 int NFSE_ImprimirPDF();
 int NFSE_SalvarPDF(char* sResposta, long* esTamanho);

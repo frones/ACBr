@@ -1498,7 +1498,7 @@ uses
   {$IfDef FPC}
    fpjson, jsonparser, jsonscanner,
   {$Else}
-    {$IFDEF DELPHIXE2_UP}JSON,{$ENDIF}
+    {$IFDEF DELPHIXE6_UP}JSON,{$ENDIF}
   {$EndIf}
   TypInfo, Clipbrd, IniFiles, DateUtils, synacode, synautil, pcnConversao,
   ACBrDelphiZXingQRCode, ACBrImage, ACBrValidador, ACBrPIXUtil, ACBrConsts,
@@ -5930,7 +5930,7 @@ var
   jdata: TJSONData;
   ms: TMemoryStream;
 {$ELSE}
-  {$IFDEF DELPHIXE2_UP}
+  {$IFDEF DELPHIXE6_UP}
   var
     wJsonValue: TJSONValue;
   {$ENDIF}
@@ -5955,7 +5955,7 @@ begin
         jdata.Free;
     end;
     {$ELSE}
-      {$IFDEF DELPHIXE2_UP}
+      {$IFDEF DELPHIXE6_UP}
       wJsonValue := TJSONObject.ParseJSONValue(AJSON);
       try
         if Assigned(wJsonValue) then

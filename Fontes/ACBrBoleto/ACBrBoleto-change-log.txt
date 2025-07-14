@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/07/2025
+-- ACBrBancoBanrisul --
+[+] #TK-6823 Implementada emissão de boleto Híbrido do banco 041-Banrisul CNAB240
+    Por: Mateus Brunelli
+
 04/07/2025
 -- ACBrBancoVortx, ACBrBoleto, ACBr_Boleto, ACBr_Boleto.dpk, ACBr_Boleto.lpk --
 [+] #TK-5773 Implementado banco Vortx

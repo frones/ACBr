@@ -89,6 +89,9 @@ contains
   ACBrTEFAPITPag in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPITPag.pas',
   ACBrTEFTPagAPI in '..\..\..\Fontes\ACBrTEFD\ACBrTEFTPagAPI.pas',
   ACBrTEFAPIPayKit in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIPayKit.pas',
-  ACBrTEFPayKitAPI in '..\..\..\Fontes\ACBrTEFD\ACBrTEFPayKitAPI.pas';
+  ACBrTEFPayKitAPI in '..\..\..\Fontes\ACBrTEFD\ACBrTEFPayKitAPI.pas',
+  ACBrTEFAPIDirectPin in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIDirectPin.pas',
+  ACBrTEFDirectPinAPI in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDirectPinAPI.pas';
+
 
 end.

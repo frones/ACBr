@@ -215,26 +215,32 @@ procedure TACBrPSPSantander.QuandoReceberRespostaEndPoint(const aEndPoint,
   aURL, aMethod: String; var aResultCode: Integer; var aRespostaHttp: AnsiString);
 begin
   // Santander responde OK a esse EndPoint, de forma diferente da especificada
-  if (UpperCase(AMethod) = ChttpMethodPOST) and (AEndPoint = cEndPointCob) and (AResultCode = HTTP_OK) then
-    AResultCode := HTTP_CREATED;
+  if ((AEndPoint = cEndPointCob) or (AEndPoint = cEndPointCobV)) then
+  begin
+    if (UpperCase(AMethod) = ChttpMethodPOST) and (AResultCode = HTTP_OK) then
+      AResultCode := HTTP_CREATED;
 
-  // Corrige JSON incorreto nas respostas em ambiente de homologação
-  if (ACBrPixCD.Ambiente = ambTeste) then
-    aRespostaHttp := TratarRespostaSandbox(aRespostaHttp);
+    // Corrige JSON incorreto nas respostas em ambiente de homologação
+    if (ACBrPixCD.Ambiente = ambTeste) and (UpperCase(AMethod) = ChttpMethodPOST) then
+      aRespostaHttp := TratarRespostaSandbox(aRespostaHttp);
+  end;
 end;
 
 procedure TACBrPSPSantander.QuandoAcessarEndPoint(const aEndPoint: String; var aURL: String; var aMethod: String);
 begin
-  // Santander não possui POST para endpoint /cob
-  if (LowerCase(aEndPoint) = cEndPointCob) and (UpperCase(aMethod) = ChttpMethodPOST) then
+  // Santander não possui POST para endpoints /cob e /cobv
+  if (LowerCase(aEndPoint) = cEndPointCob) or (LowerCase(aEndPoint) = cEndPointCobV) then
   begin
-    aMethod := ChttpMethodPUT;
-    aURL := URLComDelimitador(aURL) + CriarTxId;
-  end;
+    if (UpperCase(aMethod) = ChttpMethodPOST) then
+    begin
+      aMethod := ChttpMethodPUT;
+      aURL := URLComDelimitador(aURL) + CriarTxId;
+    end;
 
-  // Ambiente de homologação do Santander aceita apenas método POST
-  if (ACBrPixCD.Ambiente = ambTeste) then
-    aMethod := ChttpMethodPOST;
+    // Ambiente de homologação do Santander aceita apenas método POST
+    if (ACBrPixCD.Ambiente = ambTeste) and (UpperCase(aMethod) = ChttpMethodPUT) then
+      aMethod := ChttpMethodPOST;
+  end;
   
   // Santander usa v2 para Revisar Cobrança (metodo PATCH)
   if (aMethod = ChttpMethodPATCH) and ((aEndPoint = cEndPointCob) or (aEndPoint = cEndPointCobV)) then

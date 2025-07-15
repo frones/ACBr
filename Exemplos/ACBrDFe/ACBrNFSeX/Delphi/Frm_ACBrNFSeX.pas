@@ -2138,7 +2138,7 @@ procedure TfrmACBrNFSe.btnConsultarLinkNFSeClick(Sender: TObject);
 var
   InfConsultaLinkNFSe: TInfConsultaLinkNFSe;
   xTitulo, xCompetencia, xNumeroNFSe, xSerieNFSe,
-  xNumeroRps, xSerieRps, xTomador: string;
+  xNumeroRps, xSerieRps, xTomador, xPagina: string;
 begin
   xTitulo := 'Consultar Link da NFSe';
 
@@ -2179,6 +2179,10 @@ begin
       exit;
   end;
 
+  xPagina := '1';
+  if not(InputQuery(xTitulo, 'Página da consulta:', xPagina)) then
+    exit;
+
   InfConsultaLinkNFSe := TInfConsultaLinkNFSe.Create;
   try
     InfConsultaLinkNFSe.Competencia := StrToDateDef(xCompetencia, 0);
@@ -2187,6 +2191,7 @@ begin
     InfConsultaLinkNFSe.NumeroRps := StrToIntDef(xNumeroRps, 0);
     InfConsultaLinkNFSe.SerieRps := xSerieRps;
     InfConsultaLinkNFSe.CnpjCpfToma := xTomador;
+    InfConsultaLinkNFSe.Pagina := StrToIntDef(xPagina, 1);
 
     ACBrNFSeX1.ConsultarLinkNFSe(InfConsultaLinkNFSe);
 

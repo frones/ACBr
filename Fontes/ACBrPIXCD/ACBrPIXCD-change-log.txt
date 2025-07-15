@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2025
+-- ACBrPIXPSPSantander --
+[-] Correção de problemas na utilização do PSP Santander em ambiente de homologação.
+    por: Elias César
+
 03/07/2025
 -- ACBrPIXPSPPixPDV, ACBrPixSchemasPixPDV --
 [*] Ajustes referentes à migração do PSP Matera para PixNoPDV.

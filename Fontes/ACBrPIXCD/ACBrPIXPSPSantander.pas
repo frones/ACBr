@@ -74,6 +74,7 @@ type
     fRefreshURL: String;
     function GetConsumerKey: String;
     function GetConsumerSecret: String;
+    function TratarRespostaSandbox(const aRespostaHttp: String): String;
     procedure SetConsumerKey(AValue: String);
     procedure SetConsumerSecret(AValue: String);
     procedure QuandoReceberRespostaEndPoint(const aEndPoint, aURL, aMethod: String;
@@ -86,7 +87,6 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     procedure Autenticar; override;
-    procedure RenovarToken; override;
   published
     property APIVersion;
     property ConsumerKey: String read GetConsumerKey write SetConsumerKey;
@@ -97,7 +97,9 @@ implementation
 
 uses
   synautil, DateUtils,
+  ACBrPIXSchemasCobsConsultadas,
   ACBrJSON, ACBrPIXUtil,
+  ACBrUtil.Base,
   ACBrUtil.FilesIO,
   ACBrUtil.Strings,
   ACBrUtil.DateTime;
@@ -169,12 +171,6 @@ begin
        [Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 
-procedure TACBrPSPSantander.RenovarToken;
-begin
-  // TODO: ??
-  inherited RenovarToken;
-end;
-
 function TACBrPSPSantander.GetConsumerKey: String;
 begin
   Result := ClientID;
@@ -183,6 +179,24 @@ end;
 function TACBrPSPSantander.GetConsumerSecret: String;
 begin
   Result := ClientSecret;
+end;
+
+function TACBrPSPSantander.TratarRespostaSandbox(const aRespostaHttp: String): String;
+var
+  wCobs: TACBrPIXCobsConsultadas;
+begin
+  Result := aRespostaHttp;
+  if EstaVazio(aRespostaHttp) then
+    Exit;
+
+  wCobs := TACBrPIXCobsConsultadas.Create;
+  try
+    wCobs.AsJSON := aRespostaHttp;
+    if NaoEstaZerado(wCobs.cobs.Count) then
+      Result := wCobs.cobs[0].AsJSON;
+  finally
+    wCobs.Free;
+  end;
 end;
 
 procedure TACBrPSPSantander.SetConsumerKey(AValue: String);
@@ -203,6 +217,10 @@ begin
   // Santander responde OK a esse EndPoint, de forma diferente da especificada
   if (UpperCase(AMethod) = ChttpMethodPOST) and (AEndPoint = cEndPointCob) and (AResultCode = HTTP_OK) then
     AResultCode := HTTP_CREATED;
+
+  // Corrige JSON incorreto nas respostas em ambiente de homologação
+  if (ACBrPixCD.Ambiente = ambTeste) then
+    aRespostaHttp := TratarRespostaSandbox(aRespostaHttp);
 end;
 
 procedure TACBrPSPSantander.QuandoAcessarEndPoint(const aEndPoint: String; var aURL: String; var aMethod: String);
@@ -213,6 +231,10 @@ begin
     aMethod := ChttpMethodPUT;
     aURL := URLComDelimitador(aURL) + CriarTxId;
   end;
+
+  // Ambiente de homologação do Santander aceita apenas método POST
+  if (ACBrPixCD.Ambiente = ambTeste) then
+    aMethod := ChttpMethodPOST;
   
   // Santander usa v2 para Revisar Cobrança (metodo PATCH)
   if (aMethod = ChttpMethodPATCH) and ((aEndPoint = cEndPointCob) or (aEndPoint = cEndPointCobV)) then
@@ -244,7 +266,7 @@ end;
 
 function TACBrPSPSantander.VerificarSeIncluiPFX(const Method, AURL: String): Boolean;
 begin
-  Result := (inherited VerificarSeIncluiPFX(Method, AURL));
+  Result := (ACBrPixCD.Ambiente <> ambTeste) and (inherited VerificarSeIncluiPFX(Method, AURL));
 end;
 
 end.

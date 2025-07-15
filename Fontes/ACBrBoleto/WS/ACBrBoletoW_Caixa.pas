@@ -432,8 +432,7 @@ begin
       GerarFicha_Compensacao;
       GerarRecibo_Pagador;
 
-      if not Boleto.Cedente.CedenteWS.IndicadorPix then
-        GerarPagamento;
+      GerarPagamento;
 
       Gerador.wGrupo('/TITULO');
     end;
@@ -652,6 +651,8 @@ begin
   if Assigned(ATitulo) then
     with ATitulo do
     begin
+      if QtdePagamentoParcial = 0 then
+        QtdePagamentoParcial := 1;
       Gerador.wGrupo('PAGAMENTO');
       Gerador.wCampo(tcInt, '#40', 'QUANTIDADE_PERMITIDA', 01, 02, 0, QtdePagamentoParcial, DSC_QTDE_PAGAMENTO_PARCIAL);
       Gerador.wCampo(tcStr, '#41', 'TIPO                ', 01, 20, 1, TipoPagamentoToStr(TipoPagamento), DSC_TIPO_PAGAMENTO);

@@ -74,7 +74,8 @@ type
     fRefreshURL: String;
     function GetConsumerKey: String;
     function GetConsumerSecret: String;
-    function TratarRespostaSandbox(const aRespostaHttp: String): String;
+    function TratarRespostaGetCobSandbox(const aRespostaHttp: String): String;
+    function TratarRespostaGetPixSandbox(const aRespostaHttp: String): String;
     procedure SetConsumerKey(AValue: String);
     procedure SetConsumerSecret(AValue: String);
     procedure QuandoReceberRespostaEndPoint(const aEndPoint, aURL, aMethod: String;
@@ -98,6 +99,7 @@ implementation
 uses
   synautil, DateUtils,
   ACBrPIXSchemasCobsConsultadas,
+  ACBrPIXSchemasPixConsultados,
   ACBrJSON, ACBrPIXUtil,
   ACBrUtil.Base,
   ACBrUtil.FilesIO,
@@ -181,7 +183,7 @@ begin
   Result := ClientSecret;
 end;
 
-function TACBrPSPSantander.TratarRespostaSandbox(const aRespostaHttp: String): String;
+function TACBrPSPSantander.TratarRespostaGetCobSandbox(const aRespostaHttp: String): String;
 var
   wCobs: TACBrPIXCobsConsultadas;
 begin
@@ -196,6 +198,24 @@ begin
       Result := wCobs.cobs[0].AsJSON;
   finally
     wCobs.Free;
+  end;
+end;
+
+function TACBrPSPSantander.TratarRespostaGetPixSandbox(const aRespostaHttp: String): String;
+var
+  wPix: TACBrPIXConsultados;
+begin
+  Result := aRespostaHttp;
+  if EstaVazio(aRespostaHttp) then
+    Exit;
+
+  wPix := TACBrPIXConsultados.Create;
+  try
+    wPix.AsJSON := aRespostaHttp;
+    if NaoEstaZerado(wPix.pix.Count) then
+      Result := wPix.pix[0].AsJSON;
+  finally
+    wPix.Free;
   end;
 end;
 
@@ -222,26 +242,28 @@ begin
 
     // Corrige JSON incorreto nas respostas em ambiente de homologação
     if (ACBrPixCD.Ambiente = ambTeste) and (UpperCase(AMethod) = ChttpMethodPOST) then
-      aRespostaHttp := TratarRespostaSandbox(aRespostaHttp);
+      aRespostaHttp := TratarRespostaGetCobSandbox(aRespostaHttp);
   end;
+
+  if (ACBrPixCD.Ambiente = ambTeste) and (AEndPoint = cEndPointPix) and
+     (UpperCase(AMethod) = ChttpMethodGet) and (Pos('inicio', aURL) = 0) then
+    aRespostaHttp := TratarRespostaGetPixSandbox(aRespostaHttp);
 end;
 
 procedure TACBrPSPSantander.QuandoAcessarEndPoint(const aEndPoint: String; var aURL: String; var aMethod: String);
 begin
   // Santander não possui POST para endpoints /cob e /cobv
-  if (LowerCase(aEndPoint) = cEndPointCob) or (LowerCase(aEndPoint) = cEndPointCobV) then
+  if ((LowerCase(aEndPoint) = cEndPointCob) or (LowerCase(aEndPoint) = cEndPointCobV)) and
+     (UpperCase(aMethod) = ChttpMethodPOST) then
   begin
-    if (UpperCase(aMethod) = ChttpMethodPOST) then
-    begin
-      aMethod := ChttpMethodPUT;
-      aURL := URLComDelimitador(aURL) + CriarTxId;
-    end;
-
-    // Ambiente de homologação do Santander aceita apenas método POST
-    if (ACBrPixCD.Ambiente = ambTeste) and (UpperCase(aMethod) = ChttpMethodPUT) then
-      aMethod := ChttpMethodPOST;
+    aMethod := ChttpMethodPUT;
+    aURL := URLComDelimitador(aURL) + CriarTxId;
   end;
-  
+
+  // Ambiente de homologação do Santander não aceita o metodo PUT, apenas o POST
+  if (ACBrPixCD.Ambiente = ambTeste) and (UpperCase(aMethod) = ChttpMethodPUT) then
+    aMethod := ChttpMethodPOST;
+
   // Santander usa v2 para Revisar Cobrança (metodo PATCH)
   if (aMethod = ChttpMethodPATCH) and ((aEndPoint = cEndPointCob) or (aEndPoint = cEndPointCobV)) then
     aURL := StringReplace(aURL, cSantanderPathApiPIXv1, cSantanderPathApiPIXv2, [rfReplaceAll]);

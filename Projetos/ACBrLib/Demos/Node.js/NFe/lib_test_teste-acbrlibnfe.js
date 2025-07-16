@@ -35,10 +35,10 @@
 
 const path = require('path');
 const koffi = require('koffi');
-
+const os = require('os');
 const TAMANHO_BUFFER = 1024;
 
-var pathDllACBrLibNFe = path.join(__dirname, 'ACBrNFe64.dll');
+var pathDllACBrLibNFe = path.join(__dirname, os.platform() === 'win32' ? 'ACBrNFe64.dll' : 'libacbrnfe64.so');
 var pathXML = path.join(__dirname, 'chave-nfe.xml');
 
 var eArqConfig = path.join(__dirname, 'acbrlib.ini');
@@ -127,6 +127,8 @@ function getNFe() {
     inicio = libm.NFE_ConfigGravarValor('NFe', 'PathSchemas', path.resolve(__dirname, 'Schemas', 'NFe'));
     inicio  = libm.NFE_ConfigGravarValor('Principal','LogPath',__dirname)
     inicio = libm.NFE_ConfigGravarValor('Principal','LogNivel','4')
+
+    libm.NFE_ConfigGravar(eArqConfig)
     
     console.log(`Set Configurações ${inicio}`);
 

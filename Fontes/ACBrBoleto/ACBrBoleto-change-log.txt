@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/07/2025
+-- ACBrBancoSofisaSantander --
+[*] #TK-7255 Ajustes no banco cobBancoSofisaSantander para NumeroDocumento Somente Letras e Números, NomeSacado com 30 bytes e 10 espaços na sequência
+    Por: Daniel de Morais InfoCotidiano
+
 14/07/2025
 -- ACBrBancoBanrisul --
 [+] #TK-6823 Implementada emissão de boleto Híbrido do banco 041-Banrisul CNAB240

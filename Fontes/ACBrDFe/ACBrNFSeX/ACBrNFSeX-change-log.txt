@@ -45,6 +45,26 @@ Símbolo : Significado
 
 17/07/2025
 -- ACBrNFSeXServicos --
+[+] #TK-7362: Cidades incluídas: Acaua/PI, Agricolandia/PI, Alagoinha do Piaui/PI, 
+              Altos/PI, Baixa Grande do Ribeiro/PI, Bela Vista do Piaui/PI, 
+              Belem do Piaui/PI, Betania do Piaui/PI, Bom Principio do Piaui/PI, 
+              Buriti Dos Lopes/PI, Cajueiro da Praia/PI, Caldeirao Grande do Piaui/PI, 
+              Campo Alegre do Fidalgo/PI, Capitao de Campos/PI, 
+              Capitao Gervasio Oliveira/PI, Caracol/PI, Caraubas do Piaui/PI, Cocal/PI, 
+              Cocal dos Alves/PI, Coronel Jose Dias/PI, Curral Novo do Piaui/PI, 
+              Demerval Lobao/PI, Dirceu Arcoverde/PI, Dom Expedito Lopes/PI, 
+              Elesbao Veloso/PI, Francinopolis/PI, Francisco Ayres/PI, 
+              Francisco Macedo/PI, Gilbues/PI, Ilha Grande/PI, Ipiranga do Piaui/PI, 
+              Jacobina do Piaui/PI, Jardim do Mulato/PI, Joaquim Pires/PI, 
+              Jose de Freitas/PI, Julio Borges/PI, Lagoa do Barro do Piaui/PI, 
+              Lagoa do Sitio/PI, Marcolandia/PI, Miguel Alves/PI, 
+              Novo Oriente do Piaui/PI, Padre Marcos/PI, Parnagua/PI, Pedro II/PI, 
+              Pimenteiras/PI, Porto Alegre do Piaui/PI, Queimada Nova/PI, 
+              Ribeira do Piaui/PI, Santa Filomena/PI, Santa Rosa do Piaui/PI, 
+              Sao Goncalo do Gurgueia/PI, Sao Goncalo do Piaui/PI, 
+              Sao Joao do Piaui/PI, Sao Miguel do Tapuio/PI, Sao Raimundo Nonato/PI, 
+              Uniao/PI, Wall Ferraz/PI.
+   Por: Anderson Grolli
 [*] #TK-7349: A cidade Guatambu/SC mudou para versão 2.04 e a URL, o provedor continua
     o mesmo IPM.
    Por: Lucas atz

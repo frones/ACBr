@@ -36,6 +36,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/07/2025
+-- ACBrConsultaCNPJ, ACBrConsultaCNPJ.WS.MinhaReceita --
+[+] TK-7332 - ACBrConsultaCNPJ - Adicionando provedor MinhaReceita ao componente - https://www.projetoacbr.com.br/forum/topic/84179-acbrconsultacnpj-provedor-minhareceita/
+  Por: leootoni / Renato Rubinho
+
 28/05/2025
 -- ACBrWinINetReqResp --
 [*] Melhoria em 'TACBrWinINetReqResp.CloseConnection', para limpar dados e

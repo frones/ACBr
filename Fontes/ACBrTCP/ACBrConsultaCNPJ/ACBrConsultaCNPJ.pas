@@ -49,7 +49,7 @@ uses
 type
   TACBrOnSolicitaCaptchaHTTP = procedure( var AHtml : String ) of object ;
   EACBrConsultaCNPJException = class ( Exception );
-  TACBrCNPJProvedorWS = (cwsNenhum, cwsBrasilAPI, cwsReceitaWS, cwsCNPJWS);
+  TACBrCNPJProvedorWS = (cwsNenhum, cwsBrasilAPI, cwsReceitaWS, cwsCNPJWS, cwsMinhaReceita);
 
   { TACBrConsultaCNPJ }
   {$IFDEF RTL230_UP}
@@ -166,7 +166,8 @@ uses
   ACBrUtil.FilesIO,
   ACBrConsultaCNPJ.WS.ReceitaWS,
   ACBrConsultaCNPJ.WS.BrasilAPI,
-  ACBrConsultaCNPJ.WS.CNPJWS;
+  ACBrConsultaCNPJ.WS.CNPJWS,
+  ACBrConsultaCNPJ.WS.MinhaReceita;
 
 procedure TACBrConsultaCNPJ.Captcha(const Stream: TStream);
 begin
@@ -220,9 +221,10 @@ begin
   if Self.Provedor <> cwsNenhum then
   begin
     case Self.Provedor of
-      cwsReceitaWS : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSReceitaWS.Create( ACNPJ, Self.Usuario, Self.Senha, Self.DefasagemMaximo );
-      cwsBrasilAPI : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSBrasilAPI.Create( ACNPJ );
-      cwsCNPJWS    : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSCNPJWS.Create( ACNPJ, Self.Usuario, Self.Senha );
+      cwsReceitaWS    : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSReceitaWS.Create( ACNPJ, Self.Usuario, Self.Senha, Self.DefasagemMaximo );
+      cwsBrasilAPI    : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSBrasilAPI.Create( ACNPJ );
+      cwsCNPJWS       : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSCNPJWS.Create( ACNPJ, Self.Usuario, Self.Senha );
+      cwsMinhaReceita : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSMinhaReceita.Create( ACNPJ );
     end;
 
     try

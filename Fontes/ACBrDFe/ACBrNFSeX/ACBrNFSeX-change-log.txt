@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/07/2025
+-- ACBrNFSeXServicos --
+[*] #TK-7349: A cidade Guatambu/SC mudou para versão 2.04 e a URL, o provedor continua
+    o mesmo IPM.
+   Por: Lucas atz
+
 14/07/2025
 -- ACBrNFSeXServicos --
 [*] #TK-7309: A cidade Rio Fortuna/SC mudou de provedor, agora é Betha versão 1.00

@@ -4,8 +4,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, StdCtrls,
-  ExtCtrls, Buttons, Spin, Grids, ACBrPIXCD, ACBrPIXBase, ACBrBase,
-  ACBrPIXPSPPixPDV, ACBrPIXSchemasPixPDV, ImgList;
+  ExtCtrls, Buttons, Spin, Grids, ACBrPIXCD, ACBrPIXBase,
+  ACBrPIXPSPPixPDV, ACBrPIXSchemasPixPDV, ImgList, ACBrBase;
 
 const
   cMaxConsultas = 36;
@@ -27,10 +27,15 @@ type
 
   TfrPixCDPIXPDV = class(TForm)
     ACBrPixCD1: TACBrPixCD;
+    btRetirada: TBitBtn;
+    btPixPDVSimularPagto: TBitBtn;
+    btPixPDVSimularPagtoLimpar: TBitBtn;
     btCobBacenCopiaECola: TSpeedButton;
+    btQrDinamicoCopiaECola: TSpeedButton;
     btConsultarQRCodeID: TBitBtn;
     btConsultarPeriodo: TBitBtn;
     btCriarCobBacen: TBitBtn;
+    btQrDinamicoCriar: TBitBtn;
     btEstornarQRCode_ID: TBitBtn;
     btFluxoCancelarCobranca: TBitBtn;
     btFluxoCancelarConsulta: TBitBtn;
@@ -51,11 +56,15 @@ type
     cbCobBacenMultaModalidade: TComboBox;
     edCobBacenCompradorDoc: TEdit;
     edCobBacenCompradorNome: TEdit;
+    edQrDinamicoCopiaECola: TEdit;
+    edQrDinamicoMensagem: TEdit;
     edCobBacenDescValor: TEdit;
+    edQrDinamicoMinutos: TSpinEdit;
     edCobBacenJurosValor: TEdit;
     edCobBacenMultaValor: TEdit;
     edCobBacenCopiaECola: TEdit;
     edCobBacenValor: TEdit;
+    edQrDinamicoValor: TEdit;
     edConsultarQRCodeID: TEdit;
     edConsultarPeriodoInicio: TDateTimePicker;
     edConsultarPeriodoFim: TDateTimePicker;
@@ -74,6 +83,9 @@ type
     edPIXPDVSecretKey: TEdit;
     edPIXPDVCnpj: TEdit;
     edPIXPDVToken: TEdit;
+    edPixPDVSimularPagtoQRCodeID: TEdit;
+    edRetiradaValor: TEdit;
+    edRetiradaTarifa: TEdit;
     edTimeOut: TSpinEdit;
     gbCobBacenMulta: TGroupBox;
     gbCobBacenJuros: TGroupBox;
@@ -91,10 +103,14 @@ type
     gbQRCodeConsultar: TGroupBox;
     gbQRCodeEstornar: TGroupBox;
     imCobBacenQRCode: TImage;
+    imQrDinamicoQRCode: TImage;
     imFluxoQRCode: TImage;
     lbAmbiente: TLabel;
+    lbCobBacenMensagem: TLabel;
+    lbCobBacenCopiaECola2: TLabel;
     lbCobBacenDescModalidade: TLabel;
     lbCobBacenDescValor: TLabel;
+    lbCobBacenDiasPagar1: TLabel;
     lbCobBacenJurosModalidade: TLabel;
     lbCobBacenJurosValor: TLabel;
     lbCobBacenMultaModalidade: TLabel;
@@ -104,6 +120,9 @@ type
     lbCobBacenCompradorNome: TLabel;
     lbCobBacenDiasPagar: TLabel;
     lbCobBacenValor: TLabel;
+    lbCobBacenValor1: TLabel;
+    lbRetiradaValor: TLabel;
+    lbRetiradaTarifa: TLabel;
     lbConsultarQRCodeID: TLabel;
     lbConsultarPeriodoInicio: TLabel;
     lbConsultarPeriodoFim: TLabel;
@@ -127,7 +146,11 @@ type
     lbPIXPDVCnpj: TLabel;
     lbPIXPDVToken: TLabel;
     lbTimeOut: TLabel;
+    lbPixPDVQRCodeID: TLabel;
+    mmPixPDVSimularPagto: TMemo;
     mmResposta: TMemo;
+    pnPixPDVSimularPagtoLimpar: TPanel;
+    pnPixPDVSimularPagto: TPanel;
     pgConsultar: TPageControl;
     pnFluxoCopiaECola: TPanel;
     pnFluxoDiv3: TPanel;
@@ -172,6 +195,9 @@ type
     sbVerSenhaProxy: TSpeedButton;
     seProxyPorta: TSpinEdit;
     Splitter1: TSplitter;
+    tbRetirada: TTabSheet;
+    tsSimularPagamento: TTabSheet;
+    tsQrDinamico: TTabSheet;
     tmCancelarCobPendente: TTimer;
     tsCriarOrderDueDate: TTabSheet;
     tbConsultarQRCodeID: TTabSheet;
@@ -196,31 +222,10 @@ type
     edConsultarExtratoFim: TDateTimePicker;
     btConsultarExtrato: TBitBtn;
     gdConsultarExtrato: TStringGrid;
-    TabSheet1: TTabSheet;
-    tsQrDinamico: TTabSheet;
-    edQrDinamicoMensagem: TEdit;
-    lbCobBacenMensagem: TLabel;
-    edQrDinamicoValor: TEdit;
-    lbCobBacenValor1: TLabel;
-    edQrDinamicoMinutos: TSpinEdit;
-    lbCobBacenDiasPagar1: TLabel;
-    btQrDinamicoCriar: TBitBtn;
-    imQrDinamicoQRCode: TImage;
-    lbCobBacenCopiaECola2: TLabel;
-    edQrDinamicoCopiaECola: TEdit;
-    pnSimularPagto: TPanel;
-    lbPixPDVQRCodeID: TLabel;
-    edPixPDVSimularPagtoQRCodeID: TEdit;
-    btSimularPagto: TBitBtn;
-    mmPixPDVSimularPagto: TMemo;
-    Panel1: TPanel;
-    btSimularPagtoLimpar: TBitBtn;
-    procedure btCancelarOrderClick(Sender: TObject);
-    procedure btCancelarOrderDueDateClick(Sender: TObject);
     procedure btCobBacenCopiaEColaClick(Sender: TObject);
     procedure btConsultarPeriodoClick(Sender: TObject);
     procedure btCriarCobBacenClick(Sender: TObject);
-    procedure btEstornarQRCde_IDClick(Sender: TObject);
+    procedure btEstornarQRCode_IDClick(Sender: TObject);
     procedure btFluxoCancelarCobrancaClick(Sender: TObject);
     procedure btFluxoCancelarConsultaClick(Sender: TObject);
     procedure btFluxoCancelarPagtoClick(Sender: TObject);
@@ -235,6 +240,11 @@ type
     procedure btFluxoTentarNovamenteClick(Sender: TObject);
     procedure btLerParametrosClick(Sender: TObject);
     procedure btFluxoPagarClick(Sender: TObject);
+    procedure btPixPDVSimularPagtoClick(Sender: TObject);
+    procedure btPixPDVSimularPagtoLimparClick(Sender: TObject);
+    procedure btQrDinamicoCopiaEColaClick(Sender: TObject);
+    procedure btQrDinamicoCriarClick(Sender: TObject);
+    procedure btRetiradaClick(Sender: TObject);
     procedure btSalvarParametrosClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure sbVerSenhaProxyClick(Sender: TObject);
@@ -245,9 +255,6 @@ type
     procedure btnConsultaStatusTokenClick(Sender: TObject);
     procedure btnConsultaSaldoClick(Sender: TObject);
     procedure btConsultarExtratoClick(Sender: TObject);
-    procedure btQrDinamicoCriarClick(Sender: TObject);
-    procedure btSimularPagtoLimparClick(Sender: TObject);
-    procedure btSimularPagtoClick(Sender: TObject);
   private
     fFluxoDados: TDemoPixPDVDados;
 
@@ -301,7 +308,7 @@ uses
   {$EndIf}
   IniFiles, TypInfo, synacode, DateUtils, Clipbrd,
   ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Base, ACBrImage,
-  ACBrUtil.Math, ACBrDelphiZXingQRCode, ACBrUtil.DateTime, ACBrPIXSchemasCobV;
+  ACBrDelphiZXingQRCode, ACBrUtil.DateTime, ACBrPIXSchemasCobV;
 
 {$R *.dfm}
 
@@ -484,7 +491,7 @@ begin
 
       if (fFluxoDados.Status = pqsRefunded) then
         ShowMessage('Pagamento Estornado com Sucesso')
-      else if (fFluxoDados.Status = pqsCreated) then
+      else
         tmConsultarPagto.Enabled := True;  // Estorno pendente? ...Consultar até alterar Status
     end
     else
@@ -759,6 +766,18 @@ begin
         Add('Json: ' + AsJSON);
       end;
     end
+    else if (aSchema is TPixPDVRetirada) then
+    with TPixPDVRetirada(aSchema) do
+    begin
+      Add('transacaoId: ' + TransacaoId);
+      Add('endToEndId: ' + EndToEndId);
+      Add('pspId: ' + PspId);
+      Add('pspNome: ' + PspNome);
+      Add('agencia: ' + Agencia);
+      Add('conta: ' + Conta);
+      Add('contaNome: ' + ContaNome);
+      Add('contaTipo: ' + ContaTipo);
+    end
     else if (aSchema is TPixPDVQrResumo) then
     with TPixPDVQrResumo(aSchema) do
     begin
@@ -877,12 +896,111 @@ begin
     fFluxoDados.QrCode_ID := ACBrPSPPixPDV1.QrGerado.QrCodeId;
     fFluxoDados.QRCode := ACBrPSPPixPDV1.QrGerado.QrCode;
     PintarQRCode(FluxoDados.QRCode, imFluxoQRCode.Picture.Bitmap, qrUTF8BOM);
-    edFluxoQRCodeID.Text := fFluxoDados.QRCode_ID;
+    edFluxoQRCodeID.Text := fFluxoDados.QrCode_ID;
 
     ConsultarCobranca;
     tmConsultarPagto.Enabled := True;
   finally
     HabilitarInterface(True);
+  end;
+end;
+
+procedure TfrPixCDPIXPDV.btPixPDVSimularPagtoClick(Sender: TObject);
+var
+  wTimerPagtoEnabled: Boolean;
+begin
+  mmPixPDVSimularPagto.Lines.Clear;
+
+  if EstaVazio(edPixPDVSimularPagtoQRCodeID.Text) then
+  begin
+    MessageDlg('Preencha a QRCode_ID para Simular o Pagamento', mtError, [mbOK], 0);
+    edPixPDVSimularPagtoQRCodeID.SetFocus;
+    Exit;
+  end;
+
+  if (ACBrPixCD1.Ambiente <> ambTeste) then
+    raise Exception.Create(ACBrStr('Função só disponível em ambiente de Testes'));
+
+  wTimerPagtoEnabled := tmConsultarPagto.Enabled;
+  tmConsultarPagto.Enabled := False;
+  try
+    try
+      ACBrPSPPixPDV1.PostQrSimulaPagar(edPixPDVSimularPagtoQRCodeID.Text);
+      mmPixPDVSimularPagto.Lines.Text := 'Result Code: ' +
+        IntToStr(ACBrPSPPixPDV1.Http.ResultCode) + sLineBreak +
+        ACBrPSPPixPDV1.Http.ResultString;
+    except
+      On E: Exception do
+        mmPixPDVSimularPagto.Lines.Add(E.Message);
+    end;
+  finally
+    tmConsultarPagto.Enabled := wTimerPagtoEnabled;
+  end;
+end;
+
+procedure TfrPixCDPIXPDV.btPixPDVSimularPagtoLimparClick(Sender: TObject);
+begin
+  mmPixPDVSimularPagto.Lines.Clear;
+end;
+
+procedure TfrPixCDPIXPDV.btQrDinamicoCopiaEColaClick(Sender: TObject);
+begin
+  Clipboard.AsText := Trim(edQrDinamicoCopiaECola.Text);
+end;
+
+procedure TfrPixCDPIXPDV.btQrDinamicoCriarClick(Sender: TObject);
+var
+  wQRCode: String;
+begin
+  ACBrPSPPixPDV1.Clear;
+
+  with ACBrPSPPixPDV1.QrDinamico do
+  begin
+    Valor := StrToFloatDef(edQrDinamicoValor.Text, 1);
+    Minutos := edQrDinamicoMinutos.Value;
+    Mensagem := edQrDinamicoMensagem.Text;
+  end;
+
+  try
+    ACBrPSPPixPDV1.PostQrDinamico;
+
+    MostrarRespostaEndPoint('PostQrDinamico', ACBrPSPPixPDV1.QrGerado);
+    wQRCode := Trim(ACBrPSPPixPDV1.QrGerado.QrCode);
+    PintarQRCode(wQRCode, imQrDinamicoQRCode.Picture.Bitmap, qrUTF8BOM);
+    edQrDinamicoCopiaECola.Text := wQRCode;
+  except
+    On E: Exception do
+    begin
+      mmResposta.Lines.Add(E.Message);
+      mmResposta.Lines.Add(ACBrPSPPixPDV1.QrDinamico.AsJSON);
+
+      MostrarRespostaEndPoint('PostQrDinamico', ACBrPSPPixPDV1.Error);
+    end;
+  end;
+end;
+
+procedure TfrPixCDPIXPDV.btRetiradaClick(Sender: TObject);
+var
+  v, t: Double;
+begin
+  v := StrToFloatDef(edRetiradaValor.Text, 0);
+  t := StrToFloatDef(edRetiradaTarifa.Text, 0);
+  if EstaZerado(v) then
+  begin
+    MessageDlg('Preencha a valor a ser retirado!', mtError, [mbOK], 0);
+    edRetiradaValor.SetFocus;
+    Exit;
+  end;
+
+  try
+    ACBrPSPPixPDV1.PostRetirada(v, t);
+    MostrarRespostaEndPoint('Retirada', ACBrPSPPixPDV1.Retirada);
+  except
+    On E: Exception do
+    begin
+      mmResposta.Lines.Add(E.Message);
+      MostrarRespostaEndPoint('Retirada', ACBrPSPPixPDV1.Error);
+    end;
   end;
 end;
 
@@ -927,6 +1045,8 @@ begin
   Clipboard.AsText := Trim(edFluxoQRCodeID.Text);
 end;
 
+{ TfrPixCDPIXPDV - Page Control - EndPoints }
+
 { TfrPixCDPIXPDV - Page Control - EndPoints - Criar Cobrança }
 
 procedure TfrPixCDPIXPDV.btCriarCobBacenClick(Sender: TObject);
@@ -941,7 +1061,7 @@ begin
     Vencimento := edCobBacenVencimento.DateTime;
     Expira := edCobBacenDiasPagar.Value;
     Mensagem := 'Pix Cobranca (Boleto Pix) emitido por PIXPDV !';
-    Documento := FormatDateTime('yymmddhhnnss', Now);
+    Documento := OnlyNumber(TimeToStr(Now));
 
     // Preenchendo dados do Comprador
     Pagador.Nome := edCobBacenCompradorNome.Text;
@@ -955,14 +1075,10 @@ begin
     Pagador.Cep := '18280460';
 
     Desconto.modalidade := TACBrPIXDescontoModalidade(StrToIntDef(Copy(cbCobBacenDescModalidade.Text, 1, 1), 0));
-    if (Ord(Desconto.modalidade) >= 3) then
-      Desconto.valorPerc := StrToFloatDef(edCobBacenDescValor.Text, 0)
-    else
+    Desconto.valorPerc := StrToFloatDef(edCobBacenDescValor.Text, 0);
+    if (Ord(Desconto.modalidade) in [1, 2]) then
       with Desconto.descontosDataFixa.New do
-      begin
         data := IncDay(edCobBacenVencimento.DateTime, -2);
-        valorPerc := StrToFloatDef(edCobBacenDescValor.Text, 0);
-      end;
 
     Juros.modalidade := TACBrPIXJurosModalidade(StrToIntDef(Copy(cbCobBacenJurosModalidade.Text, 1, 1), 0));
     Juros.valorPerc := StrToFloatDef(edCobBacenJurosValor.Text, 0);
@@ -973,36 +1089,25 @@ begin
 
   try
     ACBrPSPPixPDV1.PostQrCobranca;
+
+    MostrarRespostaEndPoint('PostQrCobranca', ACBrPSPPixPDV1.QrGerado);
+    wQRCode := Trim(ACBrPSPPixPDV1.QrGerado.QrCode);
+    PintarQRCode(wQRCode, imCobBacenQRCode.Picture.Bitmap, qrUTF8BOM);
+    edCobBacenCopiaECola.Text := wQRCode;
   except
     On E: Exception do
     begin
       mmResposta.Lines.Add(E.Message);
+      mmResposta.Lines.Add(ACBrPSPPixPDV1.QrCobranca.AsJSON);
+
       MostrarRespostaEndPoint('PostQrCobranca', ACBrPSPPixPDV1.Error);
-      Abort;
     end;
   end;
-
-  MostrarRespostaEndPoint('PostQrCobranca', ACBrPSPPixPDV1.QrCobranca);
-  wQRCode := Trim(ACBrPSPPixPDV1.QrGerado.QrCode);
-  PintarQRCode(wQRCode, imCobBacenQRCode.Picture.Bitmap, qrUTF8BOM);
-  edCobBacenCopiaECola.Text := wQRCode;
 end;
 
 procedure TfrPixCDPIXPDV.btCobBacenCopiaEColaClick(Sender: TObject);
 begin
   Clipboard.AsText := Trim(edCobBacenCopiaECola.Text);
-end;     
-
-{ TfrPixCDPIXPDV - Page Control - EndPoints - Cancelar }
-
-procedure TfrPixCDPIXPDV.btCancelarOrderClick(Sender: TObject);
-begin
-  MessageDlg('Em desenvolvimento', mtInformation, [mbOK], 0);
-end;
-
-procedure TfrPixCDPIXPDV.btCancelarOrderDueDateClick(Sender: TObject);
-begin
-  MessageDlg('Em desenvolvimento', mtInformation, [mbOK], 0);
 end;
 
 { TfrPixCDPIXPDV - Page Control - EndPoints - Consultar - Status token }
@@ -1111,7 +1216,7 @@ end;
 
 { TfrPixCDPIXPDV - Page Control - EndPoints - Estornar }
 
-procedure TfrPixCDPIXPDV.btEstornarQRCde_IDClick(Sender: TObject);
+procedure TfrPixCDPIXPDV.btEstornarQRCode_IDClick(Sender: TObject);
 begin
   if EstaVazio(edEstornarQRCode_ID.Text) then
   begin
@@ -1238,75 +1343,6 @@ begin
     ConsultarCobranca;
   except
     ShowMessage('Erro ao Consultar');
-  end;
-end;
-
-procedure TfrPixCDPIXPDV.btQrDinamicoCriarClick(Sender: TObject);
-var
-  wQRCode: String;
-begin
-  ACBrPSPPixPDV1.Clear;
-
-  with ACBrPSPPixPDV1.QrDinamico do
-  begin
-    Valor := StrToFloatDef(edQrDinamicoValor.Text, 1);
-    Minutos := edQrDinamicoMinutos.Value;
-    Mensagem := edQrDinamicoMensagem.Text;
-  end;
-
-  try
-    ACBrPSPPixPDV1.PostQrDinamico;
-
-    MostrarRespostaEndPoint('PostQrDinamico', ACBrPSPPixPDV1.QrGerado);
-    wQRCode := Trim(ACBrPSPPixPDV1.QrGerado.QrCode);
-    PintarQRCode(wQRCode, imQrDinamicoQRCode.Picture.Bitmap, qrUTF8BOM);
-    edQrDinamicoCopiaECola.Text := wQRCode;
-  except
-    On E: Exception do
-    begin
-      mmResposta.Lines.Add(E.Message);
-      mmResposta.Lines.Add(ACBrPSPPixPDV1.QrDinamico.AsJSON);
-
-      MostrarRespostaEndPoint('PostQrDinamico', ACBrPSPPixPDV1.Error);
-    end;
-  end;
-end;
-
-procedure TfrPixCDPIXPDV.btSimularPagtoLimparClick(Sender: TObject);
-begin
-  mmPixPDVSimularPagto.Lines.Clear;
-end;
-
-procedure TfrPixCDPIXPDV.btSimularPagtoClick(Sender: TObject);
-var
-  wTimerPagtoEnabled: Boolean;
-begin
-  mmPixPDVSimularPagto.Lines.Clear;
-
-  if EstaVazio(edPixPDVSimularPagtoQRCodeID.Text) then
-  begin
-    MessageDlg('Preencha a QRCode_ID para Simular o Pagamento', mtError, [mbOK], 0);
-    edPixPDVSimularPagtoQRCodeID.SetFocus;
-    Exit;
-  end;
-
-  if (ACBrPixCD1.Ambiente <> ambTeste) then
-    raise Exception.Create(ACBrStr('Função só disponível em ambiente de Testes'));
-
-  wTimerPagtoEnabled := tmConsultarPagto.Enabled;
-  tmConsultarPagto.Enabled := False;
-  try
-    try
-      ACBrPSPPixPDV1.PostQrSimulaPagar(edPixPDVSimularPagtoQRCodeID.Text);
-      mmPixPDVSimularPagto.Lines.Text := 'Result Code: ' +
-        IntToStr(ACBrPSPPixPDV1.Http.ResultCode) + sLineBreak +
-        ACBrPSPPixPDV1.Http.ResultString;
-    except
-      On E: Exception do
-        mmPixPDVSimularPagto.Lines.Add(E.Message);
-    end;
-  finally
-    tmConsultarPagto.Enabled := wTimerPagtoEnabled;
   end;
 end;
 

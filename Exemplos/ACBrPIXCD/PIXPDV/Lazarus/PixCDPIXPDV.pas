@@ -27,6 +27,7 @@ type
 
   TfrPixCDPIXPDV = class(TForm)
     ACBrPixCD1: TACBrPixCD;
+    btRetirada: TBitBtn;
     btPixPDVSimularPagto: TBitBtn;
     btPixPDVSimularPagtoLimpar: TBitBtn;
     btCobBacenCopiaECola: TSpeedButton;
@@ -83,6 +84,8 @@ type
     edPIXPDVCnpj: TEdit;
     edPIXPDVToken: TEdit;
     edPixPDVSimularPagtoQRCodeID: TEdit;
+    edRetiradaValor: TEdit;
+    edRetiradaTarifa: TEdit;
     edTimeOut: TSpinEdit;
     gbCobBacenMulta: TGroupBox;
     gbCobBacenJuros: TGroupBox;
@@ -118,6 +121,8 @@ type
     lbCobBacenDiasPagar: TLabel;
     lbCobBacenValor: TLabel;
     lbCobBacenValor1: TLabel;
+    lbRetiradaValor: TLabel;
+    lbRetiradaTarifa: TLabel;
     lbConsultarQRCodeID: TLabel;
     lbConsultarPeriodoInicio: TLabel;
     lbConsultarPeriodoFim: TLabel;
@@ -190,6 +195,7 @@ type
     sbVerSenhaProxy: TSpeedButton;
     seProxyPorta: TSpinEdit;
     Splitter1: TSplitter;
+    tbRetirada: TTabSheet;
     tsSimularPagamento: TTabSheet;
     tsQrDinamico: TTabSheet;
     tmCancelarCobPendente: TTimer;
@@ -235,8 +241,10 @@ type
     procedure btLerParametrosClick(Sender: TObject);
     procedure btFluxoPagarClick(Sender: TObject);
     procedure btPixPDVSimularPagtoClick(Sender: TObject);
+    procedure btPixPDVSimularPagtoLimparClick(Sender: TObject);
     procedure btQrDinamicoCopiaEColaClick(Sender: TObject);
     procedure btQrDinamicoCriarClick(Sender: TObject);
+    procedure btRetiradaClick(Sender: TObject);
     procedure btSalvarParametrosClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure sbVerSenhaProxyClick(Sender: TObject);
@@ -298,9 +306,9 @@ uses
   {$IfDef FPC}
   jsonparser, jsonscanner,
   {$EndIf}
-  IniFiles, TypInfo, synacode, DateUtils, Clipbrd, ACBrUtil.FilesIO,
-  ACBrUtil.Strings, ACBrUtil.Base, ACBrImage, ACBrDelphiZXingQRCode,
-  ACBrUtil.DateTime, ACBrPIXSchemasCobV;
+  IniFiles, TypInfo, synacode, DateUtils, Clipbrd,
+  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Base, ACBrImage,
+  ACBrDelphiZXingQRCode, ACBrUtil.DateTime, ACBrPIXSchemasCobV;
 
 {$R *.lfm}
 
@@ -758,6 +766,18 @@ begin
         Add('Json: ' + AsJSON);
       end;
     end
+    else if (aSchema is TPixPDVRetirada) then
+    with TPixPDVRetirada(aSchema) do
+    begin
+      Add('transacaoId: ' + TransacaoId);
+      Add('endToEndId: ' + EndToEndId);
+      Add('pspId: ' + PspId);
+      Add('pspNome: ' + PspNome);
+      Add('agencia: ' + Agencia);
+      Add('conta: ' + Conta);
+      Add('contaNome: ' + ContaNome);
+      Add('contaTipo: ' + ContaTipo);
+    end
     else if (aSchema is TPixPDVQrResumo) then
     with TPixPDVQrResumo(aSchema) do
     begin
@@ -918,6 +938,11 @@ begin
   end;
 end;
 
+procedure TfrPixCDPIXPDV.btPixPDVSimularPagtoLimparClick(Sender: TObject);
+begin
+  mmPixPDVSimularPagto.Lines.Clear;
+end;
+
 procedure TfrPixCDPIXPDV.btQrDinamicoCopiaEColaClick(Sender: TObject);
 begin
   Clipboard.AsText := Trim(edQrDinamicoCopiaECola.Text);
@@ -950,6 +975,31 @@ begin
       mmResposta.Lines.Add(ACBrPSPPixPDV1.QrDinamico.AsJSON);
 
       MostrarRespostaEndPoint('PostQrDinamico', ACBrPSPPixPDV1.Error);
+    end;
+  end;
+end;
+
+procedure TfrPixCDPIXPDV.btRetiradaClick(Sender: TObject);
+var
+  v, t: Double;
+begin
+  v := StrToFloatDef(edRetiradaValor.Text, 0);
+  t := StrToFloatDef(edRetiradaTarifa.Text, 0);
+  if EstaZerado(v) then
+  begin
+    MessageDlg('Preencha a valor a ser retirado!', mtError, [mbOK], 0);
+    edRetiradaValor.SetFocus;
+    Exit;
+  end;
+
+  try
+    ACBrPSPPixPDV1.PostRetirada(v, t);
+    MostrarRespostaEndPoint('Retirada', ACBrPSPPixPDV1.Retirada);
+  except
+    On E: Exception do
+    begin
+      mmResposta.Lines.Add(E.Message);
+      MostrarRespostaEndPoint('Retirada', ACBrPSPPixPDV1.Error);
     end;
   end;
 end;

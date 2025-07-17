@@ -1,8 +1,8 @@
 object frPixCDPIXPDV: TfrPixCDPIXPDV
-  Left = 297
-  Top = 195
-  Width = 815
-  Height = 692
+  Left = 552
+  Top = 174
+  Width = 808
+  Height = 681
   Caption = 'frPixCDPIXPDV'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -11,83 +11,84 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   Icon.Data = {
-    0000010001001818000001002000880900001600000028000000180000003000
-    000001002000000000000009000000000000000000000000000000000000989E
-    37FF989E37FF989E37FF989E37FF989E37FF989E37FF989E37FF989E37FF989E
-    37FF989E37FF989E37FF989E37FF989E37FF989E37FF989E37FF989E37FF989E
-    37FF989E37FF989E37FF989E37FF989E37FF989E37FF989E37FF989E37FF979D
-    36FF979D36FF979D36FF979D36FFB0B568FFEDEEDDFFEDEEDDFFB0B568FF979D
-    36FF979D36FF979D36FFB0B568FFEDEEDDFFEDEEDDFFB0B568FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D37FFEDEEDDFFFEFEFDFFFEFEFDFFEDEEDCFF979D
-    36FF979D36FF979D36FFEDEEDDFFFEFEFEFFFEFEFEFFEDEEDDFF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF9BA13DFF979D37FFEDEEDDFFFEFEFDFFFEFEFDFFEDEEDDFF979D
-    36FF979D36FF979D36FFEDEEDDFFFEFEFEFFFEFEFEFFEDEEDDFF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FFB0B568FFEDEEDDFFEDEEDDFFB0B568FF979D
-    36FF979D36FF979D36FFB0B568FFEDEEDDFFEDEEDDFFB0B568FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF989E
-    37FF979D36FFBEC282FFBEC282FFBEC282FFBEC282FFBEC282FFBEC282FFBEC2
-    82FFBEC282FFBEC282FFBEC282FFBEC282FFBEC282FFBEC282FFBCC07EFFA4AA
-    50FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF9DA2
-    41FF979D37FFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFEFE
-    FEFFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFCFC
-    FAFFB7BB74FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FFADB262FFADB262FFADB262FFADB262FFADB262FFADB262FFADB2
-    62FFADB262FFADB262FFADB262FFADB262FFADB262FFADB262FFC5C991FFFEFE
-    FEFFEAEBD8FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FFA6AC54FFFEFE
-    FEFFF1F2E5FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FFA7AC56FFECEDDBFFECEDDBFFF7F7F0FFFEFE
-    FEFFD1D4A7FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF989E38FFF0F1E3FFFEFEFEFFF3F4EAFFD2D4
-    A8FF9BA13DFF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FFC8CB96FFFEFEFEFFC1C588FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FFA2A74BFFFDFDFBFFEAEBD7FF989E
-    37FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FFDEE0C1FFFEFEFEFFACB0
-    5EFF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FFD8DAB4FFF8F8F3FFF8F8F3FFF8F8F3FFF8F8F3FFF8F8F3FFF8F8
-    F3FFD8DAB4FF979D36FF979D36FF979D36FF979D36FFB6BA73FFFEFEFEFFD4D7
-    ADFF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FFF8F8F3FFA5AB52FF9BA13EFF9BA13EFF9BA13EFF9BA13EFFA5AB
-    52FFF8F8F3FF979D36FF979D36FF979D36FF979D36FF999F39FFF3F4E9FFF9F9
-    F3FF9CA240FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FFF8F8F3FF9BA13EFFF1F2E6FFF0F1E3FFF0F1E3FFF1F2E6FF9BA1
-    3EFFF8F8F3FF979D36FF979D36FF979D36FF979D36FF979D36FFCCCF9EFFFEFE
-    FEFFBFC283FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FFF8F8F3FF9BA13EFFF1F2E6FFFEFEFEFFFEFEFEFFF1F2E6FF9BA1
-    3EFFF8F8F3FF979D36FF979D36FF979D36FF979D36FF979D36FFA5AA51FFFEFE
-    FDFFE7E9D2FF989E37FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FFF8F8F3FF979D36FFF0F1E3FFFEFEFEFFFEFEFEFFF0F1E3FF979D
-    36FFF8F8F3FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FFE2E4
-    C9FFFEFEFEFFA9AE5AFF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FFF8F8F3FF9BA13EFFF0F1E3FFF0F1E3FFF0F1E3FFF0F1E3FF9BA1
-    3EFFF8F8F3FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FFBABE
-    7AFFFEFEFEFFD2D4A8FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FFF8F8F3FFA5AB52FF9BA13EFF9BA13EFF9BA13EFF9BA13EFFA5AB
-    52FFF8F8F3FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF9AA0
-    3CFFF6F6EEFFF8F9F3FFD8DAB4FFD8DAB4FFD8DAB4FF979D36FF989E37FF979D
-    36FF979D36FFD8DAB4FFF8F8F3FFF8F8F3FFF8F8F3FFF8F8F3FFF8F8F3FFF8F8
-    F3FFD1D4A8FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FFCBCE9BFFF7F8F1FFF7F8F1FFF7F8F1FFF7F8F1FF979D37FF989E37FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D
-    36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF979D36FF0000
+    9E09000000000100010018180000010020008809000016000000280000001800
+    0000300000000100200000000000000900006400000064000000000000000000
+    0000F0D3ADFFD17700FFD27B06FFD27B07FFD27B07FFD27B07FFD27B07FFD27B
+    07FFD27B07FFD27B07FFD27B07FFD27B07FFD27B07FFD27B07FFD27B07FFD27B
+    07FFD27B07FFD27B07FFD27B07FFD27B07FFD27B07FFD27B06FFD17700FFF0D4
+    ADFFD27903FFD17700FFD17801FFD17801FFD17801FFD17801FFD17801FFD178
+    01FFD17801FFD17801FFD17801FFD17801FFD17801FFD17801FFD17801FFD178
+    01FFD17801FFD17801FFD17801FFD17801FFD17801FFD17801FFD17700FFD279
+    03FFD27D0AFFD17801FFD27902FFD27801FFD87500FFD57700FFD27902FFD075
+    00FFCF7200FFCF7200FFCF7200FFCF7200FFCF7200FFCF7200FFCF7200FFCF72
+    00FFCF7200FFCF7200FFCF7200FFCF7300FFD17801FFD27902FFD17801FFD27D
+    0AFFD37D0BFFD17801FFD27801FFDC7300FFA0934EFFC1821CFFD47300FFD788
+    1FFFE3AE66FFE2AA60FFE2AA60FFE2AA60FFE2AA60FFE2AA60FFE2AA60FFE2AA
+    60FFE2AA60FFE2AA60FFE3AB61FFE2A95CFFD07300FFD17801FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD77600FFAC8D3DFF13DFFFFF1CD9FFFFDF6200FFFFFF
+    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDFA04CFFD07300FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD47700FFC97D0EFF1BDAFFFF4AC1D4FFDC6400FFFAF1
+    E5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDF9F4CFFD07300FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD27902FFD47700FFE27000FFE07100FFD17801FFCD6C
+    00FFCD6C00FFCD6C00FFCD6C00FFCD6C00FFCD6C00FFCD6C00FFCD6C00FFCD6C
+    00FFCD6A00FFD17700FFFFFFFFFFFFFFFFFFDF9F4BFFD07300FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD27902FFD27902FFD27801FFD27801FFD27902FFD178
+    01FFD17801FFD17801FFD17801FFD17801FFD17801FFD17801FFD17801FFD178
+    01FFD17800FFCB6700FFFFFFFFFFFFFFFFFFDF9F4AFFD07300FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD27902FFD27902FFD27902FFD27902FFD27902FFD279
+    02FFD27902FFD27902FFD27902FFD27902FFD27902FFD27902FFD27902FFD279
+    02FFD27801FFCC6900FFFFFFFFFFFFFFFFFFDF9F4AFFD07300FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD27902FFD27902FFD27902FFD27902FFD27902FFD279
+    02FFD27902FFD27902FFD27902FFD27902FFD27902FFD27902FFD27902FFD279
+    02FFD27801FFCB6700FFFFFFFFFFFFFFFFFFDF9F4AFFD07300FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD27902FFD47700FFE27000FFDE7200FFD27801FFCE6D
+    00FFCC6900FFCC6900FFCC6900FFCC6900FFCC6900FFCC6900FFCC6900FFCC69
+    00FFCC6700FFCF7000FFFFFFFFFFFFFFFFFFDF9F4AFFD07300FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD47700FFCF7A06FF2BD1FFFF5EB7B7FFDA6600FFF4E0
+    C5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDF9F4AFFD07300FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD77600FFA69045FF14DEFFFF16DCFFFFE06200FFFFFF
+    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE0A250FFD07300FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD27801FFDD7200FF8A9660FFB28428FFD57100FFDB94
+    36FFE9BD83FFE7B97CFFE7B97CFFE7B97CFFE7B97CFFE7B97CFFE7B97CFFE7B9
+    7CFFE7B97CFFE7B97CFFECB776FFEFB670FFD17700FFD17800FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD17801FFCE6F00FFEEB36BFFE09230FFD07400FFD074
+    00FFCF7000FFCF7000FFCF7000FFCF7000FFCF7000FFCF7000FFCF7000FFCF70
+    00FFCF7000FFD46E00FFAF8123FF8A965FFFDD7100FFD27801FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD07400FFDD9B42FFFFFFFFFFFFFFFFFFCC6900FFD278
+    01FFD27902FFD27902FFD27902FFD27902FFD27902FFD27902FFD27902FFD279
+    02FFD27801FFE46F00FF15DDFFFF14DEFFFFA78F43FFD77600FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD07300FFDFA04CFFFFFFFFFFFFFFFFFFCA6500FFD177
+    00FFD17700FFD17700FFD17700FFD17700FFD17700FFD17700FFD17700FFD177
+    00FFD17700FFDE7000FF5DB5B5FF2CD0FFFFD07A05FFD37700FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD07300FFDF9F4BFFFFFFFFFFFFFFFFFFD7871DFFD073
+    00FFD17600FFD17600FFD17600FFD17600FFD17600FFD17600FFD17600FFD176
+    00FFD17600FFD17600FFDE7000FFDF6600FFD27400FFD27902FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD07300FFDF9F4CFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD58315FFD17600FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD07400FFDD9C44FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDB9536FFD07500FFD17801FFD37D
+    0BFFD37D0BFFD17801FFD17801FFCF7100FFDE9D46FFDFA24FFFDFA14EFFDFA1
+    4EFFDFA14EFFDFA14EFFDFA14EFFDFA14EFFDFA14EFFDFA14EFFDFA14EFFDFA1
+    4EFFDFA14EFFDFA14EFFE0A351FFDB9435FFCF7000FFD27902FFD17801FFD37D
+    0BFFD27D0AFFD17801FFD27902FFD17801FFD07400FFD07300FFD07300FFD073
+    00FFD07300FFD07300FFD07300FFD07300FFD07300FFD07300FFD07300FFD073
+    00FFD07300FFD07300FFD07300FFD07400FFD27902FFD27902FFD17801FFD27D
+    0AFFD27903FFD17700FFD17801FFD17801FFD17801FFD17801FFD17801FFD178
+    01FFD17801FFD17801FFD17801FFD17801FFD17801FFD17801FFD17801FFD178
+    01FFD17801FFD17801FFD17801FFD17801FFD17801FFD17801FFD17700FFD279
+    03FFF0D3ADFFD17700FFD27B06FFD27B07FFD27B07FFD27B07FFD27B07FFD27B
+    07FFD27B07FFD27B07FFD27B07FFD27B07FFD27B07FFD27B07FFD27B07FFD27B
+    07FFD27B07FFD27B07FFD27B07FFD27B07FFD27B07FFD27B06FFD17700FFF0D3
+    ADFF000000000000000000000000000000000000000000000000000000000000
     0000000000000000000000000000000000000000000000000000000000000000
     0000000000000000000000000000000000000000000000000000000000000000
-    000000000000000000000000000000000000000000000000000000000000}
+    0000}
   OldCreateOrder = True
   OnCreate = FormCreate
   PixelsPerInch = 96
@@ -95,8 +96,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
   object pgPrincipal: TPageControl
     Left = 0
     Top = 0
-    Width = 799
-    Height = 653
+    Width = 792
+    Height = 642
     ActivePage = tsFluxoPagto
     Align = alClient
     TabHeight = 30
@@ -107,11 +108,12 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
       object pnFluxoBackground: TPanel
         Left = 0
         Top = 0
-        Width = 791
-        Height = 613
+        Width = 784
+        Height = 602
         Align = alClient
         BevelOuter = bvNone
         Color = 15263976
+        ParentBackground = False
         TabOrder = 0
         object pnFluxoPagto: TPanel
           Left = 30
@@ -125,6 +127,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
+          ParentBackground = False
           ParentFont = False
           TabOrder = 0
           object gbFluxoCliente: TGroupBox
@@ -139,6 +142,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
             Font.Height = -11
             Font.Name = 'Arial'
             Font.Style = []
+            ParentBackground = False
             ParentFont = False
             TabOrder = 1
             object pnFluxoCliente: TPanel
@@ -148,6 +152,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Height = 62
               Align = alClient
               BevelOuter = bvNone
+              ParentBackground = False
               TabOrder = 0
               object lbFluxoClienteNome: TLabel
                 Left = 245
@@ -155,6 +160,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Width = 27
                 Height = 14
                 Caption = 'Nome'
+                Color = clBtnFace
+                ParentColor = False
               end
               object lbFluxoClienteDoc: TLabel
                 Left = 15
@@ -162,6 +169,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Width = 47
                 Height = 14
                 Caption = 'CPF/CNPJ'
+                Color = clBtnFace
+                ParentColor = False
               end
               object edFluxoClienteNome: TEdit
                 Left = 245
@@ -175,7 +184,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Font.Style = []
                 ParentFont = False
                 TabOrder = 0
-                Text = 'Elias Cesar Vieira'
+                Text = 'Consumidor'
               end
               object edFluxoClienteDoc: TEdit
                 Left = 15
@@ -205,6 +214,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
             Font.Height = -11
             Font.Name = 'Arial'
             Font.Style = []
+            ParentBackground = False
             ParentFont = False
             TabOrder = 2
             object pnFluxoDadosItem: TPanel
@@ -214,6 +224,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Height = 152
               Align = alLeft
               BevelOuter = bvNone
+              ParentBackground = False
               TabOrder = 0
               object lbFluxoItemEAN: TLabel
                 Left = 15
@@ -221,6 +232,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Width = 21
                 Height = 14
                 Caption = 'EAN'
+                Color = clBtnFace
+                ParentColor = False
               end
               object lbFluxoItemValor: TLabel
                 Left = 130
@@ -228,6 +241,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Width = 25
                 Height = 14
                 Caption = 'Valor'
+                Color = clBtnFace
+                ParentColor = False
               end
               object lbFluxoItemDescricao: TLabel
                 Left = 15
@@ -235,6 +250,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Width = 49
                 Height = 14
                 Caption = 'Descri'#231#227'o'
+                Color = clBtnFace
+                ParentColor = False
               end
               object edFluxoItemEAN: TEdit
                 Left = 15
@@ -300,8 +317,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
             Height = 66
             Align = alTop
             Caption = 'Status'
-            Color = 15263976
-            ParentColor = False
+            ParentBackground = False
             TabOrder = 0
             object pnFluxoStatus: TPanel
               Left = 2
@@ -311,12 +327,13 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Align = alClient
               BevelOuter = bvNone
               Caption = 'VENDENDO'
-              Color = 14120448
+              Color = clMenuHighlight
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWhite
               Font.Height = -24
               Font.Name = 'Tahoma'
               Font.Style = [fsBold]
+              ParentBackground = False
               ParentFont = False
               TabOrder = 0
             end
@@ -325,10 +342,11 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
             Left = 0
             Top = 351
             Width = 732
-            Height = 239
+            Height = 237
             Align = alTop
             AutoSize = True
             BevelOuter = bvNone
+            ParentBackground = False
             TabOrder = 3
             object pnFluxoRodapeInfo1: TPanel
               Left = 0
@@ -337,6 +355,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Height = 160
               Align = alTop
               BevelOuter = bvNone
+              ParentBackground = False
               TabOrder = 0
               object pnFluxoQRCode: TPanel
                 Left = 246
@@ -345,6 +364,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Height = 160
                 Align = alClient
                 BevelOuter = bvNone
+                ParentBackground = False
                 TabOrder = 0
                 object imFluxoQRCode: TImage
                   Left = 0
@@ -371,6 +391,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Font.Height = -16
                 Font.Name = 'Arial'
                 Font.Style = [fsBold]
+                ParentBackground = False
                 ParentFont = False
                 TabOrder = 1
                 object pnFluxoBotoesErroConsultar: TPanel
@@ -380,6 +401,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                   Height = 160
                   Align = alClient
                   BevelOuter = bvNone
+                  ParentBackground = False
                   TabOrder = 2
                   Visible = False
                   object btFluxoTentarNovamente: TBitBtn
@@ -399,6 +421,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                     Height = 5
                     Align = alTop
                     BevelOuter = bvNone
+                    ParentBackground = False
                     TabOrder = 1
                     Visible = False
                   end
@@ -429,6 +452,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                     Height = 5
                     Align = alTop
                     BevelOuter = bvNone
+                    ParentBackground = False
                     TabOrder = 3
                     Visible = False
                   end
@@ -440,6 +464,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                   Height = 160
                   Align = alRight
                   BevelOuter = bvNone
+                  ParentBackground = False
                   TabOrder = 1
                 end
                 object pnFluxoBotoesPrincipais: TPanel
@@ -449,6 +474,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                   Height = 160
                   Align = alClient
                   BevelOuter = bvNone
+                  ParentBackground = False
                   TabOrder = 0
                   object btFluxoPagar: TBitBtn
                     Left = 0
@@ -499,6 +525,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Height = 160
                 Align = alLeft
                 BevelOuter = bvNone
+                ParentBackground = False
                 TabOrder = 2
                 object gbFluxoTotal: TGroupBox
                   Left = 0
@@ -512,6 +539,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                   Font.Height = -11
                   Font.Name = 'Tahoma'
                   Font.Style = []
+                  ParentBackground = False
                   ParentFont = False
                   TabOrder = 0
                   object pnFluxoTotalStr: TPanel
@@ -527,6 +555,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                     Font.Height = -35
                     Font.Name = 'Tahoma'
                     Font.Style = [fsBold]
+                    ParentBackground = False
                     ParentFont = False
                     TabOrder = 0
                   end
@@ -537,26 +566,29 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Left = 0
               Top = 160
               Width = 732
-              Height = 79
+              Height = 77
               Align = alClient
               AutoSize = True
               BevelOuter = bvNone
+              ParentBackground = False
               TabOrder = 1
               object lbFluxoMsgPagto: TLabel
                 Left = 0
                 Top = 49
                 Width = 732
-                Height = 30
+                Height = 28
                 Align = alClient
                 Alignment = taCenter
                 Caption = 
                   'Ambiente de homologa'#231#227'o: Utilize o PIXPDVPagador para simular um' +
                   ' pagamento'#13#10'https://pixpdv.com.br'
+                Color = clBtnFace
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clRed
                 Font.Height = -11
                 Font.Name = 'Arial'
                 Font.Style = [fsBold]
+                ParentColor = False
                 ParentFont = False
                 Visible = False
               end
@@ -567,6 +599,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Height = 49
                 Align = alTop
                 BevelOuter = bvNone
+                ParentBackground = False
                 TabOrder = 0
                 Visible = False
                 object lbFluxoQRCodeID: TLabel
@@ -575,11 +608,13 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                   Width = 57
                   Height = 14
                   Caption = 'QRCode ID'
+                  Color = clBtnFace
                   Font.Charset = DEFAULT_CHARSET
                   Font.Color = clWindowText
                   Font.Height = -11
                   Font.Name = 'Arial'
                   Font.Style = [fsBold]
+                  ParentColor = False
                   ParentFont = False
                 end
                 object btFluxoCopiaECola: TSpeedButton
@@ -612,6 +647,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
             Height = 15
             Align = alTop
             BevelOuter = bvNone
+            ParentBackground = False
             TabOrder = 4
           end
           object pnFluxoDiv2: TPanel
@@ -621,6 +657,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
             Height = 10
             Align = alTop
             BevelOuter = bvNone
+            ParentBackground = False
             TabOrder = 5
           end
           object pnFluxoDiv3: TPanel
@@ -630,6 +667,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
             Height = 10
             Align = alTop
             BevelOuter = bvNone
+            ParentBackground = False
             TabOrder = 6
           end
         end
@@ -639,17 +677,17 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
       Caption = 'Endpoints'
       ImageIndex = 14
       object Splitter1: TSplitter
-        Left = 479
+        Left = 472
         Top = 0
         Width = 5
-        Height = 613
+        Height = 602
         Align = alRight
       end
       object pgTestes: TPageControl
         Left = 0
         Top = 0
-        Width = 479
-        Height = 613
+        Width = 472
+        Height = 602
         ActivePage = tsQrDinamico
         Align = alClient
         TabHeight = 25
@@ -657,7 +695,6 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
         TabWidth = 119
         object tsQrDinamico: TTabSheet
           Caption = 'Criar QrDin'#226'mico'
-          ImageIndex = 4
           object lbCobBacenMensagem: TLabel
             Left = 32
             Top = 112
@@ -706,6 +743,13 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
             Color = clBtnFace
             ParentColor = False
           end
+          object btQrDinamicoCopiaECola: TSpeedButton
+            Left = 536
+            Top = 336
+            Width = 26
+            Height = 26
+            OnClick = btQrDinamicoCopiaEColaClick
+          end
           object edQrDinamicoMensagem: TEdit
             Left = 32
             Top = 128
@@ -753,8 +797,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
           object pgCriarCob: TPageControl
             Left = 0
             Top = 0
-            Width = 471
-            Height = 578
+            Width = 464
+            Height = 567
             ActivePage = tsCriarOrderDueDate
             Align = alClient
             TabOrder = 0
@@ -767,6 +811,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Width = 442
                 Height = 558
                 BevelOuter = bvNone
+                ParentBackground = False
                 TabOrder = 0
                 object imCobBacenQRCode: TImage
                   Left = 15
@@ -783,6 +828,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                   Width = 73
                   Height = 13
                   Caption = 'Valor Cobran'#231'a'
+                  Color = clBtnFace
+                  ParentColor = False
                 end
                 object lbCobBacenVencimento: TLabel
                   Left = 160
@@ -790,6 +837,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                   Width = 56
                   Height = 13
                   Caption = 'Vencimento'
+                  Color = clBtnFace
+                  ParentColor = False
                 end
                 object lbCobBacenDiasPagar: TLabel
                   Left = 296
@@ -800,6 +849,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                     'Quantidade de dias corridos ap'#243's a data de vencimento, em que a ' +
                     'cobran'#231'a poder'#225' ser paga'
                   Caption = 'Dias pagar (Ap'#243's vencto)'
+                  Color = clBtnFace
+                  ParentColor = False
                 end
                 object lbCobBacenCopiaECola: TLabel
                   Left = 15
@@ -807,6 +858,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                   Width = 60
                   Height = 13
                   Caption = 'Copia e Cola'
+                  Color = clBtnFace
+                  ParentColor = False
                 end
                 object btCobBacenCopiaECola: TSpeedButton
                   Left = 400
@@ -822,6 +875,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                   Height = 72
                   Align = alTop
                   Caption = 'Comprador'
+                  ParentBackground = False
                   TabOrder = 0
                   object pnCobBacenComprador: TPanel
                     Left = 2
@@ -830,6 +884,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                     Height = 55
                     Align = alClient
                     BevelOuter = bvNone
+                    ParentBackground = False
                     TabOrder = 0
                     object lbCobBacenCompradorNome: TLabel
                       Left = 15
@@ -837,6 +892,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                       Width = 28
                       Height = 13
                       Caption = 'Nome'
+                      Color = clBtnFace
+                      ParentColor = False
                     end
                     object lbCobBacenCompradorDoc: TLabel
                       Left = 293
@@ -844,6 +901,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                       Width = 52
                       Height = 13
                       Caption = 'CPF/CNPJ'
+                      Color = clBtnFace
+                      ParentColor = False
                     end
                     object edCobBacenCompradorNome: TEdit
                       Left = 15
@@ -879,6 +938,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                   Height = 72
                   Align = alTop
                   Caption = 'Desconto'
+                  ParentBackground = False
                   TabOrder = 1
                   object pnCobBacenDesconto: TPanel
                     Left = 2
@@ -887,6 +947,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                     Height = 55
                     Align = alClient
                     BevelOuter = bvNone
+                    ParentBackground = False
                     TabOrder = 0
                     object lbCobBacenDescModalidade: TLabel
                       Left = 15
@@ -894,6 +955,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                       Width = 55
                       Height = 13
                       Caption = 'Modalidade'
+                      Color = clBtnFace
+                      ParentColor = False
                     end
                     object lbCobBacenDescValor: TLabel
                       Left = 293
@@ -901,6 +964,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                       Width = 80
                       Height = 13
                       Caption = 'Valor/Percentual'
+                      Color = clBtnFace
+                      ParentColor = False
                     end
                     object edCobBacenDescValor: TEdit
                       Left = 293
@@ -928,6 +993,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                   Height = 72
                   Align = alTop
                   Caption = 'Multa'
+                  ParentBackground = False
                   TabOrder = 3
                   object pnCobBacenMulta: TPanel
                     Left = 2
@@ -936,6 +1002,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                     Height = 55
                     Align = alClient
                     BevelOuter = bvNone
+                    ParentBackground = False
                     TabOrder = 0
                     object lbCobBacenMultaModalidade: TLabel
                       Left = 15
@@ -943,6 +1010,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                       Width = 55
                       Height = 13
                       Caption = 'Modalidade'
+                      Color = clBtnFace
+                      ParentColor = False
                     end
                     object lbCobBacenMultaValor: TLabel
                       Left = 293
@@ -950,6 +1019,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                       Width = 80
                       Height = 13
                       Caption = 'Valor/Percentual'
+                      Color = clBtnFace
+                      ParentColor = False
                     end
                     object edCobBacenMultaValor: TEdit
                       Left = 293
@@ -977,6 +1048,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                   Height = 72
                   Align = alTop
                   Caption = 'Juros'
+                  ParentBackground = False
                   TabOrder = 2
                   object pnCobBacenJuros: TPanel
                     Left = 2
@@ -985,6 +1057,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                     Height = 55
                     Align = alClient
                     BevelOuter = bvNone
+                    ParentBackground = False
                     TabOrder = 0
                     object lbCobBacenJurosModalidade: TLabel
                       Left = 15
@@ -992,6 +1065,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                       Width = 55
                       Height = 13
                       Caption = 'Modalidade'
+                      Color = clBtnFace
+                      ParentColor = False
                     end
                     object lbCobBacenJurosValor: TLabel
                       Left = 293
@@ -999,6 +1074,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                       Width = 80
                       Height = 13
                       Caption = 'Valor/Percentual'
+                      Color = clBtnFace
+                      ParentColor = False
                     end
                     object edCobBacenJurosValor: TEdit
                       Left = 293
@@ -1030,12 +1107,12 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 object edCobBacenVencimento: TDateTimePicker
                   Left = 160
                   Top = 384
-                  Width = 122
-                  Height = 23
+                  Width = 83
+                  Height = 21
                   BiDiMode = bdLeftToRight
-                  Date = 44713.000000000000000000
-                  Time = 44713.000000000000000000
-                  MaxDate = 2958465.999988426000000000
+                  Date = 44713.346928946760000000
+                  Time = 44713.346928946760000000
+                  MaxDate = 2958465.000000000000000000
                   MinDate = -53780.000000000000000000
                   ParentBiDiMode = False
                   TabOrder = 4
@@ -1066,8 +1143,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
           object pgConsultar: TPageControl
             Left = 0
             Top = 0
-            Width = 471
-            Height = 578
+            Width = 464
+            Height = 567
             ActivePage = tsConsultaStatusToken
             Align = alClient
             TabOrder = 0
@@ -1092,14 +1169,16 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Width = 433
                 Height = 81
                 Caption = 'Consultar QRCode Din'#226'mico e/ou Cobran'#231'a (boleto)'
+                ParentBackground = False
                 TabOrder = 0
                 object pnQRCodeConsultar: TPanel
-                  Left = 2
-                  Top = 15
+                  Left = 0
+                  Top = 0
                   Width = 429
-                  Height = 64
+                  Height = 63
                   Align = alClient
                   BevelOuter = bvNone
+                  ParentBackground = False
                   TabOrder = 0
                   object lbConsultarQRCodeID: TLabel
                     Left = 15
@@ -1107,6 +1186,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                     Width = 55
                     Height = 13
                     Caption = 'QRCode ID'
+                    Color = clBtnFace
+                    ParentColor = False
                   end
                   object edConsultarQRCodeID: TEdit
                     Left = 15
@@ -1135,6 +1216,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Width = 27
                 Height = 13
                 Caption = 'In'#237'cio'
+                Color = clBtnFace
+                ParentColor = False
               end
               object lbConsultarPeriodoFim: TLabel
                 Left = 176
@@ -1142,6 +1225,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Width = 16
                 Height = 13
                 Caption = 'Fim'
+                Color = clBtnFace
+                ParentColor = False
               end
               object lbConsultarPeriodoTipoData: TLabel
                 Left = 24
@@ -1149,26 +1234,28 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Width = 62
                 Height = 13
                 Caption = 'Tipo de Data'
+                Color = clBtnFace
+                ParentColor = False
               end
               object edConsultarPeriodoInicio: TDateTimePicker
                 Left = 24
                 Top = 40
-                Width = 137
-                Height = 23
-                Date = 44713.000000000000000000
-                Time = 44713.000000000000000000
-                MaxDate = 2958465.999988426000000000
+                Width = 83
+                Height = 21
+                Date = 44713.346928958330000000
+                Time = 44713.346928958330000000
+                MaxDate = 2958465.000000000000000000
                 MinDate = -53780.000000000000000000
                 TabOrder = 0
               end
               object edConsultarPeriodoFim: TDateTimePicker
                 Left = 176
                 Top = 40
-                Width = 137
-                Height = 23
-                Date = 44713.000000000000000000
-                Time = 44713.000000000000000000
-                MaxDate = 2958465.999988426000000000
+                Width = 83
+                Height = 21
+                Date = 44713.346928958330000000
+                Time = 44713.346928958330000000
+                MaxDate = 2958465.000000000000000000
                 MinDate = -53780.000000000000000000
                 TabOrder = 1
               end
@@ -1242,6 +1329,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Width = 27
                 Height = 13
                 Caption = 'In'#237'cio'
+                Color = clBtnFace
+                ParentColor = False
               end
               object lbConsultarExtratoFim: TLabel
                 Left = 176
@@ -1249,26 +1338,28 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Width = 16
                 Height = 13
                 Caption = 'Fim'
+                Color = clBtnFace
+                ParentColor = False
               end
               object edConsultarExtratoInicio: TDateTimePicker
                 Left = 32
                 Top = 48
-                Width = 129
-                Height = 23
-                Date = 44713.000000000000000000
-                Time = 44713.000000000000000000
-                MaxDate = 2958465.999988426000000000
+                Width = 83
+                Height = 21
+                Date = 44713.346928958330000000
+                Time = 44713.346928958330000000
+                MaxDate = 2958465.000000000000000000
                 MinDate = -53780.000000000000000000
                 TabOrder = 0
               end
               object edConsultarExtratoFim: TDateTimePicker
                 Left = 176
                 Top = 48
-                Width = 129
-                Height = 23
-                Date = 44713.000000000000000000
-                Time = 44713.000000000000000000
-                MaxDate = 2958465.999988426000000000
+                Width = 83
+                Height = 21
+                Date = 44713.346928958330000000
+                Time = 44713.346928958330000000
+                MaxDate = 2958465.000000000000000000
                 MinDate = -53780.000000000000000000
                 TabOrder = 1
               end
@@ -1310,14 +1401,16 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
             Width = 433
             Height = 80
             Caption = 'Estornar Pagamento (Din'#226'mico e/ou Cobran'#231'a)'
+            ParentBackground = False
             TabOrder = 0
             object pnQRCodeEstornar: TPanel
-              Left = 2
-              Top = 15
+              Left = 0
+              Top = 0
               Width = 429
-              Height = 63
+              Height = 62
               Align = alClient
               BevelOuter = bvNone
+              ParentBackground = False
               TabOrder = 0
               object lbEstornarQRCode_ID: TLabel
                 Left = 15
@@ -1325,6 +1418,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Width = 50
                 Height = 13
                 Caption = 'QrCode ID'
+                Color = clBtnFace
+                ParentColor = False
               end
               object edEstornarQRCode_ID: TEdit
                 Left = 15
@@ -1340,24 +1435,101 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
                 Height = 26
                 Caption = 'Estornar'
                 TabOrder = 1
-                OnClick = btEstornarQRCde_IDClick
+                OnClick = btEstornarQRCode_IDClick
               end
             end
           end
         end
-        object TabSheet1: TTabSheet
+        object tbRetirada: TTabSheet
+          Caption = 'Retirada'
+          object lbRetiradaValor: TLabel
+            Left = 32
+            Top = 48
+            Width = 24
+            Height = 13
+            Caption = 'Valor'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object lbRetiradaTarifa: TLabel
+            Left = 168
+            Top = 48
+            Width = 27
+            Height = 13
+            Caption = 'Tarifa'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object edRetiradaValor: TEdit
+            Left = 32
+            Top = 63
+            Width = 122
+            Height = 21
+            TabOrder = 0
+            Text = '1,00'
+          end
+          object edRetiradaTarifa: TEdit
+            Left = 168
+            Top = 63
+            Width = 122
+            Height = 21
+            TabOrder = 1
+            Text = '0,20'
+          end
+          object btRetirada: TBitBtn
+            Left = 304
+            Top = 53
+            Width = 128
+            Height = 31
+            Caption = 'Retirar'
+            TabOrder = 2
+            OnClick = btRetiradaClick
+          end
+        end
+        object tsSimularPagamento: TTabSheet
           Caption = 'Simular Pagamento'
-          ImageIndex = 3
-          object pnSimularPagto: TPanel
+          object pnPixPDVSimularPagtoLimpar: TPanel
+            Left = 0
+            Top = 542
+            Width = 464
+            Height = 29
+            Align = alBottom
+            ParentBackground = False
+            TabOrder = 0
+            DesignSize = (
+              464
+              29)
+            object btPixPDVSimularPagtoLimpar: TBitBtn
+              Left = 378
+              Top = 1
+              Width = 84
+              Height = 26
+              Anchors = [akTop]
+              Caption = 'Limpar'
+              TabOrder = 0
+              OnClick = btPixPDVSimularPagtoLimparClick
+            end
+          end
+          object mmPixPDVSimularPagto: TMemo
+            Left = 0
+            Top = 88
+            Width = 464
+            Height = 450
+            Align = alClient
+            ScrollBars = ssBoth
+            TabOrder = 1
+          end
+          object pnPixPDVSimularPagto: TPanel
             Left = 0
             Top = 0
-            Width = 471
+            Width = 464
             Height = 88
             Align = alTop
             BevelOuter = bvNone
-            TabOrder = 0
+            ParentBackground = False
+            TabOrder = 2
             DesignSize = (
-              471
+              464
               88)
             object lbPixPDVQRCodeID: TLabel
               Left = 16
@@ -1376,74 +1548,53 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Anchors = [akLeft, akTop, akRight]
               TabOrder = 0
             end
-            object btSimularPagto: TBitBtn
-              Left = 359
-              Top = 31
-              Width = 90
+            object btPixPDVSimularPagto: TBitBtn
+              Left = 360
+              Top = 33
+              Width = 88
               Height = 26
+              Anchors = [akTop, akRight]
               Caption = 'Pagar'
               TabOrder = 1
-              OnClick = btSimularPagtoClick
-            end
-          end
-          object mmPixPDVSimularPagto: TMemo
-            Left = 0
-            Top = 88
-            Width = 471
-            Height = 393
-            ScrollBars = ssBoth
-            TabOrder = 1
-          end
-          object Panel1: TPanel
-            Left = 0
-            Top = 549
-            Width = 471
-            Height = 29
-            Align = alBottom
-            BevelOuter = bvNone
-            TabOrder = 2
-            object btSimularPagtoLimpar: TBitBtn
-              Left = 378
-              Top = 1
-              Width = 90
-              Height = 26
-              Caption = 'Limpar'
-              TabOrder = 0
-              OnClick = btSimularPagtoLimparClick
+              OnClick = btPixPDVSimularPagtoClick
             end
           end
         end
       end
       object pnRespostas: TPanel
-        Left = 484
+        Left = 477
         Top = 0
         Width = 307
-        Height = 613
+        Height = 602
         Align = alRight
+        ParentBackground = False
         TabOrder = 1
         object lbResposta: TLabel
           Left = 1
           Top = 1
-          Width = 125
+          Width = 305
           Height = 13
           Align = alTop
           Caption = 'Respostas das Opera'#231#245'es'
+          Color = clBtnFace
+          ParentColor = False
         end
         object mmResposta: TMemo
           Left = 1
           Top = 14
           Width = 305
-          Height = 566
+          Height = 555
           Align = alClient
           ReadOnly = True
           TabOrder = 0
         end
         object pnRodapeRespostas: TPanel
           Left = 1
-          Top = 580
+          Top = 569
           Width = 305
           Height = 32
           Align = alBottom
+          ParentBackground = False
           TabOrder = 1
           object btQREAnalisar1: TBitBtn
             Left = 216
@@ -1461,11 +1612,12 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
       ImageIndex = 2
       object pnRodapeConfig: TPanel
         Left = 0
-        Top = 576
-        Width = 791
+        Top = 565
+        Width = 784
         Height = 37
         Align = alBottom
         BevelOuter = bvNone
+        ParentBackground = False
         TabOrder = 0
         object btSalvarParametros: TBitBtn
           Left = 30
@@ -1492,6 +1644,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
         Width = 732
         Height = 289
         BevelOuter = bvNone
+        ParentBackground = False
         TabOrder = 1
         object gbConfigPIXPDV: TGroupBox
           Left = 0
@@ -1500,6 +1653,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
           Height = 164
           Align = alTop
           Caption = 'PIXPDV'
+          ParentBackground = False
           TabOrder = 0
           object pnConfigPIXPDV: TPanel
             Left = 2
@@ -1508,6 +1662,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
             Height = 147
             Align = alClient
             BevelOuter = bvNone
+            ParentBackground = False
             TabOrder = 0
             object lbPIXPDVCnpj: TLabel
               Left = 15
@@ -1515,6 +1670,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Width = 27
               Height = 13
               Caption = 'CNPJ'
+              Color = clBtnFace
+              ParentColor = False
             end
             object lbPIXPDVToken: TLabel
               Left = 15
@@ -1522,6 +1679,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Width = 31
               Height = 13
               Caption = 'Token'
+              Color = clBtnFace
+              ParentColor = False
             end
             object lbPIXPDVSecretKey: TLabel
               Left = 15
@@ -1529,6 +1688,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Width = 52
               Height = 13
               Caption = 'Secret Key'
+              Color = clBtnFace
+              ParentColor = False
             end
             object edPIXPDVCnpj: TEdit
               Left = 15
@@ -1560,6 +1721,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
           Height = 125
           Align = alClient
           Caption = 'Diversos'
+          ParentBackground = False
           TabOrder = 1
           object pnConfigDiversos: TPanel
             Left = 2
@@ -1568,6 +1730,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
             Height = 108
             Align = alClient
             BevelOuter = bvNone
+            ParentBackground = False
             TabOrder = 0
             DesignSize = (
               420
@@ -1578,6 +1741,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Width = 72
               Height = 13
               Caption = 'Arquivo de Log'
+              Color = clBtnFace
+              ParentColor = False
             end
             object sbArqLog: TSpeedButton
               Left = 373
@@ -1601,6 +1766,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Width = 44
               Height = 13
               Caption = 'Ambiente'
+              Color = clBtnFace
+              ParentColor = False
             end
             object lbTimeOut: TLabel
               Left = 275
@@ -1608,6 +1775,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Width = 38
               Height = 13
               Caption = 'Timeout'
+              Color = clBtnFace
+              ParentColor = False
             end
             object edLogArquivo: TEdit
               Left = 15
@@ -1646,6 +1815,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
           Height = 125
           Align = alRight
           Caption = 'Proxy'
+          ParentBackground = False
           TabOrder = 2
           object pnConfigProxy: TPanel
             Left = 2
@@ -1654,6 +1824,7 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
             Height = 108
             Align = alClient
             BevelOuter = bvNone
+            ParentBackground = False
             TabOrder = 0
             object lbProxyHost: TLabel
               Left = 15
@@ -1661,6 +1832,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Width = 22
               Height = 13
               Caption = 'Host'
+              Color = clBtnFace
+              ParentColor = False
             end
             object lbProxyPorta: TLabel
               Left = 185
@@ -1668,6 +1841,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Width = 25
               Height = 13
               Caption = 'Porta'
+              Color = clBtnFace
+              ParentColor = False
             end
             object lbProxyUsuario: TLabel
               Left = 15
@@ -1675,6 +1850,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Width = 36
               Height = 13
               Caption = 'Usu'#225'rio'
+              Color = clBtnFace
+              ParentColor = False
             end
             object lbProxySenha: TLabel
               Left = 184
@@ -1682,6 +1859,8 @@ object frPixCDPIXPDV: TfrPixCDPIXPDV
               Width = 31
               Height = 13
               Caption = 'Senha'
+              Color = clBtnFace
+              ParentColor = False
             end
             object sbVerSenhaProxy: TSpeedButton
               Left = 263

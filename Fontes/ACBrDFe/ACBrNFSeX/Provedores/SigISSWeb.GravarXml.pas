@@ -96,7 +96,10 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cnpj_cpf_destinatario', 11, 14, 1,
                                 NFSe.Tomador.IdentificacaoTomador.CpfCnpj, ''));
 
-  tipoPessoa := IfThen(NFSe.Tomador.IdentificacaoTomador.Tipo = TTipoPessoa.tpPF, 'F', 'J');
+  if NFSe.Tomador.IdentificacaoTomador.Tipo = tpPF then
+    tipoPessoa :='F'
+  else
+    tipoPessoa := 'J';
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'pessoa_destinatario', 1, 1, 1,
                                                                tipoPessoa, ''));

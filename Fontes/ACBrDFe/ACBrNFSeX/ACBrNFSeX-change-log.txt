@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/07/2025
+-- SigISSWeb.GravarXML --
+[-] Ajuste visando corrigir erro de compilação no Delphi 7
+   Por: Diego Folieni
 -- ACBrNFSeXClass --
 [*] #TK-7322: Inclusão do campo Transacao na Classe: TNFSe.
    Por: Italo Giurizzato Junior

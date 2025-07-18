@@ -190,7 +190,8 @@ begin
       GravarCampo('3', 1, tcStr);
       GravarCampo(FSequencialDoRegistroNoLote, 5, tcInt);
       GravarCampo('B', 1, tcStr);
-      GravarCampo(' ', 3, tcStr);
+      GravarCampo(TipoChavePixToStr(PixTipoChave), 2, tcStr);
+      GravarCampo(' ', 1, tcStr);
       GravarCampo(TpInscricaoToStr(Inscricao.Tipo), 1, tcStr);
       GravarCampo(Inscricao.Numero, 14, tcStrZero);
       GravarCampo(Endereco.Logradouro, 30, tcStr, True);

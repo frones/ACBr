@@ -82,7 +82,7 @@ begin
   NrOcorrValorCsll := 1;
   NrOcorrValorIss := 1;
   NrOcorrBaseCalc := 1;
-  NrOcorrAliquota := 1;
+  NrOcorrAliquota := 0;
   NrOcorrValorISSRetido_1 := -1;
   NrOcorrValorISSRetido_2 := 0;
 end;
@@ -103,7 +103,7 @@ function TNFSeW_Pronim202.GerarXml: Boolean;
 const
   CODIGOMUNICIPIO_EXTERIOR = '9999999';
 begin
-  if NFSe.OptanteSimplesNacional = snSim then
+  if (NFSe.OptanteSimplesNacional = snSim) and (NFSe.Servico.Valores.IssRetido = stRetencao) then
     NrOcorrAliquota := 1;
 
   // Solução para o erro "Responsável/Retentor informado indevido. (E282)"

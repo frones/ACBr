@@ -44,7 +44,13 @@ Símbolo : Significado
 
 
 18/07/2025
+-- Pronim.GravarXml --
+[*] #TK-7281: Alterado a condição para gerar a tag Aliquota em função se o prestador
+    é optante pelo simples nacional ou não.
+   Por: Maiquel
 -- ACBrNFSeXServicos --
+[*] #TK-7361: Incluída o Params Versao 2.04 para a cidade Congonhas do Norte/MG.
+   Por: Alysson Rengel
 [+] #TK-7365: Cidades incluídas: Acarau/CE, Aiuaba/CE, Altaneira/CE, Amontada/CE, 
               Araripe/CE, Barroquinha/CE, Bela Cruz/CE, Caninde/CE, Capistrano/CE, 
               Carius/CE, Cascavel/CE, Chorozinho/CE, Cruz/CE, Deputado Irapuan Pinheiro/CE, 

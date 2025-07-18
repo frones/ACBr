@@ -142,10 +142,17 @@ begin
 end;
 
 function TNFSeW_NFSeBrasil.GerarServico: TACBrXmlNode;
+var
+  item: string;
 begin
   Result := CreateElement('Servico');
 
   Result.AppendChild(GerarValores);
+
+  item := FormatarItemServico(NFSe.Servico.ItemListaServico, FormatoItemListaServico);
+
+  Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 5, NrOcorrItemListaServico,
+                                                          item, DSC_CLISTSERV));
 
   Result.AppendChild(AddNode(tcStr, '#30', 'CodigoTributacaoMunicipio', 1, 20, 0,
                      NFSe.Servico.CodigoTributacaoMunicipio, DSC_CSERVTRIBMUN));

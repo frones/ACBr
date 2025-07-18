@@ -40,6 +40,7 @@ uses
   SysUtils, StrUtils, Classes;
 
 type
+// Reforma Tributária
   TtpEnteGov = (tcgNenhum, tcgUniao, tcgEstados, tcgDistritoFederal,
                 tcgMunicipios);
 
@@ -77,7 +78,7 @@ type
     ct400001, ct410001, ct410002, ct410003, ct410004, ct410005, ct410006,
     ct410007, ct410008, ct410009, ct410010, ct410011, ct410012, ct410013,
     ct410014, ct410015, ct410016, ct410017, ct410018, ct410019, ct410020,
-    ct410021, ct410099, ct510001, ct510002, ct550001, ct550002, ct550003,
+    ct410021, ct410999, ct510001, ct510002, ct550001, ct550002, ct550003,
     ct550004, ct550005, ct550006, ct550007, ct550008, ct550009, ct550010,
     ct550011, ct550012, ct550013, ct550014, ct550015, ct550016, ct550017,
     ct550018, ct550019, ct550020, ct620001, ct620002, ct620003, ct620004,
@@ -99,7 +100,7 @@ const
     '400001', '410001', '410002', '410003', '410004', '410005', '410006',
     '410007', '410008', '410009', '410010', '410011', '410012', '410013',
     '410014', '410015', '410016', '410017', '410018', '410019', '410020',
-    '410021', '410099', '510001', '510002', '550001', '550002', '550003',
+    '410021', '410999', '510001', '510002', '550001', '550002', '550003',
     '550004', '550005', '550006', '550007', '550008', '550009', '550010',
     '550011', '550012', '550013', '550014', '550015', '550016', '550017',
     '550018', '550019', '550020', '620001', '620002', '620003', '620004',
@@ -117,6 +118,7 @@ const
 {
   Declaração das funções de conversão
 }
+
 // Reforma Tributária
 function tpEnteGovToStr(const t: TtpEnteGov): string;
 function StrTotpEnteGov(const s: string): TtpEnteGov;
@@ -136,9 +138,9 @@ function StrTocCredPres(const s: string): TcCredPres;
 implementation
 
 uses
-  typinfo,
   ACBrBase;
 
+// Reforma Tributária
 function tpEnteGovToStr(const t: TtpEnteGov): string;
 begin
   Result := TtpEnteGovArrayStrings[t];

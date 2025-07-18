@@ -4467,7 +4467,7 @@ begin
 
     if (idCSRT <> 0) and (CSRT <> '') then
     begin
-      Result.AppendChild(AddNode(tcInt, '#086', 'idCSRT', 2, 2, 1,
+      Result.AppendChild(AddNode(tcInt, '#086', 'idCSRT', 3, 3, 1,
                                                            idCSRT, DSC_IDCSRT));
 
       Result.AppendChild(AddNode(tcStr, '#087', 'hashCSRT', 28, 28, 1,

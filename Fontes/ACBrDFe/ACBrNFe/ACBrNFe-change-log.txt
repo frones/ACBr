@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/07/2025
+-- ACBrNFe.XmlWriter --
+[*] #TK-7355: Alteração visando gerar os grupos gIBSCBS e IBSCBSTot para o CST = 410.
+  Por: Daniel Pohren/Italo Giurizzato Junior
+
 11/07/2025
 -- ACBrNFe.XmlWriter --
 [*] #TK-7311: Correção visando gerar o grupo Monofasia corretamente.

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/07/2025
+-- ACBrMDFe.XmlWriter --
+[*] Correção no tamanho mínimo e máximo da tag idCSRT.
+   Por: Italo Giurizzato Junior
+
 18/06/2025
 -- Diversos --
 [*] Substituido o tipo TpcnTipoAmbiente por TACBrTipoAmbiente e consequentemente

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 18/07/2025
+-- ACBrNFSeXLerXml/ACBrNFSeXGravarXml --
+[*] #TK-7322: Acrescentado o campo Transacao na seção IdentificacaoNFSe,
+              cujo valor pode ser 1 = True ou 2 = False.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] #TK-7354: Possível solução para gerar o link da NFS-e.
    Por: Italo Giurizzato Junior

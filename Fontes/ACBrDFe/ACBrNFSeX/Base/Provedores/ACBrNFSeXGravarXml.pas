@@ -607,6 +607,8 @@ begin
       if Trim(Assinatura) <> '' then
         INIRec.WriteString(sSecao, 'Assinatura', Assinatura);
 
+      INIRec.WriteString(sSecao, 'Transacao', FpAOwner.SimNaoToStr(Transacao));
+
       sSecao:= 'IdentificacaoRps';
       INIRec.WriteString(sSecao, 'SituacaoTrib', FpAOwner.SituacaoTribToStr(SituacaoTrib));
       INIRec.WriteString(sSecao, 'Producao', FpAOwner.SimNaoToStr(Producao));

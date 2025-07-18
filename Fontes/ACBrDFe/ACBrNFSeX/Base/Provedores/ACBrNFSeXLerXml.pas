@@ -38,7 +38,9 @@ interface
 
 uses
   SysUtils, Classes, IniFiles, types,
-  ACBrBase, ACBrXmlBase, ACBrXmlReader,
+  ACBrBase,
+  ACBrXmlBase,
+  ACBrXmlReader,
   ACBrXmlDocument,
   ACBrNFSeXInterface, ACBrNFSeXClass, ACBrNFSeXConversao;
 
@@ -625,6 +627,8 @@ begin
       Link := AINIRec.ReadString(sSecao, 'Link', '');
       DescricaoCodigoTributacaoMunicipio := AINIRec.ReadString(sSecao, 'DescricaoCodigoTributacaoMunicipio', '');
       Assinatura := AINIRec.ReadString(sSecao, 'Assinatura', '');
+      // 1 = True; 2 = False
+      Transacao := FpAOwner.StrToSimNao(Ok, AINIRec.ReadString(sSecao, 'Transacao', '1'));
     end;
 
     sSecao := 'IdentificacaoRps';

@@ -93,11 +93,13 @@ contains
 
   ACBrCTe.Consts in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.Consts.pas',
   ACBrCTe.Classes in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.Classes.pas',
+  ACBrCTe.Conversao in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.Conversao.pas',
   ACBrCTe.IniReader in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.IniReader.pas',
   ACBrCTe.IniWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.IniWriter.pas',
 
   {$IFDEF USE_ACBr_XMLDOCUMENT}
   ACBrCTe.XmlHandler in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.XmlHandler.pas',
+  ACBrCTe.XmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.XmlReader.pas',
   ACBrCTe.XmlWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.XmlWriter.pas',
   {$ELSE}
   pcteCTeR in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTeR.pas',

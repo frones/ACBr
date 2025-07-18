@@ -427,6 +427,7 @@ end;
 function TNFSeW_Agili.GerarInfDeclaracaoPrestacaoServico: TACBrXmlNode;
 var
   xmlNode: TACBrXmlNode;
+  item: string;
 begin
   Result := CreateElement('InfDeclaracaoPrestacaoServico');
 
@@ -480,13 +481,41 @@ begin
     Result.AppendChild(xmlNode);
   end;
 
+  case VersaoNFSe of
+    ve100:
+      begin
+        Result.AppendChild(AddNode(tcStr, '#1', 'CodigoAtividadeEconomica', 1, 140, 0,
+                                   NFSe.Servico.CodigoTributacaoMunicipio, ''));
+
+//        Result.AppendChild(AddNode(tcStr, '#1', 'CodigoListaServicoMunicipal', 1, 140, 0,
+//                                   NFSe.Servico.CodigoTributacaoMunicipio, ''));
+
+        Result.AppendChild(AddNode(tcStr, '#1', 'CodigoCnaeAtividadeEconomica', 1, 140, 0,
+                                    FormatarCnae(NFSe.Servico.CodigoCnae), ''));
+
+        item := FormatarItemServico(NFSe.Servico.ItemListaServico, FormatoItemListaServico);
+
+        Result.AppendChild(AddNode(tcStr, '#1', 'ItemLei116AtividadeEconomica', 1, 140, 0,
+                                                                     item, ''));
+      end;
+
+    ve101:
+      begin
+        Result.AppendChild(AddNode(tcStr, '#1', 'CodigoAtividadeEconomica', 1, 140, 1,
+                                   NFSe.Servico.CodigoTributacaoMunicipio, ''));
+
+        Result.AppendChild(AddNode(tcStr, '#1', 'CodigoCnae', 7, 15, 0,
+                                    FormatarCnae(NFSe.Servico.CodigoCnae), ''));
+      end;
+  end;
+  {
   if NaoEstaVazio(NFSe.Servico.CodigoTributacaoMunicipio) then
     Result.AppendChild(AddNode(tcStr, '#1', FpAtividadeEconomica, 1, 140, 1,
                                     NFSe.Servico.CodigoTributacaoMunicipio, ''))
   else
     Result.AppendChild(AddNode(tcStr, '#1', FpAtividadeEconomica, 1, 140, 1,
                                     FormatarCnae(NFSe.Servico.CodigoCnae), ''));
-
+  }
   xmlNode := GerarExigibilidadeISSQN;
   Result.AppendChild(xmlNode);
 

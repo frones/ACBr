@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 18/07/2025
+-- Agili.GravarXml --
+[*] #TK-7327: Possível solução para gerar as tags corretas com os valores corretos,
+              dos campos CodigoAtividadeEconomica, CodigoCnaeAtividadeEconomica e
+              ItemLei116AtividadeEconomica.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXWebserviceBase --
 [*] #TK-7351: Alteração visando apresentar algumas mensagens de erros mais claras.
    Por: João Vitor Bogo

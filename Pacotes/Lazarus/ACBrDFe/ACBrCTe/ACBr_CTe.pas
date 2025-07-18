@@ -9,11 +9,12 @@ interface
 
 uses
   ACBrCTeConhecimentos, ACBrCTe, pcteConversaoCTe, ACBrCTeConfiguracoes, 
-  ACBrCTeReg, ACBrCTeWebServices, ACBrCTe.XmlWriter, pcteCTeR, pcteCTeW, 
-  pcteInutCTe, pcteProcCTe, ACBrCTeDACTEClass, ACBrCTe.Classes, 
-  ACBrCTe.XmlHandler, ACBrCTe.ConsSit, ACBrCTe.RetConsSit, 
+  ACBrCTeReg, ACBrCTeWebServices, ACBrCTe.XmlWriter, ACBrCTe.XmlReader, 
+  pcteCTeR, pcteCTeW, pcteInutCTe, pcteProcCTe, ACBrCTeDACTEClass, 
+  ACBrCTe.Classes, ACBrCTe.XmlHandler, ACBrCTe.ConsSit, ACBrCTe.RetConsSit, 
   ACBrCTe.EventoClass, ACBrCTe.EnvEvento, ACBrCTe.RetEnvEvento, 
-  ACBrCTe.Consts, ACBrCTe.IniReader, ACBrCTe.IniWriter, LazarusPackageIntf;
+  ACBrCTe.Consts, ACBrCTe.IniReader, ACBrCTe.IniWriter, 
+  ACBrCTe.Conversao, LazarusPackageIntf;
 
 implementation
 

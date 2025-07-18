@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Conhecimento de Transporte Eletrônico - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="23">
+    <Files Count="25">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeConhecimentos.pas"/>
         <UnitName Value="ACBrCTeConhecimentos"/>
@@ -109,6 +109,14 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.IniWriter.pas"/>
         <UnitName Value="ACBrCTe.IniWriter"/>
       </Item23>
+      <Item24>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.Conversao.pas"/>
+        <UnitName Value="ACBrCTe.Conversao"/>
+      </Item24>
+      <Item25>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.XmlReader.pas"/>
+        <UnitName Value="ACBrCTe.XmlReader"/>
+      </Item25>
    </Files>
     <RequiredPkgs Count="1">
       <Item1>

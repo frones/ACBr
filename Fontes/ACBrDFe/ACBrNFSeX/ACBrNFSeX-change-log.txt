@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/07/2025
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] #TK-7354: Possível solução para gerar o link da NFS-e.
+   Por: Italo Giurizzato Junior
 -- Agili.GravarXml --
 [*] #TK-7327: Possível solução para gerar as tags corretas com os valores corretos,
               dos campos CodigoAtividadeEconomica, CodigoCnaeAtividadeEconomica e

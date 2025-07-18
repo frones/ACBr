@@ -43,6 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/07/2025
+-- ACBrNFSeXServicos --
+[+] #TK-7365: Cidades incluídas: Acarau/CE, Aiuaba/CE, Altaneira/CE, Amontada/CE, 
+              Araripe/CE, Barroquinha/CE, Bela Cruz/CE, Caninde/CE, Capistrano/CE, 
+              Carius/CE, Cascavel/CE, Chorozinho/CE, Cruz/CE, Deputado Irapuan Pinheiro/CE, 
+              Groairas/CE, Itaicaba/CE, Jaguaretama/CE, Monsenhor Tabosa/CE, Morrinhos/CE, 
+              Mucambo/CE, Ocara/CE, Senador Sa/CE
+   Por: Anderson Grolli
+[*] #TK-7366: Incluída a URL de homologação da cidade Penapolis/SP.
+   Por: João Vitor Bogo
+
 17/07/2025
 -- ACBrNFSeXServicos --
 [+] #TK-7362: Cidades incluídas: Acaua/PI, Agricolandia/PI, Alagoinha do Piaui/PI, 

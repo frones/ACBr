@@ -53,7 +53,7 @@ uses
   ACBrXmlDocument, ACBrNFSeXConversao;
 
 resourcestring
-  ERR_NAO_IMP = 'Serviço não implementado para este provedor.';
+  ERR_NAO_IMP = 'Serviço %s não implementado para este provedor.';
   ERR_SEM_URL_PRO = 'Não informado a URL de Produção, favor entrar em contato com a Prefeitura ou Provedor.';
   ERR_SEM_URL_HOM = 'Não informado a URL de Homologação, favor entrar em contato com a Prefeitura ou Provedor.';
 
@@ -1154,105 +1154,105 @@ end;
 function TACBrNFSeXWebservice.Recepcionar(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Recepcionar']));
 end;
 
 function TACBrNFSeXWebservice.ConsultarDFe(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Consultar DFe']));
 end;
 
 function TACBrNFSeXWebservice.ConsultarEvento(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Consultar Evento']));
 end;
 
 function TACBrNFSeXWebservice.ConsultarLote(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Consultar Lote']));
 end;
 
 function TACBrNFSeXWebservice.ConsultarSeqRps(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Consultar Sequencial RPS']));
 end;
 
 function TACBrNFSeXWebservice.ConsultarSituacao(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Consultar Situação']));
 end;
 
 function TACBrNFSeXWebservice.ConsultarNFSePorRps(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Consultar NFSe Por RPS']));
 end;
 
 function TACBrNFSeXWebservice.ConsultarNFSe(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Consultar NFSe']));
 end;
 
 function TACBrNFSeXWebservice.ConsultarNFSePorChave(const ACabecalho,
   AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Consultar NFSe Por Chave']));
 end;
 
 function TACBrNFSeXWebservice.ConsultarNFSePorFaixa(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Consultar NFSe Por Faixa']));
 end;
 
 function TACBrNFSeXWebservice.ConsultarNFSeServicoPrestado(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Consultar Serviço Prestado NFSe']));
 end;
 
 function TACBrNFSeXWebservice.ConsultarNFSeServicoTomado(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Consultar Serviço Tomado NFSe']));
 end;
 
 function TACBrNFSeXWebservice.ConsultarParam(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Consultar Parâmetro']));
 end;
 
 function TACBrNFSeXWebservice.ConsultarLinkNFSe(const ACabecalho,
   AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Consultar Link NFSe']));
 end;
 
 function TACBrNFSeXWebservice.Cancelar(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Cancelar']));
 end;
 
 function TACBrNFSeXWebservice.GerarNFSe(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Gerar NFSe']));
 end;
 
 function TACBrNFSeXWebservice.RecepcionarSincrono(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Recepcionar Síncrono']));
 end;
 
 function TACBrNFSeXWebservice.RetornaHTMLNota(const Retorno: string): string;
@@ -1282,37 +1282,37 @@ end;
 function TACBrNFSeXWebservice.SubstituirNFSe(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Substituir NFSe']));
 end;
 
 function TACBrNFSeXWebservice.GerarToken(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Gerar Token']));
 end;
 
 function TACBrNFSeXWebservice.AbrirSessao(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Abrir Sessão']));
 end;
 
 function TACBrNFSeXWebservice.FecharSessao(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Fechar Sessão']));
 end;
 
 function TACBrNFSeXWebservice.TesteEnvio(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Teste Envio']));
 end;
 
 function TACBrNFSeXWebservice.EnviarEvento(const ACabecalho, AMSG: string): string;
 begin
   Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  raise EACBrDFeException.Create(Format(ERR_NAO_IMP, ['Enviar Evento']));
 end;
 
 { TACBrNFSeXWebserviceSoap11 }

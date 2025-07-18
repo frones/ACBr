@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/07/2025
+-- ACBrNFSeXWebserviceBase --
+[*] #TK-7351: Alteração visando apresentar algumas mensagens de erros mais claras.
+   Por: João Vitor Bogo
 -- SigISSWeb.GravarXml --
 [*] #TK-7314: Alteração visando gerar o XML corretamente para tomador fora do pais.
    Por: ArecoDesenv

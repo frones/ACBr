@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/07/2025
+-- ACBrNFSeXClass --
+[*] #TK-7322: Inclusão do campo Transacao na Classe: TNFSe.
+   Por: Italo Giurizzato Junior
 -- NFSeBrasil.Provider/NFSeBrasil.GravarXml --
 [*] #TK-7358: Possível solução para o envio correto do RPS.
    Por: Italo Giurizzato Junior

@@ -1779,6 +1779,7 @@ type
     FFrmRec: TFrmRec;
     FTipoTributacaoRPS: TTipoTributacaoRPS;
     FAssinatura: string;
+    FTransacao: TnfseSimNao;
     FInformacoesComplementares: string;
 
     FPercentualCargaTributaria: Double;
@@ -1897,8 +1898,10 @@ type
 
     property TipoTributacaoRPS: TTipoTributacaoRPS read FTipoTributacaoRPS write FTipoTributacaoRPS;
 
-    // Provedor SP
+    // Provedor ISSSaoPaulo
     property Assinatura: string read FAssinatura write FAssinatura;
+    property Transacao: TnfseSimNao read FTransacao write FTransacao;
+
     // Provedor Governa
     property RegRec: TRegRec read FRegRec write FRegRec;
     property FrmRec: TFrmRec read FFrmRec write FFrmRec;

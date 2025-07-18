@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/07/2025
+-- SigISSWeb.GravarXml --
+[*] #TK-7314: Alteração visando gerar o XML corretamente para tomador fora do pais.
+   Por: ArecoDesenv
 -- Pronim.GravarXml --
 [*] #TK-7281: Alterado a condição para gerar a tag Aliquota em função se o prestador
     é optante pelo simples nacional ou não.

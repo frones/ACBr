@@ -93,25 +93,19 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'exterior_dest', 1, 1, 1,
                                                       tomadorIdentificado, ''));
 
-  if tomadorIdentificado = '0' then
-  begin
-    tipoPessoa := 'J';
-
-    if Length(NFSe.Tomador.IdentificacaoTomador.CpfCnpj) < 14 then
-      tipoPessoa := 'F';
-
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cnpj_cpf_destinatario', 11, 14, 1,
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cnpj_cpf_destinatario', 11, 14, 1,
                                 NFSe.Tomador.IdentificacaoTomador.CpfCnpj, ''));
 
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'pessoa_destinatario', 1, 1, 1,
+  tipoPessoa := IfThen(NFSe.Tomador.IdentificacaoTomador.Tipo = TTipoPessoa.tpPF, 'F', 'J');
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'pessoa_destinatario', 1, 1, 1,
                                                                tipoPessoa, ''));
 
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ie_destinatario', 1, 16, 1,
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ie_destinatario', 1, 16, 1,
                       NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, ''));
 
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'im_destinatario', 1, 16, 1,
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'im_destinatario', 1, 16, 1,
                      NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, ''));
-  end;
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'razao_social_destinatario', 1, 60, 1,
                                                  NFSe.Tomador.RazaoSocial, ''));

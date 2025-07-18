@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/07/2025
+-- ACBrBPeXmlWriter --
+[*] Correção no tamanho mínimo e máximo da tag idCSRT.
+   Por: Italo Giurizzato Junior
+
 17/06/2025
 -- ACBrBPeWebServices --
 [*] #TK-7205: Melhorias no Consultar visando salvar o XML do evento retornado 

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/07/2025
+-- ISSDSF.Provider/ISSSaoPaulo.Provider --
+[*] #TK-7322: Alteração visando usar o campo Transacao no envio do lote de RPS.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml/ACBrNFSeXGravarXml --
 [*] #TK-7322: Acrescentado o campo Transacao na seção IdentificacaoNFSe,
               cujo valor pode ser 1 = True ou 2 = False.

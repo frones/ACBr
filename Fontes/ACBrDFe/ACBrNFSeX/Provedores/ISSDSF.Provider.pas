@@ -397,6 +397,7 @@ var
   DataInicial, DataFinal: TDateTime;
   vTotServicos, vTotDeducoes: Double;
   wAno, wMes, wDia: Word;
+  Transacao: Boolean;
 begin
   if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
   begin
@@ -453,6 +454,8 @@ begin
     begin
       DataInicial := Nota.NFSe.DataEmissao;
       DataFinal := DataInicial;
+
+      Transacao := (Nota.NFSe.Transacao = snSim);
     end;
 
     if Nota.NFSe.DataEmissao < DataInicial then
@@ -514,7 +517,8 @@ begin
                     TiraAcentos(Trim(Emitente.RazSocial)) +
                   '</RazaoSocialRemetente>' +
                   '<transacao>' +
-                     LowerCase(BoolToStr(TACBrNFSeX(FAOwner).NotasFiscais.Transacao, True)) +
+//                     LowerCase(BoolToStr(TACBrNFSeX(FAOwner).NotasFiscais.Transacao, True)) +
+                     LowerCase(BoolToStr(Transacao, True)) +
                   '</transacao>' +
                   '<dtInicio>' + xDataI + '</dtInicio>' +
                   '<dtFim>' + xDataF + '</dtFim>' +

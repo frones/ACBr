@@ -422,6 +422,7 @@ var
   DataInicial, DataFinal: TDateTime;
   vTotServicos, vTotDeducoes: Double;
   wAno, wMes, wDia: Word;
+  Transacao: Boolean;
 begin
   if Response.ModoEnvio = meLoteSincrono then
   begin
@@ -486,6 +487,8 @@ begin
     begin
       DataInicial := Nota.NFSe.DataEmissao;
       DataFinal := DataInicial;
+
+      Transacao := (Nota.NFSe.Transacao = snSim);
     end;
 
     if Nota.NFSe.DataEmissao < DataInicial then
@@ -565,7 +568,8 @@ begin
                         xCNPJCPF +
                       '</CPFCNPJRemetente>' +
                       '<transacao>' +
-                        LowerCase(BoolToStr(TACBrNFSeX(FAOwner).NotasFiscais.Transacao, True)) +
+//                        LowerCase(BoolToStr(TACBrNFSeX(FAOwner).NotasFiscais.Transacao, True)) +
+                        LowerCase(BoolToStr(Transacao, True)) +
                       '</transacao>' +
                       '<dtInicio>' + xDataI + '</dtInicio>' +
                       '<dtFim>' + xDataF + '</dtFim>' +

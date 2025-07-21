@@ -151,12 +151,24 @@ end;
 
 procedure TBoletoWSREST.DefinirCertificado;
 begin
-  BoletoWS.ArquivoCRT   := Boleto.Configuracoes.WebService.ArquivoCRT;
+  BoletoWS.Senha        := Boleto.Configuracoes.WebService.Senha;
+  BoletoWS.DadosPFX     := Boleto.Configuracoes.WebService.DadosPFX;     //BLOB PFX
+  BoletoWS.ChavePrivada := Boleto.Configuracoes.WebService.ChavePrivada; //BLOB KEY
+  BoletoWS.Certificado  := Boleto.Configuracoes.WebService.Certificado;  //BLOB CRT/PEM
+  BoletoWS.ArquivoPFX   := Boleto.Configuracoes.WebService.ArquivoPFX;
   BoletoWS.ArquivoKEY   := Boleto.Configuracoes.WebService.ArquivoKEY;
-  BoletoWS.ChavePrivada := Boleto.Configuracoes.WebService.ChavePrivada;
-  BoletoWS.Certificado  := Boleto.Configuracoes.WebService.Certificado;
+  BoletoWS.ArquivoCRT   := Boleto.Configuracoes.WebService.ArquivoCRT;
 
-    // Adicionando o chave privada
+  if NaoEstaVazio(BoletoWS.Senha) then
+    HTTPSend.Sock.SSL.KeyPassword := BoletoWS.Senha;
+  // Adicionando o chave privada
+
+  if NaoEstaVazio(BoletoWS.DadosPFX) then
+    HTTPSend.Sock.SSL.PFX         := BoletoWS.DadosPFX
+  else
+  if NaoEstaVazio(BoletoWS.ArquivoPFX) then
+    HTTPSend.Sock.SSL.PFXfile     := BoletoWS.ArquivoPFX;
+
   if NaoEstaVazio(BoletoWS.ChavePrivada) then
   begin
     if StringIsPEM(BoletoWS.ChavePrivada) then

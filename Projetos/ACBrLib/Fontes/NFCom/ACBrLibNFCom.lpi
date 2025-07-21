@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+        <MainUnitHasScaledStatement Value="False"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <Title Value="ACBrLibNFCom"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+    </General>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <Language Value="0416"/>
+      <StringTable Comments="Projeto ACBr" CompanyName="ACBrNFCom -  Biblioteca para uso da NFCom" FileDescription="ACBrLibNFCom" InternalName="ACBrLibNFCom" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="NFCom" ProductVersion="0.0.0.0"/>
+    </VersionInfo>
+    <BuildModes>
+      <Item Name="Win32-i386-CDECL" Default="True"/>
+      <Item Name="Win64-x86_64-CDECL">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Windows\ST\Cdecl\ACBrNFCom64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Win32-i386-STDCALL">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Windows\ST\StdCall\ACBrNFCom32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dSTDCALL -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Win64-x86_64-STDCALL">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Windows\ST\StdCall\ACBrNFCom64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dSTDCALL -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Linux-x86_64">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Linux\ST\acbrnfcom64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Linux-i386">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Linux\ST\acbrnfcom32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <Item Name="i386-CDECL-DEBUG">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\..\Testes\NFCom\bin\ACBrNFCom32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <UseHeaptrc Value="True"/>
+              <TrashVariables Value="True"/>
+            </Debugging>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dDEBUG -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Win32-i386-CDECL-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Windows\MT\Cdecl\ACBrNFCom32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Win32-i386-STDCALL-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Windows\MT\StdCall\ACBrNFCom32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dSTDCALL -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Win64-x86_64-CDECL-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Windows\MT\Cdecl\ACBrNFCom64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Win64-x86_64-STDCALL-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Windows\MT\StdCall\ACBrNFCom64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dSTDCALL -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Linux-x86_64-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Linux\MT\acbrnfcom64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Linux-i386-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Linux\MT\acbrnfcom32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+    <RunParams>
+      <FormatVersion Value="2"/>
+    </RunParams>
+    <RequiredPackages>
+      <Item>
+        <PackageName Value="FCL"/>
+      </Item>
+      <Item>
+        <PackageName Value="ACBr_NFCom_DANFComRL"/>
+      </Item>
+      <Item>
+        <PackageName Value="ACBrTCP"/>
+      </Item>
+      <Item>
+        <PackageName Value="LCL"/>
+      </Item>
+      <Item>
+        <PackageName Value="ACBr_NFCom"/>
+      </Item>
+    </RequiredPackages>
+    <Units>
+      <Unit>
+        <Filename Value="ACBrLibNFCom.lpr"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ACBrLibNFComDataModule.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="LibNFComDM"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ACBrLibNFComMT.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ACBrLibNFComST.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ACBrLibNFComConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ACBrLibNFComBase.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ACBrLibNFComConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ACBrLibNFComRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ACBrLibNFComStaticImportST.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ACBrLibNFComStaticImportMT.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Comum\ACBrLibComum.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Comum\ACBrLibConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Comum\ACBrLibConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="bin\Windows\ST\Cdecl\ACBrNFCom32"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+      <OtherUnitFiles Value="..\Comum"/>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <SyntaxMode Value="Delphi"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+      <TargetCPU Value="i386"/>
+      <TargetOS Value="win32"/>
+      <Optimizations>
+        <OptimizationLevel Value="3"/>
+      </Optimizations>
+    </CodeGeneration>
+    <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+        <UseLineInfoUnit Value="False"/>
+        <StripSymbols Value="True"/>
+      </Debugging>
+      <LinkSmart Value="True"/>
+      <Options>
+        <ExecutableType Value="Library"/>
+      </Options>
+    </Linking>
+    <Other>
+      <CustomOptions Value="-dNOGUI"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions>
+      <Item>
+        <Name Value="EAbort"/>
+      </Item>
+      <Item>
+        <Name Value="ECodetoolError"/>
+      </Item>
+      <Item>
+        <Name Value="EFOpenError"/>
+      </Item>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

@@ -434,14 +434,13 @@ var
   S: String;
 begin
   S := OnlyAlphaNum(AValue);
-  if Length(S) = 0 then
-     Result := S
-  else
-  begin
-    if Length(S) > 11 then
-      Result := FormatarCNPJ(S)
+  case Length(S) of
+    11 : Result := FormatarCPF(S);
+    14 : Result := FormatarCNPJ(S);
     else
-      Result := FormatarCPF(S);
+      // Devolve o [AValue] de entrada sem processamentos, pois não
+      // encontrou no case um tamanho válido para CPF 11 ou CNPJ 14.
+      Result := AValue;
   end;
 end;
 

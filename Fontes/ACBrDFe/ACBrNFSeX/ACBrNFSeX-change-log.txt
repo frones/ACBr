@@ -43,6 +43,64 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+22/07/2025
+-- ACBrNFSeXServicos --
+[+] #TK-7388: Cidades incluídas: Afranio/PE, Agrestina/PE, Agua Preta/PE, 
+    Altinho/PE, Amaraji/PE, Arcoverde/PE, Barra de Guabiraba/PE, 
+    Belem de Maria/PE, Belo Jardim/PE, Bom Conselho/PE, Bom Jardim/PE, 
+    Bonito/PE, Brejo da Madre de Deus/PE, Buique/PE, Camocim de Sao Felix/PE, 
+    Camutanga/PE, Canhotinho/PE, Carnaiba/PE, Casinhas/PE, Catende/PE, 
+    Cha Grande/PE, Condado/PE, Cupira/PE, Feira Nova/PE, Ferreiros/PE, 
+    Gloria do Goita/PE, Granito/PE, Gravata/PE, Ibirajuba/PE, Iguaracy/PE, 
+    Ingazeira/PE, Ipubi/PE, Ilha de Itamaraca/PE, Itambe/PE, Itaquitinga/PE, 
+    Jaqueira/PE, Joao Alfredo/PE, Joaquim Nabuco/PE, Jupi/PE, Lagoa do Carro/PE, 
+    Lagoa do Itaenga/PE, Lagoa dos Gatos/PE, Lajedo/PE, Machados/PE, Moreno/PE, 
+    Orobo/PE, Oroco/PE, Ouricuri/PE, Panelas/PE, Paudalho/PE, Pesqueira/PE, 
+    Pocao/PE, Pombos/PE, Primavera/PE, Riacho das Almas/PE, Ribeirao/PE, 
+    Salgadinho/PE, Santa Cruz/PE, Santa Filomena/PE, Sao Joaquim do Monte/PE, 
+    Serra Talhada/PE, Serrita/PE, Sertania/PE, Moreilandia/PE, Tamandare/PE, 
+    Timbauba/PE, Toritama/PE, Tracunhaem/PE, Trindade/PE, Verdejante/PE, 
+    Vertentes/PE, Vicencia/PE, Xexeu/PE
+   Por: Anderson Grolli
+[*] #TK-7390: A cidade Águas Frias/SC trocou de provedor, agora é IPM versão 2.04
+   Por: C4Dev
+[+] #TK-7387: Cidades incluídas: Agua Branca/PB, Aguiar/PB, Alagoa Nova/PB, 
+    Alhandra/PB, Aparecida/PB, Aracagi/PB, Araruna/PB, Barauna/PB, 
+    Barra de Santa Rosa/PB, Belem/PB, Bom Jesus/PB, Borborema/PB, Caapora/PB, 
+    Cachoeira dos Indios/PB, Cacimba de Areia/PB, Cacimba de Dentro/PB, 
+    Cajazeiras/PB, Cajazeirinhas/PB, Carrapateira/PB, Catole do Rocha/PB, 
+    Cruz do Espirito Santo/PB, Cubati/PB, Cuitegi/PB, Cuite de Mamanguape/PB, 
+    Damiao/PB, Esperanca/PB, Frei Martinho/PB, Gurinhem/PB, Gurjao/PB, 
+    Itabaiana/PB, Itapororoca/PB, Itatuba/PB, Jerico/PB, Lagoa/PB, 
+    Lagoa de Dentro/PB, Logradouro/PB, Lucena/PB, Malta/PB, Manaira/PB, Mari/PB, 
+    Mataraca/PB, Monteiro/PB, Nazarezinho/PB, Nova Floresta/PB, Nova Olinda/PB, 
+    Olho D Agua/PB, Ouro Velho/PB, Paulista/PB, Pedra Branca/PB, Pedra Lavrada/PB, 
+    Pedras de Fogo/PB, Picui/PB, Piloezinhos/PB, Pirpirituba/PB, Poco Dantas/PB, 
+    Princesa Isabel/PB, Pedro Regis/PB, Riachao/PB, Riachao do Poco/PB, 
+    Riacho dos Cavalos/PB, Rio Tinto/PB, Santa Cecilia/PB, Santa Cruz/PB, 
+    Santa Helena/PB, Santa Ines/PB, Santana de Mangueira/PB, Sao Domingos/PB, 
+    Sao Francisco/PB, Sao Jose da Lagoa Tapada/PB, Sao Jose dos Ramos/PB, 
+    Sao Jose de Piranhas/PB, Sao Sebastiao do Umbuzeiro/PB, Sape/PB, Serido/PB, 
+    Serra Redonda/PB, Serraria/PB, Sertaozinho/PB, Solanea/PB, Soledade/PB, Sousa/PB, 
+    Tenorio/PB, Triunfo/PB, Uirauna/PB, Umbuzeiro/PB, Vieiropolis/PB
+   Por: Anderson Grolli
+[*] #TK-7386: Alterado as URLs da cidade Tres Corações/MG, o provedor continua o mesmo.
+   Por: Bruno Italo
+[+] #TK-7375: Cidades incluídas: Acari/RN, Acu/RN, Bento Fernandes/RN, 
+    Caicara do Rio do Vento/RN, Campo Redondo/RN, Carnaubais/RN, 
+    Coronel Joao Pessoa/RN, Cruzeta/RN, Currais Novos/RN, Espirito Santo/RN, 
+    Extremoz/RN, Frutuoso Gomes/RN, Goianinha/RN, Itaja/RN, Lagoa de Pedras/RN, 
+    Lagoa Nova/RN, Lucrecia/RN, Luis Gomes/RN, Nisia Floresta/RN, Parana/RN, 
+    Parau/RN, Rio do Fogo/RN, Pau dos Ferros/RN, Pedro Avelino/RN, Pedro Velho/RN, 
+    Portalegre/RN, Presidente Juscelino/RN, Pureza/RN, Riachuelo/RN, 
+    Rodolfo Fernandes/RN, Santana do Serido/RN, Sao Bento do Norte/RN, 
+    Sao Fernando/RN, Sao Francisco do Oeste/RN, Sao Joao do Sabugi/RN, 
+    Sao Miguel do Gostoso/RN, Sao Tome/RN, Sao Vicente/RN, 
+    Senador Georgino Avelino/RN, Serra de Sao Bento/RN, Serra do Mel/RN, 
+    Serra Negra do Norte/RN, Serrinha/RN, Severiano Melo/RN, Tangara/RN, 
+    Tenente Ananias/RN, Timbauba dos Batistas/RN, Touros/RN, Umarizal/RN, Venha-Ver/RN
+   Por: Anderson Grolli
+
 18/07/2025
 -- SigISSWeb.GravarXML --
 [-] Ajuste visando corrigir erro de compilação no Delphi 7

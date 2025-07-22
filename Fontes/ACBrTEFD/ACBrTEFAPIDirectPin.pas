@@ -104,7 +104,7 @@ type
 implementation
 
 uses
-  DateUtils,
+  DateUtils, Math,
   ACBrJSON,
   ACBrUtil.DateTime;
 
@@ -123,19 +123,21 @@ begin
   try
     Sucesso := js.AsBoolean['result'];
     TextoEspecialOperador := js.AsString['message'];
+
     s := js.AsString['receiptContent'];
     ImagemComprovante1aVia.Text := StringReplace(s, '@', sLineBreak, [rfReplaceAll]);
     ImagemComprovante2aVia.Text := ImagemComprovante1aVia.Text;
-    DataHoraTransacaoHost := UnixMillisecondsToDateTime(js.AsInt64['date']);
+
+    DataHoraTransacaoHost := UnixMillisecondsToDateTime(js.AsInt64['date'], False);
+    DataHoraTransacaoLocal := DataHoraTransacaoHost;
+
     ValorTotal := js.AsInteger['amount']/100;
     NSU := js.AsString['nsu'];
     CodigoAutorizacaoTransacao := js.AsString['nsuAcquirer'];
     PAN := js.AsString['panMasked'];
-    s := js.AsString['typeCard'];     //TODO Verificar resultados;
-    if (s = '') then;
-
-    s := js.AsString['finalResult'];  //TODO: Verificar resultados
-    if (TextoEspecialOperador = '') and (s <> '') then
+    Finalizacao := UpperCase(js.AsString['typeCard']);
+    StatusTransacao := js.AsString['finalResult'];
+    if (TextoEspecialOperador = '') and (StatusTransacao <> '') then
       TextoEspecialOperador := s;
 
     TipoTransacao := js.AsInteger['codeResult'];
@@ -231,6 +233,8 @@ var
   Payload: String;
 begin
   fUltimaResposta := '';
+  Parcelas := max(Parcelas, 1);
+
   if (Financiamento > tefmfAVista) then
     ct := dpcINSTALLMENT
   else
@@ -248,9 +252,9 @@ begin
     tt := dptNONE;
 
   if (Financiamento in [tefmfParceladoEmissor, tefmfCreditoEmissor]) then
-    it := dpiMERCHANT
+    it := dpiISSUER
   else
-    it := dpiISSUER;
+    it := dpiMERCHANT;
 
   ReqTrans := TDPPayloadRequestTransaction.Create;
   try

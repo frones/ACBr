@@ -493,7 +493,7 @@ begin
     nsu := js.AsString['nsu'];
     nsuAcquirer := js.AsString['nsuAcquirer'];
     panMasked := js.AsString['panMasked'];
-    date := UnixMillisecondsToDateTime(js.AsInt64['date']);
+    date := UnixMillisecondsToDateTime(js.AsInt64['date'], False);
     typeCard := js.AsString['typeCard'];
     finalResult := js.AsString['finalResult'];
     codeResult := js.AsInteger['codeResult'];

@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/07/2025
+-- ACBrTEFAPIDirectPin, ACBrTEFDirectPinAPI, ACBrTEFTPagAPI --
+[*] Ajuste no Payload para correto funcionamento da chamada do DirectPin
+[*] Ajustes no tratamento do retorno, e na Data em UnixTime
+	(por: DSA)
+	
 14/07/2025
 -- ACBrTEFAPI, ACBrTEFAPIDirectPin, ACBrTEFDirectPinAPI --
 [+] Adicionado novo modelo de TEF - DirectPin Transire

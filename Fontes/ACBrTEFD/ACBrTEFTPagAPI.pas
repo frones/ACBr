@@ -720,7 +720,7 @@ begin
   sl.Values['typeTransaction'] := Trim(String(ATransaction.typeTransaction));
   sl.Values['installments'] := IntToStr(ATransaction.installments);
   sl.Values['transactionStatus'] := IntToStr(ATransaction.transactionStatus);
-  d := UnixMillisecondsToDateTime(ATransaction.date);
+  d := UnixMillisecondsToDateTime(ATransaction.date, False);
   s := FormatDateTime('YYYYMMDDHHNNSS', d);
   sl.Values['date'] := s;
   sl.Values['nsuResponse'] := Trim(String(ATransaction.nsuResponse));

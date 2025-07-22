@@ -746,6 +746,7 @@ begin
   Result := RemoverIdentacao(Result);
   Result := RemoverCaracteresDesnecessarios(Result);
   Result := RemoverPrefixosDesnecessarios(Result);
+  Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
 end;
 
 {

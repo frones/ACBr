@@ -44,8 +44,12 @@ Símbolo : Significado
 
 
 22/07/2025
+-- SimplISS.Provider --
+[*] #TK-7389: Alteração na função TratarXmlRetornado visando corrigir o erro:
+              Erro de Conexão: xmlParseEntityRef: no name.
+   Por: Fernando Batista
 -- SigISSWeb.Provider --
-[*] #TK-7353:  Ajustes para salvar o XML na codificação correta.
+[*] #TK-7353: Ajustes para salvar o XML na codificação correta.
    Por: Areco Desenv/Italo Giurizzato Junior
 -- Giap.Provider --
 [*] Possível solução para gerar o XML da NFS-e para Araraquara.

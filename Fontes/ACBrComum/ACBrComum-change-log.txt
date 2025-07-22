@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/07/2025
+-- ACBrUtil.DateTime --
+[*] Ajuste em 'UnixMillisecondsToDateTime', para informar se o parâmetro já está 
+	com UTC incluso no valor de entrada
+
 30/05/2025
 -- ACBrBase --
 [*] Ajustes em métodos de TACBrInformacao: GetAsDate, GetAsTime, GetAsTimeStamp,

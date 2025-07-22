@@ -157,7 +157,7 @@ type
 
   function UnixDateTimeBase: TDateTime;
   function DateTimeToUnixMilliseconds(const AValue: TDateTime; InputIsUTC: Boolean = True): Int64;
-  function UnixMillisecondsToDateTime(const AValue: Int64): TDateTime;
+  function UnixMillisecondsToDateTime(const AValue: Int64; InputIsUTC: Boolean = True): TDateTime;
 
 var
   TimeZoneConfInstance: TTimeZoneConf;
@@ -1205,9 +1205,16 @@ end;
 {-----------------------------------------------------------------------------
   Converte um Valor de Unix Time em Milisegundos para Pascal TDateTime
  -----------------------------------------------------------------------------}
-function UnixMillisecondsToDateTime(const AValue: Int64): TDateTime;
+function UnixMillisecondsToDateTime(const AValue: Int64; InputIsUTC: Boolean): TDateTime;
+var
+  tzb: Integer;
 begin
   Result := IncMilliSecond(UnixDateTimeBase, AValue);
+  if (not InputIsUTC) then
+  begin
+    tzb := TimeZoneToBias(GetUTCSistema);
+    Result := IncMinute(Result, -tzb);
+  end;
 end;
 
 initialization

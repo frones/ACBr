@@ -824,11 +824,12 @@ begin
           }
           with ANota.NFSe do
           begin
-             Numero := aNumeroNota;
-             CodigoVerificacao := aCodigoVerificacao;
-             Link := aLink;
-             IdentificacaoRps.Numero := aNumeroRps;
-             ANota.LerXML(ANota.GerarXML);
+            tpXML := txmlNFSe;
+            Numero := aNumeroNota;
+            CodigoVerificacao := aCodigoVerificacao;
+            Link := aLink;
+            IdentificacaoRps.Numero := aNumeroRps;
+            ANota.LerXML(ANota.GerarXML);
           end;
 
           SalvarXmlNfse(ANota);

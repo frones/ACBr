@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/07/2025
+-- Giap.Provider --
+[*] Possível solução para gerar o XML da NFS-e para Araraquara.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] #TK-7388: Cidades incluídas: Afranio/PE, Agrestina/PE, Agua Preta/PE, 
     Altinho/PE, Amaraji/PE, Arcoverde/PE, Barra de Guabiraba/PE, 

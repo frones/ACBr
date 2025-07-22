@@ -397,7 +397,7 @@ begin
 
     Nota.GerarXML;
 
-    Nota.XmlRps := ConverteXMLtoUTF8(Nota.XmlRps);
+    Nota.XmlRps := '<?xml version="1.0" encoding="ISO-8859-1"?>' + Nota.XmlRps;
     Nota.XmlRps := ChangeLineBreak(Nota.XmlRps, '');
 
     SalvarXmlRps(Nota);

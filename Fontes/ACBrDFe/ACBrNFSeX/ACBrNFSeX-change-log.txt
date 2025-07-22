@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/07/2025
+-- SigISSWeb.Provider --
+[*] #TK-7353:  Ajustes para salvar o XML na codificação correta.
+   Por: Areco Desenv/Italo Giurizzato Junior
 -- Giap.Provider --
 [*] Possível solução para gerar o XML da NFS-e para Araraquara.
    Por: Italo Giurizzato Junior

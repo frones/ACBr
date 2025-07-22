@@ -495,7 +495,7 @@ begin
       begin
         Add(LFill('Y590') +
             LFill(TIP_ATIVO) +
-            LFill(PAIS) +
+            LFill(PAIS,3) +
             LFill(DISCRIMINACAO) +
             VLFill(VL_ANT, 19, 2) +
             VLFill(VL_ATUAL, 19, 2));

@@ -4184,7 +4184,7 @@ begin
                            cClassTribToStr(IBSCBS.cClassTrib), DSC_CCLASSTRIB));
 
     case IBSCBS.CST of
-      cst000, cst200, cst220, cst410, cst510:
+      cst000, cst200, cst220, cst510:
         Result.AppendChild(Gerar_IBSCBS_gIBSCBS(IBSCBS.gIBSCBS));
 
       cst550:
@@ -4209,6 +4209,7 @@ begin
 //  cst221 = Alíquota fixa rateada usado na NFSe
 //  cst222 = Redução de Base de Cálculo sem informação de qual DF-e usar
 //  cst400 = Isenção usado na NFSe e BPeTM
+//  cst410 = Imunidade e não incidência usado em praticante todos DF-e mas não se calcula IBS/CBS
 //  cst820 = Tributação em declaração de regime especifico usado na NFSe
 //  cst830 = Exclusão da Base de Cálculo usado na NF3e
   end;

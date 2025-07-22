@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/07/2025
+-- ACBrNFe.XmlWriter --
+[*] #TK-7355: Removido o cst410 do case, pois para este CST não se calcula o IBS/CBS.
+  Por: Daniel Pohren
+
 18/07/2025
 -- ACBrNFe.XmlWriter --
 [*] #TK-7355: Alteração visando gerar os grupos gIBSCBS e IBSCBSTot para o CST = 410.

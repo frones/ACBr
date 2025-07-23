@@ -1649,16 +1649,9 @@ begin
 
     NFeDM.Travar;
 
-    LNFeEnviar := TACBrNFe.Create(NFeDM.ACBrNFe1);
+    LNFeEnviar := TACBrNFe.Create(Nil);
 
     try
-      if (AEnviaPDF) then
-        NFeDM.ConfigurarImpressao('', True);
-
-      LNFeEnviar.MAIL := NFeDM.ACBrMail1;
-
-      LNFeEnviar.DANFE := NFeDM.ACBrNFe1.DANFE;
-
       EhArquivo := StringEhArquivo(AXmlNFe);
 
       if EhArquivo then
@@ -1673,26 +1666,30 @@ begin
          raise EACBrLibException.Create(ErrEnvio, 'Erro Caminho ou conteudo do XML inválido, não foi possível fazer a leitura do conteúdo do XML');
 
       if LNFeEnviar.NotasFiscais.Count = 0 then
-        raise EACBrLibException.Create(ErrEnvio, Format(SInfNFeCarregadas, [LNFeEnviar.NotasFiscais.Count]))
-      else
-      begin
-        slMensagemEmail := TStringList.Create;
-        slCC := TStringList.Create;
-        slAnexos := TStringList.Create;
+        raise EACBrLibException.Create(ErrEnvio, Format(SInfNFeCarregadas, [LNFeEnviar.NotasFiscais.Count]));
 
-        Resp := TLibNFeResposta.Create('EnviaEmail', Config.TipoResposta, Config.CodResposta);
+      slMensagemEmail := TStringList.Create;
+      slCC := TStringList.Create;
+      slAnexos := TStringList.Create;
 
-        try
-          slMensagemEmail.DelimitedText := sLineBreak;
-          slMensagemEmail.Text := StringReplace(AMensagem, ';', sLineBreak, [rfReplaceAll]);
+      Resp := TLibNFeResposta.Create('EnviaEmail', Config.TipoResposta, Config.CodResposta);
 
-          slCC.DelimitedText := sLineBreak;
-          slCC.Text := StringReplace(ACC, ';', sLineBreak, [rfReplaceAll]);
+      if (AEnviaPDF) then
+        NFeDM.ConfigurarImpressao('', True, LNFeEnviar);
 
-          slAnexos.DelimitedText := sLineBreak;
-          slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
+      LNFeEnviar.MAIL := NFeDM.ACBrMail1;
 
-          LNFeEnviar.NotasFiscais[0].EnviarEmail(
+      try
+        slMensagemEmail.DelimitedText := sLineBreak;
+        slMensagemEmail.Text := StringReplace(AMensagem, ';', sLineBreak, [rfReplaceAll]);
+
+        slCC.DelimitedText := sLineBreak;
+        slCC.Text := StringReplace(ACC, ';', sLineBreak, [rfReplaceAll]);
+
+        slAnexos.DelimitedText := sLineBreak;
+        slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
+
+        LNFeEnviar.NotasFiscais[0].EnviarEmail(
               APara,
               AAssunto,
               slMensagemEmail,
@@ -1700,17 +1697,17 @@ begin
               slCC,      // Lista com emails que serão enviado cópias - TStrings
               slAnexos); // Lista de slAnexos - TStrings
 
-          Resp.Msg := 'Email enviado com sucesso';
-          Resposta := Resp.Gerar;
+        Resp.Msg := 'Email enviado com sucesso';
+        Resposta := Resp.Gerar;
 
-          Result := SetRetorno(ErrOK, Resposta);
-        finally
-          Resp.Free;
-          slCC.Free;
-          slAnexos.Free;
-          slMensagemEmail.Free;
-          if (AEnviaPDF) then NFeDM.FinalizarImpressao;
-        end;
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+        slCC.Free;
+        slAnexos.Free;
+        slMensagemEmail.Free;
+
+        if (AEnviaPDF) then NFeDM.FinalizarImpressao;
       end;
     finally
       NFeDM.Destravar;
@@ -1878,7 +1875,7 @@ begin
     Resposta := TLibImpressaoResposta.Create(NFeDM.ACBrNFe1.NotasFiscais.Count, Config.TipoResposta, Config.CodResposta);
 
     try
-      NFeDM.ConfigurarImpressao(Impressora, False, Protocolo, MostrarPreview, MarcaDagua, ViaConsumidor, Simplificado);
+      NFeDM.ConfigurarImpressao(Impressora, False, nil, Protocolo, MostrarPreview, MarcaDagua, ViaConsumidor, Simplificado);
       if nNumCopias > 0 then
         NFeDM.ACBrNFe1.DANFE.NumCopias := nNumCopias;
 

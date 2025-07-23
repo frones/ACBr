@@ -42,6 +42,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/07/2025
+-- ACBrLibNFe --
+[-] Fix #TK-7406 - Corrige ordem no método EnviarEmail. O load do xml ocorria depois do ConfigurarImpressao, por esse motivo o primeiro envio de e-mail nunca ia no padrão DANFECe (mesmo sendo configurado). 
+Veja: https://www.projetoacbr.com.br/forum/topic/83656-libnfe-problema-para-enviar-e-mail-de-nfc-e-a4/#comment-547758
+    Por: Júlio Cavalcanti e Elton Barbosa
+
+-- ACBrLibNFeBase --
+[-] Corrige ordem de validações
+[*] Remoção do owner no Create(TACBrNFe não precisa do owner)
+[*] Remove else desnecessário
+
+-- ACBrLibNFeDataModule --
+[*] Implementa injeção do TACBrNFe por construtor
+[*] Refatora referencias para o objeto recebido
+
 05/06/2025
 -- Diversos --
 [*] #TK-7037 - Implementada classe em c# para leitura do retorno do evento ECONF e Cancelamento do ECONF - https://www.projetoacbr.com.br/forum/topic/83169-atualiza%C3%A7%C3%A3o-fontes-c-nuget-acbrlibnfemt-econf/

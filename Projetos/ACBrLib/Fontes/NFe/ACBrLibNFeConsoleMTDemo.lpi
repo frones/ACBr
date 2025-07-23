@@ -341,9 +341,6 @@
         <UseHeaptrc Value="True"/>
         <TrashVariables Value="True"/>
       </Debugging>
-      <Options>
-        <ExecutableType Value="Library"/>
-      </Options>
     </Linking>
     <Other>
       <CustomOptions Value="-dDemo -dMT -dDEBUG -dNOGUI -dNOREPORT"/>

@@ -453,13 +453,16 @@ namespace ACBrLib.MDFe
             return DistribuicaoDFeResposta<TipoEventoMDFe>.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public DistribuicaoDFeResposta<TipoEventoMDFe> DistribuicaoDFePorNSU(int acUFAutor, string eCnpjcpf, string eNsu)
+        public DistribuicaoDFeResposta<TipoEventoMDFe> DistribuicaoDFePorNSU(string eCnpjcpf, string eNsu)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<MDFE_DistribuicaoDFePorNSU>();
-            var ret = ExecuteMethod(() => method(acUFAutor, ToUTF8(eCnpjcpf), ToUTF8(eNsu), buffer, ref bufferLen));
+            Console.WriteLine(bufferLen);
+            var ret = ExecuteMethod(() => method(ToUTF8(eCnpjcpf), ToUTF8(eNsu), buffer, ref bufferLen));
+
+            Console.WriteLine(bufferLen);
 
             CheckResult(ret);
 

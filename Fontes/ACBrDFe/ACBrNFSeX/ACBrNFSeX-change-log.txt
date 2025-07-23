@@ -43,6 +43,20 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+23/07/2025
+-- ACBrNFSeXServicos --
+[*] #TK-7379: Corrigido o valor do params CodigoCidade da cidade São João/PR.
+   Por: Desenvolvimento GDL Sistemas
+[*] #TK-7395: Alterado as URLs de homologação e produção da cidade Atibaia/SP.
+   Por: Strategix
+[+] #TK-7400: Incluída a cidade Pitanga/PR, o provedor é EloTech versão 2.03.
+   Por: tryideas sistemas
+[*] Alterado as URLs de homologação e produção da cidade Criciuma/SC, 
+    mudou para versão 2.02.
+   Por: Italo Giurizzato Junior
+[+] #TK-7403: Incluída a cidade Ico/CE, o provedor é SpeedGov.
+   Por: João Antônio
+
 22/07/2025
 -- SimplISS.Provider --
 [*] #TK-7389: Alteração na função TratarXmlRetornado visando corrigir o erro:

@@ -641,6 +641,7 @@ begin
     sSecao := 'gIBSCBS' + IntToStrZero(Idx1, 2) + IntToStrZero(Idx2, 3);
 
   AINIRec.WriteFloat(sSecao, 'vBC', gIBSCBS.vBC);
+  AINIRec.WriteFloat(sSecao, 'vIBS', gIBSCBS.vIBS);
 
   Gerar_IBSCBS_gIBSCBS_gIBSUF(AINIRec, gIBSCBS.gIBSUF, Idx1, Idx2);
   Gerar_IBSCBS_gIBSCBS_gIBSMun(AINIRec, gIBSCBS.gIBSMun, Idx1, Idx2);

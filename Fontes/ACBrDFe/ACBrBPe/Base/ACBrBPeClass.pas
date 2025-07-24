@@ -246,6 +246,7 @@ type
   TgIBSCBS = class(TObject)
   private
     FvBC: Double;
+    FvIBS: Double;
     FgIBSUF: TgIBSUFValores;
     FgIBSMun: TgIBSMunValores;
     FgCBS: TgCBSValores;
@@ -258,6 +259,7 @@ type
     destructor Destroy; override;
 
     property vBC: Double read FvBC write FvBC;
+    property vIBS: Double read FvIBS write FvIBS;
     property gIBSUF: TgIBSUFValores read FgIBSUF write FgIBSUF;
     property gIBSMun: TgIBSMunValores read FgIBSMun write FgIBSMun;
     property gCBS: TgCBSValores read FgCBS write FgCBS;

@@ -281,7 +281,7 @@ begin
   Ler_Imposto(AINIRec, FCTe.Imp);
 
   case FCTe.ide.tpCTe of
-    tcNormal:
+    tcNormal, tcSubstituto:
       Ler_InfCTeNormal(AINIRec, FCTe.infCTeNorm);
     tcComplemento:
       begin

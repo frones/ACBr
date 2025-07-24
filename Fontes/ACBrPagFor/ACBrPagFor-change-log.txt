@@ -42,9 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/07/2025
+-- ACBrPagForConversao.pas --
+[+] TK-7401: Adicionado STARK BANK S.A.
+  Por: Roberto Krug
+
 11/07/2025
 -- ACBrPagForConversao.pas --
-[*] Adicionado BANCO QI SCD S.A
+[+] Adicionado BANCO QI SCD S.A
   Por: Alexandre de Paula
 
 28/05/2025

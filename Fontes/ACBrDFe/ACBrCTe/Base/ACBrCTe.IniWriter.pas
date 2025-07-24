@@ -1875,6 +1875,7 @@ begin
   sSecao := 'gIBSCBS';
 
   AINIRec.WriteFloat(sSecao, 'vBC', gIBSCBS.vBC);
+  AINIRec.WriteFloat(sSecao, 'vIBS', gIBSCBS.vIBS);
 
   Gerar_IBSCBS_gIBSCBS_gIBSUF(AINIRec, gIBSCBS.gIBSUF);
   Gerar_IBSCBS_gIBSCBS_gIBSMun(AINIRec, gIBSCBS.gIBSMun);

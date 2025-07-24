@@ -44,7 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-24/07/205
+24/07/2025
+-- Diversos --
+[*] #TK-7370: Implementado a versão 1.06 da NT da Reforma Tributária.
+   Por: Italo Giurizzato Junior
 -- ACBrCTe.IniReader --
 [-] #TK-7391: Ajuste para leitura de InfCteNormal quando CTe de Substituição
    Por: Diego Folieni / Italo Giurizzato Junior

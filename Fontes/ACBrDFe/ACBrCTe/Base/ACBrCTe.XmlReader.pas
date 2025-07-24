@@ -1846,7 +1846,7 @@ begin
   FCTe.Ide.Toma4.EnderToma.xBairro := ObterConteudo(ANode.Childrens.FindAnyNs('xBairro'), tcStr);
   FCTe.Ide.Toma4.EnderToma.cMun := ObterConteudo(ANode.Childrens.FindAnyNs('cMun'), tcInt);
   FCTe.Ide.Toma4.EnderToma.xMun := ObterConteudo(ANode.Childrens.FindAnyNs('xMun'), tcStr);
-  FCTe.Ide.Toma4.EnderToma.CEP := ObterConteudo(ANode.Childrens.FindAnyNs('CEP'), tcStr);
+  FCTe.Ide.Toma4.EnderToma.CEP := ObterConteudo(ANode.Childrens.FindAnyNs('CEP'), tcInt);
   FCTe.Ide.Toma4.EnderToma.UF := ObterConteudo(ANode.Childrens.FindAnyNs('UF'), tcStr);
   FCTe.Ide.Toma4.EnderToma.cPais := ObterConteudo(ANode.Childrens.FindAnyNs('cPais'), tcInt);
   FCTe.Ide.Toma4.EnderToma.xPais := ObterConteudo(ANode.Childrens.FindAnyNs('xPais'), tcStr);
@@ -2136,6 +2136,7 @@ begin
   if not Assigned(ANode) then Exit;
 
   gIBSCBS.vBC := ObterConteudo(ANode.Childrens.Find('vBC'), tcDe2);
+  gIBSCBS.vIBS := ObterConteudo(ANode.Childrens.Find('vIBS'), tcDe2);
 
   Ler_gIBSUF(ANode.Childrens.Find('gIBSUF'), gIBSCBS.gIBSUF);
   Ler_gIBSMun(ANode.Childrens.Find('gIBSMun'), gIBSCBS.gIBSMun);

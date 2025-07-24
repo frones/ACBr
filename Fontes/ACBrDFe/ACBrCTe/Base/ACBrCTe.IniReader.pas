@@ -281,8 +281,10 @@ begin
   Ler_Imposto(AINIRec, FCTe.Imp);
 
   case FCTe.ide.tpCTe of
-    tcNormal, tcSubstituto:
+    tcNormal, 
+	tcSubstituto:
       Ler_InfCTeNormal(AINIRec, FCTe.infCTeNorm);
+	  
     tcComplemento:
       begin
         Ler_InfCTeComplemento(AINIRec, FCTe.infCteComp);
@@ -2345,6 +2347,7 @@ begin
   if AINIRec.SectionExists(sSecao) then
   begin
     gIBSCBS.vBC := StringToFloatDef(AINIRec.ReadString(sSecao,'vBC','') ,0);
+    gIBSCBS.vIBS := StringToFloatDef(AINIRec.ReadString(sSecao,'vIBS','') ,0);
 
     Ler_gIBSUF(AINIRec, gIBSCBS.gIBSUF);
     Ler_gIBSMun(AINIRec, gIBSCBS.gIBSMun);

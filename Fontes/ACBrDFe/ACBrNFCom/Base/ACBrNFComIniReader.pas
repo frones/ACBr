@@ -715,6 +715,7 @@ begin
   if AINIRec.SectionExists(sSecao) then
   begin
     gIBSCBS.vBC := StringToFloatDef( AINIRec.ReadString(sSecao,'vBC','') ,0);
+    gIBSCBS.vIBS := StringToFloatDef(AINIRec.ReadString(sSecao,'vIBS','') ,0);
 
     Ler_gIBSUF(AINIRec, gIBSCBS.gIBSUF, Idx);
     Ler_gIBSMun(AINIRec, gIBSCBS.gIBSMun, Idx);

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/07/2025
+-- ACBrNFe.XmlWriter --
+[*] #TK-7359: Alterado as condições para gerar o grupo gRed.
+  Por: Simons/Italo Giurizzato Junior
+
 22/07/2025
 -- ACBrNFe.XmlWriter --
 [*] #TK-7355: Removido o cst410 do case, pois para este CST não se calcula o IBS/CBS.

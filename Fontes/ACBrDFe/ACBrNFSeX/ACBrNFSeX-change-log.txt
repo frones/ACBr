@@ -43,8 +43,18 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/07/2025
+-- ACBrNFSeXServicos --
+[+] #TK-7404: Incluído diversas cidades da Bahia.
+[+] #TK-7396: Incluído diversas cidades de Alagoas.
+   Por: Anderson Grolli
+
 23/07/2025
 -- ACBrNFSeXServicos --
+[+] #TK-7394: Cidades incluídas: Aquidaba/SE, Carmopolis/SE, Laranjeiras/SE, 
+    Maruim/SE, Moita Bonita/SE, Monte Alegre de Sergipe/SE, Muribeca/SE, 
+    Nossa Senhora da Gloria/SE, Tobias Barreto/SE
+   Por: Anderson Grolli
 [*] #TK-7379: Corrigido o valor do params CodigoCidade da cidade São João/PR.
    Por: Desenvolvimento GDL Sistemas
 [*] #TK-7395: Alterado as URLs de homologação e produção da cidade Atibaia/SP.

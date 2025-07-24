@@ -567,7 +567,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#46', 'indIEDest', 1, 1, 1,
                           indIEDestToStr(NFCom.Dest.indIEDest), DSC_INDIEDEST));
 
-  if NFCom.Dest.indIEDest <> inIsento then
+  if NFCom.Dest.indIEDest <> inNaoContribuinte then
   begin
     nIE := NFCom.Dest.IE;
 

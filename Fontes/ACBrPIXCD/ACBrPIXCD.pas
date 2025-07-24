@@ -81,6 +81,7 @@ const
 
   CContentTypeUTF8 = 'charset=utf-8';
   CContentTypeTextPlain = 'text/plain';
+  CContentTypeApplicationPDF = 'application/pdf';
   CContentTypeApplicationJSon = 'application/json';
   CContentTypeApplicationWwwFormUrlEncoded = 'application/x-www-form-urlencoded';
 
@@ -3197,7 +3198,7 @@ begin
     scRecWrite: Result := 'rec.write';
     scRecRead: Result := 'rec.read';
     scSolicRecWrite: Result := 'solicrec.write';
-    scSolicRecRead: Result := 'rec.read';
+    scSolicRecRead: Result := 'solicrec.read';
   end;
 end;
 

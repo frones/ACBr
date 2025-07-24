@@ -181,6 +181,8 @@ var
   wData, wStatus: String;
 begin
   Clear;
+  if (not Assigned(AJSon)) then
+    Exit;
   {$IFDEF FPC}
   wData := EmptyStr;
   wStatus := EmptyStr;
@@ -272,6 +274,8 @@ var
   wData, wStatus: String;
 begin
   Clear;
+  if (not Assigned(AJSon)) then
+    Exit;
   {$IFDEF FPC}
   wData := EmptyStr;
   wStatus := EmptyStr;
@@ -363,6 +367,8 @@ var
   wData, wStatus: String;
 begin
   Clear;
+  if (not Assigned(AJSon)) then
+    Exit;
   {$IFDEF FPC}
   wData := EmptyStr;
   wStatus := EmptyStr;

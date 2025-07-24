@@ -349,6 +349,9 @@ end;
 
 procedure TACBrPIXRecVinculo.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
+  Clear;
+  if (not Assigned(AJSon)) then
+    Exit;
   AJSon
     .Value('contrato', fcontrato)
     .Value('objeto', fobjeto);
@@ -393,6 +396,9 @@ end;
 
 procedure TACBrPIXRecValor.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
+  Clear;
+  if (not Assigned(AJSon)) then
+    Exit;
   AJSon
     .Value('valorRec', fvalorRec)
     .Value('valorMinimoRecebedor', fvalorMinimoRecebedor);
@@ -418,6 +424,11 @@ var
   wCodigo: String;
 begin
   {$IFDEF FPC}wCodigo := EmptyStr;{$ENDIF}
+
+  Clear;
+  if (not Assigned(AJSon)) then
+    Exit;
+
   AJSon
     .Value('codigo', wCodigo)
     .Value('descricao', fdescricao);
@@ -475,6 +486,11 @@ begin
   wCodigo := EmptyStr;
   wSolicitante := EmptyStr;
   {$ENDIF}
+
+  Clear;
+  if (not Assigned(AJSon)) then
+    Exit;
+
   AJSon
     .Value('codigo', wCodigo)
     .Value('descricao', fdescricao)
@@ -540,6 +556,10 @@ end;
 
 procedure TACBrPIXRecEncerramento.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
+  Clear;
+  if (not Assigned(AJSon)) then
+    Exit;
+
   Rejeicao.ReadFromJSon(AJSon);
   Cancelamento.ReadFromJSon(AJSon);
 end;
@@ -591,6 +611,9 @@ end;
 
 procedure TACBrPIXRecDadosJornada.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
+  Clear;
+  if (not Assigned(AJSon)) then
+    Exit;
   AJSon.Value('txid', ftxid);
 end;
 
@@ -631,6 +654,11 @@ var
   wJornada: String;
 begin
   {$IFDEF FPC}wJornada := EmptyStr;{$ENDIF}
+
+  Clear;
+  if (not Assigned(AJSon)) then
+    Exit;
+
   AJSon
     .Value('jornada', wJornada)
     .Value('pixCopiaECola', fpixCopiaECola);
@@ -685,6 +713,11 @@ var
   wTipoJornada: String;
 begin
   {$IFDEF FPC}wTipoJornada := EmptyStr;{$ENDIF}
+
+  Clear;
+  if (not Assigned(AJSon)) then
+    Exit;
+
   AJSon.Value('tipoJornada', wTipoJornada);
   if NaoEstaVazio(wTipoJornada) then
     ftipoJornada := StringToPIXJornada(wTipoJornada);
@@ -848,6 +881,11 @@ begin
   wStatus := EmptyStr;
   wPolitica := EmptyStr;
   {$ENDIF}
+
+  Clear;
+  if (not Assigned(AJSon)) then
+    Exit;
+
   AJSon
     .Value('idRec', fidRec)
     .Value('status', wStatus)

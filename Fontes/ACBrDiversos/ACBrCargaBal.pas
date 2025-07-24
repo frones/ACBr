@@ -134,6 +134,7 @@ type
     FGordurasTotaisEstendido429: Double;
     FAcucaresAdicionadosEstendido429: Double;
     FAcucaresTotaisEstendido429: Double;
+    FimprimeCamposEstendido : boolean ;
     procedure SetQtdeAutomaticaPorcao(const Value: Boolean);
     procedure SetQtdePorcEmb(const Value: Integer);
     procedure SetPartIntMedidaCaseira(const Value: Integer);
@@ -206,6 +207,7 @@ type
     property AcucaresTotaisEstendido429:Double read FAcucaresTotaisEstendido429 write SetAcucaresTotaisEstendido429;
     property GordurasTotaisEstendido429:Double read FGordurasTotaisEstendido429 write SetGordurasTotaisEstendido429;
     property ProteinasEstendido429:Double read FProteinasEstendido429 write SetProteinasEstendido429;
+    property ImprimeCamposEstendido:boolean read FImprimeCamposEstendido write FImprimeCamposEstendido;
   end;
 
   TACBrCargaBalInformacaoExtra = class
@@ -1842,11 +1844,16 @@ begin
                   LFIll(Produtos[i].Nutricional.AltoSodio429,1)+
                   LFIll(Produtos[i].Nutricional.Lactose429,5,1)+
                   LFIll(Produtos[i].Nutricional.Galactose429,5,1)+
-                  LFIll(Produtos[i].Nutricional.ImprimeLactoseGalactose,1)+
-                  LFIll(Produtos[i].Nutricional.AcucaresAdicionadosEstendido429,5)+
-                  LFIll(Produtos[i].Nutricional.AcucaresTotaisEstendido429,5)+
-                  LFIll(Produtos[i].Nutricional.GordurasTotaisEstendido429,5)+
-                  LFIll(Produtos[i].Nutricional.ProteinasEstendido429,5);
+                  LFIll(Produtos[i].Nutricional.ImprimeLactoseGalactose,1);
+
+                  if   Produtos[i].Nutricional.ImprimeCamposEstendido then
+                  begin
+                    ANutri := ANutri +
+                    LFIll(Produtos[i].Nutricional.AcucaresAdicionadosEstendido429,5,1)+
+                    LFIll(Produtos[i].Nutricional.AcucaresTotaisEstendido429,5,1)+
+                    LFIll(Produtos[i].Nutricional.GordurasTotaisEstendido429,5,1)+
+                    LFIll(Produtos[i].Nutricional.ProteinasEstendido429,5,1);
+                  end;
          if (stlNutricional.IndexOf(ANutri) < 0) then
           stlNutricional.Add(ANutri);
         end;

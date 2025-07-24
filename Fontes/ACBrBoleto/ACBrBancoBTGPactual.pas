@@ -621,7 +621,7 @@ function TACBrBancoBTGPactual.GerarRegistroTransacao240(ACBrTitulo : TACBrTitulo
 var
   ATipoOcorrencia, ATipoBoleto, ATipoDistribuicao, ADataMoraJuros, CodProtesto, DiasProtesto: String;
   ACodigoDesconto, ADataDesconto, DigitoNossoNumero, ATipoAceite, AEspecieDoc, TipoSacado, EndSacado: String;
-  ADiasBaixa, ACodigoCarteira, ATipoCarteira, ATipoDocumento: String;
+  ADiasBaixa, ACodigoCarteira, ATipoCarteira, ATipoDocumento, ACodigoMora: String;
   TipoAvalista: Char;
 begin
   with ACBrTitulo do
@@ -696,6 +696,16 @@ begin
     else
       ADataMoraJuros := PadRight('', 8, '0');
 
+    {Código Mora}
+    if CodigoMora = '' then
+    begin
+      if ValorMoraJuros > 0 then
+        ACodigoMora := '1'
+      else
+        ACodigoMora := '3';
+    end else
+      ACodigoMora := CodigoMora;
+
     {Descontos}
     if (ValorDesconto > 0) and (DataDesconto > 0) then
     begin
@@ -704,8 +714,7 @@ begin
       else
         ACodigoDesconto := '1';
       ADataDesconto := FormatDateTime('ddmmyyyy', DataDesconto);
-    end
-    else
+    end else
     begin
       if ValorDesconto > 0 then
         ACodigoDesconto := '3'
@@ -724,11 +733,9 @@ begin
     end;
 
     // Nº Dias para Baixa/Devolucao
-    ADiasBaixa  := '   ';
-    if ((ATipoOcorrencia = '01') or
-       (ATipoOcorrencia = '39')) and
-       (Max(DataBaixa, DataLimitePagto) > Vencimento) then
-       ADiasBaixa  := IntToStrZero(DaysBetween(Vencimento, Max(DataBaixa, DataLimitePagto)), 3);
+    ADiasBaixa  := '000';
+    if ((ATipoOcorrencia = '01') or (ATipoOcorrencia = '39')) and (Max(DataBaixa, DataLimitePagto) > Vencimento) then
+      ADiasBaixa  := IntToStrZero(DaysBetween(Vencimento, Max(DataBaixa, DataLimitePagto)), 3);
 
     {Pegando Tipo de Boleto} //Quem emite e quem distribui o boleto?
     case ACBrBoleto.Cedente.ResponEmissao of
@@ -825,7 +832,7 @@ begin
              PadRight(AEspecieDoc, 2)                                               + // 107 a 108 Espécie do documento {ok}
              ATipoAceite                                                            + // 109 a 109 Identificação de título Aceito / Não aceito {ok}
              FormatDateTime('ddmmyyyy', DataDocumento)                              + // 110 a 117 Data da emissão do documento {ok}
-             PadLeft(trim(CodigoMora), 1)                                           + // 118 a 118 Código de mora (1=Valor diário; 2=Taxa Mensal; 3=Isento) {ok}
+             PadLeft(trim(ACodigoMora), 1)                                          + // 118 a 118 Código de mora (1=Valor diário; 2=Taxa Mensal; 3=Isento) {ok}
              ADataMoraJuros                                                         + // 119 a 126 Data a partir da qual serão cobrados juros {ok}
              IntToStrZero(round(ValorMoraJuros * 100), 15)                          + // 127 a 141 Valor de juros de mora por dia {ok}
              ACodigoDesconto                                                        + // 142 a 142 Código de desconto: 1 - Valor fixo até a data informada, 2 - Percentual desconto 4-Desconto por dia de antecipacao 0 - Sem desconto

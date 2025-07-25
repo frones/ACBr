@@ -232,6 +232,8 @@ begin
               Result := 'multa';
             toRemessaAlterarPrazoLimiteRecebimento:
               Result := 'data_limite_pagamento';
+            toRemessaAlteracaoValorNominal:
+              Result := 'valor_nominal';
           end;
         end;
       tpBaixa:
@@ -913,6 +915,11 @@ begin
           begin
             if (ATitulo.DataLimitePagto > 0) then
               LJson.AddPair('data_limite_pagamento', FormatDateBr(ATitulo.DataLimitePagto, 'YYYY-MM-DD'));
+          end;
+        toRemessaAlteracaoValorNominal:
+          begin
+            if (ATitulo.ValorDocumento > 0) then
+              LJson.AddPair('valor_titulo', StringReplace(FormatFloat('0.00',ATitulo.ValorDocumento),',','.',[]));
           end;
       end;
 

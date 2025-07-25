@@ -50,6 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/07/2025
+-- ACBrBoletoW_Itau_API.pas --
+[+] #TK-7382 Adicionado metodo para alteração do valor nominal.
+    https://www.projetoacbr.com.br/forum/topic/84407-acbrboletow_itau_api-adicionada-a-altera%C3%A7%C3%A3o-do-valor-do-boleto-valor_nominal
+    Por: Fabricio Furtado / Daniel de Morais InfoCotidiano
+
+25/07/2025
 -- ACBrBoletoRet_Santander_API.pas --
 [*] #TK-7416 Ajustes retorno da consultadetalhe para tratar boleto hibrido estava vindo como "baixado" e nao como "Liquidado"
     https://www.projetoacbr.com.br/forum/topic/84507-recebimento-boleto-santander-via-pix/

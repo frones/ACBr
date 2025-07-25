@@ -251,17 +251,22 @@ begin
                           ARetornoWS.DadosRet.TituloRet.ValorTarifa :=  LJSONObject.AsFloat['settlementDutyValue'];
                         end;
                       end;
-                      if (LJsonArray.ItemAsJSONObject[nIndiceOBJ].AsJSONArray['writeOffData'].Count > 0) then
+                      if LJsonArray.ItemAsJSONObject[nIndiceOBJ].ValueExists('writeOffData') then
                       begin
-                        if LJsonArray.ItemAsJSONObject[nIndiceOBJ].ValueExists('writeOffData') then
+                        if  (LJsonArray.ItemAsJSONObject[nIndiceOBJ].AsJSONArray['writeOffData'].Count > 0) then
                         begin
                           LJSONObject := LJsonArray.ItemAsJSONObject[nIndiceOBJ].AsJSONArray['writeOffData'].ItemAsJSONObject[0];
                           if ARetornoWS.DadosRet.TituloRet.DataBaixa = 0 then
                            ARetornoWS.DadosRet.TituloRet.DataBaixa := StringToDateTimeDef(LJSONObject.AsString['writeOffDate'], 0, 'yyyy-mm-dd');
                           if ARetornoWS.DadosRet.TituloRet.ValorPago = 0 then
                            ARetornoWS.DadosRet.TituloRet.ValorPago := LJSONObject.AsFloat['writeOffValue'];
+                          if (ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca = 'BAIXADO') and
+                             (LJSONObject.ValueExists('writeOffDescription')) and
+                             (LJSONObject.AsString['writeOffDescription'] = 'BAIXA DE PAGAMENTO VIA PIX') then
+                           ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'LIQUIDADO';
                           if EstaVazio(ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca) then
-                           ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := RetornaCodigoOcorrencia(LJSONObject.AsString['status']);
+                           ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := RetornaCodigoOcorrencia(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca);
+
                         end;
                       end;
                     end;

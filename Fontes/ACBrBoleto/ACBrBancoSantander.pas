@@ -1256,7 +1256,7 @@ procedure TACBrBancoSantander.LerRetorno400(ARetorno: TStringList);
 var
   Titulo : TACBrTitulo;
   ContLinha, CodOcorrencia, CodMotivo : Integer;
-  Linha, rCedente, rAgencia, rConta, rDigitoConta, rCNPJCPF : String;
+  Linha, rCedente, rAgencia, rConta, rDigitoConta, rCNPJCPF, LUrl, LTxId: String;
   wCodBanco: Integer;
 begin
    wCodBanco := StrToIntDef(copy(ARetorno.Strings[0],77,3),-1);
@@ -1312,35 +1312,35 @@ begin
    begin
       Linha := ARetorno[ContLinha] ;
 
-      if Copy(Linha,1,1)<> '1' then
-         Continue;
-
-      Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
+      if Linha[1] = '1' then
+        Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
       with Titulo do
       begin
-         SeuNumero   := copy(Linha,38,25);
-         if ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto then
+        if Linha[1] = '1' then
+        begin
+          SeuNumero   := copy(Linha,38,25);
+          if ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto then
             NossoNumero := Copy(Linha,63,08)
-         else
+          else
             NossoNumero := Copy(Linha,63,07);
 
-         Carteira    := Copy(Linha,108,1);
+          Carteira    := Copy(Linha,108,1);
 
-         OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(
+          OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(
                                                         copy(Linha,109,2),0));
 
-         DataOcorrencia:= StringToDateTimeDef(Copy(Linha,111,2)+'/'+
+          DataOcorrencia:= StringToDateTimeDef(Copy(Linha,111,2)+'/'+
                                               Copy(Linha,113,2)+'/'+
                                               Copy(Linha,115,2),0, 'DD/MM/YY' );
 
-         NumeroDocumento:= Copy(Linha,117,10);
+          NumeroDocumento:= Copy(Linha,117,10);
 
-         CodOcorrencia := StrToIntDef(copy(Linha,135,2),0);
+          CodOcorrencia := StrToIntDef(copy(Linha,135,2),0);
 
-         //-|Se a ocorrencia for igual a > 0 - Houve Erros
-         if(CodOcorrencia > 0) then
-         begin
+          //-|Se a ocorrencia for igual a > 0 - Houve Erros
+          if(CodOcorrencia > 0) then
+          begin
             if copy(Linha,137,3) <> '   ' then
             begin
                CodMotivo:= StrToIntDef(copy(Linha,137,3),0);
@@ -1364,37 +1364,45 @@ begin
                DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(
                                                   OcorrenciaOriginal.Tipo,CodMotivo));
             end;
-         end;
+          end;
 
-         Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
+          Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
                                             Copy(Linha,149,2)+'/'+
                                             Copy(Linha,151,2),0, 'DD/MM/YY' );
 
-         ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
+          ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
 
-         EspecieDoc := CodEspecieDocToTipo(Copy(Linha,174,2));
+          EspecieDoc := CodEspecieDocToTipo(Copy(Linha,174,2));
 
-         ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
-         ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
-         ValorMoraJuros       := StrToFloatDef(Copy(Linha,202,13),0) +
+          ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
+          ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
+          ValorMoraJuros       := StrToFloatDef(Copy(Linha,202,13),0) +
                                  StrToFloatDef(Copy(Linha,267,13),0)/100;
-         ValorIOF             := StrToFloatDef(Copy(Linha,215,13),0)/100;
-         ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
-         ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
-         ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
-         ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
+          ValorIOF             := StrToFloatDef(Copy(Linha,215,13),0)/100;
+          ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
+          ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
+          ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
+          ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
 
-         if Copy(Linha,294,1) = 'N' then
+          if Copy(Linha,294,1) = 'N' then
             Aceite:=  atNao
-         else
+          else
             Aceite:=  atSim;
 
-         if StrToIntDef(Copy(Linha,296,6),0) <> 0 then
+          if StrToIntDef(Copy(Linha,296,6),0) <> 0 then
             DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
                                                Copy(Linha,298,2)+'/'+
                                                Copy(Linha,300,2),0, 'DD/MM/YY' );
 
-         Sacado.NomeSacado:= Copy(Linha,302,36);
+          Sacado.NomeSacado:= Copy(Linha,302,36);
+        end;
+        if Linha[1] = '2' then
+        begin
+          LUrl := Trim(Copy(Linha,03,77));
+          LTxId:= Trim(Copy(Linha,80,35));
+          if NaoEstaVazio(lURL) and NaoEstaVazio(LtxId) then
+            QrCode.PIXQRCodeDinamico(LUrl,LTxId, Titulo);
+        end;
       end;
    end;
 end;

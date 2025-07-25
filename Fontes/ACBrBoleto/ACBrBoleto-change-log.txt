@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/07/2025
+-- ACBrBancoSantander.pas --
+[*] #TK-7378 Ajustes no banco CNAB400 retorno para gerar o QrCODE/EMV
+    https://www.projetoacbr.com.br/forum/topic/84366-retorno-santander-pix/
+    Por: Daniel de Morais InfoCotidiano
+
 16/07/2025
 -- ACBrBancoSofisaSantander --
 [*] #TK-7255 Ajustes no banco cobBancoSofisaSantander para NumeroDocumento Somente Letras e Números, NomeSacado com 30 bytes e 10 espaços na sequência

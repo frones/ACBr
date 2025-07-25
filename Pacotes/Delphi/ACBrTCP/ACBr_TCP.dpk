@@ -71,7 +71,8 @@ contains
   ACBrFeriadoWSJSON in '..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSJSON.pas',
   ACBrFrenet in '..\..\..\Fontes\ACBrTCP\ACBrFrenet.pas',
   ACBr.Auth.JWT in '..\..\..\Fontes\ACBrTCP\ACBr.Auth.JWT.pas',
-  ACBrCupomVerde in '..\..\..\Fontes\ACBrTCP\ACBrCupomVerde.pas';
+  ACBrCupomVerde in '..\..\..\Fontes\ACBrTCP\ACBrCupomVerde.pas',
+  ACBrIMendes in '..\..\..\Fontes\ACBrTCP\ACBrIMendes.pas';
 
 end.
 

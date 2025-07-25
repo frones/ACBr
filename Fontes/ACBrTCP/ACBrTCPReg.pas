@@ -43,7 +43,8 @@ implementation
 uses
   ACBrSocket, ACBrCEP, ACBrIBGE, ACBrNFPws, ACBrCNIEE, ACBrSuframa, ACBrDownload,
   SysUtils, ACBrIBPTax, ACBrConsultaCNPJ, ACBrConsultaCPF, ACBrCotacao, ACBrMail,
-  ACBrSpedTabelas, ACBrSedex, ACBrNCMs, ACBrFeriado, ACBrFrenet, ACBrCupomVerde;
+  ACBrSpedTabelas, ACBrSedex, ACBrNCMs, ACBrFeriado, ACBrFrenet, ACBrCupomVerde,
+  ACBrIMendes;
 
 {$IFNDEF FPC}
    {$R ACBrTCP.dcr}
@@ -55,7 +56,7 @@ begin
     [ TACBrTCPServer, TACBrCEP, TACBrIBGE, TACBrNFPws, TACBrCNIEE, TACBrSuframa,
       TACBrDownload, TACBrIBPTax, TACBrConsultaCNPJ, TACBrConsultaCPF, TACBrCotacao,
       TACBrMail, TACBrSpedTabelas, TACBrSedex, TACBrNCMs, TACBrFeriado, TACBrFrenet,
-      TACBrCupomVerde ]
+      TACBrCupomVerde, TACBrIMendes ]
   );
 end;
 

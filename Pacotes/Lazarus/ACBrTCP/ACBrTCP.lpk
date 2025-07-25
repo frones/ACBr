@@ -36,7 +36,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
-    <Files Count="31">
+    <Files Count="32">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrTCPReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -162,6 +162,10 @@
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCupomVerde.pas"/>
         <UnitName Value="ACBrCupomVerde"/>
       </Item31>
+      <Item32>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrIMendes.pas"/>
+        <UnitName Value="ACBrIMendes"/>
+      </Item32>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">

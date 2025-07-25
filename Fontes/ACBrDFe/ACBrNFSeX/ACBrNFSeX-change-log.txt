@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/07/2025
+-- Betha.Provider --
+[*] Alterações visando atender a cidade Criciuma/SC.
+   Por: Diogo Loff/Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Acrescentado o Params SubVersao para a cidade Criciuma/SC.
    Por: Italo Giurizzato Junior

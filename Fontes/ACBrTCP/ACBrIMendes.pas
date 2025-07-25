@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -735,12 +735,12 @@ end;
 
 function TACBrIMendesProdutos.GetItem(AIndex: Integer): TACBrIMendesProduto;
 begin
-  Result := inherited GetItem(AIndex) as TACBrIMendesProduto;
+  Result := TACBrIMendesProduto(inherited Items[AIndex]);
 end;
 
 procedure TACBrIMendesProdutos.SetItem(AIndex: Integer; AValue: TACBrIMendesProduto);
 begin
-  inherited SetItem(AIndex, AValue);
+  inherited Items[AIndex] := AValue;
 end;
 
 { TACBrIMendesConsultarResponse }
@@ -1740,12 +1740,12 @@ end;
 
 function TACBrIMendesRegimeEspecialList.GetItem(AIndex: Integer): TACBrIMendesRegimeEspecial;
 begin
-  Result := inherited GetItem(AIndex) as TACBrIMendesRegimeEspecial;
+  Result := TACBrIMendesRegimeEspecial(inherited Items[AIndex]);
 end;
 
 procedure TACBrIMendesRegimeEspecialList.SetItem(AIndex: Integer; AValue: TACBrIMendesRegimeEspecial);
 begin
-  inherited SetItem(AIndex, AValue);
+  inherited Items[AIndex] := AValue;
 end;
 
 function TACBrIMendes.GetConsultarDescricaoResponse: TACBrIMendesConsultarResponse;

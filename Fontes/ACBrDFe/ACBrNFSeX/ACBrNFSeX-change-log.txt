@@ -45,6 +45,8 @@ Símbolo : Significado
 
 25/07/2025
 -- ACBrNFSeXServicos --
+[*] Acrescentado o Params SubVersao para a cidade Criciuma/SC.
+   Por: Italo Giurizzato Junior
 [*] Alteração das URLs de homologação e produção da cidade Criciuma/SC, provedor
     Betha versão 1.00
    Por: Italo Giurizzato Junior

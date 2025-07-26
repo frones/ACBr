@@ -776,9 +776,9 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="vIBS" type="TDec1302" minOccurs="0">
+				<xs:element name="vIBS" type="TDec1302">
 					<xs:annotation>
-						<xs:documentation>Valor do IBS</xs:documentation>
+						<xs:documentation>Valor do IBS (soma de vIBSUF e vIBSMun)</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>

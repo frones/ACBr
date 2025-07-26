@@ -4665,7 +4665,8 @@ begin
   if gIBSUF.gDevTrib.vDevTrib > 0 then
     Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gDevTrib(gIBSUF.gDevTrib));
 
-  if (gIBSUF.gRed.pRedAliq > 0) or (gIBSUF.gRed.pAliqEfet > 0) then
+  if (gIBSUF.gRed.pRedAliq > 0) or (gIBSUF.gRed.pAliqEfet > 0) or
+     (CTe.Ide.gCompraGov.pRedutor > 0) then
     Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gRed(gIBSUF.gRed));
 
   Result.AppendChild(AddNode(tcDe2, '#23', 'vIBSUF', 1, 15, 1,
@@ -4719,7 +4720,8 @@ begin
   if gIBSMun.gDevTrib.vDevTrib > 0 then
     Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gDevTrib(gIBSMun.gDevTrib));
 
-  if (gIBSMun.gRed.pRedAliq > 0) or (gIBSMun.gRed.pAliqEfet > 0) then
+  if (gIBSMun.gRed.pRedAliq > 0) or (gIBSMun.gRed.pAliqEfet > 0) or
+     (CTe.Ide.gCompraGov.pRedutor > 0) then
     Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gRed(gIBSMun.gRed));
 
   Result.AppendChild(AddNode(tcDe2, '#23', 'vIBSMun', 1, 15, 1,
@@ -4752,7 +4754,8 @@ begin
   if gCBS.gDevTrib.vDevTrib > 0 then
     Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gDevTrib(gCBS.gDevTrib));
 
-  if (gCBS.gRed.pRedAliq > 0) or (gCBS.gRed.pAliqEfet > 0) then
+  if (gCBS.gRed.pRedAliq > 0) or (gCBS.gRed.pAliqEfet > 0) or
+     (CTe.Ide.gCompraGov.pRedutor > 0) then
     Result.AppendChild(Gerar_IBSCBS_gIBSCBS_gIBSUFMunCBS_gRed(gCBS.gRed));
 
   Result.AppendChild(AddNode(tcDe2, '#61', 'vCBS', 1, 15, 1,

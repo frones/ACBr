@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/07/2025
+-- ACBrNFe.XmlWriter --
+[*] Ajuste nas condições para gerar o grupo gRed.
+   Por: Italo Giurizzato Junior
+
 24/07/2025
 -- ACBrNFe.XmlWriter --
 [*] #TK-7359: Alterado as condições para gerar o grupo gRed.

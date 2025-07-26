@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/07/2025
+-- ACBrBPeXmlWriter --
+[*] Ajuste nas condições para gerar o grupo gRed.
+   Por: Italo Giurizzato Junior
+
 24/07/2025
 -- Diversos --
 [*] #TK-7370: Implementado a versão 1.06 da NT da Reforma Tributária.

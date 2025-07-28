@@ -30,6 +30,8 @@ namespace ACBrLib.Boleto
 
         public TipoDesconto TipoDesconto2 { get; set; }
 
+        public TipoDesconto TipoDesconto3 { get; set; }
+
         public CarteiraEnvio CarteiraEnvio { get; set; }
 
         public bool MultaValorFixo { get; set; }
@@ -45,6 +47,10 @@ namespace ACBrLib.Boleto
         public DateTime? DataAbatimento { get; set; }
 
         public DateTime? DataDesconto { get; set; }
+
+        public DateTime? DataDesconto2 { get; set; }
+
+        public DateTime? DataDesconto3 { get; set; }
 
         public DateTime? DataMoraJuros { get; set; }
 
@@ -97,6 +103,10 @@ namespace ACBrLib.Boleto
         public decimal ValorAbatimento { get; set; }
 
         public decimal ValorDesconto { get; set; }
+
+        public decimal ValorDesconto2 { get; set; }
+
+        public decimal ValorDesconto3 { get; set; }
 
         public decimal ValorMoraJuros { get; set; }
 

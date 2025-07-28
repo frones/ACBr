@@ -42,10 +42,18 @@ uses
   Androidapi.JNI.GraphicsContentViewText,
   ACBrConsts, ACBrDevice, ACBrBase, ACBrPosPrinter,
   {$IFDEF __G800__}
-   G800Interface
+    G800Interface
   {$ELSE}
-   G700Interface
-  {$ENDIF};
+    {$IFDEF __G720__}
+      G720Interface
+    {$ELSE}
+      {$IFDEF __G780__}
+        G780Interface
+      {$ELSE}
+        G700Interface
+      {$EndIf}
+    {$EndIf}
+  {$EndIf};
 
 resourcestring
   cErroImpressoraSemPapapel = 'Impressora sem Papel';

@@ -397,6 +397,9 @@ begin
   begin
     DonoCartao := '';
     Bandeira := JsonKey('tef.nomeBandeira');
+    CNPJCredenciadora := JsonKey('tef.cnpjCredenciadora');
+    UltimosQuatroDigitos := Copy(JsonKey('tef.panMascarado'), Length(JsonKey('tef.panMascarado')) - 3, 4);
+    Autorizacao := JsonKey('tef.codigoAutorizacao');
   end;
 
   AACBrTEFResp.PAN := JsonKey('tef.panMascarado');

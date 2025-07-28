@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 28/07/2025
+-- ACBrNFSeXServicos --
+[*] #TK-7424: A cidade Luiz Alves/SC trocou de provedor, agora IPI versão 1.01
+   Por: C4Dev
+[*] #TK-7407: Acrescentado o Params GerarTag para a cidade Santa Helena/PR.
+   Por: Alex Heinen
 -- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2/ACBrNFSeXProviderBase --
 -- ACBrNFSeXWebservicesResponse/PadraoNacional.Provider --
 [+] #TK-7422: Implementado a propriedade PathNome para retornar o caminho o nome

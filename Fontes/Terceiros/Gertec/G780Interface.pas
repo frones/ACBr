@@ -483,17 +483,18 @@ type
 
   [JavaSignature('br/com/gertec/gedi/structs/GEDI_PRNTR_st_BarCodeConfig')]
   JGEDI_PRNTR_st_BarCodeConfig = interface(JObject)
-    ['{B2DC1E03-36B5-4372-8489-8CA03B9D5415}']
+    ['{24A6D810-5CB1-49BD-9B85-1613344CB392}']
     function _GetbarCodeType: JGEDI_PRNTR_e_BarCodeType; cdecl;
+    procedure _SetbarCodeType(Value: JGEDI_PRNTR_e_BarCodeType); cdecl;
+    //Acrescentado Marcos
     function _Getheight: Integer; cdecl;
-    function _Getwhite_Space: Integer; cdecl;
+    procedure _Setheight(Value: Integer); cdecl;
     function _Getwidth: Integer; cdecl;
-    function clone: JGEDI_PRNTR_st_BarCodeConfig; overload; cdecl;
-//Mesmo    function clone: JObject; overload; cdecl;
-    property barCodeType: JGEDI_PRNTR_e_BarCodeType read _GetbarCodeType;
-    property height: Integer read _Getheight;
-    property white_Space: Integer read _Getwhite_Space;
-    property width: Integer read _Getwidth;
+    procedure _Setwidth(Value: Integer); cdecl;
+    //Fim Acrescentado Marcos
+    property barCodeType: JGEDI_PRNTR_e_BarCodeType read _GetbarCodeType write _SetbarCodeType;
+    property height:integer read _Getheight write _Setheight;
+    property width:integer read _Getwidth write _Setwidth;
   end;
   TJGEDI_PRNTR_st_BarCodeConfig = class(TJavaGenericImport<JGEDI_PRNTR_st_BarCodeConfigClass, JGEDI_PRNTR_st_BarCodeConfig>) end;
 
@@ -3300,15 +3301,18 @@ type
 
   [JavaSignature('br/com/gertec/gedi/structs/GEDI_PRNTR_st_StringConfig')]
   JGEDI_PRNTR_st_StringConfig = interface(JObject)
-    ['{CA4FC28C-21BF-4A12-9498-29E185042DE5}']
+    ['{73916176-383B-47A9-B09A-A370F08BF6FD}']
+    //Added Manually
     function _GetlineSpace: Integer; cdecl;
+    procedure _SetlineSpace(Value: Integer); cdecl;
     function _Getoffset: Integer; cdecl;
+    procedure _Setoffset(Value: Integer); cdecl;
     function _Getpaint: JPaint; cdecl;
-    function clone: JGEDI_PRNTR_st_StringConfig; overload; cdecl;
-//Mesmo    function clone: JObject; overload; cdecl;
-    property lineSpace: Integer read _GetlineSpace;
-    property offset: Integer read _Getoffset;
-    property paint: JPaint read _Getpaint;
+    procedure _Setpaint(Value: JPaint); cdecl;
+    property paint: JPaint read _Getpaint write _Setpaint;
+    property lineSpace: Integer read _GetlineSpace write _SetlineSpace;
+    property offset: Integer read _Getoffset write _Setoffset;
+
   end;
   TJGEDI_PRNTR_st_StringConfig = class(TJavaGenericImport<JGEDI_PRNTR_st_StringConfigClass, JGEDI_PRNTR_st_StringConfig>) end;
 
@@ -3791,17 +3795,21 @@ type
 
   [JavaSignature('br/com/gertec/gedi/structs/GEDI_PRNTR_st_PictureConfig')]
   JGEDI_PRNTR_st_PictureConfig = interface(JObject)
-    ['{94064F6F-F5F1-4539-BD81-9D4B2501218E}']
-    function _Getalignment: JGEDI_PRNTR_e_Alignment; cdecl;
-    function _Getheight: Integer; cdecl;
-    function _Getoffset: Integer; cdecl;
-    function _Getwidth: Integer; cdecl;
-    function clone: JGEDI_PRNTR_st_PictureConfig; overload; cdecl;
-//Mesmo    function clone: JObject; overload; cdecl;
-    property alignment: JGEDI_PRNTR_e_Alignment read _Getalignment;
-    property height: Integer read _Getheight;
-    property offset: Integer read _Getoffset;
-    property width: Integer read _Getwidth;
+    ['{CEF11D5B-32D1-4D99-977E-EA7087191649}']
+    //Adicionado Manualmente
+    {class} function _Getalignment: JGEDI_PRNTR_e_Alignment; cdecl;
+    {class} procedure _Setalignment(Value: JGEDI_PRNTR_e_Alignment); cdecl;
+    {class} function _Getheight: Integer; cdecl;
+    {class} procedure _Setheight(Value: Integer); cdecl;
+    {class} function _Getoffset: Integer; cdecl;
+    {class} procedure _Setoffset(Value: Integer); cdecl;
+    {class} function _Getwidth: Integer; cdecl;
+    {class} procedure _Setwidth(Value: Integer); cdecl;
+    {class} property alignment: JGEDI_PRNTR_e_Alignment read _Getalignment write _Setalignment;
+    {class} property height: Integer read _Getheight write _Setheight;
+    {class} property offset: Integer read _Getoffset write _Setoffset;
+    {class} property width: Integer read _Getwidth write _Setwidth;
+
   end;
   TJGEDI_PRNTR_st_PictureConfig = class(TJavaGenericImport<JGEDI_PRNTR_st_PictureConfigClass, JGEDI_PRNTR_st_PictureConfig>) end;
 

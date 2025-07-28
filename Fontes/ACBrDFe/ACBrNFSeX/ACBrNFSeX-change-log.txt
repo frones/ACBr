@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 28/07/2025
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] #TK-7423: Alteração visando imprimir o Código Serviço mesmo quando essa informação
+    não existe na lista de serviços dentro da tag Discriminacao.
+   Por: João Vitor Bogo
 -- ACBrNFSeXServicos --
 [*] #TK-7424: A cidade Luiz Alves/SC trocou de provedor, agora IPI versão 1.01
    Por: C4Dev

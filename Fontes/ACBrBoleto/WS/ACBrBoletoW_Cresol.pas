@@ -113,7 +113,12 @@ begin
        if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarVencimento then
           FPURL.SetPathURI(  'titulos/' + LNossoNumero );// Feito um Put com a DtVencimento para alterar o vencimento.
     end;
-    tpConsultaDetalhe:  FPURL.SetPathURI(  'titulos/' + LNossoNumero );//Se não tiver IDBolApi, vai pela URL que traz todos os boletos
+    tpConsultaDetalhe:
+    begin
+      if trim(LNossoNumero)=''  then
+        raise EACBrBoletoWSException.Create('Não foi informado o ID do Boleto em Titulo.NossoNumeroCorrespondente');
+      FPURL.SetPathURI(  'titulos/' + LNossoNumero );//Se não tiver IDBolApi, vai pela URL que traz todos os boletos
+    end;
     tpConsulta:  FPURL.SetPathURI(  'titulos?' + RequisicaoConsulta );
     tpBaixa:  FPURL.SetPathURI(  'titulos/' + LNossoNumero + '/operacao/baixar' );
   end;

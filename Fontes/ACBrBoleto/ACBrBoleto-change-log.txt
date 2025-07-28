@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/07/2025
+-- ACBrBoletoW_Cresol.pas,ACBrBoletoRet_Cresol.pas --
+[+] #TK-7419 Ajustado tpConsultaDetalhada para executar somente qdo for enviado id boleto. ajustado o retorno para devolver id boleto no nossoNumeroCorrespondente
+	https://www.projetoacbr.com.br/forum/topic/84530-acbrlib-boletoapi-retornos-banco-cresol/
+    Por: Daniel de Morais InfoCotidiano
+
+
 25/07/2025
 -- ACBrBoletoW_Itau_API.pas --
 [+] #TK-7382 Adicionado metodo para alteração do valor nominal.

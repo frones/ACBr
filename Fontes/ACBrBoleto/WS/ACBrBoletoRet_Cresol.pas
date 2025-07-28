@@ -153,6 +153,7 @@ begin
                      ARetornoWS.DadosRet.TituloRet.DataDocumento  := DateCresolToDateTime(LJsonObject.AsString['dtDocumento']);
                      ARetornoWS.DadosRet.TituloRet.ValorDocumento := LJsonObject.AsFloat['valorNominal'];
                      ARetornoWS.DadosRet.TituloRet.ValorDesconto  := LJsonObject.AsFloat['valorDesconto'];
+                     ARetornoWS.DadosRet.TituloRet.NossoNumeroCorrespondente  := ARetornoWS.DadosRet.IDBoleto.IDBoleto;
                   end
                   else
                   if (ATipoOperacao = tpConsultaDetalhe) then
@@ -315,6 +316,8 @@ begin
                  ListaRetorno.DadosRet.TituloRet.NossoNumero     := ListaRetorno.DadosRet.IDBoleto.NossoNum;
                  ListaRetorno.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonBoletoObject.AsString['dtVencimento']);
                  ListaRetorno.DadosRet.TituloRet.ValorDocumento  := LJsonBoletoObject.AsFloat['valorNominal'];
+                 ListaRetorno.DadosRet.TituloRet.NossoNumeroCorrespondente  := LJsonBoletoObject.AsString['id'];
+
                  if LJsonBoletoObject.AsString['cdTipoMulta'] = 'ISENTO' then//Sem multa.
                     ListaRetorno.DadosRet.TituloRet.PercentualMulta := 0
                  else

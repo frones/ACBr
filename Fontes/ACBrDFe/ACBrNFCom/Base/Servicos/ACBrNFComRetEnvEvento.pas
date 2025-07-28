@@ -46,7 +46,8 @@ uses
   ACBrBase, ACBrXmlBase,
 //  ACBrDFeComum.SignatureClass,
   pcnSignature,
-  ACBrNFComEventoClass;
+  ACBrNFComEventoClass,
+  ACBrXmlDocument;
 
 type
   TRetInfEventoCollectionItem = class(TObject)
@@ -72,20 +73,29 @@ type
   TRetEventoNFCom = class(TObject)
   private
     Fversao: string;
+    FInfEvento: TInfEvento;
     FretInfEvento: TRetInfEvento;
     FretEvento: TRetInfEventoCollection;
     Fsignature: Tsignature;
+    FXML: AnsiString;
 
     FXmlRetorno: string;
+
+  protected
+    procedure Ler_RetEvento(const ANode: TACBrXmlNode);
+    procedure Ler_InfEvento(const ANode: TACBrXmlNode);
+    procedure Ler_DetEvento(const ANode: TACBrXmlNode);
   public
     constructor Create;
     destructor Destroy; override;
     function LerXml: Boolean;
 
     property versao: string read Fversao write Fversao;
+    property infEvento: TInfEvento read FInfEvento write FInfEvento;
     property retInfEvento: TRetInfEvento read FretInfEvento write FretInfEvento;
     property retEvento: TRetInfEventoCollection read FretEvento write FretEvento;
     property signature: Tsignature read Fsignature write Fsignature;
+    property XML: AnsiString       read FXML       write FXML;
 
     property XmlRetorno: string read FXmlRetorno write FXmlRetorno;
   end;
@@ -94,8 +104,7 @@ implementation
 
 uses
   ACBrNFComConversao,
-  ACBrUtil.Strings,
-  ACBrXmlDocument;
+  ACBrUtil.Strings;
 
 { TRetEventoNFCom }
 
@@ -103,6 +112,7 @@ constructor TRetEventoNFCom.Create;
 begin
   inherited Create;
 
+  FInfEvento := TInfEvento.Create;
   FretInfEvento := TRetInfEvento.Create;
   FretEvento := TRetInfEventoCollection.Create;
   Fsignature := Tsignature.Create;
@@ -110,6 +120,7 @@ end;
 
 destructor TRetEventoNFCom.Destroy;
 begin
+  FInfEvento.Free;
   FretInfEvento.Free;
   FretEvento.Free;
   Fsignature.Free;
@@ -135,27 +146,16 @@ begin
       begin
         versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
 
-        ANodeAux := ANode.Childrens.FindAnyNs('infEvento');
-
-        if ANodeAux <> nil then
+        if (ANode.LocalName = 'procEventoNFCom') then
         begin
-          RetInfEvento.Id := ObterConteudoTag(ANodeAux.Attributes.Items['Id']);
-          RetInfEvento.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
-          RetInfEvento.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
-          retInfEvento.cOrgao := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cOrgao'), tcInt);
-          retInfEvento.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
-          retInfEvento.xMotivo := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr);
-          RetInfEvento.chNFCom := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNFCom'), tcStr);
-          RetInfEvento.tpEvento := StrToTpEventoNFCom(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpEvento'), tcStr));
-          RetInfEvento.xEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xEvento'), tcStr);
-          retInfEvento.nSeqEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nSeqEvento'), tcInt);
-          retInfEvento.dhRegEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRegEvento'), tcDatHor);
-          RetInfEvento.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
+          Ler_InfEvento(ANode.Childrens.FindAnyNs('eventoNFCom').Childrens.FindAnyNs('infEvento'));
+          Ler_RetEvento(ANode.Childrens.FindAnyNs('retEventoNFCom').Childrens.FindAnyNs('infEvento'));
         end;
 
-        SignatureNode := ANode.Childrens.FindAnyNs('Signature');
+        if ANode.LocalName = 'retEventoNFCom' then
+          Ler_RetEvento(ANode.Childrens.FindAnyNs('infEvento'));
 
-        LerSignature(SignatureNode, signature);
+        LerSignature(ANode.Childrens.Find('Signature'), signature);
       end;
 
       Result := True;
@@ -165,6 +165,57 @@ begin
   finally
     FreeAndNil(Document);
   end;
+end;
+
+procedure TRetEventoNFCom.Ler_InfEvento(const ANode: TACBrXmlNode);
+var
+  ok: Boolean;
+begin
+  if not Assigned(ANode) then Exit;
+
+  infEvento.Id := ObterConteudoTag(ANode.Attributes.Items['Id']);
+  infEvento.cOrgao := ObterConteudoTag(ANode.Childrens.FindAnyNs('cOrgao'), tcInt);
+  infEvento.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+  infEvento.CNPJ := ObterConteudoTagCNPJCPF(ANode);
+  infEvento.chNFCom := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFCom'), tcStr);
+  infEvento.dhEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhEvento'), tcDatHor);
+  infEvento.tpEvento := StrToTpEventoNFCom(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpEvento'), tcStr));
+  infEvento.nSeqEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
+
+  Ler_DetEvento(ANode.Childrens.FindAnyNs('detEvento').Childrens.FindAnyNs('evCancNFCom'));
+end;
+
+procedure TRetEventoNFCom.Ler_DetEvento(const ANode: TACBrXmlNode);
+begin
+  if not Assigned(ANode) then Exit;
+
+  infEvento.DetEvento.descEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('descEvento'), tcStr);
+  infEvento.DetEvento.nProt := ObterConteudoTag(ANode.Childrens.FindAnyNs('nProt'), tcStr);
+  infEvento.DetEvento.xJust := ObterConteudoTag(ANode.Childrens.FindAnyNs('xJust'), tcStr);
+
+end;
+
+procedure TRetEventoNFCom.Ler_RetEvento(const ANode: TACBrXmlNode);
+var
+  ok: Boolean;
+begin
+  if not Assigned(ANode) then Exit;
+
+  RetInfEvento.XML := ANode.OuterXml;
+
+  RetInfEvento.Id := ObterConteudoTag(ANode.Attributes.Items['Id']);
+  RetInfEvento.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+  RetInfEvento.verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
+  RetInfEvento.cOrgao := ObterConteudoTag(ANode.Childrens.FindAnyNs('cOrgao'), tcInt);
+  RetInfEvento.cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
+  RetInfEvento.xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
+  RetInfEvento.chNFCom := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFCom'), tcStr);
+  RetInfEvento.tpEvento := StrToTpEventoNFCom(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpEvento'), tcStr));
+  RetInfEvento.xEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('xEvento'), tcStr);
+  RetInfEvento.nSeqEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
+  RetInfEvento.dhRegEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRegEvento'), tcDatHor);
+  RetInfEvento.nProt := ObterConteudoTag(ANode.Childrens.FindAnyNs('nProt'), tcStr);
+
 end;
 
 { TRetInfEventoCollectionItem }

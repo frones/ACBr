@@ -1445,7 +1445,7 @@ var
   aEventos, sPathNFCom, NomeXMLSalvo: string;
   AProcNFCom: TProcDFe;
   I,
-//  J,
+  J,
   Inicio, Fim: integer;
   dhEmissao: TDateTime;
 begin
@@ -1501,27 +1501,42 @@ begin
       FprocEventoNFCom.Clear;
       for I := 0 to NFComRetorno.procEventoNFCom.Count - 1 do
       begin
-        with FprocEventoNFCom.New.RetEventoNFCom.retInfEvento do
+        with FprocEventoNFCom.New.RetEventoNFCom do
         begin
-//          idLote := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.idLote;
-          tpAmb := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.tpAmb;
-          verAplic := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.verAplic;
-          cOrgao := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.cOrgao;
-          cStat := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.cStat;
-          xMotivo := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.xMotivo;
- //         XML := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.XML;
+          XML := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.XML;
 
-          ID := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.ID;
-          tpAmb := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.tpAmb;
-//          CNPJ := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.CNPJ;
-          chNFCom := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.chNFCom;
-//          dhEvento := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.dhEvento;
-          TpEvento := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.TpEvento;
-          nSeqEvento := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.nSeqEvento;
-          nProt := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.nProt;
-//          xJust := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.xJust;
+          //InfEvento
+          infEvento.Id := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.InfEvento.ID;
+          infEvento.cOrgao := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.InfEvento.cOrgao;
+          infEvento.tpAmb := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.InfEvento.tpAmb;
+          infEvento.CNPJ := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.InfEvento.CNPJ;
+          infEvento.chNFCom := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.InfEvento.chNFCom;
+          infEvento.dhEvento := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.InfEvento.dhEvento;
+          infEvento.tpEvento := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.InfEvento.tpEvento;
+          infEvento.nSeqEvento := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.InfEvento.nSeqEvento;
 
-          {
+          infEvento.detEvento.descEvento := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.InfEvento.detEvento.descEvento;
+          infEvento.detEvento.nProt := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.InfEvento.detEvento.nProt;
+          infEvento.detEvento.xJust := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.InfEvento.detEvento.xJust;
+
+          //retInfEvento
+          retInfEvento.ID := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.ID;
+          retInfEvento.tpAmb := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.tpAmb;
+          retInfEvento.verAplic := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.verAplic;
+          retInfEvento.cOrgao := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.cOrgao;
+          retInfEvento.cStat := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.cStat;
+          retInfEvento.xMotivo := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.xMotivo;
+          retInfEvento.chNFCom := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retInfEvento.chNFCom;
+          retInfEvento.tpEvento := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.RetInfEvento.tpEvento;
+          retInfEvento.xEvento := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.RetInfEvento.xEvento;
+          retInfEvento.nSeqEvento := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.RetInfEvento.nSeqEvento;
+          retInfEvento.CNPJDest := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.RetInfEvento.CNPJDest;
+          retInfEvento.emailDest := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.RetInfEvento.emailDest;
+          retInfEvento.dhRegEvento := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.RetInfEvento.dhRegEvento;
+          retInfEvento.nProt := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.RetInfEvento.nProt;
+          retInfEvento.XML := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.RetInfEvento.XML;
+
+          {substituido pelo código acima
           retEvento.Clear;
           for J := 0 to NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retEvento.Count-1 do
           begin
@@ -1544,7 +1559,7 @@ begin
               XML := NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom.retEvento.Items[J].RetInfEvento.XML;
             end;
           end;
-          }
+          }   
         end;
         {
         with NFComRetorno.procEventoNFCom.Items[I].RetEventoNFCom do
@@ -1994,59 +2009,54 @@ begin
   begin
     for I := 0 to FEvento.Evento.Count - 1 do
     begin
-      for J := 0 to EventoRetorno.retEvento.Count - 1 do
+      if FEvento.Evento.Items[I].InfEvento.chNFCom = EventoRetorno.RetInfEvento.chNFCom then
       begin
-        if FEvento.Evento.Items[I].InfEvento.chNFCom =
-          EventoRetorno.retEvento.Items[J].RetInfEvento.chNFCom then
+        FEvento.Evento.Items[I].RetInfEvento.tpAmb := EventoRetorno.RetInfEvento.tpAmb;
+        FEvento.Evento.Items[I].RetInfEvento.nProt := EventoRetorno.RetInfEvento.nProt;
+        FEvento.Evento.Items[I].RetInfEvento.dhRegEvento := EventoRetorno.RetInfEvento.dhRegEvento;
+        FEvento.Evento.Items[I].RetInfEvento.cStat := EventoRetorno.RetInfEvento.cStat;
+        FEvento.Evento.Items[I].RetInfEvento.xMotivo := EventoRetorno.RetInfEvento.xMotivo;
+
+        Texto := '';
+
+        if EventoRetorno.RetInfEvento.cStat in [135, 136, 155] then
         begin
-          FEvento.Evento.Items[I].RetInfEvento.tpAmb := EventoRetorno.retEvento.Items[J].RetInfEvento.tpAmb;
-          FEvento.Evento.Items[I].RetInfEvento.nProt := EventoRetorno.retEvento.Items[J].RetInfEvento.nProt;
-          FEvento.Evento.Items[I].RetInfEvento.dhRegEvento := EventoRetorno.retEvento.Items[J].RetInfEvento.dhRegEvento;
-          FEvento.Evento.Items[I].RetInfEvento.cStat := EventoRetorno.retEvento.Items[J].RetInfEvento.cStat;
-          FEvento.Evento.Items[I].RetInfEvento.xMotivo := EventoRetorno.retEvento.Items[J].RetInfEvento.xMotivo;
+          VersaoEvento := TACBrNFCom(FPDFeOwner).LerVersaoDeParams(LayNFComEvento);
 
-          Texto := '';
+          Texto := '<eventoNFCom versao="' + VersaoEvento + '">' +
+                       SeparaDados(FPDadosMsg, 'infEvento', True) +
+                       '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
+                       SeparaDados(FPDadosMsg, 'Signature', False) +
+                       '</Signature>'+
+                   '</eventoNFCom>';
 
-          if EventoRetorno.retEvento.Items[J].RetInfEvento.cStat in [135, 136, 155] then
+          Texto := Texto +
+                     '<retEventoNFCom versao="' + VersaoEvento + '">' +
+                        SeparaDados(FPRetWS, 'infEvento', True) +
+                     '</retEventoNFCom>';
+
+          Texto := '<procEventoNFCom versao="' + VersaoEvento + '" xmlns="' + ACBRNFCom_NAMESPACE + '">' +
+                     Texto +
+                   '</procEventoNFCom>';
+
+          if FPConfiguracoesNFCom.Arquivos.Salvar then
           begin
-            VersaoEvento := TACBrNFCom(FPDFeOwner).LerVersaoDeParams(LayNFComEvento);
+            NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) + '-procEventoNFCom.xml';
+            PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
 
-            Texto := '<evento versao="' + VersaoEvento + '">' +
-                         SeparaDados(FPDadosMsg, 'infEvento', True) +
-                         '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
-                         SeparaDados(FPDadosMsg, 'Signature', False) +
-                         '</Signature>'+
-                     '</evento>';
-
-            Texto := Texto +
-                       '<retEvento versao="' + VersaoEvento + '">' +
-                          SeparaDados(FPRetWS, 'infEvento', True) +
-                       '</retEvento>';
-
-            Texto := '<procEventoNFCom versao="' + VersaoEvento + '" xmlns="' + ACBRNFCom_NAMESPACE + '">' +
-                       Texto +
-                     '</procEventoNFCom>';
-
-            if FPConfiguracoesNFCom.Arquivos.SalvarEvento then
-            begin
-              NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) + '-procEventoNFCom.xml';
-              PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
-
-              FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
-              FEventoRetorno.retEvento.Items[J].RetInfEvento.NomeArquivo := PathArq + NomeArq;
-              FEvento.Evento.Items[I].RetInfEvento.NomeArquivo := PathArq + NomeArq;
-            end;
-
-            { Converte de UTF8 para a String nativa e Decodificar caracteres HTML Entity }
-            Texto := ParseText(Texto);
+            FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
+            FEventoRetorno.RetInfEvento.NomeArquivo := PathArq + NomeArq;
+            FEvento.Evento.Items[I].RetInfEvento.NomeArquivo := PathArq + NomeArq;
           end;
 
-          // Se o evento for rejeitado a propriedade XML conterá uma string vazia
-          FEventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto;
-          FEvento.Evento.Items[I].RetInfEvento.XML := Texto;
-
-          break;
+          { Converte de UTF8 para a String nativa e Decodificar caracteres HTML Entity }
+          Texto := ParseText(Texto);
         end;
+
+        // Se o evento for rejeitado a propriedade XML conterá uma string vazia
+        FEventoRetorno.RetInfEvento.XML := Texto;
+        FEvento.Evento.Items[I].RetInfEvento.XML := Texto;
+
       end;
     end;
   end;

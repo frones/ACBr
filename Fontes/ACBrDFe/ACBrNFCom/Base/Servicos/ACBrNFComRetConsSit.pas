@@ -251,6 +251,7 @@ begin
 
               procEventoNFCom.New;
               procEventoNFCom.Items[i].RetEventoNFCom.XmlRetorno := AnodeAux.OuterXml;
+              procEventoNFCom.Items[i].RetEventoNFCom.XML := AnodeAux.OuterXml;
               procEventoNFCom.Items[i].RetEventoNFCom.LerXml;
             end;
           end;

@@ -92,10 +92,20 @@ function TRetornoEnvio_Bradesco.DateBradescoToDateTime(const AValue: String): TD
 var
   LData, LAno, LMes, LDia : String;
 begin
-  LAno := Copy(AValue, 0, 4);
-  LMes := Copy(AValue, 6, 2);
-  LDia := Copy(AValue, 9, 2);
-  LData := Format('%s/%s/%s', [LDia, LMes, LAno]);
+  if ACBrBoleto.Configuracoes.WebService.UseCertificateHTTP then
+  begin //portal developers
+    LData := OnlyNumber(AValue); //remover pontuação, pois não tem um padrao ponto barras ou sem
+    LAno := Copy(LData, 5, 4);
+    LMes := Copy(LData, 3, 2);
+    LDia := Copy(LData, 1, 2);
+    LData := Format('%s/%s/%s', [LDia, LMes, LAno]);
+  end else
+  begin //legado
+    LAno := Copy(AValue, 0, 4);
+    LMes := Copy(AValue, 6, 2);
+    LDia := Copy(AValue, 9, 2);
+    LData := Format('%s/%s/%s', [LDia, LMes, LAno]);
+  end;
   Result := StrToDateDef(LData, 0);
 end;
 
@@ -153,14 +163,17 @@ begin
           if (LTipoOperacao = tpInclui) then
           begin
             ARetornoWS.DadosRet.TituloRet.NossoNumero                 := LJsonObject.AsString['ctitloCobrCdent'];
-            ARetornoWS.DadosRet.TituloRet.CodBarras                   := LJsonObject.AsString['codBarras10'];
-            ARetornoWS.DadosRet.TituloRet.LinhaDig                    := LJsonObject.AsString['linhaDig10'];
+            ARetornoWS.DadosRet.TituloRet.CodBarras                   := OnlyNumber(LJsonObject.AsString['codBarras10']);
+            ARetornoWS.DadosRet.TituloRet.LinhaDig                    := OnlyNumber(LJsonObject.AsString['linhaDig10']);
             ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca        := LJsonObject.AsString['codStatus10'];//Ex. A Vencer/Vencido
             ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca  := LJsonObject.AsString['codStatus10'];//Ex 01.
             ARetornoWS.DadosRet.TituloRet.SeuNumero                   := LJsonObject.AsString['snumero10'];
             ARetornoWS.DadosRet.TituloRet.DataRegistro                := DateBradescoToDateTime(LJsonObject.AsString['dataReg10']);
+            ARetornoWS.DadosRet.TituloRet.DataProcessamento           := DateBradescoToDateTime(LJsonObject.AsString['dataImpressao10']);
             ARetornoWS.DadosRet.TituloRet.DataDocumento               := DateBradescoToDateTime(LJsonObject.AsString['dataEmis10']);
             ARetornoWS.DadosRet.TituloRet.ValorDocumento              := LJsonObject.AsCurrency['valMoeda10'];
+            if ACBrBoleto.Configuracoes.WebService.UseCertificateHTTP then // Portal Developers
+              ARetornoWS.DadosRet.TituloRet.ValorDocumento            := ARetornoWS.DadosRet.TituloRet.ValorDocumento / 100;
             ARetornoWS.DadosRet.TituloRet.Vencimento                  := DateBradescoToDateTime(LJsonObject.AsString['dataVencto10']);
             ARetornoWS.DadosRet.TituloRet.TxId                        := LJsonObject.AsString['iconcPgtoSpi'];
             ARetornoWS.DadosRet.TituloRet.EMV                         := LJsonObject.AsString['wqrcdPdraoMercd'];

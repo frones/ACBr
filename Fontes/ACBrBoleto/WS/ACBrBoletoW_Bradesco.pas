@@ -657,7 +657,10 @@ begin
     //tipoRegistro: 1-Título 2-Título com Instrução de Protesto 3-Título com Instrução de Protesto Falimentar.
     LJsonObject.AddPair('tipoRegistro', 1);//NÃO Obrigatório;
     LJsonObject.AddPair('cprodtServcOper', 0);//FIXO.
-    LJsonObject.AddPair('ctitloCobrCdent', OnlyNumber(ATitulo.NossoNumero));//NÃO Obrigatório;
+    if Boleto.Configuracoes.WebService.UseCertificateHTTP then //PORTAL DEVELOPERS
+      LJsonObject.AddPair('ctitloCobrCdent', OnlyNumber(ATitulo.NossoNumero)+ATitulo.ACBrBoleto.Banco.CalcularDigitoVerificador(ATitulo))
+    else
+      LJsonObject.AddPair('ctitloCobrCdent', OnlyNumber(ATitulo.NossoNumero));//LEGADO
 
     //ctitloCliCdent: Identificador do título pelo beneficiário(Seu Número).
     LJsonObject.AddPair('ctitloCliCdent', Trim(IfThen(ATitulo.NumeroDocumento <> '',
@@ -857,16 +860,9 @@ begin
 end;
 
 procedure TBoletoW_Bradesco.GerarBenificiarioFinalComum(AJsonObject: TACBrJSONObject);
-var LTipoPessoa : String;
 begin
   if not Assigned(ATitulo) or not Assigned(AJsonObject) then
     Exit;
-  case ATitulo.Sacado.SacadoAvalista.Pessoa of
-    pFisica   : LTipoPessoa := '1';
-    pJuridica : LTipoPessoa := '2';
-    else
-      LTipoPessoa := '0';
-  end;
   AJsonObject.AddPair('nomeSacadorAvalista', Copy(TiraAcentos(ATitulo.Sacado.SacadoAvalista.NomeAvalista), 1, 40));
   AJsonObject.AddPair('logradouroSacadorAvalista', Copy(TiraAcentos(ATitulo.Sacado.SacadoAvalista.Logradouro) + ' '+ATitulo.Sacado.SacadoAvalista.Numero, 1, 40));
   AJsonObject.AddPair('cepSacadorAvalista', Copy(ATitulo.Sacado.SacadoAvalista.CEP, 1, 5));
@@ -874,7 +870,7 @@ begin
   AJsonObject.AddPair('bairroSacadorAvalista', Copy(TiraAcentos(ATitulo.Sacado.SacadoAvalista.Bairro), 1, 40));
   AJsonObject.AddPair('municípioSacadorAvalista', Copy(TiraAcentos(ATitulo.Sacado.SacadoAvalista.Cidade), 1, 40));
   AJsonObject.AddPair('ufSacadorAvalista', Copy(TiraAcentos(ATitulo.Sacado.SacadoAvalista.UF), 1, 2));
-  AJsonObject.AddPair('cdIndCpfcnpjSacadorAvalista', LTipoPessoa);
+  AJsonObject.AddPair('cdIndCpfcnpjSacadorAvalista', IfThen(aTitulo.Sacado.SacadoAvalista.Pessoa = pJuridica, '2', '1'));
   AJsonObject.AddPair('nuCpfcnpjSacadorAvalista', Copy(OnlyNumber(ATitulo.Sacado.SacadoAvalista.CNPJCPF), 1, 14));
   AJsonObject.AddPair('endEletrônicoSacadorAvalista', Copy(ATitulo.Sacado.SacadoAvalista.Email, 1, 70));
 end;
@@ -886,7 +882,7 @@ procedure TBoletoW_Bradesco.GerarBenificiarioFinalHibrido(AJsonObject: TACBrJSON
       AVar := ADefault;
   end;
 var LCEP, LCEPComplemento, LTelefoneDDD, LTelefone,
-  LDocumento, LNumero : String;
+  LDocumento, LNumero, LTipoPessoa : String;
 begin
   if not Assigned(ATitulo) or not Assigned(AJsonObject) then
     Exit;
@@ -896,6 +892,12 @@ begin
   LTelefone := Copy(OnlyNumber(aTitulo.Sacado.SacadoAvalista.Fone), 1, 11);
   LDocumento := Copy(OnlyNumber(aTitulo.Sacado.SacadoAvalista.CNPJCPF), 1, 14);
   LNumero := aTitulo.Sacado.SacadoAvalista.Numero;
+  case ATitulo.Sacado.SacadoAvalista.Pessoa of
+    pFisica   : LTipoPessoa := '1';
+    pJuridica : LTipoPessoa := '2';
+    else
+      LTipoPessoa := '0';
+  end;
   if Boleto.Configuracoes.WebService.UseCertificateHTTP then
   begin
     ValorPadrao(LCEP);
@@ -915,7 +917,7 @@ begin
   AJsonObject.AddPair('ebairoLogdrSacdr', Copy(TiraAcentos(aTitulo.Sacado.SacadoAvalista.Bairro), 1, 40));
   AJsonObject.AddPair('imunSacdrAvals', Copy(TiraAcentos(aTitulo.Sacado.SacadoAvalista.Cidade), 1, 40));
   AJsonObject.AddPair('csglUfSacdr', Copy(TiraAcentos(aTitulo.Sacado.SacadoAvalista.UF), 1, 2));
-  AJsonObject.AddPair('indCpfCnpjSacdr', IfThen(aTitulo.Sacado.SacadoAvalista.Pessoa = pJuridica, '2', '1'));
+  AJsonObject.AddPair('indCpfCnpjSacdr', LTipoPessoa);
   AJsonObject.AddPair('renderEletrSacdr', Copy(aTitulo.Sacado.SacadoAvalista.Email, 1, 70));
   AJsonObject.AddPair('cdddFoneSacdr', LTelefoneDDD);
   AJsonObject.AddPair('cfoneSacdrTitlo', LTelefone);

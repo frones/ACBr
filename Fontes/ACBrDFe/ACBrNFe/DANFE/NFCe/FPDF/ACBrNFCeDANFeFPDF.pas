@@ -1794,7 +1794,7 @@ begin
     y1 := y1 + 1;
   end;
 
-  if NFe.Ide.tpEmis = teOffLine then
+  if (NFe.Ide.tpEmis = teOffLine) then
   begin
     texto := FVia;
     y1 := y1 + PDF.TextBox(x1, y1, w, 4, texto, 'T', hAlign, 0, '', true);
@@ -1804,9 +1804,20 @@ begin
     PDF.SetFont(10-subSize, 'B');
     y1 := y1 + PDF.TextBox(x1, y1, w, 4, texto, 'B', hAlign, 0, '', true);
 
-    texto := 'Pendente de autorização';
-    PDF.SetFont(8-subSize, 'I');
-    PDF.TextBox(x1, y1, w, 3, texto, 'B', hAlign, 0, '', true);
+    if EstaVazio(NFe.procNFe.nProt) then
+    begin
+      texto := 'Pendente de autorização';
+      PDF.SetFont(8-subSize, 'I');
+      PDF.TextBox(x1, y1, w, 3, texto, 'B', hAlign, 0, '', true);
+    end else
+    begin
+      y1 := y1 + BlocoProtocolo(
+          x1, y1, w, hAlign,
+          subSize,
+          NFe.procNFe.nProt,
+          NFe.procNFe.dhRecbto
+        );
+    end;
   end
   else if NFe.Ide.tpEmis = teDPEC then
   begin

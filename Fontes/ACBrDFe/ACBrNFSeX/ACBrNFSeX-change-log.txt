@@ -54,6 +54,9 @@ Símbolo : Significado
 [+] #TK-7422: Implementado a propriedade PathNome para retornar o caminho o nome
     do arquivo de processamento do cancelamento.
    Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[+] #TK-7408: Incluída a cidade Cerro Branco/RS, provedor Pronim.
+   Por: diogo.guerra/Nuvem Fiscal
 
 25/07/2025
 -- Betha.Provider --

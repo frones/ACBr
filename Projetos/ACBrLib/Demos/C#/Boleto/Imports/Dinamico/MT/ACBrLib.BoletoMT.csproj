@@ -15,11 +15,12 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>1.0.21.0</Version>
+    <Version>1.0.22.0</Version>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ProJetoACBr.snk</AssemblyOriginatorKeyFile>
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.21.0</FileVersion>
+    <FileVersion>1.0.22.0</FileVersion>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
@@ -35,7 +36,17 @@
     <DocumentationFile>..\..\bin\Debug\net452\ACBrLib.Boleto.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net452|x86'">
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DocumentationFile>..\..\bin\Debug\net452\ACBrLib.Boleto.xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net452|AnyCPU'">
+    <OutputPath>..\..\bin\Release\</OutputPath>
+    <DocumentationFile>..\..\bin\Release\net452\ACBrLib.Boleto.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net452|x86'">
     <OutputPath>..\..\bin\Release\</OutputPath>
     <DocumentationFile>..\..\bin\Release\net452\ACBrLib.Boleto.xml</DocumentationFile>
   </PropertyGroup>
@@ -45,7 +56,17 @@
     <DocumentationFile>..\..\bin\Debug\netstandard2.0\ACBrLib.Boleto.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|x86'">
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DocumentationFile>..\..\bin\Debug\netstandard2.0\ACBrLib.Boleto.xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <OutputPath>..\..\bin\Release\</OutputPath>
+    <DocumentationFile>..\..\bin\Release\netstandard2.0\ACBrLib.Boleto.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|x86'">
     <OutputPath>..\..\bin\Release\</OutputPath>
     <DocumentationFile>..\..\bin\Release\netstandard2.0\ACBrLib.Boleto.xml</DocumentationFile>
   </PropertyGroup>
@@ -96,8 +117,8 @@
     <Compile Include="..\Shared\Titulo\Titulo.cs" Link="Titulo\Titulo.cs" />
     <Compile Include="..\Shared\WebserviceConfig.cs" Link="WebserviceConfig.cs" />
 	<Compile Include="..\Shared\Consulta\ACBrIndicadorBoletoVencido.cs" Link="Consulta\ACBrIndicadorBoletoVencido.cs" />
-	<Compile Include="..\Shared\Consulta\ACBrIndicadorSituacaoBoleto.cs" Link="Consulta\ACBrIndicadorSituacaoBoleto.cs"/>
-	<Compile Include="..\Shared\Consulta\ConsultaTitulosPorPeriodo.cs" Link="Consulta\ConsultaTitulosPorPeriodo.cs"/>
+	<Compile Include="..\Shared\Consulta\ACBrIndicadorSituacaoBoleto.cs" Link="Consulta\ACBrIndicadorSituacaoBoleto.cs" />
+	<Compile Include="..\Shared\Consulta\ConsultaTitulosPorPeriodo.cs" Link="Consulta\ConsultaTitulosPorPeriodo.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -41,7 +41,7 @@ uses
   ACBrBase, ACBrPosPrinter,
   ACBrPosPrinterElginE1Service,
   {$IfDef ANDROID}
-   {ACBrPosPrinterGEDI,} ACBrPosPrinterElginE1Lib, ACBrPosPrinterTecToySunmiLib,
+   ACBrPosPrinterGEDI, ACBrPosPrinterElginE1Lib, ACBrPosPrinterTecToySunmiLib,
   {$EndIf}
   FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
   FMX.ListView, FMX.ListBox, FMX.Layouts, FMX.Edit, FMX.EditBox, FMX.SpinBox,
@@ -101,7 +101,6 @@ type
     seBarrasLargura: TSpinBox;
     seBarrasAltura: TSpinBox;
     ImageList1: TImageList;
-    StyleBook1: TStyleBook;
     chbTodasBth: TCheckBox;
     cbxModelo: TComboBox;
     btAcentos: TButton;
@@ -147,7 +146,7 @@ type
     { Private declarations }
     fE1Printer: TACBrPosPrinterElginE1Service;
     {$IfDef ANDROID}
-    //fGEDIPrinter: TACBrPosPrinterGEDI;
+    fGEDIPrinter: TACBrPosPrinterGEDI;
     fE1Lib: TACBrPosPrinterElginE1Lib;
     fSunmiPrinter: TACBrPosPrinterTecToySunmiLib;
     {$EndIf}
@@ -213,7 +212,7 @@ begin
   {$EndIf}
 
   {$IfDef ANDROID}
-  //fGEDIPrinter := TACBrPosPrinterGEDI.Create(ACBrPosPrinter1);
+  fGEDIPrinter := TACBrPosPrinterGEDI.Create(ACBrPosPrinter1);
   fE1Lib := TACBrPosPrinterElginE1Lib.Create(ACBrPosPrinter1);
   fE1Lib.Modelo := TElginE1LibPrinters.prnM8;
   fSunmiPrinter := TACBrPosPrinterTecToySunmiLib.Create(ACBrPosPrinter1);
@@ -226,7 +225,7 @@ procedure TPosPrinterAndroidTesteForm.FormDestroy(Sender: TObject);
 begin
   fE1Printer.Free;
   {$IfDef ANDROID}
-  //fGEDIPrinter.Free;
+  fGEDIPrinter.Free;
   fE1Lib.Free;
   fSunmiPrinter.Free;
   {$EndIf}
@@ -551,7 +550,7 @@ begin
   cbxModelo.Items.Clear;
   cbxModelo.Items.Add('Elgin E1 Service');
   cbxModelo.Items.Add('Elgin E1 Lib');
-  //cbxModelo.Items.Add('Gertec GEDI');
+  cbxModelo.Items.Add('Gertec GEDI');
   cbxModelo.Items.Add('TecToy Sunmi Service');
   lbImpressoras.Enabled := False;
 end;
@@ -596,7 +595,7 @@ begin
     case cbxModelo.ItemIndex of
       0: ACBrPosPrinter1.ModeloExterno := fE1Printer;
       1: ACBrPosPrinter1.ModeloExterno := fE1Lib;
-      //2: ACBrPosPrinter1.ModeloExterno := fGEDIPrinter;
+      2: ACBrPosPrinter1.ModeloExterno := fGEDIPrinter;
     else
       ACBrPosPrinter1.ModeloExterno := fSunmiPrinter;
     end;

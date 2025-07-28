@@ -1418,7 +1418,7 @@ begin
     NFe.Transp.retTransp.pICMSRet := ObterConteudo(AuxNode.Childrens.Find('pICMSRet'), tcDe2);
     NFe.Transp.retTransp.vICMSRet := ObterConteudo(AuxNode.Childrens.Find('vICMSRet'), tcDe2);
     NFe.Transp.retTransp.CFOP     := ObterConteudo(AuxNode.Childrens.Find('CFOP'), tcEsp);
-    NFe.Transp.retTransp.cMunFG   := ObterConteudo(AuxNode.Childrens.Find('cMunFG'), tcStr);
+    NFe.Transp.retTransp.cMunFG   := ObterConteudo(AuxNode.Childrens.Find('cMunFG'), tcInt);
   end;
 
   AuxNode := ANode.Childrens.Find('veicTransp');

@@ -234,6 +234,7 @@ end;
 function TACBrPSPAppLess.OrderResponseToCob(const aJsonOrderResponse: String): String;
 var
   wCob: TACBrPIXCobCompleta;
+  i: Integer;
 begin
   OrderResponse.AsJSON := aJsonOrderResponse;
   wCob := TACBrPIXCobCompleta.Create;
@@ -262,6 +263,8 @@ begin
       nome := 'urlPix';
       valor := OrderResponse.transaction.transactionPix.cobResponse.urlPix;
     end;
+
+    wCob.pix.Assign(OrderResponse.transaction.transactionPix.cobResponse.pix);
 
     wCob.calendario.expiracao := OrderResponse.transaction.transactionPix.cobResponse.calendario.expiracao;
     Result := wCob.AsJSON;

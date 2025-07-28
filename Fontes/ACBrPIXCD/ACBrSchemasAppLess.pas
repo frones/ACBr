@@ -50,7 +50,8 @@ uses
   ACBrBase,
   ACBrJSON,
   ACBrUtil.Base,
-  ACBrPIXBase;
+  ACBrPIXBase,
+  ACBrPIXSchemasPix;
 
 type  
 
@@ -389,9 +390,11 @@ type
     fvalor: TACBrAppLessValor;
     fstatus: TAppLessTransactionStatus;
     furlPix: String;
+    fpix: TACBrPIXArray;
     fpixCopiaECola: String;
     fpixCopiaEColaFormatted: String;
     function GetCalendario: TACBrAppLessCalendario;
+    function Getpix: TACBrPIXArray;
     function GetValor: TACBrAppLessValor;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
@@ -403,6 +406,7 @@ type
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrAppLessCobResponse);
 
+    property pix: TACBrPIXArray read Getpix;
     property status: TAppLessTransactionStatus read fstatus write fstatus;
     property urlPix: String read furlPix write furlPix;
     property pixCopiaECola: String read fpixCopiaECola write fpixCopiaECola;
@@ -1581,6 +1585,13 @@ begin
   Result := fcalendario;
 end;
 
+function TACBrAppLessCobResponse.Getpix: TACBrPIXArray;
+begin
+  if not Assigned(fpix) then
+    fpix := TACBrPIXArray.Create('pix');
+  Result := fpix;
+end;
+
 function TACBrAppLessCobResponse.GetValor: TACBrAppLessValor;
 begin
   if not Assigned(fvalor) then
@@ -1610,6 +1621,9 @@ begin
 
   if Assigned(fvalor) then
     fvalor.WriteToJson(aJson);
+
+  if Assigned(fpix) then
+    fpix.WriteToJSon(aJson);
 end;
 
 procedure TACBrAppLessCobResponse.DoReadFromJson(aJson: TACBrJSONObject);
@@ -1630,6 +1644,7 @@ begin
     fstatus := StringToAppLessTransactionStatus(s);
   calendario.ReadFromJson(aJson);
   valor.ReadFromJson(aJson);
+  pix.ReadFromJSon(aJson);
 end;
 
 destructor TACBrAppLessCobResponse.Destroy;
@@ -1638,6 +1653,8 @@ begin
     fcalendario.Free;
   if Assigned(fvalor) then
     fvalor.Free;
+  if Assigned(fpix) then
+    fpix.Free;
   inherited Destroy;
 end;
 
@@ -1652,6 +1669,8 @@ begin
     fcalendario.Clear;
   if Assigned(fvalor) then
     fvalor.Clear;
+  if Assigned(fpix) then
+    fpix.Clear;
 end;
 
 function TACBrAppLessCobResponse.IsEmpty: Boolean;
@@ -1662,7 +1681,8 @@ begin
     EstaVazio(fpixCopiaECola) and
     EstaVazio(fpixCopiaEColaFormatted) and
     ((not Assigned(fcalendario)) or fcalendario.IsEmpty) and
-    ((not Assigned(fvalor)) or fvalor.IsEmpty);
+    ((not Assigned(fvalor)) or fvalor.IsEmpty) and
+    ((not Assigned(fpix)) or fpix.IsEmpty);
 end;
 
 procedure TACBrAppLessCobResponse.Assign(Source: TACBrAppLessCobResponse);
@@ -1675,6 +1695,7 @@ begin
   fpixCopiaEColaFormatted := Source.pixCopiaEColaFormatted;
   calendario.Assign(Source.calendario);
   valor.Assign(Source.valor);
+  pix.Assign(Source.pix);
 end;
 
 { TACBrAppLessTransactionPix }

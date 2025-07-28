@@ -47,6 +47,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/07/2025
+-- ACBrPIXPSPAppLess -- 
+[*] Alteração para converter corretamente os pagamentos na consulta da cobrança.
+    por: Elias César 
+
+24/07/2025
+-- ACBrPIXSchemasRecBase, ACBrPIXSchemasRecAtualizacao --
+[-] Correção de AV, caso exista algum objeto 'null' no Json de resposta.
+
+-- ACBrPIXCD --
+[-] Correção da string do scope solicrec.read
+    por: Elias César
+
 15/07/2025
 -- ACBrPIXPSPSantander --
 [-] Correção de problemas na utilização do PSP Santander em ambiente de homologação.

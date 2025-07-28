@@ -38,7 +38,9 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrXmlBase, ACBrXmlDocument,
+  ACBrDFe.Conversao,
+  ACBrXmlBase, 
+  ACBrXmlDocument,
   ACBrNFSeXProviderBase, ACBrNFSeXWebservicesResponse;
 
 type
@@ -1608,7 +1610,7 @@ begin
                               SepararDados(Response.ArquivoRetorno, 'InfConfirmacaoCancelamento', True) +
                            '</Cancelamento>';
 
-          SalvarXmlCancelamento(Ret.Pedido.InfID.ID + '-procCancNFSe', xCancelamento);
+          SalvarXmlCancelamento(Ret.Pedido.InfID.ID + '-procCancNFSe', xCancelamento, Response.PathNome);
         end
         else
           Ret.Situacao := '';

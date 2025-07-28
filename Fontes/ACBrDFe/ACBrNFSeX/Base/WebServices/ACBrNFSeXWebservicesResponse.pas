@@ -38,7 +38,8 @@ interface
 
 uses
   classes,
-  {$IF DEFINED(NEXTGEN)}
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+//  {$IF DEFINED(NEXTGEN)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
@@ -231,6 +232,7 @@ type
     FArquivoEnvio: string;
     FArquivoRetorno: string;
     FHtmlRetorno: string;
+    FPathNome: string;
 
     function GetXmlEnvio: string;
     procedure SetXmlEnvio(const Value: string);
@@ -262,6 +264,7 @@ type
     property tpEvento: TtpEvento read FtpEvento write FtpEvento;
     property nSeqEvento: Integer read FnSeqEvento write FnSeqEvento;
     property NumNotaSubstituidora: string read FNumNotaSubstituidora write FNumNotaSubstituidora;
+    property PathNome: string read FPathNome write FPathNome;
 
     property Alertas: TNFSeEventoCollection read FAlertas;
     property Erros: TNFSeEventoCollection read FErros;
@@ -634,6 +637,7 @@ begin
   tpEvento := teCancelamento;
   nSeqEvento := 0;
   HtmlRetorno := '';
+  PathNome := '';
 
   if Assigned(FErros) then
   begin

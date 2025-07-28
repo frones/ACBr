@@ -39,7 +39,8 @@ interface
 uses
   SysUtils, Classes, Variants,
   ACBrJSON, ACBrDFeSSL,
-  ACBrXmlBase, ACBrXmlDocument,
+  ACBrXmlBase, 
+  ACBrXmlDocument,
   ACBrNFSeXNotasFiscais,
   ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
@@ -720,7 +721,7 @@ begin
     Response.ArquivoEnvio := xEvento;
     FpChave := chNFSe;
 
-    SalvarXmlEvento(ID + '-pedRegEvento', Response.ArquivoEnvio);
+    SalvarXmlEvento(ID + '-pedRegEvento', Response.ArquivoEnvio, Response.PathNome);
   end;
 end;
 
@@ -798,7 +799,7 @@ begin
 
             Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFSe'), tcStr);
 
-            SalvarXmlEvento(IDEvento + '-procEveNFSe', EventoXml);
+            SalvarXmlEvento(IDEvento + '-procEveNFSe', EventoXml, Response.PathNome);
           except
             on E:Exception do
             begin
@@ -940,7 +941,7 @@ begin
 
             Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFSe'), tcStr);
 
-            SalvarXmlEvento(IDEvento + '-procEveNFSe', ArquivoXml);
+            SalvarXmlEvento(IDEvento + '-procEveNFSe', ArquivoXml, Response.PathNome);
           except
             on E:Exception do
             begin
@@ -1098,7 +1099,7 @@ begin
 
                 Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFSe'), tcStr);
 
-                SalvarXmlEvento(IDEvento + '-procEveNFSe', ArquivoXml);
+                SalvarXmlEvento(IDEvento + '-procEveNFSe', ArquivoXml, Response.PathNome);
               except
                 on E:Exception do
                 begin

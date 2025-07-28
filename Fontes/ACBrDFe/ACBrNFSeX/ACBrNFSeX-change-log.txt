@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/07/2025
+-- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2/ACBrNFSeXProviderBase --
+-- ACBrNFSeXWebservicesResponse/PadraoNacional.Provider --
+[+] #TK-7422: Implementado a propriedade PathNome para retornar o caminho o nome
+    do arquivo de processamento do cancelamento.
+   Por: Italo Giurizzato Junior
+
 25/07/2025
 -- Betha.Provider --
 [*] Alterações visando atender a cidade Criciuma/SC.

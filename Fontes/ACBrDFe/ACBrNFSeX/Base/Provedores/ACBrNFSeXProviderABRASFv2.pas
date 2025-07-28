@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
+  ACBrDFe.Conversao,
   ACBrXmlBase, ACBrXmlDocument,
   ACBrNFSeXProviderBase, ACBrNFSeXWebservicesResponse;
 
@@ -2381,7 +2382,7 @@ begin
                             SepararDados(Response.ArquivoRetorno, 'DataHora', True) +
                          '</Cancelamento>';
 
-        SalvarXmlCancelamento(Ret.Pedido.InfID.ID + '-procCancNFSe', xCancelamento);
+        SalvarXmlCancelamento(Ret.Pedido.InfID.ID + '-procCancNFSe', xCancelamento, Response.PathNome);
       end
       else
       begin

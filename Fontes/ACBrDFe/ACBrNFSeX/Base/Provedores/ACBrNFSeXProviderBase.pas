@@ -88,8 +88,8 @@ type
     procedure SalvarXmlNfse(aNota: TNotaFiscal); overload;
     procedure SalvarXmlNfse(const NumeroNFSe: string; const aXml: AnsiString); overload;
     procedure SalvarPDFNfse(const aNome: string; const aPDF: AnsiString);
-    procedure SalvarXmlEvento(const aNome: string; const aEvento: AnsiString);
-    procedure SalvarXmlCancelamento(const aNome, aCancelamento: string);
+    procedure SalvarXmlEvento(const aNome: string; const aEvento: AnsiString; PathNome: string);
+    procedure SalvarXmlCancelamento(const aNome, aCancelamento: string; PathNome: string);
 
     function CarregarXmlNfse(aNota: TNotaFiscal; const aXml: string): TNotaFiscal;
 
@@ -1143,7 +1143,7 @@ begin
 end;
 
 procedure TACBrNFSeXProvider.SalvarXmlEvento(const aNome: string;
-  const aEvento: AnsiString);
+  const aEvento: AnsiString; PathNome: string);
 var
   aPath, aNomeArq, Extensao: string;
   aConfig: TConfiguracoesNFSe;
@@ -1156,6 +1156,7 @@ begin
                         aConfig.Geral.Emitente.DadosEmitente.InscricaoEstadual);
 
   aNomeArq := PathWithDelim(aPath) + aNome + '.xml';
+  PathNome := aNomeArq;
 
   if FAOwner.Configuracoes.Arquivos.Salvar then
   begin
@@ -1187,7 +1188,7 @@ begin
 end;
 
 procedure TACBrNFSeXProvider.SalvarXmlCancelamento(const aNome,
-  aCancelamento: string);
+  aCancelamento: string; PathNome: string);
 var
   aPath, aNomeArq, Extensao: string;
   aConfig: TConfiguracoesNFSe;
@@ -1200,6 +1201,7 @@ begin
                         aConfig.Geral.Emitente.DadosEmitente.InscricaoEstadual);
 
   aNomeArq := PathWithDelim(aPath) + aNome + '.xml';
+  PathNome := aNomeArq;
 
   if FAOwner.Configuracoes.Arquivos.Salvar then
   begin

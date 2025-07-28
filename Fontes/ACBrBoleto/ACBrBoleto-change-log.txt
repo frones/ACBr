@@ -55,6 +55,9 @@ Símbolo : Significado
 	https://www.projetoacbr.com.br/forum/topic/84530-acbrlib-boletoapi-retornos-banco-cresol/
     Por: Daniel de Morais InfoCotidiano
 
+-- ACBrBancoVortx.pas --
+[*] #TK-7409 Geração da remessa utilizando Agência com DV e correção do cálculo do DV - https://www.projetoacbr.com.br/forum/topic/84480-atualiza%C3%A7%C3%A3o-da-unit-de-boletos-referente-ao-banco-vortx/
+    Por: roberto.fermino
 
 25/07/2025
 -- ACBrBoletoW_Itau_API.pas --

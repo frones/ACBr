@@ -302,7 +302,8 @@ begin
     PadLeft(OnlyNumber(ACBrTitulo.ACBrBoleto.Cedente.CNPJCPF), 14, '0') + // 004 a 017 CNPJ do beneficiário
     PadLeft(LCarteira, 7, '0') +                                          // 018 a 024 Código da Carteira
                                                                           // Identificação da empresa beneficiária no Vórtx
-    PadLeft(IntToStr(StrToInt(LBoleto.Cedente.Agencia)), 5, '0') +        // 025 a 029 Código da Agência sem o dígito
+    PadLeft(IntToStr(StrToInt(LBoleto.Cedente.Agencia)), 4, '0') +        // 025 a 028 Código da Agência
+    PadLeft(LBoleto.Cedente.AgenciaDigito, 1, '0') +                      // 029 a 029 DV Agência
     PadLeft(IntToStr(StrToInt(LBoleto.Cedente.Conta)), 7, '0') +          // 030 a 036 Conta Corrente
     PadLeft(IntToStr(StrToInt(LBoleto.Cedente.ContaDigito)), 1, '0') +    // 037 a 037 Dígito da Agência
     PadRight(ACBrTitulo.SeuNumero, 25, ' ') +                             // 038 a 062 Número de controle para uso da empresa.
@@ -675,8 +676,8 @@ begin
   Modulo.Documento := AValor;
   Modulo.Calcular;
 
-  if Modulo.ModuloFinal = 10 then
-    LDigito := '0'
+  if Modulo.ModuloFinal in[0, 10] then
+    LDigito := '1'
   else
     LDigito := IntToStr(Modulo.ModuloFinal);
 

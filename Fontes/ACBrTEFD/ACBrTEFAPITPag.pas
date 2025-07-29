@@ -56,10 +56,12 @@ type
 
   TACBrTEFAPIClassTPag = class(TACBrTEFAPIClass)
   private
-    function GetTEFTPagAPI: TACBrTEFTPagAPI;
+    function GetTEFTPagAPI: TPagAPI;
     procedure QuandoGravarLogAPI(const ALogLine: String; var Tratado: Boolean);
-    procedure QuandoTransacaoEmAndamentoAPI( EstadoOperacao: TACBrTEFTPagEstadoOperacao; out Cancelar: Boolean);
+    procedure QuandoTransacaoEmAndamentoAPI( EstadoOperacao: TPagEstadoOperacao; out Cancelar: Boolean);
     procedure QuandoExibirMensagemAPI(const Mensagem: String);
+    procedure QuandoPerguntarMenuAPI(const Titulo: String; Opcoes: TStringList;
+      var ItemSelecionado: LongInt);
     procedure DoException(const AErrorMsg: String);
 
   protected
@@ -104,10 +106,10 @@ type
 
     procedure ObterListaDeTransacoes(ListaTransacoes: TACBrTEFRespostas;
       Inicio: TDateTime = 0; Fim: TDateTime = 0;
-      TransactionStatusSet: TACBrTEFTPagTransactionStatusSet = [];
-      ReadCardTypeSet: TACBrTEFTPagReadCardTypeSet = []);
+      TransactionStatusSet: TPagTransactionStatusSet = [];
+      ReadCardTypeSet: TPagReadCardTypeSet = []);
 
-    property TEFTPagAPI: TACBrTEFTPagAPI read GetTEFTPagAPI;
+    property TEFTPagAPI: TPagAPI read GetTEFTPagAPI;
   end;
 
 implementation
@@ -166,7 +168,7 @@ begin
     begin
       StatusTransacao := Linha.Informacao.AsString;
       st := StrToIntDef(StatusTransacao, -1);
-      Sucesso := (st = Integer(ts_CONFIRMED)) or (st = Integer(ts_CANCELLED));
+      Sucesso := (st = Integer(TRANSACTION_STATUS_CONFIRMED)) or (st = Integer(TRANSACTION_STATUS_CANCELLED));
     end
     else if (LinChave = 'date') then
       DataHoraTransacaoHost := Linha.Informacao.AsTimeStampSQL
@@ -241,6 +243,7 @@ begin
     OnGravarLog := QuandoGravarLogAPI;
     OnExibeMensagem := QuandoExibirMensagemAPI;
     OnTransacaoEmAndamento := QuandoTransacaoEmAndamentoAPI;
+    QuandoPerguntarMenu := QuandoPerguntarMenuAPI;
   end;
 end;
 
@@ -250,7 +253,7 @@ begin
   inherited Destroy;
 end;
 
-function TACBrTEFAPIClassTPag.GetTEFTPagAPI: TACBrTEFTPagAPI;
+function TACBrTEFAPIClassTPag.GetTEFTPagAPI: TPagAPI;
 begin
   Result := ACBrTEFTPagAPI.GetTEFTPagAPI;
 end;
@@ -263,7 +266,7 @@ begin
   with GetTEFTPagAPI do
   begin
     PathLib := PathDLL;
-    CNPJEmpresa := fpACBrTEFAPI.DadosEstabelecimento.CNPJ;
+    Identification := fpACBrTEFAPI.DadosEstabelecimento.CNPJ;
     Inicializar;
   end;
 
@@ -289,7 +292,7 @@ begin
 end;
 
 procedure TACBrTEFAPIClassTPag.QuandoTransacaoEmAndamentoAPI(
-  EstadoOperacao: TACBrTEFTPagEstadoOperacao; out Cancelar: Boolean);
+  EstadoOperacao: TPagEstadoOperacao; out Cancelar: Boolean);
 var
   i: Integer;
 begin
@@ -301,6 +304,16 @@ end;
 procedure TACBrTEFAPIClassTPag.QuandoExibirMensagemAPI(const Mensagem: String);
 begin
   TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem( Mensagem, telaTodas, -1);
+end;
+
+procedure TACBrTEFAPIClassTPag.QuandoPerguntarMenuAPI(const Titulo: String;
+  Opcoes: TStringList; var ItemSelecionado: LongInt);
+var
+  i: Integer;
+begin
+  i := ItemSelecionado;
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( Titulo, Opcoes, i);
+  ItemSelecionado := i;
 end;
 
 procedure TACBrTEFAPIClassTPag.DoException(const AErrorMsg: String);
@@ -318,7 +331,7 @@ function TACBrTEFAPIClassTPag.EfetuarPagamento(ValorPagto: Currency;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte;
   DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
 var
-  Params: TACBrTEFTPagTransactionParams;
+  Params: TPagTransactionParams;
   ret: LongInt;
 begin
   Params.amount := Trunc(ValorPagto * 100);
@@ -326,28 +339,28 @@ begin
     fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPICapturaNaoSuportada),
       [GetEnumName(TypeInfo(TACBrTEFModalidadePagamento), integer(Modalidade) ), ClassName] ));
 
-  Params.cardType := CardType_NONE;
+  Params.cardType := Cardinal(CARD_TYPE_NONE);
 
   if (teftcCredito in CartoesAceitos) then
-    Params.transactionType := TransactionType_CREDIT
+    Params.transactionType := Cardinal(TRANSACTION_TYPE_CREDIT)
   else if (teftcDebito in CartoesAceitos) then
-    Params.transactionType := TransactionType_DEBIT
+    Params.transactionType := Cardinal(TRANSACTION_TYPE_DEBIT)
   else if (teftcVoucher in CartoesAceitos) then
-    Params.transactionType := TransactionType_VOUCHER
+    Params.transactionType := Cardinal(TRANSACTION_TYPE_VOUCHER)
   else
-    Params.transactionType := TransactionType_CREDIT;
+    Params.transactionType := Cardinal(TRANSACTION_TYPE_CREDIT);
 
   if (Financiamento > tefmfAVista) then
-    Params.creditType := CreditType_INSTALLMENT
+    Params.creditType := Cardinal(CREDIT_TYPE_INSTALLMENT)
   else
-    Params.creditType := CreditType_NO_INSTALLMENT;
+    Params.creditType := Cardinal(CREDIT_TYPE_NO_INSTALLMENT);
 
   Params.isTyped := 0;
   Params.installment := Parcelas;
 
   ret := GetTEFTPagAPI.Transacao(Params);
   if (ret = 0) then
-    GetTEFTPagAPI.ObterUltimaTransacao(LastTransactionType_TRANSACTION, ret);
+    GetTEFTPagAPI.ObterUltimaTransacao(LAST_TRANSACTION_TYPE_TRANSACTION, ret);
 
   Result := (ret = 0);
 end;
@@ -463,9 +476,9 @@ begin
     end;
   end;
 
-  ret := GetTEFTPagAPI.Cancelamento(nsuResponse, CardType_NONE);
+  ret := GetTEFTPagAPI.Cancelamento(nsuResponse, CARD_TYPE_NONE);
   if (ret = 0) then
-    GetTEFTPagAPI.ObterUltimaTransacao(LastTransactionType_CANCELLATION, ret);
+    GetTEFTPagAPI.ObterUltimaTransacao(LAST_TRANSACTION_TYPE_CANCELLATION, ret);
 
   Result := (ret = 0);
 end;
@@ -489,25 +502,39 @@ end;
 
 procedure TACBrTEFAPIClassTPag.ObterListaDeTransacoes(
   ListaTransacoes: TACBrTEFRespostas; Inicio: TDateTime; Fim: TDateTime;
-  TransactionStatusSet: TACBrTEFTPagTransactionStatusSet;
-  ReadCardTypeSet: TACBrTEFTPagReadCardTypeSet);
+  TransactionStatusSet: TPagTransactionStatusSet;
+  ReadCardTypeSet: TPagReadCardTypeSet);
 var
-  Params: TACBrTEFTPagTransactionFilter;
-  lt: PACBrTEFTPagTransactionPartial;
-  t: TACBrTEFTPagTransactionPartial;
+  Params: TPagTransactionFilter;
+  lt: PPagTransactionPartial;
+  t: TPagTransactionPartial;
   TefResp: TACBrTEFRespTPag;
   num, error, i: LongInt;
-  ts: TACBrTEFTPagTransactionStatus;
-  rc: TACBrTEFTPagReadCardType;
+  ts: TPagTransactionStatus;
+  rc: TPagReadCardType;
   sl: TStringList;
 begin
   ListaTransacoes.Clear;
 
   if (TransactionStatusSet = []) then
-    TransactionStatusSet := [ts_CONFIRMED, ts_UNDONE, ts_PENDING, ts_PENDING_CONFIRMATION, ts_UNDO, ts_PENDING_UNDO, ts_REJECTED, ts_CANCELLED];
+    TransactionStatusSet := [ TRANSACTION_STATUS_CONFIRMED,
+                              TRANSACTION_STATUS_UNDONE,
+                              TRANSACTION_STATUS_PENDING,
+                              TRANSACTION_STATUS_PENDING_CONFIRMATION,
+                              TRANSACTION_STATUS_UNDO,
+                              TRANSACTION_STATUS_PENDING_UNDO,
+                              TRANSACTION_STATUS_REJECTED,
+                              TRANSACTION_STATUS_CANCELLED ];
 
   if (ReadCardTypeSet = []) then
-    ReadCardTypeSet := [rct_MAGNETIC, rct_M1, rct_M2, rct_EMV_CONTACT, rct_TIB, rct_CONTACTLESS_STRIPE, rct_CONTACTLESS_EMV, rct_TYPED];
+    ReadCardTypeSet := [ READ_CARD_TYPE_MAGNETIC,
+                         READ_CARD_TYPE_M1,
+                         READ_CARD_TYPE_M2,
+                         READ_CARD_TYPE_EMV_CONTACT,
+                         READ_CARD_TYPE_TIB,
+                         READ_CARD_TYPE_CONTACTLESS_STRIPE,
+                         READ_CARD_TYPE_CONTACTLESS_EMV,
+                         READ_CARD_TYPE_TYPED ];
 
   if (Inicio <> 0) then
     Params.startDate := DateTimeToUnixMilliseconds(Inicio)
@@ -520,7 +547,7 @@ begin
     Params.endDate := 0;
 
   num := 0;
-  for ts := low(TACBrTEFTPagTransactionStatus) to High(TACBrTEFTPagTransactionStatus)  do
+  for ts := low(TPagTransactionStatus) to High(TPagTransactionStatus)  do
   begin
     if (ts in TransactionStatusSet) then
     begin
@@ -531,7 +558,7 @@ begin
   Params.statusSize := num;
 
   num := 0;
-  for rc := low(TACBrTEFTPagReadCardType) to High(TACBrTEFTPagReadCardType)  do
+  for rc := low(TPagReadCardType) to High(TPagReadCardType)  do
   begin
     if (rc in ReadCardTypeSet) then
     begin

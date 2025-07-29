@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2025 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -54,227 +54,303 @@ resourcestring
   sErrNaoInicializada = 'Biblioteca TPag não inicializada';
   sErrNSUNaoInformado = 'NSU não informado';
 
-const
-  CreditType_NO_INSTALLMENT = 0;
-  CreditType_INSTALLMENT = 1;
-
-  CardType_EMV = 0;
-  CardType_CTLS = 1;
-  CardType_NONE = 2;
-
-  TransactionType_DEBIT = 0;
-  TransactionType_CREDIT = 1;
-  TransactionType_VOUCHER = 2;
-
-  LastTransactionType_TRANSACTION = 0;
-  LastTransactionType_CANCELLATION = 1;
-
-  ReasonUndo_TIME_OUT = 0;
-  ReasonUndo_DENIED_BY_CARD = 1;
-  ReasonUndo_REMOVED_CARD = 2;
-
-  Notification_FREE_DSP = 0;
-  Notification_DSP_2X16 = 1;
-  Notification_PROCESSING_DSP = 2;
-  Notification_INSERT_PASS_CARD = 3;
-  Notification_APPROACH_INSERT_PASS_CARD = 4;
-  Notification_PASS_CARD = 5;
-  Notification_SELECT = 6;
-  Notification_SELECTED = 7;
-  Notification_INVALID_APP = 8;
-  Notification_INVALID_PASSWORD = 9;
-  Notification_LAST_PASSWORD_ATTEMPT = 10;
-  Notification_BLOCKED_PASSWORD = 11;
-  Notification_PASSWORD_VERIFIED = 12;
-  Notification_BLOCKED_CARD_DSP = 13;
-  Notification_REMOVE_CARD = 14;
-  Notification_UPDATING_TABLES = 15;
-  Notification_REPRESENT_CARD = 16;
-  Notification_START_PIN = 17;
-  Notification_END_PIN = 18;
-  Notification_ERROR_MESSAGE = 19;
-  Notification_PIN_INSERT = 20;
-  Notification_SUCCESS_MESSAGE = 21;
-
-  ReturnCode_OK = 0;
-  ReturnCode_INTERNAL_ERROR = 1;
-  ReturnCode_INVALID_CALL = 10;
-  ReturnCode_INVALID_PARAMETER = 11;
-  ReturnCode_TIMEOUT = 12;
-  ReturnCode_CANCELED_OPERATION = 13;
-  ReturnCode_BUSY_PINPAD = 16;
-  ReturnCode_INVALID_MODEL = 17;
-  ReturnCode_EXPIRED_TABLES = 20;
-  ReturnCode_MAG_CARD_READ_ERROR = 41;
-  ReturnCode_MISSING_PIN_KEY = 42;
-  ReturnCode_MISSING_CARD = 43;
-  ReturnCode_SAM_MODULE_ERROR = 50;
-  ReturnCode_INVALID_SAM = 51;
-  ReturnCode_MISSING_SAM = 52;
-  ReturnCode_MUTE_CARD = 60;
-  ReturnCode_CARD_COMMUNICATION_ERROR = 61;
-  ReturnCode_CARD_WITH_INVALID_DATA = 62;
-  ReturnCode_BLOCKED_CARD = 63;
-  ReturnCode_CARD_WITHOUT_APPLICATION = 64;
-  ReturnCode_INVALIDATED_CARD = 67;
-  ReturnCode_PROBLEMATIC_CARD = 68;
-  ReturnCode_CARD_WITH_INVALID_DATA_2 = 69;
-  ReturnCode_CARD_WITHOUT_APPLICATION_2 = 70;
-  ReturnCode_UNUSED_APPLICATION = 71;
-  ReturnCode_FALLBACK_ERROR = 76;
-  ReturnCode_MULTIPLE_CTLSS = 80;
-  ReturnCode_CTLSS_COMMUNICATION_ERROR = 81;
-  ReturnCode_INVALIDATED_CTLSS = 82;
-  ReturnCode_PROBLEMATIC_CTLSS = 83;
-  ReturnCode_CTLSS_WITHOUT_APPLICATION = 84;
-  ReturnCode_UNSUPPORTED_CTLSS_APPLICATION = 85;
-  ReturnCode_EXTERNAL_CTLSS_DEVICE = 86;
-  ReturnCode_CTLSS_CHANGE_INTERFACE = 87;
-  ReturnCode_ABORTED_OPERATION = 1000;
-  ReturnCode_CARD_CHIP = 1001;
-  ReturnCode_PRODUCT_EMPTY = 1003;
-  ReturnCode_DIVERT_CARD_NUMBER = 1004;
-  ReturnCode_REJECTED_TRANSACTION = 1005;
-  ReturnCode_CARD_REJECTED = 1006;
-  ReturnCode_INVALID_TRANSACTION = 1007;
-  ReturnCode_PRINT_ERROR = 1008;
-  ReturnCode_EMPTY_TRANSACTION = 1009;
-  ReturnCode_CARD_NUMBER_INVALID = 1010;
-  ReturnCode_INVALID_EXP_DATE = 1011;
-  ReturnCode_NONE_PRODUCTS = 1012;
-  ReturnCode_NO_CREDIT_INSTALLMENT_SELECTED = 1013;
-  ReturnCode_LOGON_NOT_PERFORMED = 1014;
-  ReturnCode_TABLE_WRITE_ERROR = 1015;
-  ReturnCode_DEVICE_NOT_FOUND = 1016;
-  ReturnCode_DEVICE_NOT_CONNECTED = 1017;
-  ReturnCode_CONFIG_NOT_CALLED = 1018;
-  ReturnCode_TRANSACTION_NOT_FOUND = 1019;
-
 type
   EACBrTEFTPagAPI = class(Exception);
 
-  TACBrTEFTPagReadCardType = ( rct_MAGNETIC,
-                               rct_M1,
-                               rct_M2,
-                               rct_EMV_CONTACT,
-                               rct_TIB,
-                               rct_CONTACTLESS_STRIPE,
-                               rct_CONTACTLESS_EMV,
-                               rct_TYPED);
-  TACBrTEFTPagReadCardTypeSet = set of TACBrTEFTPagReadCardType;
 
-  TACBrTEFTPagTransactionStatus = ( ts_CONFIRMED,
-                                    ts_UNDONE,
-                                    ts_PENDING,
-                                    ts_PENDING_CONFIRMATION,
-                                    ts_UNDO,
-                                    ts_PENDING_UNDO,
-                                    ts_REJECTED,
-                                    ts_CANCELLED);
-  TACBrTEFTPagTransactionStatusSet = set of TACBrTEFTPagTransactionStatus;
+  TPagNotificationType = (
+    FREE_DSP,
+    DSP_2X16,
+    PROCESSING_DSP,
+    INSERT_PASS_CARD,
+    INSERT_CARD,
+    APPROACH_INSERT_CARD,
+    APPROACH_INSERT_PASS_CARD,
+    APPROACH_CARD,
+    PASS_CARD,
+    SELECT,
+    SELECTED,
+    INVALID_APP,
+    INVALID_PASSWORD,
+    LAST_PASSWORD_ATTEMPT,
+    BLOCKED_PASSWORD,
+    PASSWORD_VERIFIED,
+    BLOCKED_CARD_DSP,
+    REMOVE_CARD,
+    UPDATING_TABLES,
+    REPRESENT_CARD,
+    START_PIN,
+    END_PIN,
+    ERROR_MESSAGE,
+    PIN_INSERT,
+    SUCCESS_MESSAGE );
 
-  TACBrTEFTPagTransactionParams = record
+  TPagReturnCodes = (
+    OK = 0,
+    INTERNAL_ERROR = 1,
+    INVALID_CALL = 10,
+    INVALID_PARAMETER = 11,
+    TIMEOUT = 12,
+    CANCELED_OPERATION = 13,
+    BUSY_PINPAD = 16,
+    INVALID_MODEL = 17,
+    EXPIRED_TABLES = 20,
+    MAG_CARD_READ_ERROR = 41,
+    MISSING_PIN_KEY = 42,
+    MISSING_CARD = 43,
+    SAM_MODULE_ERROR = 50,
+    INVALID_SAM = 51,
+    MISSING_SAM = 52,
+    MUTE_CARD = 60,
+    CARD_COMMUNICATION_ERROR = 61,
+    CARD_WITH_INVALID_DATA = 62,
+    BLOCKED_CARD = 63,
+    CARD_WITHOUT_APPLICATION = 64,
+    INVALIDATED_CARD = 67,
+    PROBLEMATIC_CARD = 68,
+    CARD_WITH_INVALID_DATA_2 = 69,
+    CARD_WITHOUT_APPLICATION_2 = 70,
+    UNUSED_APPLICATION = 71,
+    FALLBACK_ERROR = 76,
+    MULTIPLE_CTLSS = 80,
+    CTLSS_COMMUNICATION_ERROR = 81,
+    INVALIDATED_CTLSS = 82,
+    PROBLEMATIC_CTLSS = 83,
+    CTLSS_WITHOUT_APPLICATION = 84,
+    UNSUPPORTED_CTLSS_APPLICATION = 85,
+    EXTERNAL_CTLSS_DEVICE = 86,
+    CTLSS_CHANGE_INTERFACE = 87,
+
+    ABORTED_OPERATION = 1000,
+    CARD_CHIP = 1001,
+    PRODUCT_EMPTY = 1003,
+    DIVERT_CARD_NUMBER = 1004,
+    REJECTED_TRANSACTION = 1005,
+    CARD_REJECTED = 1006,
+    INVALID_TRANSACTION = 1007,
+    PRINT_ERROR = 1008,
+    EMPTY_TRANSACTION = 1009,
+    CARD_NUMBER_INVALID = 1010,
+    INVALID_EXP_DATE = 1011,
+    NONE_PRODUCTS = 1012,
+    NO_CREDIT_INSTALLMENT_SELECTED = 1013,
+    LOGON_NOT_PERFORMED = 1014,
+    TABLE_WRITE_ERROR = 1015,
+    DEVICE_NOT_FOUND = 1016,
+    DEVICE_NOT_CONNECTED = 1017,
+    CONFIG_NOT_CALLED = 1018,
+    TRANSACTION_NOT_FOUND = 1019,
+    MAX_INSTALLMENT_AMOUNT = 1020,
+    MIN_INSTALLMENT_AMOUNT = 1021,
+    MAX_INSTALLMENT = 1022,
+    MIN_INSTALLMENT = 1023);
+
+  TPagMenuOptions = (
+    MENU_OPTIONS_APPLICATIONS,
+    MENU_OPTIONS_PRODUCTS ) ;
+
+  TPagRequestOptions = (
+    REQUEST_OPTIONS_LAST_DIGITS,
+    REQUEST_OPTIONS_CVV_TYPE,
+    REQUEST_OPTIONS_CVV,
+    REQUEST_OPTIONS_INSTALLMENTS,
+    REQUEST_OPTIONS_MONTH,
+    REQUEST_OPTIONS_YEAR );
+
+  TPagRequestData = record
+    title: PAnsiChar;
+    data: PAnsiChar;
+    extra: PAnsiChar;
+  end;
+  PPagRequestData = ^TPagRequestData;
+
+  TPagCvvType = (
+    CVV_TYPE_NO_EXISTS = 1,
+    CVV_TYPE_UNREADABLE = 2,
+    CVV_TYPE_EXISTS = 3,
+    CVV_TYPE_NOT_REQUESTED = 4 );
+
+  TPagLastTransactionType = (
+    LAST_TRANSACTION_TYPE_TRANSACTION,
+    LAST_TRANSACTION_TYPE_CANCELLATION );
+
+  TPagCreditType = (
+    CREDIT_TYPE_NO_INSTALLMENT,
+    CREDIT_TYPE_INSTALLMENT );
+
+  TPagCardType = (
+    CARD_TYPE_EMV,
+    CARD_TYPE_CTLS,
+    CARD_TYPE_MAGNETIC,
+    CARD_TYPE_NONE );
+
+  TPagTRANSACTION_TYPE = (
+    TRANSACTION_TYPE_DEBIT,
+    TRANSACTION_TYPE_CREDIT,
+    TRANSACTION_TYPE_VOUCHER,
+    TRANSACTION_TYPE_NONE );
+
+  TPagTransactionParams = record
     amount: Int64;
-    creditType: Cardinal;
-    cardType: Cardinal;
-    transactionType: Cardinal;
+    creditType: Cardinal;      // TPagCreditType
+    cardType: Cardinal;        // TPagCardType
+    transactionType: Cardinal; // TPagTRANSACTION_TYPE
     installment: LongInt;
     isTyped: LongInt;
   end;
+  PPagTransactionParams = ^TPagTransactionParams;
 
-  TACBrTEFTPagTransactionFilter = record
+  TPagReadCardType = (
+    READ_CARD_TYPE_MAGNETIC,
+    READ_CARD_TYPE_M1,
+    READ_CARD_TYPE_M2,
+    READ_CARD_TYPE_EMV_CONTACT,
+    READ_CARD_TYPE_TIB,
+    READ_CARD_TYPE_CONTACTLESS_STRIPE,
+    READ_CARD_TYPE_CONTACTLESS_EMV,
+    READ_CARD_TYPE_TYPED);
+  TPagReadCardTypeSet = set of TPagReadCardType;
+
+  TPagTransactionStatus = (
+    TRANSACTION_STATUS_CONFIRMED,
+    TRANSACTION_STATUS_UNDONE,
+    TRANSACTION_STATUS_PENDING,
+    TRANSACTION_STATUS_PENDING_CONFIRMATION,
+    TRANSACTION_STATUS_UNDO,
+    TRANSACTION_STATUS_PENDING_UNDO,
+    TRANSACTION_STATUS_REJECTED,
+    TRANSACTION_STATUS_CANCELLED);
+  TPagTransactionStatusSet = set of TPagTransactionStatus;
+
+  TPagReasonUndo = (
+    REASON_UNDO_TIME_OUT,
+    REASON_UNDO_DENIED_BY_CARD,
+    REASON_UNDO_REMOVED_CARD );
+
+  TPagTransactionFilter = record
     startDate: Int64;
     endDate: Int64;
     statusSize: LongInt;
-    status: array[0..7] of Cardinal;
+    status: array[0..7] of Cardinal;        // TPagTransactionStatus
     readCardTypeSize: LongInt;
-    readCardType: array[0..7] of Cardinal;
+    readCardType: array[0..7] of Cardinal;  // TPagReadCardType
   end;
 
-  TACBrTEFTPagTransactionPartial = record
+  TPagTransactionPartial = record
     nsuRequest: PAnsiChar;
     amount: Int64;
     typeTransaction: PAnsiChar;
     installments: LongInt;
-    transactionStatus: Cardinal;
+    transactionStatus: Cardinal;      // TPagTransactionStatus
     date: Int64; //UNIX time
     nsuResponse: PAnsiChar;
-    reasonUndo: Cardinal;
+    reasonUndo: Cardinal;             // TPagReasonUndo
     transactionReceipt: PAnsiChar;
     brand: PAnsiChar;
     authentication: LongInt;
-    entryMode: Cardinal;
+    entryMode: Cardinal;              // TPagReadCardType
     merchantCode: PAnsiChar;
     nsuAcquirer: PAnsiChar;
     authAcquirer: PAnsiChar;
     printReceipt: Boolean;
     panMasked: PAnsiChar;
   end;
-  PACBrTEFTPagTransactionPartial = ^TACBrTEFTPagTransactionPartial;
+  PPagTransactionPartial = ^TPagTransactionPartial;
 
-  TACBrTEFTPagGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
+  TPagCallBackMessageProcess = procedure(code: Cardinal; process: PAnsiChar); cdecl;
+  TPagCallBackMessageError = procedure(code: Cardinal; error: PAnsiChar); cdecl;
+  TPagCallBackMessageSuccess = procedure(success: PAnsiChar); cdecl;
+  TPagCallBackAbortProcess = function: LongInt; cdecl;
+  TPagCallBackMenuProcess = function(option: Cardinal; items: PPAnsiChar; itemSize: LongInt): LongInt; cdecl;
+  TPagCallBackRequestProcess = function(options: Cardinal; RequestData: PPagRequestData): LongInt; cdecl;
 
-  TACBrTEFTPagExibeMensagem = procedure( const Mensagem: String) of object;
+  TPagCallbackDmSDK = record
+    messageProcess: TPagCallBackMessageProcess;
+    messageError: TPagCallBackMessageError;
+    messageSuccess: TPagCallBackMessageSuccess;
+    AbortProcess: TPagCallBackAbortProcess;
+    menuProcess: TPagCallBackMenuProcess;
+    requestProcess: TPagCallBackRequestProcess;
+  end;
+  PPagCallbackDmSDK = ^TPagCallbackDmSDK;
 
-  TACBrTEFTPagEstadoOperacao = ( tpagEstFluxoAPI,
-                                 tpagEstAguardaUsuario,
-                                 tpagEstPinPad,
-                                 tpagEstPinPadLerCartao,
-                                 tpagEstPinPadDigitacao,
-                                 tpagEstRemoveCartao,
-                                 tpagEstLeituraQRCode );
+  TPagPOSConfig = record
+    posHasStripeReader: Boolean;
+    posHasPrinter: Boolean;
+    posHasDisplay: Boolean;
+  end;
+  PPagPOSConfig = ^TPagPOSConfig;
 
-  TACBrTEFTPagTransacaoEmAndamento = procedure(
-    EstadoOperacao: TACBrTEFTPagEstadoOperacao; out Cancelar: Boolean) of object;
+  TPagGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
 
-  TACBrTPagCallBackProcess = procedure(code: Cardinal; process: PAnsiChar); cdecl;
-  TACBrTPagCallBackError = procedure(code: Cardinal; error: PAnsiChar); cdecl;
-  TACBrTPagCallBackSuccess = procedure(success: PAnsiChar); cdecl;
-  TACBrTPagCallAbortProcess = function: LongInt; cdecl;
+  TPagExibeMensagem = procedure( const Mensagem: String) of object;
 
-  { TACBrTEFTPagAPI }
+  TPagEstadoOperacao = (
+    tpagEstFluxoAPI,
+    tpagEstAguardaUsuario,
+    tpagEstPinPad,
+    tpagEstPinPadLerCartao,
+    tpagEstPinPadDigitacao,
+    tpagEstRemoveCartao,
+    tpagEstLeituraQRCode );
 
-  TACBrTEFTPagAPI = Class
+  TPagTransacaoEmAndamento = procedure(
+    EstadoOperacao: TPagEstadoOperacao; out Cancelar: Boolean) of object;
+
+  TPagQuandoPerguntarMenu = procedure(
+    const Titulo: String;
+    Opcoes: TStringList;
+    var ItemSelecionado: LongInt) of object;  // Retorna o Item Selecionado, iniciando com 0
+                                              // -2 - Volta no Fluxo
+                                              // -1 - Cancela o Fluxo
+  { TPagAPI }
+
+  TPagAPI = Class
   private
     fCarregada: Boolean;
-    fCNPJEmpresa: String;
+    fIdentification: String;
     fInicializada: Boolean;
     fEmTransacao: Boolean;
     fConectada: Boolean;
     fPathLib: String;
-    fOnGravarLog: TACBrTEFTPagGravarLog;
-    fOnExibeMensagem: TACBrTEFTPagExibeMensagem;
+    fOnGravarLog: TPagGravarLog;
+    fOnExibeMensagem: TPagExibeMensagem;
     fDadosDaTransacao: TStringList;
-    fOnTransacaoEmAndamento: TACBrTEFTPagTransacaoEmAndamento;
+    fOnTransacaoEmAndamento: TPagTransacaoEmAndamento;
 
   private
-    xTPagConfiguration: function( messageProcess: TACBrTPagCallBackProcess;
-                                  messageError: TACBrTPagCallBackError;
-                                  messageSuccess: TACBrTPagCallBackSuccess;
-                                  abortProcess: TACBrTPagCallAbortProcess): LongInt; cdecl;
+    xTPagConfiguration: function(
+      posConfig: PPagPOSConfig;
+      callbackDmSdk: PPagCallbackDmSDK): LongInt; cdecl;
 
     xTPagInitialization: function(identification: PAnsiChar): LongInt; cdecl;
 
-    xTPagTransaction: function(transactionParams: TACBrTEFTPagTransactionParams): LongInt; cdecl;
+    xTPagTransaction: function(transactionParams: TPagTransactionParams): LongInt; cdecl;
 
     xTPagCancellation: function(nsuResponse: PAnsiChar; cardType: Cardinal): LongInt; cdecl;
 
     xTPagUpdateTable: function(): LongInt; cdecl;
 
-    xTPagListTransactionsStore: function(transactionFilter: TACBrTEFTPagTransactionFilter;
-      var outputCount: LongInt; var errorCode: LongInt ): PACBrTEFTPagTransactionPartial; cdecl;
+    xTPagListTransactionsStore: function(transactionFilter: TPagTransactionFilter;
+      var outputCount: LongInt; var errorCode: LongInt ): PPagTransactionPartial; cdecl;
 
     xTPagLastTransactionStore: function(LastTransactionType: Cardinal; var errorCode: LongInt):
-      PACBrTEFTPagTransactionPartial; cdecl;
+      PPagTransactionPartial; cdecl;
 
-    xTPagFreeTransactionPartialList: procedure(listTransaction: PACBrTEFTPagTransactionPartial;
+    xTPagFreeTransactionPartialList: procedure(listTransaction: PPagTransactionPartial;
       listSize: LongInt); cdecl;
 
     xTPagResetTerminal: function(): LongInt; cdecl;
 
     xTPagLastReceipt: function(isCustomer, isCancellation, isReprint: Boolean;
       var errorCode: LongInt): PAnsiChar; cdecl;
-    procedure SetCNPJEmpresa(AValue: String);
+
+  private
+    CallbackDmSDK: TPagCallbackDmSDK;
+    fQuandoPerguntarMenu: TPagQuandoPerguntarMenu;
+
+    function GetUltimoErro: String;
+    procedure SetIdentification(AValue: String);
     procedure SetInicializada(AValue: Boolean);
     procedure SetPathLib(AValue: String);
 
@@ -289,60 +365,70 @@ type
     procedure PrepararInicioDeTrancao;
 
   public
+    POSConfig: TPagPOSConfig;
+
     constructor Create;
     destructor Destroy; override;
 
     property PathLib: String read fPathLib write SetPathLib;
 
-    property CNPJEmpresa: String read fCNPJEmpresa write SetCNPJEmpresa;
+    property Identification: String read fIdentification write SetIdentification;
 
     property Carregada: Boolean read fCarregada;
     property Inicializada: Boolean read fInicializada write SetInicializada;
     property Conectada: Boolean read fConectada;
     property EmTransacao: Boolean read fEmTransacao;
 
-    property OnGravarLog: TACBrTEFTPagGravarLog read fOnGravarLog write fOnGravarLog;
+    property OnGravarLog: TPagGravarLog read fOnGravarLog write fOnGravarLog;
 
     procedure Inicializar;
     procedure DesInicializar;
     procedure Conectar;
 
-    function Transacao(Params: TACBrTEFTPagTransactionParams): LongInt;
+    function Transacao(Params: TPagTransactionParams): LongInt;
     procedure AbortarTransacao;
-    function Cancelamento(const nsuResponse: String; CardType: Cardinal): LongInt;
+    function Cancelamento(const nsuResponse: String; CardType: TPagCardType): LongInt;
     function AtualizarTabelas: LongInt;
     function ReiniciarTerminal: LongInt;
     function UltimoRecibo(EhConsumidor, EhCancelamento, EhReimpressao: Boolean; var errorCode: LongInt): String;
-    function ObterListaTransacoes(Params: TACBrTEFTPagTransactionFilter; var num, errorCode: LongInt): PACBrTEFTPagTransactionPartial;
-    function ObterTransacao(TransactionList: PACBrTEFTPagTransactionPartial; index: Integer): TACBrTEFTPagTransactionPartial;
-    procedure LiberarListaTransacoes(TransactionList: PACBrTEFTPagTransactionPartial; num: LongInt);
-    procedure ObterUltimaTransacao(LastTransactionType: Cardinal; var errorCode: LongInt);
+    function ObterListaTransacoes(Params: TPagTransactionFilter; var num, errorCode: LongInt): PPagTransactionPartial;
+    function ObterTransacao(TransactionList: PPagTransactionPartial; index: Integer): TPagTransactionPartial;
+    procedure LiberarListaTransacoes(TransactionList: PPagTransactionPartial; num: LongInt);
+    procedure ObterUltimaTransacao(LastTransactionType: TPagLastTransactionType; var errorCode: LongInt);
 
-    procedure TransacaoToStr(ATransaction: TACBrTEFTPagTransactionPartial; sl: TStringList);
+    procedure TransacaoToStr(ATransaction: TPagTransactionPartial; sl: TStringList);
 
     property DadosDaTransacao: TStringList read fDadosDaTransacao;
+    property UltimoErro: String read GetUltimoErro;
 
-    property OnExibeMensagem: TACBrTEFTPagExibeMensagem read fOnExibeMensagem
+    property OnExibeMensagem: TPagExibeMensagem read fOnExibeMensagem
       write fOnExibeMensagem;
-    property OnTransacaoEmAndamento: TACBrTEFTPagTransacaoEmAndamento read fOnTransacaoEmAndamento
+    property OnTransacaoEmAndamento: TPagTransacaoEmAndamento read fOnTransacaoEmAndamento
       write fOnTransacaoEmAndamento;
+    property QuandoPerguntarMenu: TPagQuandoPerguntarMenu read fQuandoPerguntarMenu
+      write fQuandoPerguntarMenu;
 
     procedure GravarLog(const AString: AnsiString; Traduz: Boolean = False);
     procedure ExibirMensagem(const AMsg: String);
+    procedure PerguntarMenu(const Titulo: String; Opcoes: TStringList; var ItemSelecionado: LongInt);
 
-    procedure TratarErroTPag(AErrorCode: LongInt);
+    procedure TratarErroTPag(AErrorCode: LongInt); overload;
+    procedure TratarErroTPag(AErrorCode: TPagReturnCodes); overload;
   end;
 
-function GetTEFTPagAPI: TACBrTEFTPagAPI;
-function ReturnCodesToStr(ReturnCode: LongInt): String;
+function GetTEFTPagAPI: TPagAPI;
+function ReturnCodesToStr(ReturnCode: TPagReturnCodes): String;
 
-procedure CallBackProcess(code: Cardinal; process: PAnsiChar); cdecl;
-procedure CallBackError(code: Cardinal; error: PAnsiChar); cdecl;
-procedure CallBackSuccess(success: PAnsiChar); cdecl;
+procedure CallBackMessageProcess(code: Cardinal; process: PAnsiChar); cdecl;
+procedure CallBackMessageError(code: Cardinal; error: PAnsiChar); cdecl;
+procedure CallBackMessageSuccess(success: PAnsiChar); cdecl;
 function CallBackAbortProcess: LongInt; cdecl;
+function CallBackMenuProcess(option: Cardinal; items: PPAnsiChar; itemSize: LongInt): LongInt; cdecl;
+function CallBackRequestProcess(options: Cardinal; RequestData: PPagRequestData): LongInt; cdecl;
+
 
 var
- vTEFTPagAPI : TACBrTEFTPagAPI;
+ vTEFTPagAPI : TPagAPI;
 
 implementation
 
@@ -352,83 +438,87 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.DateTime;
 
-function GetTEFTPagAPI: TACBrTEFTPagAPI;
+function GetTEFTPagAPI: TPagAPI;
 begin
   if not Assigned(vTEFTPagAPI) then
-    vTEFTPagAPI := TACBrTEFTPagAPI.Create;
+    vTEFTPagAPI := TPagAPI.Create;
 
   Result := vTEFTPagAPI;
 end;
 
-function ReturnCodesToStr(ReturnCode: LongInt): String;
+function ReturnCodesToStr(ReturnCode: TPagReturnCodes): String;
 begin
   case ReturnCode of
-    ReturnCode_OK                             : Result := 'OK';
-    ReturnCode_INTERNAL_ERROR                 : Result := 'INTERNAL_ERROR';
-    ReturnCode_INVALID_CALL                   : Result := 'INVALID_CALL';
-    ReturnCode_INVALID_PARAMETER              : Result := 'INVALID_PARAMETER';
-    ReturnCode_TIMEOUT                        : Result := 'TIMEOUT';
-    ReturnCode_CANCELED_OPERATION             : Result := 'CANCELED_OPERATION';
-    ReturnCode_BUSY_PINPAD                    : Result := 'BUSY_PINPAD';
-    ReturnCode_INVALID_MODEL                  : Result := 'INVALID_MODEL';
-    ReturnCode_EXPIRED_TABLES                 : Result := 'EXPIRED_TABLES';
-    ReturnCode_MAG_CARD_READ_ERROR            : Result := 'MAG_CARD_READ_ERROR';
-    ReturnCode_MISSING_PIN_KEY                : Result := 'MISSING_PIN_KEY';
-    ReturnCode_MISSING_CARD                   : Result := 'MISSING_CARD';
-    ReturnCode_SAM_MODULE_ERROR               : Result := 'SAM_MODULE_ERROR';
-    ReturnCode_INVALID_SAM                    : Result := 'INVALID_SAM';
-    ReturnCode_MISSING_SAM                    : Result := 'MISSING_SAM';
-    ReturnCode_MUTE_CARD                      : Result := 'MUTE_CARD';
-    ReturnCode_CARD_COMMUNICATION_ERROR       : Result := 'CARD_COMMUNICATION_ERROR';
-    ReturnCode_CARD_WITH_INVALID_DATA         : Result := 'CARD_WITH_INVALID_DATA';
-    ReturnCode_BLOCKED_CARD                   : Result := 'BLOCKED_CARD';
-    ReturnCode_CARD_WITHOUT_APPLICATION       : Result := 'CARD_WITHOUT_APPLICATION';
-    ReturnCode_INVALIDATED_CARD               : Result := 'INVALIDATED_CARD';
-    ReturnCode_PROBLEMATIC_CARD               : Result := 'PROBLEMATIC_CARD';
-    ReturnCode_CARD_WITH_INVALID_DATA_2       : Result := 'CARD_WITH_INVALID_DATA_2';
-    ReturnCode_CARD_WITHOUT_APPLICATION_2     : Result := 'CARD_WITHOUT_APPLICATION_2';
-    ReturnCode_UNUSED_APPLICATION             : Result := 'UNUSED_APPLICATION';
-    ReturnCode_FALLBACK_ERROR                 : Result := 'FALLBACK_ERROR';
-    ReturnCode_MULTIPLE_CTLSS                 : Result := 'MULTIPLE_CTLSS';
-    ReturnCode_CTLSS_COMMUNICATION_ERROR      : Result := 'CTLSS_COMMUNICATION_ERROR';
-    ReturnCode_INVALIDATED_CTLSS              : Result := 'INVALIDATED_CTLSS';
-    ReturnCode_PROBLEMATIC_CTLSS              : Result := 'PROBLEMATIC_CTLSS';
-    ReturnCode_CTLSS_WITHOUT_APPLICATION      : Result := 'CTLSS_WITHOUT_APPLICATION';
-    ReturnCode_UNSUPPORTED_CTLSS_APPLICATION  : Result := 'UNSUPPORTED_CTLSS_APPLICATION';
-    ReturnCode_EXTERNAL_CTLSS_DEVICE          : Result := 'EXTERNAL_CTLSS_DEVICE';
-    ReturnCode_CTLSS_CHANGE_INTERFACE         : Result := 'CTLSS_CHANGE_INTERFACE';
-    ReturnCode_ABORTED_OPERATION              : Result := 'ABORTED_OPERATION';
-    ReturnCode_CARD_CHIP                      : Result := 'CARD_CHIP';
-    ReturnCode_PRODUCT_EMPTY                  : Result := 'PRODUCT_EMPTY';
-    ReturnCode_DIVERT_CARD_NUMBER             : Result := 'DIVERT_CARD_NUMBER';
-    ReturnCode_REJECTED_TRANSACTION           : Result := 'REJECTED_TRANSACTION';
-    ReturnCode_CARD_REJECTED                  : Result := 'CARD_REJECTED';
-    ReturnCode_INVALID_TRANSACTION            : Result := 'INVALID_TRANSACTION';
-    ReturnCode_PRINT_ERROR                    : Result := 'PRINT_ERROR';
-    ReturnCode_EMPTY_TRANSACTION              : Result := 'EMPTY_TRANSACTION';
-    ReturnCode_CARD_NUMBER_INVALID            : Result := 'CARD_NUMBER_INVALID';
-    ReturnCode_INVALID_EXP_DATE               : Result := 'INVALID_EXP_DATE';
-    ReturnCode_NONE_PRODUCTS                  : Result := 'NONE_PRODUCTS';
-    ReturnCode_NO_CREDIT_INSTALLMENT_SELECTED : Result := 'NO_CREDIT_INSTALLMENT_SELECTED';
-    ReturnCode_LOGON_NOT_PERFORMED            : Result := 'LOGON_NOT_PERFORMED';
-    ReturnCode_TABLE_WRITE_ERROR              : Result := 'TABLE_WRITE_ERROR';
-    ReturnCode_DEVICE_NOT_FOUND               : Result := 'DEVICE_NOT_FOUND';
-    ReturnCode_DEVICE_NOT_CONNECTED           : Result := 'DEVICE_NOT_CONNECTED';
-    ReturnCode_CONFIG_NOT_CALLED              : Result := 'CONFIG_NOT_CALLED';
-    ReturnCode_TRANSACTION_NOT_FOUND          : Result := 'TRANSACTION_NOT_FOUND';
+    OK                             : Result := 'OK';
+    INTERNAL_ERROR                 : Result := 'INTERNAL_ERROR';
+    INVALID_CALL                   : Result := 'INVALID_CALL';
+    INVALID_PARAMETER              : Result := 'INVALID_PARAMETER';
+    TIMEOUT                        : Result := 'TIMEOUT';
+    CANCELED_OPERATION             : Result := 'CANCELED_OPERATION';
+    BUSY_PINPAD                    : Result := 'BUSY_PINPAD';
+    INVALID_MODEL                  : Result := 'INVALID_MODEL';
+    EXPIRED_TABLES                 : Result := 'EXPIRED_TABLES';
+    MAG_CARD_READ_ERROR            : Result := 'MAG_CARD_READ_ERROR';
+    MISSING_PIN_KEY                : Result := 'MISSING_PIN_KEY';
+    MISSING_CARD                   : Result := 'MISSING_CARD';
+    SAM_MODULE_ERROR               : Result := 'SAM_MODULE_ERROR';
+    INVALID_SAM                    : Result := 'INVALID_SAM';
+    MISSING_SAM                    : Result := 'MISSING_SAM';
+    MUTE_CARD                      : Result := 'MUTE_CARD';
+    CARD_COMMUNICATION_ERROR       : Result := 'CARD_COMMUNICATION_ERROR';
+    CARD_WITH_INVALID_DATA         : Result := 'CARD_WITH_INVALID_DATA';
+    BLOCKED_CARD                   : Result := 'BLOCKED_CARD';
+    CARD_WITHOUT_APPLICATION       : Result := 'CARD_WITHOUT_APPLICATION';
+    INVALIDATED_CARD               : Result := 'INVALIDATED_CARD';
+    PROBLEMATIC_CARD               : Result := 'PROBLEMATIC_CARD';
+    CARD_WITH_INVALID_DATA_2       : Result := 'CARD_WITH_INVALID_DATA_2';
+    CARD_WITHOUT_APPLICATION_2     : Result := 'CARD_WITHOUT_APPLICATION_2';
+    UNUSED_APPLICATION             : Result := 'UNUSED_APPLICATION';
+    FALLBACK_ERROR                 : Result := 'FALLBACK_ERROR';
+    MULTIPLE_CTLSS                 : Result := 'MULTIPLE_CTLSS';
+    CTLSS_COMMUNICATION_ERROR      : Result := 'CTLSS_COMMUNICATION_ERROR';
+    INVALIDATED_CTLSS              : Result := 'INVALIDATED_CTLSS';
+    PROBLEMATIC_CTLSS              : Result := 'PROBLEMATIC_CTLSS';
+    CTLSS_WITHOUT_APPLICATION      : Result := 'CTLSS_WITHOUT_APPLICATION';
+    UNSUPPORTED_CTLSS_APPLICATION  : Result := 'UNSUPPORTED_CTLSS_APPLICATION';
+    EXTERNAL_CTLSS_DEVICE          : Result := 'EXTERNAL_CTLSS_DEVICE';
+    CTLSS_CHANGE_INTERFACE         : Result := 'CTLSS_CHANGE_INTERFACE';
+    ABORTED_OPERATION              : Result := 'ABORTED_OPERATION';
+    CARD_CHIP                      : Result := 'CARD_CHIP';
+    PRODUCT_EMPTY                  : Result := 'PRODUCT_EMPTY';
+    DIVERT_CARD_NUMBER             : Result := 'DIVERT_CARD_NUMBER';
+    REJECTED_TRANSACTION           : Result := 'REJECTED_TRANSACTION';
+    CARD_REJECTED                  : Result := 'CARD_REJECTED';
+    INVALID_TRANSACTION            : Result := 'INVALID_TRANSACTION';
+    PRINT_ERROR                    : Result := 'PRINT_ERROR';
+    EMPTY_TRANSACTION              : Result := 'EMPTY_TRANSACTION';
+    CARD_NUMBER_INVALID            : Result := 'CARD_NUMBER_INVALID';
+    INVALID_EXP_DATE               : Result := 'INVALID_EXP_DATE';
+    NONE_PRODUCTS                  : Result := 'NONE_PRODUCTS';
+    NO_CREDIT_INSTALLMENT_SELECTED : Result := 'NO_CREDIT_INSTALLMENT_SELECTED';
+    LOGON_NOT_PERFORMED            : Result := 'LOGON_NOT_PERFORMED';
+    TABLE_WRITE_ERROR              : Result := 'TABLE_WRITE_ERROR';
+    DEVICE_NOT_FOUND               : Result := 'DEVICE_NOT_FOUND';
+    DEVICE_NOT_CONNECTED           : Result := 'DEVICE_NOT_CONNECTED';
+    CONFIG_NOT_CALLED              : Result := 'CONFIG_NOT_CALLED';
+    TRANSACTION_NOT_FOUND          : Result := 'TRANSACTION_NOT_FOUND';
+    MAX_INSTALLMENT_AMOUNT         : Result := 'MAX_INSTALLMENT_AMOUNT';
+    MIN_INSTALLMENT_AMOUNT         : Result := 'MIN_INSTALLMENT_AMOUNT';
+    MAX_INSTALLMENT                : Result := 'MAX_INSTALLMENT';
+    MIN_INSTALLMENT                : Result := 'MIN_INSTALLMENT';
   else
     Result := 'ReturnCode: '+IntToStr(Integer(ReturnCode));
   end;
 end;
 
-procedure CallBackProcess(code: Cardinal; process: PAnsiChar); cdecl;
+procedure CallBackMessageProcess(code: Cardinal; process: PAnsiChar); cdecl;
 var
   s: String;
 begin
   if (process = nil) then
     s := ''
   else
-    s := TrimRight(String(process));
+    s := UTF8ToNativeString(TrimRight(String(process)));
 
   with GetTEFTPagAPI do
   begin
@@ -437,14 +527,14 @@ begin
   end;
 end;
 
-procedure CallBackError(code: Cardinal; error: PAnsiChar); cdecl;
+procedure CallBackMessageError(code: Cardinal; error: PAnsiChar); cdecl;
 var
   s: String;
 begin
   if (error = nil) then
     s := ''
   else
-    s := TrimRight(String(error));
+    s := UTF8ToNativeString(TrimRight(String(error)));
 
   with GetTEFTPagAPI do
   begin
@@ -454,14 +544,14 @@ begin
   end;
 end;
 
-procedure CallBackSuccess(success: PAnsiChar); cdecl;
+procedure CallBackMessageSuccess(success: PAnsiChar); cdecl;
 var
   s: String;
 begin
   if (success = nil) then
     s := ''
   else
-    s := TrimRight(String(success));
+    s := UTF8ToNativeString(TrimRight(String(success)));
 
   with GetTEFTPagAPI do
   begin
@@ -473,7 +563,7 @@ end;
 
 function CallBackAbortProcess: LongInt; cdecl;
 var
-  estado: TACBrTEFTPagEstadoOperacao;
+  estado: TPagEstadoOperacao;
   Cancelar: Boolean;
 begin
   Result:= 0;  // Continuar..
@@ -484,7 +574,7 @@ begin
     begin
       estado := tpagEstPinPad;
       Cancelar := False;
-      GravarLog('  OnTransacaoEmAndamento( '+GetEnumName(TypeInfo(TACBrTEFTPagEstadoOperacao), integer(estado))+' )');
+      GravarLog('  OnTransacaoEmAndamento( '+GetEnumName(TypeInfo(TPagEstadoOperacao), integer(estado))+' )');
       OnTransacaoEmAndamento(estado, Cancelar);
       GravarLog('    Cancelar: '+BoolToStr(Cancelar, True) );
       if Cancelar then
@@ -493,87 +583,155 @@ begin
   end;
 end;
 
-{ TACBrTEFTPagAPI }
+function CallBackMenuProcess(option: Cardinal; items: PPAnsiChar;
+  itemSize: LongInt): LongInt; cdecl;
+var
+  i: Integer;
+  sl: TStringList;
+  title: String;
+  iOpcaoSelecionada: LongInt;
+  item: PPAnsiChar;
+begin
+  iOpcaoSelecionada := -1;
 
-constructor TACBrTEFTPagAPI.Create;
+  with GetTEFTPagAPI do
+  begin
+    title := GetEnumName(TypeInfo(TPagMenuOptions), option);
+    GravarLog('  CallBackMenuProcess - '+
+              'option: '+title+', '+IntToStr(itemSize)+' items: '+String(items^));
+
+    sl := TStringList.Create;
+    try
+      item := items;
+      i := 1;
+      while (item^ <> nil) do
+      begin
+        sl.Add(Format('%d - %s', [i, String(item^)]));
+        inc(i);
+        Inc(item);      // avança para o próximo ponteiro
+      end;
+
+      PerguntarMenu(title, sl, iOpcaoSelecionada);
+    finally
+      sl.Free;
+    end;
+  end;
+
+  Result:= iOpcaoSelecionada;
+end;
+
+function CallBackRequestProcess(options: Cardinal; RequestData: PPagRequestData
+  ): LongInt; cdecl;
+begin
+  Result:= 0;  // Continuar..
+
+  with GetTEFTPagAPI do
+  begin
+    GravarLog('  CallBackRequestProcess');
+    GravarLog('  '+Format('options: %d, title: %s data: %s extra: %s',
+                          [options, RequestData.title, RequestData.data, RequestData.extra]));
+  end;
+end;
+
+{ TPagAPI }
+
+constructor TPagAPI.Create;
 begin
   inherited;
 
   fOnGravarLog := Nil;
   fOnExibeMensagem := Nil;
   fOnTransacaoEmAndamento := Nil;
+  fQuandoPerguntarMenu := Nil;
 
   fCarregada := False;
   fInicializada := False;
   fCarregada := False;
   fEmTransacao := False;
   fPathLib := '';
-  fCNPJEmpresa := '';
+  fIdentification := '';
   fDadosDaTransacao := TStringList.Create;
+
+  POSConfig.posHasDisplay := True;
+  POSConfig.posHasPrinter := False;
+  POSConfig.posHasStripeReader := True;
+
+  CallbackDmSDK.messageProcess := CallBackMessageProcess;
+  CallbackDmSDK.messageError := CallBackMessageError;
+  CallbackDmSDK.messageSuccess := CallBackMessageSuccess;
+  CallbackDmSDK.AbortProcess := CallBackAbortProcess;
+  CallbackDmSDK.menuProcess := CallBackMenuProcess;
+  CallbackDmSDK.requestProcess := CallBackRequestProcess;
 end;
 
-destructor TACBrTEFTPagAPI.Destroy;
+destructor TPagAPI.Destroy;
 begin
   fDadosDaTransacao.Free;
   fOnGravarLog := Nil;
   fOnExibeMensagem := Nil;
   fOnTransacaoEmAndamento := Nil;
+  fQuandoPerguntarMenu := Nil;
   inherited Destroy;
 end;
 
-procedure TACBrTEFTPagAPI.Inicializar;
+procedure TPagAPI.Inicializar;
 var
   ret: LongInt;
+
 begin
   if fInicializada then
     Exit;
 
   fEmTransacao := False;
-  GravarLog('TACBrTEFTPagAPI.Inicializar');
+  fDadosDaTransacao.Clear;
+  GravarLog('TPagAPI.Inicializar');
 
-  if (fCNPJEmpresa = '') then
-    DoException(sErrCNPJNaoInformado);
+  if (fIdentification = '') then
+    DoException(ACBrStr(sErrCNPJNaoInformado));
 
   if not Assigned(fOnTransacaoEmAndamento) then
-    DoException(Format(sErrEventoNaoAtribuido, ['OnTransacaoEmAndamento']));
+    DoException(Format(ACBrStr(sErrEventoNaoAtribuido), ['OnTransacaoEmAndamento']));
   if not Assigned(fOnExibeMensagem) then
-    DoException(Format(sErrEventoNaoAtribuido, ['OnExibeMensagem']));
+    DoException(Format(ACBrStr(sErrEventoNaoAtribuido), ['OnExibeMensagem']));
+  if not Assigned(fQuandoPerguntarMenu) then
+    DoException(Format(ACBrStr(sErrEventoNaoAtribuido), ['QuandoPerguntarMenu']));
 
   LoadLibFunctions;
   GravarLog('  call - Configuration');
-  ret := xTPagConfiguration( CallBackProcess, CallBackError, CallBackSuccess, CallBackAbortProcess );
+  ret := xTPagConfiguration( @POSConfig, @CallbackDmSDK );
   GravarLog('   ret - '+IntToStr(ret));
   TratarErroTPag(ret);
 
   fInicializada := True;
 end;
 
-procedure TACBrTEFTPagAPI.DesInicializar;
+procedure TPagAPI.DesInicializar;
 begin
   if not fInicializada then
     Exit;
 
-  GravarLog('TACBrTEFTPagAPI.DesInicializar');
+  GravarLog('TPagAPI.DesInicializar');
   UnLoadLibFunctions;
   fInicializada := False;
   fConectada := False;
 end;
 
-procedure TACBrTEFTPagAPI.Conectar;
+procedure TPagAPI.Conectar;
 var
   ret: LongInt;
 begin
   if fConectada then
     Exit;
 
-  GravarLog('  call - Initialization('+fCNPJEmpresa+')');
-  ret := xTPagInitialization(PAnsiChar(AnsiString(fCNPJEmpresa)));
+  fDadosDaTransacao.Clear;
+  GravarLog('  call - Initialization('+fIdentification+')');
+  ret := xTPagInitialization(PAnsiChar(AnsiString(fIdentification)));
   GravarLog('   ret - '+IntToStr(ret));
   TratarErroTPag(ret);
   fConectada := True;
 end;
 
-function TACBrTEFTPagAPI.Transacao(Params: TACBrTEFTPagTransactionParams): LongInt;
+function TPagAPI.Transacao(Params: TPagTransactionParams): LongInt;
 begin
   PrepararInicioDeTrancao;
   GravarLog('  call - Transaction' + sLineBreak +
@@ -594,26 +752,28 @@ begin
   end;
 end;
 
-procedure TACBrTEFTPagAPI.AbortarTransacao;
+procedure TPagAPI.AbortarTransacao;
 begin
   fEmTransacao := False;
 end;
 
-function TACBrTEFTPagAPI.Cancelamento(const nsuResponse: String;
-  CardType: Cardinal): LongInt;
+function TPagAPI.Cancelamento(const nsuResponse: String; CardType: TPagCardType
+  ): LongInt;
 var
   s: AnsiString;
+  c: Cardinal;
 begin
   PrepararInicioDeTrancao;
-  GravarLog('  call - Cancellation( '+nsuResponse+', '+IntToStr(CardType)+' )' );
+  GravarLog('  call - Cancellation( '+nsuResponse+', '+GetEnumName(TypeInfo(TPagCardType), integer(CardType))+' )' );
 
   s := Trim(nsuResponse);
   if (s = '') then
-    DoException(sErrNSUNaoInformado);
+    DoException(ACBrStr(sErrNSUNaoInformado));
 
   fEmTransacao := True;
   try
-    Result := xTPagCancellation(PAnsiChar(s), CardType);
+    c := Cardinal(CardType);
+    Result := xTPagCancellation(PAnsiChar(s), c);
     GravarLog('   ret - '+IntToStr(Result));
     fDadosDaTransacao.Values['ret'] := IntToStr(Result);
   finally
@@ -621,7 +781,7 @@ begin
   end;
 end;
 
-function TACBrTEFTPagAPI.AtualizarTabelas: LongInt;
+function TPagAPI.AtualizarTabelas: LongInt;
 begin
   PrepararInicioDeTrancao;
   GravarLog('  call - UpdateTable');
@@ -629,17 +789,17 @@ begin
   GravarLog('   ret - '+IntToStr(Result));
 end;
 
-function TACBrTEFTPagAPI.ReiniciarTerminal: LongInt;
+function TPagAPI.ReiniciarTerminal: LongInt;
 begin
   PrepararInicioDeTrancao;
   GravarLog('  call - ResetTerminal');
   Result := xTPagResetTerminal;
   GravarLog('   ret - '+IntToStr(Result));
-  if (Result = ReturnCode_OK) then
+  if (Result = Integer(TPagReturnCodes(OK))) then
     fConectada := False;
 end;
 
-function TACBrTEFTPagAPI.UltimoRecibo(EhConsumidor, EhCancelamento,
+function TPagAPI.UltimoRecibo(EhConsumidor, EhCancelamento,
   EhReimpressao: Boolean; var errorCode: LongInt): String;
 var
   p: PAnsiChar;
@@ -653,7 +813,7 @@ begin
   errorCode := -1;
   p := xTPagLastReceipt(EhConsumidor, EhCancelamento, EhReimpressao, errorCode);
   GravarLog('   ret - '+IntToStr(errorCode));
-  if (errorCode = ReturnCode_OK) then
+  if (errorCode = Integer(TPagReturnCodes(OK))) then
     Result := String(p)
   else
     Result := '';
@@ -661,9 +821,9 @@ begin
   GravarLog('   LastReceipt:' + sLineBreak + Result);
 end;
 
-function TACBrTEFTPagAPI.ObterListaTransacoes(
-  Params: TACBrTEFTPagTransactionFilter; var num, errorCode: LongInt
-  ): PACBrTEFTPagTransactionPartial;
+function TPagAPI.ObterListaTransacoes(
+  Params: TPagTransactionFilter; var num, errorCode: LongInt
+  ): PPagTransactionPartial;
 begin
   PrepararInicioDeTrancao;
   errorCode := -1;
@@ -673,43 +833,44 @@ begin
   GravarLog('   ret - '+IntToStr(errorCode)+', num - '+IntToStr(num));
 end;
 
-function TACBrTEFTPagAPI.ObterTransacao(
-  TransactionList: PACBrTEFTPagTransactionPartial; index: Integer
-  ): TACBrTEFTPagTransactionPartial;
+function TPagAPI.ObterTransacao(
+  TransactionList: PPagTransactionPartial; index: Integer): TPagTransactionPartial;
 var
-  p: PACBrTEFTPagTransactionPartial;
+  p: PPagTransactionPartial;
 begin
   p := TransactionList;
   inc(p, index);
-  move(p^, Result, SizeOf(TACBrTEFTPagTransactionPartial));
+  move(p^, Result, SizeOf(TPagTransactionPartial));
 end;
 
-procedure TACBrTEFTPagAPI.LiberarListaTransacoes(
-  TransactionList: PACBrTEFTPagTransactionPartial; num: LongInt);
+procedure TPagAPI.LiberarListaTransacoes(
+  TransactionList: PPagTransactionPartial; num: LongInt);
 begin
   GravarLog('  call - FreeTransactionPartialList( '+IntToStr(num)+' )');
   xTPagFreeTransactionPartialList(TransactionList, num);
 end;
 
-procedure TACBrTEFTPagAPI.ObterUltimaTransacao(LastTransactionType: Cardinal;
-  var errorCode: LongInt);
+procedure TPagAPI.ObterUltimaTransacao(
+  LastTransactionType: TPagLastTransactionType; var errorCode: LongInt);
 var
-  p: PACBrTEFTPagTransactionPartial;
+  p: PPagTransactionPartial;
+  c: Cardinal;
 begin
   PrepararInicioDeTrancao;
   errorCode := -1;
-  GravarLog('  call - LastTransactionStore( '+IntToStr(LastTransactionType)+' )');
-  p := xTPagLastTransactionStore(LastTransactionType, errorCode);
+  GravarLog('  call - LastTransactionStore( '+ GetEnumName(TypeInfo(TPagLastTransactionType), integer(LastTransactionType))+' )');
+  c := Cardinal(LastTransactionType);
+  p := xTPagLastTransactionStore(c, errorCode);
   GravarLog('   ret - '+IntToStr(errorCode));
-  if (errorCode = ReturnCode_OK) and Assigned(p) then
+  if (errorCode = Integer(TPagReturnCodes(OK))) and Assigned(p) then
   begin
     TransacaoToStr(p^, fDadosDaTransacao);
     LiberarListaTransacoes(p, -1);
   end;
 end;
 
-procedure TACBrTEFTPagAPI.TransacaoToStr(
-  ATransaction: TACBrTEFTPagTransactionPartial; sl: TStringList);
+procedure TPagAPI.TransacaoToStr(
+  ATransaction: TPagTransactionPartial; sl: TStringList);
 var
   d: TDateTime;
   s: String;
@@ -736,7 +897,7 @@ begin
   sl.Values['panMasked'] := Trim(String(ATransaction.panMasked));
 end;
 
-procedure TACBrTEFTPagAPI.GravarLog(const AString: AnsiString; Traduz: Boolean);
+procedure TPagAPI.GravarLog(const AString: AnsiString; Traduz: Boolean);
 Var
   Tratado: Boolean;
   AStringLog: AnsiString;
@@ -753,18 +914,26 @@ begin
   fOnGravarLog(AStringLog, Tratado);
 end;
 
-procedure TACBrTEFTPagAPI.ExibirMensagem(const AMsg: String);
+procedure TPagAPI.ExibirMensagem(const AMsg: String);
 begin
   if Assigned(fOnExibeMensagem) then
     fOnExibeMensagem(AMsg);
 end;
 
-procedure TACBrTEFTPagAPI.SetInicializada(AValue: Boolean);
+procedure TPagAPI.PerguntarMenu(const Titulo: String; Opcoes: TStringList;
+  var ItemSelecionado: LongInt);
+begin
+  GravarLog('TPagAPI.PerguntarMenu( '+Titulo+' )');
+  if Assigned(fQuandoPerguntarMenu) then
+    fQuandoPerguntarMenu(Titulo, Opcoes, ItemSelecionado);
+end;
+
+procedure TPagAPI.SetInicializada(AValue: Boolean);
 begin
   if fInicializada = AValue then
     Exit;
 
-  GravarLog('TACBrTEFTPagAPI.SetInicializada( '+BoolToStr(AValue, True)+' )');
+  GravarLog('TPagAPI.SetInicializada( '+BoolToStr(AValue, True)+' )');
 
   if AValue then
     Inicializar
@@ -772,36 +941,41 @@ begin
     DesInicializar;
 end;
 
-procedure TACBrTEFTPagAPI.SetCNPJEmpresa(AValue: String);
+procedure TPagAPI.SetIdentification(AValue: String);
 begin
-  fCNPJEmpresa := OnlyNumber(AValue);
+  fIdentification := OnlyNumber(AValue);
 end;
 
-procedure TACBrTEFTPagAPI.SetPathLib(AValue: String);
+function TPagAPI.GetUltimoErro: String;
+begin
+  Result := fDadosDaTransacao.Values['msgError'];
+end;
+
+procedure TPagAPI.SetPathLib(AValue: String);
 begin
   if fPathLib = AValue then
     Exit;
 
-  GravarLog('TACBrTEFTPagAPI.SetPathLib( '+AValue+' )');
+  GravarLog('TPagAPI.SetPathLib( '+AValue+' )');
 
   if fInicializada then
-    DoException(sErrLibJaInicializada);
+    DoException(ACBrStr(sErrLibJaInicializada));
 
   fPathLib := PathWithDelim(ExtractFilePath(AValue));
 end;
 
-function TACBrTEFTPagAPI.GetLibFullPath: String;
+function TPagAPI.GetLibFullPath: String;
 begin
   if (PathLib <> '') then
   begin
-    GravarLog(ACBrStr('TACBrTEFTPagAPI.LibFullName: Usando "PathLib" informado pela aplicação: ')+PathLib);
+    GravarLog(ACBrStr('TPagAPI.LibFullName: Usando "PathLib" informado pela aplicação: ')+PathLib);
     Result := PathLib + CTPagLib;
   end
   else
     Result := ApplicationPath + CTPagLib;
 end;
 
-procedure TACBrTEFTPagAPI.LoadLibFunctions;
+procedure TPagAPI.LoadLibFunctions;
 
   procedure TPagFunctionDetect(LibName, FuncName: AnsiString; var LibPointer: Pointer;
     FuncIsRequired: Boolean = True) ;
@@ -813,9 +987,9 @@ procedure TACBrTEFTPagAPI.LoadLibFunctions;
       begin
         LibPointer := NIL ;
         if FuncIsRequired then
-          DoException(Format('Erro ao carregar a função: %s de: %s',[FuncName, LibName]))
+          DoException(Format(ACBrStr('Erro ao carregar a função: %s de: %s'),[FuncName, LibName]))
         else
-          GravarLog(Format('     Função não requerida: %s não encontrada em: %s',[FuncName, LibName]));
+          GravarLog(Format(ACBrStr('     Função não requerida: %s não encontrada em: %s'),[FuncName, LibName]));
         end ;
     end ;
   end;
@@ -827,7 +1001,7 @@ begin
     Exit;
 
   sLibName := GetLibFullPath;
-  GravarLog('TACBrTEFTPagAPI.LoadDLLFunctions - '+sLibName);
+  GravarLog('TPagAPI.LoadDLLFunctions - '+sLibName);
 
   TPagFunctionDetect(sLibName, 'configuration', @xTPagConfiguration);
   TPagFunctionDetect(sLibName, 'initialization', @xTPagInitialization);
@@ -843,14 +1017,14 @@ begin
   fCarregada := True;
 end;
 
-procedure TACBrTEFTPagAPI.UnLoadLibFunctions;
+procedure TPagAPI.UnLoadLibFunctions;
 var
   sLibName: String;
 begin
   if not fCarregada then
     Exit;
 
-  GravarLog('TACBrTEFTPagAPI.UnLoadDLLFunctions');
+  GravarLog('TPagAPI.UnLoadDLLFunctions');
 
   sLibName := GetLibFullPath;
   UnLoadLibrary( sLibName );
@@ -858,7 +1032,7 @@ begin
   ClearMethodPointers;
 end;
 
-procedure TACBrTEFTPagAPI.ClearMethodPointers;
+procedure TPagAPI.ClearMethodPointers;
 begin
   xTPagConfiguration := Nil;
   xTPagInitialization := Nil;
@@ -872,27 +1046,39 @@ begin
   xTPagLastReceipt := Nil;
 end;
 
-procedure TACBrTEFTPagAPI.DoException(const AErrorMsg: String);
+procedure TPagAPI.DoException(const AErrorMsg: String);
 begin
   if (Trim(AErrorMsg) = '') then
     Exit;
 
-  GravarLog('TACBrTEFTPagAPI: '+AErrorMsg);
-  raise EACBrTEFTPagAPI.Create(ACBrStr(AErrorMsg));
+  GravarLog('TPagAPI: '+AErrorMsg);
+  raise EACBrTEFTPagAPI.Create(AErrorMsg);
 end;
 
-procedure TACBrTEFTPagAPI.PrepararInicioDeTrancao;
+procedure TPagAPI.PrepararInicioDeTrancao;
 begin
   Conectar;
   fDadosDaTransacao.Clear;
 end;
 
-procedure TACBrTEFTPagAPI.TratarErroTPag(AErrorCode: LongInt);
+procedure TPagAPI.TratarErroTPag(AErrorCode: LongInt);
 begin
-  if (AErrorCode = ReturnCode_OK) then
+  TratarErroTPag( TPagReturnCodes(AErrorCode) );
+end;
+
+procedure TPagAPI.TratarErroTPag(AErrorCode: TPagReturnCodes);
+var
+  msgErro: String;
+begin
+  if (AErrorCode = TPagReturnCodes(OK)) then
     Exit;
 
-  DoException(ReturnCodesToStr(AErrorCode));
+  msgErro := Trim(UltimoErro);
+  if (msgErro <> '') then
+    msgErro := msgErro + sLineBreak;
+  msgErro := msgErro + ReturnCodesToStr(AErrorCode);
+
+  DoException(msgErro);
 end;
 
 initialization

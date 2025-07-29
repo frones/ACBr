@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+29/07/2025
+-- ACBrNFSeXServicos --
+[*] Acrescentado o Params para definir apenas 2 casas decimais para a alíquota 
+    para a cidade Criciuma/SC.
+   Por: Desenvolvimento total S
+
 28/07/2025
 -- ACBrNFSeXServicos --
 [+] #TK-7430: Incluído diversas cidades do Espirito Santo.

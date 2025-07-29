@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/07/2025
+-- ACBrPIXCD --
+[*] Inclusão do parâmetro 'txId' no método de consulta de uma recorrência.
+    por: Elias César
+
 25/07/2025
 -- ACBrPIXPSPAppLess -- 
 [*] Alteração para converter corretamente os pagamentos na consulta da cobrança.

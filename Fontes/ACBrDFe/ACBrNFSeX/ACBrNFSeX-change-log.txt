@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 29/07/2025
+-- fintelISS.GravarXml/fintelISS.Provider --
+[*] Ajuste para usar corretamente a pasta com os schemas da versão 2.04
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Acrescentado o Params para definir apenas 2 casas decimais para a alíquota 
     para a cidade Criciuma/SC.

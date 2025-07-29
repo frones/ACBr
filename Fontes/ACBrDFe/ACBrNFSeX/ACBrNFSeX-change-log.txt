@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 28/07/2025
+-- ACBrNFSeXServicos --
+[+] #TK-7430: Incluído diversas cidades do Espirito Santo.
+[+] #TK-7429: Incluído diversas cidades do Rio de Janeiro.
+[+] #TK-7426: Incluído diversas cidades de Minas Gerais.
+   Por: Anderson Grolli
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] #TK-7423: Alteração visando imprimir o Código Serviço mesmo quando essa informação
     não existe na lista de serviços dentro da tag Discriminacao.

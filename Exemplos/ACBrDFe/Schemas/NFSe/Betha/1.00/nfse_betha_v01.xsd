@@ -454,7 +454,7 @@
     <xsd:complexType name="tcParcelas">
         <xsd:all>
             <xsd:element name="Parcela" type="tsParcela" minOccurs="0" maxOccurs="1"/>
-            <xsd:element name="DataVencimento" type="xsd:dateTime" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="DataVencimento" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="Valor" type="tsValor" minOccurs="0" maxOccurs="1"/>
         </xsd:all>
     </xsd:complexType>

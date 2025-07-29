@@ -12,7 +12,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   Font.Style = []
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  TextHeight = 14
+  TextHeight = 13
   object BoletoReciboTopo: TRLReport
     Left = 18
     Top = 18
@@ -7410,7 +7410,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object txtInstrucoesDet: TRLMemo
         Left = 5
         Top = 169
-        Width = 428
+        Width = 427
         Height = 86
         AutoSize = False
         Behavior = [beSiteExpander]
@@ -7960,7 +7960,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         ParentFont = False
       end
       object imgQrCodePixFaturaDetail: TRLImage
-        Left = 445
+        Left = 450
         Top = 169
         Width = 80
         Height = 80

@@ -95,6 +95,7 @@ implementation
 
 uses
   SynaCode,
+  ACBrDFe.Conversao,
   ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Math, ACBrUtil.Strings,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,

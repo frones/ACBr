@@ -74,6 +74,7 @@ type
 implementation
 
 uses
+  ACBrDFe.Conversao,
   ACBrUtil.Base,
   ACBrUtil.XMLHTML,
   ACBrUtil.DateTime,
@@ -260,7 +261,7 @@ begin
   with NFSe.Prestador.IdentificacaoPrestador do
   begin
     CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('PRESTCPFCNPJ'), tcStr);
-    InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('PRESTCODMOBILIARIO'), tcStr);
+    InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('PRESTINSCRICAOMUN'), tcStr);
   end;
 
   with NFSe.Prestador.Endereco do

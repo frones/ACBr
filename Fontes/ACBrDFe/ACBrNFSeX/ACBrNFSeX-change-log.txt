@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 29/07/2025
+-- AssessorPublico.LerXml --
+[*] #TK-7431: Alteração visando a leitura correta da Insc. Municipal do prestador.
+   Por: João Vitor Bogo
+
 -- fintelISS.GravarXml/fintelISS.Provider --
 [*] Ajuste para usar corretamente a pasta com os schemas da versão 2.04
    Por: Italo Giurizzato Junior

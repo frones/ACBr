@@ -1224,7 +1224,7 @@ object Form1: TForm1
                       Color = clBtnFace
                       ParentColor = False
                     end
-                    object lConsultarDevolucaoPixIdentificadorDevolucao2: TLabel
+                    object lbCriarCobrancaImediata_SolicitacaoAoPagador: TLabel
                       Left = 16
                       Top = 56
                       Width = 110
@@ -3428,17 +3428,26 @@ object Form1: TForm1
                       112)
                     object lbConsultarRecorrenciaIdRec: TLabel
                       Left = 16
-                      Top = 16
+                      Top = 15
                       Width = 28
                       Height = 13
                       Caption = 'idRec'
                       Color = clBtnFace
                       ParentColor = False
                     end
+                    object lbConsultarRecorrenciatxId: TLabel
+                      Left = 333
+                      Top = 15
+                      Width = 17
+                      Height = 13
+                      Caption = 'txId'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
                     object edConsultarRecorrenciaIdRec: TEdit
-                      Left = 16
-                      Top = 36
-                      Width = 576
+                      Left = 17
+                      Top = 30
+                      Width = 289
                       Height = 21
                       Anchors = [akLeft, akTop, akRight]
                       TabOrder = 0
@@ -3452,6 +3461,14 @@ object Form1: TForm1
                       Caption = 'Consultar'
                       TabOrder = 1
                       OnClick = btConsultarRecorrenciaClick
+                    end
+                    object edConsultarRecorrenciaTxId: TEdit
+                      Left = 333
+                      Top = 30
+                      Width = 259
+                      Height = 21
+                      Anchors = [akLeft, akTop, akRight]
+                      TabOrder = 2
                     end
                   end
                   object mmConsultarRecorrencia: TMemo

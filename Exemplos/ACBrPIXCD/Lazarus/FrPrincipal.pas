@@ -236,6 +236,7 @@ type
     CobVConsultarRodapeLista: TPanel;
     dtConsultarCobrancas_Fim: TDateTimePicker;
     edCancelarCobRTxID: TEdit;
+    edConsultarRecorrenciaTxId: TEdit;
     edDesvincularLocRecId: TEdit;
     edConsultarLocationsRecConvenio: TEdit;
     edConsultarLocationsRecFim: TDateTimePicker;
@@ -523,6 +524,7 @@ type
     Label16: TLabel;
     Label17: TLabel;
     Label18: TLabel;
+    lbConsultarRecorrenciatxId: TLabel;
     lbPIXPDVVersaoAPI: TLabel;
     lbCancelarCobRTxID: TLabel;
     lbDesvincularLocRecId: TLabel;
@@ -782,7 +784,7 @@ type
     lConsultarDevolucaoPixE2eid3: TLabel;
     lConsultarDevolucaoPixE2eid5: TLabel;
     lConsultarDevolucaoPixIdentificadorDevolucao1: TLabel;
-    lConsultarDevolucaoPixIdentificadorDevolucao2: TLabel;
+    lbCriarCobrancaImediata_SolicitacaoAoPagador: TLabel;
     lConsultarPixE2eid: TLabel;
     edtBBClientID: TEdit;
     edtConsultarPixE2eid: TEdit;
@@ -2146,7 +2148,7 @@ procedure TForm1.btConsultarRecorrenciaClick(Sender: TObject);
 begin
   VerificarConfiguracao;
   mmConsultarRecorrencia.Lines.Clear;
-  if ACBrPixCD1.PSP.epRec.ConsultarRecorrencia(edConsultarRecorrenciaIdRec.Text) then
+  if ACBrPixCD1.PSP.epRec.ConsultarRecorrencia(edConsultarRecorrenciaIdRec.Text, edConsultarRecorrenciaTxId.Text) then
     mmConsultarRecorrencia.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epRec.RecorrenciaCompleta.AsJSON)
   else
     mmConsultarRecorrencia.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epRec.Problema.AsJSON);
@@ -6232,7 +6234,7 @@ begin
       for J := 0 to ColCount - 1 do
         Cells[J, I] := Cells[J, I+1];
 
-    RowCount := RowCount - 1
+    RowCount := RowCount - 1;
   end;
 end;
 

@@ -1309,7 +1309,7 @@ object Form1: TForm1
                       Caption = 'Pode Alterar Valor'
                       TabOrder = 3
                     end
-                    object lConsultarDevolucaoPixIdentificadorDevolucao2: TLabel
+                    object lbCriarCobrancaImediata_SolicitacaoAoPagador: TLabel
                       Left = 16
                       Height = 15
                       Top = 56
@@ -3670,6 +3670,22 @@ object Form1: TForm1
                       ImageIndex = 8
                       OnClick = btConsultarRecorrenciaClick
                       TabOrder = 1
+                    end
+                    object lbConsultarRecorrenciatxId: TLabel
+                      Left = 333
+                      Height = 15
+                      Top = 15
+                      Width = 19
+                      Caption = 'txId'
+                      ParentColor = False
+                    end
+                    object edConsultarRecorrenciaTxId: TEdit
+                      Left = 333
+                      Height = 23
+                      Top = 30
+                      Width = 259
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 2
                     end
                   end
                   object mmConsultarRecorrencia: TMemo

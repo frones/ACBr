@@ -879,6 +879,11 @@ begin
     devedor.cpf := wIni.ReadString(wSecao, 'devedorCPF', EmptyStr);
     devedor.cnpj := wIni.ReadString(wSecao, 'devedorCNPJ', EmptyStr);
     devedor.nome := wIni.ReadString(wSecao, 'devedorNome', EmptyStr);
+    devedor.email := wIni.ReadString(wSecao, 'devedorEmail', EmptyStr);
+    devedor.logradouro := wIni.ReadString(wSecao, 'devedorLogradouro', EmptyStr);
+    devedor.cidade := wIni.ReadString(wSecao, 'devedorCidade', EmptyStr);
+    devedor.uf := wIni.ReadString(wSecao, 'devedorUF', EmptyStr);
+    devedor.cep := wIni.ReadString(wSecao, 'devedorCEP', EmptyStr);
 
     i := 1;
     wSecao := 'infoAdicionais' + IntToStrZero(i, 3);

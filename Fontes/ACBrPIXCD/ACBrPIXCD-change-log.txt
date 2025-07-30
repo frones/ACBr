@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/07/2025
+-- ACBrPIXSchemasCobV --
+[*] Ajuste nas propriedades do devedor que faltavam ao ler as informações do INI.
+    por: Elias César
+
 29/07/2025
 -- ACBrPIXCD --
 [*] Inclusão do parâmetro 'txId' no método de consulta de uma recorrência.

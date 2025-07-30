@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+30/07/2025
+-- ACBrBoletoW_Cora.pas --
+[+] #TK-7437 adicionado tpBaixa Método POST para Baixa
+	https://www.projetoacbr.com.br/forum/topic/84597-cancelamento-boleto-api-banco-cora/
+    Por: Daniel de Morais InfoCotidiano
 
 28/07/2025
 -- ACBrBoletoW_Cresol.pas,ACBrBoletoRet_Cresol.pas --

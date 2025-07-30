@@ -190,7 +190,7 @@ begin
           (ClassName + Format(S_OPERACAO_NAO_IMPLEMENTADO,
           [TipoOperacaoToStr(Boleto.Configuracoes.WebService.Operacao)]));
       end;
-    tpCancelar:
+    tpCancelar, tpBaixa:
       begin
         FMetodoHTTP := htDELETE; // Define Método POST para Baixa
         RequisicaoCancelar;

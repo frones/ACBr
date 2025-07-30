@@ -2555,7 +2555,7 @@ begin
   if (Trim(e2eid) = '') then
     raise EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['e2eid']);
 
-  if (Trim(idDevolucao) = '') then
+  if (Trim(idDevolucao) = '') and Assigned(fPSP) and fPSP.IsBacen then
     raise EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['idDevolucao']);
 
   Clear;

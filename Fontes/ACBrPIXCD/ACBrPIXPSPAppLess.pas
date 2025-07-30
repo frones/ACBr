@@ -56,6 +56,7 @@ const
   cAppLessEndpointOrder   = '/order';
   cAppLessEndpointOrders  = '/orders';
   cAppLessEndpointCancel  = '/cancel';
+  cAppLessEndpointEndToEndId = '/endtoendid';
   cAppLessURLAuthHomolog  = cAppLessURLHomologacao+ cAppLessPathAuthToken;
   cAppLessURLAuthProducao = cAppLessURLProducao+ cAppLessPathAuthToken;
 
@@ -69,6 +70,7 @@ type
   TACBrPSPAppLess = class(TACBrPSPCertificate)
   private
     fHMAC: String;
+    fCheckingReturn: Boolean;
     fOrderRequest: TACBrAppLessOrder;
     fOrderResponse: TACBrAppLessOrderResponse;
     fOrdersResponse: TACBrAppLessOrdersResponse;
@@ -83,6 +85,8 @@ type
 
     function OrderResponseToCob(const aJsonOrderResponse: String): String;
     function OrdersResponseToCobs(const aJsonOrdersResponse: String): String;
+    function OrderResponseToPix(const aJsonOrderResponse: String): String;   
+    function OrderResponseToDevolucao(const aJsonOrderResponse: String): String;
 
     function OrderStatusToCobStatus(aOrderStatus: TAppLessOrderStatus): TACBrPIXStatusCobranca;
     function CobStatusToOrderStatus(aCobStatus: TACBrPIXStatusCobranca): TAppLessOrderStatus;
@@ -95,6 +99,7 @@ type
 
     procedure ConfigurarHeaders(const Method, AURL: String); override;
     procedure ConfigurarBody(const aMethod, aEndPoint: String; var aBody: String); override;
+    procedure ConfigurarPathParameters(const Method, EndPoint: String); override;
     procedure ConfigurarQueryParameters(const Method, EndPoint: String); override;
   public
     constructor Create(AOwner: TComponent); override;
@@ -123,8 +128,10 @@ uses
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
+  ACBrPIXSchemasPix,
   ACBrPIXSchemasCob,
   ACBrPIXSchemasCobV,
+  ACBrPIXSchemasDevolucao,
   ACBrPIXSchemasCobsConsultadas;
 
 { TACBrPSPAppLess }
@@ -234,7 +241,6 @@ end;
 function TACBrPSPAppLess.OrderResponseToCob(const aJsonOrderResponse: String): String;
 var
   wCob: TACBrPIXCobCompleta;
-  i: Integer;
 begin
   OrderResponse.AsJSON := aJsonOrderResponse;
   wCob := TACBrPIXCobCompleta.Create;
@@ -301,6 +307,44 @@ begin
   end;
 end;
 
+function TACBrPSPAppLess.OrderResponseToPix(const aJsonOrderResponse: String): String;
+var
+  wPix: TACBrPIXArray;
+begin
+  Result := aJsonOrderResponse;
+  OrderResponse.AsJSON := aJsonOrderResponse;
+  wPix := TACBrPIXArray.Create('pix');
+  try
+    wPix.Assign(OrderResponse.transaction.transactionPix.cobResponse.pix);
+
+    if (wPix.Count = 1) then
+      Result := wPix[0].AsJSON
+    else if (wPix.Count > 1) then
+      Result := wPix.AsJSON;
+  finally
+    wPix.Free;
+  end;
+end;
+
+function TACBrPSPAppLess.OrderResponseToDevolucao(const aJsonOrderResponse: String): String;
+var
+  wDev: TACBrPIXDevolucao;
+begin
+  Result := aJsonOrderResponse;
+  OrderResponse.AsJSON := aJsonOrderResponse;
+  wDev := TACBrPIXDevolucao.Create;
+  try
+    if NaoEstaZerado(OrderResponse.transaction.transactionPix.cobResponse.pix.Count) and
+       NaoEstaZerado(OrderResponse.transaction.transactionPix.cobResponse.pix[0].devolucoes.Count) then
+    begin
+      wDev.Assign(OrderResponse.transaction.transactionPix.cobResponse.pix[0].devolucoes[0]);
+      Result := wDev.AsJSON;
+    end;
+  finally
+    wDev.Free;
+  end;
+end;
+
 function TACBrPSPAppLess.OrderStatusToCobStatus(aOrderStatus: TAppLessOrderStatus): TACBrPIXStatusCobranca;
 begin
   case aOrderStatus of
@@ -327,7 +371,10 @@ end;
 
 procedure TACBrPSPAppLess.DoQuandoAcessarEndPoint(const aEndPoint: String; var aURL: String; var aMethod: String);
 begin
-  if (aEndPoint = cEndPointCob) and (aMethod = ChttpMethodPATCH) or (aMethod = ChttpMethodPUT) then
+  if (aEndPoint = cEndPointCob) and ((aMethod = ChttpMethodPATCH) or (aMethod = ChttpMethodPUT)) then
+    aMethod := ChttpMethodPOST;
+
+  if (aEndPoint = cEndPointPix) and (aMethod = ChttpMethodPUT) then
     aMethod := ChttpMethodPOST;
 end;
 
@@ -348,6 +395,26 @@ begin
       finally
         ja.Free;
       end;
+    end;
+    Exit;
+  end;
+
+  if (aEndPoint = cEndPointPix) and (aResultCode = HTTP_OK) then
+  begin
+    if (aMethod = ChttpMethodGET) then
+    begin
+      if fCheckingReturn then
+      begin
+        aRespostaHttp := OrderResponseToDevolucao(aRespostaHttp);
+        fCheckingReturn := False;
+      end
+      else
+        aRespostaHttp := OrderResponseToPix(aRespostaHttp);
+    end
+    else if (aMethod = ChttpMethodPOST) and (Pos(cAppLessEndpointCancel, aURL) > 0) then
+    begin
+      aResultCode := HTTP_CREATED;
+      aRespostaHttp := OrderResponseToDevolucao(aRespostaHttp);
     end;
     Exit;
   end;
@@ -377,17 +444,28 @@ begin
 end;
 
 function TACBrPSPAppLess.CalcularEndPointPath(const aMethod, aEndPoint: String): String;
+var
+  s: String;
 begin
-  Result := Trim(aEndPoint);
+  Result := cAppLessEndpointOrder;
 
   if (aEndPoint = cEndPointCob) or (aEndPoint = cEndPointCobV) then
   begin
     if NaoEstaZerado(URLQueryParams.Count) then
-      Result := cAppLessEndpointOrders
-    else
-      Result := cAppLessEndpointOrder;
+      Result := cAppLessEndpointOrders;
 
     if (aMethod = ChttpMethodPATCH) then
+      Result := Result + cAppLessEndpointCancel;
+  end;
+
+  if (aEndPoint = cEndPointPix) then
+  begin
+    s := EmptyStr;
+    if NaoEstaZerado(URLPathParams.Count) then
+      s := URLPathParams[0];
+    if (aMethod = ChttpMethodGET) and (Length(s) >= 25) then
+      Result := Result + cAppLessEndpointEndToEndId
+    else if (aMethod = ChttpMethodPUT) and (URLPathParams.Count > 1) then
       Result := Result + cAppLessEndpointCancel;
   end;
 end;
@@ -421,8 +499,24 @@ begin
   if (aEndPoint = cEndPointCobV) and (aMethod = ChttpMethodPOST) then
     aBody := CobVSolicitadaToBankSlipOrderRequest(aBody);
 
-  if (aEndPoint = cEndPointCob) and (aMethod = ChttpMethodPATCH) then
+  if ((aEndPoint = cEndPointCob) and (aMethod = ChttpMethodPATCH)) or
+     ((aEndPoint = cEndPointPix) and (aMethod = ChttpMethodPUT)) then
     aBody := EmptyStr;
+end;
+
+procedure TACBrPSPAppLess.ConfigurarPathParameters(const Method, EndPoint: String);
+var
+  txid: String;
+begin
+  if (EndPoint = cEndPointPix) and (URLPathParams.Count > 2) and
+     ((Method = ChttpMethodPUT) or (Method = ChttpMethodGET)) then
+  begin
+    txid := URLPathParams[0];
+    URLPathParams.Clear;
+    URLPathParams.Add(txid);
+    if (Method = ChttpMethodGET) then
+      fCheckingReturn := True;
+  end;
 end;
 
 procedure TACBrPSPAppLess.ConfigurarQueryParameters(const Method, EndPoint: String);
@@ -477,6 +571,7 @@ constructor TACBrPSPAppLess.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   fpIsBacen := False;
+  fCheckingReturn := False;
   fpQuandoAcessarEndPoint := DoQuandoAcessarEndPoint;
   fpQuandoReceberRespostaEndPoint := DoQuandoReceberRespostaEndPoint;
 end;

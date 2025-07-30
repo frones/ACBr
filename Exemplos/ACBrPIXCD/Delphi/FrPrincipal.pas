@@ -2781,7 +2781,7 @@ begin
           cpf := s;
       end;
 
-      if (ACBrPixCD1.PSP = ACBrPSPMatera1) then
+      if (ACBrPixCD1.PSP = ACBrPSPMatera1) or (ACBrPixCD1.PSP = ACBrPSPPixPDV1) then
       begin
         uf := 'SP';
         cep := '99999999';

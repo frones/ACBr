@@ -86,16 +86,16 @@ begin
         FResposta.CNPJ                 := LJsonObject.AsString['cnpj'];
         FResposta.Fantasia             := LJsonObject.AsString['nome_fantasia'];
         FResposta.Abertura             := StringToDateTimeDef(LJsonObject.AsString['data_inicio_atividade'],0,'yyyy/mm/dd');
-        FResposta.Porte                := LJsonObject.AsString['descricao_porte'];
+        FResposta.Porte                := LJsonObject.AsString['porte'];
 
         FResposta.CNAE1                := IntToStr(LJsonObject.AsInteger['cnae_fiscal']) + ' ' + LJsonObject.AsString['cnae_fiscal_descricao'];
 
-        LJsonArray := LJsonObject.AsJSONArray['cnaes_secundarias'];
+        LJsonArray := LJsonObject.AsJSONArray['cnaes_secundarios'];
 
         for Z := 0 to Pred(LJsonArray.Count) do
           FResposta.CNAE2.Add(IntToStr(LJsonArray.ItemAsJSONObject[Z].AsInteger['codigo']) + ' ' + LJsonArray.ItemAsJSONObject[Z].AsString['descricao']);
 
-        FResposta.EmpresaTipo          := LJsonObject.AsString['descricao_matriz_filial'];
+        FResposta.EmpresaTipo          := LJsonObject.AsString['descricao_identificador_matriz_filial'];
         FResposta.Endereco             := Trim(LJsonObject.AsString['descricao_tipo_de_logradouro'] + ' ' + LJsonObject.AsString['logradouro']);
         FResposta.Numero               := LJsonObject.AsString['numero'];
         FResposta.Complemento          := LJsonObject.AsString['complemento'];
@@ -109,7 +109,7 @@ begin
         FResposta.DataSituacao         := StringToDateTimeDef(LJsonObject.AsString['data_situacao_cadastral'],0,'yyyy/mm/dd');
         FResposta.DataSituacaoEspecial := StringToDateTimeDef(LJsonObject.AsString['data_situacao_especial'],0,'yyyy/mm/dd');
         FResposta.NaturezaJuridica     := IntToStr(LJsonObject.AsInteger['codigo_natureza_juridica']);
-        FResposta.EndEletronico        := '';
+        FResposta.EndEletronico        := LJsonObject.AsString['email'];
         FResposta.Telefone             := LJsonObject.AsString['ddd_telefone_1'];
         FResposta.EFR                  := '';
         FResposta.CapitalSocial        := LJsonObject.AsFloat['capital_social'];
@@ -121,7 +121,7 @@ begin
         FResposta.DataOpcaoMei         := StringToDateTimeDef(LJsonObject.AsString['data_opcao_pelo_mei'],0,'yyyy/mm/dd');
         FResposta.DataExclusaoMei      := StringToDateTimeDef(LJsonObject.AsString['data_exclusao_do_mei'],0,'yyyy/mm/dd');
 
-        FResposta.MotivoSituacaoCad    := LJsonObject.AsString['motivo_situacao_cadastral'];
+        FResposta.MotivoSituacaoCad    := LJsonObject.AsString['descricao_motivo_situacao_cadastral'];
 
         Result := True;
       end else

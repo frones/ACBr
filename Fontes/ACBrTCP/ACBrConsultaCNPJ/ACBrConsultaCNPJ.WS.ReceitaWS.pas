@@ -130,7 +130,9 @@ begin
       end else
       begin
         if (Trim(LJsonObject.AsString['message']) <> '') then
-          raise EACBrConsultaCNPJWSException.Create('Erro:'+IntToStr(LResultCode) + ' - ' +LJsonObject.AsString['message']);
+          raise EACBrConsultaCNPJWSException.Create('Erro:'+IntToStr(LResultCode) + ' - ' +LJsonObject.AsString['message'])
+        else
+          raise EACBrConsultaCNPJWSException.Create('Erro:'+IntToStr(LResultCode) + ' - Status [' + LJsonObject.AsString['status'] + ']')
       end;
     end;
     if (LResultCode > 299) then

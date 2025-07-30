@@ -67,6 +67,7 @@ var
   LRetorno : String;
   I, LCodigoRetorno : Integer;
   LURL : String;
+  LValor: String;
 begin
   Result := False;
 
@@ -94,7 +95,15 @@ begin
       FResposta.CNPJ           := LJsonObject.AsString['cnpj'];
       FResposta.Fantasia       := LJsonObject.AsString['nome_fantasia'];
       FResposta.Abertura       := StringToDateTimeDef(LJsonObject.AsString['data_inicio_atividade'],0,'yyyy/mm/dd');
-      FResposta.Endereco       := LJsonObject.AsString['tipo_logradouro'] + ' ' +LJsonObject.AsString['logradouro'];
+
+      FResposta.Endereco       := LJsonObject.AsString['logradouro'];
+      LValor := Trim(LJsonObject.AsString['tipo_logradouro']);
+      if LValor <> '' then
+      begin
+        if AnsiUpperCase(Copy(FResposta.Endereco, 1, Length(LValor))) <> AnsiUpperCase(LValor) then
+          FResposta.Endereco := LValor + ' ' + FResposta.Endereco;
+      end;
+
       FResposta.Numero         := LJsonObject.AsString['numero'];
       FResposta.Complemento    := LJsonObject.AsString['complemento'];
       FResposta.CEP            := OnlyNumber( LJsonObject.AsString['cep']);

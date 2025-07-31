@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/07/2025
+-- ACBrPIXPSPAppLess --
+[*] Incluída validação do parâmetro E2Eid ao efetuar uma devolução com PSP AppLess.
+    por: Elias César
+
 30/07/2025
 -- ACBrPIXPSPAppLess --
 [*] Alterações para funcionar o endpoint /pix padrão Bacen com PSP AppLess.

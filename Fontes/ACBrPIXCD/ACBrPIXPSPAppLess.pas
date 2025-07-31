@@ -60,6 +60,9 @@ const
   cAppLessURLAuthHomolog  = cAppLessURLHomologacao+ cAppLessPathAuthToken;
   cAppLessURLAuthProducao = cAppLessURLProducao+ cAppLessPathAuthToken;
 
+resourcestring
+  sErroParametroIncorreto = 'Para efetuar a devolução com PSP AppLess informe o orderId no campo E2Eid';
+
 type
 
   { TACBrPSPAppLess }
@@ -515,7 +518,9 @@ begin
     URLPathParams.Clear;
     URLPathParams.Add(txid);
     if (Method = ChttpMethodGET) then
-      fCheckingReturn := True;
+      fCheckingReturn := True
+    else if (Method = ChttpMethodPUT) and (Length(txid) >= 25) then
+      raise EACBrPixException.Create(sErroParametroIncorreto);
   end;
 end;
 

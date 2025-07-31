@@ -45,6 +45,8 @@ Símbolo : Significado
 
 31/07/2025
 -- ACBrNFSeXServicos --
+[*] #TK-7436: Incluído o Params GerarTag para a cidade Coronel Bicaco/RS.
+   Por: Pablo Cerbaro
 [*] #TK-7438: A cidade Confresa/MT trocou a URL, o provedor continua o mesmo.
    Por: Luiz Eduardo Bodo
 [*] #TK-7436: A cidade Coronel Bicaco/RS trocou a URL, o provedor continua o mesmo.

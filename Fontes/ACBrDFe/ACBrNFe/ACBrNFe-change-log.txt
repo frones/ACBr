@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/07/2025
+-- ACBrNFe.XmlWriter --
+[*] #TK-7435: Ajuste nas condições para gerar o grupo gIBS e gCBS em IBSCBSTot.
+   Por: Pablo Cerbaro
+
 30/07/2025
 -- ACBrNFeServicos --
 [-] #TK-7442: Ajuste na URL da consulta da Chave para RN.

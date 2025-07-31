@@ -4574,10 +4574,11 @@ begin
     Result.AppendChild(AddNode(tcDe2, 'W35', 'vBCIBSCBS', 1, 15, 1,
                                            IBSCBSTot.vBCIBSCBS, DSC_VBCIBSCBS));
 
-    if IBSCBSTot.gIBS.vIBS > 0 then
+    if (IBSCBSTot.gIBS.vIBS > 0) or
+       (IBSCBSTot.gIBS.gIBSUFTot.vDif > 0) or (IBSCBSTot.gIBS.gIBSMunTot.vDif > 0) then
       Result.AppendChild(Gerar_IBSCBSTot_gIBS(IBSCBSTot.gIBS));
 
-    if IBSCBSTot.gCBS.vCBS > 0 then
+    if (IBSCBSTot.gCBS.vCBS > 0) or (IBSCBSTot.gCBS.vDif > 0) then
       Result.AppendChild(Gerar_IBSCBSTot_gCBS(IBSCBSTot.gCBS));
 
     if (IBSCBSTot.gMono.vIBSMono > 0) or (IBSCBSTot.gMono.vCBSMono > 0) or

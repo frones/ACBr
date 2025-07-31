@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/07/2025
+-- ACBrCTe.XmlWriter --
+[-] #TK-7440: Corrigido a nomenclatura da tag chCTe do grupo infProt que estava como
+    chBPe.
+   Por: Claudio Visky
+
 28/07/2025
 -- ACBrCTe.XmlReader/ACBrCTe.XmlWriter --
 [*] #TK-7425: Alterado tanto a geração quanto a leitura do campo pAliqEfet para 4

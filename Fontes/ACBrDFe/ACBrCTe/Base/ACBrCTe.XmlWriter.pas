@@ -383,7 +383,7 @@ begin
 
   xmlNode.AddChild('verAplic').Content := CTe.procCTe.verAplic;
 
-  xmlNode.AddChild('chBPe').Content := CTe.procCTe.chCTe;
+  xmlNode.AddChild('chCTe').Content := CTe.procCTe.chCTe;
 
   xmlNode.AddChild('dhRecbto').Content :=
     FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', CTe.procCTe.dhRecbto) +

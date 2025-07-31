@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/07/2025
+-- ACBrPagForClass/CNAB240.LerTxtRetorno/PagFor.Bradesco.LerTxtRetorno --
+[*] TK-7439: Alterações visando a leitura correta do Segmento Z.
+  Por: Italo Giurizzato Junior
+
 24/07/2025
 -- ACBrPagForConversao.pas --
 [+] TK-7401: Adicionado STARK BANK S.A.

@@ -51,6 +51,8 @@ type
 
     procedure LerSegmentoJ(nLinha: Integer; var LeuRegistroJ: boolean); override;
 
+    procedure LerSegmentoZ(mSegmentoZList: TSegmentoZList; nLinha: Integer); override;
+
     procedure LerSegmento5(mSegmento5List: TSegmento5List; nLinha: Integer); override;
   end;
 
@@ -237,6 +239,47 @@ begin
     Exit;
 
   inherited LerSegmentoJ(nLinha, LeuRegistroJ);
+end;
+
+procedure TArquivoR_Bradesco.LerSegmentoZ(mSegmentoZList: TSegmentoZList;
+  nLinha: Integer);
+var
+  RegSeg: string;
+begin
+  Linha := ArquivoTXT.Strings[nLinha];
+  RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
+
+  if RegSeg <> '3Z' then
+    Exit;
+
+  mSegmentoZList.New;
+
+  with mSegmentoZList.Last do
+  begin
+    Autenticacao := LerCampo(Linha, 15, 64, tcStr);
+    SeuNumero := LerCampo(Linha, 79, 25, tcStr);
+
+    case PagFor.Lote[0].Registro1.Servico.FormaLancamento of
+      flCreditoContaCorrente, flChequePagamento, flDocTed, flOPDisposicao,
+      flPagamentoAutenticacao:
+        begin
+          ControleOBB := LerCampo(Linha, 104, 3, tcStr);
+        end;
+
+      flTributoDARFNormal, flTributoGPS, flTributoDARFSimples, flTributoIPTU,
+      flTributoDARJ, flTributoGARESPICMS, flTributoGARESPDR, flTributoGARESPITCMD,
+      flTributoIPVA, flTributoLicenciamento, flTributoDPVAT, flTributoGNRe:
+        begin
+          RefProduto := LerCampo(Linha, 153, 40, tcStr);
+          DescProduto := LerCampo(Linha, 193, 23, tcStr);
+          Documento := LerCampo(Linha, 216, 15, tcStr);
+        end;
+    end;
+
+    CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
+
+    GerarAvisos(CodOcorrencia, 'Z', '', '');
+  end;
 end;
 
 procedure TArquivoR_Bradesco.LerSegmento5(mSegmento5List: TSegmento5List; nLinha: Integer);

@@ -749,14 +749,22 @@ type
 
   TSegmentoZ = class(TObject)
   private
-    FAutenticacao : string; // Tamanho 64
+    FAutenticacao : string;
     FSeuNumero: string;
     FNossoNumero: string;
+    FControleOBB: string;
+    FRefProduto: string;
+    FDescProduto: string;
+    FDocumento: string;
     FCodOcorrencia: string;
   public
     property Autenticacao: string read FAutenticacao write FAutenticacao;
     property SeuNumero: string read FSeuNumero write FSeuNumero;
     property NossoNumero: string read FNossoNumero write FNossoNumero;
+    property ControleOBB: string read FControleOBB write FControleOBB;
+    property RefProduto: string read FRefProduto write FRefProduto;
+    property DescProduto: string read FDescProduto write FDescProduto;
+    property Documento: string read FDocumento write FDocumento;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
   end;
 

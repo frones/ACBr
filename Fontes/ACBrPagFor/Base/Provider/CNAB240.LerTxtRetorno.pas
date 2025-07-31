@@ -1496,8 +1496,8 @@ begin
   with mSegmentoZList.Last do
   begin
     Autenticacao := LerCampo(Linha, 15, 64, tcStr);
-    SeuNumero := LerCampo(Linha, 79, 20, tcStr);
-    NossoNumero := LerCampo(Linha, 104, 15, tcStr);
+    SeuNumero := LerCampo(Linha, 79, 25, tcStr);
+//    NossoNumero := LerCampo(Linha, 104, 15, tcStr);
     CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
 
     GerarAvisos(CodOcorrencia, 'Z', '', '');

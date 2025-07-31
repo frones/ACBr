@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/07/2025
+-- ACBrXmlBase --
+[*] Acrescentado a troca de </br> por ; (ponto e virgula) na função RemoverCaracteresDesnecessarios.
+   Por: Sergio Fuchs
+
 18/07/2025
 -- ACBrDFe.Conversao --
 [*] TK-7355: Correção do cClassTrib estava ct410099 sendo que o correto é ct410999.

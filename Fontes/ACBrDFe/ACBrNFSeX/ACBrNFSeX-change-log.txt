@@ -43,11 +43,21 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+31/07/2025
+-- ACBrNFSeXServicos --
+[*] #TK-7438: A cidade Confresa/MT trocou a URL, o provedor continua o mesmo.
+   Por: Luiz Eduardo Bodo
+[*] #TK-7436: A cidade Coronel Bicaco/RS trocou a URL, o provedor continua o mesmo.
+   Por: Pablo Cerbaro
+[*] #TK-7415: A cidade Mimoso do Sul/ES trocou a URL e a versão, o provedor continua o mesmo.
+   Por: Heronim Antonio Marçal
+[*] #TK-7414: A cidade Comodoro/MT trocou de provedor, agora é Fiorilli.
+   Por: Diego Reckziegel
+
 29/07/2025
 -- AssessorPublico.LerXml --
 [*] #TK-7431: Alteração visando a leitura correta da Insc. Municipal do prestador.
    Por: João Vitor Bogo
-
 -- fintelISS.GravarXml/fintelISS.Provider --
 [*] Ajuste para usar corretamente a pasta com os schemas da versão 2.04
    Por: Italo Giurizzato Junior

@@ -929,6 +929,45 @@ begin
         // Atualizar o contador do Segmento Y
         Inc(FiQtdSegmentoY);
       end;
+      if(fpLayoutVersaoArquivo >= 103) then
+      begin
+        if ListaDadosNFe.Count > 0 then // Se tem informacoes de NFe associadas ao titulo
+        begin
+          if ListaDadosNFe[0].ValorNFe > 0 then
+          begin
+            Result := Result +
+                      #13#10 +
+                      '041'  +                                                                                                                   //  001-003 BANCO
+                      '0001' +                                                                                                                   //  004-007 LOTE
+                      '3'    +                                                                                                                   //  008-008 REGISTRO
+                      DupeString('*', 5) +                                                                                                       //  009-013 SEQ. LOTE
+                      'Y'    +                                                                                                                   //  014-014 SEGMENTO
+                      ' '    +                                                                                                                   //  015-015 BRANCOS
+                      Ocorrencia +                                                                                                               //  016-017 CODIGO MOVIMENTO
+                      '52'  +                                                                                                                    //  018-019 Identificação Registro Opcional 52
+                      PadRight(ListaDadosNFe[0].NumNFe, 15) +                                                                                    //  020-034 Número da Nota Fiscal 1
+                      IntToStrZero( round(ListaDadosNFe[0].ValorNFe * 100), 15) +                                                                //  035-049 Valor da Nota Fiscal 1
+                      FormatDateTime('ddmmyyyy', ListaDadosNFe[0].EmissaoNFe)  +                                                                 //  050-057 Data Emissão da Nota Fiscal 1
+                      PadRight(ListaDadosNFe[0].ChaveNFe, 44);                                                                                   //  058-101 Chave de acesso DANFE NF 1
+                      if ACBrTitulo.ListaDadosNFe.Count <  2 then
+                        Result := Result +
+                        Space(15) +
+                        StringOfChar('0',67) +
+                        Space (57)                                                                                                              // 184-240 Uso Exclusivo FEBRABAN/CNAB
+                      else
+                      begin
+                        Result := Result +
+                        PadRight(ListaDadosNFe[1].NumNFe, 15, ' ') +                                                                           // 020-034 Nota Fiscal 1 Número da Nota Fiscal
+                        IntToStrZero(round(ListaDadosNFe[1].ValorNFe * 100), 15) +                                                             // 035-049 Valor N. Fiscal Valor da Nota Fiscal
+                        FormatDateTime('ddmmyyyy', ListaDadosNFe[1].EmissaoNFe) +                                                              // 050-057 Data Emissão Data Emissão da Nota Fiscal
+                        PadRight(ListaDadosNFe[1].ChaveNFe, 44, ' ') +                                                                         // 058-101 Chave Acesso Chave de Acesso DANFE NF
+                        Space (57);                                                                                                            // 184-240 Uso Exclusivo FEBRABAN/CNAB
+                      end;
+            // Atualizar o contador do Segmento Y
+            Inc(FiQtdSegmentoY);
+          end;
+        end;
+      end;
    end;
 end;
 

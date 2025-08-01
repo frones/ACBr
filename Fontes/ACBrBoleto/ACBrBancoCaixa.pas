@@ -894,7 +894,7 @@ var
   ATipoSacado, ATipoCendente, wLinha                         :String;
   wCarteira                                                  :Integer;
   ACodigoDesconto, ADataMulta : String;
-  ACodCedente : String;
+  ACodCedente, LCodigoJuros : String;
 
   function DoMontaInstrucoes1: string;
   begin
@@ -1092,6 +1092,24 @@ begin
       {Codigo do Cedente}
       ACodCedente := DefineCodigoCedente(ACBrTitulo.ACBrBoleto.Cedente);
 
+      LCodigoJuros := CodigoMora;
+      if ValorMoraJuros > 0 then
+      begin
+        if LCodigoJuros <> '' then
+        begin
+          case CodigoMoraJuros of
+            cjValorDia   : LCodigoJuros := '1'; // valor dias corrido
+            cjTaxaMensal : LCodigoJuros := '3'; // percentual ao mes dias corrido
+            cjIsento     : LCodigoJuros := '5'; // isento
+            //valor dia util 6
+            //percentual ao mes dias uteis 8
+          else
+            LCodigoJuros := '5';
+          end;
+        end;
+      end else
+        LCodigoJuros := '5';
+
       with ACBrBoleto do
       begin
          wLinha:= '1'                                                              + //  1 até 1   -  ID Registro - Preencher com ‘1'
@@ -1106,8 +1124,9 @@ begin
                   PadRight(ACBrTitulo.SeuNumero, 25, ' ')                          + // 32 até 56  - Seu numero
                   PadRight(Copy(AModalidade,1,2), 2, '0')                          + // 57 até 58  - Modalidade identificação
                   PadLeft(Copy(ANossoNumero, 3, 15), 15, '0')                      + // 59 até 73  - Nosso Numero
-                  Space(3)                                                         + // 74 Até 76  - Brancos
-                  Space(1)                                                         + //77 até 77 - Campo em branco
+                  Space(2)                                                         + // 74 Até 75  - Brancos
+                  Space(1)                                                         + // 76 Até 76 NE055 Pagamento Parcial
+                  PadLeft(LCodigoJuros, 1)                                         + //77 até 77  NE066 Codigo Juros
                   ADataMoraJuros                                                   + //78 até 83 - Data Inicio de Juros
                   ACodigoDesconto                                                  + //84 até 84 - Código do Tipo de Desconto
                   Space(22)                                                        + //85 até 106 - Campos em Branco

@@ -1585,6 +1585,7 @@ type
   TgIBSCBS = class(TObject)
   private
     FvBC: Double;
+    FvIBS: Double;
     FgIBSUF: TgIBSUF;
     FgIBSMun: TgIBSMun;
     FgCBS: TgCBS;
@@ -1600,6 +1601,7 @@ type
     procedure Assign(Source: TgIBSCBS);
 
     property vBC: Double read FvBC write FvBC;
+    property vIBS: Double read FvIBS write FvIBS;
     property gIBSUF: TgIBSUF read FgIBSUF write FgIBSUF;
     property gIBSMun: TgIBSMun read FgIBSMun write FgIBSMun;
     property gCBS: TgCBS read FgCBS write FgCBS;
@@ -5062,6 +5064,7 @@ end;
 procedure TgIBSCBS.Assign(Source: TgIBSCBS);
 begin
   vBC := Source.vBC;
+  vIBS := Source.vIBS;
   gIBSUF.Assign(Source.gIBSUF);
   gIBSMun.Assign(Source.gIBSMun);
   gCBS.Assign(Source.gCBS);

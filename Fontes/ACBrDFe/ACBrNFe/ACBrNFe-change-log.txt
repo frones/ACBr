@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/08/2025
+-- ACBrNFe.Classes/ACBrNFe.IniReader/ACBrNFe.IniWriter/ACBrNFe.XmlReader/ACBrNFe.XmlWriter --
+[*] #TK-7446: Alteração visando deixar o componente em conformidade com a versão 1.20 da 
+    NT 2025/002 - Reforma Tributária.
+   Por: Italo Giurizzato Junior
+
 31/07/2025
 -- ACBrNFe.XmlWriter --
 [*] #TK-7435: Ajuste nas condições para gerar o grupo gIBS e gCBS em IBSCBSTot.
